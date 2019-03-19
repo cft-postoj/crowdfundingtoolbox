@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #b0aeaf;
+        opacity: 0;
+      }
+
+      .cls-2 {
+        fill: #2e3131;
+      }
+    </style>
+  </defs>
+  <g id="plus" transform="translate(-1194 -181)">
+    <rect id="safearea" class="cls-1" width="16" height="16" transform="translate(1194 181)"/>
+    <g id="icon" transform="translate(-651.999 162)">
+      <path id="Union_2" data-name="Union 2" class="cls-2" d="M-4216-2425v-4h-4a1,1,0,0,1-1-1,1,1,0,0,1,1-1h4v-4a1,1,0,0,1,1-1,1,1,0,0,1,1,1v4h4a1,1,0,0,1,1,1,1,1,0,0,1-1,1h-4v4a1,1,0,0,1-1,1A1,1,0,0,1-4216-2425Z" transform="translate(6069 2457)"/>
+    </g>
+  </g>
+</svg>

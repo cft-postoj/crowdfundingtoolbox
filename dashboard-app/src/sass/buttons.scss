@@ -1,0 +1,40 @@
+@import './variables';
+.btn {
+    font-size: 15px;
+    color: #8AA1B1;
+    position: relative;
+    text-align: center;
+    background-color: #F4F7F9;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    width: 226px;
+    transition: 0.3s ease;
+    height: 42px;
+
+    &.active {
+        background: #0074E9;
+        color: #ffffff;
+        font-weight: bold;
+        letter-spacing: 1.2px;
+    }
+    &.date-picker {
+        color: #ffffff;
+        font-weight: bold;
+        letter-spacing: 1.2px;
+        height: 48px;
+        width: 100%;
+        border: 1px solid #D8DFE5;
+        border-radius: 4px;
+        transition: 0.3s ease;
+        text-shadow:
+                -1px -1px 0px rgba($black, .3),
+                0px -1px 0px rgba($black, .3),
+                1px -1px 0px rgba($black, .3),
+                -1px  0px 0px rgba($black, .3),
+                1px  0px 0px rgba($black, .3),
+                -1px  1px 0px rgba($black, .3),
+                0px  1px 0px rgba($black, .3),
+                1px  1px 0px rgba($black, .3);
+    }
+}

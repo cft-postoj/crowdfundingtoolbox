@@ -1,0 +1,58 @@
+@import "../../sass/variables";
+@import "../../sass/classes";
+
+.stats-wrapper {
+  font-family: Lato, 'sans-serif';
+
+  .stats-value {
+    height: 180px;
+    color: #2E3131;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stats-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2E3131;
+
+    span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    p {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .stats-actions {
+    margin: 15px 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: #8AA1B1;
+    float: right;
+    &--button {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .info-container {
+    margin: auto;
+    text-align: center;
+    color: #2E3131;
+    font-family: Lato, 'sans-serif' !important;
+
+    &--header {
+      font-size: 12px;
+    }
+
+    &--body {
+      font-size: 15px;
+    }
+  }
+}

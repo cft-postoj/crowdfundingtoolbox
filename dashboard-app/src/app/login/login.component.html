@@ -1,0 +1,42 @@
+<div class="login">
+    <app-alert [(open)]="alertOpen" [fixed]="alertFixed" [type]="alertType" [message]="alertMessage"></app-alert>
+    <div class="login--wrapper">
+        <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" *ngIf="!forgottenPasswordForm" autocomplete="on">
+            <p>SIGN IN</p>
+            <label for="username">
+                Username or Email
+            </label>
+            <input type="text" name="username" formControlName="username" id="username" placeholder="Type your username or email"/>
+
+            <label for="password">
+                Password
+            </label>
+            <input type="password" formControlName="password" name="password" id="password" placeholder="Type your password"/>
+            <div class="text-right">
+                <span class="forgotPass" (click)="showForgottenForm()">
+                    Forgot password?
+                </span>
+            </div>
+            <app-loading [isLoading]="loading"></app-loading>
+            <button type="submit" *ngIf="!loading">Sign In</button>
+
+        </form>
+
+        <form [formGroup]="loginForm" (ngSubmit)="submitPassword()" *ngIf="forgottenPasswordForm">
+            <label for="email">
+                Your email for reset password
+            </label>
+            <input type="email" name="email" id="email" placeholder="Type your email"/>
+
+            <div class="text-right">
+                <span class="forgotPass" (click)="showForgottenForm()">
+                    Back to login form
+                </span>
+            </div>
+
+            <button type="submit">Reset password</button>
+
+        </form>
+    </div>
+</div>
+

@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::any('{slug}', function($slug)
+{
+    return View('welcome');
+})->where('slug', '^(?!storage).*$');

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 36 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f2f1ef;
+        opacity: 0;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="1" y1="0.5" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#0074e9"/>
+      <stop offset="1" stop-color="#4d05e8"/>
+    </linearGradient>
+  </defs>
+  <g id="campaings" transform="translate(-40 -162)">
+    <rect id="safe_area" data-name="safe area" class="cls-1" width="36" height="36" transform="translate(40 162)"/>
+    <g id="icon" transform="translate(46 168)">
+      <rect id="Rectangle_40" data-name="Rectangle 40" class="cls-2" width="10.667" height="8" transform="translate(13.333)"/>
+      <rect id="Rectangle_41" data-name="Rectangle 41" class="cls-2" width="10.667" height="13.333"/>
+      <rect id="Rectangle_42" data-name="Rectangle 42" class="cls-2" width="10.667" height="8" transform="translate(0 16)"/>
+      <rect id="Rectangle_43" data-name="Rectangle 43" class="cls-2" width="10.667" height="13.333" transform="translate(13.333 10.667)"/>
+    </g>
+  </g>
+</svg>

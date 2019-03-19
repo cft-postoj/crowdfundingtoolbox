@@ -1,0 +1,17 @@
+<div class="notification" *ngIf="!isClosed">
+  Your session will be closed in short time.
+  <div class="notification--btns">
+    <button
+            type="button"
+            class="btn-success"
+            (click)="stayLoggedIn()"
+    >Stay logged in
+    </button>
+    <button
+            type="button"
+            class="btn-light"
+            (click)="logout()"
+    >Logout
+    </button>
+  </div>
+</div>

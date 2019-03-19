@@ -1,0 +1,61 @@
+<div class="active bg-overlay"></div>
+<div class="active campaignEdit">
+    <div class="campaignEdit--head">
+        <ng-container *ngIf="newCampaign; else editTitle">
+            <b>NEW CAMPAIGN</b>
+        </ng-container>
+        <ng-template #editTitle>
+            <b>EDIT CAMPAIGN</b>
+        </ng-template>
+        <span
+                [inlineSVG]="'/assets/images/icons/close.svg'"
+                (click)="closeEditWindow()"
+                title="Close"
+                class="campaignEdit--close">
+        </span>
+
+    </div>
+    <!--<div class="campaignEdit&#45;&#45;body">-->
+    <!--<form>-->
+    <!--<app-dragAndDrop></app-dragAndDrop>-->
+    <!--<angular-editor [config]="editorConfig"></angular-editor>-->
+    <!--</form>-->
+    <!--</div>-->
+    <app-loading [isLoading]="loading"></app-loading>
+    <ng-container *ngIf="!loading">
+        <div class="campaignEdit--body">
+            <div class="campaignEdit--body--tabs tabs">
+                <button type="button" [class]="(activeContent == 'campaignSettings') ? 'active' : ''"
+                        (click)="activeContent = 'campaignSettings'">Campaign settings
+                </button>
+                <button type="button" [class]="(activeContent == 'widgetSettings') ? 'active' : ''"
+                        (click)="activeContent = 'widgetSettings'">Widget settings
+                </button>
+            </div>
+            <div class="campaignEdit--body--content" *ngIf="activeContent == 'campaignSettings'">
+                <app-campaign-settings class="d-flex" [campaign]="campaign"></app-campaign-settings>
+            </div>
+            <div class="campaignEdit--body--content" *ngIf="activeContent == 'widgetSettings'">
+                <app-widget-settings  class="d-flex" [campaign]="campaign"></app-widget-settings>
+            </div>
+
+            <!--<div>-->
+            <!--<mat-tab-group mat-align-tabs="start">-->
+            <!--<mat-tab label="Campaign settings">-->
+            <!--<app-campaign-settings></app-campaign-settings>-->
+            <!--</mat-tab>-->
+            <!--<mat-tab label="Widget settings">-->
+            <!--<app-widget-settings></app-widget-settings>-->
+            <!--</mat-tab>-->
+            <!--</mat-tab-group>-->
+            <!--</div>-->
+        </div>
+        <!--<ngb-alert *ngIf="!validInput()"  [type]="'danger'" >{{ errorMessage }}</ngb-alert>-->
+        <app-alert *ngIf="!validInput() && submitted" [type]="'danger'" [(open)]="error" [message]="errorMessage" > </app-alert>
+        <app-actions (preview)="previewOpen = !previewOpen" class="actions" (submit)="handleSubmit()" [submitting]="saving" [hidePreviewButton]="newCampaign"></app-actions>
+    </ng-container>
+</div>
+
+<app-preview *ngIf="previewOpen" [(show)]="previewOpen" [campaignId]="campaign.id" [deviceType]="deviceType"></app-preview>
+<app-preview  #previewGenerate *ngIf="creatingHTMLs" [class]="'hide'" [generateHTML]="'true'" [show]="'false'" [createdCampaign]="createdCampaign" [deviceType]="deviceType"></app-preview>
+

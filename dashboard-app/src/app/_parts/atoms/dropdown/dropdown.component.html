@@ -1,0 +1,11 @@
+<div (click)="active = !active" [class]="(active) ? 'selectWrapper active' : 'selectWrapper'">
+    <select name={{name}} class={{class}} (change)="onButtonClick($event)" [compareWith]="byTitle" [(ngModel)]="selectedItem">
+        <option [ngValue]="defaultDropdown" disabled selected hidden>{{title}}</option>
+        <option
+                *ngFor="let item of items"
+                [ngValue]="item"
+                [selected]="currentValue === item.title">
+            {{item.title}}</option>
+    </select>
+</div>
+

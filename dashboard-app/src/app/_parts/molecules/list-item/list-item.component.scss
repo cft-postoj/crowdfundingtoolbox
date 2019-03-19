@@ -1,0 +1,23 @@
+@import "../../../../sass/variables";
+@import "../../../../sass/classes";
+@import "../../../../sass/mixins";
+
+.list-items--item {
+    &--action {
+        margin: 0 3px;
+        cursor: pointer;
+        svg g path {
+            @include transitionSingle(.3s ease);
+        }
+        &:hover {
+            svg g path {
+                fill: $azure;
+            }
+        }
+    }
+    .pointer {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

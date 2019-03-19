@@ -1,0 +1,42 @@
+@import "variables";
+@import "mixins";
+.list-items {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 2px;
+  padding: 0;
+
+  th {
+    color: $bali;
+    font-weight: 400;
+    padding: 12px 30px;
+    position: sticky;
+    top: 0;
+    background-color: $aquaHaze ;
+    z-index: 9;
+  }
+  &--item {
+    background: transparent;
+    td {
+      background: $white;
+      height: 72px;
+      padding: 12px 30px;
+      font-size: 12px;
+      max-width: 300px;
+      margin-bottom: 150px;
+      color: $outer-space;
+    }
+    &--name {
+      font-size: 16px;
+      margin-bottom: 0;
+      color: $black;
+      line-height: 16px;
+      + span {
+        color: $outer-space;
+        font-size: 12px;
+      }
+    }
+
+  }
+}
+

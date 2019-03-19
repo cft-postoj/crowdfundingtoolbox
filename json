@@ -1,0 +1,308 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Laravel",
+        "description": "",
+        "version": "1.0.0"
+    },
+    "host": "http:\/\/localhost\/crowdfundingToolbox",
+    "basePath": "\/",
+    "paths": {
+        "\/api\/documentation": {
+            "get": {
+                "description": "GET \/api\/documentation",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/docs\/{jsonFile}": {
+            "get": {
+                "description": "GET \/docs\/{jsonFile}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "jsonFile",
+                        "type": "integer",
+                        "required": false,
+                        "description": ""
+                    }
+                ]
+            },
+            "post": {
+                "description": "POST \/docs\/{jsonFile}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "jsonFile",
+                        "type": "integer",
+                        "required": false,
+                        "description": ""
+                    }
+                ]
+            },
+            "put": {
+                "description": "PUT \/docs\/{jsonFile}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "jsonFile",
+                        "type": "integer",
+                        "required": false,
+                        "description": ""
+                    }
+                ]
+            },
+            "patch": {
+                "description": "PATCH \/docs\/{jsonFile}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "jsonFile",
+                        "type": "integer",
+                        "required": false,
+                        "description": ""
+                    }
+                ]
+            },
+            "delete": {
+                "description": "DELETE \/docs\/{jsonFile}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "jsonFile",
+                        "type": "integer",
+                        "required": false,
+                        "description": ""
+                    }
+                ]
+            },
+            "options": {
+                "description": "OPTIONS \/docs\/{jsonFile}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "jsonFile",
+                        "type": "integer",
+                        "required": false,
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/docs\/asset\/{asset}": {
+            "get": {
+                "description": "GET \/docs\/asset\/{asset}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "asset",
+                        "type": "integer",
+                        "required": true,
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/api\/oauth2-callback": {
+            "get": {
+                "description": "GET \/api\/oauth2-callback",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/login": {
+            "post": {
+                "description": "POST \/api\/backoffice\/login",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/register": {
+            "post": {
+                "description": "POST \/api\/backoffice\/register",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/logout": {
+            "get": {
+                "description": "GET \/api\/backoffice\/logout",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/remove-user": {
+            "delete": {
+                "description": "DELETE \/api\/backoffice\/remove-user",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/users": {
+            "get": {
+                "description": "GET \/api\/backoffice\/users",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/crowdfunding-settings": {
+            "put": {
+                "description": "PUT \/api\/backoffice\/crowdfunding-settings",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/campaigns": {
+            "post": {
+                "description": "POST \/api\/backoffice\/campaigns",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/campaigns\/{id}": {
+            "put": {
+                "description": "PUT \/api\/backoffice\/campaigns\/{id}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "integer",
+                        "required": true,
+                        "description": ""
+                    }
+                ]
+            },
+            "get": {
+                "description": "GET \/api\/backoffice\/campaigns\/{id}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "integer",
+                        "required": true,
+                        "description": ""
+                    }
+                ]
+            },
+            "delete": {
+                "description": "DELETE \/api\/backoffice\/campaigns\/{id}",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "integer",
+                        "required": true,
+                        "description": ""
+                    }
+                ]
+            }
+        },
+        "\/api\/backoffice\/campaigns\/all": {
+            "get": {
+                "description": "GET \/api\/backoffice\/campaigns\/all",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/api\/backoffice\/upload": {
+            "post": {
+                "description": "POST \/api\/backoffice\/upload",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "\/": {
+            "get": {
+                "description": "GET \/",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}

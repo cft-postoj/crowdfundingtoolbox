@@ -1,0 +1,47 @@
+@import "../../../../sass/variables";
+@import "../../../../sass/mixins";
+.breadcrumbs {
+  background: $white;
+  width: calc(100%);
+  position: relative;
+  flex: none;
+  padding: 15px 30px;
+  z-index: 9;
+  ul {
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+    height: 100%;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    li {
+      color: $outer-space;
+      display: inline-flex;
+      &:not(:first-child) {
+        padding-left: 30px;
+        position: relative;
+        &:before {
+          content: '';
+          background: url('/assets/images/icons/breadcrumb.svg') no-repeat;
+          width: 18px;
+          height: 18px;
+          left: 7px;
+          top: 3px;
+          position: absolute;
+        }
+      }
+      a {
+        color: $outer-space;
+      }
+      &.breadcrumbs--active {
+        a {
+          color: $azure;
+        }
+      }
+    }
+  }
+
+}
+
+

@@ -1,0 +1,43 @@
+@import "../radio-button-group/radio-button-group.component";
+
+.input-group{
+    .item--icon{
+        background: white;
+
+        ::ng-deep svg{
+            display: block;
+            margin: auto;
+            height: 100%;
+        }
+
+        &.default-color{
+            fill: #F4F7F9;
+        }
+    }
+    input {
+        border: none;
+        display: block;
+        color: $bali;
+        width: 100%;
+        position: relative;
+        outline: none;
+        font-size: 18px;
+        transition: 0.3s ease;
+        text-align: right;
+        padding: 5px 5px 5px 0;
+    }
+    &.active {
+        .item--icon {
+            border-bottom-color: $azure;
+            border-top-color: $azure;
+
+            &:last-child {
+                border-right-color:$azure;
+            }
+
+            &:first-child {
+                border-left-color:$azure;
+            }
+        }
+    }
+}

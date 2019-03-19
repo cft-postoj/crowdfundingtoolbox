@@ -1,0 +1,54 @@
+<div *ngIf="campaignId" class="active bg-overlay"></div>
+<div class="preview" [ngClass]="class" [style.display]="(show) ? 'block' : 'none'">
+  <span (click)="closePreview()"
+        class="actionIcon btn-close"
+        title="Delete"
+        [inlineSVG]="'assets/images/icons/preview_close.svg'"
+  ></span>
+    <div class="header container">
+        <div class="row">
+            <div class="col-2 vertical-align">
+                 PREVIEW MODE
+            </div>
+            <div *ngIf="campaignId" class="col-2 offset-3 vertical-align">
+                <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType" [class]="'small'">
+                </app-radio-button-group>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="campaignId" class="tabs">
+        <button *ngFor="let wid of widgets" type="button" [class]="(widget == wid) ? 'active' : ''"
+                (click)="changeWidget(wid)">{{wid.widget_type.name}}
+        </button>
+    </div>
+
+    <app-loading [isLoading]="loading">
+    </app-loading>
+
+    <!-- iframe encapsulated TODO -->
+    <iframe [hidden]="loading" #iframe frameborder="1" width="100%" height="100%" class="{{deviceType}}"></iframe>
+    <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
+        <link [href]="'https://fonts.googleapis.com/css?family=' + widget.settings[deviceType].widget_settings.general.fontSettings.fontFamily | safe" rel="stylesheet">
+        <div [ngStyle]="getBackgroundStyle()" [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
+            <div [ngStyle]="getOverlayStyle()"></div>
+            <div [ngStyle]="getBodyStyle()">
+                <div [ngStyle]="getHeadlineTextStyle()">
+                    {{widget.settings[deviceType].headline_text}}
+                </div>
+                <!-- CTA -->
+                <div [ngStyle]="getButtonContainerStyles()">
+                    <a
+                            [ngStyle]="getButtonStyles()"
+                            href="{{widget.settings[deviceType].cta.url}}">
+                        {{widget.settings[deviceType].cta.text}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="styles">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<app-top-panel></app-top-panel>
+<div class="wrapper">
+  <app-side-bar></app-side-bar>
+  <div class="appContent">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<app-notification *ngIf="expiration"></app-notification>
+

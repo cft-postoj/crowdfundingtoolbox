@@ -1,0 +1,12 @@
+.crowdfundingAlert {
+  position: fixed;
+  width: 100%;
+  &.width-auto {
+    width: auto;
+  }
+}
+
+#fixed {
+  position: fixed;
+  width: 100%;
+}

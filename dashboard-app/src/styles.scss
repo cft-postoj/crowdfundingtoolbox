@@ -1,0 +1,81 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./sass/variables";
+@import "./sass/mixins";
+@import '~bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css?family=Lato:400,900&subset=latin-ext');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, 'sans-serif' !important;
+  @import "./sass/variables";
+  @import "./sass/mixins";
+  background: $aquaHaze;
+  overflow-y: hidden;
+  height: 100vh;
+
+  #crowd-content {
+    overflow-y: auto;
+    margin: 0;
+    &.withStatistics {
+      margin: 0 15px;
+      overflow: auto;
+      height: calc(100vh - 240px);
+      padding: 0 0 40px 0;
+    }
+  }
+  .bg-overlay {
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba($outer-space, .66);
+    position: absolute;
+    z-index: 98;
+    display: none;
+    @include transitionSingle(.3s ease);
+    &.active {
+      display: block;
+    }
+  }
+
+  .actionIcon {
+    cursor: pointer;
+    fill: $bali;
+    @include transitionSingle(.3s ease);
+    &:hover {
+      fill: $azure;
+    }
+  }
+}
+
+button, html [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: initial;
+}
+
+/*
+ *  STYLE 4
+ */
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba($azure,0.3);
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background-color: $azure;
+  border: 2px solid $azure;
+}
+
+@import "sass/listItems";
+@import "sass/buttons";
+@import "sass/inputs";
+@import "sass/texts";
+@import "sass/tabs";

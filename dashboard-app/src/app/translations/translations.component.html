@@ -1,0 +1,25 @@
+<p>You're logged in with Angular 7!!</p>
+
+<b>List of all languages in app:</b><br />
+<select *ngFor="let language of languages" (change)="setLanguage(language.id)">
+    <option selected disabled>Choose language</option>
+    <option value={{language.slug}}>{{language.name}}</option>
+</select>
+<div class="languageContent">
+    <input type="text" placeholder="Search for term" (keyup)="searching($event.target.value)" />
+    <button type="button" class="btn btn-primary float-right">Save</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Original (English term)</th>
+                <th>Translation</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let translation of translations">
+            <tr>
+                <td>{{translation.trans_id}}</td>
+                <td><input type="text" name={{translation.trans_id}} value={{translation.trans_string}} /></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

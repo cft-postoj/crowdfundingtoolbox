@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <g id="Group_35" data-name="Group 35" transform="translate(-992 -433)">
+    <rect id="safe_area" data-name="safe area" width="256" height="256" transform="translate(992 433)" fill="#f2f1ef" opacity="0"/>
+    <g id="icon" transform="translate(1060 585.546)">
+      <g id="Group_21" data-name="Group 21" transform="translate(0 -54.546)">
+        <path id="Path_65" data-name="Path 65" d="M9.444,0H-59.444A25.555,25.555,0,0,0-85,25.556,25.556,25.556,0,0,0-59.444,51.111h34.857l-.794-2.222H-59.444A23.36,23.36,0,0,1-82.778,25.556,23.359,23.359,0,0,1-59.444,2.222H9.444a23.333,23.333,0,1,1,0,46.667H-5.418l-1.474.953,1.268,1.269H9.444A25.556,25.556,0,0,0,9.444,0" transform="translate(85)" fill="#8aa1b1"/>
+      </g>
+      <g id="Group_22" data-name="Group 22" transform="translate(57.201 -19.016)">
+        <path id="Path_66" data-name="Path 66" d="M1.739,1.394,9.424-3.579l-25.077-8.967L-6.686,12.53l4.973-7.684L3.67,10.23A2.441,2.441,0,1,0,7.123,6.777Z" transform="translate(15.653 12.546)" fill="#8aa1b1"/>
+      </g>
+    </g>
+  </g>
+</svg>

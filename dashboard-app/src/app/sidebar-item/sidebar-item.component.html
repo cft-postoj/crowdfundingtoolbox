@@ -1,0 +1,16 @@
+<div class="sidebar-item-wrapper">
+  <div class="sidebar-item-header">
+    Campaigns
+  </div>
+  <div class="sub-items">
+    <ul>
+      <ng-container *ngFor="let item of items">
+        <li routerLinkActive="active-item" [routerLink]="[item.value]">{{item.title}}</li>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="button-new-campaign">
+    <app-button (onClick)="this.router.navigateByUrl(routing.CAMPAIGNS_ALL_FULL_PATH+'/('+routing.RIGHT_OUTLET+':'+routing.NEW+')')"
+                type="button" iconName="add" label="New campaign" class="classic new"></app-button>
+  </div>
+</div>

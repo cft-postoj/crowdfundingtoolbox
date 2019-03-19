@@ -8,6 +8,24 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+        <script
+                src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+
+        <script>
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost/crowdfundingToolbox/public/api/backoffice/dashboard',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImJlYTAwM2U0MzI3ODRlODgyMjk2OTFkODhkOWU2OWMwNDgyOGNhYzgyZDBlZmVhNzNlNWUxZTg1NjVkOWJhN2QyZDdiOTVlMzljNDFiNjAzIn0.eyJhdWQiOiIxIiwianRpIjoiYmVhMDAzZTQzMjc4NGU4ODIyOTY5MWQ4OGQ5ZTY5YzA0ODI4Y2FjODJkMGVmZWE3M2U1ZTFlODU2NWQ5YmE3ZDJkN2I5NWUzOWM0MWI2MDMiLCJpYXQiOjE1NDM5MjczMDYsIm5iZiI6MTU0MzkyNzMwNiwiZXhwIjoxNTc1NDYzMzA2LCJzdWIiOiIiLCJzY29wZXMiOltdfQ.p4tmRuknSQl21towkcZjbL2mJWWKyjG7OpLS6FnJBuL7n35coFPqproUt0qdWhtjSXU-G7z_IvgX5fcHWyUC8Jhxw5Ti89IJbfBFXQNrKLKPkwqKVz763qweuxwt7pGKOtU44HSBZdZ0ULDcHm20LDN09fLtcbP4skTr1415mC8gzEL3zt1mXtKi9fs0bO4I4Rldy9sKWUQhlCLbnhe_-MSac2mziqGIVpQauADjbkS9uiGHAEogMKiMqNdYIUnM0T9kdNlnLfrcAAcP0cP0AGJlHd0hbWT0xboXdi6XaR0EEfdU1NqnRS59g98XgfTi6hr7mfm_-AoKLN10aUyJ0bAFwxeu3RPFV_4udd8m-8IsGfcpXJcRfA6dHn4hU_vLQRuvKpbOvFKEKFBE0V0x9c1IQ3Nv1tTbhaTIJs67AeYONyU1GhgFjLi9Mb38HIaRm-VU6bBDKPqmkG30dYA2vzAOW-4tudzoI4KGMcP1cMoVz1CdKsuQu1C33e52mfGSnyxxwK1E9ky-C2b-JMif5Izkq4OYiv2b3A9qeac7ySdEA1DEQ14J--CdmSspCOXWPSS9CQN3MmZWzvdCJC50BaA014TLWUoF_lG_6wgDJGmkQr9MYUX5IKYdeFBeZif5U-NCHCP-pRvJT_T3zRU9M0yQ9YYyvzhjcrRQGdTg29k'
+                },
+                success: function(data) {
+                    console.log(data)
+                }
+            })
+        </script>
 
         <!-- Styles -->
         <style>

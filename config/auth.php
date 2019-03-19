@@ -42,8 +42,14 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
+        ],
+
+        // ** New guard **
+        'backOfficeUser' => [
+            'driver' => 'passport',
+            'provider' => 'backOfficeUsers',
         ],
     ],
 
@@ -65,15 +71,14 @@ return [
     */
 
     'providers' => [
+        'backOfficeUsers' => [
+            'driver' => 'eloquent',
+            'model' => App\BackOfficeAPI\BackOfficeUser::class,
+        ],
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+            'model' => App\API\User::class
+        ]
     ],
 
     /*

@@ -1,0 +1,101 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+.topPanel {
+  background: $outer-space;
+  padding: 14px 30px;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  &__title {
+    min-width: 320px;
+    float: left;
+    height: 100%;
+    h1 {
+      font-size: 18px;
+      color: $white;
+      padding-left: 45px;
+      margin: 0;
+    }
+  }
+  &__admin {
+    justify-content: flex-end;
+    width: 100%;
+    display: flex;
+    &__photo {
+      @include borderRadius(50px);
+      width: 42px;
+      height: 42px;
+      background: $azure;
+      color: $white;
+      justify-content: center;
+      align-items: center;
+    }
+    &__user {
+      margin-left: 15px;
+      color: $white;
+      & > div {
+        vertical-align: middle;
+      }
+      h5 {
+        margin-bottom: 0;
+        font-size: 16px;
+      }
+      &__position {
+        font-size: 14px;
+        font-weight: 400;
+        color: $bali;
+        margin-bottom: 0;
+      }
+    }
+    &__settings {
+      margin-left: 40px;
+      cursor: pointer;
+      svg {
+        @include transitionSingle(.3s ease);
+        opacity: .33;
+      }
+      &:hover {
+        svg {
+          opacity: 1;
+        }
+
+      }
+    }
+    &__logout {
+      cursor: pointer;
+      svg {
+        @include transitionSingle(.3s ease);
+        opacity: .33;
+      }
+      &:hover {
+        svg {
+          opacity: 1;
+        }
+
+      }
+    }
+    &__notifications {
+      cursor: pointer;
+      svg {
+        opacity: .33;
+        circle {
+          display: none;
+        }
+      }
+      &.hasNotifications {
+        svg {
+          opacity: 1;
+          circle {
+            display: block;
+          }
+        }
+
+      }
+    }
+  }
+}
