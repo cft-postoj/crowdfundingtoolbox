@@ -2,6 +2,8 @@
 /public/hot
 /public/storage
 /dashboard/node_modules
+/dashboard-app/dist
+/dashboard-app/package-lock.json
 /storage/*.key
 /vendor
 /.idea
@@ -15,3 +17,5 @@ yarn-error.log
 .phpunit.result.cache
 /milestones
 /storage/*
+.env
+/dashboard-app/src/environments
