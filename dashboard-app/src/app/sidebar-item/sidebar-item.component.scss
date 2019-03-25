@@ -1,19 +1,28 @@
 @import "../../sass/variables";
 
 .sidebar-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   background-color: white;
 
   .sub-items {
+    flex-shrink: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+
 
     ul {
+      display: flex;
+      flex-direction: column;
       padding-left: 10px;
       padding-right: 10px;
       list-style-type: none;
 
       li {
+        flex: 1 0 38px;
         padding-left: 15px;
-        height: 38px;
         line-height: 38px;
         font-size: 15px;
         color: $sidebar-fontcolor;
@@ -36,17 +45,18 @@
   }
 
   .button-new-campaign {
-    padding-left: 25px;
-    padding-right: 25px;
+    flex-shrink: 0;
+    padding: 25px;
   }
 
   .sidebar-item-header {
+    flex-shrink: 0;
     font-family: Lato, 'sans-serif';
     color: #2E3131;
     font-size: 14px;
     font-weight: bold;
     padding-left: 25px;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
   }
 }
 

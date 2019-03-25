@@ -2,10 +2,10 @@
 
     <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}">
         <div class="row collapsible--header" (click)="openTab(1)">
-            <div class="col-sm-11  pl-0">
+            <div class="col-sm-11">
                 GENERAL
             </div>
-            <div class="col-sm-1 pr-0">
+            <div class="col-sm-1">
                 <label class="button-expand"
                        type="button"
                        [attr.aria-expanded]="isOpened(1)" aria-controls="general-settings">
@@ -14,7 +14,7 @@
         </div>
 
 
-        <div class="row card-wrapper">
+        <div class="row card-wrapper m-0">
             <div class="col pl-0 pr-0">
                 <div id="general" [ngbCollapse]="!isOpened(1)">
                     <div class="card" style="border: none">
@@ -145,21 +145,21 @@
     </div>
     <div class="collapse-container" [ngClass]="{'flex-open':isOpened(2)}">
         <div class="row collapsible--header" (click)="openTab(2)">
-            <div class="col-sm-11  pl-0">
+            <div class="col-sm-11">
                 CALL TO ACTION BUTTON
             </div>
-            <div class="col-sm-1 pr-0">
+            <div class="col-sm-1">
                 <label class="button-expand"
                        type="button"
                        [attr.aria-expanded]="isOpened(2)" aria-controls="general-settings">
                 </label>
             </div>
         </div>
-        <div class="row card-wrapper">
+        <div class="row card-wrapper m-0">
             <div class="col pl-0 pr-0">
                 <div id="call-to-action" [ngbCollapse]="!isOpened(2)">
                     <div class="card" style="border: none">
-                        <div class="card-body pl-0 pr-3">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="btn-group-vertical" style="width: 100%">
                                     <div class="btn-group" role="group" aria-label="Basic example">
@@ -172,10 +172,10 @@
                                 </div>
                             </div>
                             <ng-container *ngIf="cta=='Default'">
-                                <div class="row m-0 mt-3 bold">
+                                <div class="row mt-3 bold">
                                    Padding & margins
                                 </div>
-                                <div class="row m-0 p-0 mt-3">
+                                <div class="row p-0 mt-3">
                                     <div class="col pr-4">
                                         <div class="row p-0">
                                              Padding
@@ -191,17 +191,19 @@
                                         <div class="row p-0">
                                             Margin
                                         </div>
-                                        <div class="row p-0 mt-3">
-                                            <app-input-group [buttons]="marginButtons"
-                                                             (buttonChange)="campaign.widget_settings.call_to_action.default.margin[$event.name] = $event.value">
-                                            </app-input-group>
+                                        <div class="row mt-3">
+                                            <div class="col">
+                                                <app-input-group [buttons]="marginButtons"
+                                                                 (buttonChange)="campaign.widget_settings.call_to_action.default.margin[$event.name] = $event.value">
+                                                </app-input-group>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row m-0 mt-3 bold">
+                                <div class="row  mt-3 bold">
                                     Font settings
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row mt-3 p-0">
                                     <div class="col-8 p-0">
                                         <app-dropdown [items]="fontFamily"
                                                       [class]="'classic default-border'"
@@ -213,7 +215,7 @@
                                     <div class="col vertical-align pl-3">
                                         Font weight
                                     </div>
-                                    <div class="col pr-0">
+                                    <div class="col">
                                         <app-dropdown [items]="fontWeight"
                                                       [class]="'classic default-border align-right'"
                                                       [title]="'weight'"
@@ -222,7 +224,7 @@
                                     </div>
 
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row  mt-3 p-0">
                                     <div class="col-2 p-0 vertical-align">
                                         Alignment
                                     </div>
@@ -246,19 +248,19 @@
                                     <div class="col-2 vertical-align pl-3">
                                         Size (px)
                                     </div>
-                                    <div class="col-2 pr-0">
+                                    <div class="col-2">
                                         <app-inputNumber [(value)]="campaign.widget_settings.call_to_action.default.fontSettings.fontSize"
                                                          [class]="'float-right'">
                                         </app-inputNumber>
                                     </div>
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row mt-3 p-0">
                                     Design
                                 </div>
-                                <div class="row m-0 mt-3 p-0 bold">
+                                <div class="row mt-3 p-0 bold">
                                     Hover
                                 </div>
-                                <div class="row m-0 mt-3 p-0 ">
+                                <div class="row mt-3 p-0 ">
                                     <div class="col-2 pl-0">
                                         <app-checkbox [name]="'Fill'"
                                                 [(checked)]="campaign.widget_settings.call_to_action.default.design.fill.active">
@@ -281,7 +283,7 @@
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row mt-3 p-0">
                                     <div class="col-2 pl-0">
                                         <app-checkbox [name]="'Border'"
                                                       [(checked)]="campaign.widget_settings.call_to_action.default.design.border.active">
@@ -311,7 +313,7 @@
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row mt-3 p-0">
                                     <div class="col-2 pl-0">
                                         <app-checkbox [name]="'Shadow'"
                                                       [(checked)]="campaign.widget_settings.call_to_action.default.design.shadow.active">
@@ -340,10 +342,10 @@
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="row m-0 mt-3 bold">
+                                <div class="row mt-3 bold">
                                     Radius
                                 </div>
-                                <div class="row m-0 mt-3">
+                                <div class="row mt-3">
                                     <div class="col-2 p-0 vertical-align">
                                         <app-radio-button-group
                                                [(currentValue)]="campaign.widget_settings.call_to_action.default.design.radius.active"
@@ -380,10 +382,10 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="cta=='Hover'">
-                                <div class="row m-0 mt-3 bold">
+                                <div class="row mt-3 bold">
                                     Hover type
                                 </div>
-                                <div class="row m-0 mt-3">
+                                <div class="row mt-3">
                                     <div class="col-8  p-0">
                                         <app-dropdown [class]="'classic default-border'"
                                                       [title]="'Choose hover type'"
@@ -395,10 +397,10 @@
                                         </app-button>
                                     </div>
                                 </div>
-                                <div class="row m-0 mt-3 bold">
+                                <div class="row mt-3 bold">
                                     Hover font settings
                                 </div>
-                                <div class="row m-0 mt-3">
+                                <div class="row mt-3">
                                     <div class="col-2 p-0 vertical-align">
                                         Font weight
                                     </div>
@@ -420,13 +422,13 @@
                                                [(colorPicker)]="campaign.widget_settings.call_to_action.hover.fontSettings.color"/>
                                     </div>
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row mt-3 p-0">
                                     Design
                                 </div>
-                                <div class="row m-0 mt-3 p-0 bold">
+                                <div class="row mt-3 p-0 bold">
                                     Hover
                                 </div>
-                                <div class="row m-0 mt-3 p-0 ">
+                                <div class="row mt-3 p-0 ">
                                     <div class="col-2 pl-0">
                                         <app-checkbox [name]="'Fill'"
                                                       [(checked)]="campaign.widget_settings.call_to_action.hover.design.fill.active">
@@ -449,7 +451,7 @@
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row mt-3 p-0">
                                     <div class="col-2 pl-0">
                                         <app-checkbox [name]="'Border'"
                                                       [(checked)]="campaign.widget_settings.call_to_action.hover.design.border.active">
@@ -479,7 +481,7 @@
                                         </div>
                                     </ng-container>
                                 </div>
-                                <div class="row m-0 mt-3 p-0">
+                                <div class="row mt-3 p-0">
                                     <div class="col-2 pl-0">
                                         <app-checkbox [name]="'Shadow'"
                                                       [(checked)]="campaign.widget_settings.call_to_action.hover.design.shadow.active">

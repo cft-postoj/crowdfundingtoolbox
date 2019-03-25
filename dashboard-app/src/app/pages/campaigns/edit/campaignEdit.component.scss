@@ -12,6 +12,7 @@
   top: 0;
   z-index: 99;
   right: -1000px;
+  overflow: hidden;
 
   //@include transitionSingle(.7s ease);
   &.preview {
@@ -60,9 +61,11 @@
       position: relative;
       margin-top: 30px;
       width: 100%;
+      overflow: hidden;
       ::ng-deep .card-body {
-        overflow-x: hidden;
-        overflow-y:hidden;
+        overflow:hidden;
+        padding-right: 15px;
+        padding-left: 15px;
         margin-bottom: 20px;
         @media screen and (max-height: 750px) {
           width: 100%;
@@ -179,7 +182,7 @@
     width: calc(100% + 80px);
     margin-left: -40px;
     @media screen and (max-width: 1480px) {
-      width: calc(100% +40px);
+      width: calc(100% + 40px);
       margin-left: -20px;
     }
   }

@@ -33,10 +33,10 @@
                 </button>
             </div>
             <div class="campaignEdit--body--content" *ngIf="activeContent == 'campaignSettings'">
-                <app-campaign-settings class="d-flex" [campaign]="campaign"></app-campaign-settings>
+                <app-campaign-settings class="d-flex" style="overflow: hidden" [campaign]="campaign"></app-campaign-settings>
             </div>
             <div class="campaignEdit--body--content" *ngIf="activeContent == 'widgetSettings'">
-                <app-widget-settings  class="d-flex" [campaign]="campaign"></app-widget-settings>
+                <app-widget-settings  class="d-flex" style="overflow: hidden;" [campaign]="campaign"></app-widget-settings>
             </div>
 
             <!--<div>-->

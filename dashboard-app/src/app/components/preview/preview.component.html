@@ -28,6 +28,10 @@
     <app-loading [isLoading]="loading">
     </app-loading>
 
+    <!--<iframe #pagePreview [src]="'https://postoj.ondas.me/' | safe "  width="100%" height="400px">-->
+
+    <!--</iframe>-->
+
     <!-- iframe encapsulated TODO -->
     <iframe [hidden]="loading" #iframe frameborder="1" width="100%" height="100%" class="{{deviceType}}"></iframe>
     <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>

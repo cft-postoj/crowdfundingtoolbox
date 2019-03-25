@@ -15,11 +15,13 @@
   }
 
   .item-content {
+    bottom: 80px;
+    top: 70px;
+
     transition: left 0.3s linear;
     background-color: white;
-    height: 100%;
     vertical-align: top;
-    padding-top: 20px;
+    padding-top: 40px;
     display: inline-block;
     width: 260px;
     z-index: -1;

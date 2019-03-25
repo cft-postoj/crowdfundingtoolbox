@@ -19,7 +19,8 @@ import {WidgetService} from "../../_services/widget.service";
 import {RadioButton} from "../../_parts/atoms/radio-button/radio-button";
 import {of, Subscription} from "rxjs";
 import {iframeCode} from "../preview/previewCode"
-
+import {DomSanitizer} from '@angular/platform-browser';
+import {IframeService} from "../../_services/iframe.service";
 
 @Component({
     selector: 'app-preview',
@@ -63,6 +64,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('iframe') iframe: ElementRef;
     @ViewChild('preview') previewContent: ElementRef;
+    // @ViewChild('pagePreview') pagePreview: ElementRef;
     data$: Subject<string> = new Subject();
     public deviceTypeButtons: RadioButton[] = [];
     public deviceTypes = devices;
@@ -72,7 +74,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private previewService: PreviewService, public el: ElementRef,
                 private convertHex: ConvertHexService, private widgetService: WidgetService,
-                private ref: ChangeDetectorRef) {
+                private ref: ChangeDetectorRef, private iframeService: IframeService, private sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
@@ -383,7 +385,18 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnDestroy() {
         this.closePreview();
-        if(this.subscription) this.subscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
+
+    // replaceContent() {
+    //     var previewElement = document.getElementById('cr0wdWidgetContent-'+this.widget.widget_type.method).cloneNode(true);
+    //     var pagePreviewElement = this.pagePreview.nativeElement.contentWindow.document.getElementById('cr0wdWidgetContent-'+this.widget.widget_type.method);
+    //     console.log(previewElement);
+    //     console.log(pagePreviewElement);
+    //     console.log(this.pagePreview.nativeElement.contentWindow.document)
+    //     pagePreviewElement.replaceWith(previewElement);
+    // }
 
 }

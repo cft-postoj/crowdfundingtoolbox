@@ -19,10 +19,10 @@
                 <div class="campaign-settings-content container-fluid">
                     <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}">
                         <div class="row collapsible--header" (click)="openTab(1)">
-                            <div class="col-sm-11  pl-0">
+                            <div class="col-sm-11">
                                 BACKGROUND
                             </div>
-                            <div class="col-sm-1 pr-0">
+                            <div class="col-sm-1">
                                 <label class="button-expand"
                                        type="button"
                                        [attr.aria-expanded]="isOpened(1)" aria-controls="general-settings">
@@ -30,88 +30,87 @@
                             </div>
                         </div>
 
-                        <div class="row card-wrapper">
+                        <div class="row m-0 card-wrapper">
                             <div class="col pl-0 pr-0">
                                 <div id="background-settings" [ngbCollapse]="!isOpened(1)">
                                     <div class="card" style="border: none">
-                                        <div class="card-body pl-0 pr-0">
-                                            <div class="card-body--content">
-                                                <div class="row m-0 mt-3 p-0">
-                                                    <span class="font-weight-bold">
-                                                        Width & Height
-                                                    </span>
+                                        <div class="card-body pl-0">
+                                            <div class="row mt-3">
+                                                <span class="col font-weight-bold">
+                                                    Width & Height
+                                                </span>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-6">
+                                                    Width: <input type="text" readonly disabled
+                                                                  [(ngModel)]="widget.settings[deviceType].additional_settings.width">
                                                 </div>
-                                                <div class="row m-0 mt-2 p-0">
-                                                    <div class="col-6 p-0">
-                                                        Width: <input type="text" readonly disabled
-                                                                      [(ngModel)]="widget.settings[deviceType].additional_settings.width">
-                                                    </div>
-                                                    <div class="col-6 p-0">
-                                                        Height: <input type="text"
-                                                                       [(ngModel)]="widget.settings[deviceType].additional_settings.height">
-                                                    </div>
+                                                <div class="col-6">
+                                                    Height: <input type="text"
+                                                                   [(ngModel)]="widget.settings[deviceType].additional_settings.height">
                                                 </div>
-                                                <div *ngIf="widget.settings[deviceType].additional_settings.fixedSettings.top != null">
-                                                    <div class="row m-0 mt-3 p-0">
-                                                    <span class="font-weight-bold">
-                                                        Position
-                                                    </span>
-                                                    </div>
-                                                    <div class="row m-0 mt-2 p-0">
-                                                        <div class="col-6 p-0">
-                                                            <app-dropdown [items]="positionSettings"
-                                                                          [class]="'classic default-border align-right'"
-                                                                          [title]="'Choose position property'"
-                                                                          [(currentValue)]="widget.settings[deviceType].additional_settings.fixedSettings.top">
-                                                            </app-dropdown>
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div *ngIf="widget.settings[deviceType].additional_settings.fixedSettings.top != null">
+                                                <div class="row mt-3">
+                                                <span class="col font-weight-bold">
+                                                    Position
+                                                </span>
                                                 </div>
-                                                <div class="row m-0 mt-3 p-0">
-                                                    <span class="font-weight-bold">
-                                                        Background type
-                                                    </span>
-                                                </div>
-                                                <div class="row m-0 mt-2 p-0">
-                                                    <app-radio-button class="col p-0"
-                                                                      [name]="'backgroundType'"
-                                                                      [radioButtons]="backgroundTypesButtons"
-                                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
-                                                                      [colClass]="'col p-0'"></app-radio-button>
-                                                </div>
-                                                <div class="row m-0 mt-3 p-0"
-                                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
-                                                          widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
-                                                    <app-dragAndDrop
-                                                            [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image"
-                                                            class="col p-0">
-                                                    </app-dragAndDrop>
-                                                </div>
-                                                <div class="row m-0 mt-3 p-0"
-                                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.color.value ||
-                                                           widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
-                                                    <div class="col-2 p-0 vertical-align">
-                                                        Pick color
-                                                    </div>
-                                                    <div class="col-6 p-0">
-                                                        <input [value]="widget.settings[deviceType].widget_settings.general.background.color"
-                                                               class="btn date-picker"
-                                                               [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
-                                                               [cpPosition]="'bottom'"
-                                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
-                                                    </div>
-                                                    <div class="col-2 p-0 pl-4 vertical-align">
-                                                        Opacity (%)
-                                                    </div>
-                                                    <div class="col-2 p-0">
-                                                        <app-inputNumber
-                                                                [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
-                                                                [class]="'float-right'">
-                                                        </app-inputNumber>
+                                                <div class="row mt-2">
+                                                    <div class="col-6">
+                                                        <app-dropdown [items]="positionSettings"
+                                                                      [class]="'classic default-border align-right'"
+                                                                      [title]="'Choose position property'"
+                                                                      [(currentValue)]="widget.settings[deviceType].additional_settings.fixedSettings.top">
+                                                        </app-dropdown>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row mt-3 ">
+                                                <span class="col font-weight-bold">
+                                                    Background type
+                                                </span>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <app-radio-button class="col"
+                                                                  [name]="'backgroundType'"
+                                                                  [radioButtons]="backgroundTypesButtons"
+                                                                  [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
+                                                                  [colClass]="'col p-0'"></app-radio-button>
+                                            </div>
+                                            <div class="row mt-3"
+                                                 *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
+                                                      widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                                <app-dragAndDrop
+                                                        [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image"
+                                                        class="col">
+                                                </app-dragAndDrop>
+                                            </div>
+                                            <div class="row mt-3"
+                                                 *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.color.value ||
+                                                       widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                                <div class="col-2 vertical-align">
+                                                    Pick color
+                                                </div>
+                                                <div class="col-6">
+                                                    <input [value]="widget.settings[deviceType].widget_settings.general.background.color"
+                                                           class="btn date-picker"
+                                                           [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
+                                                           [cpPosition]="'bottom'"
+                                                           [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
+                                                </div>
+                                                <div class="col-2 pl-0 vertical-align">
+                                                    Opacity (%)
+                                                </div>
+                                                <div class="col-2">
+                                                    <app-inputNumber
+                                                            [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
+                                                            [class]="'float-right'">
+                                                    </app-inputNumber>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -119,10 +118,10 @@
                     </div>
                     <div class="collapse-container" [ngClass]="{'flex-open':isOpened(2)}">
                         <div class="row collapsible--header" (click)="openTab(2)">
-                            <div class="col-sm-11  pl-0">
+                            <div class="col-sm-11 ">
                                 HEADLINE
                             </div>
-                            <div class="col-sm-1 pr-0">
+                            <div class="col-sm-1">
                                 <label class="button-expand"
                                        type="button"
                                        [attr.aria-expanded]="isOpened(2)" aria-controls="targeting-settings">
@@ -130,11 +129,11 @@
                             </div>
                         </div>
 
-                        <div class="row card-wrapper">
+                        <div class="row m-0 card-wrapper">
                             <div class="col pl-0 pr-0">
                                 <div id="headline-settings" [ngbCollapse]="!isOpened(2)">
                                     <div class="card" style="border: none">
-                                        <div class="card-body pl-0 pr-0">
+                                        <div class="card-body pl-0">
                                             <span class="font-weight-bold">Headline text</span>
                                             <div class="editInput">
                                                 <input #widgetHeadline id="widgetHeadline"
@@ -176,11 +175,11 @@
                                                     </app-inputNumber>
                                                 </div>
                                             </div>
-                                            <div class="row m-0 mt-3 p-0">
-                                                <div class="col vertical-align pl-3">
+                                            <div class="row mt-3">
+                                                <div class="col vertical-align">
                                                     Display
                                                 </div>
-                                                <div class="col pr-0">
+                                                <div class="col">
                                                     <app-dropdown [items]="displaySettings"
                                                                   [class]="'classic default-border align-right'"
                                                                   [title]="'Choose display property'"
@@ -225,10 +224,10 @@
                     </div>
                     <div class="collapse-container" [ngClass]="{'flex-open':isOpened(3)}">
                         <div class="row collapsible--header" (click)="openTab(3)">
-                            <div class="col-sm-11  pl-0">
+                            <div class="col-sm-11">
                                 CALL TO ACTION BUTTON
                             </div>
-                            <div class="col-sm-1 pr-0">
+                            <div class="col-sm-1">
                                 <label class="button-expand"
                                        type="button"
                                        [attr.aria-expanded]="isOpened(3)" aria-controls="targeting-settings">
@@ -236,13 +235,13 @@
                             </div>
                         </div>
 
-                        <div class="row card-wrapper">
+                        <div class="row m-0 card-wrapper">
                             <div class="col pl-0 pr-0">
                                 <div id="cta-settings" [ngbCollapse]="!isOpened(3)">
                                     <div class="card" style="border: none">
                                         <div class="card-body pl-0">
                                             <div class="row">
-                                                <div class="btn-group-vertical" style="width: 100%">
+                                                <div class="btn-group-vertical col-12 mb-3">
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <button type="button"
                                                                 (click)="cta='Default'"
@@ -256,7 +255,7 @@
                                                 </div>
                                             </div>
                                             <ng-container *ngIf="cta=='Default'">
-                                                <span class="font-weight-bold">Button text</span>
+                                                <span class="font-weight-bold mt-3">Button text</span>
                                                 <div class="editInput mt-3">
                                                     <input #cta id="cta_button"
                                                            placeholder="Please add text for button"
@@ -278,8 +277,8 @@
                                                        {{widget.settings[deviceType].cta.url?widget.settings[deviceType].cta.url.length:0}} / {{cta_url?.maxLength}}
                                                  </span>
                                                 </div>
-                                                <div class="row m-0 mt-3 p-0">
-                                                    <div class="col vertical-align pl-3">
+                                                <div class="row mt-3">
+                                                    <div class="col vertical-align">
                                                         Display
                                                     </div>
                                                     <div class="col pr-0">
@@ -319,8 +318,8 @@
                                                 <div class="row m-0 mt-3 bold">
                                                     Font settings
                                                 </div>
-                                                <div class="row m-0 mt-3 p-0">
-                                                    <div class="col vertical-align pl-3">
+                                                <div class="row mt-3">
+                                                    <div class="col vertical-align">
                                                         Font weight
                                                     </div>
                                                     <div class="col pr-0">
@@ -368,8 +367,8 @@
                                                 <div class="row m-0 mt-3 bold">
                                                     Hover font settings
                                                 </div>
-                                                <div class="row m-0 mt-3">
-                                                    <div class="col-2 p-0 vertical-align">
+                                                <div class="row mt-3">
+                                                    <div class="col-2 vertical-align">
                                                         Font weight
                                                     </div>
                                                     <div class="col-4">
@@ -465,10 +464,10 @@
                     </div>
                     <div class="collapse-container" [ngClass]="{'flex-open':isOpened(4)}">
                         <div class="row collapsible--header" (click)="openTab(4)">
-                            <div class="col-sm-11  pl-0">
+                            <div class="col-sm-11 ">
                                 PAYMENT
                             </div>
-                            <div class="col-sm-1 pr-0">
+                            <div class="col-sm-1">
                                 <label class="button-expand"
                                        type="button"
                                        [attr.aria-expanded]="isOpened(4)" aria-controls="targeting-settings">
@@ -476,11 +475,11 @@
                             </div>
                         </div>
 
-                        <div class="row card-wrapper">
+                        <div class="row m-0 card-wrapper">
                             <div class="col pl-0 pr-0">
                                 <div id="payment-type" [ngbCollapse]="!isOpened(4)">
                                     <div class="card" style="border: none">
-                                        <div class="card-body pl-0 pr-0">
+                                        <div class="card-body pl-0">
                                             <div class="row">
                                                 <div class="col bold">
                                                     Payment type
