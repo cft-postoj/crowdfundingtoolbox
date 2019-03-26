@@ -1,43 +1,43 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {first} from 'rxjs/operators';
 
-import { User } from '../_models';
-import { UserService, AuthenticationService } from '../_services';
+import {User} from '../_models';
+import {AuthenticationService, UserService} from '../_services';
 
-@Component({ templateUrl: 'about.component.html' })
+@Component({templateUrl: 'about.component.html'})
 export class AboutComponent implements OnInit, OnDestroy {
-  public currentUser: User;
-  currentUserSubscription: Subscription;
-  users: User[] = [];
+    public currentUser: User;
+    currentUserSubscription: Subscription;
+    users: User[] = [];
 
-  constructor(
-    private authenticationService: AuthenticationService,
-    private userService: UserService
-  ) {
-    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = user;
-    });
-  }
+    constructor(
+        private authenticationService: AuthenticationService,
+        private userService: UserService
+    ) {
+    }
 
-  ngOnInit() {
-    this.loadAllUsers();
-  }
+    ngOnInit() {
+        this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+            this.currentUser = user;
+        });
+        this.loadAllUsers();
+    }
 
-  ngOnDestroy() {
-    // unsubscribe to ensure no memory leaks
-    this.currentUserSubscription.unsubscribe();
-  }
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.currentUserSubscription.unsubscribe();
+    }
 
-  deleteUser(id: number) {
-    this.userService.delete(id).pipe(first()).subscribe(() => {
-      this.loadAllUsers();
-    });
-  }
+    deleteUser(id: number) {
+        this.userService.delete(id).pipe(first()).subscribe(() => {
+            this.loadAllUsers();
+        });
+    }
 
-  private loadAllUsers() {
-    this.userService.getAll().subscribe((users: User[]) => {
-      this.users = users;
-    });
-  }
+    private loadAllUsers() {
+        this.userService.getAll().subscribe((users: User[]) => {
+            this.users = users;
+        });
+    }
 }

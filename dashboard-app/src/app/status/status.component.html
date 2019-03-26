@@ -1,71 +1,72 @@
 <div class="card stats-wrapper">
-  <div class="card-header bg-white">
-    <div class="stats-title">
-      <span>{{widget.widget_type.name}}</span>
-      <app-switcher [(checked)]="widget.active" (checkedChange)="toggleActive(widget)" [id]="id" class="float-right"></app-switcher>
-    </div>
-    <div class="font-italic fs12">
-      Last edited:
-    </div>
-    <div class="font-italic fs12">
-      {{lastEdited}}
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="stats-value">
-      <div *ngIf="percentage" class="m-auto text-center">
-        <circle-progress
-          [percent]="85"
-          [radius]="60"
-          [outerStrokeWidth]="24"
-          [outerStrokeColor]="'#0074E9'"
-          [innerStrokeColor]="'#C7E596'"
-          [showInnerStroke]="false"
-          [showSubtitle]="false"
-          [animation]="true"
-          [animationDuration]="300">
-        </circle-progress>
-      </div>
-      <div *ngIf="!percentage" class="text-center">
-        <span class="fs12">Crowdfunded</span>
-        <p class="fs24 font-weight-bold">{{2 | numbersk : true}}</p>
-      </div>
-    </div>
-    <div class="row mt25 mb25">
-      <div class="col-sm-4">
-        <div class="info-container">
-          <div class="info-container--header">
-            Views
-          </div>
-          <div class="info-container--footer">
-            {{999 | numbersk}}
-          </div>
+    <div class="card-header bg-white">
+        <div class="stats-title">
+            <span>{{widget.widget_type.name}}</span>
+            <app-switcher [checked]="widget.active" (checkedChange)="toggleActive(widget)" [id]="id"
+                          class="float-right"></app-switcher>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="info-container">
-          <div class="info-container--header">
-            Clicks
-          </div>
-          <div class="info-container--footer">
-            {{999 | numbersk}}
-          </div>
+        <div class="font-italic fs12">
+            Last edited:
         </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="info-container">
-          <div class="info-container--header">
-            Engagement
-          </div>
-          <div class="info-container--body">
-            {{99 | numbersk}}%
-          </div>
+        <div class="font-italic fs12">
+            {{lastEdited}}
         </div>
-      </div>
     </div>
-    <hr>
-    <div class="row stats-actions">
-      <div class="col-sm-12">
+    <div class="card-body">
+        <div class="stats-value">
+            <div *ngIf="percentage" class="m-auto text-center">
+                <circle-progress
+                        [percent]="85"
+                        [radius]="60"
+                        [outerStrokeWidth]="24"
+                        [outerStrokeColor]="'#0074E9'"
+                        [innerStrokeColor]="'#C7E596'"
+                        [showInnerStroke]="false"
+                        [showSubtitle]="false"
+                        [animation]="true"
+                        [animationDuration]="300">
+                </circle-progress>
+            </div>
+            <div *ngIf="!percentage" class="text-center">
+                <span class="fs12">Crowdfunded</span>
+                <p class="fs24 font-weight-bold">{{2 | numbersk : true}}</p>
+            </div>
+        </div>
+        <div class="row mt25 mb25">
+            <div class="col-sm-4">
+                <div class="info-container">
+                    <div class="info-container--header">
+                        Views
+                    </div>
+                    <div class="info-container--footer">
+                        {{999 | numbersk}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="info-container">
+                    <div class="info-container--header">
+                        Clicks
+                    </div>
+                    <div class="info-container--footer">
+                        {{999 | numbersk}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="info-container">
+                    <div class="info-container--header">
+                        Engagement
+                    </div>
+                    <div class="info-container--body">
+                        {{99 | numbersk}}%
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row stats-actions">
+            <div class="col-sm-12">
         <span title="Preview" class="pr-4 stats-actions--button" (click)="previewCampaign()">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <g id="preview_24px" transform="translate(-1736 -136)">
@@ -81,7 +82,7 @@
           </svg>
           Preview
         </span>
-        <span title="Edit" class="stats-actions--button" (click)="editWidget()">
+                <span title="Edit" class="stats-actions--button" (click)="editWidget()">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <g id="edit_24px" transform="translate(-1816 -136)">
               <rect id="safe_area" data-name="safe area" width="24" height="24"
@@ -96,7 +97,7 @@
           </svg>
           Edit
         </span>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

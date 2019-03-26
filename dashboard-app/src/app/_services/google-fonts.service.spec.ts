@@ -1,12 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import {GoogleFontsService} from './google-fonts.service';
+import {HttpClient} from "@angular/common/http";
 
-import { GoogleFontsService } from './google-fonts.service';
+let httpClientSpy: { get: jasmine.Spy };
+let fontService: GoogleFontsService;
 
 describe('GoogleFontsService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+    beforeEach(() => {
+        httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        fontService = new GoogleFontsService(<any> httpClientSpy)
+    });
 
-  it('should be created', () => {
-    const service: GoogleFontsService = TestBed.get(GoogleFontsService);
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(fontService).toBeTruthy();
+    });
 });

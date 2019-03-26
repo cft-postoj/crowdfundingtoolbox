@@ -20,7 +20,6 @@ import {RadioButton} from "../../_parts/atoms/radio-button/radio-button";
 import {of, Subscription} from "rxjs";
 import {iframeCode} from "../preview/previewCode"
 import {DomSanitizer} from '@angular/platform-browser';
-import {IframeService} from "../../_services/iframe.service";
 
 @Component({
     selector: 'app-preview',
@@ -74,7 +73,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private previewService: PreviewService, public el: ElementRef,
                 private convertHex: ConvertHexService, private widgetService: WidgetService,
-                private ref: ChangeDetectorRef, private iframeService: IframeService, private sanitizer: DomSanitizer) {
+                private ref: ChangeDetectorRef, private sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
@@ -99,11 +98,15 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         doc.write(this.iframeCode);
         doc.close();
         this.widget = this.widget ? this.widget : new Widget();
+        if (!this.deviceType) {
+            this.deviceType = this.deviceTypes.desktop.name
+        }
 
         this.subscription = this.previewService.updatePreviewChange.subscribe(update => {
             this.ref.detectChanges();
             this.recreateStyles();
         })
+
         this.recreateStyles();
 
     }

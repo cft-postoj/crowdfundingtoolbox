@@ -14,7 +14,7 @@ import {Routing} from "./constants/config.constants";
 import {CampaignEditComponent} from "./pages/campaigns/edit/campaignEdit.component";
 import {WidgetEditComponent} from "./pages/widget/widget-edit/widget-edit.component";
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     {
         path: 'login', component: LoginComponent
     },
@@ -87,7 +87,7 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: '/dashboard',
+        redirectTo: '/dashboard/campaigns/all',
         canActivate: [LoginGuard],
     }
 ];

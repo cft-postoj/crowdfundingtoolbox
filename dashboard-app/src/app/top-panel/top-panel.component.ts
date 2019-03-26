@@ -18,11 +18,13 @@ export class TopPanelComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.firstName = localStorage.getItem('user_firstName');
-        this.lastName = localStorage.getItem('user_lastName');
-        this.signature = this.firstName.slice(0, 1).toUpperCase() +
-            this.lastName.slice(0, 1).toUpperCase();
-        this.role = localStorage.getItem('user_role');
+        if (localStorage.getItem('token')) {
+            this.firstName = localStorage.getItem('user_firstName');
+            this.lastName = localStorage.getItem('user_lastName');
+            this.signature = this.firstName.slice(0, 1).toUpperCase() +
+                this.lastName.slice(0, 1).toUpperCase();
+            this.role = localStorage.getItem('user_role');
+        }
     }
 
     public logout(): void {

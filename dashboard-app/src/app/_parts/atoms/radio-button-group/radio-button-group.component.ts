@@ -9,7 +9,7 @@ import {RadioButton} from "../radio-button/radio-button";
 export class RadioButtonGroupComponent implements OnInit {
 
     @Input()
-    public radioButtons: RadioButton[];
+    public radioButtons: RadioButton[] = [];
 
     public currentButton: RadioButton
 

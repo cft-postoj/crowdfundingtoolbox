@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import {WidgetService} from './widget.service';
 
-import { WidgetService } from './widget.service';
+let httpClientSpy: { get: jasmine.Spy };
+let widgetService: WidgetService;
 
 describe('WidgetService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+    beforeEach(() => {
+        httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        widgetService = new WidgetService(<any> httpClientSpy)
+    });
 
-  it('should be created', () => {
-    const service: WidgetService = TestBed.get(WidgetService);
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(widgetService).toBeTruthy();
+    });
 });

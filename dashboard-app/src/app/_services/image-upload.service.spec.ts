@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import {ImageUploadService} from './image-upload.service';
 
-import { ImageUploadService } from './image-upload.service';
+let httpClientSpy: { get: jasmine.Spy };
+let imageUploadService: ImageUploadService;
 
 describe('ImageUploadService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+    beforeEach(() => {
+        httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        imageUploadService = new ImageUploadService(<any> httpClientSpy)
+    });
 
-  it('should be created', () => {
-    const service: ImageUploadService = TestBed.get(ImageUploadService);
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(imageUploadService).toBeTruthy();
+    });
 });

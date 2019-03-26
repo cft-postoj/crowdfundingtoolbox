@@ -1,12 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import {TokenExpirationService} from './token-expiration.service';
 
-import { TokenExpirationService } from './token-expiration.service';
+let httpClientSpy: { get: jasmine.Spy };
+let tokenExpirationService: TokenExpirationService;
 
 describe('TokenExpirationService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+    beforeEach(() => {
+        httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        tokenExpirationService = new TokenExpirationService(<any> httpClientSpy)
+    });
 
-  it('should be created', () => {
-    const service: TokenExpirationService = TestBed.get(TokenExpirationService);
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+
+        expect(tokenExpirationService).toBeTruthy();
+    });
 });
