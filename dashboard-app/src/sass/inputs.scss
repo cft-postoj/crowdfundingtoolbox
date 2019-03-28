@@ -57,3 +57,47 @@ textarea{
         color: #8AA1B1;
     }
 }
+
+.editInput {
+    position: relative;
+    input {
+        border: none;
+        border-bottom: 1px solid $bali;
+        display: block;
+        width: 100%;
+        position: relative;
+        outline: none;
+        padding: 5px 0;
+        font-size: 18px;
+        letter-spacing: 0.8px;
+        @include transitionSingle(.3s ease);
+        &::-webkit-input-placeholder {
+            font-style: italic;
+            color: $bali;
+        }
+        &:-moz-placeholder {
+            font-style: italic;
+            color: $bali;
+        }
+        &::-moz-placeholder {
+            font-style: italic;
+            color: $bali;
+        }
+        &:-ms-input-placeholder {
+            font-style: italic;
+            color: $bali;
+        }
+        &:focus {
+            border-bottom: 1px solid $azure;
+        }
+        & + span.actualLength {
+            position: absolute;
+            right: 0;
+            padding-right: 15px;
+            margin-top: -30px;
+            font-size: 10px;
+            background: $white;
+            color: $bali;
+        }
+    }
+}

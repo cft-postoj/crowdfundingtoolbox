@@ -2,91 +2,92 @@
 @import "../../sass/mixins";
 
 #sidebar {
-  bottom: 0;
-  width: 320px;
-  height: 100%;
-  border-right: 3px solid $white;
-  &.preview {
-    display: none;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  .item-content {
-    bottom: 80px;
-    top: 70px;
-
-    transition: left 0.3s linear;
-    background-color: white;
-    vertical-align: top;
-    padding-top: 40px;
-    display: inline-block;
-    width: 260px;
-    z-index: -1;
-    position: absolute;
-    left: 320px;
-
-    &--active {
-      left: 60px;
-      z-index: 0;
-    }
-  }
-
-  .sidebar-content {
-    height: 100%;
-  }
-
-  .sidebar-footer {
-    position: fixed;
-    left: 0;
     bottom: 0;
-  }
-
-  .main-items {
-    height: 100%;
     width: 320px;
-    display: inline-block;
-    padding-top: 90px;
-    padding-left: 40px;
-    transition: 0.3s;
-
-    &--sub-active {
-      width: 60px;
-      padding-left: 0;
+    height: 100%;
+    border-right: 3px solid $white;
+    &.preview {
+        display: none;
     }
 
-    .item {
-      height: 36px;
-      line-height: 36px;
-      display: flex;
-      margin-bottom: 30px;
-      font-family: Lato, 'sans-serif';
-      font-weight: 500;
-      font-size: 18px;
-      color: #8AA1B1;
-      white-space: nowrap;
-      @include transitionSingle(.3s ease);
-      &--icon {
-        margin: -2px 15px 0 10px;
-        color: $bali;
-        fill: currentColor;
-        @include transitionSingle(.3s ease);
+    ul {
+        list-style-type: none;
+    }
 
-      }
-      &:hover {
-        cursor: pointer;
-        color: #2E3131;
-        .item--icon {
-          color: $azure;
+    .item-content {
+        bottom: 80px;
+        top: 70px;
+
+        transition: left 0.3s linear;
+        background-color: white;
+        vertical-align: top;
+        padding-top: 40px;
+        display: inline-block;
+        width: 260px;
+        z-index: -1;
+        position: absolute;
+        left: 320px;
+        border-right: 1px solid $aquaHaze;
+
+        &--active {
+            left: 60px;
+            z-index: 0;
         }
-      }
-      .icon--active {
-        color: $azure;
-      }
     }
-  }
+
+    .sidebar-content {
+        height: 100%;
+    }
+
+    .sidebar-footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+    }
+
+    .main-items {
+        height: 100%;
+        width: 320px;
+        display: inline-block;
+        padding-top: 90px;
+        padding-left: 40px;
+        transition: 0.3s;
+
+        &--sub-active {
+            width: 60px;
+            padding-left: 0;
+        }
+
+        .item {
+            height: 36px;
+            line-height: 36px;
+            display: flex;
+            margin-bottom: 30px;
+            font-family: Lato, 'sans-serif';
+            font-weight: 500;
+            font-size: 18px;
+            color: #8AA1B1;
+            white-space: nowrap;
+            @include transitionSingle(.3s ease);
+            &--icon {
+                margin: -2px 15px 0 10px;
+                color: $bali;
+                fill: currentColor;
+                @include transitionSingle(.3s ease);
+
+            }
+            &:hover {
+                cursor: pointer;
+                color: #2E3131;
+                .item--icon {
+                    color: $azure;
+                }
+            }
+            .icon--active {
+                color: $azure;
+            }
+        }
+    }
 }
 
 

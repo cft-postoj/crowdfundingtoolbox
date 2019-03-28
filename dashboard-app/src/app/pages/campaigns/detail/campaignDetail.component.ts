@@ -15,7 +15,7 @@ import {environment} from 'environments/environment';
 
 @Component({
     templateUrl: './campaignDetail.component.html',
-    styleUrls: ['../../../../sass/classes.scss']
+    styleUrls: ['./campaignDetail.component.scss','../../../../sass/classes.scss']
 })
 
 export class CampaignDetailComponent implements OnInit, OnDestroy {

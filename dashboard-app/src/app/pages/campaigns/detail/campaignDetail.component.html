@@ -47,7 +47,7 @@
         <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
         <div class="container-fluid stats-wrapper">
             <div class="row">
-                <div class="col-3 mt-5"
+                <div class="stats-card col-3 mt-5"
                      *ngFor="let widget of this.widgets">
                     <app-status [campaignModel]="campaign" [id]="widget.id" [widget]="widget" (activeEmitter)="toggleWidgetActive(widget)" (previewEmitter)="openPreview($event)"></app-status>
                 </div>

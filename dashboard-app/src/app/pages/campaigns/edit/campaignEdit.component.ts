@@ -21,7 +21,6 @@ import {backgroundTypes} from "../../../_models/enums";
 
 export class CampaignEditComponent implements OnInit {
     @Output() closeEdit: EventEmitter<any> = new EventEmitter();
-    public activeContent: string = 'campaignSettings';
     campaign: Campaign = new Campaign();
     public widgets: Widget[] = [];
 
@@ -118,9 +117,10 @@ export class CampaignEditComponent implements OnInit {
                         this.previewGenerate.generateHTMLFromWidgets().subscribe(
                             htmlReadyToSend => {
                                 this.campaignService.updateWidgetsHTML(this.campaignId, htmlReadyToSend).subscribe( result=> {
-                                    this.componentComService.setAlertMessage(`Campaign ${this.campaign.name} created`);
-                                    let targetUrl = this.router.url.split("/(" + this.routing.RIGHT_OUTLET)[0];
+                                    let targetUrl = Routing.CAMPAIGNS_FULL_PATH+"/"+ this.campaignId;
+                                    // let targetUrl = this.router.url.split("/(" + this.routing.RIGHT_OUTLET)[0];
                                     this.router.navigateByUrl(targetUrl);
+                                    this.componentComService.setAlertMessage(`Campaign ${this.campaign.name} created. Please set widgets for this campaign.`);
                                     this.creatingHTMLs = false;
                                  });
                             }
@@ -160,23 +160,18 @@ export class CampaignEditComponent implements OnInit {
             this.error = true;
             return false;
         }
-        if (!this.campaign.headline_text){
-            this.errorMessage = "Headline text is required";
-            this.error = true;
-            return false;
-        }
         if (!this.campaign.date_to) {
             this.errorMessage = "End date of campaign is required";
             this.error = true;
             return false;
         }
-        if (!this.campaign.widget_settings.general.background.image.url && (
-            this.campaign.widget_settings.general.background.type == this.backgroundTypes.image.value ||
-            this.campaign.widget_settings.general.background.type == this.backgroundTypes.imageOverlay.value)) {
-            this.errorMessage = "Please upload image or change background type";
-            this.error = true;
-            return false;
-        }
+        // if (!this.campaign.widget_settings.general.background.image.url && (
+        //     this.campaign.widget_settings.general.background.type == this.backgroundTypes.image.value ||
+        //     this.campaign.widget_settings.general.background.type == this.backgroundTypes.imageOverlay.value)) {
+        //     this.errorMessage = "Please upload image or change background type";
+        //     this.error = true;
+        //     return false;
+        // }
         return true;
     }
 

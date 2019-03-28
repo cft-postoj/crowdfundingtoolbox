@@ -9,15 +9,24 @@
 
     .collapsible {
         &--header {
+            padding-top: 38px;
             font-weight: bold;
             font-size: 17px;
             cursor: pointer;
             flex: none;
+            @media screen and (max-width: 1480px) {
+                padding-top: 12px;
+            }
         }
     }
 
     .card-wrapper{
-        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin-right: 0;
+        & > * {
+            padding-right: 0;
+        }
     }
 
     &-input {

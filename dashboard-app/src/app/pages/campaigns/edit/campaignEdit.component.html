@@ -24,19 +24,8 @@
     <app-loading [isLoading]="loading"></app-loading>
     <ng-container *ngIf="!loading">
         <div class="campaignEdit--body">
-            <div class="campaignEdit--body--tabs tabs">
-                <button type="button" [class]="(activeContent == 'campaignSettings') ? 'active' : ''"
-                        (click)="activeContent = 'campaignSettings'">Campaign settings
-                </button>
-                <button type="button" [class]="(activeContent == 'widgetSettings') ? 'active' : ''"
-                        (click)="activeContent = 'widgetSettings'">Widget settings
-                </button>
-            </div>
-            <div class="campaignEdit--body--content" *ngIf="activeContent == 'campaignSettings'">
+            <div class="campaignEdit--body--content">
                 <app-campaign-settings class="d-flex" style="overflow: hidden" [campaign]="campaign"></app-campaign-settings>
-            </div>
-            <div class="campaignEdit--body--content" *ngIf="activeContent == 'widgetSettings'">
-                <app-widget-settings  class="d-flex" style="overflow: hidden;" [campaign]="campaign"></app-widget-settings>
             </div>
 
             <!--<div>-->
