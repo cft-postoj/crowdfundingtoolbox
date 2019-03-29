@@ -1,10 +1,8 @@
-<div class="container-fluid p-0">
-    <div class="row p-0 m-0 radio-button-group" [ngClass]="class">
-        <div   *ngFor="let rb of radioButtons" (click)="setActive(rb)"
-                class="col p-0 item--icon"
-                [inlineSVG]="rb.icon"
-                [removeSVGAttributes]="['fill']"
-                [ngClass]="{'icon--active': rb === currentButton , 'default-color':fill}">
-        </div>
+<div class="row radio-button-group" [ngClass]="class">
+    <div *ngFor="let rb of radioButtons" (click)="setActive(rb)"
+            class="col p-0 item--icon"
+            [inlineSVG]="rb.icon"
+            [removeSVGAttributes]="['fill']"
+            [ngClass]="{'icon--active': rb === currentButton , 'default-color':fill}">
     </div>
 </div>

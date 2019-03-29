@@ -57,7 +57,6 @@ export class StatusComponent implements OnInit {
     }
 
     public editWidget() {
-
         this.router.navigateByUrl(`${Routing.CAMPAIGNS_FULL_PATH}/${this.campaignModel.id}/(${Routing.RIGHT_OUTLET}:${Routing.EDIT}/${this.id})`);
     }
 

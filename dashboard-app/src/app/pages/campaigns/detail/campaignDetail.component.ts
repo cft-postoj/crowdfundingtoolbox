@@ -136,8 +136,9 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
     public toggleWidgetActive(widget: Widget) {
         this.widgetService.smartActive(widget.id, widget.active).subscribe(result => {
+            widget.active = !widget.active;
             this.alertOpen = true;
-            this.alertMessage = `Widget status changed to  ${widget.active?'active': 'disabled'}`;
+            this.alertMessage = `Widget status changed to ${widget.active? 'active': 'disabled'}`;
             this.alertType= "success";
         });
     }

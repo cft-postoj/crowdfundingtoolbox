@@ -5,7 +5,7 @@ export class Widget {
     active = true;
     widget_type = {
         id: 0,
-        name: 'widget',
+        name: '',
         description: '',
         method: ''
     };
@@ -138,6 +138,7 @@ export class Widget {
                 },
             },
             payment_settings: {
+                active: true,
                 payment_type: 'both',
                 monthly_prices: {
                     custom_price: false,

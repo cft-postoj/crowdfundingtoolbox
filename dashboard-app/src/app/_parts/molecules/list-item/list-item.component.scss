@@ -3,6 +3,7 @@
 @import "../../../../sass/mixins";
 
 .list-items--item {
+    transition: 0.3s all;
     &--action {
         margin: 0 3px;
         cursor: pointer;

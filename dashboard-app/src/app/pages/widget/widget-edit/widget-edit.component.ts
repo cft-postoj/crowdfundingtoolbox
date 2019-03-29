@@ -30,7 +30,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     public paymentTypeRadioButtons: RadioButton[]= []
     public paymentTypes = paymentTypes ;
     public copyPrices;
-    public preview: boolean;
+    public preview;
     public saving: boolean = false;
     public paddingButtons: RadioButton[]= [];
     public marginButtons: RadioButton[]= [];
@@ -104,6 +104,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
                 }
             )
         })
+        this.preview = true;
     }
 
     ngOnDestroy(){
@@ -138,7 +139,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     }
 
     //add or remove items in once_prices to match with value from monthly_prices
-    updateNumberOfOnOfPrices(event) {
+    updateNumberOfSinglePayments(event) {
         while(this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options != event && (!!event || event==0) ) {
             if (this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options > event) {
                 this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options--;
@@ -147,8 +148,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
             if (this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options < event) {
                 this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options++;
                 this.widget.settings[this.deviceType].payment_settings.once_prices.options.push(
-                    { value: this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options * 5}
-                );
+                    { value: this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options * 5});
             }
         }
     }
@@ -168,7 +168,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     }
 
     togglePreview(){
-        this.preview= !this.preview;
+        this.preview = !this.preview;
     }
 
     updateWidget(){

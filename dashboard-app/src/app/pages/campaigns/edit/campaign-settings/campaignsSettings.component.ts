@@ -27,7 +27,6 @@ export class CampaignsSettingsComponent implements OnInit {
     public campaignEndRadioButtons: RadioButton[];
     public paymentTypeRadioButtons: RadioButton[];
     public campaignEndValue;
-    public supportSettings = 'General';
     public copyPrices;
 
     public paymentTypes = paymentTypes ;

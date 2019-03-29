@@ -24,9 +24,7 @@
         overflow-x: hidden;
         overflow-y: auto;
         margin-right: 0;
-        & > * {
-            padding-right: 0;
-        }
+        padding-bottom: 5px;
     }
 
     &-input {

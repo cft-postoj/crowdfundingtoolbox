@@ -37,7 +37,7 @@
             </div>
 
             <div class="fs15 col-12 mt-5">
-                <span class="font-weight-bold">Status</span>
+                <span class="font-weight-bold">Active</span>
                 <app-switcher [id]="'status-switcher'"
                               [(checked)]="campaign.active" class="float-right"></app-switcher>
             </div>
@@ -96,7 +96,7 @@
 
     <div class="collapse-container" [ngClass]="{'flex-open':isOpened(3)}">
         <div class="collapsible--header row" (click)="openTab(3)">
-            <div class="col-sm-11  ">
+            <div class="col-sm-11">
                MONETIZATION
             </div>
             <div class="col-sm-1">
@@ -107,40 +107,18 @@
             </div>
         </div>
         <div class="card-wrapper row" [ngbCollapse]="!isOpened(3)">
-            <div class="col">
-                <div class="btn-group-vertical" style="width: 100%">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button"
-                                (click)="supportSettings='General'"
-                                [class]="(supportSettings == 'General') ? 'btn active' : 'btn'">General
-                        </button>
-                        <button type="button" (click)="supportSettings='Payment'"
-                                [class]="(supportSettings == 'Payment') ? 'btn active' : 'btn'">Payment
-                        </button>
-                    </div>
-                </div>
+            <div class="col-12 mt-3">
+                Will campaign ends with selected date, or when donation goal is reached
             </div>
-            <div class="col-12 mt-3 faded">
-                Landing page widget is set to Payment support type by default.
+            <div class="col-12 mt-3">
+                <app-radio-button
+                                  [(currentValue)]="campaign.promote_settings.donation_goal.active"
+                                  [radioButtons]="campaignEndRadioButtons"
+                                  [colClass]="'col'"></app-radio-button>
             </div>
-            <ng-container *ngIf="supportSettings == 'General'">
+            <ng-container    *ngIf="this.campaign.promote_settings.donation_goal.active">
                 <div class="col-12 mt-3">
-                    <div class="col p-0">
-                        <app-checkbox [(checked)]="campaign.promote_settings.status_bar"
-                                      [name]="'Campaign with status bar'"></app-checkbox>
-                    </div>
-                </div>
-                <div class="col-12 mt-3">
-                    Will campaign ends with selected date, or when donation goal is reached
-                </div>
-                <div class="col-12 mt-3">
-                    <app-radio-button class="col p-0"
-                                      [(currentValue)]="campaign.promote_settings.donation_goal.active"
-                                      [radioButtons]="campaignEndRadioButtons"
-                                      [colClass]="'col p-0'"></app-radio-button>
-                </div>
-                <div class="col-12 mt-3">
-                    Donation goal
+                   Donation goal
                 </div>
                 <div class="col-12 mt-3 inputs-group"
                      *ngIf="this.campaign.promote_settings.donation_goal.active">
@@ -155,171 +133,6 @@
                            placeholder="EUR (€)"
                            disabled
                     />
-                </div>
-                <div class="col-12  mt-3">
-                    <div class="row">
-                        <div class="col-2 vertical-align">
-                            Fill collor
-                        </div>
-                        <div class="col-4 ">
-                            <input [value]="campaign.promote_settings.design.fill_color"
-                                   class="btn date-picker"
-                                   [style.background]="campaign.promote_settings.design.fill_color"
-                                   [cpPosition]="'top'"
-                                   [(colorPicker)]="campaign.promote_settings.design.fill_color"/>
-                        </div>
-                        <div class="col-2 vertical-align">
-                            Text color
-                        </div>
-                        <div class="col-4">
-                            <input [value]="campaign.promote_settings.design.text_color"
-                                   class="btn date-picker"
-                                   [style.background]="campaign.promote_settings.design.text_color"
-                                   [cpPosition]="'top'"
-                                   [(colorPicker)]="campaign.promote_settings.design.text_color"/>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
-            <ng-container *ngIf="supportSettings == 'Payment'">
-                <div class="col-12 mt-3 bold">
-                        Payment type
-                </div>
-                <div class="col-12 mt-3">
-                    <app-radio-button class="col p-0"
-                                      [(currentValue)]="campaign.payment_settings.payment_type"
-                                      [radioButtons]="paymentTypeRadioButtons"
-                                      [colClass]="'col p-0'"></app-radio-button>
-                </div>
-                <ng-container
-                        *ngIf="campaign.payment_settings.payment_type==paymentTypes.monthly.value || campaign.payment_settings.payment_type==paymentTypes.both.value">
-                    <div class="col-12 mt-3 bold">
-                            Monthly prices
-                    </div>
-                    <div class="col-12 mt-3">
-                        <div class="row">
-                            <div class="col-2 vertical-align">
-                                Price options
-                            </div>
-                            <div class="col-2">
-                                <app-inputNumber
-                                        [value]="campaign.payment_settings.monthly_prices.count_of_options"
-                                        (valueChange)="updateNumberOfMonthlyPrices($event)">
-                                </app-inputNumber>
-                            </div>
-                            <div class="col-4 p-0 offset-4">
-                                <app-checkbox
-                                        [(checked)]="campaign.payment_settings.monthly_prices.custom_prices"
-                                        [name]="'Custom price options'"></app-checkbox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <ng-container
-                                    *ngFor="let option of campaign.payment_settings.monthly_prices.options; let i = index">
-                                <div class="col-4 mt-3">
-                                    <div class="row">
-                                        <div class="col-6 vertical-align">
-                                            Price No.{{i+1}}
-                                        </div>
-                                        <div class="col-6">
-                                            <app-inputNumber [(value)]="option.value">
-                                            </app-inputNumber>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-container
-                        *ngIf="campaign.payment_settings.payment_type==paymentTypes.once.value || campaign.payment_settings.payment_type==paymentTypes.both.value">
-                    <div class="col-12 mt-3 bold ">
-                        One-of prices
-                    </div>
-                    <div *ngIf="campaign.payment_settings.payment_type!=paymentTypes.once.value"
-                         class="col-12 mt-3">
-                        <app-checkbox [name]="'Copy prices from monthly prices'"
-                                      [(checked)]="copyPrices">
-                        </app-checkbox>
-                    </div>
-                    <ng-container *ngIf="!copyPrices">
-                        <div class="col-12 mt-3">
-                            <div class="row">
-                                <div class="col-2  vertical-align">
-                                    Price options
-                                </div>
-                                <div class="col-2 ">
-                                    <app-inputNumber
-                                            [value]="campaign.payment_settings.monthly_prices.count_of_options"
-                                            (valueChange)="updateNumberOfOnOfPrices($event)">
-                                    </app-inputNumber>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <ng-container
-                                        *ngFor="let option of campaign.payment_settings.once_prices.options; let i = index">
-                                    <div class="col-4 mt-3">
-                                        <div class="row">
-                                            <div class="col-6  vertical-align">
-                                                Price No.{{i+1}}
-                                            </div>
-                                            <div class="col-6 ">
-                                                <app-inputNumber [(value)]="option.value">
-                                                </app-inputNumber>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </ng-container>
-                </ng-container>
-                <div class="col-12 mt-3 bold">
-                    Active price design
-                </div>
-                <div class="col-12 mt-3">
-                    <app-checkbox [name]="'Set default active price'"
-                                  [(checked)]="campaign.payment_settings.default_price.active">
-                    </app-checkbox>
-                </div>
-                <div class="col-12 mt-3" *ngIf="campaign.payment_settings.default_price.active">
-                    <app-dropdown class="classic col-12 pl-0"
-                                  [class]="'classic mr15'"
-                                  [items]="createActivePriceOptions()"
-                                  [title]="'Choose default price'"
-                                  [(currentValue)]="this.campaign.payment_settings.default_price.value"
-                    ></app-dropdown>
-                </div>
-                <div class="col-12 mt-3 bold">
-                    Active price button settings
-                </div>
-                <div class="col-12 mt-3">
-                    <div class="row">
-                        <div class="col-2  vertical-align">
-                            Background color
-                        </div>
-                        <div class="col-4">
-                            <input [value]="campaign.payment_settings.default_price.styles.background"
-                                   class="btn date-picker"
-                                   [style.background]="campaign.payment_settings.default_price.styles.background"
-                                   [cpPosition]="'top'"
-                                   [(colorPicker)]="campaign.payment_settings.default_price.styles.background"/>
-                        </div>
-                        <div class="col-2 vertical-align">
-                            Font color
-                        </div>
-                        <div class="col-4">
-                            <input [value]="campaign.payment_settings.default_price.styles.color"
-                                   class="btn date-picker"
-                                   [style.background]="campaign.payment_settings.default_price.styles.color"
-                                   [cpPosition]="'top'"
-                                   [(colorPicker)]="campaign.payment_settings.default_price.styles.color"/>
-                        </div>
-                    </div>
                 </div>
             </ng-container>
         </div>
