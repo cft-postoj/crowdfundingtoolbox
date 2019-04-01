@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from 'environments/environment';
+import {Router} from "@angular/router";
+import {Routing} from "../constants/config.constants";
 
 @Component({
     selector: 'app-sidebar-footer',
@@ -9,8 +11,9 @@ import {environment} from 'environments/environment';
 export class SidebarFooterComponent implements OnInit {
 
     public environment = environment;
+    public routing = Routing;
 
-    constructor() {
+    constructor(private router: Router) {
     }
 
     ngOnInit() {
@@ -29,6 +32,6 @@ export class SidebarFooterComponent implements OnInit {
     }
 
     globalSettings() {
-        alert('Not working in this stage.')
+        this.router.navigate([this.routing.CONFIGURATION_FULL_PATH]);
     }
 }

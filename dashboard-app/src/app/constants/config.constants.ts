@@ -12,6 +12,8 @@ export class Routing {
     static readonly ALL = "all";
     static readonly EDIT = "edit";
     static readonly NEW = "new";
+    static readonly CONFIGURATION = 'configuration';
+    static readonly CONFIGURATION_FULL_PATH = `${Routing.DASHBOARD}/${Routing.CONFIGURATION}`;
 
 
     //specific paths for components

@@ -42,7 +42,7 @@ export const appRoutes: Routes = [
                 },
             },
             {
-                path: 'configuration',
+                path: Routing.CONFIGURATION,
                 component: ConfigurationComponent
             },
             {
