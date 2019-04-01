@@ -65,8 +65,10 @@ export class SideBarComponent implements OnInit {
 
     getCampaignsAndCreateSidebar(){
         this.campaignService.getAll().subscribe((campaigns: any) => {
-            this.campaigns = campaigns.data;
-            this.showItem(this.campaignsItemName)
+            if (campaigns.data && campaigns.data.length){
+                this.campaigns = campaigns.data;
+                this.showItem(this.campaignsItemName)
+            }
         }, (error) => {
             console.error(error);
         });

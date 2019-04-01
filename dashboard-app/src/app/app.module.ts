@@ -57,6 +57,8 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { ModalComponent } from './_parts/atoms/modal/modal.component';
 import { SafePipe } from './_pipe/safe.pipe';
 import { NotificationComponent } from './_parts/atoms/notification/notification.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { GeneralSettingsComponent } from "./components/general-settings/general-settings.component";
 
 @NgModule({
     imports: [
@@ -118,9 +120,10 @@ import { NotificationComponent } from './_parts/atoms/notification/notification.
         WidgetEditComponent,
         PreviewComponent,
         ModalComponent,
-        PreviewComponent,
         SafePipe,
-        NotificationComponent
+        NotificationComponent,
+        GeneralSettingsComponent,
+        SettingsComponent
     ],
     providers: [
         {

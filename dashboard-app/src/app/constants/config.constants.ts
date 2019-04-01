@@ -12,8 +12,6 @@ export class Routing {
     static readonly ALL = "all";
     static readonly EDIT = "edit";
     static readonly NEW = "new";
-    static readonly CONFIGURATION = 'configuration';
-    static readonly CONFIGURATION_FULL_PATH = `${Routing.DASHBOARD}/${Routing.CONFIGURATION}`;
 
 
     //specific paths for components
@@ -21,6 +19,11 @@ export class Routing {
     static readonly CAMPAIGNS_ALL = `${Routing.CAMPAIGNS}/${Routing.ALL}`;
     static readonly CAMPAIGNS_FULL_PATH = `/${Routing.DASHBOARD}/${Routing.CAMPAIGNS}`;
     static readonly CAMPAIGNS_ALL_FULL_PATH = `${Routing.CAMPAIGNS_FULL_PATH}/${Routing.ALL}`;
+
+    //configurations paths
+    static readonly CONFIGURATION = 'configuration';
+    static readonly CONFIGURATION_FULL_PATH = `${Routing.DASHBOARD}/${Routing.CONFIGURATION}`;
+    static readonly GENERAL = 'general';
 
 
 }

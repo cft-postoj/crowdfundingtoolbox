@@ -4,7 +4,7 @@
     <div class="configurationPage--items">
         <div class="row configurationPage--row">
             <div class="col-md-4">
-                <div class="configurationPage--item">
+                <div class="configurationPage--item"  (click)="openGlobal()">
                     <b>GENERAL PAGE SETTINGS</b>
                     <p>General settings including fonts, colors etc…</p>
                     <svg class="icon_settings" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
@@ -91,3 +91,5 @@
         <app-button [label]="'Continue to dashboard'" [class]="'disabled mt30 mb30 classic'"></app-button>
     </div>
 </div>
+
+<router-outlet name="right"></router-outlet>

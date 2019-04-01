@@ -1,0 +1,210 @@
+@import "variables";
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    padding: 23px 40px 0 40px;
+    width: 50%;
+    background: $white;
+    height: calc(100vh - 70px);
+    position: absolute;
+    top: 0;
+    z-index: 99;
+    right: -1000px;
+    overflow: hidden;
+
+    //@include transitionSingle(.7s ease);
+    &.preview {
+        width: calc(50% - 100px);
+    }
+
+    &--head {
+        font-size: 20px;
+    }
+
+    @media screen and (max-width: 1480px) {
+        padding: 23px 20px 0 20px;
+    }
+
+    &.active {
+        right: 0;
+    }
+
+    &--body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        &.tab-button {
+            width: 196px;
+            height: 48px;
+            color: #8AA1B1;
+        }
+
+        &--active {
+            background-color: $azure;
+            color: white;
+        }
+        &--tabs {
+            width: calc(100% + 80px);
+            left: -40px;
+            @media screen and (max-width: 1480px) {
+                width: calc(100% + 40px);
+                left: -20px;
+            }
+        }
+        &--content {
+            font-family: Lato, 'sans-serif';
+            color: #2E3131;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+
+            .collapsible {
+                &--header {
+                    padding-top: 38px;
+                    font-weight: bold;
+                    font-size: 17px;
+                    cursor: pointer;
+                    flex: none;
+                    @media screen and (max-width: 1480px) {
+                        padding-top: 12px;
+                    }
+                }
+            }
+
+            .card-wrapper {
+                overflow-x: hidden;
+                overflow-y: auto;
+                margin-right: 0;
+                flex: 1;
+                flex-wrap: wrap;
+                align-content: baseline;
+                padding-bottom: 5px;
+                [class^='col-'] {
+                    padding-bottom: 15px;
+                }
+                .colors {
+                    display: flex;
+                    span {
+                        cursor: pointer;
+                        ::ng-deep svg{
+                            fill: $bali;
+                        }
+                    }
+                }
+                .add-button {
+                    cursor: pointer;
+
+                    ::ng-deep svg {
+                        max-height: 50px;
+                    }
+                }
+
+            }
+
+            &-input {
+                margin-top: 10px;
+                margin-bottom: -15px;
+                border: none;
+            }
+
+            .collapse-container {
+                height: 100%;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .flex-open {
+                flex: 1;
+            }
+
+            .flex-closed {
+                flex: 1 0 auto;
+            }
+
+            &.container-fluid {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .button-expand {
+                border: none;
+                background: url('/assets/images/icons/plus.svg');
+                float: right;
+                width: 16px;
+                height: 15px;
+                cursor: pointer;
+                &[aria-expanded=true] {
+                    background: url('/assets/images/icons/minus.svg');
+                }
+
+            }
+
+        }
+    }
+
+    &--tabs {
+        &::ng-deep {
+            transition: none !important;
+            width: 100%;
+            position: absolute;
+            overflow: visible;
+            right: 0;
+            left: 0;
+
+            &.mat-tab-labels {
+                transition: none !important;
+                background-color: $aquaHaze;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            &.mat-tab-label {
+                text-align: center;
+                font-size: 15px;
+                font-family: Lato, 'sans-serif';
+                background-color: $aquaHaze;
+                color: $bali;
+                transition: none !important;
+                overflow: hidden;
+                opacity: 1;
+                width: 214px;
+            }
+
+            &.mat-tab-label-active {
+                text-align: center;
+                font-size: 15px;
+                font-weight: bold;
+                font-family: Lato, 'sans-serif';
+                transition: none !important;
+                background-color: $azure;
+                color: white;
+                width: 214px;
+                overflow: hidden;
+                opacity: 1;
+            }
+
+        }
+    }
+    .mat-tab-label-content {
+        width: 214px;
+    }
+
+    &--close {
+        float: right;
+        cursor: pointer;
+    }
+    .actions {
+        margin-top: auto;
+        width: calc(100% + 80px);
+        margin-left: -40px;
+        @media screen and (max-width: 1480px) {
+            width: calc(100% + 40px);
+            margin-left: -20px;
+        }
+    }
+}

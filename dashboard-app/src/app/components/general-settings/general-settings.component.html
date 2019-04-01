@@ -1,0 +1,55 @@
+<div class="active bg-overlay"></div>
+<div class="d-flex" class="active settings">
+    <div class="settings--head">
+        <b>GENERAL PAGE SETTINGS</b>
+        <span
+                [inlineSVG]="'/assets/images/icons/close.svg'"
+                (click)="closeEditWindow()"
+                title="Close"
+                class="settings--close">
+               </span>
+    </div>
+    <ng-container *ngIf="loading">
+        <app-loading [isLoading]="loading"></app-loading>
+    </ng-container>
+
+    <ng-container *ngIf="!loading">
+        <div class="settings--body">
+            <div class="settings--body--content">
+                <div class="collapse-container flex-open">
+                    <div class="collapsible--header row">
+                        <div class="col-sm-12">
+                            Colors
+                        </div>
+                    </div>
+                    <div class="card-wrapper row">
+                        <div *ngFor="let color of colors; let i = index" class="col-2 colors pr-0">
+                            <input [value]="color"
+                                   class="btn date-picker color"
+                                   [style.background]="color"
+                                   [cpPosition]="'bottom'"
+                                   [(colorPicker)]="color"/>
+                            <span
+                                    class="vertical-align"
+                                    title="Delete color"
+                                    [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                    [removeSVGAttributes]="['fill']"
+                                    (click)="delete(i)"></span>
+                        </div>
+                        <div class="col-2">
+                            <span class="add-button vertical-align "
+                                    title="Add new color"
+                                    [inlineSVG]="'/assets/images/icons/add.svg'"
+                                    [removeSVGAttributes]="['fill']"
+                                    (click)="addColor()"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ng-container>
+    <app-actions class="actions" [(deviceType)]="deviceType" [live]="true" (submit)="updateWidget()"
+                 (preview)="togglePreview()"
+                 [submitting]="saving" (deviceTypeChange)="recreateRadioButtons()"></app-actions>
+</div>
