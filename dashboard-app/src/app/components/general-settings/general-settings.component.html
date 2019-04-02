@@ -1,13 +1,9 @@
 <div class="active bg-overlay"></div>
-<div class="d-flex" class="active settings">
+<div class="active settings d-flex">
     <div class="settings--head">
         <b>GENERAL PAGE SETTINGS</b>
-        <span
-                [inlineSVG]="'/assets/images/icons/close.svg'"
-                (click)="closeEditWindow()"
-                title="Close"
-                class="settings--close">
-               </span>
+        <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close" class="settings--close">
+        </span>
     </div>
     <ng-container *ngIf="loading">
         <app-loading [isLoading]="loading"></app-loading>
@@ -23,33 +19,25 @@
                         </div>
                     </div>
                     <div class="card-wrapper row">
-                        <div *ngFor="let color of colors; let i = index" class="col-2 colors pr-0">
-                            <input [value]="color"
-                                   class="btn date-picker color"
-                                   [style.background]="color"
-                                   [cpPosition]="'bottom'"
-                                   [(colorPicker)]="color"/>
-                            <span
-                                    class="vertical-align"
-                                    title="Delete color"
-                                    [inlineSVG]="'/assets/images/icons/delete.svg'"
-                                    [removeSVGAttributes]="['fill']"
-                                    (click)="delete(i)"></span>
+                        <div *ngFor="let color of colors; let i = index" class="col-3 col-xxl-2 colors pr-0 cp-custom">
+                            <input class="btn date-picker color" [style.background]="color" [cpPosition]="'left'"
+                                [cpMaxPresetColorsLength]="'25'" [cpPresetColors]="colors" [(colorPicker)]="color"
+                                (colorPickerClose)="changeValueInArray(i , $event)" />
+                            <span class="vertical-align" title="Delete color" [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
                         </div>
                         <div class="col-2">
-                            <span class="add-button vertical-align "
-                                    title="Add new color"
-                                    [inlineSVG]="'/assets/images/icons/add.svg'"
-                                    [removeSVGAttributes]="['fill']"
-                                    (click)="addColor()"></span>
+                            <span class="add-button vertical-align " title="Add new color" [inlineSVG]="'/assets/images/icons/add.svg'"
+                                [removeSVGAttributes]="['fill']" (click)="addColor()"></span>
                         </div>
                     </div>
                 </div>
+                  <div class="description text-center pb-3">
+                      New created campaigns inherit those settings. Changing those settings dont affect already created campaigns. 
+                  </div>
 
             </div>
         </div>
     </ng-container>
-    <app-actions class="actions" [(deviceType)]="deviceType" [live]="true" (submit)="updateWidget()"
-                 (preview)="togglePreview()"
-                 [submitting]="saving" (deviceTypeChange)="recreateRadioButtons()"></app-actions>
+    <app-actions class="actions" [hidePreviewButton]="'true'"></app-actions>
 </div>
