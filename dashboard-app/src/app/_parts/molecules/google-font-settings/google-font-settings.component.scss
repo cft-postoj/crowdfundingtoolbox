@@ -1,0 +1,27 @@
+@import 'variables';
+@import 'mixins';
+.numberOfFonts {
+  label, .selectWrapper {
+    display: inline-block;
+  }
+  label {
+    color: $azure;
+  }
+  ::ng-deep .selectWrapper {
+    width: 300px;
+    border: 1px solid $outer-space;
+    margin-left: 15px;
+    @include borderRadius(4px);
+  }
+}
+::ng-deep .btn {
+  width: auto;
+  height: auto;
+}
+::ng-deep .ngx-select__search.form-control {
+  cursor: pointer;
+}
+::ng-deep .ngx-select__selected {
+  background: rgba($aquaHaze, .5);
+  padding: 5px;
+}

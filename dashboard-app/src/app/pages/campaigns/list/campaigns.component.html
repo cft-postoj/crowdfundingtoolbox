@@ -43,6 +43,5 @@
 <app-loading [isLoading]="loading"></app-loading>
 <h4 *ngIf="noCampaigns"> No campaigns found, please create new one </h4>
 <router-outlet name="right"></router-outlet>
-
   <app-preview *ngIf="previewOpen" [class]="'fullscreen'" [(show)]="previewOpen" [campaignId]="previewId" [deviceType]="deviceType"></app-preview>
 </div>

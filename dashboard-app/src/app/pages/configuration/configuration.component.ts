@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Routing} from "../../constants/config.constants";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import { Routing } from '../../constants/config.constants';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-configuration',
@@ -10,10 +10,10 @@ import {Router} from "@angular/router";
 export class ConfigurationComponent {
     public routing = Routing;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) { }
 
     openGlobal() {
         this.router.navigateByUrl(`${Routing.CONFIGURATION_FULL_PATH}/(${Routing.RIGHT_OUTLET}:${Routing.GENERAL})`);
     }
-    
+
 }
