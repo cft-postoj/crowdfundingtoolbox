@@ -5,7 +5,7 @@
     flex-direction: column;
     padding: 23px 40px 0 40px;
     width: 50%;
-    background: $white;
+    background: $aquaHaze;
     height: calc(100vh - 70px);
     position: absolute;
     top: 0;
@@ -19,6 +19,7 @@
     }
 
     &--head {
+        padding: 0 6px;
         font-size: 20px;
     }
 
@@ -31,10 +32,9 @@
     }
 
     &--body {
+        overflow: auto;
         position: relative;
-        display: flex;
         flex-direction: column;
-        flex-grow: 1;
 
         &.tab-button {
             width: 196px;
@@ -60,11 +60,10 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            height: 100%;
 
             .collapsible {
                 &--header {
-                    padding-top: 38px;
+                    padding: 0 6px;
                     font-weight: bold;
                     font-size: 17px;
                     cursor: pointer;
@@ -75,26 +74,36 @@
                 }
             }
 
-            .card-wrapper {
-                overflow-x: hidden;
-                overflow-y: auto;
-                margin-right: 0;
+            .settings--card--wrapper {
+                overflow: visible;
                 flex: 1;
                 flex-wrap: wrap;
                 align-content: baseline;
                 padding-bottom: 5px;
-                [class^='col-'] {
-                    padding-bottom: 15px;
-                }
                 .colors {
                     display: flex;
                     span {
                         cursor: pointer;
-                        ::ng-deep svg{
+                        ::ng-deep svg {
                             fill: $bali;
                         }
                     }
                 }
+                .settings--card {
+                    padding: 12px;
+                    margin: 6px;
+                    border-style: none;
+                    border-width: 1px;
+                    border-color: rgba(0, 0, 0, .07);
+                    border-radius: 5px;
+                    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff));
+                    background-image: linear-gradient(180deg, #fff, #fff);
+                    box-shadow: 0 2px 7px 0 rgba(5, 34, 97, .1);
+                    @media screen and (min-width: 1440px ) {
+                        margin: 12px 6px;
+                    }
+                }
+
                 .add-button {
                     cursor: pointer;
 
@@ -112,19 +121,16 @@
             }
 
             .collapse-container {
-                height: 100%;
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
+                padding: 12px 0;
             }
 
-            .flex-open {
-                flex: 1;
-            }
-
-            .flex-closed {
-                flex: 1 0 auto;
-            }
+            //.flex-open {
+            //    flex: 1;
+            //}
+            //
+            //.flex-closed {
+            //    flex: 1 0 auto;
+            //}
 
             &.container-fluid {
                 padding-left: 0;

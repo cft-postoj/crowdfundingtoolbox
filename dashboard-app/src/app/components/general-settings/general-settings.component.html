@@ -18,17 +18,27 @@
                             Colors
                         </div>
                     </div>
-                    <div class="card-wrapper row">
-                        <div *ngFor="let color of colors; let i = index" class="col-3 col-xxl-2 colors pr-0 cp-custom">
-                            <input class="btn date-picker color" [style.background]="color" [cpPosition]="'left'"
-                                [cpMaxPresetColorsLength]="'25'" [cpPresetColors]="colors" [(colorPicker)]="color"
-                                (colorPickerClose)="changeValueInArray(i , $event)" />
-                            <span class="vertical-align" title="Delete color" [inlineSVG]="'/assets/images/icons/delete.svg'"
-                                [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
-                        </div>
-                        <div class="col-2">
-                            <span class="add-button vertical-align " title="Add new color" [inlineSVG]="'/assets/images/icons/add.svg'"
-                                [removeSVGAttributes]="['fill']" (click)="addColor()"></span>
+                    <div class="settings--card--wrapper">
+                        <div class="settings--card">
+                            <div class="row">
+                                <div *ngFor="let color of colors; let i = index"
+                                     class="col-3 col-xxl-2 colors pr-0 cp-custom">
+                                    <input class="btn date-picker"
+                                           [style.background]="color"
+                                           [cpPosition]="'left'"
+                                           [cpMaxPresetColorsLength]="'25'"
+                                           [(colorPicker)]="color"
+                                           (colorPickerClose)="changeValueInArray(i , $event)"/>
+                                    <span class="vertical-align" title="Delete color"
+                                          [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                          [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
+                                </div>
+                                <div class="col-2">
+                            <span class="add-button vertical-align " title="Add new color"
+                                  [inlineSVG]="'/assets/images/icons/add.svg'"
+                                  [removeSVGAttributes]="['fill']" (click)="addColor()"></span>
+                                </div>
+                    </div>
                         </div>
                     </div>
                 </div>

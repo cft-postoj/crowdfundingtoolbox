@@ -16,10 +16,10 @@ import {backgroundTypes} from "../../../_models/enums";
 @Component({
     selector: 'app-campaign-edit',
     templateUrl: './campaignEdit.component.html',
-    styleUrls: ['../../../../sass/classes.scss', './campaignEdit.component.scss']
+    styleUrls: ['../../../components/settings/settings.component.scss', './campaignEdit.component.scss']
 })
 
-export class CampaignEditComponent implements OnInit {
+export class CampaignEditComponent  implements OnInit {
     @Output() closeEdit: EventEmitter<any> = new EventEmitter();
     campaign: Campaign = new Campaign();
     public widgets: Widget[] = [];
@@ -160,7 +160,7 @@ export class CampaignEditComponent implements OnInit {
             this.error = true;
             return false;
         }
-        if (!this.campaign.date_to) {
+        if (!this.campaign.date_to && !this.campaign.promote_settings.donation_goal.active) {
             this.errorMessage = "End date of campaign is required";
             this.error = true;
             return false;

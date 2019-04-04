@@ -5,14 +5,15 @@ import {ActivatedRoute} from "@angular/router";
 import {RadioButton} from "../../../../_parts/atoms/radio-button/radio-button";
 import {DropdownItem} from "../../../../_models/dropdown-item";
 import {paymentTypes} from "../../../../_models/enums"
+import {SettingsComponent} from "../../../../components/settings/settings.component";
 
 @Component({
     selector: 'app-campaign-settings',
     templateUrl: './campaignSettings.component.html',
-    styleUrls: ['../../../../../sass/classes.scss', './campaignSettings.component.scss']
+    styleUrls: ['../../../../components/settings/settings.component.scss', './campaignSettings.component.scss']
 })
 
-export class CampaignsSettingsComponent implements OnInit {
+export class CampaignsSettingsComponent  implements OnInit {
 
 
     @Input()
@@ -22,7 +23,7 @@ export class CampaignsSettingsComponent implements OnInit {
     public dateTo: { day: number, year: number, month: number };
     public campaignNameLength: number = 0;
 
-    public opened = 1;
+    public opened:number[] = [1,2,3];
     public differ: KeyValueDiffer<string, any>;
     public campaignEndRadioButtons: RadioButton[];
     public paymentTypeRadioButtons: RadioButton[];
@@ -70,12 +71,16 @@ export class CampaignsSettingsComponent implements OnInit {
         this.campaignNameLength = event.target.value.length;
     }
 
-    public isOpened(tabNumber: number) {
-        return this.opened === tabNumber;
+    public openTab(tabNumber: number) {
+        if (this.isOpened(tabNumber)) {
+            this.opened.splice(this.opened.indexOf(tabNumber),1)
+        } else {
+            this.opened.push(tabNumber);
+        }
     }
 
-    public openTab(tabNumber: number) {
-        this.opened = this.opened == tabNumber ? 0 : tabNumber;
+    public isOpened(tabNumber: number) {
+        return this.opened.indexOf(tabNumber)>-1;
     }
 
 

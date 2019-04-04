@@ -16,7 +16,7 @@ export class Campaign {
             value: 9000
         },
         selected_date: {
-            active: false,
+            active: true,
             value: "2019-03-04"
         },
         design: {

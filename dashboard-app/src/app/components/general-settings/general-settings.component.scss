@@ -1,10 +1,6 @@
 .cp-custom {
-    ::ng-deep .color-picker{
-        display: flex;
-        flex-direction: column-reverse;
-        hr {
-            
-    display: none;
-        }
+    ::ng-deep color-picker {
+        position: fixed;
+        z-index: 9999999;
     }
 }

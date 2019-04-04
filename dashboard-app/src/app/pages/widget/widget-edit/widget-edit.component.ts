@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Routing} from "../../../constants/config.constants";
 import {Widget} from "../../../_models/widget";
@@ -14,11 +14,11 @@ import {environment} from "../../../../environments/environment";
 @Component({
     selector: 'app-widget-edit',
     templateUrl: './widget-edit.component.html',
-    styleUrls: ['./widget-edit.component.scss']
+    styleUrls: ['./widget-edit.component.scss','../../../components/settings/settings.component.scss']
 })
 export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
 
-    public opened = 1;
+    public opened: number[] = [];
     public routing = Routing;
     loading = true;
     widget = new Widget();
@@ -37,7 +37,6 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     public marginText: RadioButton[]= [];
     public shadowButtons: RadioButton[] =[];
     public fontWeight: DropdownItem[] = [];
-    public displaySettings: DropdownItem[] = [];
     public positionSettings: DropdownItem[] = [];
     public ctaSettings:string="Default";
     creatingHTMLs=false;
@@ -79,9 +78,6 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
             this.fontWeight.push({title: "Light", value: 100});
             this.fontWeight.push({title: "Medium", value: 400});
 
-            this.displaySettings.push({title: 'Inline', value: 'inline'});
-            this.displaySettings.push({title: 'Block', value: 'block'});
-
             this.positionSettings.push({title: 'Top', value: '0'}); // top: 0
             this.positionSettings.push({title: 'Bottom', value: 'auto'}); // top: auto
 
@@ -116,11 +112,15 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     }
 
     public openTab(tabNumber: number) {
-        this.opened = this.opened == tabNumber ? 0 : tabNumber;
+        if (this.isOpened(tabNumber)) {
+            this.opened.splice(this.opened.indexOf(tabNumber),1)
+        } else {
+            this.opened.push(tabNumber);
+        }
     }
 
     public isOpened(tabNumber: number) {
-        return this.opened === tabNumber;
+        return this.opened.indexOf(tabNumber)>-1;
     }
 
     //add or remove items in monthly_prices to match with value from monthly_prices

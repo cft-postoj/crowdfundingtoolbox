@@ -1,6 +1,6 @@
 <div class="active bg-overlay"></div>
-<div class="active campaignEdit">
-    <div class="campaignEdit--head">
+<div class="active settings">
+    <div class="settings--head">
         <ng-container *ngIf="newCampaign; else editTitle">
             <b>NEW CAMPAIGN</b>
         </ng-container>
@@ -11,7 +11,7 @@
                 [inlineSVG]="'/assets/images/icons/close.svg'"
                 (click)="closeEditWindow()"
                 title="Close"
-                class="campaignEdit--close">
+                class="settings--close">
         </span>
 
     </div>
@@ -23,11 +23,7 @@
     <!--</div>-->
     <app-loading [isLoading]="loading"></app-loading>
     <ng-container *ngIf="!loading">
-        <div class="campaignEdit--body">
-            <div class="campaignEdit--body--content">
-                <app-campaign-settings class="d-flex" style="overflow: hidden" [campaign]="campaign"></app-campaign-settings>
-            </div>
-
+            <app-campaign-settings class="d-flex settings--body" style="overflow: hidden" [campaign]="campaign"></app-campaign-settings>
             <!--<div>-->
             <!--<mat-tab-group mat-align-tabs="start">-->
             <!--<mat-tab label="Campaign settings">-->
@@ -38,7 +34,7 @@
             <!--</mat-tab>-->
             <!--</mat-tab-group>-->
             <!--</div>-->
-        </div>
+
         <!--<ngb-alert *ngIf="!validInput()"  [type]="'danger'" >{{ errorMessage }}</ngb-alert>-->
         <app-alert *ngIf="!validInput() && submitted" [type]="'danger'" [(open)]="error" [message]="errorMessage" > </app-alert>
         <app-actions (preview)="previewOpen = !previewOpen" class="actions" (submit)="handleSubmit()" [submitting]="saving" [hidePreviewButton]="newCampaign"></app-actions>

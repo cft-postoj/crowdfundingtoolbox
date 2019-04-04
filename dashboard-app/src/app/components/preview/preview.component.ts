@@ -241,6 +241,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             //height: this.widget.settings[this.deviceType].additional_settings.textContainer.height
         }
         let dynamicStyle = {
+            'background-color': this.widget.settings[this.deviceType].widget_settings.general.background.color,
             backgroundColor: this.widget.settings[this.deviceType].widget_settings.general.text_background,
 
         }
