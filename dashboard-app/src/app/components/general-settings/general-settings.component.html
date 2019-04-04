@@ -2,7 +2,8 @@
 <div class="active settings d-flex">
     <div class="settings--head">
         <b>GENERAL PAGE SETTINGS</b>
-        <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close" class="settings--close">
+        <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close"
+              class="settings--close">
         </span>
     </div>
     <ng-container *ngIf="loading">
@@ -12,6 +13,18 @@
     <ng-container *ngIf="!loading">
         <div class="settings--body">
             <div class="settings--body--content">
+                <div class="collapse-container flex-open">
+                    <div class="collapsible--header row">
+                        <div class="col-sm-12">
+                            Fonts
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper">
+                        <div class="settings--card">
+                            <app-google-font-settings></app-google-font-settings>
+                        </div>
+                    </div>
+                </div>
                 <div class="collapse-container flex-open">
                     <div class="collapsible--header row">
                         <div class="col-sm-12">
@@ -28,7 +41,8 @@
                                            [cpPosition]="'left'"
                                            [cpMaxPresetColorsLength]="'25'"
                                            [(colorPicker)]="color"
-                                           (colorPickerClose)="changeValueInArray(i , $event)"/>
+                                           (colorPickerClose)="changeValueInArray(i , $event)"
+                                           readonly/>
                                     <span class="vertical-align" title="Delete color"
                                           [inlineSVG]="'/assets/images/icons/delete.svg'"
                                           [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
@@ -38,13 +52,14 @@
                                   [inlineSVG]="'/assets/images/icons/add.svg'"
                                   [removeSVGAttributes]="['fill']" (click)="addColor()"></span>
                                 </div>
-                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                  <div class="description text-center pb-3">
-                      New created campaigns inherit those settings. Changing those settings dont affect already created campaigns. 
-                  </div>
+                <div class="description text-center pb-3">
+                    New created campaigns inherit those settings. Changing those settings dont affect already created
+                    campaigns.
+                </div>
 
             </div>
         </div>

@@ -26,7 +26,7 @@ export class GoogleFontSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.initNumberOptions();
-        this.selectedValues = ['Open Sans', 'Lato'];
+        this.selectedValues = ['Open Sans', 'Lato', 'Oswald'];
         this.fetchGoogleFonts();
     }
 
@@ -44,6 +44,7 @@ export class GoogleFontSettingsComponent implements OnInit {
                             this.currentFonts += (this.currentFonts == '') ? d.family : '|' + d.family;
                         }
                     })
+                    this.selectAction();
                 }
             }
         );
@@ -96,8 +97,18 @@ export class GoogleFontSettingsComponent implements OnInit {
         let children = this.fontFamilyRef.choiceMenuElRef.nativeElement.children;
         for (let ch of children) {
             let currentFontFamily = ch.children[0].children[0].innerText;
-            console.log(currentFontFamily);
             ch.style.fontFamily = currentFontFamily;
         }
+    }
+
+    public selectAction() {
+        setTimeout(() => {
+            // span selected fonts children
+            let children = this.fontFamilyRef.mainElRef.nativeElement.children[1].children;
+            for (let ch of children) {
+                let currentFontFamily = ch.innerText;
+                ch.style.fontFamily = currentFontFamily;
+            }
+        }, 0);
     }
 }

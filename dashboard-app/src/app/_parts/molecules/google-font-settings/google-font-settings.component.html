@@ -2,7 +2,7 @@
 
 
 <div class="numberOfFonts">
-    <label for="numberOfFonts">Choose number of Google Fonts, which will be displayed in next select:</label>
+    <label for="numberOfFonts">Choose number of Google Fonts:</label>
     <app-dropdown
             [items]="numberOptions"
             [title]="'Please, select number of fonts'"
@@ -12,13 +12,16 @@
     </app-dropdown>
 </div>
 
-
+<hr>
+<label for="fontFamilyList">Choose app fonts:</label>
 <ngx-select [multiple]="true"
             [items]="fontFamilyStrings"
             [disabled]="false"
             [keepSelectedItems]="true"
             [defaultValue]="selectedValues"
             (open)="openAction()"
+            (select)="selectAction()"
             [autoActiveOnMouseEnter]="true"
-            placeholder="No fonts selected" #fontFamilyList>
+            id="fontFamilyList"
+            [placeholder]="'No fonts selected'" #fontFamilyList>
 </ngx-select>
