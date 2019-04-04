@@ -13,6 +13,9 @@
         </div>
     </div>
     <div class="card-body">
+        <div class="widgetPreview">
+            <img [src]="'/assets/images/widgets/' + widget.widget_type.name.toLowerCase() + '.png'" />
+        </div>
         <div class="stats-value">
             <div *ngIf="percentage" class="m-auto text-center">
                 <circle-progress
@@ -32,7 +35,7 @@
                 <p class="fs24 font-weight-bold">{{2 | numbersk : true}}</p>
             </div>
         </div>
-        <div class="row mt25 mb25">
+        <div class="row mb25">
             <div class="col-sm-4">
                 <div class="info-container">
                     <div class="info-container--header">

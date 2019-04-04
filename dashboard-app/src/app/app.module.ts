@@ -59,6 +59,8 @@ import { SafePipe } from './_pipe/safe.pipe';
 import { NotificationComponent } from './_parts/atoms/notification/notification.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { GeneralSettingsComponent } from "./components/general-settings/general-settings.component";
+import { GoogleFontSettingsComponent } from './_parts/molecules/google-font-settings/google-font-settings.component';
+import {NgxSelectModule} from "ngx-select-ex";
 
 @NgModule({
     imports: [
@@ -75,7 +77,8 @@ import { GeneralSettingsComponent } from "./components/general-settings/general-
         AngularEditorModule,
         BrowserAnimationsModule,
         NgbModule,
-        ColorPickerModule
+        ColorPickerModule,
+        NgxSelectModule
     ],
     entryComponents: [ModalComponent],
     declarations: [
@@ -123,7 +126,9 @@ import { GeneralSettingsComponent } from "./components/general-settings/general-
         SafePipe,
         NotificationComponent,
         GeneralSettingsComponent,
-        SettingsComponent
+        SettingsComponent,
+        NotificationComponent,
+        GoogleFontSettingsComponent
     ],
     providers: [
         {

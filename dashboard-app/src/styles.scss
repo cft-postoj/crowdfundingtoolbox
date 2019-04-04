@@ -84,20 +84,23 @@ button, html [type="button"], [type="reset"], [type="submit"] {
 
 ::-webkit-scrollbar-track
 {
-  -webkit-box-shadow: inset 0 0 6px rgba($azure,0.3);
-  background-color: #F5F5F5;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba($outer-space,.3);
+  background-color: $aquaHaze;
 }
 
 ::-webkit-scrollbar
 {
-  width: 10px;
-  background-color: #F5F5F5;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba($outer-space,.3);
+  background-color: $aquaHaze;
 }
 
 ::-webkit-scrollbar-thumb
 {
-  background-color: $azure;
-  border: 2px solid $azure;
+  background-color: $bali;
+  border: 2px solid $bali;
+  border-radius: 10px;
 }
 
 
