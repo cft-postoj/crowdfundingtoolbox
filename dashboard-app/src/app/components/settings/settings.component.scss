@@ -99,7 +99,7 @@
                     background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff));
                     background-image: linear-gradient(180deg, #fff, #fff);
                     box-shadow: 0 2px 7px 0 rgba(5, 34, 97, .1);
-                    @media screen and (min-width: 1440px ) {
+                    @media screen and (min-width: $xxl ) {
                         margin: 12px 6px;
                     }
                 }

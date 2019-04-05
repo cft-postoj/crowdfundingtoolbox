@@ -14,6 +14,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 14px 12px;
     @include transitionSingle(.3s ease);
     outline: none;
+    height: 48px;
     &:focus, &:active {
       border: 1px solid $bali;
       outline: none;
@@ -28,7 +29,7 @@ input[type=number]::-webkit-outer-spin-button {
       border: none;
       outline: none;
       cursor: pointer;
-      margin-top: 5px;
+      margin-top: 0;
       &:last-child {
         margin-top: -10px;
       }

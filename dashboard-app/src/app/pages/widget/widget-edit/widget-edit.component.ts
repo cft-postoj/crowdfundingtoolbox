@@ -45,6 +45,8 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     public subcriptions: Subscription;
     cta: string="Default";
     private pricesOptions: DropdownItem[];
+    public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
+        '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'];
 
     constructor(private router: Router,
                 private route: ActivatedRoute,

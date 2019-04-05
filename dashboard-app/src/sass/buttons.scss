@@ -19,7 +19,7 @@
         font-weight: bold;
         letter-spacing: 1.2px;
     }
-    &.date-picker {
+    &.color-picker--custom {
         color: #ffffff;
         font-weight: bold;
         letter-spacing: 1.2px;
@@ -40,8 +40,23 @@
     }
 }
 
+.btn-group {
+    .btn {
+        &.active {
+            background: #0074E9;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+        }
+    }
+
+    > .btn {
+        background-color: $mystic;
+    }
+}
+
 .color-picker--simple {
-    .color-picker{
+    .color-picker {
         display: flex;
         flex-direction: column-reverse;
         hr {

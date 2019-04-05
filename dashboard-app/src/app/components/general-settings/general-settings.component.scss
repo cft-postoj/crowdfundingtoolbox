@@ -1,6 +1,13 @@
 .cp-custom {
     ::ng-deep color-picker {
-        position: fixed;
-        z-index: 9999999;
+        .color-picker {
+            top: 35% !important;
+            right: 10% !important;
+            left: initial !important;
+            position: fixed;
+            .arrow-left {
+                display: none;
+            }
+        }
     }
 }
