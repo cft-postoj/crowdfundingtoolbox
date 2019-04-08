@@ -10,11 +10,10 @@
             id="numberOfFonts"
             (currentValueChange)="countOfFonts($event)">
     </app-dropdown>
-</div>
 
-<hr>
-<label for="fontFamilyList">Choose app fonts:</label>
-<ngx-select [multiple]="true"
+    <hr>
+    <label for="fontFamilyList">Choose app fonts:</label>
+    <ngx-select [multiple]="true"
             [items]="fontFamilyStrings"
             [disabled]="false"
             [keepSelectedItems]="true"
@@ -22,6 +21,8 @@
             (open)="openAction()"
             (select)="selectAction()"
             [autoActiveOnMouseEnter]="true"
+            (selectionChanges)="emitValues()"
             id="fontFamilyList"
             [placeholder]="'No fonts selected'" #fontFamilyList>
-</ngx-select>
+    </ngx-select>
+</div>

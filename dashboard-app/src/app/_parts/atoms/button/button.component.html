@@ -4,8 +4,10 @@
         (click)="onButtonClick($event)"
 
 >
-    <span *ngIf="iconName">
-        <img src="/assets/images/icons/{{iconName}}.svg"  />
+    <span *ngIf="iconName"
+                class="actionIcon"
+                [inlineSVG]="'/assets/images/icons/'+iconName+'.svg'"
+                [removeSVGAttributes]="['fill']">
     </span>
     {{label}}
 </button>

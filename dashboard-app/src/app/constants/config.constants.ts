@@ -24,6 +24,7 @@ export class Routing {
     static readonly CONFIGURATION = 'configuration';
     static readonly CONFIGURATION_FULL_PATH = `${Routing.DASHBOARD}/${Routing.CONFIGURATION}`;
     static readonly GENERAL = 'general';
+    static readonly CTA = 'cta';
 
 
 }

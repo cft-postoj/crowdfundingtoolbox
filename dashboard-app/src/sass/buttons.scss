@@ -36,7 +36,6 @@
         -1px 1px 0px rgba($black, .3),
         0px 1px 0px rgba($black, .3),
         1px 1px 0px rgba($black, .3);
-
     }
 }
 
@@ -52,15 +51,5 @@
 
     > .btn {
         background-color: $mystic;
-    }
-}
-
-.color-picker--simple {
-    .color-picker {
-        display: flex;
-        flex-direction: column-reverse;
-        hr {
-            display: none;
-        }
     }
 }

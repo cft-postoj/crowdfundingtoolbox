@@ -1,0 +1,21 @@
+.color-picker--fixed {
+    .color-picker {
+        top: 35% !important;
+        right: 10% !important;
+        left: initial !important;
+        position: fixed;
+        .arrow {
+            display: none;
+        }
+    }
+}
+
+.color-picker--simple {
+    .color-picker {
+        display: flex;
+        flex-direction: column-reverse;
+        hr {
+            display: none;
+        }
+    }
+}

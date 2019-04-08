@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, ViewChild, ElementRef, EventEmitter, Output} from '@angular/core';
 import {DropdownItem} from "../../../_models/dropdown-item";
 import {GoogleFontsService} from "../../../_services/google-fonts.service";
 import {delay} from "q";
@@ -18,7 +18,12 @@ export class GoogleFontSettingsComponent implements OnInit {
     private numberGoogleFonts: number = 10;
     public fontFamilyStrings: string[] = [];
     public currentFonts: string = '';
-    public selectedValues: string[] = [];
+
+    @Input()
+    public selectedValues: string[] = ['Open Sans', 'Lato', 'Oswald'];
+
+    @Output()
+    public selectedValuesChange = new EventEmitter<any>();
     public currentOptionValue: string = '';
 
     constructor(private googleFontsService: GoogleFontsService) {
@@ -26,7 +31,6 @@ export class GoogleFontSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.initNumberOptions();
-        this.selectedValues = ['Open Sans', 'Lato', 'Oswald'];
         this.fetchGoogleFonts();
     }
 
@@ -110,5 +114,9 @@ export class GoogleFontSettingsComponent implements OnInit {
                 ch.style.fontFamily = currentFontFamily;
             }
         }, 0);
+    }
+
+    public emitValues() {
+        this.selectedValuesChange.emit(this.fontFamilyRef.optionsSelected)
     }
 }

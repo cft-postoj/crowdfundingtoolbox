@@ -102,6 +102,16 @@
                     @media screen and (min-width: $xxl ) {
                         margin: 12px 6px;
                     }
+                    &--header{
+                        font-weight: 700;
+                    }
+                    &--body{
+                    }
+                    .settings--card--body{
+                        [class*=col]{
+                            padding-top: 8px;
+                        }
+                    }
                 }
 
                 .add-button {

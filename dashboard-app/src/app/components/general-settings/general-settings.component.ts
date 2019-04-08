@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Routing } from '../../constants/config.constants';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Routing} from '../../constants/config.constants';
+import {DropdownItem} from "../../_models/dropdown-item";
 
 @Component({
     selector: 'app-general-settings',
@@ -15,11 +16,33 @@ export class GeneralSettingsComponent implements OnInit {
 
     public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'];
-    public newColor = '#9E0B0F';
 
-    constructor(private router: Router) { }
+    public fontWeight: DropdownItem[] = [];
+
+    public generalSetting = {
+        colors :  ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
+            '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'],
+        fonts: ['Open Sans', 'Lato', 'Oswald'],
+        title:
+            {
+                fontWeight: '9E0B0F',
+                color: "#eee",
+                size: '24'
+            },
+        subtitle: {
+            fontWeight: 400,
+            color: "#ED1C24",
+            size: '20'
+        },
+    };
+
+    constructor(private router: Router) {
+    }
 
     ngOnInit() {
+        this.fontWeight.push({title: "Bold", value: "bold"});
+        this.fontWeight.push({title: "Light", value: 100});
+        this.fontWeight.push({title: "Medium", value: 400});
     }
 
     public isOpened(tabNumber: number) {
@@ -31,15 +54,15 @@ export class GeneralSettingsComponent implements OnInit {
     }
 
     public delete(deleteIndex: number) {
-        this.colors = this.colors.slice(0, deleteIndex).concat(this.colors.slice(deleteIndex + 1, this.colors.length));
+        this.generalSetting.colors.splice(deleteIndex, 1);
     }
 
     addColor() {
-        this.colors.push('#fff');
+        this.generalSetting.colors.push('#fff');
     }
 
     changeValueInArray(index, color) {
-        this.colors[index] = color;
+        this.generalSetting.colors[index] = color;
     }
 
     closeEditWindow() {
@@ -47,4 +70,16 @@ export class GeneralSettingsComponent implements OnInit {
         this.router.navigateByUrl(targetUrl);
     }
 
+
+    generateDropdowns(fonts: (string)[]) {
+       return fonts.map(font => {
+           return {title: font, value: font}
+        })
+    }
+
+    updateValues(event) {
+        this.generalSetting.fonts = event.map(ngxSelected =>
+            ngxSelected.value
+        )
+    }
 }

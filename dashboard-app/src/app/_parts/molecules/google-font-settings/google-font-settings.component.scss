@@ -1,39 +1,43 @@
 @import 'variables';
 @import 'mixins';
+
 .numberOfFonts {
-  label, .selectWrapper {
-    display: inline-block;
-  }
-  label {
-    color: $outer-space;
-  }
-  ::ng-deep .selectWrapper {
-    width: 300px;
-    border: 1px solid $outer-space;
-    margin-left: 15px;
-    @include borderRadius(4px);
-  }
-}
-::ng-deep .btn {
-  width: auto;
-  height: auto;
-}
-::ng-deep .ngx-select__search.form-control {
-  cursor: pointer;
-}
-::ng-deep .ngx-select__selected {
-  background: rgba($aquaHaze, .5);
-  padding: 5px;
-}
-::ng-deep app-dropdown {
-  .selectWrapper {
-    width: 150px !important;
-    display: inline-block !important;
-  }
-  select {
-    color: $azure;
-    option {
-      color: $outer-space;
+    label, .selectWrapper {
+        display: inline-block;
     }
-  }
+    label {
+        color: $outer-space;
+    }
+    ::ng-deep .selectWrapper {
+        width: 300px;
+        border: 1px solid $outer-space;
+        margin-left: 15px;
+        @include borderRadius(4px);
+    }
+
+    ::ng-deep .btn {
+        width: auto;
+        height: auto;
+    }
+    ::ng-deep .ngx-select__search.form-control {
+        cursor: pointer;
+        background: url('/assets/images/icons/add.svg') no-repeat;
+        padding-left: 30px!important;
+    }
+    ::ng-deep .ngx-select__selected {
+        background: rgba($aquaHaze, .5);
+        padding: 5px;
+    }
+    ::ng-deep app-dropdown {
+        .selectWrapper {
+            width: 150px !important;
+            display: inline-block !important;
+        }
+        select {
+            color: $azure;
+            option {
+                color: $outer-space;
+            }
+        }
+    }
 }

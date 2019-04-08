@@ -16,4 +16,7 @@ export class ConfigurationComponent {
         this.router.navigateByUrl(`${Routing.CONFIGURATION_FULL_PATH}/(${Routing.RIGHT_OUTLET}:${Routing.GENERAL})`);
     }
 
+    openCta() {
+        this.router.navigateByUrl(`${Routing.CONFIGURATION_FULL_PATH}/(${Routing.RIGHT_OUTLET}:${Routing.CTA})`);
+    }
 }
