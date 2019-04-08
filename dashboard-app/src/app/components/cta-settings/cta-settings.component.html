@@ -1,0 +1,253 @@
+<div class="active bg-overlay"></div>
+<div class="d-flex active settings">
+    <div class="settings--head">
+        <b>CALL TO ACTION SETTINGS</b>
+        <span
+                [inlineSVG]="'/assets/images/icons/close.svg'"
+                (click)="closeEditWindow()"
+                title="Close"
+                class="settings--close">
+        </span>
+    </div>
+    <div class="settings--body">
+        <div class="settings--body--content">
+            <div class="collapse-container flex-open" >
+                <div class="col-12">
+                    <div class="row">
+                        <div class="btn-group-vertical col-12 mb-3">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button"
+                                        (click)="cta='Default'"
+                                        [class]="(cta == 'Default') ? 'btn active' : 'btn'">
+                                    Default
+                                </button>
+                                <button type="button" (click)="cta='Hover'"
+                                        [class]="(cta == 'Hover') ? 'btn active' : 'btn'">Hover
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper" *ngIf="cta=='Default'">
+                    <div class="settings--card">
+                        <div class="row">
+                            <span class="col font-weight-bold">Button text</span>
+                        </div>
+                        <div class="row editInput">
+                            <div class="col">
+                                <input #cta id="cta_button"
+                                       placeholder="Please add text for button"
+                                       [(ngModel)]="cta_global.text"
+                                       maxlength="60">
+                                <span class="actualLength">
+                                       {{cta_global.text ? cta_global.text.length : 0}} / {{cta?.maxLength}}
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings--card">
+                        <div class="row">
+                            <div class="col">
+                                URL
+                            </div>
+                        </div>
+                        <div class="editInput row">
+                            <div class="col">
+                                <input #cta_url id="cta_url"
+                                       placeholder="Please add url"
+                                       [(ngModel)]="cta_global.url"
+                                       maxlength="2000">
+                                <span class="actualLength">
+                                       {{cta_global.url ? cta_global.url.length : 0}} / {{cta_url?.maxLength}}
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings--card">
+                        <div class="row">
+                            <div class="col-12 bold">
+                                Button offsets
+                            </div>
+                            <div class="col-12 col-xxl-6">
+                                Inside
+                                <app-input-group [buttons]="paddingButtons"
+                                                 (buttonChange)="cta_widget.default.padding[$event.name] = $event.value">
+
+                                </app-input-group>
+                            </div>
+                            <div class="col-12 col-xxl-6 pt-3 pt-xxl-0">
+                                Outside
+                                <app-input-group [buttons]="marginButtons"
+                                                 (buttonChange)="cta_widget.default.margin[$event.name] = $event.value">
+                                </app-input-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings--card">
+                        <div class="row">
+                            <div class="col-12 bold">
+                                Font settings
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 vertical-align">
+                                Family
+                            </div>
+                            <div class="col-6">
+                                <app-dropdown [items]="fontFamily"
+                                              [class]="'classic default-border align-right'"
+                                              [title]="'Choose font'"
+                                              [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
+                                </app-dropdown>
+                            </div>
+                            <div class="col-3 pt-2 vertical-align">
+                                Font weight
+                            </div>
+                            <div class="col-3 pt-2">
+                                <app-dropdown [items]="fontWeight"
+                                              [class]="'classic default-border align-right'"
+                                              [title]="'weight'"
+                                              [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
+                                </app-dropdown>
+                            </div>
+                            <div class="col-3 pt-2 vertical-align">
+                                Alignment
+                            </div>
+                            <div class="col-3 pt-2 vertical-align">
+                                <app-radio-button-group [class]="'full-width'"
+                                                        [(currentValue)]="cta_widget.default.fontSettings.alignment"
+                                                        [radioButtons]="radioButtons"
+                                >
+                                </app-radio-button-group>
+                            </div>
+                            <div class="col vertical-align">
+                                Color
+                            </div>
+                            <div class="col">
+                                <input [value]="cta_widget.default.fontSettings.color"
+                                       class="btn color-picker--custom"
+                                       [style.background]="cta_widget.default.fontSettings.color"
+                                       [cpPosition]="'top'"
+                                       [cpPresetColors]="colors"
+                                       [(colorPicker)]="cta_widget.default.fontSettings.color"/>
+                            </div>
+                            <div class="col vertical-align">
+                                Size (px)
+                            </div>
+                            <div class="col">
+                                <app-inputNumber
+                                        [(value)]="cta_widget.default.fontSettings.fontSize"
+                                        [class]="'float-right'">
+                                </app-inputNumber>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper" *ngIf="cta=='Hover'">
+                        <div class="settings--card">
+                            <div class="row">
+                                <div class="col bold">Hover font settings</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 vertical-align">
+                                    Font weight
+                                </div>
+                                <div class="col-4">
+                                    <app-dropdown [class]="'classic default-border'"
+                                                  [title]="'Choose font weight'"
+                                                  [items]="fontWeight"
+                                                  [(currentValue)]="cta_widget.hover.fontSettings.fontWeight">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-2 vertical-align">
+                                    Color
+                                </div>
+                                <div class="col-4 color-picker--simple">
+                                    <input [value]="cta_widget.hover.fontSettings.color"
+                                           class="btn color-picker--custom"
+                                           [style.background]="cta_widget.hover.fontSettings.color"
+                                           [cpPosition]="'top'"
+                                           [cpPresetColors]="colors"
+                                           [(colorPicker)]="cta_widget.hover.fontSettings.color"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="row">
+                                <div class="col bold">
+                                    Design
+                                </div>
+                            </div>
+                            <div class="row pt-1 pb-1">
+                                <div class="col-3">
+                                    <app-checkbox [name]="'Fill'"
+                                                  [(checked)]="cta_widget.hover.design.fill.active">
+                                    </app-checkbox>
+                                </div>
+                                <div class="col-4"
+                                     *ngIf="cta_widget.hover.design.fill.active">
+                                    <input [value]="cta_widget.hover.design.fill.color"
+                                           class="btn color-picker--custom"
+                                           [style.background]="cta_widget.hover.design.fill.color"
+                                           [cpPosition]="'top'"
+                                           [cpPresetColors]="colors"
+                                           [(colorPicker)]="cta_widget.hover.design.fill.color"/>
+                                </div>
+                            </div>
+                            <div class="row pt-1 pb-1">
+                                <div class="col-3">
+                                    <app-checkbox [name]="'Border'"
+                                                  [(checked)]="cta_widget.hover.design.border.active">
+                                    </app-checkbox>
+                                </div>
+                                <ng-container
+                                        *ngIf="cta_widget.hover.design.border.active">
+                                    <div class="col-4">
+                                        <input [value]="cta_widget.hover.design.border.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="cta_widget.hover.design.border.color"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="cta_widget.hover.design.border.color"/>
+                                    </div>
+                                    <div class="col-2 offset-1 vertical-align">
+                                        Size (px)
+                                    </div>
+                                    <div class="col-2">
+                                        <app-inputNumber [class]="'float-right'"
+                                                         [(value)]="cta_widget.hover.design.border.size"></app-inputNumber>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                            <div class="row pt-1 pb-1">
+                                <div class="col-3">
+                                    <app-checkbox [name]="'Shadow'"
+                                                  [(checked)]="cta_widget.hover.design.shadow.active">
+                                    </app-checkbox>
+                                </div>
+                                <ng-container
+                                        *ngIf="cta_widget.hover.design.shadow.active">
+                                    <div class="col-4">
+                                        <input [value]="cta_widget.hover.design.shadow.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="cta_widget.hover.design.shadow.color"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="cta_widget.hover.design.shadow.color"/>
+                                    </div>
+                                    <div class="col-5 vertical-align">
+                                        <app-input-group [buttons]="shadowButtons"
+                                                         (buttonChange)="cta_widget.hover.design.shadow[$event.name] = $event.value">
+                                        </app-input-group>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <app-actions class="actions" [hidePreviewButton]="'true'"></app-actions>
+</div>

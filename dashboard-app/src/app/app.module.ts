@@ -61,6 +61,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { GeneralSettingsComponent } from "./components/general-settings/general-settings.component";
 import { GoogleFontSettingsComponent } from './_parts/molecules/google-font-settings/google-font-settings.component';
 import {NgxSelectModule} from "ngx-select-ex";
+import { CtaSettingsComponent } from './components/cta-settings/cta-settings.component';
 
 @NgModule({
     imports: [
@@ -128,7 +129,8 @@ import {NgxSelectModule} from "ngx-select-ex";
         GeneralSettingsComponent,
         SettingsComponent,
         NotificationComponent,
-        GoogleFontSettingsComponent
+        GoogleFontSettingsComponent,
+        CtaSettingsComponent
     ],
     providers: [
         {

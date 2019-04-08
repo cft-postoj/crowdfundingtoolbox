@@ -26,11 +26,13 @@ export class RadioButtonGroupComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.radioButtons.forEach(rb => {
-            if (rb.value == this.currentValue) {
-                this.currentButton = rb;
-            }
-        })
+        if (this.radioButtons) {
+            this.radioButtons.forEach(rb => {
+                if (rb.value == this.currentValue) {
+                    this.currentButton = rb;
+                }
+            })
+        }
     }
 
 
