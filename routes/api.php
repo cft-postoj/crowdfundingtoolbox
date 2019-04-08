@@ -73,7 +73,14 @@ Route::group([
         Route::get('users', 'BackOfficeAPI\UsersController@getAll');
 
         // General Crowdfunding settings
-        Route::put('crowdfunding-settings', 'BackOfficeAPI\CrowdfundingSettingsController@index');
+        //Route::put('crowdfunding-settings', 'BackOfficeAPI\CrowdfundingSettingsController@index');
+        Route::get('crowdfunding-settings/all', 'BackOfficeAPI\CampaignsConfigurationController@get');
+        Route::get('crowdfunding-settings/colors', 'BackOfficeAPI\CampaignsConfigurationController@getColors');
+        Route::get('crowdfunding-settings/fonts', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
+        Route::put('crowdfunding-settings/general-page-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateGeneralPageSettings');
+        Route::put('crowdfunding-settings/cta-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateCallToActionSettings');
+        Route::put('crowdfunding-settings/widgets-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateWidgetSettings');
+
 
         // Campaigns
         Route::post('campaigns', 'BackOfficeAPI\CampaignController@create');
