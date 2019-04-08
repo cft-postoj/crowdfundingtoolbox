@@ -11,37 +11,7 @@ class CrowdfundingSettingsController extends Controller
 {
     private $apiRequest;
 
-    /**
-     * @OA\Put(
-     *     path="/api/backoffice/crowdfunding-settings",
-     *     tags={"GENERAL SETTINGS"},
-     *     summary="Crowdfunding Settings",
-     *     description="Only for authenticated users.",
-     *     operationId="crowdFundingSettings",
-     *     @OA\Response(
-     *         response=201,
-     *         description="Successfully created campaign!",
-     *     @OA\JsonContent()
-     *     ),
-     *     @OA\RequestBody(
-     *      description="After created campaign, it will be activated.",
-     *         @OA\JsonContent(
-     *           type="object",
-     *           @OA\Property(
-     *              property="type", type="string"
-     *           ),
-     *          @OA\Property(
-     *              property="settings", type="json"
-     *          ),
-     *          example={
-     *              "type": "general",
-     *              "settings": {"color": {"primary": "#000000", "secondary": "#ff0000"}}
-     *          }
-     *
-     *       )
-     * )
-     * )
-     */
+
     protected function index(Request $request)
     {
         if ($request['type'] != null) {
