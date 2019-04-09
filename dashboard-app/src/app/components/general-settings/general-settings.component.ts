@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Routing} from '../../constants/config.constants';
 import {DropdownItem} from "../../_models/dropdown-item";
+import {GeneralSettings} from "../../_models/general-settings";
+import {GeneralSettingsService} from "../../_services/general-settings.service";
 
 @Component({
     selector: 'app-general-settings',
@@ -19,30 +21,33 @@ export class GeneralSettingsComponent implements OnInit {
 
     public fontWeight: DropdownItem[] = [];
 
-    public generalSetting = {
-        colors :  ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
-            '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'],
-        fonts: ['Open Sans', 'Lato', 'Oswald'],
-        title:
-            {
-                fontWeight: '9E0B0F',
-                color: "#eee",
-                size: '24'
-            },
-        subtitle: {
-            fontWeight: 400,
-            color: "#ED1C24",
-            size: '20'
-        },
-    };
+    // public generalSetting = {
+    //     colors :  ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
+    //         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'],
+    //     fonts: ['Open Sans', 'Lato', 'Oswald'],
+    //     title:
+    //         {
+    //             fontWeight: '9E0B0F',
+    //             color: "#eee",
+    //             size: '24'
+    //         },
+    //     subtitle: {
+    //         fontWeight: 400,
+    //         color: "#ED1C24",
+    //         size: '20'
+    //     },
+    // };
 
-    constructor(private router: Router) {
+    public generalSetting = new GeneralSettings();
+
+    constructor(private router: Router, private settingsService: GeneralSettingsService) {
     }
 
     ngOnInit() {
         this.fontWeight.push({title: "Bold", value: "bold"});
         this.fontWeight.push({title: "Light", value: 100});
         this.fontWeight.push({title: "Medium", value: 400});
+        console.log(this.generalSetting.font_settings_additional_text)
     }
 
     public isOpened(tabNumber: number) {
@@ -71,7 +76,7 @@ export class GeneralSettingsComponent implements OnInit {
     }
 
 
-    generateDropdowns(fonts: (string)[]) {
+    generateDropdowns(fonts: string[]) {
        return fonts.map(font => {
            return {title: font, value: font}
         })
@@ -84,7 +89,8 @@ export class GeneralSettingsComponent implements OnInit {
     }
 
     updateSettings() {
-
-
+       this.settingsService.updateGeneralPageSettings(this.generalSetting).subscribe(result => {
+           console.log(result);
+       });
     }
 }

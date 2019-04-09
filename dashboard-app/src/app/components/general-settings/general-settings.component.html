@@ -84,7 +84,7 @@
                                                   [class]="'classic default-border align-right'"
                                                   [title]="'family'"
                                                   [customFonts]="true"
-                                                  [(currentValue)]="generalSetting.title.fontFamily">
+                                                  [(currentValue)]="generalSetting.font_settings_headline_text.fontFamily">
                                     </app-dropdown>
                                 </div>
                                 <div class="col-2  vertical-align">
@@ -94,7 +94,7 @@
                                     <app-dropdown [items]="fontWeight"
                                                   [class]="'classic default-border align-right'"
                                                   [title]="'weight'"
-                                                  [(currentValue)]="generalSetting.title.fontWeight">
+                                                  [(currentValue)]="generalSetting.font_settings_headline_text.fontWeight">
                                     </app-dropdown>
                                 </div>
                                 <div class="col-2 vertical-align">
@@ -102,11 +102,11 @@
                                 </div>
                                 <div class="col-4 color-picker--fixed color-picker--simple">
                                     <input class="btn color-picker--custom"
-                                           [value]="generalSetting.title.color"
-                                           [style.background]="generalSetting.title.color"
+                                           [value]="generalSetting.font_settings_headline_text.color"
+                                           [style.background]="generalSetting.font_settings_headline_text.color"
                                            [cpPosition]="'bottom'"
                                            [cpPresetColors]="generalSetting.colors"
-                                           [(colorPicker)]="generalSetting.title.color"
+                                           [(colorPicker)]="generalSetting.font_settings_headline_text.color"
                                     />
                                 </div>
                                 <div class="col-2 vertical-align">
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="col-4">
                                     <app-inputNumber
-                                            [(value)]="generalSetting.title.size" numberOfFonts
+                                            [(value)]="generalSetting.font_settings_headline_text.fontSize" numberOfFonts
                                             [class]="'float-right'">
                                     </app-inputNumber>
                                 </div>
@@ -139,7 +139,7 @@
                                                       [class]="'classic default-border align-right'"
                                                       [title]="'family'"
                                                       [customFonts]="true"
-                                                      [(currentValue)]="generalSetting.subtitle.fontFamily">
+                                                      [(currentValue)]="generalSetting.font_settings_additional_text.fontFamily">
                                         </app-dropdown>
                                     </div>
                                     <div class="col-2  vertical-align">
@@ -149,7 +149,7 @@
                                         <app-dropdown [items]="fontWeight"
                                                       [class]="'classic default-border align-right'"
                                                       [title]="'weight'"
-                                                      [(currentValue)]="generalSetting.subtitle.fontWeight">
+                                                      [(currentValue)]="generalSetting.font_settings_additional_text.fontWeight">
                                         </app-dropdown>
                                     </div>
                                     <div class="col-2 vertical-align">
@@ -157,11 +157,11 @@
                                     </div>
                                     <div class="col-4 color-picker--fixed color-picker--simple">
                                         <input class="btn color-picker--custom"
-                                               [value]="generalSetting.subtitle.color"
-                                               [style.background]="generalSetting.subtitle.color"
+                                               [value]="generalSetting.font_settings_additional_text.color"
+                                               [style.background]="generalSetting.font_settings_additional_text.color"
                                                [cpPosition]="'bottom'"
                                                [cpPresetColors]="generalSetting.colors"
-                                               [(colorPicker)]="generalSetting.subtitle.color"
+                                               [(colorPicker)]="generalSetting.font_settings_additional_text.color"
                                         />
                                     </div>
                                     <div class="col-2 vertical-align">
@@ -169,7 +169,7 @@
                                     </div>
                                     <div class="col-4">
                                         <app-inputNumber
-                                                [(value)]="generalSetting.subtitle.size"
+                                                [(value)]="generalSetting.font_settings_additional_text.fontSize"
                                                 [class]="'float-right'">
                                         </app-inputNumber>
                                     </div>
