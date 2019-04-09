@@ -68,6 +68,8 @@
                     font-size: 17px;
                     cursor: pointer;
                     flex: none;
+                    color: $azure;
+                    letter-spacing: 1px;
                     @media screen and (max-width: 1480px) {
                         padding-top: 12px;
                     }
