@@ -15,7 +15,6 @@ export class GoogleFontSettingsComponent implements OnInit {
 
     public numberOptions: DropdownItem[] = [];
     public fontFamily: any = [];
-    private numberGoogleFonts: number = 10;
     public fontFamilyStrings: string[] = [];
     public currentFonts: string = '';
 
@@ -42,11 +41,9 @@ export class GoogleFontSettingsComponent implements OnInit {
             data => {
                 if (data.items.length > 0) {
                     data.items.map((d, key) => {
-                        if (key < this.numberGoogleFonts) {
-                            this.fontFamily.push({id: d.family, value: d.family});
-                            this.fontFamilyStrings.push(d.family);
-                            this.currentFonts += (this.currentFonts == '') ? d.family : '|' + d.family;
-                        }
+                        this.fontFamily.push({id: d.family, value: d.family});
+                        this.fontFamilyStrings.push(d.family);
+                        this.currentFonts += (this.currentFonts == '') ? d.family : '|' + d.family;
                     })
                     this.selectAction();
                 }

@@ -13,98 +13,99 @@
     <ng-container *ngIf="!loading">
         <div class="settings--body">
             <div class="settings--body--content">
-                <div class="collapse-container flex-open">
-                    <div class="settings--card--wrapper">
-                        <div class="settings--card">
-                            <div class="settings--card--header row">
-                                <div class="col-sm-12">
-                                    Colors
-                                </div>
+                <div class="settings--card--wrapper">
+                    <div class="settings--card">
+                        <div class="settings--card--header row">
+                            <div class="col-sm-12">
+                                Colors
                             </div>
-                            <div class="settings--card--body row">
-                                <div *ngFor="let color of generalSetting.colors; let i = index"
-                                     class="col-3 col-xxl-2 colors pr-0 color-picker--fixed">
-                                    <input class="btn color-picker--custom"
-                                           [style.background]="color"
-                                           [cpPosition]="'left'"
-                                           [cpMaxPresetColorsLength]="'25'"
-                                           [(colorPicker)]="color"
-                                           (colorPickerClose)="changeValueInArray(i , $event)"
-                                           readonly/>
-                                    <span class="vertical-align" title="Delete color"
-                                          [inlineSVG]="'/assets/images/icons/delete.svg'"
-                                          [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
-                                </div>
-                                <div class="col-2">
-                            <span class="add-button vertical-align" title="Add new color"
-                                  [inlineSVG]="'/assets/images/icons/add.svg'"
-                                  [removeSVGAttributes]="['fill']" (click)="addColor()"></span>
+                        </div>
+                        <div class="settings--card--body row">
+                            <div *ngFor="let color of generalSetting.colors; let i = index"
+                                 class="col-3 col-xxl-2 colors pr-0 color-picker--fixed">
+                                <input class="btn color-picker--custom"
+                                       [style.background]="color"
+                                       [cpPosition]="'left'"
+                                       [cpMaxPresetColorsLength]="'25'"
+                                       [(colorPicker)]="color"
+                                       (colorPickerClose)="changeValueInArray(i , $event)"
+                                       readonly/>
+                                <span class="vertical-align" title="Delete color"
+                                      [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                      [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
+                            </div>
+                            <div class="col-2">
+                        <span class="add-button vertical-align" title="Add new color"
+                              [inlineSVG]="'/assets/images/icons/add.svg'"
+                              [removeSVGAttributes]="['fill']" (click)="addColor()"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper">
+                    <div class="settings--card">
+                        <div class="settings--card--header row">
+                            <div class="col-sm-12">
+                                Fonts
+                            </div>
+                        </div>
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <app-google-font-settings [selectedValues]="generalSetting.fonts" (selectedValuesChange)="updateValues($event)"></app-google-font-settings>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container flex-open">
-                    <div class="settings--card--wrapper">
-                        <div class="settings--card">
-                            <div class="settings--card--header row">
-                                <div class="col-sm-12">
-                                    Fonts
-                                </div>
+                <div class="settings--card--wrapper">
+                    <div class="settings--card">
+                        <div class="settings--card--header row">
+                            <div class="col-12">
+                                Headline text
                             </div>
-                            <app-google-font-settings [selectedValues]="generalSetting.fonts" (selectedValuesChange)="updateValues($event)"></app-google-font-settings>
                         </div>
-                    </div>
-
-                    <div class="settings--card--wrapper">
-                        <div class="settings--card">
-                            <div class="settings--card--header row">
-                                <div class="col-12">
-                                    Title
-                                </div>
+                        <div class="row settings--card--body">
+                            <div class="col-2 vertical-align">
+                                Font
                             </div>
-                            <div class="row settings--card--body">
-                                <div class="col-2 vertical-align">
-                                    Font
-                                </div>
-                                <div class="col-4">
-                                    <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
-                                                  [class]="'classic default-border align-right'"
-                                                  [title]="'family'"
-                                                  [(currentValue)]="generalSetting.title.fontFamily">
-                                    </app-dropdown>
-                                </div>
-                                <div class="col-2  vertical-align">
-                                    Weight
-                                </div>
-                                <div class="col-4">
-                                    <app-dropdown [items]="fontWeight"
-                                                  [class]="'classic default-border align-right'"
-                                                  [title]="'weight'"
-                                                  [(currentValue)]="generalSetting.title.fontWeight">
-                                    </app-dropdown>
-                                </div>
-                                <div class="col-2 vertical-align">
-                                    Color
-                                </div>
-                                <div class="col-4 color-picker--fixed color-picker--simple">
-                                    <input class="btn color-picker--custom"
-                                           [value]="generalSetting.title.color"
-                                           [style.background]="generalSetting.title.color"
-                                           [cpPosition]="'bottom'"
-                                           [cpPresetColors]="generalSetting.colors"
-                                           [(colorPicker)]="generalSetting.title.color"
-                                    />
-                                </div>
-                                <div class="col-3 vertical-align">
-                                    Size (px)
-                                </div>
-                                <div class="col-3">
-                                    <app-inputNumber
-                                            [(value)]="generalSetting.title.size"
-                                            [class]="'float-right'">
-                                    </app-inputNumber>
-                                </div>
+                            <div class="col-4">
+                                <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
+                                              [class]="'classic default-border align-right'"
+                                              [title]="'family'"
+                                              [(currentValue)]="generalSetting.title.fontFamily">
+                                </app-dropdown>
+                            </div>
+                            <div class="col-2  vertical-align">
+                                Weight
+                            </div>
+                            <div class="col-4">
+                                <app-dropdown [items]="fontWeight"
+                                              [class]="'classic default-border align-right'"
+                                              [title]="'weight'"
+                                              [(currentValue)]="generalSetting.title.fontWeight">
+                                </app-dropdown>
+                            </div>
+                            <div class="col-2 vertical-align">
+                                Color
+                            </div>
+                            <div class="col-4 color-picker--fixed color-picker--simple">
+                                <input class="btn color-picker--custom"
+                                       [value]="generalSetting.title.color"
+                                       [style.background]="generalSetting.title.color"
+                                       [cpPosition]="'bottom'"
+                                       [cpPresetColors]="generalSetting.colors"
+                                       [(colorPicker)]="generalSetting.title.color"
+                                />
+                            </div>
+                            <div class="col-2 vertical-align">
+                                Size (px)
+                            </div>
+                            <div class="col-4">
+                                <app-inputNumber
+                                        [(value)]="generalSetting.title.size"numberOfFonts
+                                        [class]="'float-right'">
+                                </app-inputNumber>
                             </div>
                         </div>
                     </div>
@@ -113,7 +114,7 @@
                         <div class="settings--card">
                             <div class="row settings--card--header">
                                 <div class="col-sm-12">
-                                    Subtitle
+                                    Additional text
                                 </div>
                             </div>
                             <div class="row settings--card--body">
@@ -149,10 +150,10 @@
                                            [(colorPicker)]="generalSetting.subtitle.color"
                                     />
                                 </div>
-                                <div class="col-3 vertical-align">
+                                <div class="col-2 vertical-align">
                                     Size (px)
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <app-inputNumber
                                             [(value)]="generalSetting.subtitle.size"
                                             [class]="'float-right'">

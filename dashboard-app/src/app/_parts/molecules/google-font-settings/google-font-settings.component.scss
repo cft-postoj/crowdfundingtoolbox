@@ -22,7 +22,8 @@
     ::ng-deep .ngx-select__search.form-control {
         cursor: pointer;
         background: url('/assets/images/icons/add.svg') no-repeat;
-        padding-left: 30px!important;
+        padding-left: 50px!important;
+        height: 50px!important;
     }
     ::ng-deep .ngx-select__selected {
         background: rgba($aquaHaze, .5);

@@ -33,7 +33,6 @@ export class DropdownComponent {
                 }
             })
         }
-        console.log(this.currentValue)
     }
 
     onButtonClick(event) {

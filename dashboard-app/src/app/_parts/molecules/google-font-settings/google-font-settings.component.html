@@ -1,18 +1,5 @@
 <link [href]="'https://fonts.googleapis.com/css?family='+currentFonts | safe" rel="stylesheet">
-
-
 <div class="numberOfFonts">
-    <label for="numberOfFonts">Choose number of Google Fonts:</label>
-    <app-dropdown
-            [items]="numberOptions"
-            [title]="'Please, select number of fonts'"
-            [currentValue]="currentOptionValue"
-            id="numberOfFonts"
-            (currentValueChange)="countOfFonts($event)">
-    </app-dropdown>
-
-    <hr>
-    <label for="fontFamilyList">Choose app fonts:</label>
     <ngx-select [multiple]="true"
             [items]="fontFamilyStrings"
             [disabled]="false"
