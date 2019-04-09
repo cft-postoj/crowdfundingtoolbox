@@ -106,8 +106,10 @@
                         font-weight: 700;
                     }
                     &--body{
-                        [class*=col]{
-                            padding-top: 8px;
+                        > .row {
+                            > [class*=col] {
+                                padding-top: 8px;
+                            }
                         }
                     }
                 }
