@@ -20,23 +20,25 @@
                                 Colors
                             </div>
                         </div>
-                        <div class="settings--card--body row">
-                            <div *ngFor="let color of generalSetting.colors; let i = index"
-                                 class="col-3 col-xxl-2 colors color-picker--fixed">
-                                <div class="row">
-                                    <div class="col-9 pr-0">
-                                        <input class="btn color-picker--custom"
-                                               [style.background]="color"
-                                               [cpPosition]="'left'"
-                                               [cpMaxPresetColorsLength]="'25'"
-                                               [(colorPicker)]="color"
-                                               (colorPickerClose)="changeValueInArray(i , $event)"
-                                               readonly/>
-                                    </div>
-                                    <div class="col-3 pl-0 flex-center">
-                                        <span title="Delete color"
-                                              [inlineSVG]="'/assets/images/icons/delete.svg'"
-                                              [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div *ngFor="let color of generalSetting.colors; let i = index"
+                                     class="col-3 col-xxl-2 colors color-picker--fixed">
+                                    <div class="row">
+                                        <div class="col pr-0">
+                                            <input class="btn color-picker--custom"
+                                                   [style.background]="color"
+                                                   [cpPosition]="'left'"
+                                                   [cpMaxPresetColorsLength]="'25'"
+                                                   [(colorPicker)]="color"
+                                                   (colorPickerClose)="changeValueInArray(i , $event)"
+                                                   readonly/>
+                                        </div>
+                                        <div class="col-3 pl-2 flex-center">
+                                            <span title="Delete color"
+                                                  [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                                  [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +60,8 @@
                         <div class="settings--card--body">
                             <div class="row">
                                 <div class="col-12">
-                                    <app-google-font-settings [selectedValues]="generalSetting.fonts" (selectedValuesChange)="updateValues($event)"></app-google-font-settings>
+                                    <app-google-font-settings [selectedValues]="generalSetting.fonts"
+                                                              (selectedValuesChange)="updateValues($event)"></app-google-font-settings>
                                 </div>
                             </div>
                         </div>
@@ -71,48 +74,50 @@
                                 Headline text
                             </div>
                         </div>
-                        <div class="row settings--card--body">
-                            <div class="col-2 vertical-align">
-                                Font
-                            </div>
-                            <div class="col-4">
-                                <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
-                                              [class]="'classic default-border align-right'"
-                                              [title]="'family'"
-                                              [customFonts]="true"
-                                              [(currentValue)]="generalSetting.title.fontFamily">
-                                </app-dropdown>
-                            </div>
-                            <div class="col-2  vertical-align">
-                                Weight
-                            </div>
-                            <div class="col-4">
-                                <app-dropdown [items]="fontWeight"
-                                              [class]="'classic default-border align-right'"
-                                              [title]="'weight'"
-                                              [(currentValue)]="generalSetting.title.fontWeight">
-                                </app-dropdown>
-                            </div>
-                            <div class="col-2 vertical-align">
-                                Color
-                            </div>
-                            <div class="col-4 color-picker--fixed color-picker--simple">
-                                <input class="btn color-picker--custom"
-                                       [value]="generalSetting.title.color"
-                                       [style.background]="generalSetting.title.color"
-                                       [cpPosition]="'bottom'"
-                                       [cpPresetColors]="generalSetting.colors"
-                                       [(colorPicker)]="generalSetting.title.color"
-                                />
-                            </div>
-                            <div class="col-2 vertical-align">
-                                Size (px)
-                            </div>
-                            <div class="col-4">
-                                <app-inputNumber
-                                        [(value)]="generalSetting.title.size"numberOfFonts
-                                        [class]="'float-right'">
-                                </app-inputNumber>
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-2 vertical-align">
+                                    Font
+                                </div>
+                                <div class="col-4">
+                                    <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'family'"
+                                                  [customFonts]="true"
+                                                  [(currentValue)]="generalSetting.title.fontFamily">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-2  vertical-align">
+                                    Weight
+                                </div>
+                                <div class="col-4">
+                                    <app-dropdown [items]="fontWeight"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'weight'"
+                                                  [(currentValue)]="generalSetting.title.fontWeight">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-2 vertical-align">
+                                    Color
+                                </div>
+                                <div class="col-4 color-picker--fixed color-picker--simple">
+                                    <input class="btn color-picker--custom"
+                                           [value]="generalSetting.title.color"
+                                           [style.background]="generalSetting.title.color"
+                                           [cpPosition]="'bottom'"
+                                           [cpPresetColors]="generalSetting.colors"
+                                           [(colorPicker)]="generalSetting.title.color"
+                                    />
+                                </div>
+                                <div class="col-2 vertical-align">
+                                    Size (px)
+                                </div>
+                                <div class="col-4">
+                                    <app-inputNumber
+                                            [(value)]="generalSetting.title.size" numberOfFonts
+                                            [class]="'float-right'">
+                                    </app-inputNumber>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -124,48 +129,50 @@
                                     Additional text
                                 </div>
                             </div>
-                            <div class="row settings--card--body">
-                                <div class="col-2 vertical-align">
-                                    Font
-                                </div>
-                                <div class="col-4">
-                                    <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
-                                                  [class]="'classic default-border align-right'"
-                                                  [title]="'family'"
-                                                  [customFonts]="true"
-                                                  [(currentValue)]="generalSetting.subtitle.fontFamily">
-                                    </app-dropdown>
-                                </div>
-                                <div class="col-2  vertical-align">
-                                    Weight
-                                </div>
-                                <div class="col-4">
-                                    <app-dropdown [items]="fontWeight"
-                                                  [class]="'classic default-border align-right'"
-                                                  [title]="'weight'"
-                                                  [(currentValue)]="generalSetting.subtitle.fontWeight">
-                                    </app-dropdown>
-                                </div>
-                                <div class="col-2 vertical-align">
-                                    Color
-                                </div>
-                                <div class="col-4 color-picker--fixed color-picker--simple">
-                                    <input class="btn color-picker--custom"
-                                           [value]="generalSetting.subtitle.color"
-                                           [style.background]="generalSetting.subtitle.color"
-                                           [cpPosition]="'bottom'"
-                                           [cpPresetColors]="generalSetting.colors"
-                                           [(colorPicker)]="generalSetting.subtitle.color"
-                                    />
-                                </div>
-                                <div class="col-2 vertical-align">
-                                    Size (px)
-                                </div>
-                                <div class="col-4">
-                                    <app-inputNumber
-                                            [(value)]="generalSetting.subtitle.size"
-                                            [class]="'float-right'">
-                                    </app-inputNumber>
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <div class="col-2 vertical-align">
+                                        Font
+                                    </div>
+                                    <div class="col-4">
+                                        <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'family'"
+                                                      [customFonts]="true"
+                                                      [(currentValue)]="generalSetting.subtitle.fontFamily">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-2  vertical-align">
+                                        Weight
+                                    </div>
+                                    <div class="col-4">
+                                        <app-dropdown [items]="fontWeight"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'weight'"
+                                                      [(currentValue)]="generalSetting.subtitle.fontWeight">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Color
+                                    </div>
+                                    <div class="col-4 color-picker--fixed color-picker--simple">
+                                        <input class="btn color-picker--custom"
+                                               [value]="generalSetting.subtitle.color"
+                                               [style.background]="generalSetting.subtitle.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="generalSetting.colors"
+                                               [(colorPicker)]="generalSetting.subtitle.color"
+                                        />
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Size (px)
+                                    </div>
+                                    <div class="col-4">
+                                        <app-inputNumber
+                                                [(value)]="generalSetting.subtitle.size"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+                                    </div>
                                 </div>
                             </div>
                         </div>
