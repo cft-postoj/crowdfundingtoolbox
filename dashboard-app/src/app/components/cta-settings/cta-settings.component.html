@@ -72,14 +72,14 @@
                                 <div class="col-12 col-xxl-6">
                                     Inside
                                     <app-input-group [buttons]="paddingButtons"
-                                                     (buttonChange)="cta_widget.default.padding[$event.name] = $event.value">
+                                                     (buttonChange)="call_to_action.default.padding[$event.name] = $event.value">
 
                                     </app-input-group>
                                 </div>
                                 <div class="col-12 col-xxl-6">
                                     Outside
                                     <app-input-group [buttons]="marginButtons"
-                                                     (buttonChange)="cta_widget.default.margin[$event.name] = $event.value">
+                                                     (buttonChange)="call_to_action.default.margin[$event.name] = $event.value">
                                     </app-input-group>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                                                   [class]="'classic default-border align-right'"
                                                   [title]="'Choose font'"
                                                   [customFonts]="true"
-                                                  [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
+                                                  [(currentValue)]="call_to_action.default.fontSettings.fontWeight">
                                     </app-dropdown>
                                 </div>
                                 <div class="col-3 col-xxl-2 vertical-align">
@@ -111,7 +111,7 @@
                                     <app-dropdown [items]="fontWeight"
                                                   [class]="'classic default-border align-right'"
                                                   [title]="'weight'"
-                                                  [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
+                                                  [(currentValue)]="call_to_action.default.fontSettings.fontWeight">
                                     </app-dropdown>
                                 </div>
                                 <div class="col-3 col-xxl-2 vertical-align">
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="col-3 col-xxl-2 vertical-align">
                                     <app-radio-button-group [class]="'full-width'"
-                                                            [(currentValue)]="cta_widget.default.fontSettings.alignment"
+                                                            [(currentValue)]="call_to_action.default.fontSettings.alignment"
                                                             [radioButtons]="radioButtons"
                                     >
                                     </app-radio-button-group>
@@ -128,19 +128,19 @@
                                     Color
                                 </div>
                                 <div class="col col-xxl-2 color-picker--fixed color-picker--simple">
-                                    <input [value]="cta_widget.default.fontSettings.color"
+                                    <input [value]="call_to_action.default.fontSettings.color"
                                            class="btn color-picker--custom"
-                                           [style.background]="cta_widget.default.fontSettings.color"
+                                           [style.background]="call_to_action.default.fontSettings.color"
                                            [cpPosition]="'top'"
                                            [cpPresetColors]="generalSettings.colors"
-                                           [(colorPicker)]="cta_widget.default.fontSettings.color"/>
+                                           [(colorPicker)]="call_to_action.default.fontSettings.color"/>
                                 </div>
                                 <div class="col col-xxl-2 vertical-align">
                                     Size (px)
                                 </div>
                                 <div class="col col-xxl-2">
                                     <app-inputNumber
-                                            [(value)]="cta_widget.default.fontSettings.fontSize"
+                                            [(value)]="call_to_action.default.fontSettings.fontSize"
                                             [class]="'float-right'">
                                     </app-inputNumber>
                                 </div>
@@ -157,41 +157,41 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Fill'"
-                                                  [(checked)]="cta_widget.default.design.fill.active">
+                                                  [(checked)]="call_to_action.default.design.fill.active">
                                     </app-checkbox>
                                 </div>
                                 <div class="col-4 color-picker--fixed color-picker--simple"
-                                     *ngIf="cta_widget.default.design.fill.active">
-                                    <input [value]="cta_widget.default.design.fill.color"
+                                     *ngIf="call_to_action.default.design.fill.active">
+                                    <input [value]="call_to_action.default.design.fill.color"
                                            class="btn color-picker--custom"
-                                           [style.background]="cta_widget.default.design.fill.color"
+                                           [style.background]="call_to_action.default.design.fill.color"
                                            [cpPosition]="'top'"
                                            [cpPresetColors]="generalSettings.colors"
-                                           [(colorPicker)]="cta_widget.default.design.fill.color"/>
+                                           [(colorPicker)]="call_to_action.default.design.fill.color"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Border'"
-                                                  [(checked)]="cta_widget.default.design.border.active">
+                                                  [(checked)]="call_to_action.default.design.border.active">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="cta_widget.default.design.border.active">
+                                        *ngIf="call_to_action.default.design.border.active">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
-                                        <input [value]="cta_widget.default.design.border.color"
+                                        <input [value]="call_to_action.default.design.border.color"
                                                class="btn color-picker--custom"
-                                               [style.background]="cta_widget.default.design.border.color"
+                                               [style.background]="call_to_action.default.design.border.color"
                                                [cpPosition]="'top'"
                                                [cpPresetColors]="generalSettings.colors"
-                                               [(colorPicker)]="cta_widget.default.design.border.color"/>
+                                               [(colorPicker)]="call_to_action.default.design.border.color"/>
                                     </div>
                                     <div class="col-2 offset-1 vertical-align">
                                         Size (px)
                                     </div>
                                     <div class="col-2">
                                         <app-inputNumber [class]="'float-right'"
-                                                         [(value)]="cta_widget.default.design.border.size"></app-inputNumber>
+                                                         [(value)]="call_to_action.default.design.border.size"></app-inputNumber>
                                     </div>
                                 </ng-container>
                             </div>
@@ -199,22 +199,22 @@
                             <div class="row ">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Shadow'"
-                                                  [(checked)]="cta_widget.default.design.shadow.active">
+                                                  [(checked)]="call_to_action.default.design.shadow.active">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="cta_widget.default.design.shadow.active">
+                                        *ngIf="call_to_action.default.design.shadow.active">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
-                                        <input [value]="cta_widget.default.design.shadow.color"
+                                        <input [value]="call_to_action.default.design.shadow.color"
                                                class="btn color-picker--custom"
-                                               [style.background]="cta_widget.default.design.shadow.color"
+                                               [style.background]="call_to_action.default.design.shadow.color"
                                                [cpPosition]="'top'"
                                                [cpPresetColors]="generalSettings.colors"
-                                               [(colorPicker)]="cta_widget.default.design.shadow.color"/>
+                                               [(colorPicker)]="call_to_action.default.design.shadow.color"/>
                                     </div>
                                     <div class="col-5 vertical-align">
                                         <app-input-group [buttons]="shadowButtons"
-                                                         (buttonChange)="cta_widget.default.design.shadow[$event.name] = $event.value">
+                                                         (buttonChange)="call_to_action.default.design.shadow[$event.name] = $event.value">
                                         </app-input-group>
                                     </div>
                                 </ng-container>
@@ -233,12 +233,12 @@
                             <div class="row">
                                 <div class="col-3 vertical-align">
                                     <app-radio-button-group
-                                            [(currentValue)]="cta_widget.default.design.radius.active"
+                                            [(currentValue)]="call_to_action.default.design.radius.active"
                                             [radioButtons]="radiusButtons">
                                     </app-radio-button-group>
                                 </div>
                                 <ng-container
-                                        *ngIf="cta_widget.default.design.radius.active">
+                                        *ngIf="call_to_action.default.design.radius.active">
                                     <div class="col-3 vertical-align">
                                         <app-input-group [buttons]="allRadiusesButton"
                                                          (buttonChange)="writeRadiusValue($event.value)"
@@ -254,7 +254,7 @@
                                             </div>
                                             <div class="col-10">
                                                 <app-input-group [buttons]="specificRadiusButtons"
-                                                                 (buttonChange)="cta_widget.default.design.radius[$event.name] = $event.value"
+                                                                 (buttonChange)="call_to_action.default.design.radius[$event.name] = $event.value"
                                                                  [fill]="true"
                                                                  [class]="specificRadius?'active':''"
                                                                  (click)="setSpecificRadius(true)">
@@ -281,19 +281,19 @@
                                     <app-dropdown [class]="'classic default-border'"
                                                   [title]="'Choose font weight'"
                                                   [items]="fontWeight"
-                                                  [(currentValue)]="cta_widget.hover.fontSettings.fontWeight">
+                                                  [(currentValue)]="call_to_action.hover.fontSettings.fontWeight">
                                     </app-dropdown>
                                 </div>
                                 <div class="col-2 vertical-align">
                                     Color
                                 </div>
                                 <div class="col-4 color-picker--fixed color-picker--simple">
-                                    <input [value]="cta_widget.hover.fontSettings.color"
+                                    <input [value]="call_to_action.hover.fontSettings.color"
                                            class="btn color-picker--custom"
-                                           [style.background]="cta_widget.hover.fontSettings.color"
+                                           [style.background]="call_to_action.hover.fontSettings.color"
                                            [cpPosition]="'top'"
                                            [cpPresetColors]="generalSettings.colors"
-                                           [(colorPicker)]="cta_widget.hover.fontSettings.color"/>
+                                           [(colorPicker)]="call_to_action.hover.fontSettings.color"/>
                                 </div>
                             </div>
                         </div>
@@ -308,41 +308,41 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Fill'"
-                                                  [(checked)]="cta_widget.hover.design.fill.active">
+                                                  [(checked)]="call_to_action.hover.design.fill.active">
                                     </app-checkbox>
                                 </div>
                                 <div class="col-4 color-picker--fixed color-picker--simple"
-                                     *ngIf="cta_widget.hover.design.fill.active">
-                                    <input [value]="cta_widget.hover.design.fill.color"
+                                     *ngIf="call_to_action.hover.design.fill.active">
+                                    <input [value]="call_to_action.hover.design.fill.color"
                                            class="btn color-picker--custom"
-                                           [style.background]="cta_widget.hover.design.fill.color"
+                                           [style.background]="call_to_action.hover.design.fill.color"
                                            [cpPosition]="'top'"
                                            [cpPresetColors]="generalSettings.colors"
-                                           [(colorPicker)]="cta_widget.hover.design.fill.color"/>
+                                           [(colorPicker)]="call_to_action.hover.design.fill.color"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Border'"
-                                                  [(checked)]="cta_widget.hover.design.border.active">
+                                                  [(checked)]="call_to_action.hover.design.border.active">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="cta_widget.hover.design.border.active">
+                                        *ngIf="call_to_action.hover.design.border.active">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
-                                        <input [value]="cta_widget.hover.design.border.color"
+                                        <input [value]="call_to_action.hover.design.border.color"
                                                class="btn color-picker--custom"
-                                               [style.background]="cta_widget.hover.design.border.color"
+                                               [style.background]="call_to_action.hover.design.border.color"
                                                [cpPosition]="'top'"
                                                [cpPresetColors]="generalSettings.colors"
-                                               [(colorPicker)]="cta_widget.hover.design.border.color"/>
+                                               [(colorPicker)]="call_to_action.hover.design.border.color"/>
                                     </div>
                                     <div class="col-2 offset-1 vertical-align">
                                         Size (px)
                                     </div>
                                     <div class="col-2">
                                         <app-inputNumber [class]="'float-right'"
-                                                         [(value)]="cta_widget.hover.design.border.size"></app-inputNumber>
+                                                         [(value)]="call_to_action.hover.design.border.size"></app-inputNumber>
                                     </div>
                                 </ng-container>
                             </div>
@@ -350,22 +350,22 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Shadow'"
-                                                  [(checked)]="cta_widget.hover.design.shadow.active">
+                                                  [(checked)]="call_to_action.hover.design.shadow.active">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="cta_widget.hover.design.shadow.active">
+                                        *ngIf="call_to_action.hover.design.shadow.active">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
-                                        <input [value]="cta_widget.hover.design.shadow.color"
+                                        <input [value]="call_to_action.hover.design.shadow.color"
                                                class="btn color-picker--custom"
-                                               [style.background]="cta_widget.hover.design.shadow.color"
+                                               [style.background]="call_to_action.hover.design.shadow.color"
                                                [cpPosition]="'top'"
                                                [cpPresetColors]="generalSettings.colors"
-                                               [(colorPicker)]="cta_widget.hover.design.shadow.color"/>
+                                               [(colorPicker)]="call_to_action.hover.design.shadow.color"/>
                                     </div>
                                     <div class="col-5 vertical-align">
                                         <app-input-group [buttons]="shadowButtons"
-                                                         (buttonChange)="cta_widget.hover.design.shadow[$event.name] = $event.value">
+                                                         (buttonChange)="call_to_action.hover.design.shadow[$event.name] = $event.value">
                                         </app-input-group>
                                     </div>
                                 </ng-container>

@@ -12,7 +12,7 @@ import {DropdownItem} from "../../_models/dropdown-item";
 export class CtaSettingsComponent implements OnInit {
 
     public cta = 'Default';
-    public cta_widget: any = {
+    public call_to_action: any = {
         default: {
             padding: {
                 top: '20',
@@ -143,43 +143,38 @@ export class CtaSettingsComponent implements OnInit {
         this.fontFamily.push({title: "Oswald", value: "Oswald"})
 
         this.shadowButtons = [];
-        this.shadowButtons.push(new RadioButton("x", this.cta_widget.default.design.shadow.x, '', "X:"))
-        this.shadowButtons.push(new RadioButton("y", this.cta_widget.default.design.shadow.y, '', "Y:"))
-        this.shadowButtons.push(new RadioButton("b", this.cta_widget.default.design.shadow.b, '', "B:"))
+        this.shadowButtons.push(new RadioButton("x", this.call_to_action.default.design.shadow.x, '', "X:"))
+        this.shadowButtons.push(new RadioButton("y", this.call_to_action.default.design.shadow.y, '', "Y:"))
+        this.shadowButtons.push(new RadioButton("b", this.call_to_action.default.design.shadow.b, '', "B:"))
 
         this.allRadiusesButton.push(new RadioButton("all", 0, "/assets/images/icons/radius_AllTogether.svg"))
 
-        this.specificRadiusButtons.push(new RadioButton("tl", this.cta_widget.default.design.radius.tl, "/assets/images/icons/radius_LeftTop.svg"))
-        this.specificRadiusButtons.push(new RadioButton("tr", this.cta_widget.default.design.radius.tr, "/assets/images/icons/radius_RightTop.svg"))
-        this.specificRadiusButtons.push(new RadioButton("br", this.cta_widget.default.design.radius.br, "/assets/images/icons/radius_LeftBottom.svg"))
-        this.specificRadiusButtons.push(new RadioButton("bl", this.cta_widget.default.design.radius.bl, "/assets/images/icons/radius_LeftBottom.svg"))
+        this.specificRadiusButtons.push(new RadioButton("tl", this.call_to_action.default.design.radius.tl, "/assets/images/icons/radius_LeftTop.svg"))
+        this.specificRadiusButtons.push(new RadioButton("tr", this.call_to_action.default.design.radius.tr, "/assets/images/icons/radius_RightTop.svg"))
+        this.specificRadiusButtons.push(new RadioButton("br", this.call_to_action.default.design.radius.br, "/assets/images/icons/radius_LeftBottom.svg"))
+        this.specificRadiusButtons.push(new RadioButton("bl", this.call_to_action.default.design.radius.bl, "/assets/images/icons/radius_LeftBottom.svg"))
 
         this.radiusButtons.push(new RadioButton("active", false, "/assets/images/icons/radius_disable.svg"));
         this.radiusButtons.push(new RadioButton("disabled", true, "/assets/images/icons/radius_enable.svg"));
 
+        this.paddingButtons = [];
+        this.paddingButtons.push(new RadioButton("top", this.call_to_action.default.padding.top, "/assets/images/icons/padding_top.svg"))
+        this.paddingButtons.push(new RadioButton("right", this.call_to_action.default.padding.right, "/assets/images/icons/padding_right.svg"))
+        this.paddingButtons.push(new RadioButton("bottom", this.call_to_action.default.padding.bottom, "/assets/images/icons/padding_bottom.svg"))
+        this.paddingButtons.push(new RadioButton("left", this.call_to_action.default.padding.left, "/assets/images/icons/padding_left.svg"))
+
+        this.marginButtons = [];
+        this.marginButtons.push(new RadioButton("top", this.call_to_action.default.margin.top, "/assets/images/icons/margin_top.svg"))
+        this.marginButtons.push(new RadioButton("right", this.call_to_action.default.margin.right, "/assets/images/icons/margin_right.svg"))
+        this.marginButtons.push(new RadioButton("bottom", this.call_to_action.default.margin.bottom, "/assets/images/icons/margin_bot.svg"))
+        this.marginButtons.push(new RadioButton("left", this.call_to_action.default.margin.left, "/assets/images/icons/margin_left.svg"))
+
         this.calcSpecificRadius();
-        this.recreateRadioButtons();
     }
 
     closeEditWindow() {
         const targetUrl = this.router.url.split('/(' + Routing.RIGHT_OUTLET)[0];
         this.router.navigateByUrl(targetUrl);
-    }
-
-    recreateRadioButtons() {
-
-        this.paddingButtons = [];
-        this.paddingButtons.push(new RadioButton("top", this.cta_widget.default.padding.top, "/assets/images/icons/padding_top.svg"))
-        this.paddingButtons.push(new RadioButton("right", this.cta_widget.default.padding.right, "/assets/images/icons/padding_right.svg"))
-        this.paddingButtons.push(new RadioButton("bottom", this.cta_widget.default.padding.bottom, "/assets/images/icons/padding_bottom.svg"))
-        this.paddingButtons.push(new RadioButton("left", this.cta_widget.default.padding.left, "/assets/images/icons/padding_left.svg"))
-
-        this.marginButtons = [];
-        this.marginButtons.push(new RadioButton("top", this.cta_widget.default.margin.top, "/assets/images/icons/margin_top.svg"))
-        this.marginButtons.push(new RadioButton("right", this.cta_widget.default.margin.right, "/assets/images/icons/margin_right.svg"))
-        this.marginButtons.push(new RadioButton("bottom", this.cta_widget.default.margin.bottom, "/assets/images/icons/margin_bot.svg"))
-        this.marginButtons.push(new RadioButton("left", this.cta_widget.default.margin.left, "/assets/images/icons/margin_left.svg"))
-
     }
 
     setSpecificRadius(value: boolean) {
@@ -188,7 +183,7 @@ export class CtaSettingsComponent implements OnInit {
 
     writeRadiusValue(value) {
         this.specificRadiusButtons.forEach(rb => {
-            this.cta_widget.default.design.radius[rb.name] = value;
+            this.call_to_action.default.design.radius[rb.name] = value;
         })
         this.specificRadiusButtons.forEach(button => {
             button.value = value;
