@@ -41,10 +41,12 @@ export class GoogleFontSettingsComponent implements OnInit {
             data => {
                 if (data.items.length > 0) {
                     data.items.map((d, key) => {
-                        this.fontFamily.push({id: d.family, value: d.family});
-                        this.fontFamilyStrings.push(d.family);
-                        this.currentFonts += (this.currentFonts == '') ? d.family : '|' + d.family;
-                    })
+                        if (key < 100) { // only 100 fonts will be showed in list
+                            this.fontFamily.push({id: d.family, value: d.family});
+                            this.fontFamilyStrings.push(d.family);
+                            this.currentFonts += (this.currentFonts == '') ? d.family : '|' + d.family;
+                        }
+                    });
                     this.selectAction();
                 }
             }
@@ -89,7 +91,7 @@ export class GoogleFontSettingsComponent implements OnInit {
 
 
     public countOfFonts(e) {
-        this.numberGoogleFonts = e;
+        //this.numberGoogleFonts = e;
         this.fetchGoogleFonts();
     }
 
