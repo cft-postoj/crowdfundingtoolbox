@@ -1,0 +1,23 @@
+<div class="active bg-overlay"></div>
+<div class="active settings d-flex">
+    <div class="settings--head">
+        <b>WIDGET SETTINGS</b>
+        <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close"
+              class="settings--close">
+        </span>
+    </div>
+    <ng-container *ngIf="loading">
+        <app-loading [isLoading]="loading"></app-loading>
+    </ng-container>
+
+    <ng-container *ngIf="!loading">
+        <div class="settings--body">
+            <div class="settings--body--content">
+                <div class="settings--card--wrapper">
+
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <app-actions class="actions" [hidePreviewButton]="'true'"></app-actions>
+</div>

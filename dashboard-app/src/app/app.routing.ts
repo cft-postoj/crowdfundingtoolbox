@@ -15,6 +15,7 @@ import {CampaignEditComponent} from "./pages/campaigns/edit/campaignEdit.compone
 import {WidgetEditComponent} from "./pages/widget/widget-edit/widget-edit.component";
 import {GeneralSettingsComponent} from "./components/general-settings/general-settings.component";
 import {CtaSettingsComponent} from "./components/cta-settings/cta-settings.component";
+import {WidgetSettingsComponent} from "./components/widget-settings/widget-settings.component";
 
 export const appRoutes: Routes = [
     {
@@ -53,6 +54,10 @@ export const appRoutes: Routes = [
                 }, {
                     path: Routing.CTA,
                     component: CtaSettingsComponent,
+                    outlet: Routing.RIGHT_OUTLET
+                },{
+                    path: Routing.WIDGET,
+                    component: WidgetSettingsComponent,
                     outlet: Routing.RIGHT_OUTLET
                 }]
             },
