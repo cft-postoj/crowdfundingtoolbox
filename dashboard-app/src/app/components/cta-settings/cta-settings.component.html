@@ -89,56 +89,59 @@
                                 Font settings
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6 vertical-align">
-                                Family
-                            </div>
-                            <div class="col-6">
-                                <app-dropdown [items]="fontFamily"
-                                              [class]="'classic default-border align-right'"
-                                              [title]="'Choose font'"
-                                              [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
-                                </app-dropdown>
-                            </div>
-                            <div class="col-3 pt-2 vertical-align">
-                                Font weight
-                            </div>
-                            <div class="col-3 pt-2">
-                                <app-dropdown [items]="fontWeight"
-                                              [class]="'classic default-border align-right'"
-                                              [title]="'weight'"
-                                              [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
-                                </app-dropdown>
-                            </div>
-                            <div class="col-3 pt-2 vertical-align">
-                                Alignment
-                            </div>
-                            <div class="col-3 pt-2 vertical-align">
-                                <app-radio-button-group [class]="'full-width'"
-                                                        [(currentValue)]="cta_widget.default.fontSettings.alignment"
-                                                        [radioButtons]="radioButtons"
-                                >
-                                </app-radio-button-group>
-                            </div>
-                            <div class="col vertical-align">
-                                Color
-                            </div>
-                            <div class="col">
-                                <input [value]="cta_widget.default.fontSettings.color"
-                                       class="btn color-picker--custom"
-                                       [style.background]="cta_widget.default.fontSettings.color"
-                                       [cpPosition]="'top'"
-                                       [cpPresetColors]="colors"
-                                       [(colorPicker)]="cta_widget.default.fontSettings.color"/>
-                            </div>
-                            <div class="col vertical-align">
-                                Size (px)
-                            </div>
-                            <div class="col">
-                                <app-inputNumber
-                                        [(value)]="cta_widget.default.fontSettings.fontSize"
-                                        [class]="'float-right'">
-                                </app-inputNumber>
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-6 col-xxl-2 vertical-align">
+                                    Family
+                                </div>
+                                <div class="col-6 ">
+                                    <app-dropdown [items]="fontFamily"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'Choose font'"
+                                                  [customFonts]="true"
+                                                  [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-3 col-xxl-2 vertical-align">
+                                    Font weight
+                                </div>
+                                <div class="col-3 col-xxl-2">
+                                    <app-dropdown [items]="fontWeight"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'weight'"
+                                                  [(currentValue)]="cta_widget.default.fontSettings.fontWeight">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-3 col-xxl-2 vertical-align">
+                                    Alignment
+                                </div>
+                                <div class="col-3 col-xxl-2 vertical-align">
+                                    <app-radio-button-group [class]="'full-width'"
+                                                            [(currentValue)]="cta_widget.default.fontSettings.alignment"
+                                                            [radioButtons]="radioButtons"
+                                    >
+                                    </app-radio-button-group>
+                                </div>
+                                <div class="col col-xxl-2 vertical-align">
+                                    Color
+                                </div>
+                                <div class="col col-xxl-2">
+                                    <input [value]="cta_widget.default.fontSettings.color"
+                                           class="btn color-picker--custom"
+                                           [style.background]="cta_widget.default.fontSettings.color"
+                                           [cpPosition]="'top'"
+                                           [cpPresetColors]="colors"
+                                           [(colorPicker)]="cta_widget.default.fontSettings.color"/>
+                                </div>
+                                <div class="col col-xxl-2 vertical-align">
+                                    Size (px)
+                                </div>
+                                <div class="col col-xxl-2">
+                                    <app-inputNumber
+                                            [(value)]="cta_widget.default.fontSettings.fontSize"
+                                            [class]="'float-right'">
+                                    </app-inputNumber>
+                                </div>
                             </div>
                         </div>
                     </div>

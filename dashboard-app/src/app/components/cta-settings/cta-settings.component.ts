@@ -16,16 +16,16 @@ export class CtaSettingsComponent implements OnInit {
     public cta_widget: any = {
         default: {
             padding: {
-                top: '0',
+                top: '20',
                 right: '0',
-                bottom: '0',
+                bottom: '20',
                 left: '0'
             },
             margin: {
-                top: '0',
-                right: '0',
-                bottom: '0',
-                left: '0'
+                top: '15',
+                right: 'auto',
+                bottom: '15',
+                left: 'auto'
             },
             fontSettings: {
                 fontFamily: 'Roboto',
@@ -114,9 +114,9 @@ export class CtaSettingsComponent implements OnInit {
         this.fontWeight.push({title: "Light", value: 100});
         this.fontWeight.push({title: "Medium", value: 400});
 
-        this.fontFamily.push({title:"TODO",value:0})
-        this.fontFamily.push({title:"TODO42",value:0})
-        this.fontFamily.push({title:"42TODO",value:0})
+        this.fontFamily.push({title:"Roboto",value:'Roboto'})
+        this.fontFamily.push({title:'Indie Flower',value:'Indie Flower'})
+        this.fontFamily.push({title:"Oswald",value:"Oswald"})
 
         this.recreateRadioButtons();
     }

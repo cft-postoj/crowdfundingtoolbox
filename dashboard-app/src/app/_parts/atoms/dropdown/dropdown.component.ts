@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {DropdownItem} from "../../../_models/dropdown-item";
+import {GoogleFontsService} from "../../../_services/google-fonts.service";
 
 @Component({
     selector: 'app-dropdown',
@@ -23,18 +24,23 @@ export class DropdownComponent {
     active: boolean;
     selectedItem = new DropdownItem("default", null);
     defaultDropdown = new DropdownItem("default", null);
+    private currentFonts: number | "IPv4" | "IPv6" | string;
 
-    constructor() {
+    constructor(private googleFontsService: GoogleFontsService) {
         this.active = false;
     }
 
     ngOnInit() {
-        console.log(this.customFonts)
         if (this.items) {
             this.items.forEach(item => {
                 if (item.value == this.currentValue) {
                     this.selectedItem = item;
                 }
+            })
+        }
+        if (this.customFonts) {
+            this.items.map((item:DropdownItem) => {
+                this.currentFonts += (this.currentFonts == '') ? item.value : '|' + item.value;
             })
         }
     }
