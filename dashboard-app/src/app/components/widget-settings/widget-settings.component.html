@@ -14,7 +14,28 @@
         <div class="settings--body">
             <div class="settings--body--content">
                 <div class="settings--card--wrapper">
+                    <div class="settings--card">
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-12 bold">
+                                    Paddings and margins
+                                </div>
+                                <div class="col-12 col-xxl-6">
+                                    Paddings
+                                    <app-input-group [buttons]="paddingButtons"
+                                                     (buttonChange)="this.widget_settings.padding[$event.name] = $event.value">
 
+                                    </app-input-group>
+                                </div>
+                                <div class="col-12 col-xxl-6">
+                                    Margins
+                                    <app-input-group [buttons]="marginButtons"
+                                                     (buttonChange)="this.widget_settings.margin[$event.name] = $event.value">
+                                    </app-input-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
