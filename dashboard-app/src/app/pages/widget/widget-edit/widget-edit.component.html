@@ -70,16 +70,16 @@
                             </div>
                             <div class="row mt-2">
                                 <app-radio-button class="col-12"
-                                        [name]="'backgroundType'"
-                                        [radioButtons]="backgroundTypesButtons"
-                                        [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
-                                        [colClass]="'col'"></app-radio-button>
+                                                  [name]="'backgroundType'"
+                                                  [radioButtons]="backgroundTypesButtons"
+                                                  [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
+                                                  [colClass]="'col'"></app-radio-button>
                             </div>
                             <div class="row"
                                  *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
                                   widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
                                 <app-dragAndDrop class="col-12"
-                                        [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image">
+                                                 [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image">
                                 </app-dragAndDrop>
                             </div>
                             <div class="row"
@@ -164,41 +164,53 @@
                             </div>
                         </div>
                         <div class="settings--card">
-                             <div class="row">
-                                <span class="col font-weight-bold">Design</span>
-                            </div>
-                            <div class="row">
-                                <div class="col-3 vertical-align">
-                                    Text color
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <span class="col font-weight-bold">Design</span>
                                 </div>
-                                <div class="col-4 color-picker--simple">
-                                    <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
-                                           class="btn color-picker--custom"
-                                           [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
-                                           [cpPosition]="'bottom'"
-                                           [cpPresetColors]="colors"
-                                           [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.color"/>
-                                </div>
-                                <div class="col-2 vertical-align ">
-                                    Size (px)
-                                </div>
-                                <div class="col-3">
-                                    <app-inputNumber
-                                            [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
-                                            [class]="'float-right'">
-                                    </app-inputNumber>
-                                </div>
-                                <div class="col-0"></div>
-                                <div class="col-3 vertical-align">
-                                    Background color
-                                </div>
-                                <div class="col-4 pt-2">
-                                    <input [value]="widget.settings[deviceType].widget_settings.general.text_background"
-                                           class="btn color-picker--custom"
-                                           [style.background]="widget.settings[deviceType].widget_settings.general.text_background"
-                                           [cpPosition]="'top'"
-                                           [cpPresetColors]="colors"
-                                           [(colorPicker)]="widget.settings[deviceType].widget_settings.general.text_background"/>
+                                <div class="row">
+                                    <div class="col-3 vertical-align">
+                                        Font family
+                                    </div>
+                                    <div class="col-3 color-picker--simple">
+                                        <app-dropdown [items]="fontFamily"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'Choose font'"
+                                                      [customFonts]="true"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontFamily">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Text color
+                                    </div>
+                                    <div class="col-3 color-picker--simple">
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.color"/>
+                                    </div>
+                                    <div class="col-3 vertical-align ">
+                                        Size (px)
+                                    </div>
+                                    <div class="col-3">
+                                        <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Background color
+                                    </div>
+                                    <div class="col-3 pt-2">
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.text_background"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.text_background"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.text_background"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +219,7 @@
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(3)}">
                     <div class="row collapsible--header" (click)="openTab(3)">
                         <div class="col-11">
-                            CALL TO ACTION BUTTON
+                            ADDITIONAL TEXT
                         </div>
                         <div class="col-1 vertical-align">
                             <label class="button-expand"
@@ -216,7 +228,115 @@
                             </label>
                         </div>
                     </div>
-                    <div [ngbCollapse]="!isOpened(3)">
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(3)">
+                        <div class="settings--card">
+                            <span class="row">
+                                <div class="col font-weight-bold">Additional text</div>
+                            </span>
+                            <div class="row editInput">
+                                <div class="col-12">
+                                    <input #widgetAdditional id="widgetAdditional"
+                                           placeholder="Please add additional text"
+                                           [(ngModel)]="widget.settings[deviceType].widget_settings.additional_text.text"
+                                           maxlength="120">
+                                    <span class="actualLength">
+                                         {{widget.settings[deviceType].widget_settings.additional_text.text ? widget.settings[deviceType].widget_settings.additional_text.text?.length: "0"}} / {{widgetAdditional?.maxLength}}
+                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <div class="col font-weight-bold">Position</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 col-xxl-2 vertical-align">
+                                        Alignment
+                                    </div>
+                                    <div class="col-8 col-xxl-2 vertical-align">
+                                        <app-radio-button-group [class]="'full-width'"
+                                                                [(currentValue)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.alignment"
+                                                                [radioButtons]="radioButtons">
+                                        </app-radio-button-group>
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Margin
+                                    </div>
+                                    <div class="col-10 col-xxl-6 pt-2 pt-xxl-0">
+                                        <app-input-group [buttons]="marginAdditionalText"
+                                                         (buttonChange)="widget.settings[deviceType].widget_settings.additional_text.text_margin[$event.name] = $event.value">
+                                        </app-input-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <span class="col font-weight-bold">Design</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 vertical-align">
+                                        Font family
+                                    </div>
+                                    <div class="col-3 color-picker--simple">
+                                        <app-dropdown [items]="fontFamily"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'Choose font'"
+                                                      [customFonts]="true"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontFamily">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Text color
+                                    </div>
+                                    <div class="col-3 color-picker--simple color-picker--fixed">
+                                        <input [value]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"/>
+                                    </div>
+                                    <div class="col-3 vertical-align ">
+                                        Size (px)
+                                    </div>
+                                    <div class="col-3">
+                                        <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontSize"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Background color
+                                    </div>
+                                    <div class="col-3 pt-2">
+                                        <input [value]="widget.settings[deviceType].widget_settings.additional_text.text_background"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.additional_text.text_background"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.text_background"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(4)}">
+                    <div class="row collapsible--header" (click)="openTab(4)">
+                        <div class="col-11">
+                            CALL TO ACTION BUTTON
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(4)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div [ngbCollapse]="!isOpened(4)">
                         <div class="col-12">
                             <div class="row">
                                 <div class="btn-group-vertical col-12 mb-3">
@@ -241,9 +361,9 @@
                                 <div class="row editInput">
                                     <div class="col">
                                         <input #cta id="cta_button"
-                                           placeholder="Please add text for button"
-                                           [(ngModel)]="widget.settings[deviceType].cta.text"
-                                           maxlength="60">
+                                               placeholder="Please add text for button"
+                                               [(ngModel)]="widget.settings[deviceType].cta.text"
+                                               maxlength="60">
                                         <span class="actualLength">
                                            {{widget.settings[deviceType].cta.text?widget.settings[deviceType].cta.text.length:0}} / {{cta?.maxLength}}
                                          </span>
@@ -294,48 +414,50 @@
                                         Font settings
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col vertical-align">
-                                        Alignment
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col vertical-align">
+                                            Alignment
+                                        </div>
+                                        <div class="col vertical-align">
+                                            <app-radio-button-group [class]="'full-width'"
+                                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
+                                                                    [radioButtons]="radioButtons"
+                                            >
+                                            </app-radio-button-group>
+                                        </div>
+                                        <div class="col vertical-align">
+                                            Font weight
+                                        </div>
+                                        <div class="col">
+                                            <app-dropdown [items]="fontWeight"
+                                                          [class]="'classic default-border align-right'"
+                                                          [title]="'weight'"
+                                                          [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontWeight">
+                                            </app-dropdown>
+                                        </div>
                                     </div>
-                                    <div class="col vertical-align">
-                                        <app-radio-button-group [class]="'full-width'"
-                                                                [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
-                                                                [radioButtons]="radioButtons"
-                                        >
-                                        </app-radio-button-group>
-                                    </div>
-                                    <div class="col vertical-align">
-                                        Font weight
-                                    </div>
-                                    <div class="col">
-                                        <app-dropdown [items]="fontWeight"
-                                                      [class]="'classic default-border align-right'"
-                                                      [title]="'weight'"
-                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontWeight">
-                                        </app-dropdown>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col vertical-align">
-                                        Color
-                                    </div>
-                                    <div class="col">
-                                        <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"/>
-                                    </div>
-                                    <div class="col vertical-align">
-                                        Size (px)
-                                    </div>
-                                    <div class="col">
-                                        <app-inputNumber
-                                                [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize"
-                                                [class]="'float-right'">
-                                        </app-inputNumber>
+                                    <div class="row">
+                                        <div class="col vertical-align">
+                                            Color
+                                        </div>
+                                        <div class="col">
+                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"/>
+                                        </div>
+                                        <div class="col vertical-align">
+                                            Size (px)
+                                        </div>
+                                        <div class="col">
+                                            <app-inputNumber
+                                                    [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize"
+                                                    [class]="'float-right'">
+                                            </app-inputNumber>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -445,25 +567,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(4)}">
-                    <div class="row collapsible--header" (click)="openTab(4)">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(5)}">
+                    <div class="row collapsible--header" (click)="openTab(5)">
                         <div class="col-11">
                             MONETIZATION
                         </div>
                         <div class="col-1 vertical-align">
                             <label class="button-expand"
                                    type="button"
-                                   [attr.aria-expanded]="isOpened(4)" aria-controls="targeting-settings">
+                                   [attr.aria-expanded]="isOpened(5)" aria-controls="targeting-settings">
                             </label>
                         </div>
                     </div>
 
-                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(4)">
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(5)">
                         <div class="row">
                             <app-checkbox class="col"
-                                    [(checked)]="widget.settings[deviceType].payment_settings.active"
-                                    [name]="'Widget with monetization'"
-                                    disabled
+                                          [(checked)]="widget.settings[deviceType].payment_settings.active"
+                                          [name]="'Widget with monetization'"
+                                          disabled
                             ></app-checkbox>
                         </div>
                         <ng-container *ngIf="widget.settings[deviceType].payment_settings.active">
@@ -548,7 +670,7 @@
                                             </div>
                                             <div class="col-3">
                                                 <app-inputNumber
-                                                        [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
+                                                        [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
                                                         (valueChange)="updateNumberOfSinglePayments($event)">
                                                 </app-inputNumber>
                                             </div>
@@ -580,19 +702,19 @@
                                 </div>
                                 <div class="row pt-2">
                                     <app-checkbox class="col"
-                                            [name]="'Set default active price'"
-                                            [(checked)]="widget.settings[deviceType].payment_settings.default_price.active">
+                                                  [name]="'Set default active price'"
+                                                  [(checked)]="widget.settings[deviceType].payment_settings.default_price.active">
                                     </app-checkbox>
                                 </div>
                                 <ng-container *ngIf="widget.settings[deviceType].payment_settings.default_price.active">
-                                     <div class="row pt-2">
+                                    <div class="row pt-2">
                                         <app-dropdown class="classic col"
                                                       [class]="'classic mr15'"
                                                       [items]="createActivePriceOptions()"
                                                       [title]="'Choose default price'"
                                                       [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.value"
                                         ></app-dropdown>
-                                     </div>
+                                    </div>
                                     <div class="row pt-2">
                                         <div class="col bold">
                                             Colors
@@ -643,7 +765,7 @@
                                     <div class="row"
                                          *ngIf="widget.settings[deviceType].additional_text.active">
                                         <angular-editor class="col"
-                                                [(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>
+                                                        [(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>
                                     </div>
                                 </ng-container>
                             </div>

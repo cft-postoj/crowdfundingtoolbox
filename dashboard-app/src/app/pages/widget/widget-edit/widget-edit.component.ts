@@ -35,6 +35,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     public paddingButtons: RadioButton[]= [];
     public marginButtons: RadioButton[]= [];
     public marginText: RadioButton[]= [];
+    private marginAdditionalText: RadioButton[]= [];
     public shadowButtons: RadioButton[] =[];
     public fontWeight: DropdownItem[] = [];
     public positionSettings: DropdownItem[] = [];
@@ -47,6 +48,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     private pricesOptions: DropdownItem[];
     public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'];
+     fontFamily = []
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -73,7 +75,8 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         this.id = this.route.snapshot.paramMap.get("widgetId");
 
         this.widgetService.getById(this.id).subscribe((response: any) => {
-            this.widget = response.data;
+//            TODO: change backend to support additional_text and then remove this mock (uncomment next line)
+//             this.widget = response.data;
             this.loading = false;
 
             this.fontWeight.push({title:"Bold",value:"bold"});
@@ -86,7 +89,9 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
             this.radioButtons.push( new RadioButton("left","left",assetsUrl + "images/icons/left.svg"))
             this.radioButtons.push( new RadioButton("center","center",assetsUrl + "images/icons/center.svg"))
             this.radioButtons.push( new RadioButton("right","right",assetsUrl + "images/icons/right.svg"))
-
+            this.fontFamily.push({title: "Roboto", value: 'Roboto'})
+            this.fontFamily.push({title: 'Indie Flower', value: 'Indie Flower'})
+            this.fontFamily.push({title: "Oswald", value: "Oswald"})
             this.recreateRadioButtons();
 
         }, (error) => {
@@ -195,6 +200,13 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         this.marginText.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.general.text_margin.right, assetsUrl + "images/icons/margin_right.svg"))
         this.marginText.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.general.text_margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
         this.marginText.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.general.text_margin.left, assetsUrl + "images/icons/margin_left.svg"))
+
+
+        this.marginAdditionalText = [];
+        this.marginAdditionalText.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.top, assetsUrl + "images/icons/margin_top.svg"))
+        this.marginAdditionalText.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.right, assetsUrl + "images/icons/margin_right.svg"))
+        this.marginAdditionalText.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
+        this.marginAdditionalText.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.left, assetsUrl + "images/icons/margin_left.svg"))
 
         this.marginButtons = [];
         this.marginButtons.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.top, assetsUrl + "images/icons/margin_top.svg"))

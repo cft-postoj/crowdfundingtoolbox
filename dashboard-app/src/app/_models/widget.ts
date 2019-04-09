@@ -43,6 +43,36 @@ export class Widget {
                         value: ''
                     },
                 },
+                additional_text: {
+                    text: 'additional text',
+                    fontSettings: {
+                        fontFamily: 'Roboto',
+                        fontWeight: 'bold',
+                        alignment: 'center',
+                        color: '#FFFFFF',
+                        fontSize: 24
+                    },
+                    background: {
+                        type: 'image-overlay',
+                        image: {
+                            id: 1,
+                            url: ''
+                        },
+                        color: '#1F47BB',
+                        opacity: 33
+                    },
+                    text_background: '#fff',
+                    text_margin: {
+                        top: '0',
+                        right: 'auto',
+                        bottom: '0',
+                        left: 'auto'
+                    },
+                    common_text: {
+                        active: true,
+                        value: ''
+                    },
+                },
                 call_to_action: {
                     default: {
                         padding: {
@@ -223,6 +253,36 @@ export class Widget {
             payment_widget: false,
             widget_settings: {
                 general: {
+                    fontSettings: {
+                        fontFamily: 'Roboto',
+                        fontWeight: 'bold',
+                        alignment: 'center',
+                        color: '#FFFFFF',
+                        fontSize: 24
+                    },
+                    background: {
+                        type: 'image-overlay',
+                        image: {
+                            id: 1,
+                            url: ''
+                        },
+                        color: '#1F47BB',
+                        opacity: 33
+                    },
+                    text_background: '#fff',
+                    text_margin: {
+                        top: '0',
+                        right: 'auto',
+                        bottom: '0',
+                        left: 'auto'
+                    },
+                    common_text: {
+                        active: true,
+                        value: ''
+                    },
+                },
+                additional_text: {
+                    text: 'additional text',
                     fontSettings: {
                         fontFamily: 'Roboto',
                         fontWeight: 'bold',
@@ -451,6 +511,36 @@ export class Widget {
                         left: 'auto'
                     },
                     text_background: '#fff',
+                    common_text: {
+                        active: true,
+                        value: ''
+                    },
+                },
+                additional_text: {
+                    text: 'additional text',
+                    fontSettings: {
+                        fontFamily: 'Roboto',
+                        fontWeight: 'bold',
+                        alignment: 'center',
+                        color: '#FFFFFF',
+                        fontSize: 24
+                    },
+                    background: {
+                        type: 'image-overlay',
+                        image: {
+                            id: 1,
+                            url: ''
+                        },
+                        color: '#1F47BB',
+                        opacity: 33
+                    },
+                    text_background: '#fff',
+                    text_margin: {
+                        top: '0',
+                        right: 'auto',
+                        bottom: '0',
+                        left: 'auto'
+                    },
                     common_text: {
                         active: true,
                         value: ''
