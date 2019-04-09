@@ -82,4 +82,9 @@ export class GeneralSettingsComponent implements OnInit {
             ngxSelected.value
         )
     }
+
+    updateSettings() {
+
+
+    }
 }

@@ -186,5 +186,8 @@
             </div>
         </div>
     </ng-container>
-    <app-actions class="actions" [hidePreviewButton]="'true'"></app-actions>
+    <app-actions
+            class="actions"
+            (submit)="updateSettings()"
+            [hidePreviewButton]="'true'"></app-actions>
 </div>
