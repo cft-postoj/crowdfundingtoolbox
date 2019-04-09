@@ -55,8 +55,8 @@ export class CampaignsSettingsComponent  implements OnInit {
         // });
 
         this.campaignEndRadioButtons = [];
-        this.campaignEndRadioButtons.push(new RadioButton("With selected date", false))
-        this.campaignEndRadioButtons.push(new RadioButton("When donation goal is reached", true))
+        this.campaignEndRadioButtons.push(new RadioButton("Date", false))
+        this.campaignEndRadioButtons.push(new RadioButton("Donation goal", true))
 
         this.paymentTypeRadioButtons = [];
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value))
