@@ -1,7 +1,7 @@
 <div (click)="active = !active" [class]="(active) ? 'selectWrapper active' : 'selectWrapper'">
-    <select name={{name}} class={{class}} (change)="onButtonClick($event)" [compareWith]="byTitle" [(ngModel)]="selectedItem">
+    <select [ngStyle]="customFonts && {'font-family':currentValue}" name={{name}} class={{class}} (change)="onButtonClick($event)" [compareWith]="byTitle" [(ngModel)]="selectedItem">
         <option [ngValue]="defaultDropdown" disabled selected hidden>{{title}}</option>
-        <option
+        <option [ngStyle]="customFonts && {'font-family':item.value}"
                 *ngFor="let item of items"
                 [ngValue]="item"
                 [class]="item.title"

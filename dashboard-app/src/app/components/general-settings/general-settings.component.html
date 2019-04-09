@@ -22,17 +22,23 @@
                         </div>
                         <div class="settings--card--body row">
                             <div *ngFor="let color of generalSetting.colors; let i = index"
-                                 class="col-3 col-xxl-2 colors pr-0 color-picker--fixed">
-                                <input class="btn color-picker--custom"
-                                       [style.background]="color"
-                                       [cpPosition]="'left'"
-                                       [cpMaxPresetColorsLength]="'25'"
-                                       [(colorPicker)]="color"
-                                       (colorPickerClose)="changeValueInArray(i , $event)"
-                                       readonly/>
-                                <span class="vertical-align" title="Delete color"
-                                      [inlineSVG]="'/assets/images/icons/delete.svg'"
-                                      [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
+                                 class="col-3 col-xxl-2 colors color-picker--fixed">
+                                <div class="row">
+                                    <div class="col-9 pr-0">
+                                        <input class="btn color-picker--custom"
+                                               [style.background]="color"
+                                               [cpPosition]="'left'"
+                                               [cpMaxPresetColorsLength]="'25'"
+                                               [(colorPicker)]="color"
+                                               (colorPickerClose)="changeValueInArray(i , $event)"
+                                               readonly/>
+                                    </div>
+                                    <div class="col-3 pl-0 flex-center">
+                                        <span title="Delete color"
+                                              [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                              [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-2">
                         <span class="add-button vertical-align" title="Add new color"
@@ -73,6 +79,7 @@
                                 <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
                                               [class]="'classic default-border align-right'"
                                               [title]="'family'"
+                                              [customFonts]="true"
                                               [(currentValue)]="generalSetting.title.fontFamily">
                                 </app-dropdown>
                             </div>
@@ -125,6 +132,7 @@
                                     <app-dropdown [items]="generateDropdowns(generalSetting.fonts)"
                                                   [class]="'classic default-border align-right'"
                                                   [title]="'family'"
+                                                  [customFonts]="true"
                                                   [(currentValue)]="generalSetting.subtitle.fontFamily">
                                     </app-dropdown>
                                 </div>

@@ -14,6 +14,9 @@ export class DropdownComponent {
     @Input() items: DropdownItem[];
     @Input() title: string;
 
+    //set true if you want to change font of each option. Font family for option is value of dropdownItem
+    @Input() customFonts:boolean = false;
+
     @Input() currentValue;
     @Output() currentValueChange = new EventEmitter<any>();
 
@@ -26,6 +29,7 @@ export class DropdownComponent {
     }
 
     ngOnInit() {
+        console.log(this.customFonts)
         if (this.items) {
             this.items.forEach(item => {
                 if (item.value == this.currentValue) {
