@@ -5,6 +5,7 @@
         <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close"
               class="settings--close">
         </span>
+
     </div>
     <ng-container *ngIf="loading">
         <app-loading [isLoading]="loading"></app-loading>
@@ -186,6 +187,7 @@
             </div>
         </div>
     </ng-container>
+    <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
     <app-actions
             class="actions"
             (submit)="updateSettings()"

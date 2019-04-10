@@ -4,15 +4,22 @@ import {Routing} from '../../constants/config.constants';
 import {DropdownItem} from "../../_models/dropdown-item";
 import {GeneralSettings} from "../../_models/general-settings";
 import {GeneralSettingsService} from "../../_services/general-settings.service";
+import {ComponentCommunicationService} from "../../_services/component-communication.service";
 
 @Component({
     selector: 'app-general-settings',
     templateUrl: './general-settings.component.html',
     styleUrls: ['./general-settings.component.scss', '../settings/settings.component.scss']
 })
+
 export class GeneralSettingsComponent implements OnInit {
 
     public opened: number;
+
+    submitted: boolean = false;
+    alertOpen: boolean = false;
+    alertMessage: string = '';
+    alertType: string = '';
 
     public loading = false;
 
@@ -21,33 +28,16 @@ export class GeneralSettingsComponent implements OnInit {
 
     public fontWeight: DropdownItem[] = [];
 
-    // public generalSetting = {
-    //     colors :  ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
-    //         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'],
-    //     fonts: ['Open Sans', 'Lato', 'Oswald'],
-    //     title:
-    //         {
-    //             fontWeight: '9E0B0F',
-    //             color: "#eee",
-    //             size: '24'
-    //         },
-    //     subtitle: {
-    //         fontWeight: 400,
-    //         color: "#ED1C24",
-    //         size: '20'
-    //     },
-    // };
-
     public generalSetting = new GeneralSettings();
 
-    constructor(private router: Router, private settingsService: GeneralSettingsService) {
+    constructor(private router: Router, private settingsService: GeneralSettingsService, private componentComService: ComponentCommunicationService) {
+        this.fetchSettings();
     }
 
     ngOnInit() {
         this.fontWeight.push({title: "Bold", value: "bold"});
         this.fontWeight.push({title: "Light", value: 100});
         this.fontWeight.push({title: "Medium", value: 400});
-        console.log(this.generalSetting.font_settings_additional_text)
     }
 
     public isOpened(tabNumber: number) {
@@ -88,9 +78,29 @@ export class GeneralSettingsComponent implements OnInit {
         )
     }
 
+    fetchSettings() {
+        this.settingsService.getGeneralPageSettings().subscribe(result => {
+            console.log(result.fonts)
+            if (result.colors != null && result.fonts != null) {
+                this.generalSetting.colors = result.colors;
+                this.generalSetting.fonts = result.fonts;
+                this.generalSetting.font_settings_headline_text = result.font_settings_headline_text;
+                this.generalSetting.font_settings_additional_text = result.font_settings_additional_text;
+            }
+        });
+    }
+
     updateSettings() {
+        this.submitted = true;
        this.settingsService.updateGeneralPageSettings(this.generalSetting).subscribe(result => {
-           console.log(result);
+           let targetUrl = Routing.CONFIGURATION_FULL_PATH;
+           this.alertOpen = true;
+           this.alertType = 'success';
+           this.alertMessage = 'Successfully updated General Page Settings.';
+           setTimeout(() => {
+               this.router.navigateByUrl(targetUrl);
+           }, 2000)
+
        });
     }
 }

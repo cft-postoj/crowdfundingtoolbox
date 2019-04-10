@@ -9,9 +9,11 @@ import {delay} from "q";
     templateUrl: './google-font-settings.component.html',
     styleUrls: ['./google-font-settings.component.scss']
 })
-export class GoogleFontSettingsComponent implements OnInit {
+export class GoogleFontSettingsComponent implements OnInit, OnChanges {
 
     @ViewChild('fontFamilyList') fontFamilyRef: any;
+
+
 
     public numberOptions: DropdownItem[] = [];
     public fontFamily: any = [];
@@ -31,6 +33,10 @@ export class GoogleFontSettingsComponent implements OnInit {
     ngOnInit() {
         this.initNumberOptions();
         this.fetchGoogleFonts();
+    }
+
+    ngOnChanges() {
+        console.log(this.selectedValues)
     }
 
     private fetchGoogleFonts() {

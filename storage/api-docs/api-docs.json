@@ -560,6 +560,19 @@
             }
         },
         "/api/backoffice/crowdfunding-settings/general-page-settings": {
+            "get": {
+                "tags": [
+                    "GENERAL SETTINGS"
+                ],
+                "summary": "Crowdfunding Settings",
+                "description": "Get general page settings.",
+                "operationId": "crowdFundingSettingsGetGeneralPageSettings",
+                "responses": {
+                    "200": {
+                        "description": "Successfull!"
+                    }
+                }
+            },
             "put": {
                 "tags": [
                     "GENERAL SETTINGS"

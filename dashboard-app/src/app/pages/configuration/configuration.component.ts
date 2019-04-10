@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Routing } from '../../constants/config.constants';
 import { Router } from '@angular/router';
 
