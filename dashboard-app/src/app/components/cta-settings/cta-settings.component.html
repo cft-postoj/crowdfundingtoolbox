@@ -30,40 +30,6 @@
                 </div>
                 <div class="settings--card--wrapper" *ngIf="cta=='Default'">
                     <div class="settings--card">
-                        <div class="row">
-                            <span class="col font-weight-bold">Button text</span>
-                        </div>
-                        <div class="row editInput">
-                            <div class="col">
-                                <input #cta id="cta_button"
-                                       placeholder="Please add text for button"
-                                       [(ngModel)]="cta_global.text"
-                                       maxlength="60">
-                                <span class="actualLength">
-                                       {{cta_global.text ? cta_global.text.length : 0}} / {{cta?.maxLength}}
-                                     </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="settings--card">
-                        <div class="row">
-                            <div class="col">
-                                URL
-                            </div>
-                        </div>
-                        <div class="editInput row">
-                            <div class="col">
-                                <input #cta_url id="cta_url"
-                                       placeholder="Please add url"
-                                       [(ngModel)]="cta_global.url"
-                                       maxlength="2000">
-                                <span class="actualLength">
-                                       {{cta_global.url ? cta_global.url.length : 0}} / {{cta_url?.maxLength}}
-                                     </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="settings--card">
                         <div class="settings--card--body">
                             <div class="row">
                                 <div class="col-12 bold">
@@ -101,7 +67,7 @@
                                                   [class]="'classic default-border align-right'"
                                                   [title]="'Choose font'"
                                                   [customFonts]="true"
-                                                  [(currentValue)]="call_to_action.default.fontSettings.fontWeight">
+                                                  [(currentValue)]="call_to_action.default.fontSettings.fontFamily">
                                     </app-dropdown>
                                 </div>
                                 <div class="col-3 col-xxl-2 vertical-align">
@@ -157,11 +123,11 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Fill'"
-                                                  [(checked)]="call_to_action.default.design.fill.active">
+                                                  [(checked)]="call_to_action.default.design.fill.selected">
                                     </app-checkbox>
                                 </div>
                                 <div class="col-4 color-picker--fixed color-picker--simple"
-                                     *ngIf="call_to_action.default.design.fill.active">
+                                     *ngIf="call_to_action.default.design.fill.selected">
                                     <input [value]="call_to_action.default.design.fill.color"
                                            class="btn color-picker--custom"
                                            [style.background]="call_to_action.default.design.fill.color"
@@ -173,11 +139,11 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Border'"
-                                                  [(checked)]="call_to_action.default.design.border.active">
+                                                  [(checked)]="call_to_action.default.design.border.selected">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="call_to_action.default.design.border.active">
+                                        *ngIf="call_to_action.default.design.border.selected">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
                                         <input [value]="call_to_action.default.design.border.color"
                                                class="btn color-picker--custom"
@@ -199,11 +165,11 @@
                             <div class="row ">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Shadow'"
-                                                  [(checked)]="call_to_action.default.design.shadow.active">
+                                                  [(checked)]="call_to_action.default.design.shadow.selected">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="call_to_action.default.design.shadow.active">
+                                        *ngIf="call_to_action.default.design.shadow.selected">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
                                         <input [value]="call_to_action.default.design.shadow.color"
                                                class="btn color-picker--custom"
@@ -233,12 +199,12 @@
                             <div class="row">
                                 <div class="col-3 vertical-align">
                                     <app-radio-button-group
-                                            [(currentValue)]="call_to_action.default.design.radius.active"
+                                            [(currentValue)]="call_to_action.default.design.radius.selected"
                                             [radioButtons]="radiusButtons">
                                     </app-radio-button-group>
                                 </div>
                                 <ng-container
-                                        *ngIf="call_to_action.default.design.radius.active">
+                                        *ngIf="call_to_action.default.design.radius.selected">
                                     <div class="col-3 vertical-align">
                                         <app-input-group [buttons]="allRadiusesButton"
                                                          (buttonChange)="writeRadiusValue($event.value)"
@@ -308,11 +274,11 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Fill'"
-                                                  [(checked)]="call_to_action.hover.design.fill.active">
+                                                  [(checked)]="call_to_action.hover.design.fill.selected">
                                     </app-checkbox>
                                 </div>
                                 <div class="col-4 color-picker--fixed color-picker--simple"
-                                     *ngIf="call_to_action.hover.design.fill.active">
+                                     *ngIf="call_to_action.hover.design.fill.selected">
                                     <input [value]="call_to_action.hover.design.fill.color"
                                            class="btn color-picker--custom"
                                            [style.background]="call_to_action.hover.design.fill.color"
@@ -324,11 +290,11 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Border'"
-                                                  [(checked)]="call_to_action.hover.design.border.active">
+                                                  [(checked)]="call_to_action.hover.design.border.selected">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="call_to_action.hover.design.border.active">
+                                        *ngIf="call_to_action.hover.design.border.selected">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
                                         <input [value]="call_to_action.hover.design.border.color"
                                                class="btn color-picker--custom"
@@ -350,11 +316,11 @@
                             <div class="row">
                                 <div class="col-3">
                                     <app-checkbox [name]="'Shadow'"
-                                                  [(checked)]="call_to_action.hover.design.shadow.active">
+                                                  [(checked)]="call_to_action.hover.design.shadow.selected">
                                     </app-checkbox>
                                 </div>
                                 <ng-container
-                                        *ngIf="call_to_action.hover.design.shadow.active">
+                                        *ngIf="call_to_action.hover.design.shadow.selected">
                                     <div class="col-4 color-picker--fixed color-picker--simple">
                                         <input [value]="call_to_action.hover.design.shadow.color"
                                                class="btn color-picker--custom"
@@ -376,5 +342,9 @@
             </div>
         </div>
     </div>
-    <app-actions class="actions" [hidePreviewButton]="'true'"></app-actions>
+    <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+    <app-actions
+            class="actions"
+            (submit)="updateSettings()"
+            [hidePreviewButton]="'true'"></app-actions>
 </div>

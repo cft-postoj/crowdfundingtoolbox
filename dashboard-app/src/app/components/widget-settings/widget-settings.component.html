@@ -14,6 +14,41 @@
         <div class="settings--body">
             <div class="settings--body--content">
                 <div class="settings--card--wrapper">
+                    CTA
+                    <div class="settings--card">
+                        <div class="row">
+                            <span class="col font-weight-bold">Button text</span>
+                        </div>
+                        <div class="row editInput">
+                            <div class="col">
+                                <input #cta id="cta_button"
+                                       placeholder="Please add text for button"
+                                       [(ngModel)]="cta_global.text"
+                                       maxlength="60">
+                                <span class="actualLength">
+                                       {{cta_global.text ? cta_global.text.length : 0}} / {{cta?.maxLength}}
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings--card">
+                        <div class="row">
+                            <div class="col">
+                                URL
+                            </div>
+                        </div>
+                        <div class="editInput row">
+                            <div class="col">
+                                <input #cta_url id="cta_url"
+                                       placeholder="Please add url"
+                                       [(ngModel)]="cta_global.url"
+                                       maxlength="2000">
+                                <span class="actualLength">
+                                       {{cta_global.url ? cta_global.url.length : 0}} / {{cta_url?.maxLength}}
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="settings--card">
                         <div class="settings--card--body">
                             <div class="row">
