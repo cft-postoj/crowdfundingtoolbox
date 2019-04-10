@@ -3,6 +3,10 @@ import {Routing} from "../../constants/config.constants";
 import {Router} from "@angular/router";
 import {RadioButton} from "../../_parts/atoms/radio-button/radio-button";
 import {DropdownItem} from "../../_models/dropdown-item";
+import {CtaSettings} from "../../_models/cta-settings";
+import {GeneralSettings} from "../../_models/general-settings";
+import {GeneralSettingsService} from "../../_services/general-settings.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-cta-settings',
@@ -11,109 +15,17 @@ import {DropdownItem} from "../../_models/dropdown-item";
 })
 export class CtaSettingsComponent implements OnInit {
 
+    public generalSettings = new GeneralSettings();
+
+    submitted: boolean = false;
+    alertOpen: boolean = false;
+    alertMessage: string = '';
+    alertType: string = '';
+
+
     public cta = 'Default';
-    public call_to_action: any = {
-        default: {
-            padding: {
-                top: '20',
-                right: '0',
-                bottom: '20',
-                left: '0'
-            },
-            margin: {
-                top: '15',
-                right: 'auto',
-                bottom: '15',
-                left: 'auto'
-            },
-            fontSettings: {
-                fontFamily: 'Roboto',
-                fontWeight: 'bold',
-                alignment: 'center',
-                color: '#FFFFFF',
-                fontSize: 24
-            },
-            design: {
-                fill: {
-                    active: true,
-                    color: '#B71100',
-                    opacity: 100
-                },
-                border: {
-                    active: false,
-                    color: '#B71100',
-                    size: 2,
-                    opacity: 0
-                },
-                shadow: {
-                    active: false,
-                    color: '#B71100',
-                    x: 2,
-                    y: 2,
-                    b: 2,
-                    opacity: 15
-                },
-                radius: {
-                    active: true,
-                    tl: 3,
-                    tr: 4,
-                    br: 2,
-                    bl: 1
-                },
+    public call_to_action = new CtaSettings();
 
-            },
-        },
-        hover: {
-            type: 'fade',
-            fontSettings: {
-                fontWeight: 'bold',
-                color: '#FFFFFF'
-            },
-            design: {
-                fill: {
-                    active: true,
-                    color: '#B71100',
-                    opacity: 100
-                },
-                border: {
-                    active: false,
-                    color: '#B71100',
-                    size: 2,
-                    opacity: 0
-                },
-                shadow: {
-                    active: false,
-                    color: '#B71100',
-                    x: 2,
-                    y: 2,
-                    b: 2,
-                    opacity: 15
-                },
-            },
-        }
-    };
-    public cta_global = {
-        text: "Poporte nás",
-        url: "https://podpora.postoj.sk"
-    };
-
-    //TODO: get generalSettings from backend
-    public generalSettings = {
-        colors: ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
-            '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'],
-        fonts: ['Open Sans', 'Lato', 'Oswald'],
-        title:
-            {
-                fontWeight: '9E0B0F',
-                color: "#eee",
-                size: '24'
-            },
-        subtitle: {
-            fontWeight: 400,
-            color: "#ED1C24",
-            size: '20'
-        },
-    };
 
     public paddingButtons: RadioButton[] = [];
     public marginButtons: RadioButton[] = [];
@@ -126,7 +38,9 @@ export class CtaSettingsComponent implements OnInit {
     public radiusButtons: RadioButton[] = [];
     private specificRadius: boolean;
 
-    constructor(public router: Router) {
+    constructor(public router: Router, private settingsService: GeneralSettingsService) {
+        this.fetchGeneralSettings();
+        this.fetchCtaSettings();
     }
 
     ngOnInit() {
@@ -138,9 +52,9 @@ export class CtaSettingsComponent implements OnInit {
         this.fontWeight.push({title: "Light", value: 100});
         this.fontWeight.push({title: "Medium", value: 400});
 
-        this.fontFamily.push({title: "Roboto", value: 'Roboto'})
-        this.fontFamily.push({title: 'Indie Flower', value: 'Indie Flower'})
-        this.fontFamily.push({title: "Oswald", value: "Oswald"})
+        this.generalSettings.fonts.map((val, key) => {
+            this.fontFamily.push({title: val, value: val});
+        });
 
         this.shadowButtons = [];
         this.shadowButtons.push(new RadioButton("x", this.call_to_action.default.design.shadow.x, '', "X:"))
@@ -194,12 +108,37 @@ export class CtaSettingsComponent implements OnInit {
         let firstValue;
         let result = false;
         this.specificRadiusButtons.forEach(rb => {
-            firstValue = firstValue? firstValue : rb.value;
+            firstValue = firstValue ? firstValue : rb.value;
             if (rb.value !== firstValue) {
                 result = true;
             }
         })
         this.setSpecificRadius(result)
+    }
+
+    fetchGeneralSettings() {
+        this.settingsService.getGeneralPageSettings().subscribe(response => {
+            this.generalSettings = response;
+        })
+    }
+
+    fetchCtaSettings() {
+        this.settingsService.getCtaSettings().subscribe(response => {
+           this.call_to_action = response;
+        });
+    }
+
+    updateSettings() {
+        this.submitted = true;
+        this.settingsService.updateCtaSettings(this.call_to_action).subscribe(response => {
+            let targetUrl = Routing.CONFIGURATION_FULL_PATH;
+            this.alertOpen = true;
+            this.alertType = 'success';
+            this.alertMessage = 'Successfully updated CTA Settings.';
+            setTimeout(() => {
+                this.router.navigateByUrl(targetUrl);
+            }, 2000)
+        });
     }
 
 }

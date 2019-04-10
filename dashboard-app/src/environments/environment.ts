@@ -32,7 +32,9 @@ export const environment = {
     translationsUrl: '/translations',
     translationsAllUrl: '/translations/all',
 
-    widgetsUrl: '/widgets'
+    widgetsUrl: '/widgets',
+
+    cftSettings: '/crowdfunding-settings'
 
 
 };
