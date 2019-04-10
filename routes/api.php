@@ -18,6 +18,7 @@ header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-Requested-With, Origin, Authorization');
 
+
 // Backoffice routes
 Route::group([
     'prefix' => 'backoffice'
@@ -79,6 +80,8 @@ Route::group([
         Route::get('crowdfunding-settings/fonts', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
         Route::get('crowdfunding-settings/general-page-settings', 'BackOfficeAPI\CampaignsConfigurationController@getGeneralPageSettings');
         Route::get('crowdfunding-settings/cta-settings', 'BackOfficeAPI\CampaignsConfigurationController@getCtaSettings');
+        Route::get('crowdfunding-settings/widgets-settings', 'BackOfficeAPI\CampaignsConfigurationController@getWidgetSettings');
+
 
         Route::put('crowdfunding-settings/general-page-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateGeneralPageSettings');
         Route::put('crowdfunding-settings/cta-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateCallToActionSettings');

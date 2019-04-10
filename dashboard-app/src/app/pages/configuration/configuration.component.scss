@@ -2,16 +2,16 @@
 @import "../../../sass/mixins";
 .configurationPage {
   background: $white;
-  height: 705px;
+  height: 100vh;
   color: $outer-space;
   text-align: center;
   padding: 39px 0;
   @media screen and (min-height: 750px) and (max-height: 800px) {
-    height: 600px;
+    //height: 600px;
     margin-top: 30px;
   }
   @media screen and (max-height: 749px) {
-    height: 580px;
+    //height: 580px;
     margin-top: 20px;
   }
   b {

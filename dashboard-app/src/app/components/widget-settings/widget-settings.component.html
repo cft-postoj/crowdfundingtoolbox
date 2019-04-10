@@ -14,7 +14,31 @@
         <div class="settings--body">
             <div class="settings--body--content">
                 <div class="settings--card--wrapper">
-                    CTA
+                    <h5>Headline text</h5>
+                    <div class="settings--card">
+                        <div class="row editInput">
+                            <div class="col">
+                                <angular-editor
+                                        [(ngModel)]="widget_settings.general.headline_text.text"
+                                        [config]="{placeholder: 'Write headline text here, please', editable: true}"
+                                ></angular-editor>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Additional text</h5>
+                    <div class="settings--card">
+                        <div class="row editInput">
+                            <div class="col">
+                                <angular-editor
+                                        [(ngModel)]="widget_settings.general.additional_text.text"
+                                        [config]="{placeholder: 'Write additional text here, please', editable: true}"
+                                ></angular-editor>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Call To Action widgets settings</h5>
                     <div class="settings--card">
                         <div class="row">
                             <span class="col font-weight-bold">Button text</span>
@@ -23,10 +47,10 @@
                             <div class="col">
                                 <input #cta id="cta_button"
                                        placeholder="Please add text for button"
-                                       [(ngModel)]="cta_global.text"
+                                       [(ngModel)]="widget_settings.general.cta.text"
                                        maxlength="60">
                                 <span class="actualLength">
-                                       {{cta_global.text ? cta_global.text.length : 0}} / {{cta?.maxLength}}
+                                       {{widget_settings.general.cta.text ? widget_settings.general.cta.text.length : 0}} / {{cta?.maxLength}}
                                      </span>
                             </div>
                         </div>
@@ -41,14 +65,15 @@
                             <div class="col">
                                 <input #cta_url id="cta_url"
                                        placeholder="Please add url"
-                                       [(ngModel)]="cta_global.url"
+                                       [(ngModel)]="widget_settings.general.cta.url"
                                        maxlength="2000">
                                 <span class="actualLength">
-                                       {{cta_global.url ? cta_global.url.length : 0}} / {{cta_url?.maxLength}}
+                                       {{widget_settings.general.cta.url ? widget_settings.general.cta.url.length : 0}} / {{cta_url?.maxLength}}
                                      </span>
                             </div>
                         </div>
                     </div>
+                    <h5>Other settings</h5>
                     <div class="settings--card">
                         <div class="settings--card--body">
                             <div class="row">
@@ -58,14 +83,14 @@
                                 <div class="col-12 col-xxl-6">
                                     Paddings
                                     <app-input-group [buttons]="paddingButtons"
-                                                     (buttonChange)="this.widget_settings.padding[$event.name] = $event.value">
+                                                     (buttonChange)="widget_settings.general.padding[$event.name] = $event.value">
 
                                     </app-input-group>
                                 </div>
                                 <div class="col-12 col-xxl-6">
                                     Margins
                                     <app-input-group [buttons]="marginButtons"
-                                                     (buttonChange)="this.widget_settings.margin[$event.name] = $event.value">
+                                                     (buttonChange)="widget_settings.general.margin[$event.name] = $event.value">
                                     </app-input-group>
                                 </div>
                             </div>
@@ -75,5 +100,9 @@
             </div>
         </div>
     </ng-container>
-    <app-actions class="actions" [hidePreviewButton]="'true'"></app-actions>
+    <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+    <app-actions
+            class="actions"
+            (submit)="updateSettings()"
+            [hidePreviewButton]="'true'"></app-actions>
 </div>
