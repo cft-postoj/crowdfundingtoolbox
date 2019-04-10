@@ -24,7 +24,7 @@ export class DropdownComponent {
     active: boolean;
     selectedItem = new DropdownItem("default", null);
     defaultDropdown = new DropdownItem("default", null);
-    private currentFonts: number | "IPv4" | "IPv6" | string;
+    public currentFonts: number | "IPv4" | "IPv6" | string;
 
     constructor(private googleFontsService: GoogleFontsService) {
         this.active = false;

@@ -14,7 +14,8 @@ import {environment} from 'environments/environment';
     styleUrls: ['../../../../../sass/classes.scss', './widgetSettings.component.scss']
 })
 
-export class WidgetSettingsComponent {
+//all functionality is replaced into others component. Component is not deleted only because there can be some useful logic, that can be reused in others components
+export class WidgetSettingsComponentOld {
 
     @Input()
     public campaign: Campaign;

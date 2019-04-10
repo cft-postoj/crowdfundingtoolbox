@@ -12,6 +12,7 @@ export class WidgetSettingsComponent implements OnInit {
 
     public paddingButtons: RadioButton[] = [];
     public marginButtons: RadioButton[] = [];
+    loading = true;
 
     public widget_settings={
         padding: {
