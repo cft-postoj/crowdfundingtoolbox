@@ -1,13 +1,12 @@
 const googleApiKey = 'YOUR_API_KEY';
-const yourDomain = 'YOUR_URL';
 
 export const environment = {
 
     production: true,
 
-    apiUrl: 'https://' + yourDomain + '/api',
-    backOfficeUrl:  'https://' + yourDomain + '/api/backoffice',
-    authServerUrl: 'https://' + yourDomain + '/api/backoffice' ,
+    apiUrl: 'https://app.crowdfundingtoolbox.news/api',
+    backOfficeUrl:  'https://app.crowdfundingtoolbox.news/api/backoffice',
+    authServerUrl: 'https://app.crowdfundingtoolbox.news/api/backoffice' ,
 
     fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + googleApiKey,
 
@@ -29,5 +28,7 @@ export const environment = {
     translationsUrl: '/translations',
     translationsAllUrl: '/translations/all',
 
-    widgetsUrl: '/widgets'
+
+    widgetsUrl: '/widgets',
+    cftSettings: '/crowdfunding-settings'
 };
