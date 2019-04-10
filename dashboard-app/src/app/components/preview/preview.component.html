@@ -39,8 +39,7 @@
         <div [ngStyle]="getBackgroundStyle()" [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
             <div [ngStyle]="getOverlayStyle()"></div>
             <div [ngStyle]="getBodyStyle()">
-                <div [ngStyle]="getHeadlineTextStyle()">
-                    {{widget.settings[deviceType].headline_text}}
+                <div [ngStyle]="getHeadlineTextStyle()" [innerHTML]="widget.settings[deviceType].headline_text">
                 </div>
                 <!-- CTA -->
                 <div [ngStyle]="getButtonContainerStyles()">

@@ -127,15 +127,12 @@
                             <span class="row">
                                 <div class="col font-weight-bold">Headline text</div>
                             </span>
-                            <div class="row editInput">
-                                <div class="col-12">
-                                    <input #widgetHeadline id="widgetHeadline"
-                                           placeholder="Please add headline"
-                                           [(ngModel)]="widget.settings[deviceType].headline_text"
-                                           maxlength="120">
-                                    <span class="actualLength">
-                                         {{widget.settings[deviceType].headline_text ? widget.settings[deviceType].headline_text?.length: "0"}} / {{widgetHeadline?.maxLength}}
-                                     </span>
+                            <div class="settings--card--body">
+                                <div class="row editInput">
+                                    <div class="col-12">
+                                        <angular-editor class="angular-editor--simple"
+                                                        [(ngModel)]="widget.settings[deviceType].headline_text"></angular-editor>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +180,7 @@
                                     <div class="col-3 vertical-align">
                                         Text color
                                     </div>
-                                    <div class="col-3 color-picker--simple">
+                                    <div class="col-3 color-picker--simple color-picker--fixed ">
                                         <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
                                                class="btn color-picker--custom"
                                                [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
@@ -203,7 +200,7 @@
                                     <div class="col-3 vertical-align">
                                         Background color
                                     </div>
-                                    <div class="col-3 pt-2">
+                                    <div class="col-3 color-picker--simple color-picker--fixed">
                                         <input [value]="widget.settings[deviceType].widget_settings.general.text_background"
                                                class="btn color-picker--custom"
                                                [style.background]="widget.settings[deviceType].widget_settings.general.text_background"
@@ -235,13 +232,8 @@
                             </span>
                             <div class="row editInput">
                                 <div class="col-12">
-                                    <input #widgetAdditional id="widgetAdditional"
-                                           placeholder="Please add additional text"
-                                           [(ngModel)]="widget.settings[deviceType].widget_settings.additional_text.text"
-                                           maxlength="120">
-                                    <span class="actualLength">
-                                         {{widget.settings[deviceType].widget_settings.additional_text.text ? widget.settings[deviceType].widget_settings.additional_text.text?.length: "0"}} / {{widgetAdditional?.maxLength}}
-                                     </span>
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].widget_settings.additional_text.text"></angular-editor>
                                 </div>
                             </div>
                         </div>
@@ -280,7 +272,7 @@
                                     <div class="col-3 vertical-align">
                                         Font family
                                     </div>
-                                    <div class="col-3 color-picker--simple">
+                                    <div class="col-3">
                                         <app-dropdown [items]="fontFamily"
                                                       [class]="'classic default-border align-right'"
                                                       [title]="'Choose font'"
@@ -311,7 +303,7 @@
                                     <div class="col-3 vertical-align">
                                         Background color
                                     </div>
-                                    <div class="col-3 pt-2">
+                                    <div class="col-3 color-picker--simple color-picker--fixed">
                                         <input [value]="widget.settings[deviceType].widget_settings.additional_text.text_background"
                                                class="btn color-picker--custom"
                                                [style.background]="widget.settings[deviceType].widget_settings.additional_text.text_background"
@@ -581,12 +573,14 @@
                     </div>
 
                     <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(5)">
-                        <div class="row">
-                            <app-checkbox class="col"
-                                          [(checked)]="widget.settings[deviceType].payment_settings.active"
-                                          [name]="'Widget with monetization'"
-                                          disabled
-                            ></app-checkbox>
+                        <div class="settings--card">
+                            <div class="row">
+                                <app-checkbox class="col"
+                                              [(checked)]="widget.settings[deviceType].payment_settings.active"
+                                              [name]="'Widget with monetization'"
+                                              disabled
+                                ></app-checkbox>
+                            </div>
                         </div>
                         <ng-container *ngIf="widget.settings[deviceType].payment_settings.active">
                             <div class="settings--card">
@@ -764,7 +758,7 @@
                                     </div>
                                     <div class="row"
                                          *ngIf="widget.settings[deviceType].additional_text.active">
-                                        <angular-editor class="col"
+                                        <angular-editor class="angular-editor--simple"
                                                         [(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>
                                     </div>
                                 </ng-container>

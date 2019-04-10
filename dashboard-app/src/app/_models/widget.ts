@@ -19,7 +19,7 @@ export class Widget {
                         fontFamily: 'Roboto',
                         fontWeight: 'bold',
                         alignment: 'center',
-                        color: '#FFFFFF',
+                        color: '#f00',
                         fontSize: 24
                     },
                     background: {
@@ -49,7 +49,7 @@ export class Widget {
                         fontFamily: 'Roboto',
                         fontWeight: 'bold',
                         alignment: 'center',
-                        color: '#FFFFFF',
+                        color: '#fa',
                         fontSize: 24
                     },
                     background: {
@@ -257,7 +257,7 @@ export class Widget {
                         fontFamily: 'Roboto',
                         fontWeight: 'bold',
                         alignment: 'center',
-                        color: '#FFFFFF',
+                        color: '#f00',
                         fontSize: 24
                     },
                     background: {
@@ -492,7 +492,7 @@ export class Widget {
                         fontFamily: 'Roboto',
                         fontWeight: 'bold',
                         alignment: 'center',
-                        color: '#FFFFFF',
+                        color: '#f00',
                         fontSize: 24
                     },
                     background: {
