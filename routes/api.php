@@ -61,6 +61,8 @@ Route::group([
 
     Route::post('register', 'API\UserService@create');
 
+    Route::get('test', 'BackOfficeAPI\WidgetsController@getGeneralSettings');
+
     Route::group(['middleware' => ['jwt.verify']], function () {
         // Create new user - only admin role can do this
 

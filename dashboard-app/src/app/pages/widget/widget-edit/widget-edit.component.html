@@ -201,12 +201,12 @@
                                         Background color
                                     </div>
                                     <div class="col-3 color-picker--simple color-picker--fixed">
-                                        <input [value]="widget.settings[deviceType].widget_settings.general.text_background"
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
                                                class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.general.text_background"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
                                                [cpPosition]="'top'"
                                                [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.text_background"/>
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"/>
                                     </div>
                                 </div>
                             </div>
