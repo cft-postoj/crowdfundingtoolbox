@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const googleApiKey = 'YOUR_API_KEY';
+const googleApiKey = 'AIzaSyA9p_o601-50SPOBkXFIkAnAzTx7RRn_UI';
 
 export const environment = {
 
