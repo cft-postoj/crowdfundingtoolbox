@@ -68,6 +68,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public deviceTypeButtons: RadioButton[] = [];
     public deviceTypes = devices;
 
+    public scale:number = 50;
+
     public iframeCode = iframeCode;
     private subscription: Subscription;
 
@@ -257,18 +259,41 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getHeadlineTextStyle() {
+        const headlineText = this.widget.settings[this.deviceType].widget_settings.general;
         let dynamicStyle = {
-            'text-align': this.widget.settings[this.deviceType].widget_settings.general.fontSettings.alignment,
-            'font-size': this.widget.settings[this.deviceType].widget_settings.general.fontSettings.fontSize + 'px',
-            'color': this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color,
-            fontFamily: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.fontFamily,
+            'text-align': headlineText.fontSettings.alignment,
+            'font-size': headlineText.fontSettings.fontSize + 'px',
+            'color': headlineText.fontSettings.color,
+            fontFamily: headlineText.fontSettings.fontFamily,
             width: this.widget.settings[this.deviceType].additional_settings.textContainer.text.width,
-            display: this.widget.settings[this.deviceType].widget_settings.general.text_display,
+            display: headlineText.text_display,
 
-            margin: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.top) + ' ' +
-                this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.right) + ' ' +
-                this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.bottom) + ' ' +
-                this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.left)
+            margin: this.addPx(headlineText.text_margin.top) + ' ' +
+                this.addPx(headlineText.text_margin.right) + ' ' +
+                this.addPx(headlineText.text_margin.bottom) + ' ' +
+                this.addPx(headlineText.text_margin.left)
+        }
+        let result = {...dynamicStyle};
+        return result;
+    }
+
+    getAdditionalTextStyle() {
+        const additionalText = this.widget.settings[this.deviceType].widget_settings.additional_text;
+        if (!additionalText){
+            return;
+        }
+        let dynamicStyle = {
+            'text-align': additionalText.fontSettings.alignment,
+            'font-size': additionalText.fontSettings.fontSize + 'px',
+            'color': additionalText.fontSettings.color,
+            fontFamily: additionalText.fontSettings.fontFamily,
+            width: this.widget.settings[this.deviceType].additional_settings.textContainer.text.width,
+            display: additionalText.text_display,
+
+            margin: this.addPx(additionalText.text_margin.top) + ' ' +
+                this.addPx(additionalText.text_margin.right) + ' ' +
+                this.addPx(additionalText.text_margin.bottom) + ' ' +
+                this.addPx(additionalText.text_margin.left)
         }
         let result = {...dynamicStyle};
         return result;

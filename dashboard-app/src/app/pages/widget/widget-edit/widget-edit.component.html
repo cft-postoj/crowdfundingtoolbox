@@ -750,16 +750,16 @@
                                           </div>
                                       </div>-->
                                     <div class="row mt-3">
-                                        <div class="col-10 bold">Monetization text</div>
-                                        <div class="col-2">
-                                            <app-switcher [id]="'additional'"
-                                                          [(checked)]="widget.settings[deviceType].additional_text.active"></app-switcher>
-                                        </div>
+                                        <div class="col-12 bold">Monetization text
+                                            <app-switcher class="float-right" [id]="'additional'"
+                                                          [(checked)]="widget.settings[deviceType].additional_text.active"></app-switcher></div>
                                     </div>
                                     <div class="row"
                                          *ngIf="widget.settings[deviceType].additional_text.active">
-                                        <angular-editor class="angular-editor--simple"
-                                                        [(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>
+                                        <div class="col">
+                                            <angular-editor class="angular-editor--simple"
+                                                            [(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>
+                                        </div>
                                     </div>
                                 </ng-container>
                             </div>

@@ -6,15 +6,25 @@
         [inlineSVG]="'assets/images/icons/preview_close.svg'"
   ></span>
     <div class="header container">
+    <div class="header container">
         <div class="row">
             <div class="col-2 vertical-align">
                  PREVIEW MODE
             </div>
-            <div *ngIf="campaignId" class="col-2 offset-3 vertical-align">
-                <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType" [class]="'small'">
-                </app-radio-button-group>
+            <div class="col-2 offset-3 vertical-align">
+                <ng-container *ngIf="campaignId">
+                    <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType" [class]="'small'">
+                    </app-radio-button-group>
+                </ng-container>
             </div>
-            <div class="col-4">
+            <div class="col-1 offset-2 flex-center">
+                <label for="scale">Scale</label>
+            </div>
+            <div class="col-2">
+                <app-inputNumber id="scale"
+                        [(value)]="scale"
+                        [class]="'float-right'">
+                </app-inputNumber>
             </div>
         </div>
     </div>
@@ -33,13 +43,15 @@
     <!--</iframe>-->
 
     <!-- iframe encapsulated TODO -->
-    <iframe [hidden]="loading" #iframe frameborder="1" width="100%" height="100%" class="{{deviceType}}"></iframe>
+    <iframe [ngStyle]="{'transform': 'scale('+scale/100+')'}" [hidden]="loading" #iframe frameborder="0" width="100%" height="100%" class="{{deviceType}}"></iframe>
     <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
         <link [href]="'https://fonts.googleapis.com/css?family=' + widget.settings[deviceType].widget_settings.general.fontSettings.fontFamily | safe" rel="stylesheet">
         <div [ngStyle]="getBackgroundStyle()" [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
             <div [ngStyle]="getOverlayStyle()"></div>
             <div [ngStyle]="getBodyStyle()">
                 <div [ngStyle]="getHeadlineTextStyle()" [innerHTML]="widget.settings[deviceType].headline_text">
+                </div>
+                <div [ngStyle]="getAdditionalTextStyle()" [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
                 </div>
                 <!-- CTA -->
                 <div [ngStyle]="getButtonContainerStyles()">

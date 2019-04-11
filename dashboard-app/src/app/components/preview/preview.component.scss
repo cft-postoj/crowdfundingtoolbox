@@ -5,11 +5,10 @@
   display: none;
   position: absolute;
   width: 50%;
-  height: 90%;
-  margin: 50px auto;
+  height: 100%;
   top: 0;
   bottom: 0;
-  left: 50px;
+  left: 0;
   z-index: 99;
   background: white;
 
@@ -83,7 +82,7 @@
     }
   }
     &.fullscreen {
-        width: 90%;
+        width: calc( 100% - 14px);
         iframe {
             position: relative;
             transform: scale(0.6) translateX(-50%);
