@@ -66,7 +66,7 @@ class CampaignsConfigurationController extends Controller
     protected function getFonts()
     {
         return response()->json([
-            'fonts' => CampaignsConfiguration::where('id', 1)->get()[0]['fonts']
+            'fonts' => json_decode(CampaignsConfiguration::where('id', 1)->get()[0]['fonts'])
         ], Response::HTTP_OK);
     }
 
