@@ -11,7 +11,7 @@ import {
     ViewChild
 } from '@angular/core';
 import {Widget} from "../../_models/widget";
-import {backgroundTypes, devices} from "../../_models/enums";
+import {backgroundTypes, devices, widgetTypes} from "../../_models/enums";
 import {PreviewService} from "../../_services/preview.service";
 import {Subject} from 'rxjs/Subject';
 import {ConvertHexService} from "../../_services/convert-hex.service";
@@ -183,7 +183,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         };
 
         let fixedStyles = (this.widget.settings[this.deviceType].additional_settings.fixedSettings != null) ? {
-            top: this.widget.settings[this.deviceType].additional_settings.fixedSettings.top,
             bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
             zIndex: this.widget.settings[this.deviceType].additional_settings.fixedSettings.zIndex,
             textAlign: this.widget.settings[this.deviceType].additional_settings.fixedSettings.textAlign,
@@ -236,8 +235,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     getBodyStyle() {
         let defaultStyle = {
             position: this.widget.settings[this.deviceType].additional_settings.textContainer.position,
-            top: this.widget.settings[this.deviceType].additional_settings.textContainer.top,
-            left: this.widget.settings[this.deviceType].additional_settings.textContainer.left,
+            // top: this.widget.settings[this.deviceType].additional_settings.textContainer.top,
+            // left: this.widget.settings[this.deviceType].additional_settings.textContainer.left,
             width: this.widget.settings[this.deviceType].additional_settings.textContainer.width,
             margin: this.widget.settings[this.deviceType].additional_settings.textContainer.margin,
             //height: this.widget.settings[this.deviceType].additional_settings.textContainer.height
@@ -260,7 +259,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getHeadlineTextStyle() {
         const headlineText = this.widget.settings[this.deviceType].widget_settings.general;
-        let dynamicStyle = {
+        let dynamicStyle = {};
+        dynamicStyle = {
             'text-align': headlineText.fontSettings.alignment,
             'font-size': headlineText.fontSettings.fontSize + 'px',
             'color': headlineText.fontSettings.color,
@@ -272,6 +272,10 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(headlineText.text_margin.right) + ' ' +
                 this.addPx(headlineText.text_margin.bottom) + ' ' +
                 this.addPx(headlineText.text_margin.left)
+        }
+        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+            dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
+            dynamicStyle['float'] = 'left';
         }
         let result = {...dynamicStyle};
         return result;
@@ -373,6 +377,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(ctaStyles.default.margin.bottom) + ' ' +
                 this.addPx(ctaStyles.default.margin.left),
         }
+        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+            containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
+            containerStyles['float']='left';
+        }
+        console.log(this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,containerStyles)
         return containerStyles;
     }
 

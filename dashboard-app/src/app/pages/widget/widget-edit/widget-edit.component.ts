@@ -4,7 +4,7 @@ import {Routing} from "../../../constants/config.constants";
 import {Widget} from "../../../_models/widget";
 import {WidgetService} from "../../../_services/widget.service";
 import {RadioButton} from "../../../_parts/atoms/radio-button/radio-button";
-import {backgroundTypes, devices, paymentTypes} from "../../../_models/enums";
+import {backgroundTypes, devices, paymentTypes, widgetTypes} from "../../../_models/enums";
 import {DropdownItem} from "../../../_models/dropdown-item";
 import {ComponentCommunicationService} from "../../../_services/component-communication.service";
 import {PreviewService} from "../../../_services/preview.service";
@@ -41,6 +41,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     public positionSettings: DropdownItem[] = [];
     public ctaSettings:string="Default";
     creatingHTMLs=false;
+    widgetTypes = widgetTypes;
 
     @ViewChild('previewGenerateHTML') previewGenerateHTML;
     public subcriptions: Subscription;
