@@ -73,6 +73,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <h5>Widget Background Color</h5>
+                    <div class="settings--card">
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input class="btn color-picker--custom"
+                                           [value]="widget_settings.general.backgroundColor"
+                                           [style.background]="widget_settings.general.backgroundColor"
+                                           [cpPosition]="'top'"
+                                           [cpPresetColors]="generalSettings.colors"
+                                           [(colorPicker)]="widget_settings.general.backgroundColor"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h5>Other settings</h5>
                     <div class="settings--card">
                         <div class="settings--card--body">

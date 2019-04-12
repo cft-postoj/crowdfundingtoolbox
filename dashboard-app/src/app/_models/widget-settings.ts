@@ -10,6 +10,7 @@ export class WidgetSettings {
             text: 'Support us',
             url: 'https://podpora.postoj.sk'
         },
+        backgroundColor: '#333333',
         padding: {
             top: '0',
             right: '0',

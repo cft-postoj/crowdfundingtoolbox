@@ -21,3 +21,33 @@ export var paymentTypes = {
     once:  {title:"Once", value: "once"},
     both:  {title:"Both options", value: "both"},
 }
+
+export var widgetTypes = {
+    landing: {
+        name: 'landing'
+    },
+    sidebar: {
+        name: 'sidebar'
+    },
+    leaderboard: {
+        name: 'leaderboard'
+    },
+    popup: {
+        name: 'popup'
+    },
+    fixed: {
+        name: 'fixed'
+    },
+    locked: {
+        name: 'locked'
+    },
+    article: {
+        name: 'article'
+    },
+    article_link: {
+        name: 'article_link'
+    },
+    custom: {
+        name: 'custom'
+    }
+}
