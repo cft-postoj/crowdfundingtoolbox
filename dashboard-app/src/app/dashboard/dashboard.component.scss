@@ -259,7 +259,7 @@ html, body {
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   height: calc(100vh - 70px);
   transition: all 0.3s;
