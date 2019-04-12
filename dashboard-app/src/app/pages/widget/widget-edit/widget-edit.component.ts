@@ -14,9 +14,9 @@ import {environment} from "../../../../environments/environment";
 @Component({
     selector: 'app-widget-edit',
     templateUrl: './widget-edit.component.html',
-    styleUrls: ['./widget-edit.component.scss','../../../components/settings/settings.component.scss']
+    styleUrls: ['./widget-edit.component.scss', '../../../components/settings/settings.component.scss']
 })
-export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
+export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
     public opened: number[] = [];
     public routing = Routing;
@@ -27,47 +27,48 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     public backgroundTypesButtons: RadioButton[] = [];
     public radioButtons: RadioButton[] = [];
     deviceType = devices.desktop.name;
-    public paymentTypeRadioButtons: RadioButton[]= []
-    public paymentTypes = paymentTypes ;
+    public paymentTypeRadioButtons: RadioButton[] = []
+    public paymentTypes = paymentTypes;
     public copyPrices;
     public preview;
     public saving: boolean = false;
-    public paddingButtons: RadioButton[]= [];
-    public marginButtons: RadioButton[]= [];
-    public marginText: RadioButton[]= [];
-    private marginAdditionalText: RadioButton[]= [];
-    public shadowButtons: RadioButton[] =[];
+    public paddingButtons: RadioButton[] = [];
+    public marginButtons: RadioButton[] = [];
+    public marginText: RadioButton[] = [];
+    private marginAdditionalText: RadioButton[] = [];
+    public shadowButtons: RadioButton[] = [];
     public fontWeight: DropdownItem[] = [];
     public positionSettings: DropdownItem[] = [];
-    public ctaSettings:string="Default";
-    creatingHTMLs=false;
+    public ctaSettings: string = "Default";
+    creatingHTMLs = false;
     widgetTypes = widgetTypes;
 
     @ViewChild('previewGenerateHTML') previewGenerateHTML;
     public subcriptions: Subscription;
-    cta: string="Default";
+    cta: string = "Default";
     private pricesOptions: DropdownItem[];
     public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'];
-     fontFamily = []
+    fontFamily = []
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private widgetService: WidgetService,
-                private componentComService:ComponentCommunicationService,
-                private previewService:PreviewService) {
+                private componentComService: ComponentCommunicationService,
+                private previewService: PreviewService) {
 
     }
 
     ngDoCheck() {
         if (this.preview)
-           this.previewService.updatePreview();
+            this.previewService.updatePreview();
     }
+
     ngOnInit() {
         let assetsUrl = (environment.production) ? 'public/app/assets/' : '../../../../assets/';
-        this.backgroundTypesButtons.push( new RadioButton (backgroundTypes.color.name,backgroundTypes.color.value))
-        this.backgroundTypesButtons.push( new RadioButton (backgroundTypes.image.name,backgroundTypes.image.value))
-        this.backgroundTypesButtons.push( new RadioButton (backgroundTypes.imageOverlay.name,backgroundTypes.imageOverlay.value))
+        this.backgroundTypesButtons.push(new RadioButton(backgroundTypes.color.name, backgroundTypes.color.value))
+        this.backgroundTypesButtons.push(new RadioButton(backgroundTypes.image.name, backgroundTypes.image.value))
+        this.backgroundTypesButtons.push(new RadioButton(backgroundTypes.imageOverlay.name, backgroundTypes.imageOverlay.value))
 
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value))
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value))
@@ -77,19 +78,19 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
 
         this.widgetService.getById(this.id).subscribe((response: any) => {
 //            TODO: change backend to support additional_text and then remove this mock (uncomment next line)
-             this.widget = response.data;
+            this.widget = response.data;
             this.loading = false;
 
-            this.fontWeight.push({title:"Bold",value:"bold"});
+            this.fontWeight.push({title: "Bold", value: "bold"});
             this.fontWeight.push({title: "Light", value: 100});
             this.fontWeight.push({title: "Medium", value: 400});
 
             this.positionSettings.push({title: 'Top', value: '0'}); // top: 0
             this.positionSettings.push({title: 'Bottom', value: 'auto'}); // top: auto
 
-            this.radioButtons.push( new RadioButton("left","left",assetsUrl + "images/icons/left.svg"))
-            this.radioButtons.push( new RadioButton("center","center",assetsUrl + "images/icons/center.svg"))
-            this.radioButtons.push( new RadioButton("right","right",assetsUrl + "images/icons/right.svg"))
+            this.radioButtons.push(new RadioButton("left", "left", assetsUrl + "images/icons/left.svg"))
+            this.radioButtons.push(new RadioButton("center", "center", assetsUrl + "images/icons/center.svg"))
+            this.radioButtons.push(new RadioButton("right", "right", assetsUrl + "images/icons/right.svg"))
             this.fontFamily.push({title: "Roboto", value: 'Roboto'})
             this.fontFamily.push({title: 'Indie Flower', value: 'Indie Flower'})
             this.fontFamily.push({title: "Oswald", value: "Oswald"})
@@ -100,7 +101,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         });
 
         this.subcriptions = this.previewService.htmls.subscribe(htmlsWrapper => {
-            let subs =  this.widgetService.updateWidgetsHTML(this.widget.id, htmlsWrapper).subscribe(
+            let subs = this.widgetService.updateWidgetsHTML(this.widget.id, htmlsWrapper).subscribe(
                 result => {
                     this.componentComService.setAlertMessage("Widget " + this.widget.widget_type.name + " successfully updated.");
                     this.router.navigateByUrl(this.router.url.split(Routing.RIGHT_OUTLET)[0]);
@@ -111,7 +112,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         this.preview = true;
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.subcriptions.unsubscribe();
     }
 
@@ -121,19 +122,19 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
 
     public openTab(tabNumber: number) {
         if (this.isOpened(tabNumber)) {
-            this.opened.splice(this.opened.indexOf(tabNumber),1)
+            this.opened.splice(this.opened.indexOf(tabNumber), 1)
         } else {
             this.opened.push(tabNumber);
         }
     }
 
     public isOpened(tabNumber: number) {
-        return this.opened.indexOf(tabNumber)>-1;
+        return this.opened.indexOf(tabNumber) > -1;
     }
 
     //add or remove items in monthly_prices to match with value from monthly_prices
     updateNumberOfMonthlyPrices(event) {
-        while(this.widget.settings[this.deviceType].payment_settings.monthly_prices.count_of_options != event && (!!event || event==0) ) {
+        while (this.widget.settings[this.deviceType].payment_settings.monthly_prices.count_of_options != event && (!!event || event == 0)) {
             if (this.widget.settings[this.deviceType].payment_settings.monthly_prices.count_of_options > event) {
                 this.widget.settings[this.deviceType].payment_settings.monthly_prices.count_of_options--;
                 this.widget.settings[this.deviceType].payment_settings.monthly_prices.options.pop();
@@ -148,7 +149,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
 
     //add or remove items in once_prices to match with value from monthly_prices
     updateNumberOfSinglePayments(event) {
-        while(this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options != event && (!!event || event==0) ) {
+        while (this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options != event && (!!event || event == 0)) {
             if (this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options > event) {
                 this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options--;
                 this.widget.settings[this.deviceType].payment_settings.once_prices.options.pop();
@@ -156,30 +157,30 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
             if (this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options < event) {
                 this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options++;
                 this.widget.settings[this.deviceType].payment_settings.once_prices.options.push(
-                    { value: this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options * 5});
+                    {value: this.widget.settings[this.deviceType].payment_settings.once_prices.count_of_options * 5});
             }
         }
     }
 
-    createActivePriceOptions():DropdownItem[]{
-        var result : DropdownItem[] = [];
-        this.widget.settings[this.deviceType].payment_settings.monthly_prices.options.forEach( (option,i) => {
+    createActivePriceOptions(): DropdownItem[] {
+        var result: DropdownItem[] = [];
+        this.widget.settings[this.deviceType].payment_settings.monthly_prices.options.forEach((option, i) => {
             result.push({
-                title: 'Price No.'+(i+1),
+                title: 'Price No.' + (i + 1),
                 value: option.value
             })
         })
-        if (!this.pricesOptions || this.pricesOptions.length==0 || this.pricesOptions.length!= result.length ) {
+        if (!this.pricesOptions || this.pricesOptions.length == 0 || this.pricesOptions.length != result.length) {
             this.pricesOptions = result;
         }
         return this.pricesOptions;
     }
 
-    togglePreview(){
+    togglePreview() {
         this.preview = !this.preview;
     }
 
-    updateWidget(){
+    updateWidget() {
         this.saving = true;
         this.creatingHTMLs = true
         this.widgetService.updateWidget(this.widget).subscribe(result => {
@@ -187,7 +188,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         })
     }
 
-    recreateRadioButtons(){
+    recreateRadioButtons() {
         let assetsUrl = (environment.production) ? 'public/app/assets/' : '../../../../assets/';
 
         this.paddingButtons = [];
@@ -195,6 +196,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         this.paddingButtons.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.right, assetsUrl + "images/icons/padding_right.svg"))
         this.paddingButtons.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.bottom, assetsUrl + "images/icons/padding_bottom.svg"))
         this.paddingButtons.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.left, assetsUrl + "images/icons/padding_left.svg"))
+
 
         this.marginText = [];
         this.marginText.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.general.text_margin.top, assetsUrl + "images/icons/margin_top.svg"))
@@ -210,15 +212,17 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         this.marginAdditionalText.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.left, assetsUrl + "images/icons/margin_left.svg"))
 
         this.marginButtons = [];
+
         this.marginButtons.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.top, assetsUrl + "images/icons/margin_top.svg"))
         this.marginButtons.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.right, assetsUrl + "images/icons/margin_right.svg"))
         this.marginButtons.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
         this.marginButtons.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.left, assetsUrl + "images/icons/margin_left.svg"))
 
+
         this.shadowButtons = [];
-        this.shadowButtons.push( new RadioButton("x",this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.x,'',"X:"))
-        this.shadowButtons.push( new RadioButton("y",this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.y,'',"Y:"))
-        this.shadowButtons.push( new RadioButton("b",this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.b,'',"B:"))
+        this.shadowButtons.push(new RadioButton("x", this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.x, '', "X:"))
+        this.shadowButtons.push(new RadioButton("y", this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.y, '', "Y:"))
+        this.shadowButtons.push(new RadioButton("b", this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.b, '', "B:"))
 
     }
 

@@ -121,7 +121,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             parent.removeChild(parent.firstChild);
         const style = document.createElement('style');
         style.type = 'text/css';
-        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} a:hover{${this.getHoverButtonStyles()}}`;
+        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} a:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}`;
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
     }
@@ -181,10 +181,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             margin: 'auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: '15px'
+            padding: '30px'
         };
 
-        let fixedStyles = (this.widget.settings[this.deviceType].additional_settings.fixedSettings != null) ? {
+
+        let fixedStyles = (this.widget.settings[this.deviceType].additional_settings.fixedSettings.length > 0) ? {
             bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
             zIndex: this.widget.settings[this.deviceType].additional_settings.fixedSettings.zIndex,
             textAlign: this.widget.settings[this.deviceType].additional_settings.fixedSettings.textAlign,
@@ -350,7 +351,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             'border-bottom-right-radius': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             cursor: 'pointer',
             textDecoration: 'none'
-        }
+        };
+
 
 
         let result = {...defaultStyles};
@@ -381,7 +383,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(ctaStyles.default.margin.right) + ' ' +
                 this.addPx(ctaStyles.default.margin.bottom) + ' ' +
                 this.addPx(ctaStyles.default.margin.left),
-        }
+        };
+
         if (this.widget.widget_type.method == widgetTypes.fixed.name) {
             containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
             containerStyles['float'] = 'left';

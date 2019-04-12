@@ -229,7 +229,8 @@ export class Widget {
                     left: '',
                     text: {
                         width: '300px',
-                        maxWidth: '100%'
+                        maxWidth: '100%',
+                        textAlign: ''
                     }
                 },
                 buttonContainer: {
@@ -241,9 +242,21 @@ export class Widget {
                     left: '',
                     display: '',
                     textAlign: '',
+                    margin: {
+                      top: '',
+                      right: '',
+                      bottom: '',
+                      left: ''
+                    },
                     button: {
                         width: '300px',
-                        maxWidth: '100%'
+                        maxWidth: '100%',
+                        padding: {
+                            top: '',
+                            right: '',
+                            bottom: '',
+                            left: ''
+                        }
                     }
                 }
             }
