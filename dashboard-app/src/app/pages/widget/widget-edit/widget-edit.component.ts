@@ -76,7 +76,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
 
         this.widgetService.getById(this.id).subscribe((response: any) => {
 //            TODO: change backend to support additional_text and then remove this mock (uncomment next line)
-//             this.widget = response.data;
+             this.widget = response.data;
             this.loading = false;
 
             this.fontWeight.push({title:"Bold",value:"bold"});

@@ -22,6 +22,8 @@ export class CtaSettingsComponent implements OnInit {
     alertMessage: string = '';
     alertType: string = '';
 
+    loading: boolean = true;
+
 
     public cta = 'Default';
     public call_to_action = new CtaSettings();
@@ -125,6 +127,7 @@ export class CtaSettingsComponent implements OnInit {
     fetchCtaSettings() {
         this.settingsService.getCtaSettings().subscribe(response => {
            this.call_to_action = response;
+           this.loading = false;
         });
     }
 

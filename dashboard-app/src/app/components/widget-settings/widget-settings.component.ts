@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {RadioButton} from "../../_parts/atoms/radio-button/radio-button";
 import {WidgetSettings} from "../../_models/widget-settings";
 import {GeneralSettingsService} from "../../_services/general-settings.service";
+import {GeneralSettings} from "../../_models/general-settings";
 
 @Component({
     selector: 'app-widget-settings',
@@ -23,7 +24,10 @@ export class WidgetSettingsComponent implements OnInit {
 
     public widget_settings = new WidgetSettings();
 
+    public generalSettings = new GeneralSettings();
+
     constructor(private router: Router, private settingsService: GeneralSettingsService) {
+        this.fetchGeneralSettings();
         this.fetchWidgetSettings();
     }
 
@@ -46,10 +50,17 @@ export class WidgetSettingsComponent implements OnInit {
         this.router.navigateByUrl(targetUrl);
     }
 
+    fetchGeneralSettings() {
+        this.settingsService.getGeneralPageSettings().subscribe(response => {
+            this.generalSettings = response;
+        })
+    }
+
     fetchWidgetSettings() {
         this.settingsService.getWidgetSettings().subscribe(response => {
             // fetch only GENERAL settings
             this.widget_settings.general = response.general;
+            this.loading = false;
         })
     }
 
