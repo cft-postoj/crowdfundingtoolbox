@@ -432,7 +432,7 @@ class WidgetsController extends Controller
                 $outputJson = array(
                     'width' => '100%',
                     'maxWidth' => '100%',
-                    'height' => '50px',
+                    'height' => '80px',
                     'position' => 'fixed',
                     'fixedSettings' => array(
                         'top' => 'auto',
@@ -459,7 +459,7 @@ class WidgetsController extends Controller
                         )),
                     'display' => 'inline-block',
                     'textContainer' => array(
-                        'width' => 80,
+                        'width' => 70,
                         'margin' => array(
                             'top' => '0',
                             'right' => 'auto',
@@ -477,7 +477,7 @@ class WidgetsController extends Controller
                         )
                     ),
                     'buttonContainer' => array(
-                        'width' => 20,
+                        'width' => 30,
                         'position' => 'relative',
                         'top' => 'auto',
                         'right' => 'auto',
