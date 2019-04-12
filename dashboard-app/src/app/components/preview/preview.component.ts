@@ -250,13 +250,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
         }
 
-        let fixedStyle = {
-            top: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.top),
-            right: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.right),
-            bottom: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.bottom),
-            left: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.left)
-        }
-        let result = {...defaultStyle, ...dynamicStyle, ...fixedStyle};
+        let result = {...defaultStyle, ...dynamicStyle};
         return result;
     }
 
@@ -349,6 +343,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             textDecoration: 'none'
         };
 
+        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+            defaultStyles['display'] = 'inline-block';
+        }
 
         let result = {...defaultStyles};
         return result;
