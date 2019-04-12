@@ -54,6 +54,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     @Output() emitHtml = new EventEmitter();
 
+    @Input()
     public loading: boolean;
 
     public backgroundTypes = backgroundTypes;
@@ -181,7 +182,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             margin: 'auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: '30px'
+            padding: (this.widget.widget_type.method == widgetTypes.leaderboard.name) ? '0' : '30px'
         };
         let fixedStyles = (this.widget.widget_type.method == widgetTypes.fixed.name) ? {
             bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
@@ -229,6 +230,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
 
     changePreview(preview) {
+        if (!this.loading)
         this.data$.next(preview.innerHTML);
     }
 
@@ -379,6 +381,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
             containerStyles['float'] = 'left';
         }
+
         return containerStyles;
     }
 
@@ -446,6 +449,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     private usedFontFamily(fontFamily) {
         let tempArray = this.fontFamilyPreview.split('|');
         if (tempArray.indexOf(fontFamily) === -1) {
+            if (fontFamily != undefined)
             tempArray.push(fontFamily);
         }
         this.fontFamilyPreview = '';

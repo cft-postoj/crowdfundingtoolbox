@@ -155,14 +155,14 @@ class WidgetsController extends Controller
         $generalSettingsHeadlineText = json_decode($generalSettings['font_settings_headline_text'], true);
         $generalCtaSettings = json_decode($generalSettings['cta'], true);
 
-        $widgetSettings['general']['fontSettings'] = array(
+        $widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
             'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
             'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
-            'alignment' => $this->overrideGeneralSettings('headline-alignment', 'center', $widgetType),
+            'alignment' => 'center',
             'color' => $generalSettingsHeadlineText['color'],
             'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
             'fontSize' => $generalSettingsHeadlineText['fontSize']
-        );
+        ), $widgetType);
 
         $widgetSettings['general']['background'] = array(
             'type' => 'color',
@@ -170,6 +170,8 @@ class WidgetsController extends Controller
             'color' => $generalWidgetSettings['backgroundColor'],
             'opacity' => 100
         );
+
+        $widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $widgetSettings['general']['text_margin'], $widgetType);
 
         $widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
 
@@ -216,6 +218,7 @@ class WidgetsController extends Controller
 
     private function overrideGeneralSettings($type, $settings, $widgetType)
     {
+        $output = $settings;
         if ($type == 'cta') {
             switch ($widgetType) {
                 case 1: // landing widget
@@ -236,16 +239,52 @@ class WidgetsController extends Controller
                         'left' => '70'
                     );
                     break;
+                case 3: // leaderboard
+                    $output = $settings;
+                    $output['default']['margin'] = array(
+                        'top' => '100',
+                        'right' => 'auto',
+                        'bottom' => '0',
+                        'left' => 'auto'
+                    );
+                    $output['default']['padding'] = array(
+                        'top' => '20',
+                        'right' => '70',
+                        'bottom' => '25',
+                        'left' => '70'
+                    );
+                    break;
                     default:
                         $output = $settings;
             }
-        } else if ($type == 'headline-alignment') {
+        } else if ($type == 'headlineFonts') {
             switch ($widgetType) {
                 case 1: // landing widget
                     $output = $settings;
                     break;
                 case 2: // sidebar widget
-                    $output = 'left'; // alignment
+                    $output['alignment'] = 'left';
+                    break;
+                case 3: // leaderboard widget
+                    $output['fontSize'] =  50;
+                default:
+                    $output = $settings;
+            }
+        } else if ($type == 'headlineMargin') {
+            switch ($widgetType) {
+                case 1: // landing widget
+                    $output = $settings;
+                    break;
+                case 2: // sidebar widget
+                    $output = $settings;
+                    break;
+                case 3: // leaderboard
+                    $output = array(
+                        'top' => '30',
+                        'right' => 'auto',
+                        'bottom' => '0',
+                        'left' => 'auto'
+                    );
                     break;
                 default:
                     $output = $settings;
