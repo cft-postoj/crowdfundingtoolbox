@@ -561,6 +561,51 @@
                                 </div>
 
                             </div>
+                            <div class="settings--card">
+                                <div class="settings--card--header">
+                                    <div class="row ">
+                                        <div class="col">
+                                            Radius
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-3 vertical-align">
+                                            <app-radio-button-group
+                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active"
+                                                    [radioButtons]="radiusButtons">
+                                            </app-radio-button-group>
+                                        </div>
+                                        <ng-container
+                                                *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active">
+                                            <div class="col-3 vertical-align">
+                                                <app-input-group [buttons]="allRadiusesButton"
+                                                                 (buttonChange)="writeRadiusValue($event.value)"
+                                                                 [fill]="true"
+                                                                 [class]="!specificRadius?'active':''"
+                                                                 (click)="setSpecificRadius(false)">
+                                                </app-input-group>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="row">
+                                                    <div class="col-2 vertical-align text-right">
+                                                        or
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <app-input-group [buttons]="specificRadiusButtons"
+                                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius[$event.name] = $event.value"
+                                                                         [fill]="true"
+                                                                         [class]="specificRadius?'active':''"
+                                                                         (click)="setSpecificRadius(true)">
+                                                        </app-input-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="settings--card--wrapper" *ngIf="cta=='Hover'">
                             <div class="settings--card">

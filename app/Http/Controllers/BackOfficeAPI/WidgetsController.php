@@ -273,6 +273,20 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
+                    'bodyContainer' => array(
+                        'width' => '100%',
+                        'height' => '100%',
+                        'margin' => '0 auto',
+                        'position' => 'relative',
+                        'top' => 'auto',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%',
+                            'top' => '30px'
+                        )
+                    ),
                     'textContainer' => array(
                         'width' => '100%',
                         'height' => '100%',
@@ -309,6 +323,23 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
+                    'bodyContainer' => array(
+                        'width' => '100%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => '80px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%'
+                        )
+                    ),
                     'textContainer' => array(
                         'width' => '100%',
                         'margin' => array(
@@ -356,9 +387,26 @@ class WidgetsController extends Controller
                         'zIndex' => 999999,
                         'textAlign' => 'center'
                     ),
+                    'bodyContainer' => array(
+                        'width' => '100%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => 'auto',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%',
+                            'maxWidth' => '100%'
+                        )),
                     'display' => 'inline-block',
                     'textContainer' => array(
-                        'width' => '100%',
+                        'width' => 80,
                         'margin' => array(
                             'top' => '0',
                             'right' => 'auto',
@@ -376,7 +424,7 @@ class WidgetsController extends Controller
                         )
                     ),
                     'buttonContainer' => array(
-                        'width' => '100%',
+                        'width' => 20,
                         'position' => 'relative',
                         'top' => 'auto',
                         'right' => 'auto',

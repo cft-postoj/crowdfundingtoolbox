@@ -234,11 +234,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getBodyStyle() {
         let defaultStyle = {
-            position: this.widget.settings[this.deviceType].additional_settings.textContainer.position,
+            position: this.widget.settings[this.deviceType].additional_settings.bodyContainer.position,
             // top: this.widget.settings[this.deviceType].additional_settings.textContainer.top,
             // left: this.widget.settings[this.deviceType].additional_settings.textContainer.left,
-            width: this.widget.settings[this.deviceType].additional_settings.textContainer.width,
-            margin: this.widget.settings[this.deviceType].additional_settings.textContainer.margin,
+            width: this.widget.settings[this.deviceType].additional_settings.bodyContainer.width,
+            margin: this.widget.settings[this.deviceType].additional_settings.bodyContainer.margin,
             //height: this.widget.settings[this.deviceType].additional_settings.textContainer.height
         }
         let dynamicStyle = {
@@ -273,10 +273,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(headlineText.text_margin.bottom) + ' ' +
                 this.addPx(headlineText.text_margin.left)
         }
-        if (this.widget.widget_type.method == widgetTypes.fixed.name){
-            dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
-            dynamicStyle['float'] = 'left';
-        }
         let result = {...dynamicStyle};
         return result;
     }
@@ -309,7 +305,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         let boxShadow = ctaStyles.default.design.shadow.x + 'px ' +
             ctaStyles.default.design.shadow.y + 'px ' +
             ctaStyles.default.design.shadow.b + 'px ' + '0px ' +
-            this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color, ctaStyles.default.design.shadow.opacity);
+            this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color);
 
 
         let defaultStyles = {
@@ -323,10 +319,10 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             color: ctaStyles.default.fontSettings.color,
             fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
             display: this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display,
-            'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color, ctaStyles.default.design.fill.opacity)
+            'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)
                 : 'transparent',
-            border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.size + 'px solid' +
-                this.convertHex.convert(ctaStyles.default.design.border.color, ctaStyles.default.design.border.opacity) : 'none',
+            border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.border.size + 'px solid ' +
+                this.convertHex.convert(ctaStyles.default.design.border.color) : 'none',
             '-webkit-box-shadow': (ctaStyles.default.design.shadow.active) ? boxShadow : 'none',
             '-moz-box-shadow': (ctaStyles.default.design.shadow.active) ? boxShadow : 'none',
             'box-shadow': (ctaStyles.default.design.shadow.active) ? boxShadow : 'none',
@@ -346,8 +342,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             cursor: 'pointer',
             textDecoration: 'none'
         }
-
-
         let result = {...defaultStyles};
         return result;
     }
@@ -381,7 +375,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
             containerStyles['float']='left';
         }
-        console.log(this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,containerStyles)
         return containerStyles;
     }
 
@@ -437,4 +430,12 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     //     pagePreviewElement.replaceWith(previewElement);
     // }
 
+    getTextContainerStyle() {
+        let dynamicStyle = {};
+        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+            dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
+            dynamicStyle['float'] = 'left';
+        }
+        return dynamicStyle;
+    }
 }

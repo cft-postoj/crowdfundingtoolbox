@@ -219,6 +219,19 @@ export class Widget {
                     zIndex: 100,
                 },
                 display: 'block',
+                bodyContainer: {
+                    width: '100%',
+                    margin: '0 auto',
+                    position: 'absolute',
+                    top: '',
+                    right: '',
+                    bottom: '',
+                    left: '',
+                    text: {
+                        width: '300px',
+                        maxWidth: '100%'
+                    }
+                },
                 textContainer: {
                     width: '100%',
                     margin: '0 auto',

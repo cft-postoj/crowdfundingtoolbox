@@ -42,6 +42,10 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     public ctaSettings:string="Default";
     creatingHTMLs=false;
     widgetTypes = widgetTypes;
+    public allRadiusesButton: RadioButton[] = [];
+    private specificRadius: boolean;
+    public specificRadiusButtons: RadioButton[] = [];
+    private radiusButtons: any[];
 
     @ViewChild('previewGenerateHTML') previewGenerateHTML;
     public subcriptions: Subscription;
@@ -49,7 +53,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
     private pricesOptions: DropdownItem[];
     public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'];
-     fontFamily = []
+     fontFamily = [];
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -87,9 +91,6 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
             this.positionSettings.push({title: 'Top', value: '0'}); // top: 0
             this.positionSettings.push({title: 'Bottom', value: 'auto'}); // top: auto
 
-            this.radioButtons.push( new RadioButton("left","left",assetsUrl + "images/icons/left.svg"))
-            this.radioButtons.push( new RadioButton("center","center",assetsUrl + "images/icons/center.svg"))
-            this.radioButtons.push( new RadioButton("right","right",assetsUrl + "images/icons/right.svg"))
             this.fontFamily.push({title: "Roboto", value: 'Roboto'})
             this.fontFamily.push({title: 'Indie Flower', value: 'Indie Flower'})
             this.fontFamily.push({title: "Oswald", value: "Oswald"})
@@ -220,6 +221,49 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck  {
         this.shadowButtons.push( new RadioButton("y",this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.y,'',"Y:"))
         this.shadowButtons.push( new RadioButton("b",this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.b,'',"B:"))
 
+        this.radioButtons = [];
+        this.radioButtons.push(new RadioButton("left", "left", "/assets/images/icons/left.svg"))
+        this.radioButtons.push(new RadioButton("center", "center", "/assets/images/icons/center.svg"))
+        this.radioButtons.push(new RadioButton("right", "right", "/assets/images/icons/right.svg"))
+
+        this.allRadiusesButton = [];
+        this.allRadiusesButton.push(new RadioButton("all", 0, "/assets/images/icons/radius_AllTogether.svg"))
+
+        this.radiusButtons = [];
+        this.radiusButtons.push(new RadioButton("active", false, "/assets/images/icons/radius_disable.svg"));
+        this.radiusButtons.push(new RadioButton("disabled", true, "/assets/images/icons/radius_enable.svg"));
+
+        this.specificRadiusButtons = [];
+        this.specificRadiusButtons.push(new RadioButton("tl", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.tl, "/assets/images/icons/radius_LeftTop.svg"))
+        this.specificRadiusButtons.push(new RadioButton("tr", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.tr, "/assets/images/icons/radius_RightTop.svg"))
+        this.specificRadiusButtons.push(new RadioButton("br", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.br, "/assets/images/icons/radius_LeftBottom.svg"))
+        this.specificRadiusButtons.push(new RadioButton("bl", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.bl, "/assets/images/icons/radius_LeftBottom.svg"))
+
+    }
+
+    writeRadiusValue(value) {
+        this.specificRadiusButtons.forEach(rb => {
+            this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius[rb.name] = value;
+        })
+        this.specificRadiusButtons.forEach(button => {
+            button.value = value;
+        })
+    }
+
+    calcSpecificRadius() {
+        let firstValue;
+        let result = false;
+        this.specificRadiusButtons.forEach(rb => {
+            firstValue = firstValue ? firstValue : rb.value;
+            if (rb.value !== firstValue) {
+                result = true;
+            }
+        })
+        this.setSpecificRadius(result)
+    }
+
+    setSpecificRadius(value: boolean) {
+        this.specificRadius = value;
     }
 
 }

@@ -48,9 +48,11 @@
         <div class="cft--background" [ngStyle]="getBackgroundStyle()" [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
             <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
             <div class="cft--body" [ngStyle]="getBodyStyle()">
-                <div class="cft--headline-text" [ngStyle]="getHeadlineTextStyle()" [innerHTML]="widget.settings[deviceType].headline_text">
-                </div>
-                <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()" [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
+                <div class="cft--text-container"  [ngStyle]="getTextContainerStyle()">
+                    <div class="cft--headline-text" [ngStyle]="getHeadlineTextStyle()" [innerHTML]="widget.settings[deviceType].headline_text">
+                    </div>
+                    <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()" [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
+                    </div>
                 </div>
                 <!-- CTA -->
                 <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()">
