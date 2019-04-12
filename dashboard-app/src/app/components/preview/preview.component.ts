@@ -244,7 +244,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         }
         let dynamicStyle = {
             'background-color': this.widget.settings[this.deviceType].widget_settings.general.background.color,
-            backgroundColor: this.widget.settings[this.deviceType].widget_settings.general.text_background,
+            backgroundColor: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.backgroundColor,
 
         }
 
@@ -367,7 +367,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             right: additionalSettings.right,
             //bottom: additionalSettings.bottom,
             left: additionalSettings.left,
-            textAlign: additionalSettings.textAlign,
+            textAlign: ctaStyles.default.fontSettings.alignment,
             margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
                 this.addPx(ctaStyles.default.margin.right) + ' ' +
                 this.addPx(ctaStyles.default.margin.bottom) + ' ' +
