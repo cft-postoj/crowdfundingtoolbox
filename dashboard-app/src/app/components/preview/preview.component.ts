@@ -183,9 +183,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             'background-size': 'cover',
             padding: '30px'
         };
-
-
-        let fixedStyles = (this.widget.settings[this.deviceType].additional_settings.fixedSettings.length > 0) ? {
+        let fixedStyles = (this.widget.widget_type.method == widgetTypes.fixed.name) ? {
             bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
             zIndex: this.widget.settings[this.deviceType].additional_settings.fixedSettings.zIndex,
             textAlign: this.widget.settings[this.deviceType].additional_settings.fixedSettings.textAlign,
