@@ -158,7 +158,7 @@ class WidgetsController extends Controller
         $widgetSettings['general']['fontSettings'] = array(
             'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
             'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
-            'alignment' => 'center',
+            'alignment' => $this->overrideGeneralSettings('headline-alignment', 'center', $widgetType),
             'color' => $generalSettingsHeadlineText['color'],
             'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
             'fontSize' => $generalSettingsHeadlineText['fontSize']
@@ -171,7 +171,7 @@ class WidgetsController extends Controller
             'opacity' => 100
         );
 
-        $widgetSettings['call_to_action'] = $generalCtaSettings;
+        $widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
 
         // Additional text
         $widgetSettings['additional_text'] = array(
@@ -212,6 +212,46 @@ class WidgetsController extends Controller
 
         );
         return $this->widgetSettings;
+    }
+
+    private function overrideGeneralSettings($type, $settings, $widgetType)
+    {
+        if ($type == 'cta') {
+            switch ($widgetType) {
+                case 1: // landing widget
+                    $output = $settings;
+                    break;
+                case 2: // sidebar widget
+                    $output = $settings;
+                    $output['default']['margin'] = array(
+                        'top' => '420',
+                        'right' => 'auto',
+                        'bottom' => '0',
+                        'left' => 'auto'
+                    );
+                    $output['default']['padding'] = array(
+                        'top' => '15',
+                        'right' => '70',
+                        'bottom' => '20',
+                        'left' => '70'
+                    );
+                    break;
+                    default:
+                        $output = $settings;
+            }
+        } else if ($type == 'headline-alignment') {
+            switch ($widgetType) {
+                case 1: // landing widget
+                    $output = $settings;
+                    break;
+                case 2: // sidebar widget
+                    $output = 'left'; // alignment
+                    break;
+                default:
+                    $output = $settings;
+            }
+        }
+        return $output;
     }
 
     protected function getGeneralSettings()
@@ -298,7 +338,8 @@ class WidgetsController extends Controller
                         'left' => 'auto',
                         'text' => array(
                             'width' => '100%',
-                            'top' => '30px'
+                            'top' => '30px',
+                            'textAlign' => 'left'
                         )
                     ),
                     'buttonContainer' => array(
@@ -310,8 +351,20 @@ class WidgetsController extends Controller
                         'left' => 'auto',
                         'display' => 'block',
                         'textAlign' => 'center',
+                        'margin' => array(
+                            'top' => '420',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
                         'button' => array(
-                            'width' => '100%'
+                            'width' => '100%',
+                            'padding' => array(
+                                'top' => '15',
+                                'right' => '70',
+                                'bottom' => '20',
+                                'left' => '70'
+                            )
                         )
                     )
                 );

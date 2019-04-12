@@ -61,6 +61,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public mouseOver: boolean = false;
     public crowdStyles: string;
 
+    public fontFamilyPreview: string = '';
+
     @ViewChild('iframe') iframe: ElementRef;
     @ViewChild('preview') previewContent: ElementRef;
     // @ViewChild('pagePreview') pagePreview: ElementRef;
@@ -68,7 +70,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public deviceTypeButtons: RadioButton[] = [];
     public deviceTypes = devices;
 
-    public scale:number = 50;
+    public scale: number = 50;
 
     public iframeCode = iframeCode;
     private subscription: Subscription;
@@ -119,7 +121,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             parent.removeChild(parent.firstChild);
         const style = document.createElement('style');
         style.type = 'text/css';
-        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} a:hover{${this.getHoverButtonStyles()}}`;
+        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} a:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}`;
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
     }
@@ -179,10 +181,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             margin: 'auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: '15px'
+            padding: '30px'
         };
 
-        let fixedStyles = (this.widget.settings[this.deviceType].additional_settings.fixedSettings != null) ? {
+
+        let fixedStyles = (this.widget.settings[this.deviceType].additional_settings.fixedSettings.length > 0) ? {
             bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
             zIndex: this.widget.settings[this.deviceType].additional_settings.fixedSettings.zIndex,
             textAlign: this.widget.settings[this.deviceType].additional_settings.fixedSettings.textAlign,
@@ -259,6 +262,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getHeadlineTextStyle() {
         const headlineText = this.widget.settings[this.deviceType].widget_settings.general;
+        this.usedFontFamily(headlineText.fontSettings.fontFamily);
         let dynamicStyle = {};
         dynamicStyle = {
             'text-align': headlineText.fontSettings.alignment,
@@ -279,7 +283,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getAdditionalTextStyle() {
         const additionalText = this.widget.settings[this.deviceType].widget_settings.additional_text;
-        if (!additionalText){
+        this.usedFontFamily(additionalText.fontSettings.fontFamily);
+        if (!additionalText) {
             return;
         }
         let dynamicStyle = {
@@ -301,6 +306,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getButtonStyles() {
         let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
+        this.usedFontFamily(ctaStyles.default.fontSettings.fontFamily);
         let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer.button;
         let boxShadow = ctaStyles.default.design.shadow.x + 'px ' +
             ctaStyles.default.design.shadow.y + 'px ' +
@@ -341,7 +347,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             'border-bottom-right-radius': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             cursor: 'pointer',
             textDecoration: 'none'
-        }
+        };
+
+
         let result = {...defaultStyles};
         return result;
     }
@@ -361,19 +369,20 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
             width: additionalSettings.width,
             position: additionalSettings.position,
-            top: additionalSettings.top,
-            right: additionalSettings.right,
+            //top: additionalSettings.top,
+            //right: additionalSettings.right,
             //bottom: additionalSettings.bottom,
-            left: additionalSettings.left,
+            //left: additionalSettings.left,
             textAlign: ctaStyles.default.fontSettings.alignment,
             margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
                 this.addPx(ctaStyles.default.margin.right) + ' ' +
                 this.addPx(ctaStyles.default.margin.bottom) + ' ' +
                 this.addPx(ctaStyles.default.margin.left),
-        }
-        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+        };
+
+        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
             containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
-            containerStyles['float']='left';
+            containerStyles['float'] = 'left';
         }
         return containerStyles;
     }
@@ -438,4 +447,18 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         }
         return dynamicStyle;
     }
+
+    private usedFontFamily(fontFamily) {
+        let tempArray = this.fontFamilyPreview.split('|');
+        if (tempArray.indexOf(fontFamily) === -1) {
+            tempArray.push(fontFamily);
+        }
+        this.fontFamilyPreview = '';
+        tempArray.forEach(font => {
+            this.fontFamilyPreview +=
+                (this.fontFamilyPreview != '') ?
+                    '|' + font : font;
+        });
+    }
+
 }

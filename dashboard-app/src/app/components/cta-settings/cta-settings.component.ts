@@ -23,6 +23,7 @@ export class CtaSettingsComponent implements OnInit {
     alertType: string = '';
 
     loading: boolean = true;
+    saving: boolean = false;
 
 
     public cta = 'Default';
@@ -126,19 +127,21 @@ export class CtaSettingsComponent implements OnInit {
 
     fetchCtaSettings() {
         this.settingsService.getCtaSettings().subscribe(response => {
-           this.call_to_action = response;
-           this.loading = false;
+            this.call_to_action = response;
+            this.loading = false;
         });
     }
 
     updateSettings() {
         this.submitted = true;
+        this.saving = true;
         this.settingsService.updateCtaSettings(this.call_to_action).subscribe(response => {
             let targetUrl = Routing.CONFIGURATION_FULL_PATH;
             this.alertOpen = true;
             this.alertType = 'success';
             this.alertMessage = 'Successfully updated CTA Settings.';
             setTimeout(() => {
+                this.saving = false;
                 this.router.navigateByUrl(targetUrl);
             }, 2000)
         });
