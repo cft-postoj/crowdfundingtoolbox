@@ -16,6 +16,7 @@ export class WidgetSettingsComponent implements OnInit {
     public paddingButtons: RadioButton[] = [];
     public marginButtons: RadioButton[] = [];
     loading = true;
+    saving: boolean = false;
 
     submitted: boolean = false;
     alertOpen: boolean = false;
@@ -66,12 +67,14 @@ export class WidgetSettingsComponent implements OnInit {
 
     updateSettings() {
         this.submitted = true;
+        this.saving = true;
         this.settingsService.updateWidgetSettings(this.widget_settings).subscribe(response => {
             let targetUrl = Routing.CONFIGURATION_FULL_PATH;
             this.alertOpen = true;
             this.alertType = 'success';
             this.alertMessage = 'Successfully updated Widget Settings.';
             setTimeout(() => {
+                this.saving = false;
                 this.router.navigateByUrl(targetUrl);
             }, 2000)
         });

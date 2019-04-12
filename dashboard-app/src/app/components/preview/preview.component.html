@@ -7,10 +7,10 @@
   ></span>
     <div class="header container">
         <div class="row">
-            <div class="col-2 vertical-align">
-                 PREVIEW MODE
+            <div class="col-3 vertical-align">
+                PREVIEW MODE
             </div>
-            <div class="col-2 offset-3 vertical-align">
+            <div class="col-2 offset-2 vertical-align">
                 <ng-container *ngIf="campaignId">
                     <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType" [class]="'small'">
                     </app-radio-button-group>
@@ -21,8 +21,8 @@
             </div>
             <div class="col-2">
                 <app-inputNumber id="scale"
-                        [(value)]="scale"
-                        [class]="'float-right'">
+                                 [(value)]="scale"
+                                 [class]="'float-right'">
                 </app-inputNumber>
             </div>
         </div>
@@ -44,7 +44,7 @@
     <!-- iframe encapsulated TODO -->
     <iframe [ngStyle]="{'transform': 'scale('+scale/100+')'}" [hidden]="loading" #iframe frameborder="0" width="100%" height="100%" class="{{deviceType}}"></iframe>
     <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
-        <link [href]="'https://fonts.googleapis.com/css?family=' + widget.settings[deviceType].widget_settings.general.fontSettings.fontFamily | safe" rel="stylesheet">
+        <link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
         <div class="cft--background" [ngStyle]="getBackgroundStyle()" [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
             <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
             <div class="cft--body" [ngStyle]="getBodyStyle()">
@@ -55,8 +55,8 @@
                 <!-- CTA -->
                 <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()">
                     <a class="cft--button"
-                            [ngStyle]="getButtonStyles()"
-                            href="{{widget.settings[deviceType].cta.url}}">
+                       [ngStyle]="getButtonStyles()"
+                       href="{{widget.settings[deviceType].cta.url}}">
                         {{widget.settings[deviceType].cta.text}}
                     </a>
                 </div>

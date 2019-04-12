@@ -61,6 +61,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public mouseOver: boolean = false;
     public crowdStyles: string;
 
+    public fontFamilyPreview: string = '';
+
     @ViewChild('iframe') iframe: ElementRef;
     @ViewChild('preview') previewContent: ElementRef;
     // @ViewChild('pagePreview') pagePreview: ElementRef;
@@ -68,7 +70,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public deviceTypeButtons: RadioButton[] = [];
     public deviceTypes = devices;
 
-    public scale:number = 50;
+    public scale: number = 50;
 
     public iframeCode = iframeCode;
     private subscription: Subscription;
@@ -259,6 +261,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getHeadlineTextStyle() {
         const headlineText = this.widget.settings[this.deviceType].widget_settings.general;
+        this.usedFontFamily(headlineText.fontSettings.fontFamily);
         let dynamicStyle = {};
         dynamicStyle = {
             'text-align': headlineText.fontSettings.alignment,
@@ -273,7 +276,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(headlineText.text_margin.bottom) + ' ' +
                 this.addPx(headlineText.text_margin.left)
         }
-        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
             dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
             dynamicStyle['float'] = 'left';
         }
@@ -283,7 +286,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getAdditionalTextStyle() {
         const additionalText = this.widget.settings[this.deviceType].widget_settings.additional_text;
-        if (!additionalText){
+        this.usedFontFamily(additionalText.fontSettings.fontFamily);
+        if (!additionalText) {
             return;
         }
         let dynamicStyle = {
@@ -305,6 +309,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getButtonStyles() {
         let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
+        this.usedFontFamily(ctaStyles.default.fontSettings.fontFamily);
         let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer.button;
         let boxShadow = ctaStyles.default.design.shadow.x + 'px ' +
             ctaStyles.default.design.shadow.y + 'px ' +
@@ -367,21 +372,21 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
             width: additionalSettings.width,
             position: additionalSettings.position,
-            top: additionalSettings.top,
-            right: additionalSettings.right,
+            //top: additionalSettings.top,
+            //right: additionalSettings.right,
             //bottom: additionalSettings.bottom,
-            left: additionalSettings.left,
+            //left: additionalSettings.left,
             textAlign: ctaStyles.default.fontSettings.alignment,
             margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
                 this.addPx(ctaStyles.default.margin.right) + ' ' +
                 this.addPx(ctaStyles.default.margin.bottom) + ' ' +
                 this.addPx(ctaStyles.default.margin.left),
         }
-        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
             containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
-            containerStyles['float']='left';
+            containerStyles['float'] = 'left';
         }
-        console.log(this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,containerStyles)
+        console.log(this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display, containerStyles)
         return containerStyles;
     }
 
@@ -436,5 +441,18 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     //     console.log(this.pagePreview.nativeElement.contentWindow.document)
     //     pagePreviewElement.replaceWith(previewElement);
     // }
+
+    private usedFontFamily(fontFamily) {
+        let tempArray = this.fontFamilyPreview.split('|');
+        if (tempArray.indexOf(fontFamily) === -1) {
+            tempArray.push(fontFamily);
+        }
+        this.fontFamilyPreview = '';
+        tempArray.forEach(font => {
+            this.fontFamilyPreview +=
+                (this.fontFamilyPreview != '') ?
+                    '|' + font : font;
+        });
+    }
 
 }

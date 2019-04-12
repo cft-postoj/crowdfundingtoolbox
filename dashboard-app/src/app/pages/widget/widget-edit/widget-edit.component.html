@@ -110,7 +110,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}" *ngIf="widget.widget_type.method==widgetTypes.fixed.name">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}"
+                     *ngIf="widget.widget_type.method==widgetTypes.fixed.name">
                     <div class="row collapsible--header" (click)="openTab(6)">
                         <div class="col-11">
                             WIDTHS
@@ -124,22 +125,24 @@
                     </div>
                     <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(6)">
                         <div class="settings--card">
-                            <div class="row">
-                                <div class="col-3 bold flex-center">
-                                    Headline [%]
-                                </div>
-                                <div class="col-3">
-                                     <app-inputNumber type="text"
-                                                  [(value)]="widget.settings[deviceType].additional_settings.textContainer.width">
-                                     </app-inputNumber>
-                                </div>
-                                <div class="col-3 bold flex-center">
-                                    Button [%]
-                                </div>
-                                <div class="col-3">
-                                    <app-inputNumber type="text"
-                                           [(value)]="widget.settings[deviceType].additional_settings.buttonContainer.width">
-                                    </app-inputNumber>
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <div class="col-6 bold flex-center">
+                                        Headline & Addtional texts [%]
+                                    </div>
+                                    <div class="col-6">
+                                        <app-inputNumber type="text"
+                                                         [(value)]="widget.settings[deviceType].additional_settings.textContainer.width">
+                                        </app-inputNumber>
+                                    </div>
+                                    <div class="col-6 bold flex-center">
+                                        Button [%]
+                                    </div>
+                                    <div class="col-6">
+                                        <app-inputNumber type="text"
+                                                         [(value)]="widget.settings[deviceType].additional_settings.buttonContainer.width">
+                                        </app-inputNumber>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -438,20 +441,39 @@
                             <div class="settings--card">
                                 <div class="row">
                                     <div class="col-12 bold">
+                                        Button alignment
+                                    </div>
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-6 vertical-align">
+                                            <app-radio-button-group [class]="'full-width'"
+                                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
+                                                                    [radioButtons]="radioButtons"
+                                            >
+                                            </app-radio-button-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col-12 bold">
                                         Font settings
                                     </div>
                                 </div>
                                 <div class="settings--card--body">
                                     <div class="row">
                                         <div class="col vertical-align">
-                                            Alignment
+                                            Font Family
                                         </div>
                                         <div class="col vertical-align">
-                                            <app-radio-button-group [class]="'full-width'"
-                                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
-                                                                    [radioButtons]="radioButtons"
-                                            >
-                                            </app-radio-button-group>
+                                            <app-dropdown [items]="fontFamily"
+                                                          [class]="'classic default-border align-right'"
+                                                          [title]="'Choose font'"
+                                                          [customFonts]="true"
+                                                          [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontFamily">
+                                            </app-dropdown>
                                         </div>
                                         <div class="col vertical-align">
                                             Font weight
@@ -860,7 +882,8 @@
                                     <div class="row mt-3">
                                         <div class="col-12 bold">Monetization text
                                             <app-switcher class="float-right" [id]="'additional'"
-                                                          [(checked)]="widget.settings[deviceType].additional_text.active"></app-switcher></div>
+                                                          [(checked)]="widget.settings[deviceType].additional_text.active"></app-switcher>
+                                        </div>
                                     </div>
                                     <div class="row"
                                          *ngIf="widget.settings[deviceType].additional_text.active">

@@ -346,10 +346,14 @@
                 </div>
             </div>
         </div>
-        <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+        <app-alert
+                [(open)]="alertOpen"
+                [type]="alertType"
+                [message]="alertMessage"></app-alert>
     </ng-container>
     <app-actions
             class="actions"
             (submit)="updateSettings()"
+            [submitting]="saving"
             [hidePreviewButton]="'true'"></app-actions>
 </div>
