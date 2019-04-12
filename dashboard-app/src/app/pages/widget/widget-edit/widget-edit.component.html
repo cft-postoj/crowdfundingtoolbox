@@ -905,7 +905,7 @@
                  [submitting]="saving" (deviceTypeChange)="recreateRadioButtons()"></app-actions>
 </div>
 
-<app-preview *ngIf="preview" [widget]="widget" [deviceType]="deviceType" [(show)]="preview">
+<app-preview *ngIf="preview" [loading]="loading" [widget]="widget" [deviceType]="deviceType" [(show)]="preview">
 </app-preview>
 <app-preview #previewGenerateHTML *ngIf="creatingHTMLs" [class]="'hide'" [generateHTML]="'true'" [show]="'false'"
              [widget]="widget" [deviceType]="deviceType"></app-preview>
