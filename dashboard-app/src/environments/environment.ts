@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const googleApiKey = 'YOUR_API_KEY';
+import {keys} from "../keys";
 
 export const environment = {
 
@@ -12,7 +12,7 @@ export const environment = {
     backOfficeUrl: 'http://localhost:8000/api/backoffice',
     authServerUrl: 'http://localhost:8000/api/backoffice',
 
-    fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + googleApiKey,
+    fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + keys.googleApiKey,
 
     login:'/login',
     logout:'/logout',

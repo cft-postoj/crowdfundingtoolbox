@@ -1,4 +1,4 @@
-const googleApiKey = 'YOUR_API_KEY';
+import {keys} from "../keys";
 
 export const environment = {
 
@@ -8,7 +8,7 @@ export const environment = {
     backOfficeUrl:  '/api/backoffice',
     authServerUrl: '/api/backoffice' ,
 
-    fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + googleApiKey,
+    fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + keys.googleApiKey,
 
     login: '/login',
     logout: '/logout',
