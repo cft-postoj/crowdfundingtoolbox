@@ -47,7 +47,7 @@ export class DropdownComponent implements OnInit, OnChanges{
             })
         }
         if (this.customFonts) {
-            this.items.map((item: DropdownItem) => {
+            this.items.forEach((item: DropdownItem) => {
                 this.currentFonts += (this.currentFonts == '') ? item.value : '|' + item.value;
             })
         }

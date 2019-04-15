@@ -32,6 +32,8 @@ export class GeneralSettingsComponent implements OnInit {
 
     public generalSetting = new GeneralSettings();
 
+    public fontFamilyDropdownButtons = [];
+
     constructor(private router: Router, private settingsService: GeneralSettingsService, private componentComService: ComponentCommunicationService) {
         this.fetchSettings();
     }
@@ -67,17 +69,13 @@ export class GeneralSettingsComponent implements OnInit {
         this.router.navigateByUrl(targetUrl);
     }
 
-
-    generateDropdowns(fonts: string[]) {
-        return fonts.map(font => {
-            return {title: font, value: font}
-        })
-    }
-
     updateValues(event) {
         this.generalSetting.fonts = event.map(ngxSelected =>
             ngxSelected.value
         )
+        this.fontFamilyDropdownButtons = this.generalSetting.fonts.map(font => {
+            return {title: font, value: font}
+        })
     }
 
     fetchSettings() {
@@ -88,6 +86,9 @@ export class GeneralSettingsComponent implements OnInit {
                 this.generalSetting.font_settings_headline_text = result.font_settings_headline_text;
                 this.generalSetting.font_settings_additional_text = result.font_settings_additional_text;
                 this.loading = false;
+                this.fontFamilyDropdownButtons = this.generalSetting.fonts.map(font => {
+                    return {title: font, value: font}
+                })
             }
         });
     }
