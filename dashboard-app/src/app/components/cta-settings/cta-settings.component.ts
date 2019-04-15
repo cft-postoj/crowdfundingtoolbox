@@ -22,6 +22,9 @@ export class CtaSettingsComponent implements OnInit {
     alertMessage: string = '';
     alertType: string = '';
 
+    loading: boolean = true;
+    saving: boolean = false;
+
 
     public cta = 'Default';
     public call_to_action = new CtaSettings();
@@ -55,19 +58,27 @@ export class CtaSettingsComponent implements OnInit {
         this.generalSettings.fonts.map((val, key) => {
             this.fontFamily.push({title: val, value: val});
         });
+        this.recreateButtons();
 
+        this.calcSpecificRadius();
+    }
+
+    private recreateButtons() {
         this.shadowButtons = [];
         this.shadowButtons.push(new RadioButton("x", this.call_to_action.default.design.shadow.x, '', "X:"))
         this.shadowButtons.push(new RadioButton("y", this.call_to_action.default.design.shadow.y, '', "Y:"))
         this.shadowButtons.push(new RadioButton("b", this.call_to_action.default.design.shadow.b, '', "B:"))
 
+        this.allRadiusesButton=[];
         this.allRadiusesButton.push(new RadioButton("all", 0, "/assets/images/icons/radius_AllTogether.svg"))
 
+        this.specificRadiusButtons=[];
         this.specificRadiusButtons.push(new RadioButton("tl", this.call_to_action.default.design.radius.tl, "/assets/images/icons/radius_LeftTop.svg"))
         this.specificRadiusButtons.push(new RadioButton("tr", this.call_to_action.default.design.radius.tr, "/assets/images/icons/radius_RightTop.svg"))
         this.specificRadiusButtons.push(new RadioButton("br", this.call_to_action.default.design.radius.br, "/assets/images/icons/radius_LeftBottom.svg"))
         this.specificRadiusButtons.push(new RadioButton("bl", this.call_to_action.default.design.radius.bl, "/assets/images/icons/radius_LeftBottom.svg"))
 
+        this.radioButtons=[];
         this.radiusButtons.push(new RadioButton("active", false, "/assets/images/icons/radius_disable.svg"));
         this.radiusButtons.push(new RadioButton("disabled", true, "/assets/images/icons/radius_enable.svg"));
 
@@ -82,8 +93,6 @@ export class CtaSettingsComponent implements OnInit {
         this.marginButtons.push(new RadioButton("right", this.call_to_action.default.margin.right, "/assets/images/icons/margin_right.svg"))
         this.marginButtons.push(new RadioButton("bottom", this.call_to_action.default.margin.bottom, "/assets/images/icons/margin_bot.svg"))
         this.marginButtons.push(new RadioButton("left", this.call_to_action.default.margin.left, "/assets/images/icons/margin_left.svg"))
-
-        this.calcSpecificRadius();
     }
 
     closeEditWindow() {
@@ -124,18 +133,22 @@ export class CtaSettingsComponent implements OnInit {
 
     fetchCtaSettings() {
         this.settingsService.getCtaSettings().subscribe(response => {
-           this.call_to_action = response;
+            this.call_to_action = response;
+            this.loading = false;
+            this.recreateButtons();
         });
     }
 
     updateSettings() {
         this.submitted = true;
+        this.saving = true;
         this.settingsService.updateCtaSettings(this.call_to_action).subscribe(response => {
             let targetUrl = Routing.CONFIGURATION_FULL_PATH;
             this.alertOpen = true;
             this.alertType = 'success';
             this.alertMessage = 'Successfully updated CTA Settings.';
             setTimeout(() => {
+                this.saving = false;
                 this.router.navigateByUrl(targetUrl);
             }, 2000)
         });

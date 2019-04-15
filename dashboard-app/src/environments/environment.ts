@@ -37,4 +37,3 @@ export const environment = {
     cftSettings: '/crowdfunding-settings'
 
 };
-

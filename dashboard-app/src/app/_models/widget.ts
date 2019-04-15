@@ -219,7 +219,7 @@ export class Widget {
                     zIndex: 100,
                 },
                 display: 'block',
-                textContainer: {
+                bodyContainer: {
                     width: '100%',
                     margin: '0 auto',
                     position: 'absolute',
@@ -232,6 +232,20 @@ export class Widget {
                         maxWidth: '100%'
                     }
                 },
+                textContainer: {
+                    width: '100%',
+                    margin: '0 auto',
+                    position: 'absolute',
+                    top: '',
+                    right: '',
+                    bottom: '',
+                    left: '',
+                    text: {
+                        width: '300px',
+                        maxWidth: '100%',
+                        textAlign: ''
+                    }
+                },
                 buttonContainer: {
                     width: '100%',
                     position: 'absolute',
@@ -241,9 +255,21 @@ export class Widget {
                     left: '',
                     display: '',
                     textAlign: '',
+                    margin: {
+                      top: '',
+                      right: '',
+                      bottom: '',
+                      left: ''
+                    },
                     button: {
                         width: '300px',
-                        maxWidth: '100%'
+                        maxWidth: '100%',
+                        padding: {
+                            top: '',
+                            right: '',
+                            bottom: '',
+                            left: ''
+                        }
                     }
                 }
             }

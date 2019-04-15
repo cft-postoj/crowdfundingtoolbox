@@ -2,95 +2,100 @@
 @import '../../../sass/mixins.scss';
 
 .preview {
-  display: none;
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99;
-  background: white;
+    display: none;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    background: white;
 
-  border: 1px transparent;
-  border-radius: 4px;
-  color: #8AA1B1;
-  font-size: 14px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-  .header {
-    height: 10%;
-    font-weight: bold;
+    border: 1px transparent;
+    border-radius: 4px;
+    color: #8AA1B1;
     font-size: 14px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-    .title {
-      padding-left: 16px;
-    }
+    .header {
+        height: 10%;
+        font-weight: bold;
+        font-size: 14px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+
+        .title {
+            padding-left: 16px;
+        }
 
     }
     //don't use scss to style your components. Instead alert default style of method, which is used to get styles
-    .background {
-        .overlay {
-             }
-        .body {
-            .headline-text {
-
-      }
+    .cft--background {
+        .cft--overlay {
+        }
+        .cft--body {
+            .cft--text-container {
+                .cft--headline-text {
+                }
+                .cft--additional-text {
+                }
+            }
+            .cft--button-container{}
+        }
     }
-  }
-  .btn-close {
-    position: absolute;
-    right: -14px;
-    top: -14px;
-    cursor: pointer;
-    z-index: 9999;
-
-  }
-  .widgetType {
-    display: inline-block;
-    width: 80%;
-    color: $azure;
-  }
-  iframe {
-    &.desktop {
-      width: 1366px;
-      height: 768px;
-      transform: scale(.55);
-      transform-origin: 0 0;
-    }
-    &.tablet {
-      width: 768px;
-      margin-top: -186px;
-      height: 800px;
-      @include borderRadius(30px);
-      border: 4px solid #000000;
-      transform: scale(.55);
-    }
-    &.mobile {
-      width: 410px;
-      margin: -150px auto 0 22%;
-      height: 700px;
-      @include borderRadius(30px);
-      border: 4px solid #000000;
-      transform: scale(.55);
+    .btn-close {
+        position: absolute;
+        right: -14px;
+        top: -14px;
+        cursor: pointer;
+        z-index: 9999;
 
     }
-  }
+    .widgetType {
+        display: inline-block;
+        width: 80%;
+        color: $azure;
+    }
+    iframe {
+        &.desktop {
+            width: 1366px;
+            height: 768px;
+            transform: scale(.55);
+            transform-origin: 0 0;
+        }
+        &.tablet {
+            width: 768px;
+            margin-top: -186px;
+            height: 800px;
+            @include borderRadius(30px);
+            border: 4px solid #000000;
+            transform: scale(.55);
+        }
+        &.mobile {
+            width: 410px;
+            margin: -150px auto 0 22%;
+            height: 700px;
+            @include borderRadius(30px);
+            border: 4px solid #000000;
+            transform: scale(.55);
+
+        }
+    }
     &.fullscreen {
-        width: calc( 100% - 14px);
+        width: calc(100% - 14px);
         iframe {
             position: relative;
             transform: scale(0.6) translateX(-50%);
-            left: 50%;
+            left: 0;
         }
 
     }
 }
-.hide{
-  display: none !important;
+
+.hide {
+    display: none !important;
 }

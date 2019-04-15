@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackOfficeAPI;
 
 use App\BackOfficeAPI\Campaign;
 use App\BackOfficeAPI\CampaignImage;
+use App\BackOfficeAPI\CampaignsConfiguration;
 use App\BackOfficeAPI\CampaignSettings;
 use App\BackOfficeAPI\Widget;
 use App\BackOfficeAPI\WidgetResult;
@@ -147,8 +148,56 @@ class WidgetsController extends Controller
 
     private function createSettingsJson($headlineText, $widgetSettings, $promoteSettings, $paymentSettings, $widgetType)
     {
+
+        // GET GENERAL CAMPAIGN SETTINGS
+        $generalSettings = $this->getGeneralSettings();
+        $generalWidgetSettings = json_decode($generalSettings['widget_settings'], true);
+        $generalSettingsHeadlineText = json_decode($generalSettings['font_settings_headline_text'], true);
+        $generalCtaSettings = json_decode($generalSettings['cta'], true);
+
+        $widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
+            'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+            'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+            'alignment' => 'center',
+            'color' => $generalSettingsHeadlineText['color'],
+            'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+            'fontSize' => $generalSettingsHeadlineText['fontSize']
+        ), $widgetType);
+
+        $widgetSettings['general']['background'] = array(
+            'type' => 'color',
+            'image' => array('id' => 0, 'url' => null),
+            'color' => $generalWidgetSettings['backgroundColor'],
+            'opacity' => 100
+        );
+
+        $widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $widgetSettings['general']['text_margin'], $widgetType);
+
+        $widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
+
+        // Additional text
+        $widgetSettings['additional_text'] = array(
+            'text' => $generalWidgetSettings['additional_text']['text'],
+            'fontSettings' => array(
+                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                'alignment' => 'center',
+                'color' => $generalSettingsHeadlineText['color'],
+                'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                'fontSize' => 18
+            ),
+            'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+            'text_margin' => array(
+                'top' => '0',
+                'right' => 'auto',
+                'bottom' => '0',
+                'left' => 'auto'
+            )
+        );
+
+
         $this->widgetSettings = array(
-            'headline_text' => $headlineText,
+            'headline_text' => $generalWidgetSettings['headline_text']['text'],
             'widget_settings' => $widgetSettings,
             'promote_settings' => $promoteSettings,
             'payment_settings' => $paymentSettings,
@@ -156,19 +205,97 @@ class WidgetsController extends Controller
                 'active' => false,
                 'subscribe_text' => ''
             ),
-            'additional_text' => array(
-                'active' => false,
-                'text' => ''
-            ),
             'cta' => array(
-                'text' => '',
-                'url' => ''
+                'text' => $generalWidgetSettings['cta']['text'],
+                'url' => $generalWidgetSettings['cta']['url']
             ),
             'additional_settings' =>
-                $this->getAdditionalWidgetSettings($widgetType)
+                $this->getAdditionalWidgetSettings($widgetType, $generalSettings)
 
         );
         return $this->widgetSettings;
+    }
+
+    private function overrideGeneralSettings($type, $settings, $widgetType)
+    {
+        $output = $settings;
+        if ($type == 'cta') {
+            switch ($widgetType) {
+                case 1: // landing widget
+                    $output = $settings;
+                    break;
+                case 2: // sidebar widget
+                    $output = $settings;
+                    $output['default']['margin'] = array(
+                        'top' => '420',
+                        'right' => 'auto',
+                        'bottom' => '0',
+                        'left' => 'auto'
+                    );
+                    $output['default']['padding'] = array(
+                        'top' => '15',
+                        'right' => '70',
+                        'bottom' => '20',
+                        'left' => '70'
+                    );
+                    break;
+                case 3: // leaderboard
+                    $output = $settings;
+                    $output['default']['margin'] = array(
+                        'top' => '100',
+                        'right' => 'auto',
+                        'bottom' => '0',
+                        'left' => 'auto'
+                    );
+                    $output['default']['padding'] = array(
+                        'top' => '20',
+                        'right' => '70',
+                        'bottom' => '25',
+                        'left' => '70'
+                    );
+                    break;
+                    default:
+                        $output = $settings;
+            }
+        } else if ($type == 'headlineFonts') {
+            switch ($widgetType) {
+                case 1: // landing widget
+                    $output = $settings;
+                    break;
+                case 2: // sidebar widget
+                    $output['alignment'] = 'left';
+                    break;
+                case 3: // leaderboard widget
+                    $output['fontSize'] =  50;
+                default:
+                    $output = $settings;
+            }
+        } else if ($type == 'headlineMargin') {
+            switch ($widgetType) {
+                case 1: // landing widget
+                    $output = $settings;
+                    break;
+                case 2: // sidebar widget
+                    $output = $settings;
+                    break;
+                case 3: // leaderboard
+                    $output = array(
+                        'top' => '30',
+                        'right' => 'auto',
+                        'bottom' => '0',
+                        'left' => 'auto'
+                    );
+                    break;
+                default:
+                    $output = $settings;
+            }
+        }
+        return $output;
+    }
+
+    protected function getGeneralSettings()
+    {
+        return CampaignsConfiguration::where('id', 1)->get()[0];
     }
 
     private function create()
@@ -196,9 +323,9 @@ class WidgetsController extends Controller
                     'widget_id' => $widget->id,
                     'campaign_id' => $this->campaignId,
                     'widget_type_id' => $id,
-                    'desktop'   =>  '<div></div>',
-                    'tablet'    =>  '<div></div>',
-                    'mobile'    =>  '<div></div>'
+                    'desktop' => '<div></div>',
+                    'tablet' => '<div></div>',
+                    'mobile' => '<div></div>'
                 ]);
             }
         } catch (\Exception $e) {
@@ -210,7 +337,7 @@ class WidgetsController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    private function getAdditionalWidgetSettings($widgetType)
+    private function getAdditionalWidgetSettings($widgetType, $generalSettings)
     {
         $outputJson = array();
         switch ($widgetType) {
@@ -225,7 +352,7 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
-                    'textContainer' => array(
+                    'bodyContainer' => array(
                         'width' => '100%',
                         'height' => '100%',
                         'margin' => '0 auto',
@@ -239,6 +366,21 @@ class WidgetsController extends Controller
                             'top' => '30px'
                         )
                     ),
+                    'textContainer' => array(
+                        'width' => '100%',
+                        'height' => '100%',
+                        'margin' => '0 auto',
+                        'position' => 'relative',
+                        'top' => 'auto',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%',
+                            'top' => '30px',
+                            'textAlign' => 'left'
+                        )
+                    ),
                     'buttonContainer' => array(
                         'width' => '100%',
                         'position' => 'absolute',
@@ -248,8 +390,20 @@ class WidgetsController extends Controller
                         'left' => 'auto',
                         'display' => 'block',
                         'textAlign' => 'center',
+                        'margin' => array(
+                            'top' => '420',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
                         'button' => array(
-                            'width' => '100%'
+                            'width' => '100%',
+                            'padding' => array(
+                                'top' => '15',
+                                'right' => '70',
+                                'bottom' => '20',
+                                'left' => '70'
+                            )
                         )
                     )
                 );
@@ -261,6 +415,23 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
+                    'bodyContainer' => array(
+                        'width' => '100%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => '80px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%'
+                        )
+                    ),
                     'textContainer' => array(
                         'width' => '100%',
                         'margin' => array(
@@ -300,17 +471,34 @@ class WidgetsController extends Controller
                 $outputJson = array(
                     'width' => '100%',
                     'maxWidth' => '100%',
-                    'height' => '50px',
+                    'height' => '80px',
                     'position' => 'fixed',
                     'fixedSettings' => array(
                         'top' => 'auto',
                         'bottom' => '0',
                         'zIndex' => 999999,
-                        'textAlign' =>  'center'
+                        'textAlign' => 'center'
                     ),
+                    'bodyContainer' => array(
+                        'width' => '100%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => 'auto',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%',
+                            'maxWidth' => '100%'
+                        )),
                     'display' => 'inline-block',
                     'textContainer' => array(
-                        'width' => '100%',
+                        'width' => 70,
                         'margin' => array(
                             'top' => '0',
                             'right' => 'auto',
@@ -328,7 +516,7 @@ class WidgetsController extends Controller
                         )
                     ),
                     'buttonContainer' => array(
-                        'width' => '100%',
+                        'width' => 30,
                         'position' => 'relative',
                         'top' => 'auto',
                         'right' => 'auto',
@@ -517,37 +705,35 @@ class WidgetsController extends Controller
                 $request['settings']['desktop']['widget_settings']['general']['background']['image']['url'] != null) {
                 // create image mapping
                 CampaignImage::create([
-                    'campaign_id'   =>  Widget::find($id)->only('campaign_id')['campaign_id'],
-                    'widget_id' =>  $id,
-                    'image_id'  =>  $request['settings']['desktop']['widget_settings']['general']['background']['image']['id'],
-                    'device_type'   =>  1 //desktop
+                    'campaign_id' => Widget::find($id)->only('campaign_id')['campaign_id'],
+                    'widget_id' => $id,
+                    'image_id' => $request['settings']['desktop']['widget_settings']['general']['background']['image']['id'],
+                    'device_type' => 1 //desktop
                 ]);
                 CampaignImage::create([
-                    'campaign_id'   =>  Widget::find($id)->only('campaign_id')['campaign_id'],
-                    'widget_id' =>  $id,
-                    'image_id'  =>  $request['settings']['tablet']['widget_settings']['general']['background']['image']['id'],
-                    'device_type'   =>  2 //tablet
+                    'campaign_id' => Widget::find($id)->only('campaign_id')['campaign_id'],
+                    'widget_id' => $id,
+                    'image_id' => $request['settings']['tablet']['widget_settings']['general']['background']['image']['id'],
+                    'device_type' => 2 //tablet
                 ]);
                 CampaignImage::create([
-                    'campaign_id'   =>  Widget::find($id)->only('campaign_id')['campaign_id'],
-                    'widget_id' =>  $id,
-                    'image_id'  =>  $request['settings']['mobile']['widget_settings']['general']['background']['image']['id'],
-                    'device_type'   =>  3 //mobile
+                    'campaign_id' => Widget::find($id)->only('campaign_id')['campaign_id'],
+                    'widget_id' => $id,
+                    'image_id' => $request['settings']['mobile']['widget_settings']['general']['background']['image']['id'],
+                    'device_type' => 3 //mobile
                 ]);
             } else {
                 // update image mapping
                 CampaignImage::where('widget_id', $id)->where('device_type', 1)->update([
-                    'image_id'  =>  $request['settings']['desktop']['widget_settings']['general']['background']['image']['id']
+                    'image_id' => $request['settings']['desktop']['widget_settings']['general']['background']['image']['id']
                 ]);
                 CampaignImage::where('widget_id', $id)->where('device_type', 2)->update([
-                    'image_id'  =>  $request['settings']['tablet']['widget_settings']['general']['background']['image']['id']
+                    'image_id' => $request['settings']['tablet']['widget_settings']['general']['background']['image']['id']
                 ]);
                 CampaignImage::where('widget_id', $id)->where('device_type', 3)->update([
-                    'image_id'  =>  $request['settings']['mobile']['widget_settings']['general']['background']['image']['id']
+                    'image_id' => $request['settings']['mobile']['widget_settings']['general']['background']['image']['id']
                 ]);
             }
-
-
 
 
             $user = Auth::user();
@@ -696,11 +882,11 @@ class WidgetsController extends Controller
             $widgetResults = WidgetResult::all()
                 ->where('widget_id', $id);
             foreach ($widgetResults as $result) {
-                    WidgetResult::find($result['id'])->update([
-                        'desktop' => $request['desktop'],
-                        'tablet' => $request['tablet'],
-                        'mobile' => $request['mobile']
-                    ]);
+                WidgetResult::find($result['id'])->update([
+                    'desktop' => $request['desktop'],
+                    'tablet' => $request['tablet'],
+                    'mobile' => $request['mobile']
+                ]);
             }
         } catch (\Exception $e) {
             return \response()->json([
@@ -741,7 +927,8 @@ class WidgetsController extends Controller
      * )
      * )
      */
-    protected function smartWidgetUpdate(Request $request, $id) {
+    protected function smartWidgetUpdate(Request $request, $id)
+    {
         $valid = validator($request->only('active'), [
             'active' => 'required|boolean'
         ]);
@@ -753,7 +940,7 @@ class WidgetsController extends Controller
 
         try {
             Widget::find($id)->update([
-               'active' =>  $request['active']
+                'active' => $request['active']
             ]);
         } catch (\Exception $e) {
             return response()->json([

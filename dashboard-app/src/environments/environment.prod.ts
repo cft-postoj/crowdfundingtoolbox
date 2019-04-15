@@ -4,9 +4,9 @@ export const environment = {
 
     production: true,
 
-    apiUrl: 'https://app.crowdfundingtoolbox.news/api',
-    backOfficeUrl:  'https://app.crowdfundingtoolbox.news/api/backoffice',
-    authServerUrl: 'https://app.crowdfundingtoolbox.news/api/backoffice' ,
+    apiUrl: '/api',
+    backOfficeUrl:  '/api/backoffice',
+    authServerUrl: '/api/backoffice' ,
 
     fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + googleApiKey,
 
@@ -32,5 +32,4 @@ export const environment = {
     widgetsUrl: '/widgets',
     cftSettings: '/crowdfunding-settings'
 };
-
 

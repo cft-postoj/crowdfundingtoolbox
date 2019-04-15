@@ -11,7 +11,7 @@ import {
     ViewChild
 } from '@angular/core';
 import {Widget} from "../../_models/widget";
-import {backgroundTypes, devices} from "../../_models/enums";
+import {backgroundTypes, devices, widgetTypes} from "../../_models/enums";
 import {PreviewService} from "../../_services/preview.service";
 import {Subject} from 'rxjs/Subject';
 import {ConvertHexService} from "../../_services/convert-hex.service";
@@ -54,12 +54,15 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     @Output() emitHtml = new EventEmitter();
 
+    @Input()
     public loading: boolean;
 
     public backgroundTypes = backgroundTypes;
 
     public mouseOver: boolean = false;
     public crowdStyles: string;
+
+    public fontFamilyPreview: string = '';
 
     @ViewChild('iframe') iframe: ElementRef;
     @ViewChild('preview') previewContent: ElementRef;
@@ -68,7 +71,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public deviceTypeButtons: RadioButton[] = [];
     public deviceTypes = devices;
 
-    public scale:number = 50;
+    public scale: number = 50;
 
     public iframeCode = iframeCode;
     private subscription: Subscription;
@@ -119,7 +122,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             parent.removeChild(parent.firstChild);
         const style = document.createElement('style');
         style.type = 'text/css';
-        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} a:hover{${this.getHoverButtonStyles()}}`;
+        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} a:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}`;
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
     }
@@ -179,11 +182,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             margin: 'auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: '15px'
+            padding: (this.widget.widget_type.method == widgetTypes.leaderboard.name) ? '0' : '30px'
         };
-
-        let fixedStyles = (this.widget.settings[this.deviceType].additional_settings.fixedSettings != null) ? {
-            top: this.widget.settings[this.deviceType].additional_settings.fixedSettings.top,
+        let fixedStyles = (this.widget.widget_type.method == widgetTypes.fixed.name) ? {
             bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
             zIndex: this.widget.settings[this.deviceType].additional_settings.fixedSettings.zIndex,
             textAlign: this.widget.settings[this.deviceType].additional_settings.fixedSettings.textAlign,
@@ -229,38 +230,35 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
 
     changePreview(preview) {
+        if (!this.loading)
         this.data$.next(preview.innerHTML);
     }
 
 
     getBodyStyle() {
         let defaultStyle = {
-            position: this.widget.settings[this.deviceType].additional_settings.textContainer.position,
-            top: this.widget.settings[this.deviceType].additional_settings.textContainer.top,
-            left: this.widget.settings[this.deviceType].additional_settings.textContainer.left,
-            width: this.widget.settings[this.deviceType].additional_settings.textContainer.width,
-            margin: this.widget.settings[this.deviceType].additional_settings.textContainer.margin,
+            position: this.widget.settings[this.deviceType].additional_settings.bodyContainer.position,
+            // top: this.widget.settings[this.deviceType].additional_settings.textContainer.top,
+            // left: this.widget.settings[this.deviceType].additional_settings.textContainer.left,
+            width: this.widget.settings[this.deviceType].additional_settings.bodyContainer.width,
+            margin: this.widget.settings[this.deviceType].additional_settings.bodyContainer.margin,
             //height: this.widget.settings[this.deviceType].additional_settings.textContainer.height
         }
         let dynamicStyle = {
             'background-color': this.widget.settings[this.deviceType].widget_settings.general.background.color,
-            backgroundColor: this.widget.settings[this.deviceType].widget_settings.general.text_background,
+            backgroundColor: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.backgroundColor,
 
         }
 
-        let fixedStyle = {
-            top: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.top),
-            right: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.right),
-            bottom: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.bottom),
-            left: this.addPx(this.widget.settings[this.deviceType].widget_settings.general.text_margin.left)
-        }
-        let result = {...defaultStyle, ...dynamicStyle, ...fixedStyle};
+        let result = {...defaultStyle, ...dynamicStyle};
         return result;
     }
 
     getHeadlineTextStyle() {
         const headlineText = this.widget.settings[this.deviceType].widget_settings.general;
-        let dynamicStyle = {
+        this.usedFontFamily(headlineText.fontSettings.fontFamily);
+        let dynamicStyle = {};
+        dynamicStyle = {
             'text-align': headlineText.fontSettings.alignment,
             'font-size': headlineText.fontSettings.fontSize + 'px',
             'color': headlineText.fontSettings.color,
@@ -279,7 +277,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getAdditionalTextStyle() {
         const additionalText = this.widget.settings[this.deviceType].widget_settings.additional_text;
-        if (!additionalText){
+        this.usedFontFamily(additionalText.fontSettings.fontFamily);
+        if (!additionalText) {
             return;
         }
         let dynamicStyle = {
@@ -301,11 +300,12 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getButtonStyles() {
         let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
+        this.usedFontFamily(ctaStyles.default.fontSettings.fontFamily);
         let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer.button;
         let boxShadow = ctaStyles.default.design.shadow.x + 'px ' +
             ctaStyles.default.design.shadow.y + 'px ' +
             ctaStyles.default.design.shadow.b + 'px ' + '0px ' +
-            this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color, ctaStyles.default.design.shadow.opacity);
+            this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color);
 
 
         let defaultStyles = {
@@ -319,10 +319,10 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             color: ctaStyles.default.fontSettings.color,
             fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
             display: this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display,
-            'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color, ctaStyles.default.design.fill.opacity)
+            'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)
                 : 'transparent',
-            border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.size + 'px solid' +
-                this.convertHex.convert(ctaStyles.default.design.border.color, ctaStyles.default.design.border.opacity) : 'none',
+            border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.border.size + 'px solid ' +
+                this.convertHex.convert(ctaStyles.default.design.border.color) : 'none',
             '-webkit-box-shadow': (ctaStyles.default.design.shadow.active) ? boxShadow : 'none',
             '-moz-box-shadow': (ctaStyles.default.design.shadow.active) ? boxShadow : 'none',
             'box-shadow': (ctaStyles.default.design.shadow.active) ? boxShadow : 'none',
@@ -341,8 +341,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             'border-bottom-right-radius': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             cursor: 'pointer',
             textDecoration: 'none'
-        }
+        };
 
+        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+            defaultStyles['display'] = 'inline-block';
+        }
 
         let result = {...defaultStyles};
         return result;
@@ -363,16 +366,22 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
             width: additionalSettings.width,
             position: additionalSettings.position,
-            top: additionalSettings.top,
-            right: additionalSettings.right,
+            //top: additionalSettings.top,
+            //right: additionalSettings.right,
             //bottom: additionalSettings.bottom,
-            left: additionalSettings.left,
-            textAlign: additionalSettings.textAlign,
+            //left: additionalSettings.left,
+            textAlign: ctaStyles.default.fontSettings.alignment,
             margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
                 this.addPx(ctaStyles.default.margin.right) + ' ' +
                 this.addPx(ctaStyles.default.margin.bottom) + ' ' +
                 this.addPx(ctaStyles.default.margin.left),
+        };
+
+        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
+            containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
+            containerStyles['float'] = 'left';
         }
+
         return containerStyles;
     }
 
@@ -427,5 +436,28 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     //     console.log(this.pagePreview.nativeElement.contentWindow.document)
     //     pagePreviewElement.replaceWith(previewElement);
     // }
+
+    getTextContainerStyle() {
+        let dynamicStyle = {};
+        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+            dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
+            dynamicStyle['float'] = 'left';
+        }
+        return dynamicStyle;
+    }
+
+    private usedFontFamily(fontFamily) {
+        let tempArray = this.fontFamilyPreview.split('|');
+        if (tempArray.indexOf(fontFamily) === -1) {
+            if (fontFamily != undefined)
+            tempArray.push(fontFamily);
+        }
+        this.fontFamilyPreview = '';
+        tempArray.forEach(font => {
+            this.fontFamilyPreview +=
+                (this.fontFamilyPreview != '') ?
+                    '|' + font : font;
+        });
+    }
 
 }

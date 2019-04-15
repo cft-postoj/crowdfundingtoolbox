@@ -21,7 +21,9 @@ export class GeneralSettingsComponent implements OnInit {
     alertMessage: string = '';
     alertType: string = '';
 
-    public loading = false;
+    loading: boolean = true;
+
+    saving: boolean = false;
 
     public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'];
@@ -67,8 +69,8 @@ export class GeneralSettingsComponent implements OnInit {
 
 
     generateDropdowns(fonts: string[]) {
-       return fonts.map(font => {
-           return {title: font, value: font}
+        return fonts.map(font => {
+            return {title: font, value: font}
         })
     }
 
@@ -80,27 +82,29 @@ export class GeneralSettingsComponent implements OnInit {
 
     fetchSettings() {
         this.settingsService.getGeneralPageSettings().subscribe(result => {
-            console.log(result.fonts)
             if (result.colors != null && result.fonts != null) {
                 this.generalSetting.colors = result.colors;
                 this.generalSetting.fonts = result.fonts;
                 this.generalSetting.font_settings_headline_text = result.font_settings_headline_text;
                 this.generalSetting.font_settings_additional_text = result.font_settings_additional_text;
+                this.loading = false;
             }
         });
     }
 
     updateSettings() {
         this.submitted = true;
-       this.settingsService.updateGeneralPageSettings(this.generalSetting).subscribe(result => {
-           let targetUrl = Routing.CONFIGURATION_FULL_PATH;
-           this.alertOpen = true;
-           this.alertType = 'success';
-           this.alertMessage = 'Successfully updated General Page Settings.';
-           setTimeout(() => {
-               this.router.navigateByUrl(targetUrl);
-           }, 2000)
+        this.saving = true;
+        this.settingsService.updateGeneralPageSettings(this.generalSetting).subscribe(result => {
+            let targetUrl = Routing.CONFIGURATION_FULL_PATH;
+            this.alertOpen = true;
+            this.alertType = 'success';
+            this.alertMessage = 'Successfully updated General Page Settings.';
+            setTimeout(() => {
+                this.saving = false;
+                this.router.navigateByUrl(targetUrl);
+            }, 2000)
 
-       });
+        });
     }
 }

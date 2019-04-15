@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {RadioButton} from "../../_parts/atoms/radio-button/radio-button";
 import {WidgetSettings} from "../../_models/widget-settings";
 import {GeneralSettingsService} from "../../_services/general-settings.service";
+import {GeneralSettings} from "../../_models/general-settings";
 
 @Component({
     selector: 'app-widget-settings',
@@ -15,6 +16,7 @@ export class WidgetSettingsComponent implements OnInit {
     public paddingButtons: RadioButton[] = [];
     public marginButtons: RadioButton[] = [];
     loading = true;
+    saving: boolean = false;
 
     submitted: boolean = false;
     alertOpen: boolean = false;
@@ -23,11 +25,18 @@ export class WidgetSettingsComponent implements OnInit {
 
     public widget_settings = new WidgetSettings();
 
+    public generalSettings = new GeneralSettings();
+
     constructor(private router: Router, private settingsService: GeneralSettingsService) {
+        this.fetchGeneralSettings();
         this.fetchWidgetSettings();
     }
 
     ngOnInit() {
+        this.recreateButtons();
+    }
+
+    private recreateButtons() {
         this.paddingButtons = [];
         this.paddingButtons.push(new RadioButton("top", this.widget_settings.general.padding.top, "/assets/images/icons/padding_top.svg"))
         this.paddingButtons.push(new RadioButton("right", this.widget_settings.general.padding.right, "/assets/images/icons/padding_right.svg"))
@@ -46,21 +55,31 @@ export class WidgetSettingsComponent implements OnInit {
         this.router.navigateByUrl(targetUrl);
     }
 
+    fetchGeneralSettings() {
+        this.settingsService.getGeneralPageSettings().subscribe(response => {
+            this.generalSettings = response;
+        })
+    }
+
     fetchWidgetSettings() {
         this.settingsService.getWidgetSettings().subscribe(response => {
             // fetch only GENERAL settings
             this.widget_settings.general = response.general;
+            this.loading = false;
+            this.recreateButtons();
         })
     }
 
     updateSettings() {
         this.submitted = true;
+        this.saving = true;
         this.settingsService.updateWidgetSettings(this.widget_settings).subscribe(response => {
             let targetUrl = Routing.CONFIGURATION_FULL_PATH;
             this.alertOpen = true;
             this.alertType = 'success';
             this.alertMessage = 'Successfully updated Widget Settings.';
             setTimeout(() => {
+                this.saving = false;
                 this.router.navigateByUrl(targetUrl);
             }, 2000)
         });

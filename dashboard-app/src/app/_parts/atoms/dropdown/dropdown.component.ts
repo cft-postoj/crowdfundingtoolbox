@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import {DropdownItem} from "../../../_models/dropdown-item";
 import {GoogleFontsService} from "../../../_services/google-fonts.service";
 
@@ -8,7 +8,7 @@ import {GoogleFontsService} from "../../../_services/google-fonts.service";
     styleUrls: ['./dropdown.component.scss']
 })
 
-export class DropdownComponent {
+export class DropdownComponent implements OnInit, OnChanges{
 
     @Input() name: string;
     @Input() class: string;
@@ -31,6 +31,14 @@ export class DropdownComponent {
     }
 
     ngOnInit() {
+        this.setUp();
+    }
+
+    ngOnChanges(){
+        this.setUp();
+    }
+
+    private setUp() {
         if (this.items) {
             this.items.forEach(item => {
                 if (item.value == this.currentValue) {
@@ -39,7 +47,7 @@ export class DropdownComponent {
             })
         }
         if (this.customFonts) {
-            this.items.map((item:DropdownItem) => {
+            this.items.map((item: DropdownItem) => {
                 this.currentFonts += (this.currentFonts == '') ? item.value : '|' + item.value;
             })
         }

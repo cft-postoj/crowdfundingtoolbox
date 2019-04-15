@@ -21,18 +21,18 @@ export class CtaSettings {
         },
         design: {
             fill: {
-                selected: true,
+                active: true,
                 color: '#B71100',
                 opacity: 100
             },
             border: {
-                selected: false,
+                active: false,
                 color: '#B71100',
                 size: 2,
                 opacity: 0
             },
             shadow: {
-                selected: false,
+                active: false,
                 color: '#B71100',
                 x: 2,
                 y: 2,
@@ -54,18 +54,18 @@ export class CtaSettings {
         },
         design: {
             fill: {
-                selected: true,
+                active: true,
                 color: '#B71100',
                 opacity: 100
             },
             border: {
-                selected: false,
+                active: false,
                 color: '#B71100',
                 size: 2,
                 opacity: 0
             },
             shadow: {
-                selected: false,
+                active: false,
                 color: '#B71100',
                 x: 2,
                 y: 2,
@@ -73,7 +73,7 @@ export class CtaSettings {
                 opacity: 0
             },
             radius: {
-                selected: false,
+                active: false,
                 value: '0'
             }
         }
