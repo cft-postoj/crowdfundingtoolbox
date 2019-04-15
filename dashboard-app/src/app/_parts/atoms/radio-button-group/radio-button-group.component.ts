@@ -6,7 +6,7 @@ import {RadioButton} from "../radio-button/radio-button";
     templateUrl: './radio-button-group.component.html',
     styleUrls: ['./radio-button-group.component.scss']
 })
-export class RadioButtonGroupComponent implements OnInit {
+export class RadioButtonGroupComponent implements OnInit, OnChanges {
 
     @Input()
     public radioButtons: RadioButton[] = [];
@@ -26,6 +26,16 @@ export class RadioButtonGroupComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.radioButtons) {
+            this.radioButtons.forEach(rb => {
+                if (rb.value == this.currentValue) {
+                    this.currentButton = rb;
+                }
+            })
+        }
+    }
+
+    ngOnChanges(){
         if (this.radioButtons) {
             this.radioButtons.forEach(rb => {
                 if (rb.value == this.currentValue) {
