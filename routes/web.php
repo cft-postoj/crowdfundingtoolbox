@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/portal/login', function() {
+   return view('portal-templates.login');
+});
 
 Route::any('{slug}', function($slug)
 {
