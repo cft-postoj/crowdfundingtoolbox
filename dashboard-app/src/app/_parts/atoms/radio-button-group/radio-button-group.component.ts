@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, OnChanges} from '@angular/core';
 import {RadioButton} from "../radio-button/radio-button";
 
 @Component({
@@ -35,7 +35,7 @@ export class RadioButtonGroupComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(){
+    ngOnChanges() {
         if (this.radioButtons) {
             this.radioButtons.forEach(rb => {
                 if (rb.value == this.currentValue) {
