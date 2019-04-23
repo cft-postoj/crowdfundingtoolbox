@@ -460,4 +460,20 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
+    getMonatizationDonationButtonContainerStyle() {
+        return {
+            'display': 'flex',
+            'flex-wrap': 'wrap',
+            'margin-right': '-15px',
+            'margin-left': '-15px',
+        }
+    }
+
+    getMonatizationDonationButtonStyle() {
+        return {
+        'flex': '0 0 33.33333333%',
+        'max-width': '33.33333333%',
+        'padding': '15px',
+        }
+    }
 }
