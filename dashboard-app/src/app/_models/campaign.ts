@@ -1,3 +1,5 @@
+import {Targeting} from "./targeting";
+
 export class Campaign {
     id: number = 0;
 
@@ -7,7 +9,7 @@ export class Campaign {
     headline_text: string = "";
     date_from: any = { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()};
     date_to: any ;
-    targeting: {};
+    targeting = new Targeting();
 
     promote_settings = {
         status_bar: false,

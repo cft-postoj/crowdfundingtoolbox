@@ -1,11 +1,10 @@
-import {Component, Input, KeyValueDiffer, KeyValueDiffers, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, KeyValueDiffer, KeyValueDiffers, OnInit, ViewChild} from '@angular/core';
 import {CampaignService} from '../../../../_services/campaign.service';
 import {Campaign} from '../../../../_models/campaign';
 import {ActivatedRoute} from "@angular/router";
 import {RadioButton} from "../../../../_parts/atoms/radio-button/radio-button";
 import {DropdownItem} from "../../../../_models/dropdown-item";
 import {paymentTypes} from "../../../../_models/enums"
-import {SettingsComponent} from "../../../../components/settings/settings.component";
 
 @Component({
     selector: 'app-campaign-settings',
@@ -32,6 +31,10 @@ export class CampaignsSettingsComponent  implements OnInit {
 
     public paymentTypes = paymentTypes ;
 
+    public newUrl: string;
+
+    @ViewChild("newUrlInput") newUrlInput: ElementRef;
+
     constructor(private differs: KeyValueDiffers, private route: ActivatedRoute, private campaignService: CampaignService) {
         this.differ = this.differs.find({}).create();
 
@@ -53,6 +56,8 @@ export class CampaignsSettingsComponent  implements OnInit {
         // }, (error) => {
         //     console.error(error);
         // });
+
+        console.log(this.campaign)
 
         this.campaignEndRadioButtons = [];
         this.campaignEndRadioButtons.push(new RadioButton("Date", false))
@@ -129,5 +134,20 @@ export class CampaignsSettingsComponent  implements OnInit {
             })
         })
         return result;
+    }
+
+    splice(array: string[], index: number) {
+        array.splice(index, 1)
+    }
+
+    addUrl() {
+        if (this.campaign.targeting.url.specific) {
+            if (this.newUrl) {
+                this.campaign.targeting.url.list.push(this.newUrl);
+                this.newUrl = undefined;
+            } else {
+                this.newUrlInput.nativeElement.focus();
+            }
+        }
     }
 }

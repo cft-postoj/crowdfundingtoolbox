@@ -24,6 +24,9 @@ export class DatepickerComponent implements OnInit {
     @Input()
     public type: string;
 
+    @Input()
+    public disabled:boolean;
+
     public displayMonths = 1;
     public navigation = 'select';
     public showWeekNumbers = false;

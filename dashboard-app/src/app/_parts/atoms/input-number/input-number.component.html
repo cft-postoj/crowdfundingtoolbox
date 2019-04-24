@@ -4,9 +4,10 @@
             [(ngModel)]="value"
             class="crowdfundingNumber--input"
             (keyup)="onChange()"
+            [disabled]="disabled"
     />
     <span class="crowdfundingNumber--arrows">
-        <button type="button" [inlineSVG]="'/assets/images/icons/filter_up.svg'" (click)="value = +value+1 ; onChange()"></button>
-        <button type="button" [inlineSVG]="'/assets/images/icons/filter_down.svg'" (click)="value = (value > 0) ? value-1 : value;  onChange()"></button>
+        <button type="button" [disabled]="disabled" [inlineSVG]="'/assets/images/icons/filter_up.svg'" (click)="value = +value+1 ; onChange()"></button>
+        <button type="button" [disabled]="disabled" [inlineSVG]="'/assets/images/icons/filter_down.svg'" (click)="value = (value > 0) ? value-1 : value;  onChange()"></button>
     </span>
 </div>
