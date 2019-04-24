@@ -125,11 +125,12 @@ Route::group([
 });
 
 Route::group([
-    'prefix'    =>  'portal'
-], function() {
-   Route::get('widgets', 'BackOfficeAPI\WidgetsController@getWidgets');
+    'prefix' => 'portal'
+], function () {
+    Route::get('widgets', 'BackOfficeAPI\WidgetsController@getWidgets');
+    Route::post('register', 'API\UserService@create');
+    Route::post('donation-register', 'API\UserService@donationCreate');
 });
-
 
 
 // Portal routes
@@ -137,6 +138,7 @@ Route::group([], function () {
     //Route::post('register', 'API\UserService@create');
 
     Route::group(['middleware' => ['api', 'multiauth:api']], function () {
+        //Route::post('register', 'API\UserService@create');
         //Route::post('login', 'API\UserService@login');
         //Route::get('user-info', 'API\UserService@show');
     });

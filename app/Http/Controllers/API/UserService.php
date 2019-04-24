@@ -60,8 +60,8 @@ class UserService extends Controller
         $credentials = $request->only('email', 'password');
         if (strpos($request['email'], '@') === false) {
             $credentials = [
-              'username'    =>  $request['email'],
-              'password'    =>  $request['password']
+                'username' => $request['email'],
+                'password' => $request['password']
             ];
         }
         try {
@@ -80,9 +80,9 @@ class UserService extends Controller
             if (BackOfficeUser::where('user_id', $user->id)->first()) {
                 $token = JWTAuth::fromUser($user);
                 return \response()->json([
-                    'user'  =>  $user,
-                    'user_role' =>  Role::where('id', BackOfficeUser::where('user_id', $user->id)->first()['role_id'])->first()['slug'],
-                    'token' =>  $token
+                    'user' => $user,
+                    'user_role' => Role::where('id', BackOfficeUser::where('user_id', $user->id)->first()['role_id'])->first()['slug'],
+                    'token' => $token
                 ], Response::HTTP_OK);
             }
         } else {
@@ -117,10 +117,12 @@ class UserService extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/backoffice/register",
-     *     tags={"BACKOFFICE USER"},
-     *     summary="Create backoffice user",
-     *     description="Only for users with admin role. They can create new users.",
+     *     path="/api/portal/register",
+     *     tags={"USER"},
+     *     summary="Create portal or backoffice user",
+     *     description="Endpoint for portal user: /api/portal/register.
+     *      Endpoint for backoffice user: /api/backoffice/register.
+     *     Only for users with admin role. They can create new users.",
      *     operationId="register",
      *     @OA\Response(
      *         response=201,
@@ -167,16 +169,16 @@ class UserService extends Controller
 
         $valid = validator($request->only(
             'email',
-            'username',
+            //'username',
             'first_name',
             'last_name',
             'password',
             'confirmation_password'
         ), [
             'email' => 'required|string|email|max:255|unique:users',
-            'username' => 'required|string|max:255|unique:users',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            // 'username' => 'string|max:255|unique:users',
+            // 'first_name' => 'string|max:255',
+            // 'last_name' => 'string|max:255',
             'password' => 'required|string|max:255',
             'confirmation_password' => 'required|string|max:255|same:password'
         ]);
@@ -192,11 +194,11 @@ class UserService extends Controller
         $data = \request()->only('email', 'username', 'first_name', 'last_name', 'password');
 
         $user = User::create([
-            'username'  =>  $data['username'],
-            'email' =>  $data['email'],
-            'first_name'    =>  $data['first_name'],
-            'last_name' =>  $data['last_name'],
-            'password'  =>  bcrypt($data['password'])
+            'username' => (isset($data['username'])) ? $data['username'] : '',
+            'email' => $data['email'],
+            'first_name' => (isset($data['first_name'])) ? $data['first_name'] : '',
+            'last_name' => (isset($data['last_name'])) ? $data['last_name'] : '',
+            'password' => bcrypt($data['password'])
         ]);
         $user->save();
 
@@ -204,22 +206,78 @@ class UserService extends Controller
             $currentAdmin = Auth::user();
             if (BackOfficeUser::where('user_id', $currentAdmin->id)->first()->only('role_id')['role_id'] == 1) {
                 $backOfficeUser = BackOfficeUser::create([
-                    'user_id'   =>  $user->id,
-                    'role_id'   =>  1   // admin user
+                    'user_id' => $user->id,
+                    'role_id' => 1   // admin user
                 ]);
                 $backOfficeUser->save();
             } else {
                 return response()->json([
-                    'message'   =>  'You don\'t have permissions to this action'
+                    'message' => 'You don\'t have permissions to this action'
                 ], 400);
             }
         } else {
-
+            PortalUser::create([
+                'user_id' => $user->id
+            ])->save();
         }
 
         return response()->json([
             'message' => 'Successfully created user!',
             'user' => $user
         ], 201);
+    }
+
+
+    /*
+     * In donation case (only email is required)
+     */
+    protected function donationCreate(Request $request)
+    {
+        $valid = validator($request->only(
+            'email'
+        ), [
+            'email' => 'required|string|email|max:255',
+        ]);
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Email is incorrect.'
+            ], 400);
+            return $jsonError;
+        }
+
+        if (User::where('email', $request['email'])->first()) {
+            // make donation response -- store to donation table by user id
+            return null;
+        }
+
+        $generatedPassword = $this->generatePasswordToken();
+
+        $user = User::create([
+            'email' => $request['email'],
+            'password' => bcrypt($generatedPassword),
+            'generate_password_token'   =>  $generatedPassword
+        ]);
+        $user->save();
+
+        PortalUser::create([
+            'user_id' => $user->id
+        ])->save();
+
+        // donation functions
+
+        //return mailing;
+
+    }
+
+    private function generatePasswordToken()
+    {
+        $length = 32;
+        try {
+            return bin2hex(random_bytes($length));
+        } catch (\Exception $e) {
+            return $e;
+        }
+
     }
 }
