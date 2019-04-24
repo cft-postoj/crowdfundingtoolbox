@@ -114,6 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('cft--loginButton').onclick = function (e) {
     e.preventDefault();
+    loginAction();
     document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
 
     document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
@@ -153,7 +154,45 @@ document.addEventListener('DOMContentLoaded', function () {
       };
     };
   };
-});
+}); //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+
+var apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
+
+function loginAction() {
+  var form = document.querySelector('form[name="cftLogin--login--form"]');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = JSON.stringify(formSerialize(form));
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('POST', apiUrl + 'login', true);
+    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.responseType = 'json';
+
+    xhttp.onload = function () {
+      console.log(xhttp.response);
+    };
+
+    xhttp.send(data);
+  }); // code below is required for submitting
+
+  var submitButton = document.querySelector('button[type="submit"]');
+  submitButton.addEventListener('click', function (clickEvent) {
+    var domEvent = document.createEvent('Event');
+    domEvent.initEvent('submit', false, true);
+    clickEvent.target.closest('form').dispatchEvent(domEvent);
+  });
+}
+
+function formSerialize(formElement) {
+  var values = {};
+  var inputs = formElement.elements;
+
+  for (var i = 0; i < inputs.length; i++) {
+    values[inputs[i].name] = inputs[i].value;
+  }
+
+  return values;
+}
 
 /***/ }),
 

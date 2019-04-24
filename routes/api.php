@@ -130,6 +130,7 @@ Route::group([
     Route::get('widgets', 'BackOfficeAPI\WidgetsController@getWidgets');
     Route::post('register', 'API\UserService@create');
     Route::post('donation-register', 'API\UserService@donationCreate');
+    Route::post('login', 'API\UserService@authenticate');
 });
 
 
