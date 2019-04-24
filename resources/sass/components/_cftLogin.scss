@@ -1,0 +1,75 @@
+.cftLogin {
+  &--cftLoginWrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    &.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    &--content {
+      background: $body-bg;
+      max-width: 700px;
+      @include boxShadow(0 0 10px $bali);
+      margin: 5% auto 0;
+      padding: 30px;
+      text-align: center;
+      form {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: left;
+        input {
+          display: block;
+          width: 100%;
+          margin: 5px auto;
+          border: 1px solid transparent;
+          padding: 10px;
+          outline: none;
+          &:focus {
+            border: 1px solid $bali;
+          }
+        }
+        button {
+          &:not(.cftLogin--cftLoginWrapper--content--button) {
+            margin: 15px 0 15px 1px;
+            border: 1px solid transparent;
+            background: $bali;
+            color: $white;
+            padding: 10px;
+            cursor: pointer;
+            @include transitionSingle(.3s);
+            &:hover {
+              background: $white;
+              color: $bali;
+            }
+          }
+        }
+      }
+      &--button {
+        background: transparent;
+        text-decoration: underline;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0px;
+        &.forgotPassword {
+          position: relative;
+          display: block;
+        }
+      }
+      &--register {
+        display: none;
+      }
+      &--forgotPassword {
+        display: none;
+      }
+    }
+  }
+}

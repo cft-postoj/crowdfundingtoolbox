@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\BackOfficeAPI\BackOfficeUser;
 use App\BackOfficeAPI\Role;
+use App\Mail\AutoRegistrationEmail;
+use App\Mail\RegisterEmail;
 use App\PortalUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,6 +13,7 @@ use App\API\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 
@@ -194,7 +197,7 @@ class UserService extends Controller
         $data = \request()->only('email', 'username', 'first_name', 'last_name', 'password');
 
         $user = User::create([
-            'username' => (isset($data['username'])) ? $data['username'] : '',
+            'username' => (isset($data['username'])) ? $data['username'] : explode('@', $data['email'])[0],
             'email' => $data['email'],
             'first_name' => (isset($data['first_name'])) ? $data['first_name'] : '',
             'last_name' => (isset($data['last_name'])) ? $data['last_name'] : '',
@@ -219,6 +222,7 @@ class UserService extends Controller
             PortalUser::create([
                 'user_id' => $user->id
             ])->save();
+            Mail::to($data['email'])->send(new RegisterEmail());
         }
 
         return response()->json([
@@ -253,8 +257,10 @@ class UserService extends Controller
 
         $generatedPassword = $this->generatePasswordToken();
 
+        $username = explode('@', $request['email'])[0];
         $user = User::create([
             'email' => $request['email'],
+            'username'  =>  $username,
             'password' => bcrypt($generatedPassword),
             'generate_password_token'   =>  $generatedPassword
         ]);
@@ -267,6 +273,7 @@ class UserService extends Controller
         // donation functions
 
         //return mailing;
+        return Mail::to($request['email'])->send(new AutoRegistrationEmail($username, $generatedPassword));
 
     }
 
