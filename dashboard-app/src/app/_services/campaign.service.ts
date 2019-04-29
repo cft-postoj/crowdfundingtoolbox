@@ -58,6 +58,8 @@ export class CampaignService {
         let result:Campaign = {...campaign}
         result.date_from = this.writeDateAsString(campaign.date_from)
         result.date_to = this.writeDateAsString(campaign.date_to)
+        result.targeting.registration.after.date = this.writeDateAsString(result.targeting.registration.after.date);
+        result.targeting.registration.before.date = this.writeDateAsString(result.targeting.registration.before.date);
         return result;
     }
 
@@ -68,6 +70,8 @@ export class CampaignService {
     writeDatesAsJson(campaign: Campaign) {
         campaign.date_from = this.writeDateAsJson(campaign.date_from)
         campaign.date_to = this.writeDateAsJson(campaign.date_to)
+        campaign.targeting.registration.after.date = this.writeDateAsJson(campaign.targeting.registration.after.date)
+        campaign.targeting.registration.before.date = this.writeDateAsJson(campaign.targeting.registration.before.date)
     }
 
     writeDateAsJson(date) {

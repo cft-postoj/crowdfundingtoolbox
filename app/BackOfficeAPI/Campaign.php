@@ -14,4 +14,9 @@ class Campaign extends Model
     protected $fillable = [
         'name', 'active', 'description', 'date_from', 'date_to', 'headline_text', 'updated_at'
     ];
+
+    public function targeting(){
+        return $this->hasOne('App\BackOfficeAPI\Targeting');
+    }
+
 }

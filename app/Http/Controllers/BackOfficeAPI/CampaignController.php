@@ -7,11 +7,14 @@ use App\BackOfficeAPI\CampaignImage;
 use App\BackOfficeAPI\CampaignSettings;
 use App\BackOfficeAPI\CampaignVersion;
 use App\BackOfficeAPI\DeviceType;
+use App\BackOfficeAPI\Targeting;
 use App\BackOfficeAPI\Widget;
 use App\BackOfficeAPI\WidgetResult;
 use App\BackOfficeAPI\WidgetSettings;
 use App\Http\Resources\BackOfficeAPI\CampaignResource;
+use App\Http\Resources\BackOfficeAPI\CampaignResourceDetail;
 use App\Http\Resources\BackOfficeAPI\WidgetResource;
+use App\Http\Services\TargetingService;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,11 +26,13 @@ class CampaignController extends Controller
     private $user;
     private $widgetsController;
     private $campaignId;
+    private $targetingService;
 
     public function __construct()
     {
         $this->user = new UserService();
         $this->widgetsController = new WidgetsController();
+        $this->targetingService = new TargetingService();
     }
 
     /**
@@ -105,6 +110,8 @@ class CampaignController extends Controller
         $this->campaignId = $campaign->id;
 
         $this->campaignSettings($this->campaignId, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+
+        $this->targetingService->createTargetingFromRequest($this->campaignId, $request['targeting']);
 
         $this->widgetsController->createWidgets($campaign->id);
 
@@ -338,6 +345,8 @@ class CampaignController extends Controller
 
         $this->widgetsController->updateWidgetSettingsFromCampaign($id, $request['headline_text'], $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
 
+        $this->targetingService->updateTargetingFromRequest($id, $request['targeting']);
+
         $user = Auth::user();
 
         $this->addTracking($id, $user->id, $this->show($id));
@@ -469,7 +478,8 @@ class CampaignController extends Controller
                     'message' => 'No results found.'
                 ], Response::HTTP_NOT_FOUND);
             }
-            return CampaignResource::make(Campaign::find($id));
+            $campaingWithTargeting = Campaign::with('targeting.urls')->find($id);
+            return CampaignResourceDetail::make($campaingWithTargeting);
         } catch (\Exception $e) {
             return $e;
         }
@@ -761,6 +771,7 @@ class CampaignController extends Controller
                     ]);
                 }
             }
+            $this->targetingService->cloneTargeting($campaignData,$newCampaign);
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => 'There was an error during duplicating campaign with all widgets data. Please try again later.',

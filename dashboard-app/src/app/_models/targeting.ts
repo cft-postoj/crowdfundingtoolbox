@@ -1,37 +1,40 @@
 export class Targeting {
-    signed = {
-        active: true
-    }
-
-    not_signed = {
-        active: false
-    }
-    one_time = {
-        active: true,
-        older_than: {
-            active: true,
-            value: 30
+    signed_status = {
+        signed : {
+            active: true
         },
-        not_older_than: {
-            active: false,
-            value: 60
+        not_signed : {
+            active: false
         }
-    }
-    monthly = {
-        active: false,
-        bigger_than: {
-            active: false,
-            value: 5
-        },
-        less_than: {
-            active: false,
-            value: 15
-        }
-    }
-    not_donator = {
-        active: false
-    }
-    read_arcticles = {
+    };
+   support = {
+       one_time : {
+           active: true,
+           older_than: {
+               active: true,
+               value: 30
+           },
+           not_older_than: {
+               active: false,
+               value: 60
+           }
+       },
+       monthly : {
+           active: false,
+           min: {
+               active: false,
+               value: 5
+           },
+           max: {
+               active: false,
+               value: 15
+           }
+       },
+       not_supporter : {
+           active: false
+       }
+   };
+    read_articles = {
         today: {
             active: false,
             min: 0,
@@ -48,18 +51,21 @@ export class Targeting {
             max: 0
         }
     }
-    registration = {
+    registration: any  = {
         before: {
             active: false,
-            date: new Date()
+            date:  { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()},
         },
         after: {
             active: false,
-            date: new Date()
+            date: { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()}
         }
     }
     url = {
         specific: false,
-        list: ['https://www.postoj.sk', 'https://www.postoj.sk/politika']
+        list: [
+            {id:0, path:'https://www.postoj.sk'},
+            {id:0, path:'https://www.postoj.sk/politika'}
+            ]
     }
 }

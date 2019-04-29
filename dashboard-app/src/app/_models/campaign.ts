@@ -1,4 +1,4 @@
-import {Targeting} from "./targeting";
+import { Targeting } from "./targeting";
 
 export class Campaign {
     id: number = 0;

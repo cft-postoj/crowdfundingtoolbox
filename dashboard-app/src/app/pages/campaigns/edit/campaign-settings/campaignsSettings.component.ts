@@ -143,7 +143,10 @@ export class CampaignsSettingsComponent  implements OnInit {
     addUrl() {
         if (this.campaign.targeting.url.specific) {
             if (this.newUrl) {
-                this.campaign.targeting.url.list.push(this.newUrl);
+                this.campaign.targeting.url.list.push({
+                    id:0,
+                    path:this.newUrl
+                });
                 this.newUrl = undefined;
             } else {
                 this.newUrlInput.nativeElement.focus();
