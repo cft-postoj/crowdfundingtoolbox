@@ -15,7 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/portal/login', function() {
-   return view('portal-templates.login');
+    return view('portal-templates.login');
+});
+Route::get('/portal/postoj', function() {
+   return view('portal-templates.postoj');
+});
+
+Route::get('/portal/set-generated-password', function() {
+    return view('portal-templates.setGeneratedPassword');
 });
 
 Route::any('{slug}', function($slug)

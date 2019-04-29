@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\BackOfficeAPI\BackOfficeUser;
 use App\BackOfficeAPI\Role;
 use App\Mail\AutoRegistrationEmail;
+use App\Mail\ForgottenPasswordEmail;
 use App\Mail\RegisterEmail;
 use App\PortalUser;
 use Illuminate\Http\Request;
@@ -180,8 +181,8 @@ class UserService extends Controller
         ), [
             'email' => 'required|string|email|max:255|unique:users',
             // 'username' => 'string|max:255|unique:users',
-            // 'first_name' => 'string|max:255',
-            // 'last_name' => 'string|max:255',
+            'first_name' => 'string|max:255',
+            'last_name' => 'string|max:255',
             'password' => 'required|string|max:255',
             'confirmation_password' => 'required|string|max:255|same:password'
         ]);
@@ -260,9 +261,9 @@ class UserService extends Controller
         $username = explode('@', $request['email'])[0];
         $user = User::create([
             'email' => $request['email'],
-            'username'  =>  $username,
+            'username' => $username,
             'password' => bcrypt($generatedPassword),
-            'generate_password_token'   =>  $generatedPassword
+            'generate_password_token' => $generatedPassword
         ]);
         $user->save();
 
@@ -286,5 +287,121 @@ class UserService extends Controller
             return $e;
         }
 
+    }
+
+    protected function forgotPassword(Request $request)
+    {
+        $valid = validator($request->only(
+            'email'
+        ), [
+            'email' => 'required|string|email|max:255',
+        ]);
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Email is incorrect.'
+            ], 400);
+            return $jsonError;
+        }
+
+        if (User::where('email', $request['email'])->first() == null) {
+            $jsonError = response()->json([
+                'message' => 'Email is not exists in our system. Please, sign out first.'
+            ], 400);
+            return $jsonError;
+        }
+
+        try {
+            $token = $this->generatePasswordToken();
+            User::where('email', $request['email'])->update([
+                'generate_password_token' => $token
+            ]);
+            Mail::to($request['email'])->send(new ForgottenPasswordEmail($token));
+        } catch (\Exception $e) {
+            return \response()->json([
+                'error' => $e,
+                'messsage' => 'Unexpected error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return \response()->json([
+            'message' => 'Email with reset link was successfully sent.'
+        ], Response::HTTP_OK);
+    }
+
+    protected function hasUserGeneratedToken(Request $request)
+    {
+        $valid = validator($request->only(
+            'token'
+        ), [
+            'token' => 'required|string',
+        ]);
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Token is incorrect.'
+            ], Response::HTTP_BAD_REQUEST);
+            return $jsonError;
+        }
+
+        try {
+            if (User::where('generate_password_token', $request['token'])->first() != null) {
+                return \response()->json([
+                    'isUserExists' => true
+                ], Response::HTTP_OK);
+            }
+            return \response()->json([
+                'isUserExists' => false
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return \response()->json([
+                'error' => $e,
+                'message' => 'Unexpected error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    protected function changePassword(Request $request)
+    {
+        $valid = validator($request->only(
+            'token',
+            'password',
+            'confirmation_password'
+        ), [
+            'token' => 'required|string',
+            'password' => 'required|string|max:255',
+            'confirmation_password' => 'required|string|max:255|same:password'
+        ]);
+
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Bad action.'
+            ], Response::HTTP_BAD_REQUEST);
+            return $jsonError;
+        }
+
+        try {
+            $user = User::where('generate_password_token', $request['token'])->first();
+            if ($user != null) {
+                User::where('generate_password_token', $request['token'])->update([
+                   'password'   =>  bcrypt($request['password']),
+                   'generate_password_token'    =>  null
+                ]);
+                $token = JWTAuth::fromUser($user);
+                return \response()->json([
+                    'token' =>  $token
+                ], Response::HTTP_OK);
+            }
+
+            return \response()->json([
+                'message'   =>  'User is not exist.'
+            ], Response::HTTP_BAD_REQUEST);
+        } catch(\Exception $e) {
+            return \response()->json([
+                'error' => $e,
+                'message' => 'Unexpected error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

@@ -18,6 +18,39 @@
   }
 }
 
+.cft--loginButton {
+  display: block;
+}
+
+.cft--myAccountButton {
+  display: none;
+}
+
+.cft--alert {
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  text-align: center;
+  padding: 5px 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cft--alert.error {
+  background: #e3342f;
+  color: #ffffff;
+}
+
+.cft--alert.success {
+  background: #38c172;
+  color: #ffffff;
+}
+
+.cft--alert.active {
+  visibility: visible;
+  opacity: 1;
+}
+
 .cftLogin--cftLoginWrapper {
   position: fixed;
   top: 0;
@@ -26,12 +59,15 @@
   right: 0;
   background: rgba(255, 255, 255, 0.7);
   transition: opacity 500ms;
-  visibility: hidden;
+  display: none;
   opacity: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 999;
 }
 
 .cftLogin--cftLoginWrapper.active {
-  visibility: visible;
+  display: block !important;
   opacity: 1;
 }
 

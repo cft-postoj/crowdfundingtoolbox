@@ -7,10 +7,13 @@
     right: 0;
     background: rgba(255, 255, 255, 0.7);
     transition: opacity 500ms;
-    visibility: hidden;
+    display: none;
     opacity: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 999;
     &.active {
-      visibility: visible;
+      display: block !important;
       opacity: 1;
     }
     &--content {

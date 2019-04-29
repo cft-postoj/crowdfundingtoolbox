@@ -131,6 +131,9 @@ Route::group([
     Route::post('register', 'API\UserService@create');
     Route::post('donation-register', 'API\UserService@donationCreate');
     Route::post('login', 'API\UserService@authenticate');
+    Route::post('forgotPassword', 'API\UserService@forgotPassword');
+    Route::post('has-user-generated-token', 'API\UserService@hasUserGeneratedToken');
+    Route::post('change-password', 'API\UserService@changePassword');
 });
 
 

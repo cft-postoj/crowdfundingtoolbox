@@ -86,6 +86,50 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/alert.js":
+/*!*******************************!*\
+  !*** ./resources/js/alert.js ***!
+  \*******************************/
+/*! exports provided: successAlert, errorAlert */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "successAlert", function() { return successAlert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "errorAlert", function() { return errorAlert; });
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+
+function successAlert(text) {
+  console.log('this');
+  var element = document.querySelector('.cft--alert');
+  element.innerText = text;
+  var classes = ['success', 'active'];
+  var removeClassses = classes.toString();
+  removeClassses += ',error';
+  Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["toggleClassLists"])(classes, removeClassses, element);
+
+  document.querySelector('.cft--alert').onclick = function () {
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["toggleClassLists"])(classes, element);
+  };
+
+  Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["removeFormData"])('form');
+}
+function errorAlert(text) {
+  console.log('this2');
+  var element = document.querySelector('.cft--alert');
+  element.innerText = text;
+  var classes = ['error', 'active'];
+  var removeClassses = classes.toString();
+  removeClassses += ',success';
+  Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["toggleClassLists"])(classes, removeClassses, element);
+
+  document.querySelector('.cft--alert').onclick = function () {
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["toggleClassLists"])(classes, element);
+  };
+}
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -98,7 +142,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crowdFundingToolbox */ "./resources/js/crowdFundingToolbox.js");
 /* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _crowdFundingLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crowdFundingLogin */ "./resources/js/crowdFundingLogin.js");
-/* harmony import */ var _crowdFundingLogin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_crowdFundingLogin__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _crowdFundingSetPassword__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crowdFundingSetPassword */ "./resources/js/crowdFundingSetPassword.js");
+
 
 
 
@@ -108,10 +153,134 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************!*\
   !*** ./resources/js/crowdFundingLogin.js ***!
   \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+//const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+
+var apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
+
+var viewsUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/portal/';
 
 document.addEventListener('DOMContentLoaded', function () {
+  fetchLoginTemplate();
+});
+
+function loginAction() {
+  var form = document.querySelector('form[name="cftLogin--login--form"]');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('POST', apiUrl + 'login', true);
+    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.responseType = 'json';
+
+    xhttp.onload = function () {
+      if (xhttp.response.token) {
+        localStorage.setItem('cft_usertoken', xhttp.response.token);
+        showMyAccount();
+      }
+    };
+
+    xhttp.send(data);
+  }); // code below is required for submitting
+
+  var submitButton = document.querySelector('form[name="cftLogin--login--form"] button[type="submit"]');
+  submitButton.addEventListener('click', function (clickEvent) {
+    var domEvent = document.createEvent('Event');
+    domEvent.initEvent('submit', false, true);
+    clickEvent.target.closest('form').dispatchEvent(domEvent);
+  });
+}
+
+function registerAction() {
+  var form = document.querySelector('form[name="cftLogin--register--form"]');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('POST', apiUrl + 'register', true);
+    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.responseType = 'json';
+
+    xhttp.onload = function () {
+      // if there is some error
+      if (xhttp.response.error) {
+        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+      } else {
+        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["successAlert"])(xhttp.response.message);
+      }
+    };
+
+    xhttp.send(data);
+  }); // code below is required for submitting
+
+  var submitButton = document.querySelector('form[name="cftLogin--register--form"] button[type="submit"]');
+  submitButton.addEventListener('click', function (clickEvent) {
+    var domEvent = document.createEvent('Event');
+    domEvent.initEvent('submit', false, true);
+    clickEvent.target.closest('form').dispatchEvent(domEvent);
+  });
+}
+
+function forgotPasswordAction() {
+  var form = document.querySelector('form[name="cftLogin--forgotPassword--form"]');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('POST', apiUrl + 'forgotPassword', true);
+    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.responseType = 'json';
+
+    xhttp.onload = function () {
+      // if there is some error
+      if (xhttp.response.error) {
+        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+      } else {
+        if (xhttp.status === 200) {
+          Object(_alert__WEBPACK_IMPORTED_MODULE_1__["successAlert"])(xhttp.response.message);
+        } else {
+          Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(xhttp.response.message);
+        }
+      }
+    };
+
+    xhttp.send(data);
+  }); // code below is required for submitting
+
+  var submitButton = document.querySelector('form[name="cftLogin--forgotPassword--form"] button[type="submit"]');
+  submitButton.addEventListener('click', function (clickEvent) {
+    var domEvent = document.createEvent('Event');
+    domEvent.initEvent('submit', false, true);
+    clickEvent.target.closest('form').dispatchEvent(domEvent);
+  });
+}
+
+function showMyAccount() {
+  document.getElementById('cft--loginButton').style.display = 'none';
+  setTimeout(function () {
+    document.getElementById('cft--myAccountButton').style.display = 'block';
+    document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
+  }, 500);
+}
+
+function fetchLoginTemplate() {
+  var url = viewsUrl + 'login';
+  fetch(url).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    document.getElementById('cft--login').innerHTML = html;
+    loginFunctions();
+  });
+}
+
+function loginFunctions() {
   document.getElementById('cft--loginButton').onclick = function (e) {
     e.preventDefault();
     loginAction();
@@ -125,6 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector('.cftLogin--cftLoginWrapper--content--login .cftLogin--cftLoginWrapper--content--button').onclick = function (e) {
       e.preventDefault();
+      registerAction();
       document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'none';
       document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'block';
     }; // SHOW LOGIN
@@ -139,6 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector('.cftLogin--cftLoginWrapper--content--login .cftLogin--cftLoginWrapper--content--button.forgotPassword').onclick = function (e) {
       e.preventDefault();
+      forgotPasswordAction();
       document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'none';
       document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'none';
       document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword').style.display = 'block';
@@ -154,44 +325,91 @@ document.addEventListener('DOMContentLoaded', function () {
       };
     };
   };
-}); //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+}
+
+/***/ }),
+
+/***/ "./resources/js/crowdFundingSetPassword.js":
+/*!*************************************************!*\
+  !*** ./resources/js/crowdFundingSetPassword.js ***!
+  \*************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+//const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 
 var apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
 
-function loginAction() {
-  var form = document.querySelector('form[name="cftLogin--login--form"]');
+var viewsUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/portal/';
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.href.indexOf('?setPassword=') > -1) {
+    isUserExist();
+  }
+});
+
+function isUserExist() {
+  var data = {
+    'token': Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["findGetParameter"])('setPassword')
+  };
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', apiUrl + 'has-user-generated-token', true);
+  xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  xhttp.responseType = 'json';
+
+  xhttp.onload = function () {
+    if (xhttp.response.isUserExists) {
+      showSetPasswordTemplate();
+    }
+  };
+
+  xhttp.send(JSON.stringify(data));
+}
+
+function showSetPasswordTemplate() {
+  var url = viewsUrl + 'set-generated-password';
+  fetch(url).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    document.getElementById('cft--login').innerHTML = html;
+    document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
+
+    document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
+      e.preventDefault();
+      if (e.target.className === 'cftLogin--cftLoginWrapper active') document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
+      resetPasswordAction();
+    };
+  });
+}
+
+function resetPasswordAction() {
+  var form = document.querySelector('form[name="cftLogin--changePassword--form"]');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var data = JSON.stringify(formSerialize(form));
+    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'login', true);
+    xhttp.open('POST', apiUrl + 'change-password', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
     xhttp.onload = function () {
-      console.log(xhttp.response);
+      if (xhttp.response.token) {
+        console.log(xhttp.response);
+        localStorage.setItem('cft_usertoken', xhttp.response.token);
+      }
     };
 
     xhttp.send(data);
   }); // code below is required for submitting
 
-  var submitButton = document.querySelector('button[type="submit"]');
+  var submitButton = document.querySelector('form[name="cftLogin--changePassword--form"] button[type="submit"]');
   submitButton.addEventListener('click', function (clickEvent) {
     var domEvent = document.createEvent('Event');
     domEvent.initEvent('submit', false, true);
     clickEvent.target.closest('form').dispatchEvent(domEvent);
   });
-}
-
-function formSerialize(formElement) {
-  var values = {};
-  var inputs = formElement.elements;
-
-  for (var i = 0; i < inputs.length; i++) {
-    values[inputs[i].name] = inputs[i].value;
-  }
-
-  return values;
 }
 
 /***/ }),
@@ -257,6 +475,80 @@ function cr0wdGetDeviceType() {
   }
 
   return device;
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers.js":
+/*!*********************************!*\
+  !*** ./resources/js/helpers.js ***!
+  \*********************************/
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleClassLists", function() { return toggleClassLists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addClassLists", function() { return addClassLists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeClassLists", function() { return removeClassLists; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getJsonFirstProp", function() { return getJsonFirstProp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFormData", function() { return removeFormData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findGetParameter", function() { return findGetParameter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formSerialize", function() { return formSerialize; });
+function toggleClassLists(array, remove, el) {
+  removeClassLists(remove, el);
+  setTimeout(function () {
+    array.forEach(function (item, index) {
+      el.classList.toggle(item);
+    });
+  }, 50);
+}
+function addClassLists(array, el) {
+  array.forEach(function (item, index) {
+    el.classList.add(item);
+  });
+}
+function removeClassLists(classes, el) {
+  el.classList.remove(classes);
+}
+function getJsonFirstProp(jsonObj) {
+  var firstProp;
+
+  for (var key in jsonObj) {
+    if (jsonObj.hasOwnProperty(key)) {
+      firstProp = jsonObj[key];
+      break;
+    }
+  }
+
+  return firstProp;
+}
+function removeFormData(formElement) {
+  document.querySelectorAll(formElement + ' input').forEach(function (el, index) {
+    el.value = '';
+  });
+  document.querySelectorAll(formElement + ' textarea').forEach(function (el, index) {
+    el.value = '';
+  });
+}
+function findGetParameter(parameterName) {
+  var result = null,
+      tmp = [];
+  location.search.substr(1).split("&").forEach(function (item) {
+    tmp = item.split("=");
+    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+  });
+  return result;
+}
+function formSerialize(formElement) {
+  var values = {};
+  var inputs = formElement.elements;
+
+  for (var i = 0; i < inputs.length; i++) {
+    values[inputs[i].name] = inputs[i].value;
+  }
+
+  return values;
 }
 
 /***/ }),

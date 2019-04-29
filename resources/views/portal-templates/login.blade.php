@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
 <!-- TODO -- remove scripts. Scripts will be in one external file on portal side. -->
-<script src="{{ mix('js/app.js') }}"></script>
+{{--<script src="{{ mix('js/app.js') }}"></script>--}}
 
-<button type="button" id="cft--loginButton">Login</button>
+<button type="button" id="cft--loginButton" class="cft--loginButton">Login</button>
+<button type="button" id="cft--myAccountButton" class="cft--myAccountButton" style="display: none">My account</button>
 
-<div class="cftLogin--cftLoginWrapper">
+<div class="cftLogin--cftLoginWrapper" style="display: none">
     <div class="cftLogin--cftLoginWrapper--content">
         <h2>Welcome back</h2>
         <p>Sign in our portal and use all benefits</p>
@@ -26,7 +27,7 @@
                 <input type="text" name="lastName" placeholder="Last name" />
                 <input type="email" name="email" placeholder="E-mail" />
                 <input type="password" name="password" placeholder="Password" />
-                <input type="password" name="re-password" placeholder="Repeat your password" />
+                <input type="password" name="confirmation_password" placeholder="Repeat your password" />
                 <button type="submit">Sign out</button> or sign in
                 <button type="button" class="cftLogin--cftLoginWrapper--content--button">here</button>
             </form>
@@ -34,11 +35,12 @@
         <div class="cftLogin--cftLoginWrapper--content--forgotPassword">
             <h3>Forgot your password?</h3>
             <p>Don't worry. You can reset it here.</p>
-            <form name="cftLogin--register--form">
+            <form name="cftLogin--forgotPassword--form">
                 <input type="email" name="email" placeholder="E-mail" />
                 <button type="submit">Reset password</button> <button type="button" class="cftLogin--cftLoginWrapper--content--button login">sign in</button> or <button type="button" class="cftLogin--cftLoginWrapper--content--button register">register</button>
 
             </form>
         </div>
+        <span class="cft--alert" title="Close message"></span>
     </div>
 </div>
