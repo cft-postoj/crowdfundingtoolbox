@@ -339,12 +339,16 @@ function loginFunctions() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+
 
 var apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
 
 var viewsUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/portal/';
 document.addEventListener('DOMContentLoaded', function () {
+  showSetPasswordTemplate();
+
   if (window.location.href.indexOf('?setPassword=') > -1) {
     isUserExist();
   }
@@ -361,7 +365,7 @@ function isUserExist() {
 
   xhttp.onload = function () {
     if (xhttp.response.isUserExists) {
-      showSetPasswordTemplate();
+      return showSetPasswordTemplate();
     }
   };
 
@@ -370,6 +374,7 @@ function isUserExist() {
 
 function showSetPasswordTemplate() {
   var url = viewsUrl + 'set-generated-password';
+  console.log('view');
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
@@ -379,6 +384,7 @@ function showSetPasswordTemplate() {
     document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
       e.preventDefault();
       if (e.target.className === 'cftLogin--cftLoginWrapper active') document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
+      document.querySelector('input[name="token"]').value = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["findGetParameter"])('setPassword');
       resetPasswordAction();
     };
   });
@@ -386,26 +392,46 @@ function showSetPasswordTemplate() {
 
 function resetPasswordAction() {
   var form = document.querySelector('form[name="cftLogin--changePassword--form"]');
+  var submitButton = document.querySelector('form[name="cftLogin--changePassword--form"] button[type="submit"]');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    console.log('submitted');
     var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', apiUrl + 'change-password', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
-    xhttp.onload = function () {
-      if (xhttp.response.token) {
-        console.log(xhttp.response);
-        localStorage.setItem('cft_usertoken', xhttp.response.token);
-      }
+    xhttp.onerror = function () {
+      console.log('error');
     };
 
-    xhttp.send(data);
-  }); // code below is required for submitting
+    xhttp.onsuccess = function () {
+      console.log('success');
+    }; // xhttp.onload = () => {
+    //     if (xhttp.response.error) {
+    //         errorAlert(getJsonFirstProp(xhttp.response.error));
+    //         submitButton.innerText = 'Submit';
+    //         submitButton.disabled = '';
+    //     }
+    //     xhttp.onreadystatechange = () => {
+    //         if (xhttp.readyState === 4) {
+    //             if (xhttp.status === 200) {
+    //                 console.log(xhttp.response)
+    //                 localStorage.setItem('cft_usertoken', xhttp.response.token);
+    //             } else {
+    //                 console.log('failed');
+    //             }
+    //         }
+    //     }
+    // };
 
-  var submitButton = document.querySelector('form[name="cftLogin--changePassword--form"] button[type="submit"]');
+
+    xhttp.send(data);
+  }, false); // code below is required for submitting
+
   submitButton.addEventListener('click', function (clickEvent) {
+    clickEvent.preventDefault();
     var domEvent = document.createEvent('Event');
     domEvent.initEvent('submit', false, true);
     clickEvent.target.closest('form').dispatchEvent(domEvent);

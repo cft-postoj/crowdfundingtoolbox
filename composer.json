@@ -16,6 +16,7 @@
         "laravel/tinker": "^1.0",
         "mpociot/laravel-apidoc-generator": "^3.3",
         "mtrajano/laravel-swagger": "^0.2.0",
+        "nwidart/laravel-modules": "^4.1",
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
@@ -38,7 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Modules\\": "Modules/"
         },
         "classmap": [
             "database/seeds",

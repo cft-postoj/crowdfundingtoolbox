@@ -1,0 +1,21 @@
+&--alert {
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  text-align: center;
+  padding: 5px 15px;
+  cursor: pointer;
+  @include transitionSingle(.3s);
+  &.error {
+    background: $red;
+    color: $white;
+  }
+  &.success {
+    background: $green;
+    color: $white;
+  }
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+}
