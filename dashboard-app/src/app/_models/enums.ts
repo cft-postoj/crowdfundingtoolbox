@@ -17,37 +17,46 @@ export var devices = {
 }
 
 export var paymentTypes = {
-    monthly: {title:"Monthly", value: "monthly"},
-    once:  {title:"Once", value: "once"},
-    both:  {title:"Both options", value: "both"},
+    monthly: {title: "Monthly", value: "monthly"},
+    once: {title: "Once", value: "once"},
+    both: {title: "Both options", value: "both"},
 }
 
 export var widgetTypes = {
     landing: {
-        name: 'landing'
+        name: 'landing',
+        method: 'landing'
     },
     sidebar: {
-        name: 'sidebar'
+        name: 'sidebar',
+        method: 'sidebar'
     },
     leaderboard: {
-        name: 'leaderboard'
+        name: 'leaderboard',
+        method: 'leaderboard'
     },
     popup: {
-        name: 'popup'
+        name: 'popup',
+        method: 'popup'
     },
     fixed: {
-        name: 'fixed'
+        name: 'fixed',
+        method: 'fixed'
     },
     locked: {
-        name: 'locked'
+        name: 'locked',
+        method: 'locked'
     },
     article: {
-        name: 'article'
+        name: 'article',
+        method: 'article'
     },
     article_link: {
-        name: 'article_link'
+        name: 'article_link',
+        method: 'article_link'
     },
     custom: {
-        name: 'custom'
+        name: 'custom',
+        method: 'custom'
     }
 }

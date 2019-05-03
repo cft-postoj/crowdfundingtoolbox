@@ -4,24 +4,24 @@ import { KeyValueDiffers } from '@angular/core';
 import { CampaignService } from '../../../../_services/campaign.service';
 import { ActivatedRoute } from '@angular/router';
 import { paymentTypes } from '../../../../_models/enums';
-import { CampaignsSettingsComponent } from './campaignsSettings.component';
-describe('CampaignsSettingsComponent', () => {
-  let component: CampaignsSettingsComponent;
-  let fixture: ComponentFixture<CampaignsSettingsComponent>;
+import { CampaignSettingsComponent } from './campaignSettings.component';
+describe('CampaignSettingsComponent', () => {
+  let component: CampaignSettingsComponent;
+  let fixture: ComponentFixture<CampaignSettingsComponent>;
   beforeEach(() => {
     const keyValueDiffersStub = { find: () => ({ create: () => ({}) }) };
     const campaignServiceStub = {};
     const activatedRouteStub = {};
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [CampaignsSettingsComponent],
+      declarations: [CampaignSettingsComponent],
       providers: [
         { provide: KeyValueDiffers, useValue: keyValueDiffersStub },
         { provide: CampaignService, useValue: campaignServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub }
       ]
     });
-    fixture = TestBed.createComponent(CampaignsSettingsComponent);
+    fixture = TestBed.createComponent(CampaignSettingsComponent);
     component = fixture.componentInstance;
   });
   it('can load instance', () => {

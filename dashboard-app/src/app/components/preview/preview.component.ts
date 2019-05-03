@@ -20,6 +20,7 @@ import {RadioButton} from "../../_parts/atoms/radio-button/radio-button";
 import {of, Subscription} from "rxjs";
 import {iframeCode} from "../preview/previewCode"
 import {DomSanitizer} from '@angular/platform-browser';
+import { setActiveButton, validateForm } from './landing';
 
 @Component({
     selector: 'app-preview',
@@ -76,6 +77,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public iframeCode = iframeCode;
     private subscription: Subscription;
 
+
     constructor(private previewService: PreviewService, public el: ElementRef,
                 private convertHex: ConvertHexService, private widgetService: WidgetService,
                 private ref: ChangeDetectorRef, private sanitizer: DomSanitizer) {
@@ -96,13 +98,14 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             })
         }
 
+        this.widget = this.widget ? this.widget : new Widget();
+
         const win: Window = this.iframe.nativeElement.contentWindow;
         win['dataFromParent'] = this.data$;
         const doc: Document = win.document;
         doc.open();
         doc.write(this.iframeCode);
         doc.close();
-        this.widget = this.widget ? this.widget : new Widget();
         if (!this.deviceType) {
             this.deviceType = this.deviceTypes.desktop.name
         }
@@ -122,9 +125,37 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             parent.removeChild(parent.firstChild);
         const style = document.createElement('style');
         style.type = 'text/css';
-        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} a:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}`;
+        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} .cft--button:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}
+        
+            .active > .cft--monatization--donation-button {
+                color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
+                background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
+                border-color: #32a300;
+            }
+            
+             .cft--monatization--membership-checkbox.active:before {
+                background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
+                border: 1px solid #32a300
+              }
+             .cft--monatization--membership-checkbox.active:after{
+                border: solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
+                border-width: 0 2px 2px 0;
+                }
+        `;
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
+
+        const parentScript = document.getElementById('scripts');
+        while (parentScript.firstChild)
+            parentScript.removeChild(parentScript.firstChild);
+        let script = document.createElement('script');
+        script.appendChild(document.createTextNode(setActiveButton.toString()));
+        parentScript.appendChild(script);
+
+        script = document.createElement('script');
+        script.appendChild(document.createTextNode(validateForm.toString()));
+        parentScript.appendChild(script);
+
     }
 
     public generateHTMLFromWidgets() {
@@ -182,7 +213,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             margin: 'auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: (this.widget.widget_type.method == widgetTypes.leaderboard.name) ? '0' : '30px'
+            padding: (this.widget.widget_type.method == widgetTypes.leaderboard.name
+                || this.widget.widget_type.method == widgetTypes.landing.name) ? '0' : '30px'
         };
         let fixedStyles = (this.widget.widget_type.method == widgetTypes.fixed.name) ? {
             bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
@@ -231,7 +263,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     changePreview(preview) {
         if (!this.loading)
-        this.data$.next(preview.innerHTML);
+            this.data$.next(preview.innerHTML);
     }
 
 
@@ -242,6 +274,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             // left: this.widget.settings[this.deviceType].additional_settings.textContainer.left,
             width: this.widget.settings[this.deviceType].additional_settings.bodyContainer.width,
             margin: this.widget.settings[this.deviceType].additional_settings.bodyContainer.margin,
+            //set color from headline to bodyStyle to enable inheritation for all childs components
+            color: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color,
             //height: this.widget.settings[this.deviceType].additional_settings.textContainer.height
         }
         let dynamicStyle = {
@@ -288,6 +322,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             fontFamily: additionalText.fontSettings.fontFamily,
             width: this.widget.settings[this.deviceType].additional_settings.textContainer.text.width,
             display: additionalText.text_display,
+            padding: this.widget.settings[this.deviceType].additional_settings.bodyContainer.padding,
 
             margin: this.addPx(additionalText.text_margin.top) + ' ' +
                 this.addPx(additionalText.text_margin.right) + ' ' +
@@ -343,7 +378,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             textDecoration: 'none'
         };
 
-        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
             defaultStyles['display'] = 'inline-block';
         }
 
@@ -439,7 +474,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getTextContainerStyle() {
         let dynamicStyle = {};
-        if (this.widget.widget_type.method == widgetTypes.fixed.name){
+        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
             dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
             dynamicStyle['float'] = 'left';
         }
@@ -450,7 +485,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         let tempArray = this.fontFamilyPreview.split('|');
         if (tempArray.indexOf(fontFamily) === -1) {
             if (fontFamily != undefined)
-            tempArray.push(fontFamily);
+                tempArray.push(fontFamily);
         }
         this.fontFamilyPreview = '';
         tempArray.forEach(font => {
@@ -460,20 +495,128 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    getMonatizationDonationButtonContainerStyle() {
-        return {
-            'display': 'flex',
+    getRowStyle() {
+        let defaultStyle = {
+            'display': '-ms-flexbox',
+            '-ms-flex-wrap': 'wrap',
             'flex-wrap': 'wrap',
             'margin-right': '-15px',
             'margin-left': '-15px',
         }
+
+        let defaultStyleDisplay2 = {
+            'display': 'flex'
+        }
+
+        let result = {...defaultStyle, ...defaultStyleDisplay2};
+
+        return result;
     }
 
     getMonatizationDonationButtonStyle() {
         return {
-        'flex': '0 0 33.33333333%',
-        'max-width': '33.33333333%',
-        'padding': '15px',
+            'flex': '0 0 33.33333333%',
+            'max-width': '33.33333333%',
+            'padding': '6px 15px',
+            'width': '100%',
+            'min-height': '1px',
+            'box-sizing': 'border-box',
+            'display': 'flex',
+            'flex-direction': 'column'
+        }
+    }
+
+    getDonationButtonStyle() {
+        return {
+            'padding': '5px',
+            'border': '1px solid #bdc2c6',
+            'border-radius': '2px',
+            'box-shadow': '0 1px 2px 0 rgba(91,107,120,.2)',
+            'flex': '1',
+            'display': 'flex',
+            'flex-direction': 'column',
+            'justify-content': 'center',
+            'cursor': 'pointer',
+        }
+    }
+
+    getDonationButtonPriceStyle() {
+        return {
+            'font-size': '18px',
+            'font-weight': '700',
+            'line-height': '1',
+            'padding': '1px 0',
+            'text-align': 'center'
+        }
+    }
+
+    getDonationButtonPeriodicityStyle() {
+        return {
+            'font-size': '14px',
+            'text-align': 'center'
+        }
+    }
+
+    getMonetizationContainerStyle() {
+        return {
+            'max-width': '90%',
+            'margin': 'auto'
+        }
+    }
+
+    ctaReplaced() {
+        return this.widget.widget_type.method === widgetTypes.landing.method && this.widget.settings[this.deviceType].payment_settings.active;
+    }
+
+    getMembershipStyle() {
+        return {
+            'padding-left': '50px',
+            'margin': '12px 0'
+        }
+    }
+
+    getLabelStyle() {
+        return {
+            width: '100%',
+            display: 'block'
+        }
+    }
+
+    getFormGroupStyle() {
+        return {
+            'padding-top': '16px'
+        }
+    }
+
+    getEmailDonateStyle() {
+        return {
+            'padding': '6px',
+            'margin-top': '12px',
+            'width': '320px'
+        }
+    }
+
+    getDonationInputPriceStyle() {
+        return {
+            'font-size': '18px',
+            'font-weight': '700',
+            'line-height': '1',
+            'padding': '1px 0',
+            'text-align': 'center',
+            'outline': 'none',
+            'border': 'none',
+            'background': 'transparent',
+            'width': '100%',
+            'color': 'inherit'
+        }
+    }
+
+    getErrorStyle() {
+        return {
+            'display': 'none',
+            'font-size': '14px',
+            'color': 'red',
+            'margin-top': '3px'
         }
     }
 }

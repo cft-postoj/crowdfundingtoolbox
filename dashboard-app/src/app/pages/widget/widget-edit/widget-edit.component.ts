@@ -176,8 +176,14 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
                 value: option.value
             })
         })
+        if (this.widget.settings[this.deviceType].payment_settings.monthly_prices.custom_price){
+            result.push({
+                title: 'Custom price option',
+                value: 'custom'
+            })
+        }
         if (!this.pricesOptions || this.pricesOptions.length == 0 || this.pricesOptions.length != result.length) {
-            this.pricesOptions = result;
+            this.pricesOptions = result
         }
         return this.pricesOptions;
     }

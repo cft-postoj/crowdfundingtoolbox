@@ -12,7 +12,7 @@ import {paymentTypes} from "../../../../_models/enums"
     styleUrls: ['../../../../components/settings/settings.component.scss', './campaignSettings.component.scss']
 })
 
-export class CampaignsSettingsComponent  implements OnInit {
+export class CampaignSettingsComponent  implements OnInit {
 
 
     @Input()
@@ -51,8 +51,8 @@ export class CampaignsSettingsComponent  implements OnInit {
         // this.campaignService.getCampaignById(this.id).subscribe((campaign: Campaign) => {
         //     this.campaignData = campaign;
         //     this.isActive = new Date(campaign.date_to) >= new Date();
-        //     this.dateTo = CampaignsSettingsComponent.createDateObject(campaign.date_to);
-        //     this.dateFrom = CampaignsSettingsComponent.createDateObject(campaign.date_from);
+        //     this.dateTo = CampaignSettingsComponent.createDateObject(campaign.date_to);
+        //     this.dateFrom = CampaignSettingsComponent.createDateObject(campaign.date_from);
         // }, (error) => {
         //     console.error(error);
         // });
