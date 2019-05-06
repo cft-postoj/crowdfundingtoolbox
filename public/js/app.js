@@ -162,9 +162,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 
-var apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
+var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
 
-var viewsUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/portal/';
+var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 
 document.addEventListener('DOMContentLoaded', function () {
   fetchLoginTemplate();
@@ -343,12 +343,10 @@ __webpack_require__.r(__webpack_exports__);
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 
 
-var apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
+var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
 
-var viewsUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/portal/';
+var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 document.addEventListener('DOMContentLoaded', function () {
-  showSetPasswordTemplate();
-
   if (window.location.href.indexOf('?setPassword=') > -1) {
     isUserExist();
   }

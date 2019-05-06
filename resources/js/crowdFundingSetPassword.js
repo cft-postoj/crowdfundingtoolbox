@@ -2,11 +2,10 @@
 import {findGetParameter, formSerialize, getJsonFirstProp} from "./helpers";
 import {errorAlert} from "./alert";
 
-const apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
-const viewsUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/portal/';
+const apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
+const viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 
 document.addEventListener('DOMContentLoaded', function () {
-    showSetPasswordTemplate();
     if (window.location.href.indexOf('?setPassword=') > -1) {
         isUserExist();
     }

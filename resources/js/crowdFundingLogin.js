@@ -1,8 +1,8 @@
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 import {formSerialize, getJsonFirstProp} from "./helpers";
 
-const apiUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/api/portal/'; // TEST API
-const viewsUrl = 'http://localhost/POSTOJ%20-%20CFT/crowdfundingToolbox/public/portal/';
+const apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
+const viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 import {successAlert, errorAlert} from "./alert";
 
 document.addEventListener('DOMContentLoaded', function () {
