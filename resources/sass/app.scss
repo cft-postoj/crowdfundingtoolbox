@@ -1,14 +1,11 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
-@import 'variables';
+@import 'helpers/variables';
+@import 'helpers/mixins';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import 'components/cft';
+@import 'components/cftLogin';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+

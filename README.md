@@ -165,5 +165,11 @@ There was used JWT auth.
 * payment module
 * statistics
 
+#UPDATE!
+
+### PORTAL VIEWS
+Login/register and my account view. These views are situated in laravel resources folder
+which use webpack and sass loader.
+
 ### License
 MIT License
