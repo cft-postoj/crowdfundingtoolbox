@@ -61,6 +61,7 @@ import { GoogleFontSettingsComponent } from './_parts/molecules/google-font-sett
 import {NgxSelectModule} from "ngx-select-ex";
 import { CtaSettingsComponent } from './components/cta-settings/cta-settings.component';
 import { WidgetSettingsComponent } from "./components/widget-settings/widget-settings.component";
+import { PreviewMonetizationComponent } from './components/preview-monetization/preview-monetization.component';
 
 @NgModule({
     imports: [
@@ -129,7 +130,8 @@ import { WidgetSettingsComponent } from "./components/widget-settings/widget-set
         NotificationComponent,
         GoogleFontSettingsComponent,
         CtaSettingsComponent,
-        WidgetSettingsComponent
+        WidgetSettingsComponent,
+        PreviewMonetizationComponent
     ],
     providers: [
         {

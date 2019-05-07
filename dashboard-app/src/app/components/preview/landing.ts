@@ -1,4 +1,4 @@
-export function setActiveButton(chosenButton) {
+export function setActiveButton(chosenButton, focusInput:false) {
     var landingDocument = document;
     if (document.getElementById('crowdWidgetContent-preview')) {
         let iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
@@ -10,8 +10,14 @@ export function setActiveButton(chosenButton) {
         if (btns[i].classList.contains('active')) {
             btns[i].className = btns[i].className.replace(' active', '');
         }
-        if (btns[i] === chosenButton) {
-            btns[i].className += " active";
+        if (btns[i].childNodes[0] === chosenButton) {
+            btns[i].className += ' active';
+        }
+    }
+    if (focusInput) {
+        let inputs = chosenButton.getElementsByTagName('input') as HTMLElement[];
+        if (inputs.length) {
+            inputs[0].focus();
         }
     }
     var checkbox = landingDocument.getElementById('cft--monatization--membership-checkbox');
@@ -38,5 +44,35 @@ export function validateForm(this) {
 }
 
 export function oneTimePayment() {
-
+    var landingDocument = document;
+    if (document.getElementById('crowdWidgetContent-preview')) {
+        let iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
+        landingDocument = iframe.contentWindow.document;
+    }
+    let monthlyElements = landingDocument.getElementsByClassName('cft--monatization--only-monthly') as any;
+    let oneTimeElements = landingDocument.getElementsByClassName('cft--monatization--only-one-time') as any;
+    for (let oneTime of oneTimeElements){
+        oneTime.className= oneTime.className.replace(/ cft--monatization--hidden/g, '');
+    }
+    for (let monthly of monthlyElements){
+        monthly.className +=' cft--monatization--hidden'
+    }
 }
+
+export function monthlyPayment() {
+    var landingDocument = document;
+    if (document.getElementById('crowdWidgetContent-preview')) {
+        let iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
+        landingDocument = iframe.contentWindow.document;
+    }
+    let monthlyElements = landingDocument.getElementsByClassName('cft--monatization--only-monthly') as any;
+    let oneTimeElements = landingDocument.getElementsByClassName('cft--monatization--only-one-time') as any;
+    for (let oneTime of oneTimeElements){
+        oneTime.className +=' cft--monatization--hidden'
+    }
+
+    for (let monthly of monthlyElements){
+        monthly.className = monthly.className.replace(/ cft--monatization--hidden/g, '');
+    }
+}
+

@@ -20,7 +20,6 @@ import {RadioButton} from "../../_parts/atoms/radio-button/radio-button";
 import {of, Subscription} from "rxjs";
 import {iframeCode} from "../preview/previewCode"
 import {DomSanitizer} from '@angular/platform-browser';
-import { setActiveButton, validateForm } from './landing';
 
 @Component({
     selector: 'app-preview',
@@ -121,40 +120,18 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     recreateStyles() {
         const parent = document.getElementById('styles');
-        while (parent.firstChild)
-            parent.removeChild(parent.firstChild);
-        const style = document.createElement('style');
+
+        for (let style of  parent.getElementsByClassName("globalStyles") as any) {
+             style.remove()
+        }
+
+        let style = document.createElement('style');
+        style.setAttribute("class", "globalStyles");
         style.type = 'text/css';
-        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} .cft--button:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}
-        
-            .active > .cft--monatization--donation-button {
-                color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
-                background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
-                border-color: #32a300;
-            }
-            
-             .cft--monatization--membership-checkbox.active:before {
-                background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
-                border: 1px solid #32a300
-              }
-             .cft--monatization--membership-checkbox.active:after{
-                border: solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
-                border-width: 0 2px 2px 0;
-                }
-        `;
+        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} .cft--button:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}`;
+
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
-
-        const parentScript = document.getElementById('scripts');
-        while (parentScript.firstChild)
-            parentScript.removeChild(parentScript.firstChild);
-        let script = document.createElement('script');
-        script.appendChild(document.createTextNode(setActiveButton.toString()));
-        parentScript.appendChild(script);
-
-        script = document.createElement('script');
-        script.appendChild(document.createTextNode(validateForm.toString()));
-        parentScript.appendChild(script);
 
     }
 
@@ -394,32 +371,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         return isNaN(input) ? input : input + 'px';
     }
 
-    getButtonContainerStyles() {
-        let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer;
-        let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
-        let containerStyles = {
-            display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
-            width: additionalSettings.width,
-            position: additionalSettings.position,
-            //top: additionalSettings.top,
-            //right: additionalSettings.right,
-            //bottom: additionalSettings.bottom,
-            //left: additionalSettings.left,
-            textAlign: ctaStyles.default.fontSettings.alignment,
-            margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
-                this.addPx(ctaStyles.default.margin.right) + ' ' +
-                this.addPx(ctaStyles.default.margin.bottom) + ' ' +
-                this.addPx(ctaStyles.default.margin.left),
-        };
-
-        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
-            containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
-            containerStyles['float'] = 'left';
-        }
-
-        return containerStyles;
-    }
-
     getHoverButtonStyles() {
         let hoverDesignSettings = this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design;
         let hoverSettings = this.widget.settings[this.deviceType].widget_settings.call_to_action.hover;
@@ -495,128 +446,33 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    getRowStyle() {
-        let defaultStyle = {
-            'display': '-ms-flexbox',
-            '-ms-flex-wrap': 'wrap',
-            'flex-wrap': 'wrap',
-            'margin-right': '-15px',
-            'margin-left': '-15px',
-        }
-
-        let defaultStyleDisplay2 = {
-            'display': 'flex'
-        }
-
-        let result = {...defaultStyle, ...defaultStyleDisplay2};
-
-        return result;
-    }
-
-    getMonatizationDonationButtonStyle() {
-        return {
-            'flex': '0 0 33.33333333%',
-            'max-width': '33.33333333%',
-            'padding': '6px 15px',
-            'width': '100%',
-            'min-height': '1px',
-            'box-sizing': 'border-box',
-            'display': 'flex',
-            'flex-direction': 'column'
-        }
-    }
-
-    getDonationButtonStyle() {
-        return {
-            'padding': '5px',
-            'border': '1px solid #bdc2c6',
-            'border-radius': '2px',
-            'box-shadow': '0 1px 2px 0 rgba(91,107,120,.2)',
-            'flex': '1',
-            'display': 'flex',
-            'flex-direction': 'column',
-            'justify-content': 'center',
-            'cursor': 'pointer',
-        }
-    }
-
-    getDonationButtonPriceStyle() {
-        return {
-            'font-size': '18px',
-            'font-weight': '700',
-            'line-height': '1',
-            'padding': '1px 0',
-            'text-align': 'center'
-        }
-    }
-
-    getDonationButtonPeriodicityStyle() {
-        return {
-            'font-size': '14px',
-            'text-align': 'center'
-        }
-    }
-
-    getMonetizationContainerStyle() {
-        return {
-            'max-width': '90%',
-            'margin': 'auto'
-        }
-    }
-
     ctaReplaced() {
         return this.widget.widget_type.method === widgetTypes.landing.method && this.widget.settings[this.deviceType].payment_settings.active;
     }
 
-    getMembershipStyle() {
-        return {
-            'padding-left': '50px',
-            'margin': '12px 0'
+    getButtonContainerStyles() {
+        let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer;
+        let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
+        let containerStyles = {
+            display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
+            width: additionalSettings.width,
+            position: additionalSettings.position,
+            //top: additionalSettings.top,
+            //right: additionalSettings.right,
+            //bottom: additionalSettings.bottom,
+            //left: additionalSettings.left,
+            textAlign: ctaStyles.default.fontSettings.alignment,
+            margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
+                this.addPx(ctaStyles.default.margin.right) + ' ' +
+                this.addPx(ctaStyles.default.margin.bottom) + ' ' +
+                this.addPx(ctaStyles.default.margin.left),
+        };
+
+        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
+            containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
+            containerStyles['float'] = 'left';
         }
+        return containerStyles;
     }
 
-    getLabelStyle() {
-        return {
-            width: '100%',
-            display: 'block'
-        }
-    }
-
-    getFormGroupStyle() {
-        return {
-            'padding-top': '16px'
-        }
-    }
-
-    getEmailDonateStyle() {
-        return {
-            'padding': '6px',
-            'margin-top': '12px',
-            'width': '320px'
-        }
-    }
-
-    getDonationInputPriceStyle() {
-        return {
-            'font-size': '18px',
-            'font-weight': '700',
-            'line-height': '1',
-            'padding': '1px 0',
-            'text-align': 'center',
-            'outline': 'none',
-            'border': 'none',
-            'background': 'transparent',
-            'width': '100%',
-            'color': 'inherit'
-        }
-    }
-
-    getErrorStyle() {
-        return {
-            'display': 'none',
-            'font-size': '14px',
-            'color': 'red',
-            'margin-top': '3px'
-        }
-    }
 }
