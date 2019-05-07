@@ -27,10 +27,13 @@ Route::get('/portal/my-account', function() {
 
 /* Part of routes, which will be showed by some action via JS */
 Route::get('/portal/login', function() {
-    return view('portal-templates.login');
+    return view('portal-templates.parts.login');
 });
 Route::get('/portal/set-generated-password', function() {
-    return view('portal-templates.setGeneratedPassword');
+    return view('portal-templates.parts.setGeneratedPassword');
+});
+Route::get('/portal/my-account-content', function() {
+    return view('portal-templates.parts.myaccountContent');
 });
 /**************************************/
 

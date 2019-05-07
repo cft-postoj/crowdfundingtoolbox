@@ -143,6 +143,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _crowdFundingLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crowdFundingLogin */ "./resources/js/crowdFundingLogin.js");
 /* harmony import */ var _crowdFundingSetPassword__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crowdFundingSetPassword */ "./resources/js/crowdFundingSetPassword.js");
+/* harmony import */ var _crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crowdFundingMyAccount */ "./resources/js/crowdFundingMyAccount.js");
+
 
 
 
@@ -325,6 +327,90 @@ function loginFunctions() {
       };
     };
   };
+}
+
+/***/ }),
+
+/***/ "./resources/js/crowdFundingMyAccount.js":
+/*!***********************************************!*\
+  !*** ./resources/js/crowdFundingMyAccount.js ***!
+  \***********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+
+var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
+
+var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
+
+document.addEventListener('DOMContentLoaded', function () {
+  // TODO if user is logged in and has valid token
+  fetchMyAccountTemplate();
+});
+
+function fetchMyAccountTemplate() {
+  var url = viewsUrl + 'my-account-content';
+  fetch(url).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    document.getElementById('cft--myAccountContent').innerHTML = html;
+    showProfileActions();
+  });
+}
+
+function showProfileActions() {
+  var allSections = document.querySelectorAll('.cft--myAccount--body--section');
+  var showCftNewslettersSection = document.getElementById('showCftNewslettersSection');
+  var showCftSavedArticlesSection = document.getElementById('showCftSavedArticlesSection');
+  var showCftDonationSection = document.getElementById('showCftDonationSection');
+  var showCftMyProfileSection = document.getElementById('showCftMyProfileSection');
+  var showCftMyOrdersSection = document.getElementById('showCftMyOrdersSection');
+  var bodyIntro = document.querySelector('.cft--myAccount--body--intro');
+  var newslettersContent = document.getElementById('cft--myAccount--newsletters');
+  var savedArticlesContent = document.getElementById('cft--myAccount--savedArticles');
+  var donationContent = document.getElementById('cft--myAccount--donation');
+  var myProfileContent = document.getElementById('cft--myAccount--myProfile');
+  var myOrdersContent = document.getElementById('cft--myAccount--myOrders');
+
+  showCftNewslettersSection.onclick = function (clickEvent) {
+    clickEvent.preventDefault();
+    showHelper(newslettersContent);
+  };
+
+  showCftSavedArticlesSection.onclick = function (clickEvent) {
+    clickEvent.preventDefault();
+    showHelper(savedArticlesContent);
+  };
+
+  showCftDonationSection.onclick = function (clickEvent) {
+    clickEvent.preventDefault();
+    showHelper(donationContent);
+  };
+
+  showCftMyProfileSection.onclick = function (clickEvent) {
+    clickEvent.preventDefault();
+    showHelper(myProfileContent);
+  };
+
+  showCftMyOrdersSection.onclick = function (clickEvent) {
+    clickEvent.preventDefault();
+    showHelper(myOrdersContent);
+  };
+
+  function showHelper(content) {
+    bodyIntro.style.display = 'none';
+    allSections.forEach(function (s, key) {
+      s.classList.remove('active');
+    });
+
+    if (!content.classList.contains('active')) {
+      content.classList.add('active');
+    }
+  }
 }
 
 /***/ }),
