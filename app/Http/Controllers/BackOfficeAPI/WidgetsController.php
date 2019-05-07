@@ -223,6 +223,7 @@ class WidgetsController extends Controller
             switch ($widgetType) {
                 case 1: // landing widget
                     $output = $settings;
+                    $output['default']['fontSettings']['alignment'] = 'center';
                     break;
                 case 2: // sidebar widget
                     $output = $settings;
@@ -260,7 +261,8 @@ class WidgetsController extends Controller
         } else if ($type == 'headlineFonts') {
             switch ($widgetType) {
                 case 1: // landing widget
-                    $output = $settings;
+                    $output['color']= '#114b7d';
+                    $output['backgroundColor']= '#eee';
                     break;
                 case 2: // sidebar widget
                     $output['alignment'] = 'left';
@@ -342,7 +344,62 @@ class WidgetsController extends Controller
         $outputJson = array();
         switch ($widgetType) {
             case 1: // landing widget
-                $outputJson = array();
+                $outputJson = array(
+                    'width' => 'auto',
+                    'height' => '100%',
+                    'position' => 'relative',
+                    'display' => 'block',
+                    'bodyContainer' => array(
+                        'width' => '50%',
+                        'margin' => '30px 60px',
+                        'padding' => '32px 0 0 0',
+                        'position' => 'absolute',
+                        'text' => array(
+                            'width' => '100%',
+                            'top' => '30px'
+                        )
+                    ),
+                    'textContainer' => array(
+                        'width' => '100%',
+                        'height' => '100%',
+                        'margin' => '0 auto',
+                        'position' => 'relative',
+                        'top' => 'auto',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%',
+                            'top' => '30px',
+                            'textAlign' => 'left'
+                        )
+                    ),
+                    'buttonContainer' => array(
+                        'width' => '100%',
+                        'position' => 'relative',
+                        'top' => 'auto',
+                        'right' => 'auto',
+                        'bottom' => '50px',
+                        'left' => 'auto',
+                        'display' => 'block',
+                        'textAlign' => 'center',
+                        'margin' => array(
+                            'top' => '420',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'button' => array(
+                            'width' => '100%',
+                            'padding' => array(
+                                'top' => '15',
+                                'right' => '70',
+                                'bottom' => '20',
+                                'left' => '70'
+                            )
+                        )
+                    )
+                );
                 break;
             case 2: // sidebar widget
                 $outputJson = array(
@@ -630,7 +687,7 @@ class WidgetsController extends Controller
                 ->orderBy('updated_at', 'desc')
                 ->get()
                 ->where('campaign_id', $campaignId)
-                ->whereIn('widget_type_id', [2, 3, 5]));
+                ->whereIn('widget_type_id', [1, 2, 3, 5]));
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e

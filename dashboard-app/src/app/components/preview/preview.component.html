@@ -42,7 +42,7 @@
     <!--</iframe>-->
 
     <!-- iframe encapsulated TODO -->
-    <iframe [ngStyle]="{'transform': 'scale('+scale/100+')'}" [hidden]="loading" #iframe frameborder="0" width="100%" height="100%" class="{{deviceType}}"></iframe>
+    <iframe id="crowdWidgetContent-preview" [ngStyle]="{'transform': 'scale('+scale/100+')'}" [hidden]="loading" #iframe frameborder="0" width="100%" height="100%" class="{{deviceType}}"></iframe>
     <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
         <link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
         <div class="cft--background" [ngStyle]="getBackgroundStyle()" [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
@@ -54,8 +54,9 @@
                     <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()" [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
                     </div>
                 </div>
+                <app-preview-monetization [widget]="widget" [deviceType]="deviceType"></app-preview-monetization>
                 <!-- CTA -->
-                <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()">
+                <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="!ctaReplaced()">
                     <a class="cft--button"
                        [ngStyle]="getButtonStyles()"
                        href="{{widget.settings[deviceType].cta.url}}">
@@ -66,5 +67,7 @@
         </div>
         <div id="styles">
         </div>
+            <div id="scripts">
+            </div>
     </div>
 </div>

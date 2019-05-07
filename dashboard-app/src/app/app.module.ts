@@ -34,7 +34,7 @@ import {CampaignEditComponent} from './pages/campaigns/edit/campaignEdit.compone
 import {DragAndDropComponent} from './_parts/atoms/dragAndDrop/dragAndDrop.component';
 import {AngularEditorModule} from '@kolkov/angular-editor';
 import {CampaignDetailComponent} from "./pages/campaigns/detail/campaignDetail.component";
-import {CampaignsSettingsComponent} from './pages/campaigns/edit/campaign-settings/campaignsSettings.component';
+import {CampaignSettingsComponent} from './pages/campaigns/edit/campaign-settings/campaignSettings.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProgressComponent} from './_parts/atoms/progress/progress.component';
 import {DatepickerComponent} from './_parts/atoms/datepicker/datepicker.component';
@@ -61,7 +61,7 @@ import { GoogleFontSettingsComponent } from './_parts/molecules/google-font-sett
 import {NgxSelectModule} from "ngx-select-ex";
 import { CtaSettingsComponent } from './components/cta-settings/cta-settings.component';
 import { WidgetSettingsComponent } from "./components/widget-settings/widget-settings.component";
-import {WidgetSettingsComponentOld} from "./pages/campaigns/edit/widget-settings/widgetSettings.component";
+import { PreviewMonetizationComponent } from './components/preview-monetization/preview-monetization.component';
 
 @NgModule({
     imports: [
@@ -107,7 +107,7 @@ import {WidgetSettingsComponentOld} from "./pages/campaigns/edit/widget-settings
         StatusComponent,
         CampaignEditComponent,
         BreadcrumbsComponent,
-        CampaignsSettingsComponent,
+        CampaignSettingsComponent,
         DragAndDropComponent,
         CampaignDetailComponent,
         CheckboxComponent,
@@ -131,7 +131,7 @@ import {WidgetSettingsComponentOld} from "./pages/campaigns/edit/widget-settings
         GoogleFontSettingsComponent,
         CtaSettingsComponent,
         WidgetSettingsComponent,
-        WidgetSettingsComponentOld
+        PreviewMonetizationComponent
     ],
     providers: [
         {
