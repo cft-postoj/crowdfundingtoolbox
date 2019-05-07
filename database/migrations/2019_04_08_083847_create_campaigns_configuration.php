@@ -36,9 +36,9 @@ class CreateCampaignsConfiguration extends Migration
         DB::table('campaigns_configuration')->insert(
             array(
                 array(
-                    'font_family' => json_encode(array()),
-                    'color' => json_encode(array()),
-                    'font_settings_title' => json_encode(array()),
+                    'fonts' => json_encode(array()),
+                    'colors' => json_encode(array()),
+                    'font_settings_headline_text' => json_encode(array()),
                     'font_settings_additional_text' =>  json_encode(array()),
                     'cta'   =>  json_encode(array()),
                     'widget_settings'   =>  json_encode(array())

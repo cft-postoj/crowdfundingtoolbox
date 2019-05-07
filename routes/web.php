@@ -1,5 +1,5 @@
 <?php
-
+use \Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +14,28 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+/* Testing portal routes -- in PROD mode they will not working, all logic from these (included scripts, placeholders)
+ will be in portal templates */
+Route::get('/portal/postoj', function() {
+   return view('portal-templates.postoj');
+});
+Route::get('/portal/my-account', function() {
+    return view('portal-templates.myaccount');
+});
+/*******************************************************/
+
+/* Part of routes, which will be showed by some action via JS */
+Route::get('/portal/login', function() {
+    return view('portal-templates.parts.login');
+});
+Route::get('/portal/set-generated-password', function() {
+    return view('portal-templates.parts.setGeneratedPassword');
+});
+Route::get('/portal/my-account-content', function() {
+    return view('portal-templates.parts.myaccountContent');
+});
+/**************************************/
 
 Route::any('{slug}', function($slug)
 {

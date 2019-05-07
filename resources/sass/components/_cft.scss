@@ -1,0 +1,10 @@
+.cft {
+  &--loginButton {
+    display: block;
+  }
+  &--myAccountButton {
+    display: none;
+  }
+  @import "cftMyAccount";
+  @import "alert";
+}

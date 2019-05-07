@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\BackOfficeAPI\BackOfficeUser;
 use App\BackOfficeAPI\Role;
+use App\Mail\AutoRegistrationEmail;
+use App\Mail\ForgottenPasswordEmail;
+use App\Mail\RegisterEmail;
 use App\PortalUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,6 +14,7 @@ use App\API\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 
@@ -60,8 +64,8 @@ class UserService extends Controller
         $credentials = $request->only('email', 'password');
         if (strpos($request['email'], '@') === false) {
             $credentials = [
-              'username'    =>  $request['email'],
-              'password'    =>  $request['password']
+                'username' => $request['email'],
+                'password' => $request['password']
             ];
         }
         try {
@@ -80,9 +84,9 @@ class UserService extends Controller
             if (BackOfficeUser::where('user_id', $user->id)->first()) {
                 $token = JWTAuth::fromUser($user);
                 return \response()->json([
-                    'user'  =>  $user,
-                    'user_role' =>  Role::where('id', BackOfficeUser::where('user_id', $user->id)->first()['role_id'])->first()['slug'],
-                    'token' =>  $token
+                    'user' => $user,
+                    'user_role' => Role::where('id', BackOfficeUser::where('user_id', $user->id)->first()['role_id'])->first()['slug'],
+                    'token' => $token
                 ], Response::HTTP_OK);
             }
         } else {
@@ -117,10 +121,12 @@ class UserService extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/backoffice/register",
-     *     tags={"BACKOFFICE USER"},
-     *     summary="Create backoffice user",
-     *     description="Only for users with admin role. They can create new users.",
+     *     path="/api/portal/register",
+     *     tags={"USER"},
+     *     summary="Create portal or backoffice user",
+     *     description="Endpoint for portal user: /api/portal/register.
+     *      Endpoint for backoffice user: /api/backoffice/register.
+     *     Only for users with admin role. They can create new users.",
      *     operationId="register",
      *     @OA\Response(
      *         response=201,
@@ -167,16 +173,16 @@ class UserService extends Controller
 
         $valid = validator($request->only(
             'email',
-            'username',
+            //'username',
             'first_name',
             'last_name',
             'password',
             'confirmation_password'
         ), [
             'email' => 'required|string|email|max:255|unique:users',
-            'username' => 'required|string|max:255|unique:users',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            // 'username' => 'string|max:255|unique:users',
+            'first_name' => 'string|max:255',
+            'last_name' => 'string|max:255',
             'password' => 'required|string|max:255',
             'confirmation_password' => 'required|string|max:255|same:password'
         ]);
@@ -192,11 +198,11 @@ class UserService extends Controller
         $data = \request()->only('email', 'username', 'first_name', 'last_name', 'password');
 
         $user = User::create([
-            'username'  =>  $data['username'],
-            'email' =>  $data['email'],
-            'first_name'    =>  $data['first_name'],
-            'last_name' =>  $data['last_name'],
-            'password'  =>  bcrypt($data['password'])
+            'username' => (isset($data['username'])) ? $data['username'] : explode('@', $data['email'])[0],
+            'email' => $data['email'],
+            'first_name' => (isset($data['first_name'])) ? $data['first_name'] : '',
+            'last_name' => (isset($data['last_name'])) ? $data['last_name'] : '',
+            'password' => bcrypt($data['password'])
         ]);
         $user->save();
 
@@ -204,22 +210,198 @@ class UserService extends Controller
             $currentAdmin = Auth::user();
             if (BackOfficeUser::where('user_id', $currentAdmin->id)->first()->only('role_id')['role_id'] == 1) {
                 $backOfficeUser = BackOfficeUser::create([
-                    'user_id'   =>  $user->id,
-                    'role_id'   =>  1   // admin user
+                    'user_id' => $user->id,
+                    'role_id' => 1   // admin user
                 ]);
                 $backOfficeUser->save();
             } else {
                 return response()->json([
-                    'message'   =>  'You don\'t have permissions to this action'
+                    'message' => 'You don\'t have permissions to this action'
                 ], 400);
             }
         } else {
-
+            PortalUser::create([
+                'user_id' => $user->id
+            ])->save();
+            Mail::to($data['email'])->send(new RegisterEmail());
         }
 
         return response()->json([
             'message' => 'Successfully created user!',
             'user' => $user
         ], 201);
+    }
+
+
+    /*
+     * In donation case (only email is required)
+     */
+    protected function donationCreate(Request $request)
+    {
+        $valid = validator($request->only(
+            'email'
+        ), [
+            'email' => 'required|string|email|max:255',
+        ]);
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Email is incorrect.'
+            ], 400);
+            return $jsonError;
+        }
+
+        if (User::where('email', $request['email'])->first()) {
+            // make donation response -- store to donation table by user id
+            return null;
+        }
+
+        $generatedPassword = $this->generatePasswordToken();
+
+        $username = explode('@', $request['email'])[0];
+        $user = User::create([
+            'email' => $request['email'],
+            'username' => $username,
+            'password' => bcrypt($generatedPassword),
+            'generate_password_token' => $generatedPassword
+        ]);
+        $user->save();
+
+        PortalUser::create([
+            'user_id' => $user->id
+        ])->save();
+
+        // donation functions
+
+        //return mailing;
+        return Mail::to($request['email'])->send(new AutoRegistrationEmail($username, $generatedPassword));
+
+    }
+
+    private function generatePasswordToken()
+    {
+        $length = 32;
+        try {
+            return bin2hex(random_bytes($length));
+        } catch (\Exception $e) {
+            return $e;
+        }
+
+    }
+
+    protected function forgotPassword(Request $request)
+    {
+        $valid = validator($request->only(
+            'email'
+        ), [
+            'email' => 'required|string|email|max:255',
+        ]);
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Email is incorrect.'
+            ], 400);
+            return $jsonError;
+        }
+
+        if (User::where('email', $request['email'])->first() == null) {
+            $jsonError = response()->json([
+                'message' => 'Email is not exists in our system. Please, sign out first.'
+            ], 400);
+            return $jsonError;
+        }
+
+        try {
+            $token = $this->generatePasswordToken();
+            User::where('email', $request['email'])->update([
+                'generate_password_token' => $token
+            ]);
+            Mail::to($request['email'])->send(new ForgottenPasswordEmail($token));
+        } catch (\Exception $e) {
+            return \response()->json([
+                'error' => $e,
+                'messsage' => 'Unexpected error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return \response()->json([
+            'message' => 'Email with reset link was successfully sent.'
+        ], Response::HTTP_OK);
+    }
+
+    protected function hasUserGeneratedToken(Request $request)
+    {
+        $valid = validator($request->only(
+            'token'
+        ), [
+            'token' => 'required|string',
+        ]);
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Token is incorrect.'
+            ], Response::HTTP_BAD_REQUEST);
+            return $jsonError;
+        }
+
+        try {
+            if (User::where('generate_password_token', $request['token'])->first() != null) {
+                return \response()->json([
+                    'isUserExists' => true
+                ], Response::HTTP_OK);
+            }
+            return \response()->json([
+                'isUserExists' => false
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return \response()->json([
+                'error' => $e,
+                'message' => 'Unexpected error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    protected function changePassword(Request $request)
+    {
+        $valid = validator($request->only(
+            'token',
+            'password',
+            'confirmation_password'
+        ), [
+            'token' => 'required|string',
+            'password' => 'required|string|max:255',
+            'confirmation_password' => 'required|string|max:255|same:password'
+        ]);
+
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors(),
+                'message' => 'Bad action.'
+            ], Response::HTTP_BAD_REQUEST);
+            return $jsonError;
+        }
+
+        try {
+            $user = User::where('generate_password_token', $request['token'])->first();
+            if ($user != null) {
+                User::where('generate_password_token', $request['token'])->update([
+                   'password'   =>  bcrypt($request['password']),
+                   'generate_password_token'    =>  null
+                ]);
+                $token = JWTAuth::fromUser($user);
+                return \response()->json([
+                    'token' =>  $token
+                ], Response::HTTP_OK);
+            }
+
+            return \response()->json([
+                'message'   =>  'User is not exist.'
+            ], Response::HTTP_BAD_REQUEST);
+        } catch(\Exception $e) {
+            return \response()->json([
+                'error' => $e,
+                'message' => 'Unexpected error'
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

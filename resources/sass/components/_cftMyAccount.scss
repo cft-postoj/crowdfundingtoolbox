@@ -1,0 +1,33 @@
+&--myAccount {
+  margin: 30px 0;
+  &--sidebar {
+    float: left;
+    width: 30%;
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        padding: 0;
+      }
+    }
+  }
+  &--body {
+    float: right;
+    width: 70%;
+    &--section {
+      width: 100%;
+      display: none;
+      opacity: 0;
+      @include transitionSingle(.3s ease);
+      &.active {
+        display: block;
+        opacity: 1;
+      }
+    }
+    > div {
+      h2 {
+        color: $black;
+      }
+    }
+  }
+}

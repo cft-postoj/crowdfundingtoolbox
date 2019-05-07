@@ -11,5 +11,36 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/dashboard.js', 'public/js')
-   .sass('resources/sass/dashboard.scss', 'public/css');
+mix
+    .browserSync({
+        proxy: 'http://localhost:8000/portal/postoj',
+        files: [
+            'public/css/app.css',
+            'public/js/app.js',
+            'app/**/*',
+            'routes/**/*',
+            'resources/views/**/*',
+            'resources/lang/**/*',
+            'resources/sass/**/*',
+            'resources/js/**/*'
+        ]
+    })
+    .js('resources/js/app.js', 'public/js/')
+    .sass('resources/sass/app.scss', 'public/css');
+
+
+// const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+//
+// mix.webpackConfig({
+//     plugins: [
+//         new BrowserSyncPlugin({
+//             open: 'external',
+//             host: 'localhost',
+//             port: 3000,
+//             proxy: 'http://127.0.0.1:8000/',
+//             files: ['resources/views/**/*.php', 'app/**/*.php', 'routes/**/*.php']
+//         })
+//     ]
+// })
+//     .js('resources/js/app.js', 'public/js/')
+//     .sass('resources/sass/app.scss', 'public/css/');
