@@ -1,11 +1,12 @@
-export function setActiveButton(chosenButton, focusInput:false) {
+export function setActiveButtonMonthly(chosenButton, focusInput:false) {
+    var target;
     var landingDocument = document;
     if (document.getElementById('crowdWidgetContent-preview')) {
         let iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
         landingDocument = iframe.contentWindow.document;
     }
     var header = landingDocument.getElementById('cr0wdWidgetContent-landing');
-    var btns = header.getElementsByClassName('cft--monatization--donation-button-container');
+    var btns = header.getElementsByClassName('cft--monatization--donation-button--monthly');
     for (var i = 0; i < btns.length; i++) {
         if (btns[i].classList.contains('active')) {
             btns[i].className = btns[i].className.replace(' active', '');
@@ -20,14 +21,47 @@ export function setActiveButton(chosenButton, focusInput:false) {
             inputs[0].focus();
         }
     }
-    var checkbox = landingDocument.getElementById('cft--monatization--membership-checkbox');
-    if (chosenButton.getElementsByTagName('input')[0].value >= 10) {
+    var checkbox = landingDocument.getElementById('cft--monatization--membership-checkbox--monthly');
+    if (chosenButton.getElementsByTagName('input')[0].value >= target) {
         checkbox.className += ' active';
     }
     else {
         checkbox.className = checkbox.className.replace(/ active/g, '');
     }
 }
+export function setActiveButtonOneTime(chosenButton, focusInput:false) {
+    var target;
+    var landingDocument = document;
+    if (document.getElementById('crowdWidgetContent-preview')) {
+        let iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
+        landingDocument = iframe.contentWindow.document;
+    }
+    var header = landingDocument.getElementById('cr0wdWidgetContent-landing');
+    var btns = header.getElementsByClassName('cft--monatization--donation-button--one-time');
+    for (var i = 0; i < btns.length; i++) {
+        if (btns[i].classList.contains('active')) {
+            btns[i].className = btns[i].className.replace(' active', '');
+        }
+        if (btns[i].childNodes[0] === chosenButton) {
+            btns[i].className += ' active';
+        }
+    }
+    if (focusInput) {
+        let inputs = chosenButton.getElementsByTagName('input') as HTMLElement[];
+        if (inputs.length) {
+            inputs[0].focus();
+        }
+    }
+    var checkbox = landingDocument.getElementById('cft--monatization--membership-checkbox--one-time');
+    if (chosenButton.getElementsByTagName('input')[0].value >= target) {
+        checkbox.className += ' active';
+    }
+    else {
+        checkbox.className = checkbox.className.replace(/ active/g, '');
+    }
+}
+
+
 
 export function validateForm(this) {
     let validInput = false;

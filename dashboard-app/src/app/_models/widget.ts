@@ -170,21 +170,48 @@ export class Widget {
             payment_settings: {
                 active: true,
                 payment_type: 'both',
+                design: {
+                    background_color: "#fff",
+                    padding: {
+                        top: "10",
+                        right: "25",
+                        bottom: "10",
+                        left: "25"
+                    },
+                    margin: {
+                        top: "15",
+                        right: "10",
+                        bottom: "15",
+                        left: "10"
+                    },
+                    width: '100%',
+                    height: 'auto',
+                },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     options: [
                         {value: 30},
                         {value: 40}
-                    ]
+                    ],
+                    benefit: {
+                        active: true,
+                        text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                        value: 10
+                    }
                 },
                 once_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     options: [
-                        {value: 30},
+                        {value: 80},
                         {value: 40}
-                    ]
+                    ],
+                    benefit: {
+                        active: true,
+                        text: 'S podporou 60 € a viac ročne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                        value: 60
+                    }
                 },
                 default_price: {
                     active: true,
@@ -256,10 +283,10 @@ export class Widget {
                     display: '',
                     textAlign: '',
                     margin: {
-                      top: '',
-                      right: '',
-                      bottom: '',
-                      left: ''
+                        top: '',
+                        right: '',
+                        bottom: '',
+                        left: ''
                     },
                     button: {
                         width: '300px',
@@ -433,21 +460,48 @@ export class Widget {
             },
             payment_settings: {
                 payment_type: 'both',
+                design: {
+                    background_color: "#fff",
+                    padding: {
+                        top: "10",
+                        right: "25",
+                        bottom: "10",
+                        left: "25"
+                    },
+                    margin: {
+                        top: "15",
+                        right: "10",
+                        bottom: "15",
+                        left: "10"
+                    },
+                    width: '100%',
+                    height: 'auto',
+                },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     options: [
                         {value: 30},
                         {value: 40}
-                    ]
+                    ],
+                    benefit: {
+                        active: true,
+                        text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                        value: 10
+                    }
                 },
                 once_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     options: [
-                        {value: 30},
+                        {value: 80},
                         {value: 40}
-                    ]
+                    ],
+                    benefit: {
+                        active: true,
+                        text: 'S podporou 60 € a viac ročne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                        value: 60
+                    }
                 },
                 default_price: {
                     active: true,
@@ -668,21 +722,48 @@ export class Widget {
             },
             payment_settings: {
                 payment_type: 'both',
+                design: {
+                    background_color: "#fff",
+                    padding: {
+                        top: "10",
+                        right: "25",
+                        bottom: "10",
+                        left: "25"
+                    },
+                    margin: {
+                        top: "15",
+                        right: "10",
+                        bottom: "15",
+                        left: "10"
+                    },
+                    width: '100%',
+                    height: 'auto',
+                },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     options: [
                         {value: 30},
                         {value: 40}
-                    ]
+                    ],
+                    benefit: {
+                        active: true,
+                        text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                        value: 10
+                    }
                 },
                 once_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     options: [
-                        {value: 30},
+                        {value: 80},
                         {value: 40}
-                    ]
+                    ],
+                    benefit: {
+                        active: true,
+                        text: 'S podporou 60 € a viac ročne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                        value: 60
+                    }
                 },
                 default_price: {
                     active: true,

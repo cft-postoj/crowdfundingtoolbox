@@ -3,13 +3,14 @@
     <div class="cft--monatization--title">
     </div>
     <div class="cft--monatization--donation-button-wrapper cft--monatization--only-monthly"
+         [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value}"
          [ngStyle]="getRowStyle()">
         <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
              [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == option.value}"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
-                 onclick="parent.setActiveButton(this)">
+                 onclick="parent.setActiveButtonMonthly(this)">
                 <input type="hidden" value="{{option.value}}">
                 <div class="cft--monatization--donation-button-price" [ngStyle]="getDonationButtonPriceStyle()">
                     {{option.value}}
@@ -19,13 +20,13 @@
                 </div>
             </div>
         </div>
-        <div class="cft--monatization--donation-button-container"
+        <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
              [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == 'custom' }"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngIf="widget.settings[deviceType].payment_settings.monthly_prices.custom_price">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
-                 onclick="parent.setActiveButton(this, true)"
-                 oninput="parent.setActiveButton(this)">
+                 onclick="parent.setActiveButtonMonthly(this, true)"
+                 oninput="parent.setActiveButtonMonthly(this)">
                 <input type="number" class="cft--monatization--donation-input-price"
                        [ngStyle]="getDonationInputPriceStyle()" placeholder="custom"/>
                 <div class="cft--monatization--donation-button-periodicity"
@@ -34,37 +35,48 @@
             </div>
         </div>
     </div>
-    <div class="cft--monatization--donation-button-wrapper cft--monatization--only-one-time cft--monatization--hidden"
+    <div class="cft--monatization--donation-button-wrapper cft--monatization--only-one-time"
+         [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value ||
+         widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value}"
          [ngStyle]="getRowStyle()">
-        <div id="cft--monatization--donation-button--one-time" class="cft--monatization--donation-button-container"
+        <div id="cft--monatization--donation-button--one-time"
+             class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
              [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == option.value}"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
-                 onclick="parent.setActiveButton(this)">
+                 onclick="parent.setActiveButtonOneTime(this)">
                 <input type="hidden" value="{{option.value}}">
                 <div class="cft--monatization--donation-button-price" [ngStyle]="getDonationButtonPriceStyle()">
                     {{option.value}}
                 </div>
             </div>
         </div>
-        <div class="cft--monatization--donation-button-container"
+        <div class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
              [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == 'custom' }"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngIf="widget.settings[deviceType].payment_settings.once_prices.custom_price">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
-                 onclick="parent.setActiveButton(this, true)"
-                 oninput="parent.setActiveButton(this)">
+                 onclick="parent.setActiveButtonOneTime(this, true)"
+                 oninput="parent.setActiveButtonOneTime(this)">
                 <input type="number" class="cft--monatization--donation-input-price"
                        [ngStyle]="getDonationInputPriceStyle()" placeholder="custom"/>
             </div>
         </div>
     </div>
-    <div class="cft--monatization--membership">
-        <span class="cft--monatization--membership-checkbox" id="cft--monatization--membership-checkbox"></span>
-        <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()">S podporou 10&nbsp;€
-            a&nbsp;viac mesačne sa môžete <strong>stať členom Klubu Postoj a&nbsp;získať naše špeciálne tlačené
-                vydanie.</strong></div>
+    <div class="cft--monatization--membership cft--monatization--only-monthly"
+         *ngIf="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active">
+        <span class="cft--monatization--membership-checkbox" id="cft--monatization--membership-checkbox--monthly"></span>
+        <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()"
+             [innerHTML]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text">
+        </div>
+    </div>
+    <div class="cft--monatization--membership cft--monatization--only-one-time cft--monatization--hidden"
+         *ngIf="widget.settings[deviceType].payment_settings.once_prices.benefit.active">
+        <span class="cft--monatization--membership-checkbox" id="cft--monatization--membership-checkbox--one-time"></span>
+        <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()"
+             [innerHTML]="widget.settings[deviceType].payment_settings.once_prices.benefit.text">
+        </div>
     </div>
     <form id="cft--monatization--form--donate" onsubmit="return parent.validateForm(this)" class="form" action="#"
           method="post" novalidate>
@@ -94,12 +106,14 @@
             </button>
         </div>
     </form>
-    <div class="cft--monatization--additional-links cft--monatization--only-monthly "
-         [ngStyle]="additionalLinksStyle()">
+    <div class="cft--monatization--additional-links cft--monatization--only-monthly"
+         [ngStyle]="additionalLinksStyle()"
+         *ngIf="widget.settings[deviceType].payment_settings.payment_type == paymentTypes.both.value" >
         <a href="javascript:void(0)" onclick="parent.oneTimePayment()">Jednorazový príspevok</a>
     </div>
     <div class="cft--monatization--additional-links cft--monatization--only-one-time cft--monatization--hidden"
-         [ngStyle]="additionalLinksStyle()">
+         [ngStyle]="additionalLinksStyle()"
+         *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
         <a href="javascript:void(0)" onclick="parent.monthlyPayment()">Podporujte nás pravidelne</a>
     </div>
 </div>
