@@ -57,6 +57,9 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     fontFamily = [];
     fontFamilyDropdownButtons = [];
 
+    public paddingMonetization: RadioButton[] = [];
+    public marginMonetization: RadioButton[] = [];
+
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private widgetService: WidgetService,
@@ -254,10 +257,28 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         this.specificRadiusButtons.push(new RadioButton("br", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.br, "/assets/images/icons/radius_LeftBottom.svg"))
         this.specificRadiusButtons.push(new RadioButton("bl", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.bl, "/assets/images/icons/radius_LeftBottom.svg"))
 
+
+        this.paddingMonetization = [];
+        this.paddingMonetization.push(new RadioButton("top", this.widget.settings[this.deviceType].payment_settings.design.padding.top, assetsUrl + "images/icons/padding_top.svg"))
+        this.paddingMonetization.push(new RadioButton("right", this.widget.settings[this.deviceType].payment_settings.design.padding.right, assetsUrl + "images/icons/padding_right.svg"))
+        this.paddingMonetization.push(new RadioButton("bottom", this.widget.settings[this.deviceType].payment_settings.design.padding.bottom, assetsUrl + "images/icons/padding_bottom.svg"))
+        this.paddingMonetization.push(new RadioButton("left", this.widget.settings[this.deviceType].payment_settings.design.padding.left, assetsUrl + "images/icons/padding_left.svg"))
+
+
+        this.marginMonetization = [];
+        this.marginMonetization.push(new RadioButton("top", this.widget.settings[this.deviceType].payment_settings.design.margin.top, assetsUrl + "images/icons/margin_top.svg"))
+        this.marginMonetization.push(new RadioButton("right", this.widget.settings[this.deviceType].payment_settings.design.margin.right, assetsUrl + "images/icons/margin_right.svg"))
+        this.marginMonetization.push(new RadioButton("bottom", this.widget.settings[this.deviceType].payment_settings.design.margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
+        this.marginMonetization.push(new RadioButton("left", this.widget.settings[this.deviceType].payment_settings.design.margin.left, assetsUrl + "images/icons/margin_left.svg"))
+
+
+
         this.fontFamilyDropdownButtons = [];
         this.fontFamily.forEach( fontFamily => {
             this.fontFamilyDropdownButtons.push({title:fontFamily,value:fontFamily})
-        })
+        });
+        
+        
     }
 
     writeRadiusValue(value) {

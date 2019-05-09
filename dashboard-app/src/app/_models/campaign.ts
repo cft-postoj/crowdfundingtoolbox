@@ -29,6 +29,23 @@ export class Campaign {
 
     payment_settings = {
         payment_type: "both",
+        design:{
+            background_color: "#fff",
+            padding: {
+                top: "10",
+                right: "25",
+                bottom: "10",
+                left: "25"
+            },
+            margin: {
+                top: "15",
+                right: "10",
+                bottom: "15",
+                left: "10"
+            },
+            width: '100%',
+            height:'auto',
+        },
         monthly_prices : {
             /* TODO: moznost pridat min value */
             // custom_price: {
@@ -40,7 +57,12 @@ export class Campaign {
             options: [
                 { value: 30},
                 { value: 20}
-            ]
+            ],
+            benefit : {
+                active: true,
+                text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                value: 10
+            }
         },
         once_prices: {
             custom_price: false,
@@ -48,7 +70,12 @@ export class Campaign {
             options: [
                 { value: 30},
                 { value: 20}
-            ]
+            ],
+            benefit : {
+                active: true,
+                text: 'S podporou 60 € a viac ročne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
+                value: 10
+            }
         },
         default_price: {
             active: true,
@@ -57,7 +84,8 @@ export class Campaign {
                 background: "#3B3232",
                 color: "#FFFFFF"
             }
-        }
+        },
+
     };
 
     widget_settings = {

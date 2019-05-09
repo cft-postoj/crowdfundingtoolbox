@@ -759,6 +759,62 @@
                         </div>
                         <ng-container *ngIf="widget.settings[deviceType].payment_settings.active">
                             <div class="settings--card">
+                                <div class="settings--card--header">
+                                    Design
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-6 editInput">
+                                            Width:
+                                            <input #campaignName id="monetization-width"
+                                                   placeholder="Width in % or px"
+                                                   [(ngModel)]="widget.settings[deviceType].payment_settings.design.width"
+                                                   maxlength="120">
+                                        </div>
+                                        <div class="col-6 editInput">
+                                            Height:
+                                            <input #campaignName id="monetization-height"
+                                                   placeholder="Height in % or px"
+                                                   [(ngModel)]="widget.settings[deviceType].payment_settings.design.height"
+                                                   maxlength="120">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 vertical-align">
+                                            Background color
+                                        </div>
+                                        <div class="col-3 color-picker--simple">
+                                            <input [value]="widget.settings[deviceType].payment_settings.design.background_color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].payment_settings.design.background_color"
+                                                   [cpPosition]="'bottom'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.design.background_color"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            Inside offsets
+                                        </div>
+                                        <div class="col-12">
+                                            <app-input-group [buttons]="paddingMonetization"
+                                                             (buttonChange)="widget.settings[deviceType].payment_settings.design.padding[$event.name] = $event.value">
+                                            </app-input-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            Outside offsets
+                                        </div>
+                                        <div class="col-12">
+                                            <app-input-group [buttons]="marginMonetization"
+                                                             (buttonChange)="widget.settings[deviceType].payment_settings.design.margin[$event.name] = $event.value">
+                                            </app-input-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
                                 <div class="row">
                                     <div class="col-12 bold">
                                         Payment type
@@ -777,82 +833,37 @@
                             <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value ||
                                                         widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
                                 <div class="settings--card">
-                                    <div class="row">
-                                        <div class="col-12 bold">
+                                    <div class="settings--card--header row">
+                                        <div class="col">
                                             Monthly prices
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-3 vertical-align">
-                                            Price options
-                                        </div>
-                                        <div class="col-3">
-                                            <app-inputNumber
-                                                    [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
-                                                    (valueChange)="updateNumberOfMonthlyPrices($event)">
-                                            </app-inputNumber>
-                                        </div>
-                                        <div class="col-4 offset-2 pull-right">
-                                            <app-checkbox
-                                                    [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
-                                                    [name]="'Custom price option'"></app-checkbox>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <ng-container
-                                                *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
-                                            <div class="col-6 pt-3 col-xxl-4">
-                                                <div class="row">
-                                                    <div class="col-6 vertical-align">
-                                                        Price No.{{i+1}}
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <app-inputNumber [(value)]="option.value">
-                                                        </app-inputNumber>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ng-container>
-                                    </div>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value ||
-                                                     widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
-                                <div class="settings--card">
-                                    <div class="row">
-                                        <div class="col bold ">
-                                            Single payment
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value"
-                                             class="col pt-2">
-                                            <app-checkbox [name]="'Copy prices from monthly prices'"
-                                                          [(checked)]="copyPrices">
-                                            </app-checkbox>
-                                        </div>
-                                    </div>
-                                    <ng-container *ngIf="!copyPrices">
+                                    <div class="settings--card--body">
                                         <div class="row">
                                             <div class="col-3 vertical-align">
                                                 Price options
                                             </div>
                                             <div class="col-3">
                                                 <app-inputNumber
-                                                        [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
-                                                        (valueChange)="updateNumberOfSinglePayments($event)">
+                                                        [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
+                                                        (valueChange)="updateNumberOfMonthlyPrices($event)">
                                                 </app-inputNumber>
+                                            </div>
+                                            <div class="col-4 offset-2 pull-right">
+                                                <app-checkbox
+                                                        [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
+                                                        [name]="'Custom price option'"></app-checkbox>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <ng-container
-                                                    *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options; let i = index">
+                                                    *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
                                                 <div class="col-6 pt-3 col-xxl-4">
                                                     <div class="row">
                                                         <div class="col-6 vertical-align">
                                                             Price No.{{i+1}}
                                                         </div>
-                                                        <div class="col-6 ">
+                                                        <div class="col-6">
                                                             <app-inputNumber [(value)]="option.value">
                                                             </app-inputNumber>
                                                         </div>
@@ -860,7 +871,98 @@
                                                 </div>
                                             </ng-container>
                                         </div>
-                                    </ng-container>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-10 bold">
+                                                Benefit
+                                            </div>
+                                            <app-switcher class="col-2 text-right"
+                                                    [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"> </app-switcher>
+                                            <div class="col-12">
+                                                <angular-editor class="angular-editor--simple"
+                                                                [(ngModel)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text"></angular-editor>
+                                            </div>
+                                            <div class="col-6 vertical-align">
+                                                Min. donation for benefit
+                                            </div>
+                                            <div class="col-6">
+                                                <app-inputNumber
+                                                    [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
+                                                    [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active" ></app-inputNumber>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value ||
+                                                     widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
+                                <div class="settings--card">
+                                    <div class="settings--card--header">
+                                        <div class="row">
+                                            <div class="col">
+                                                Single payment
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="settings--card--body">
+                                        <div class="row">
+                                            <div *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value"
+                                                 class="col pt-2">
+                                                <app-checkbox [name]="'Copy prices from monthly prices'"
+                                                              [(checked)]="copyPrices">
+                                                </app-checkbox>
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="!copyPrices">
+                                            <div class="row">
+                                                <div class="col-3 vertical-align">
+                                                    Price options
+                                                </div>
+                                                <div class="col-3">
+                                                    <app-inputNumber
+                                                            [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
+                                                            (valueChange)="updateNumberOfSinglePayments($event)">
+                                                    </app-inputNumber>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <ng-container
+                                                        *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options; let i = index">
+                                                    <div class="col-6 pt-3 col-xxl-4">
+                                                        <div class="row">
+                                                            <div class="col-6 vertical-align">
+                                                                Price No.{{i+1}}
+                                                            </div>
+                                                            <div class="col-6 ">
+                                                                <app-inputNumber [(value)]="option.value">
+                                                                </app-inputNumber>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-10 bold">
+                                                    Benefit
+                                                </div>
+                                                <app-switcher class="col-2 text-right"
+                                                              [(checked)]="widget.settings[deviceType].payment_settings.once_prices.benefit.active"> </app-switcher>
+                                                <div class="col-12">
+                                                    <angular-editor class="angular-editor--simple"
+                                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.once_prices.benefit.text"></angular-editor>
+                                                </div>
+                                                <div class="col-6 vertical-align">
+                                                    Min. donation for benefit
+                                                </div>
+                                                <div class="col-6">
+                                                    <app-inputNumber
+                                                            [(value)]="widget.settings[deviceType].payment_settings.once_prices.benefit.value"
+                                                            [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active" ></app-inputNumber>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
                                 </div>
                             </ng-container>
                             <div class="settings--card">

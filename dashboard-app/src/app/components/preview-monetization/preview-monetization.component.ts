@@ -1,10 +1,16 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Widget} from "../../_models/widget";
-import {widgetTypes} from "../../_models/enums";
+import {paymentTypes, widgetTypes} from "../../_models/enums";
 import {ConvertHexService} from "../../_services/convert-hex.service";
 import {PreviewService} from "../../_services/preview.service";
 import {Subscription} from "rxjs";
-import {setActiveButton, validateForm, oneTimePayment, monthlyPayment } from "../preview/landing";
+import {
+    monthlyPayment,
+    oneTimePayment,
+    setActiveButtonMonthly,
+    setActiveButtonOneTime,
+    validateForm
+} from "../preview/landing";
 
 @Component({
     selector: 'app-preview-monetization',
@@ -23,6 +29,8 @@ export class PreviewMonetizationComponent implements OnInit {
     recreateStylesEmitter;
 
     private subscription: Subscription;
+
+    public paymentTypes = paymentTypes;
 
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
                 private ref: ChangeDetectorRef,) {
@@ -57,13 +65,13 @@ export class PreviewMonetizationComponent implements OnInit {
         style.type = 'text/css';
 
         const css = `
-            .active > .cft--monatization--donation-button {
+            .active > .cft--monatization--donation-button{
                     color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
                     border-color: #32a300;
                 }
         
-            .cft--monatization--membership-checkbox.active:before {
+            .cft--monatization--membership-checkbox.active:before{
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
                     border: 1px solid #32a300
                 }
@@ -87,20 +95,20 @@ export class PreviewMonetizationComponent implements OnInit {
 
         let script = document.createElement('script');
         script.setAttribute("class", "previewScripts");
-        script.appendChild(document.createTextNode(setActiveButton.toString()+"\n"));
 
-        script.appendChild(document.createTextNode(validateForm.toString()+"\n"));
-        script.appendChild(document.createTextNode(oneTimePayment.toString()+"\n"));
-        script.appendChild(document.createTextNode(monthlyPayment.toString()+"\n"));
+        let scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',
+            'var target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';
 
-        let targetScript = `
-        if (typeof target === 'undefined'){ 
-            let target = ${13}
-        } else {
-            target = ${13}
-        }`
+        let scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('var target;',
+            'var target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
 
-        script.appendChild(document.createTextNode(targetScript));
+        script.appendChild(document.createTextNode(scriptActiveButtonMonthly + "\n"));
+        script.appendChild(document.createTextNode(scriptActiveButtonOneTime + "\n"));
+
+        script.appendChild(document.createTextNode(validateForm.toString() + "\n"));
+        script.appendChild(document.createTextNode(oneTimePayment.toString() + "\n"));
+        script.appendChild(document.createTextNode(monthlyPayment.toString() + "\n"));
+
         parentScript.appendChild(script);
 
 
@@ -225,9 +233,19 @@ export class PreviewMonetizationComponent implements OnInit {
 
 
     getMonetizationContainerStyle() {
+        let paymentDesign = this.widget.settings[this.deviceType].payment_settings.design;
         return {
-            'max-width': '90%',
-            'margin': 'auto'
+            'width': paymentDesign.width,
+            'height': paymentDesign.height,
+            'background-color': paymentDesign.background_color,
+            margin: this.addPx(paymentDesign.margin.top) + ' ' +
+                this.addPx(paymentDesign.margin.right) + ' ' +
+                this.addPx(paymentDesign.margin.bottom) + ' ' +
+                this.addPx(paymentDesign.margin.left),
+            padding: this.addPx(paymentDesign.padding.top) + ' ' +
+                this.addPx(paymentDesign.padding.right) + ' ' +
+                this.addPx(paymentDesign.padding.bottom) + ' ' +
+                this.addPx(paymentDesign.padding.left),
         }
     }
 
@@ -259,7 +277,7 @@ export class PreviewMonetizationComponent implements OnInit {
         return {
             'padding': '6px',
             'margin-top': '12px',
-            'width': '320px'
+            'max-width': '320px'
         }
     }
 
