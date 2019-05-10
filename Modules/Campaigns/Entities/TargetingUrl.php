@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BackOfficeAPI;
+namespace Modules\Campaigns\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +11,7 @@ class TargetingUrl extends Model
     protected $table = 'targeting_url';
 
     protected $fillable = [
-       'targeting_id', 'path'
+        'targeting_id', 'path'
     ];
 
     public function targeting()

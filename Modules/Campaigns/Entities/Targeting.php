@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BackOfficeAPI;
+namespace Modules\Campaigns\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

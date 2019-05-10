@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Campaign} from '../_models/campaign';
-import {Routing} from "../constants/config.constants";
-import {Router} from "@angular/router";
-import {Widget} from "../_models/widget";
+import {Routing} from '../constants/config.constants';
+import {Router} from '@angular/router';
+import {Widget} from '../_models/widget';
 
 @Component({
     selector: 'app-status',
@@ -36,11 +36,10 @@ export class StatusComponent implements OnInit {
 
 
     constructor(private router: Router) {
-
     }
 
     ngOnInit(): void {
-        let options = {
+        const options = {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -48,7 +47,7 @@ export class StatusComponent implements OnInit {
             hour: 'numeric',
             minute: 'numeric'
         };
-        let date = new Date(this.widget.updated_at.date);
+        const date = new Date(this.widget.updated_at.date);
         this.lastEdited = date.toLocaleDateString('en-US', options);
     }
 
@@ -57,7 +56,8 @@ export class StatusComponent implements OnInit {
     }
 
     public editWidget() {
-        this.router.navigateByUrl(`${Routing.CAMPAIGNS_FULL_PATH}/${this.campaignModel.id}/(${Routing.RIGHT_OUTLET}:${Routing.EDIT}/${this.id})`);
+        this.router.navigateByUrl(`${Routing.CAMPAIGNS_FULL_PATH}/${this.campaignModel.id}/`
+        + `(${Routing.RIGHT_OUTLET}:${Routing.EDIT}/${this.id})`);
     }
 
     public toggleActive(widget) {

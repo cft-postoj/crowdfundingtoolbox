@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {keys} from "../keys";
+import {keys} from '../keys';
 
 export const environment = {
 
@@ -14,8 +14,8 @@ export const environment = {
 
     fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + keys.googleApiKey,
 
-    login:'/login',
-    logout:'/logout',
+    login: '/login',
+    logout: '/logout',
     refreshToken: '/refresh-token',
 
     smart: '/smart-settings',

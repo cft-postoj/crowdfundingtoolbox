@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\BackOfficeAPI;
+namespace Modules\Campaigns\Transformers;
 
-use App\BackOfficeAPI\CampaignSettings;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Campaigns\Entities\CampaignSettings;
+use Illuminate\Http\Resources\Json\Resource;
 
-class CampaignResourceDetail extends JsonResource
+class CampaignResourceDetail extends Resource
 {
     /**
      * Transform the resource into an array.

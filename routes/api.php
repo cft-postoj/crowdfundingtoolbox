@@ -36,28 +36,7 @@ Route::group([
 //    Route::get('translation/{id}', function ($id) {
 //        return App\Http\Controllers\BackOfficeAPI\TranslationsController::getTranslationsById($id);
 //    });
-//
-//    Route::get('test', 'BackOfficeAPI\WidgetsController@create');
 
-    /*
-     * WIDGETS
-     */
-    // widget categories
-//    Route::get('widget-categories', 'BackOfficeAPI\WidgetsCategoryController@getAll');
-//    Route::get('widget-category/{id}', function ($id) {
-//        return App\Http\Controllers\BackOfficeAPI\WidgetsCategoryController::getCategory($id);
-//    });
-//    Route::post('widget-category', 'BackOfficeAPI\WidgetsCategoryController@create');
-//    Route::put('widget-category', 'BackOfficeAPI\WidgetsCategoryController@update');
-//    Route::delete('widget-category', 'BackOfficeAPI\WidgetsCategoryController@delete');
-//    // widgets
-//    Route::get('widgets', 'BackOfficeAPI\WidgetsController@getAll');
-//    Route::get('widget/{id}', function ($id) {
-//        return App\Http\Controllers\BackOfficeAPI\WidgetsController::getWidget($id);
-//    });
-//    Route::post('widget', 'BackOfficeAPI\WidgetsController@create');
-//    Route::put('widget', 'BackOfficeAPI\WidgetsController@update');
-//    Route::delete('widget', 'BackOfficeAPI\WidgetsController@delete');
 
     Route::post('register', 'API\UserService@create');
     //Route::get('test', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
@@ -77,40 +56,39 @@ Route::group([
 
         // General Crowdfunding settings
         //Route::put('crowdfunding-settings', 'BackOfficeAPI\CrowdfundingSettingsController@index');
-        Route::get('crowdfunding-settings/all', 'BackOfficeAPI\CampaignsConfigurationController@get');
-        Route::get('crowdfunding-settings/colors', 'BackOfficeAPI\CampaignsConfigurationController@getColors');
-        Route::get('crowdfunding-settings/fonts', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
-        Route::get('crowdfunding-settings/general-page-settings', 'BackOfficeAPI\CampaignsConfigurationController@getGeneralPageSettings');
-        Route::get('crowdfunding-settings/cta-settings', 'BackOfficeAPI\CampaignsConfigurationController@getCtaSettings');
-        Route::get('crowdfunding-settings/widgets-settings', 'BackOfficeAPI\CampaignsConfigurationController@getWidgetSettings');
+        Route::get('crowdfunding-settings/all', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@get');
+        Route::get('crowdfunding-settings/colors', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getColors');
+        Route::get('crowdfunding-settings/fonts', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getFonts');
+        Route::get('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getGeneralPageSettings');
+        Route::get('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getCtaSettings');
+        Route::get('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getWidgetSettings');
 
-
-        Route::put('crowdfunding-settings/general-page-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateGeneralPageSettings');
-        Route::put('crowdfunding-settings/cta-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateCallToActionSettings');
-        Route::put('crowdfunding-settings/widgets-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateWidgetSettings');
+        Route::put('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateGeneralPageSettings');
+        Route::put('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateCallToActionSettings');
+        Route::put('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateWidgetSettings');
 
 
         // Campaigns
-        Route::post('campaigns', 'BackOfficeAPI\CampaignController@create');
-        Route::put('campaigns/{id}', 'BackOfficeAPI\CampaignController@update');
-        Route::put('campaigns/{id}/smart-settings', 'BackOfficeAPI\CampaignController@smartCampaignUpdate');
-        Route::get('campaigns/all', 'BackOfficeAPI\CampaignController@all');
-        Route::get('campaigns/{id}', 'BackOfficeAPI\CampaignController@show');
-        Route::delete('campaigns/{id}', 'BackOfficeAPI\CampaignController@delete');
-        Route::put('campaigns/{id}/result', 'BackOfficeAPI\CampaignController@updateResult');
-        Route::get('campaigns/{id}/clone', 'BackOfficeAPI\CampaignController@cloneCampaign');
+        Route::post('campaigns', '\Modules\Campaigns\Http\Controllers\CampaignsController@create');
+        Route::put('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@update');
+        Route::put('campaigns/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\CampaignsController@smartCampaignUpdate');
+        Route::get('campaigns/all', '\Modules\Campaigns\Http\Controllers\CampaignsController@all');
+        Route::get('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@show');
+        Route::delete('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@delete');
+        Route::put('campaigns/{id}/result', '\Modules\Campaigns\Http\Controllers\CampaignsController@updateResult');
+        Route::get('campaigns/{id}/clone', '\Modules\Campaigns\Http\Controllers\CampaignsController@cloneCampaign');
 
         // Widgets
-        Route::get('campaigns/{campaignId}/widgets', 'BackOfficeAPI\WidgetsController@getWidgetsByCampaignId');
-        Route::get('widgets/{id}', 'BackOfficeAPI\WidgetsController@show');
-        Route::put('widgets/{id}', 'BackOfficeAPI\WidgetsController@update');
-        Route::get('widgets/{id}/settings-from-campaign', 'BackOfficeAPI\WidgetsController@updateSettingsFromCampaign');
-        Route::put('widgets/{id}/result', 'BackOfficeAPI\WidgetsController@updateResult');
-        Route::put('widgets/{id}/smart-settings', 'BackOfficeAPI\WidgetsController@smartWidgetUpdate');
+        Route::get('campaigns/{campaignId}/widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgetsByCampaignId');
+        Route::get('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@show');
+        Route::put('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@update');
+        Route::get('widgets/{id}/settings-from-campaign', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateSettingsFromCampaign');
+        Route::put('widgets/{id}/result', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateResult');
+        Route::put('widgets/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\WidgetsController@smartWidgetUpdate');
 
 
         // Upload image
-        Route::post('upload', 'BackOfficeAPI\ImagesController@upload');
+        Route::post('upload', '\Modules\Campaigns\Http\Controllers\ImagesController@upload');
     });
 
     Route::group([
