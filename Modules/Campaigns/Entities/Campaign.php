@@ -16,6 +16,6 @@ class Campaign extends Model
     ];
 
     public function targeting(){
-        return $this->hasOne('Modules\Campaigns\Entities\Targeting');
+        return $this->hasOne('Modules\Targeting\Entities\Targeting');
     }
 }
