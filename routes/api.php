@@ -23,8 +23,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-Requested-W
 Route::group([
     'prefix' => 'backoffice'
 ], function () {
-    Route::post('login', 'API\UserService@authenticate');
-
+    Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
 
     // Languages and Translations
 //    Route::get('default-strings', 'BackOfficeAPI\TranslationsController@getDefault');
@@ -38,7 +37,7 @@ Route::group([
 //    });
 
 
-    Route::post('register', 'API\UserService@create');
+    Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
     //Route::get('test', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
     //Route::get('test', 'BackOfficeAPI\WidgetsController@getGeneralSettings');
 
@@ -46,13 +45,13 @@ Route::group([
         // Create new user - only admin role can do this
 
         // Sign out backoffice user
-        Route::get('logout', 'BackOfficeAPI\UsersController@logout');
+        Route::get('logout', '\Modules\UserManagement\Http\Controllers\UserServiceController@logout');
         // Stay logged in
-        Route::get('refresh-token', 'BackOfficeAPI\UsersController@refresh');
+        Route::get('refresh-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@refresh');
         // Delete user - only for admin role
-        Route::delete('remove-user', 'BackOfficeAPI\UsersController@delete');
+        Route::delete('remove-user', '\Modules\UserManagement\Http\Controllers\UserServiceController@delete');
         // Get all users
-        Route::get('users', 'BackOfficeAPI\UsersController@getAll');
+        Route::get('users', '\Modules\UserManagement\Http\Controllers\UserServiceController@getAll');
 
         // General Crowdfunding settings
         //Route::put('crowdfunding-settings', 'BackOfficeAPI\CrowdfundingSettingsController@index');
@@ -105,13 +104,13 @@ Route::group([
 Route::group([
     'prefix' => 'portal'
 ], function () {
-    Route::get('widgets', 'BackOfficeAPI\WidgetsController@getWidgets');
-    Route::post('register', 'API\UserService@create');
-    Route::post('donation-register', 'API\UserService@donationCreate');
-    Route::post('login', 'API\UserService@authenticate');
-    Route::post('forgotPassword', 'API\UserService@forgotPassword');
-    Route::post('has-user-generated-token', 'API\UserService@hasUserGeneratedToken');
-    Route::post('change-password', 'API\UserService@changePassword');
+    Route::get('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
+    Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
+    Route::post('donation-register', '\Modules\UserManagement\Http\Controllers\UserServiceController@donationCreate');
+    Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
+    Route::post('forgotPassword', '\Modules\UserManagement\Http\Controllers\UserServiceController@forgotPassword');
+    Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@hasUserGeneratedToken');
+    Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
 });
 
 
