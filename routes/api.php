@@ -23,8 +23,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-Requested-W
 Route::group([
     'prefix' => 'backoffice'
 ], function () {
-    Route::post('login', 'API\UserService@authenticate');
-
+    Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
 
     // Languages and Translations
 //    Route::get('default-strings', 'BackOfficeAPI\TranslationsController@getDefault');
@@ -36,30 +35,9 @@ Route::group([
 //    Route::get('translation/{id}', function ($id) {
 //        return App\Http\Controllers\BackOfficeAPI\TranslationsController::getTranslationsById($id);
 //    });
-//
-//    Route::get('test', 'BackOfficeAPI\WidgetsController@create');
 
-    /*
-     * WIDGETS
-     */
-    // widget categories
-//    Route::get('widget-categories', 'BackOfficeAPI\WidgetsCategoryController@getAll');
-//    Route::get('widget-category/{id}', function ($id) {
-//        return App\Http\Controllers\BackOfficeAPI\WidgetsCategoryController::getCategory($id);
-//    });
-//    Route::post('widget-category', 'BackOfficeAPI\WidgetsCategoryController@create');
-//    Route::put('widget-category', 'BackOfficeAPI\WidgetsCategoryController@update');
-//    Route::delete('widget-category', 'BackOfficeAPI\WidgetsCategoryController@delete');
-//    // widgets
-//    Route::get('widgets', 'BackOfficeAPI\WidgetsController@getAll');
-//    Route::get('widget/{id}', function ($id) {
-//        return App\Http\Controllers\BackOfficeAPI\WidgetsController::getWidget($id);
-//    });
-//    Route::post('widget', 'BackOfficeAPI\WidgetsController@create');
-//    Route::put('widget', 'BackOfficeAPI\WidgetsController@update');
-//    Route::delete('widget', 'BackOfficeAPI\WidgetsController@delete');
 
-    Route::post('register', 'API\UserService@create');
+    Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
     //Route::get('test', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
     //Route::get('test', 'BackOfficeAPI\WidgetsController@getGeneralSettings');
 
@@ -67,50 +45,49 @@ Route::group([
         // Create new user - only admin role can do this
 
         // Sign out backoffice user
-        Route::get('logout', 'BackOfficeAPI\UsersController@logout');
+        Route::get('logout', '\Modules\UserManagement\Http\Controllers\UserServiceController@logout');
         // Stay logged in
-        Route::get('refresh-token', 'BackOfficeAPI\UsersController@refresh');
+        Route::get('refresh-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@refresh');
         // Delete user - only for admin role
-        Route::delete('remove-user', 'BackOfficeAPI\UsersController@delete');
+        Route::delete('remove-user', '\Modules\UserManagement\Http\Controllers\UserServiceController@delete');
         // Get all users
-        Route::get('users', 'BackOfficeAPI\UsersController@getAll');
+        Route::get('users', '\Modules\UserManagement\Http\Controllers\UserServiceController@getAll');
 
         // General Crowdfunding settings
         //Route::put('crowdfunding-settings', 'BackOfficeAPI\CrowdfundingSettingsController@index');
-        Route::get('crowdfunding-settings/all', 'BackOfficeAPI\CampaignsConfigurationController@get');
-        Route::get('crowdfunding-settings/colors', 'BackOfficeAPI\CampaignsConfigurationController@getColors');
-        Route::get('crowdfunding-settings/fonts', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
-        Route::get('crowdfunding-settings/general-page-settings', 'BackOfficeAPI\CampaignsConfigurationController@getGeneralPageSettings');
-        Route::get('crowdfunding-settings/cta-settings', 'BackOfficeAPI\CampaignsConfigurationController@getCtaSettings');
-        Route::get('crowdfunding-settings/widgets-settings', 'BackOfficeAPI\CampaignsConfigurationController@getWidgetSettings');
+        Route::get('crowdfunding-settings/all', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@get');
+        Route::get('crowdfunding-settings/colors', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getColors');
+        Route::get('crowdfunding-settings/fonts', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getFonts');
+        Route::get('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getGeneralPageSettings');
+        Route::get('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getCtaSettings');
+        Route::get('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getWidgetSettings');
 
-
-        Route::put('crowdfunding-settings/general-page-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateGeneralPageSettings');
-        Route::put('crowdfunding-settings/cta-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateCallToActionSettings');
-        Route::put('crowdfunding-settings/widgets-settings', 'BackOfficeAPI\CampaignsConfigurationController@updateWidgetSettings');
+        Route::put('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateGeneralPageSettings');
+        Route::put('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateCallToActionSettings');
+        Route::put('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateWidgetSettings');
 
 
         // Campaigns
-        Route::post('campaigns', 'BackOfficeAPI\CampaignController@create');
-        Route::put('campaigns/{id}', 'BackOfficeAPI\CampaignController@update');
-        Route::put('campaigns/{id}/smart-settings', 'BackOfficeAPI\CampaignController@smartCampaignUpdate');
-        Route::get('campaigns/all', 'BackOfficeAPI\CampaignController@all');
-        Route::get('campaigns/{id}', 'BackOfficeAPI\CampaignController@show');
-        Route::delete('campaigns/{id}', 'BackOfficeAPI\CampaignController@delete');
-        Route::put('campaigns/{id}/result', 'BackOfficeAPI\CampaignController@updateResult');
-        Route::get('campaigns/{id}/clone', 'BackOfficeAPI\CampaignController@cloneCampaign');
+        Route::post('campaigns', '\Modules\Campaigns\Http\Controllers\CampaignsController@create');
+        Route::put('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@update');
+        Route::put('campaigns/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\CampaignsController@smartCampaignUpdate');
+        Route::get('campaigns/all', '\Modules\Campaigns\Http\Controllers\CampaignsController@all');
+        Route::get('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@show');
+        Route::delete('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@delete');
+        Route::put('campaigns/{id}/result', '\Modules\Campaigns\Http\Controllers\CampaignsController@updateResult');
+        Route::get('campaigns/{id}/clone', '\Modules\Campaigns\Http\Controllers\CampaignsController@cloneCampaign');
 
         // Widgets
-        Route::get('campaigns/{campaignId}/widgets', 'BackOfficeAPI\WidgetsController@getWidgetsByCampaignId');
-        Route::get('widgets/{id}', 'BackOfficeAPI\WidgetsController@show');
-        Route::put('widgets/{id}', 'BackOfficeAPI\WidgetsController@update');
-        Route::get('widgets/{id}/settings-from-campaign', 'BackOfficeAPI\WidgetsController@updateSettingsFromCampaign');
-        Route::put('widgets/{id}/result', 'BackOfficeAPI\WidgetsController@updateResult');
-        Route::put('widgets/{id}/smart-settings', 'BackOfficeAPI\WidgetsController@smartWidgetUpdate');
+        Route::get('campaigns/{campaignId}/widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgetsByCampaignId');
+        Route::get('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@show');
+        Route::put('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@update');
+        Route::get('widgets/{id}/settings-from-campaign', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateSettingsFromCampaign');
+        Route::put('widgets/{id}/result', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateResult');
+        Route::put('widgets/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\WidgetsController@smartWidgetUpdate');
 
 
         // Upload image
-        Route::post('upload', 'BackOfficeAPI\ImagesController@upload');
+        Route::post('upload', '\Modules\Campaigns\Http\Controllers\ImagesController@upload');
     });
 
     Route::group([
@@ -127,13 +104,13 @@ Route::group([
 Route::group([
     'prefix' => 'portal'
 ], function () {
-    Route::get('widgets', 'BackOfficeAPI\WidgetsController@getWidgets');
-    Route::post('register', 'API\UserService@create');
-    Route::post('donation-register', 'API\UserService@donationCreate');
-    Route::post('login', 'API\UserService@authenticate');
-    Route::post('forgotPassword', 'API\UserService@forgotPassword');
-    Route::post('has-user-generated-token', 'API\UserService@hasUserGeneratedToken');
-    Route::post('change-password', 'API\UserService@changePassword');
+    Route::get('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
+    Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
+    Route::post('donation-register', '\Modules\UserManagement\Http\Controllers\UserServiceController@donationCreate');
+    Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
+    Route::post('forgotPassword', '\Modules\UserManagement\Http\Controllers\UserServiceController@forgotPassword');
+    Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@hasUserGeneratedToken');
+    Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
 });
 
 
