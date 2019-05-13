@@ -73,11 +73,11 @@ return [
     'providers' => [
         'backOfficeUsers' => [
             'driver' => 'eloquent',
-            'model' => App\BackOfficeAPI\BackOfficeUser::class,
+            'model' => Modules\UserManagement\Entities\BackOfficeUser::class,
         ],
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\API\User::class
+            'model' => Modules\UserManagement\Entities\User::class
         ]
     ],
 

@@ -3,9 +3,10 @@
 namespace Modules\Targeting\Providers;
 
 use Illuminate\Http\Response;
-use Illuminate\Support\ServiceProvider;
+use Modules\Targeting\Entities\TargetingUrl;
+use Modules\Targeting\Entities\Targeting;
 
-class TargetingService extends ServiceProvider
+class TargetingService
 {
     public function createTargetingFromRequest($campaignId, $requestTargeting)
     {

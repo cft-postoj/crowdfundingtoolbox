@@ -16,9 +16,10 @@ use Modules\Campaigns\Entities\WidgetSettings;
 use Modules\Campaigns\Transformers\CampaignResource;
 use Modules\Campaigns\Transformers\CampaignResourceDetail;
 use Modules\Campaigns\Transformers\WidgetResource;
-use App\Http\Services\TargetingService;
-use App\Http\Controllers\API\UserService;
+use Modules\Targeting\Providers\TargetingService;
+use Modules\UserManagement\Entities\User;
 use Illuminate\Support\Facades\Auth;
+use Modules\UserManagement\Http\Controllers\UserServiceController;
 
 class CampaignsController extends Controller
 {
@@ -26,10 +27,11 @@ class CampaignsController extends Controller
     private $widgetsController;
     private $campaignId;
     private $targetingService;
+    private $userService;
 
     public function __construct()
     {
-        $this->user = new UserService();
+        $this->userService = new UserServiceController();
         $this->widgetsController = new WidgetsController();
         $this->targetingService = new TargetingService();
     }
@@ -499,7 +501,7 @@ class CampaignsController extends Controller
      */
     protected function all()
     {
-        if ($this->user->isBackOfficeUser()) {
+        if ($this->userService->isBackOfficeUser()) {
             return CampaignResource::collection(Campaign::orderBy('active', 'desc')->orderBy('updated_at', 'desc')->get());
         }
     }

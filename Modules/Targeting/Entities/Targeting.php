@@ -5,7 +5,7 @@ namespace Modules\Targeting\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Targeteting extends Model
+class Targeting extends Model
 {
     use SoftDeletes;
     protected $table = 'targeting';
@@ -22,6 +22,6 @@ class Targeteting extends Model
     ];
 
     public function urls(){
-        return $this->hasMany('Modules\Targeting\Entities\TargetetingUrl');
+        return $this->hasMany('\Modules\Targeting\Entities\TargetingUrl');
     }
 }
