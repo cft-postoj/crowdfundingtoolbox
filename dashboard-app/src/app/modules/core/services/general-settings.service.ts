@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {CtaSettings, GeneralSettings} from "../models";
+import {CtaSettings, GeneralSettings, WidgetSettings,} from "../models";
 import {environment} from "../../../../environments/environment";
-import {WidgetSettings} from "../../campaigns/models";
 
 
 @Injectable({

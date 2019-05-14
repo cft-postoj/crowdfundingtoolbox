@@ -11,7 +11,8 @@ import {environment} from "../../../../../environments/environment";
 @Component({
     selector: 'app-widget-edit',
     templateUrl: './widget-edit.component.html',
-    styleUrls: ['./widget-edit.component.scss', '../campaign-settings/campaign-settings.component.scss']
+    styleUrls: ['./widget-edit.component.scss',
+        '../../../core/components/settings/settings.component.scss', '../campaign-settings/campaign-settings.component.scss']
 })
 export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 

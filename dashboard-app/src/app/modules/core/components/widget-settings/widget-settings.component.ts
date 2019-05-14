@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {GeneralSettings, RadioButton} from "../../../core/models";
-import {WidgetSettings} from "../../models";
-import {GeneralSettingsService} from "../../../core/services";
+import {GeneralSettings, RadioButton} from "../../models";
+import {GeneralSettingsService} from "../../services";
 import {Routing} from "../../../../constants/config.constants";
+import {WidgetSettings} from "../../models/widget-settings";
 
 @Component({
     selector: 'app-widget-settings',
     templateUrl: './widget-settings.component.html',
-    styleUrls: ['./widget-settings.component.scss', '../campaign-settings/campaign-settings.component.scss']
+    styleUrls: ['./widget-settings.component.scss',  '../settings/settings.component.scss']
 })
 export class WidgetSettingsComponent implements OnInit {
 

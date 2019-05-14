@@ -1,10 +1,14 @@
 import {RouterModule, Routes} from '@angular/router';
 import {Routing} from "./constants/config.constants";
-import {CtaSettingsComponent, DashboardComponent, GeneralSettingsComponent} from "./modules/core/components";
+import {
+    CtaSettingsComponent,
+    DashboardComponent,
+    GeneralSettingsComponent,
+    WidgetSettingsComponent
+} from "./modules/core/components";
 import {LoginGuard} from "./modules/user-management/services";
 import {AboutComponent, ContactComponent} from "./components";
 import {ConfigurationComponent} from "./modules/core/pages/configuration/configuration.component";
-import {WidgetSettingsComponent} from "./modules/campaigns/components";
 import {TranslationCreateComponent, TranslationListComponent} from "./modules/translations/components";
 
 export const appRoutes: Routes = [

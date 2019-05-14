@@ -18,9 +18,10 @@ import {
     SwitcherComponent
 }  from "./parts/atoms";
 import {ActionsComponent} from "../../components";
-import {PreviewMonetizationComponent, WidgetSettingsComponent} from "../campaigns/components";
+import {PreviewMonetizationComponent} from "../campaigns/components";
 import {SafePipe} from "./pipes/safe.pipe";
 import {SlovakNumberFormatter} from "./pipes/SlovakNumberFormatter";
+import {WidgetSettingsComponent} from "./components";
 
 
 @NgModule({

@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {WidgetEditComponent} from './widget-edit.component';
-import {AppModule} from "../../../app.module";
 
 describe('WidgetEditComponent', () => {
     let component: WidgetEditComponent;
@@ -10,7 +9,6 @@ describe('WidgetEditComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppModule
             ],
         })
             .compileComponents();

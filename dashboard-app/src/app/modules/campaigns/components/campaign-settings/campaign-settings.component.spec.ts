@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { KeyValueDiffers } from '@angular/core';
-import { CampaignService } from '../../../../_services/campaign.service';
 import { ActivatedRoute } from '@angular/router';
-import { paymentTypes } from '../../../../_models/enums';
-import { CampaignSettingsComponent } from './campaignSettings.component';
+import {CampaignService} from "../../services";
+import {CampaignSettingsComponent} from "./campaign-settings.component";
+import {paymentTypes} from "../../../core/models";
 describe('CampaignSettingsComponent', () => {
   let component: CampaignSettingsComponent;
   let fixture: ComponentFixture<CampaignSettingsComponent>;
@@ -31,10 +31,7 @@ describe('CampaignSettingsComponent', () => {
     expect(component.campaignNameLength).toEqual(0);
   });
   it('opened defaults to: 1', () => {
-    expect(component.opened).toEqual(1);
-  });
-  it('supportSettings defaults to: General', () => {
-    expect(component.supportSettings).toEqual('General');
+    expect(component.opened[0]).toEqual(1);
   });
   it('paymentTypes defaults to: paymentTypes', () => {
     expect(component.paymentTypes).toEqual(paymentTypes);
