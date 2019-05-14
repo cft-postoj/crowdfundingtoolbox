@@ -3,15 +3,12 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { CampaignService } from 'app/modules/campaigns/_services/campaign.service';
-import { ComponentCommunicationService } from '../../../_services/component-communication.service';
-import { PreviewService } from '../../../_services/preview.service';
-import { WidgetService } from '../../../_services/widget.service';
 import { Routing } from 'app/constants/config.constants';
 import { environment } from 'environments/environment';
-import { backgroundTypes } from '../../../_models/enums';
-import { CampaignEditComponent } from './campaignEdit.component';
-import {devices} from "../../../_models/enums";
+import {CampaignEditComponent} from "./campaign-edit.component";
+import {CampaignService, PreviewService, WidgetService} from "../../services";
+import {ComponentCommunicationService} from "../../../core/services";
+import {backgroundTypes, devices} from "../../../core/models";
 
 describe('CampaignEditComponent', () => {
   let component: CampaignEditComponent;
@@ -59,9 +56,6 @@ describe('CampaignEditComponent', () => {
   });
   it('can load instance', () => {
     expect(component).toBeTruthy();
-  });
-  it('activeContent defaults to: campaignSettings', () => {
-    expect(component.activeContent).toEqual('campaignSettings');
   });
   it('widgets defaults to: []', () => {
     expect(component.widgets).toEqual([]);

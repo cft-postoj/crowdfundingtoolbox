@@ -1,15 +1,13 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Campaign} from '../../../_models/campaign';
-import {CampaignService} from '../../../_services/campaign.service';
-import {WidgetService} from '../../../_services/widget.service';
-import {Widget} from '../../../_models/widget';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ComponentCommunicationService} from '../../../_services/component-communication.service';
 import {environment} from 'environments/environment';
-import {CampaignDetailComponent} from './campaignDetail.component';
-import {devices} from "../../../_models/enums";
+import {CampaignDetailComponent} from "./campaign-detail.component";
+import {Campaign, Widget} from "../../models";
+import {CampaignService, WidgetService} from "../../services";
+import {ComponentCommunicationService} from "../../../core/services";
+import {devices} from "../../../core/models";
 
 describe('CampaignDetailComponent', () => {
     let component: CampaignDetailComponent;

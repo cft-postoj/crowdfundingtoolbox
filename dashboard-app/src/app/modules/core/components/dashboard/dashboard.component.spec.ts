@@ -2,8 +2,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DashboardComponent} from './dashboard.component';
 import {RouterTestingModule} from "@angular/router/testing";
-import {AppModule} from "../app.module";
-import {TokenExpirationService} from "../_services/token-expiration.service";
+import {TokenExpirationService} from "../../../user-management/services";
+import {AppModule} from "../../../../app.module";
 
 class MockTokenExpirationService extends TokenExpirationService {
 

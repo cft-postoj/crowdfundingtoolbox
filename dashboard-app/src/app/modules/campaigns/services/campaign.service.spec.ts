@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClient} from '@angular/common/http';
-import {Campaign} from '../_models/campaign';
 import {CampaignService} from './campaign.service';
+import {Campaign} from "../models";
 
 describe('CampaignService', () => {
 

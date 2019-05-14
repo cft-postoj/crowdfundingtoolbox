@@ -3,10 +3,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {PreviewComponent} from './preview.component';
 import {InlineSVGModule} from "ng-inline-svg";
 import {HttpClientModule} from "@angular/common/http";
-import {RadioButtonGroupComponent} from "../../modules/core/_parts/atoms/radio-button-group/radio-button-group.component";
-import {LoadingComponent} from "../../modules/core/_parts/atoms/loading/loading.component";
 import {FormsModule} from "@angular/forms";
-import {SafePipe} from "../../_pipe/safe.pipe";
+import {LoadingComponent, RadioButtonGroupComponent} from "../../../core/parts/atoms";
+import {SafePipe} from "../../../core/pipes/safe.pipe";
 
 describe('PreviewComponent', () => {
     let component: PreviewComponent;

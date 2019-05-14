@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SidebarItemComponent} from './sidebar-item.component';
 import {RouterTestingModule} from "@angular/router/testing";
-import {ButtonComponent} from "../modules/core/_parts/atoms/button/button.component";
+import {ButtonComponent} from "../../parts/atoms";
 
 describe('SidebarItemComponent', () => {
     let component: SidebarItemComponent;

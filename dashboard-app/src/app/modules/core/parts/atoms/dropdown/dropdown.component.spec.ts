@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { DropdownItem } from '../../../_models/dropdown-item';
 import { DropdownComponent } from './dropdown.component';
+import {DropdownItem} from "../../../models";
 describe('DropdownComponent', () => {
   let component: DropdownComponent;
   let fixture: ComponentFixture<DropdownComponent>;

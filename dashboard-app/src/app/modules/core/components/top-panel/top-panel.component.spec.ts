@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../_services';
 import { TopPanelComponent } from './top-panel.component';
+import {AuthenticationService} from "../../../user-management/services";
 describe('TopPanelComponent', () => {
   let component: TopPanelComponent;
   let fixture: ComponentFixture<TopPanelComponent>;

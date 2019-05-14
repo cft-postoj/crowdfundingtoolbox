@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RadioButtonGroupComponent} from './radio-button-group.component';
-import {AppModule} from "../../../app.module";
+import {AppModule} from "../../../../../app.module";
 
 describe('RadioButtonGroupComponent', () => {
     let component: RadioButtonGroupComponent;

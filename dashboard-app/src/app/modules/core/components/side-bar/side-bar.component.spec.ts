@@ -6,8 +6,8 @@ import {InlineSVGModule} from "ng-inline-svg";
 import {HttpClientModule} from "@angular/common/http";
 import {SidebarItemComponent} from "../sidebar-item/sidebar-item.component";
 import {SidebarFooterComponent} from "../sidebar-footer/sidebar-footer.component";
-import {ButtonComponent} from "../modules/core/_parts/atoms/button/button.component";
 import {RouterTestingModule} from "@angular/router/testing";
+import {ButtonComponent} from "../../parts/atoms";
 
 describe('SideBarComponent', () => {
     let component: SideBarComponent;

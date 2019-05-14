@@ -1,12 +1,12 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {Router} from '@angular/router';
-import {Campaign} from '../../../_models/campaign';
-import {CampaignService} from '../../../_services/campaign.service';
-import {ComponentCommunicationService} from '../../../_services/component-communication.service';
-import {Routing} from '../../../constants/config.constants';
-import {CampaignListComponent} from './campaigns.component';
-import {devices} from "../../../_models/enums";
+import {CampaignListComponent} from "./campaign-list.component";
+import {Campaign} from "../../models";
+import {CampaignService} from "../../services";
+import {ComponentCommunicationService} from "../../../core/services";
+import {Routing} from "../../../../constants/config.constants";
+import {devices} from "../../../core/models";
 
 describe('CampaignListComponent', () => {
     let component: CampaignListComponent;

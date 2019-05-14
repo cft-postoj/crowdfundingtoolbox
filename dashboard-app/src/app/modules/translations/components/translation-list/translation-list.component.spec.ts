@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { LanguageService } from '../_services';
-import { TranslationsService } from '../_services';
-import { TranslationsListComponent } from './translations.component';
+import {LanguageService} from "../../services/language.service";
+import {TranslationsService} from "../../services/translations.service";
+import {TranslationListComponent} from "./translation-list.component";
 describe('TranslationListComponent', () => {
-  let component: TranslationsListComponent;
-  let fixture: ComponentFixture<TranslationsListComponent>;
+  let component: TranslationListComponent;
+  let fixture: ComponentFixture<TranslationListComponent>;
   beforeEach(() => {
     const languageServiceStub = { getAll: () => ({ subscribe: () => ({}) }) };
     const translationsServiceStub = {
@@ -13,13 +13,13 @@ describe('TranslationListComponent', () => {
     };
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [TranslationsListComponent],
+      declarations: [TranslationListComponent],
       providers: [
         { provide: LanguageService, useValue: languageServiceStub },
         { provide: TranslationsService, useValue: translationsServiceStub }
       ]
     });
-    fixture = TestBed.createComponent(TranslationsListComponent);
+    fixture = TestBed.createComponent(TranslationListComponent);
     component = fixture.componentInstance;
   });
   it('can load instance', () => {

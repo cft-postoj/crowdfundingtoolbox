@@ -5,7 +5,7 @@ import {InlineSVGModule} from "ng-inline-svg";
 import {HttpClientModule} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {appRoutes} from 'app/app.routing'
-import {AppModule} from "../../../app.module";
+import {AppModule} from "../../../../../app.module";
 
 describe('NotificationComponent', () => {
     let component: NotificationComponent;

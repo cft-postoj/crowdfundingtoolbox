@@ -1,13 +1,13 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CampaignStatusComponent} from './status.component';
-import {SwitcherComponent} from "../modules/core/_parts/atoms/switcher/switcher.component";
 import {CircleProgressComponent} from "ng-circle-progress";
-import {SlovakNumberFormatter} from "../_pipe/SlovakNumberFormatter";
 import {FormsModule} from "@angular/forms";
 import {InlineSVGModule} from "ng-inline-svg";
 import {HttpClientModule} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
+import {CampaignStatusComponent} from "./campaign-status.component";
+import {SwitcherComponent} from "../../../core/parts/atoms";
+import {SlovakNumberFormatter} from "../../../core/pipes/SlovakNumberFormatter";
 
 describe('CampaignStatusComponent', () => {
     let component: CampaignStatusComponent;

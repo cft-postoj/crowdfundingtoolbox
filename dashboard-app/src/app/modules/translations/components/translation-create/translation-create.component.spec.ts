@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { LanguageService } from '../../_services';
-import { TranslationCreateComponent } from './new-translation.component';
+import {TranslationCreateComponent} from "./translation-create.component";
+import {LanguageService} from "../../services/language.service";
 describe('TranslationCreateComponent', () => {
   let component: TranslationCreateComponent;
   let fixture: ComponentFixture<TranslationCreateComponent>;

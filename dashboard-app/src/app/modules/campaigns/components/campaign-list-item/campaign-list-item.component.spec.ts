@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CampaignService } from '../../../_services/campaign.service';
 import { Router } from '@angular/router';
-import { ComponentCommunicationService } from '../../../_services/component-communication.service';
-import { CampaignsListItemComponent } from './list-item.component';
+import {CampaignService} from "../../services";
+import {ComponentCommunicationService} from "../../../core/services";
+import {CampaignListItemComponent} from "./campaign-list-item.component";
 describe('CampaignListItemComponent', () => {
-  let component: CampaignsListItemComponent;
-  let fixture: ComponentFixture<CampaignsListItemComponent>;
+  let component: CampaignListItemComponent;
+  let fixture: ComponentFixture<CampaignListItemComponent>;
   beforeEach(() => {
     const ngbModalStub = {
       open: () => ({
@@ -25,7 +25,7 @@ describe('CampaignListItemComponent', () => {
     const componentCommunicationServiceStub = { setAlertMessage: () => ({}) };
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [CampaignsListItemComponent],
+      declarations: [CampaignListItemComponent],
       providers: [
         { provide: NgbModal, useValue: ngbModalStub },
         { provide: CampaignService, useValue: campaignServiceStub },
@@ -36,7 +36,7 @@ describe('CampaignListItemComponent', () => {
         }
       ]
     });
-    fixture = TestBed.createComponent(CampaignsListItemComponent);
+    fixture = TestBed.createComponent(CampaignListItemComponent);
     component = fixture.componentInstance;
   });
   it('can load instance', () => {

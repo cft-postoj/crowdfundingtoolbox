@@ -3,10 +3,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { AuthenticationService } from '../_services';
-import { ComponentCommunicationService } from '../_services/component-communication.service';
-import { Routing } from '../constants/config.constants';
 import { LoginComponent } from './login.component';
+import {AuthenticationService} from "../../services";
+import {ComponentCommunicationService} from "../../../core/services";
+import {Routing} from "../../../../constants/config.constants";
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
