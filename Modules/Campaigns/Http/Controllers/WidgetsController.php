@@ -631,7 +631,7 @@ class WidgetsController extends Controller
                 ->orderBy('updated_at', 'desc')
                 ->get()
                 ->where('campaign_id', $campaignId)
-                ->whereIn('widget_type_id', [2, 3, 5]));
+                ->whereIn('widget_type_id', [1, 2, 3, 5])); // landing, sidebar, leaderboard, fixed
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e
@@ -824,7 +824,7 @@ class WidgetsController extends Controller
                     ->get()
                     ->where('active', true)
                     ->whereIn('campaign_id', $campaignIds)
-                    ->whereIn('widget_type_id', [2, 3, 5]);
+                    ->whereIn('widget_type_id', [2, 3, 5]); // get only widget sidebar, leaderboard and fixed
             $onlyThreeWidgets = array();
             $usedWidgetIds = array();
             foreach ($randomResponse as $rand) {
@@ -940,7 +940,7 @@ class WidgetsController extends Controller
         }
 
         try {
-            Widget::find($id)->update([
+            Widget::where('id', $id)->update([
                 'active' => $request['active']
             ]);
         } catch (\Exception $e) {

@@ -5,6 +5,7 @@ namespace Modules\Campaigns\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Mockery\Exception;
 use Modules\Campaigns\Entities\Campaign;
 use Modules\Campaigns\Entities\CampaignImage;
 use Modules\Campaigns\Entities\CampaignSettings;
@@ -16,10 +17,13 @@ use Modules\Campaigns\Entities\WidgetSettings;
 use Modules\Campaigns\Transformers\CampaignResource;
 use Modules\Campaigns\Transformers\CampaignResourceDetail;
 use Modules\Campaigns\Transformers\WidgetResource;
+use Modules\Campaigns\Transformers\WidgetResultResource;
+use Modules\Targeting\Entities\Targeting;
 use Modules\Targeting\Providers\TargetingService;
 use Modules\UserManagement\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use Modules\UserManagement\Http\Controllers\UserServiceController;
+use JWTAuth;
 
 class CampaignsController extends Controller
 {
@@ -781,6 +785,90 @@ class CampaignsController extends Controller
         }
 
         return $this->all();
+    }
+
+
+    /*
+     * Portal access - get filtered campaign widgets
+     * 1) by logged in user (donating, etc.)
+     * 2) by unregistered user
+     */
+    protected function getCampaignWidgets()
+    {
+        $user = (JWTAuth::getToken())
+            ? ((JWTAuth::check()) ? JWTAuth::parseToken()->authenticate() : null)
+            : null;
+        if ($user == null) {
+            // unregistered user
+            // TODO: na strane frontendu cez localstorage/cookies kontrolovat kolko clankov uz precital user
+            try {
+                $actualDate = date('Y-m-d');
+                $campaignIds = Campaign::with('targeting')
+                    ->where('active', true)
+                    ->where('date_to', '>=', $actualDate)
+                    ->whereHas('targeting', function ($query) {
+                        $query->where('not_signed', true);
+                    })
+                    ->pluck('id');
+
+                $randomResponse =
+                    Widget::inRandomOrder()
+                        ->get()
+                        ->where('active', true)
+                        ->whereIn('campaign_id', $campaignIds)
+                        ->whereIn('widget_type_id', [2, 3, 5]);
+                $onlyThreeWidgets = array();
+                $usedWidgetIds = array();
+
+                foreach ($randomResponse as $rand) {
+                    if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
+                        array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
+                        array_push($usedWidgetIds, $rand['widget_type_id']);
+                    }
+                }
+                return \response()->json(
+                    array(
+                        'widgets' => $onlyThreeWidgets
+                    ),
+                    Response::HTTP_OK
+                );
+            } catch (Exception $e) {
+                return \response()->json([
+                    'error' => $e
+                ], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        try {
+            // user data (is user donator?) with targeting
+            $userId = $user->id;
+            // check readArticles, donations
+
+            $actualDate = date('Y-m-d');
+
+            $campaignIds = Campaign::all()
+                ->where('active', true)
+                ->where('date_to', '>=', $actualDate)
+                ->pluck('id');
+            $randomResponse =
+                Widget::inRandomOrder()
+                    ->get()
+                    ->where('active', true)
+                    ->whereIn('campaign_id', $campaignIds)
+                    ->whereIn('widget_type_id', [2, 3, 5]);
+            $onlyThreeWidgets = array();
+            $usedWidgetIds = array();
+            foreach ($randomResponse as $rand) {
+                if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
+                    array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
+                    array_push($usedWidgetIds, $rand['widget_type_id']);
+                }
+            }
+        } catch (Exception $e) {
+            return \response()->json([
+                'error' => $e
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
 }
