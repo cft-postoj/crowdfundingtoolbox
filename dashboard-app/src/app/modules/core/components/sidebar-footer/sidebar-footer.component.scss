@@ -1,0 +1,27 @@
+@import '../../../../../sass/variables';
+@import '../../../../../sass/mixins';
+#footer-container {
+  width: 320px;
+  height: 80px;
+  //background-image: linear-gradient(to left, $azure , $dark-blue);
+  background: $azure;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .footer-button {
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    margin: 0 30px;
+    height: auto;
+    cursor: pointer;
+    opacity: .66;
+    @include transitionSingle(.3s ease);
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+

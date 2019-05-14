@@ -4,134 +4,64 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {InlineSVGModule} from 'ng-inline-svg';
 import {AppComponent} from './app.component';
-import {routing} from './app.routing';
 
-import {LoginComponent} from './login';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {SideBarComponent} from './side-bar/side-bar.component';
-import {AboutComponent} from './about/about.component';
-import {ContactComponent} from './contact/contact.component';
-import {HomeComponent} from './home/home.component';
-import {HttpErrorInterceptor} from './interceptor/httpError.interceptor';
-
-import {TokenInterceptor} from './interceptor/token.interceptor';
-import {TranslationsComponent} from './translations/translations.component';
-import {NewTranslationComponent} from './translations/new-translation/new-translation.component';
-import {TopPanelComponent} from './top-panel/top-panel.component';
-import {CampaignsComponent} from './pages/campaigns/list/campaigns.component';
-import {SidebarItemComponent} from './sidebar-item/sidebar-item.component';
-import {SidebarFooterComponent} from './sidebar-footer/sidebar-footer.component';
-import {DropdownComponent} from './_parts/atoms/dropdown/dropdown.component';
-import {ListItemComponent} from './_parts/molecules/list-item/list-item.component';
-import {SwitcherComponent} from './_parts/atoms/switcher/switcher.component';
-import {BreadcrumbsComponent} from './_parts/molecules/breadcrumbs/breadcrumbs.component';
-import {ButtonComponent} from './_parts/atoms/button/button.component';
-import {NgCircleProgressModule} from 'ng-circle-progress';
-import {SlovakNumberFormatter} from './_pipe/SlovakNumberFormatter';
-import {ConfigurationComponent} from './pages/configuration/configuration.component';
-import {StatusComponent} from './status/status.component';
-import {CampaignEditComponent} from './pages/campaigns/edit/campaignEdit.component';
-import {DragAndDropComponent} from './_parts/atoms/dragAndDrop/dragAndDrop.component';
-import {AngularEditorModule} from '@kolkov/angular-editor';
-import {CampaignDetailComponent} from "./pages/campaigns/detail/campaignDetail.component";
-import {CampaignSettingsComponent} from './pages/campaigns/edit/campaign-settings/campaignSettings.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ProgressComponent} from './_parts/atoms/progress/progress.component';
-import {DatepickerComponent} from './_parts/atoms/datepicker/datepicker.component';
 import {MatTabsModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CheckboxComponent} from './_parts/atoms/checkbox/checkbox.component';
-import {RadioButtonComponent} from './_parts/atoms/radio-button/radio-button.component';
-import {AlertComponent} from "./_parts/atoms/alert/alert.component";
-import { ColorPickerModule } from 'ngx-color-picker';
-import {LoadingComponent} from "./_parts/atoms/loading/loading.component";
-import {InputNumberComponent} from "./_parts/atoms/input-number/input-number.component";
-import { ActionsComponent } from './actions/actions.component';
-import { StatisticsComponent } from './pages/campaigns/statistics/statistics.component';
-import { RadioButtonGroupComponent } from './_parts/atoms/radio-button-group/radio-button-group.component';
-import { InputGroupComponent } from './_parts/atoms/input-group/input-group.component';
-import { WidgetEditComponent } from './pages/widget/widget-edit/widget-edit.component';
-import { PreviewComponent } from './components/preview/preview.component';
-import { ModalComponent } from './_parts/atoms/modal/modal.component';
-import { SafePipe } from './_pipe/safe.pipe';
-import { NotificationComponent } from './_parts/atoms/notification/notification.component';
-import { SettingsComponent } from './components/settings/settings.component';
-import { GeneralSettingsComponent } from "./components/general-settings/general-settings.component";
-import { GoogleFontSettingsComponent } from './_parts/molecules/google-font-settings/google-font-settings.component';
-import {NgxSelectModule} from "ngx-select-ex";
-import { CtaSettingsComponent } from './components/cta-settings/cta-settings.component';
-import { WidgetSettingsComponent } from "./components/widget-settings/widget-settings.component";
-import { PreviewMonetizationComponent } from './components/preview-monetization/preview-monetization.component';
+import {routing} from "./app.routing";
+import {CoreModule} from "./modules/core/core.module";
+import {UserManagementModule} from "./modules/user-management/user-management.module";
+import {ModalComponent, NotificationComponent} from "./modules/core/parts/atoms";
+import {
+    CtaSettingsComponent,
+    DashboardComponent, GeneralSettingsComponent, SettingsComponent,
+    SideBarComponent,
+    SidebarFooterComponent, SidebarItemComponent,
+    TopPanelComponent
+} from "./modules/core/components";
+import {AboutComponent, ContactComponent} from "./components";
+import {ConfigurationComponent} from "./modules/core/pages/configuration/configuration.component";
+import {TranslationListComponent} from "./modules/translations/components";
+import {TranslationCreateComponent} from "./modules/translations/components/translation-create/translation-create.component";
+import {HttpErrorInterceptor, TokenInterceptor} from "./modules/user-management/interceptor";
 
 @NgModule({
     imports: [
-        MatTabsModule,
         BrowserModule,
+
+        CoreModule,
+        UserManagementModule,
+
+        MatTabsModule,
         ReactiveFormsModule,
-        FormsModule,
         HttpClientModule,
-        routing,
-        NgCircleProgressModule.forRoot({
-            space: -5
-        }),
-        InlineSVGModule.forRoot(),
-        AngularEditorModule,
         BrowserAnimationsModule,
-        NgbModule,
-        ColorPickerModule,
-        NgxSelectModule
+
+        InlineSVGModule.forRoot(),
+        routing,
     ],
     entryComponents: [ModalComponent],
     declarations: [
-        DatepickerComponent,
-        ProgressComponent,
-        SlovakNumberFormatter,
+
         AppComponent,
         TopPanelComponent,
-        LoginComponent,
         DashboardComponent,
         AboutComponent,
         ContactComponent,
-        HomeComponent,
-        TranslationsComponent,
-        NewTranslationComponent,
-        CampaignsComponent,
+        TranslationListComponent,
+        TranslationCreateComponent,
         SideBarComponent,
         SidebarItemComponent,
         SidebarFooterComponent,
-        ButtonComponent,
-        DropdownComponent,
-        ListItemComponent,
+
         ConfigurationComponent,
-        SwitcherComponent,
-        StatusComponent,
-        CampaignEditComponent,
-        BreadcrumbsComponent,
-        CampaignSettingsComponent,
-        DragAndDropComponent,
-        CampaignDetailComponent,
-        CheckboxComponent,
-        RadioButtonComponent,
-        AlertComponent,
-        LoadingComponent,
-        InputNumberComponent,
-        ActionsComponent,
-        StatisticsComponent,
-        ActionsComponent,
-        RadioButtonGroupComponent,
-        InputGroupComponent,
-        WidgetEditComponent,
-        PreviewComponent,
         ModalComponent,
-        SafePipe,
+
         NotificationComponent,
         GeneralSettingsComponent,
         SettingsComponent,
         NotificationComponent,
-        GoogleFontSettingsComponent,
+
         CtaSettingsComponent,
-        WidgetSettingsComponent,
-        PreviewMonetizationComponent
     ],
     providers: [
         {
