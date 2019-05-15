@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,900&subset=latin-ext');
-
+@import "../../../../../sass/variables";
 
 html, body {
   margin: 0;
   padding: 0;
   font-family: Lato, 'sans-serif';
-  @import "../../../../../sass/variables";
   background: transparent;
 
   p {
