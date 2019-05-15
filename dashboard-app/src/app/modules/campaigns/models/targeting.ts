@@ -17,10 +17,26 @@ export class Targeting {
            not_older_than: {
                active: false,
                value: 60
+           },
+           min: {
+               active: false,
+               value: 50
+           },
+           max: {
+               active: false,
+               value: 100
            }
        },
        monthly : {
            active: false,
+           older_than: {
+               active: true,
+               value: 50
+           },
+           not_older_than: {
+               active: false,
+               value: 90
+           },
            min: {
                active: false,
                value: 5

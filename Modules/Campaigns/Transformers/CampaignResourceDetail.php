@@ -41,7 +41,15 @@ class CampaignResourceDetail extends Resource
         $result['support']['one_time']['older_than']['value'] = $targeting->one_time_older_than_value;
         $result['support']['one_time']['not_older_than']['active'] = $targeting->one_time_not_older_than;
         $result['support']['one_time']['not_older_than']['value'] = $targeting->one_time_not_older_than_value;
+        $result['support']['one_time']['min']['active'] = $targeting->one_time_min;
+        $result['support']['one_time']['min']['value'] = $targeting->one_time_min_value;
+        $result['support']['one_time']['max']['active'] = $targeting->one_time_max;
+        $result['support']['one_time']['max']['value'] = $targeting->one_time_max_value;
         $result['support']['monthly']['active'] = $targeting->monthly;
+        $result['support']['monthly']['older_than']['active'] = $targeting->monthly_older_than;
+        $result['support']['monthly']['older_than']['value'] = $targeting->monthly_older_than_value;
+        $result['support']['monthly']['not_older_than']['active'] = $targeting->monthly_not_older_than;
+        $result['support']['monthly']['not_older_than']['value'] = $targeting->monthly_not_older_than_value;
         $result['support']['monthly']['min']['active'] = $targeting->monthly_min;
         $result['support']['monthly']['min']['value'] = $targeting->monthly_min_value;
         $result['support']['monthly']['max']['active'] = $targeting->monthly_max;

@@ -55,7 +55,6 @@ export class CampaignSettingsComponent  implements OnInit {
         //     console.error(error);
         // });
 
-        console.log(this.campaign)
 
         this.campaignEndRadioButtons = [];
         this.campaignEndRadioButtons.push(new RadioButton("Date", false))
