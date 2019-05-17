@@ -178,23 +178,27 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getBackgroundStyle() {
+        let backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
         let defaultStyle = {
-            position: this.widget.settings[this.deviceType].additional_settings.position,
-            height: this.widget.settings[this.deviceType].additional_settings.height,
-            width: this.widget.settings[this.deviceType].additional_settings.width,
-            maxWidth: this.widget.settings[this.deviceType].additional_settings.maxWidth,
+            position: backgroundStyles.position,
+            height: backgroundStyles.height,
+            width: backgroundStyles.width,
+            maxWidth: backgroundStyles.maxWidth,
             top: 0,
             left: 0,
             margin: 'auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: (this.widget.widget_type.method == widgetTypes.leaderboard.name
-                || this.widget.widget_type.method == widgetTypes.landing.name) ? '0' : '30px'
+            padding: this.addPx(backgroundStyles.padding.top) + ' ' +
+                this.addPx(backgroundStyles.padding.right) + ' ' +
+                this.addPx(backgroundStyles.padding.bottom) + ' ' +
+                this.addPx(backgroundStyles.padding.left),
         };
+
         let fixedStyles = (this.widget.widget_type.method == widgetTypes.fixed.name) ? {
-            bottom: (this.widget.settings[this.deviceType].additional_settings.fixedSettings.top == 'auto') ? 0 : 'auto',
-            zIndex: this.widget.settings[this.deviceType].additional_settings.fixedSettings.zIndex,
-            textAlign: this.widget.settings[this.deviceType].additional_settings.fixedSettings.textAlign,
+            bottom: (backgroundStyles.fixedSettings.top == 'auto') ? 0 : 'auto',
+            zIndex: backgroundStyles.fixedSettings.zIndex,
+            textAlign: backgroundStyles.fixedSettings.textAlign,
             padding: '5px'
         } : {};
 
@@ -445,7 +449,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ctaReplaced() {
-        return this.widget.widget_type.method === widgetTypes.landing.method && this.widget.settings[this.deviceType].payment_settings.active;
+        return this.widget.settings[this.deviceType].payment_settings.active;
     }
 
     getButtonContainerStyles() {

@@ -1,23 +1,23 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {Widget} from "../../models";
 import {Subscription} from "rxjs";
+import {paymentTypes, widgetTypes} from "../../../core/models";
+import {PreviewService} from "../../services";
+import {ConvertHexService} from "../../../core/services";
 import {
     monthlyPayment,
     oneTimePayment,
     setActiveButtonMonthly,
     setActiveButtonOneTime,
     validateForm
-} from "../preview/landing";
-import {Widget} from "../../models";
-import {PreviewService} from "../../services";
-import {ConvertHexService} from "../../../core/services";
-import {widgetTypes, paymentTypes} from "../../../core/models";
+} from "./monetization-lite";
 
 @Component({
-    selector: 'app-preview-monetization',
-    templateUrl: './preview-monetization.component.html',
-    styleUrls: ['./preview-monetization.component.scss']
+    selector: 'app-preview-monetization-lite',
+    templateUrl: './preview-monetization-lite.component.html',
+    styleUrls: ['./preview-monetization-lite.component.scss']
 })
-export class PreviewMonetizationComponent implements OnInit {
+export class PreviewMonetizationLiteComponent implements OnInit {
 
     @Input()
     public widget = new Widget();
@@ -32,8 +32,9 @@ export class PreviewMonetizationComponent implements OnInit {
 
     public paymentTypes = paymentTypes;
 
+
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
-                private ref: ChangeDetectorRef,) {
+                private ref: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -319,6 +320,19 @@ export class PreviewMonetizationComponent implements OnInit {
         }
     }
 
+    getMonatizationFrequencyButtonStyle() {
+        return {
+            'flex': '0 0 50%',
+            'max-width': '50%',
+            'padding': '6px 15px',
+            'width': '100%',
+            'min-height': '1px',
+            'box-sizing': 'border-box',
+            'display': 'flex',
+            'flex-direction': 'column'
+        }
+    }
+
 
     getDonationButtonPriceStyle() {
         return {
@@ -343,4 +357,5 @@ export class PreviewMonetizationComponent implements OnInit {
             padding: '16px'
         }
     }
+
 }

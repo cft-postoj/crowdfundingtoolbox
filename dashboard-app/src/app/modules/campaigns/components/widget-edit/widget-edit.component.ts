@@ -56,6 +56,8 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
     public paddingMonetization: RadioButton[] = [];
     public marginMonetization: RadioButton[] = [];
+    public monetizationTypes: DropdownItem[] = [];
+    private backgroundPadding:  RadioButton[] = [];
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -94,6 +96,9 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
             this.positionSettings.push({title: 'Top', value: '0'}); // top: 0
             this.positionSettings.push({title: 'Bottom', value: 'auto'}); // top: auto
+
+            this.monetizationTypes.push({title:'Classic', value:'classic'});
+            this.monetizationTypes.push({title:'Lite', value:'lite'});
 
             this.recreateRadioButtons();
 
@@ -215,6 +220,16 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         this.marginText.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.general.text_margin.right, assetsUrl + "images/icons/margin_right.svg"))
         this.marginText.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.general.text_margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
         this.marginText.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.general.text_margin.left, assetsUrl + "images/icons/margin_left.svg"))
+
+
+
+        let backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
+
+        this.backgroundPadding = [];
+        this.backgroundPadding.push(new RadioButton("top", backgroundStyles.top, assetsUrl + "images/icons/padding_top.svg"));
+        this.backgroundPadding.push(new RadioButton("right", backgroundStyles.right, assetsUrl + "images/icons/padding_right.svg"));
+        this.backgroundPadding.push(new RadioButton("bottom", backgroundStyles.bottom, assetsUrl + "images/icons/padding_bot.svg"));
+        this.backgroundPadding.push(new RadioButton("left", backgroundStyles.left, assetsUrl + "images/icons/padding_left.svg"));
 
 
         this.marginAdditionalText = [];

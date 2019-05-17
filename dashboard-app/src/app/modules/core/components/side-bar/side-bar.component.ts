@@ -85,14 +85,16 @@ export class SideBarComponent implements OnInit {
     showItem(itemName: string) {
         if (itemName === this.campaignsItemName) {
             this.sidebarItems = [];
-            this.campaigns.forEach(
-                campaign => {
-                    this.sidebarItems.push({
-                        title: campaign.name,
-                        value: "/" + Routing.CAMPAIGNS_FULL_PATH + "/" + campaign.id
-                    });
-                }
-            );
+            if (this.campaigns) {
+                this.campaigns.forEach(
+                    campaign => {
+                        this.sidebarItems.push({
+                            title: campaign.name,
+                            value: "/" + Routing.CAMPAIGNS_FULL_PATH + "/" + campaign.id
+                        });
+                    }
+                );
+            }
             this.sidebarItems.push({
                 title: "All campaigns",
                 value: "/"+Routing.CAMPAIGNS_ALL_FULL_PATH

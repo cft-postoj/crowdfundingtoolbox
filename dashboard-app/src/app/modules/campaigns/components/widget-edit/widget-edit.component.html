@@ -63,48 +63,62 @@
                             </div>
                         </div>
                         <div class="settings--card">
-                            <div class="row">
-                                <span class="col-12 font-weight-bold">
-                                    Background
-                                </span>
-                            </div>
-                            <div class="row mt-2">
-                                <app-radio-button class="col-12"
-                                                  [name]="'backgroundType'"
-                                                  [radioButtons]="backgroundTypesButtons"
-                                                  [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
-                                                  [colClass]="'col'"></app-radio-button>
-                            </div>
-                            <div class="row"
-                                 *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
-                                  widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
-                                <app-dragAndDrop class="col-12"
-                                                 [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image">
-                                </app-dragAndDrop>
-                            </div>
-                            <div class="row"
-                                 *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.color.value ||
-                                   widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
-                                <div class="col-2 vertical-align">
-                                    Color
+                            <div class="settings--card--header">
+                                <div class="row">
+                                    <span class="col-12">
+                                        Background
+                                    </span>
                                 </div>
-                                <div class="col-6 color-picker--simple">
-                                    <input [value]="widget.settings[deviceType].widget_settings.general.background.color"
-                                           class="btn color-picker--custom"
-                                           [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
-                                           [cpPosition]="'bottom'"
-                                           [cpPresetColors]="colors"
-                                           [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
+                            </div>
+                            <div class="settings--card--body">
+                                <div class="row mt-2">
+                                    <app-radio-button class="col-12"
+                                                      [name]="'backgroundType'"
+                                                      [radioButtons]="backgroundTypesButtons"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
+                                                      [colClass]="'col'"></app-radio-button>
                                 </div>
-                                <div class="col-5 col-xxl-2 vertical-align">
-                                    Opacity (%)
+                                <div class="row"
+                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
+                                      widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                    <app-dragAndDrop class="col-12"
+                                                     [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image">
+                                    </app-dragAndDrop>
                                 </div>
-                                <div class="col-3 col-xxl-2 pt-2 pt-xxl-0">
-                                    <app-inputNumber
-                                            [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
-                                            [class]="'float-right'">
-                                    </app-inputNumber>
+                                <div class="row"
+                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.color.value ||
+                                       widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                    <div class="col-2 vertical-align">
+                                        Color
+                                    </div>
+                                    <div class="col-6 color-picker--simple">
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.background.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
+                                    </div>
+                                    <div class="col-5 col-xxl-2 vertical-align">
+                                        Opacity (%)
+                                    </div>
+                                    <div class="col-3 col-xxl-2 pt-2 pt-xxl-0">
+                                        <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-2 vertical-align">
+                                    Offsets
+                                </div>
+                                <div class="col-10">
+                                    <app-input-group [buttons]="paddingMonetization"
+                                                     (buttonChange)="widget.settings[deviceType].additional_settings.padding[$event.name] = $event.value">
+                                    </app-input-group>
                                 </div>
                             </div>
                         </div>
@@ -760,6 +774,23 @@
                         <ng-container *ngIf="widget.settings[deviceType].payment_settings.active">
                             <div class="settings--card">
                                 <div class="settings--card--header">
+                                    Monetization type
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <app-dropdown  class="classic"
+                                                           [class]="'classic mr15'"
+                                                           [items]="monetizationTypes"
+                                                           [title]="'Choose design'"
+                                                           [(currentValue)]="widget.settings[deviceType].payment_settings.type">
+                                            </app-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="settings--card--header">
                                     Design
                                 </div>
                                 <div class="settings--card--body">
@@ -774,7 +805,7 @@
                                         <div class="col-6 editInput">
                                             Height:
                                             <input #campaignName id="monetization-height"
-                                                   placeholder="Height in % or px"
+                                                   placeholder="Height in % or px"Design
                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.design.height"
                                                    maxlength="120">
                                         </div>
@@ -790,6 +821,17 @@
                                                    [cpPosition]="'bottom'"
                                                    [cpPresetColors]="colors"
                                                    [(colorPicker)]="widget.settings[deviceType].payment_settings.design.background_color"/>
+                                        </div>
+                                        <div class="col-3 vertical-align">
+                                            Text color
+                                        </div>
+                                        <div class="col-3 color-picker--simple col-3 color-picker--fixed">
+                                            <input [value]="widget.settings[deviceType].payment_settings.design.text_color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].payment_settings.design.text_color"
+                                                   [cpPosition]="'bottom'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.design.text_color"/>
                                         </div>
                                     </div>
                                     <div class="row">
