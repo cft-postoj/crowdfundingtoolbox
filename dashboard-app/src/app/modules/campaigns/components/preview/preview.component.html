@@ -54,7 +54,12 @@
                     <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()" [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
                     </div>
                 </div>
-                <app-preview-monetization [widget]="widget" [deviceType]="deviceType" style="display: flex"></app-preview-monetization>
+                <app-preview-monetization
+                        *ngIf="widget.settings[deviceType].payment_settings.type === 'classic'"
+                        [widget]="widget" [deviceType]="deviceType" style="display: flex"></app-preview-monetization>
+                <app-preview-monetization-lite
+                        *ngIf="widget.settings[deviceType].payment_settings.type === 'lite'"
+                        [widget]="widget" [deviceType]="deviceType" style="display: flex"></app-preview-monetization-lite>
                 <!-- CTA -->
                 <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="!ctaReplaced()">
                     <a class="cft--button"

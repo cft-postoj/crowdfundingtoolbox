@@ -343,7 +343,66 @@ class WidgetsController extends Controller
         $outputJson = array();
         switch ($widgetType) {
             case 1: // landing widget
-                $outputJson = array();
+                $outputJson = array(
+                    'width' => '100%',
+                    'height' => '100%',
+                    'position' => 'relative',
+                    'fixedSettings' => array(),
+                    'display' => 'block',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
+                    'bodyContainer' => array(
+                        'width' => '100%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => '80px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%'
+                        )
+                    ),
+                    'textContainer' => array(
+                        'width' => '50%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => '80px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%'
+                        )
+                    ),
+                    'buttonContainer' => array(
+                        'width' => '100%',
+                        'position' => 'absolute',
+                        'top' => '50px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'textAlign' => 'center',
+                        'button' => array(
+                            'width' => '35%',
+                            'display' => 'inline-block',
+                        )
+                    )
+                );
                 break;
             case 2: // sidebar widget
                 $outputJson = array(
@@ -353,6 +412,12 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
                     'bodyContainer' => array(
                         'width' => '100%',
                         'height' => '100%',
@@ -416,6 +481,12 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
                     'bodyContainer' => array(
                         'width' => '100%',
                         'margin' => array(
@@ -474,6 +545,12 @@ class WidgetsController extends Controller
                     'maxWidth' => '100%',
                     'height' => '80px',
                     'position' => 'fixed',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
                     'fixedSettings' => array(
                         'top' => 'auto',
                         'bottom' => '0',
@@ -631,7 +708,7 @@ class WidgetsController extends Controller
                 ->orderBy('updated_at', 'desc')
                 ->get()
                 ->where('campaign_id', $campaignId)
-                ->whereIn('widget_type_id', [2, 3, 5]));
+                ->whereIn('widget_type_id', [1, 2, 3, 5]));
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e

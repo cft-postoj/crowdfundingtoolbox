@@ -170,6 +170,7 @@ export class Widget {
             payment_settings: {
                 active: true,
                 payment_type: 'both',
+                type: 'classic',
                 design: {
                     background_color: "#fff",
                     padding: {
@@ -186,6 +187,7 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
+                    text_color: '#777'
                 },
                 monthly_prices: {
                     custom_price: false,
@@ -240,6 +242,12 @@ export class Widget {
                 maxWidth: '200px',
                 height: '300px',
                 position: 'relative', // relative || fixed
+                padding: {
+                    top: '30',
+                    right: '30',
+                    bottom: '30',
+                    left: '30'
+                },
                 fixedSettings: {
                     top: '0',
                     bottom: 'auto',
@@ -460,6 +468,7 @@ export class Widget {
             },
             payment_settings: {
                 payment_type: 'both',
+                type: 'classic',
                 design: {
                     background_color: "#fff",
                     padding: {
@@ -476,6 +485,7 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
+                    text_color: '#777'
                 },
                 monthly_prices: {
                     custom_price: false,
@@ -511,6 +521,7 @@ export class Widget {
                         color: '#ffffff'
                     }
                 },
+
             },
 
             email_settings: {
@@ -530,6 +541,12 @@ export class Widget {
                 maxWidth: '200px',
                 height: '300px',
                 position: 'relative', // relative || fixed
+                padding: {
+                    top: '30',
+                    right: '30',
+                    bottom: '30',
+                    left: '30'
+                },
                 fixedSettings: {
                     top: '0',
                     bottom: 'auto',
@@ -722,6 +739,7 @@ export class Widget {
             },
             payment_settings: {
                 payment_type: 'both',
+                type: 'classic',
                 design: {
                     background_color: "#fff",
                     padding: {
@@ -738,6 +756,7 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
+                    text_color: '#777'
                 },
                 monthly_prices: {
                     custom_price: false,
@@ -791,6 +810,12 @@ export class Widget {
                 maxWidth: '200px',
                 height: '300px',
                 position: 'relative', // relative || fixed
+                padding: {
+                    top: '30',
+                    right: '30',
+                    bottom: '30',
+                    left: '30'
+                },
                 fixedSettings: {
                     top: '0',
                     bottom: 'auto',
