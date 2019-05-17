@@ -62,8 +62,8 @@
                         <div class="col-6">
                             <div class="bold"> Start </div>
                             <app-datepicker
-                                    [(date)]="campaign.date_from"
-                                    [maxDate]="this.campaign.promote_settings.donation_goal.active ? null : campaign.date_to"
+                                    [(date)]="campaign.promote_settings.start_date_value"
+                                    [maxDate]="this.campaign.promote_settings.is_end_date? null : campaign.promote_settings.end_date_value"
                                     [type]="'start'">
                             </app-datepicker>
                         </div>
@@ -84,29 +84,29 @@
                     </div>
                     <div class="row mt-2">
                         <app-radio-button class="col"
-                                          [(currentValue)]="campaign.promote_settings.donation_goal.active"
-                                          (currentValueChange)="campaign.promote_settings.selected_date.active=!$event"
+                                          [(currentValue)]="!campaign.promote_settings.is_end_date"
+                                          (currentValueChange)="campaign.promote_settings.is_end_date=!$event"
                                           [radioButtons]="campaignEndRadioButtons"
                                           [colClass]="'col'"></app-radio-button>
                     </div>
-                    <ng-container *ngIf="!this.campaign.promote_settings.donation_goal.active">
+                    <ng-container *ngIf="campaign.promote_settings.is_end_date">
                         <div class="row pt-2">
                             <div class="col-12">
                                 <app-datepicker
-                                        [(date)]="campaign.date_to"
-                                        [minDate]="campaign.date_from"
+                                        [(date)]="campaign.promote_settings.end_date_value"
+                                        [minDate]="campaign.promote_settings.start_date_value"
                                         [type]="'end'">
                                 </app-datepicker>
                             </div>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="this.campaign.promote_settings.donation_goal.active">
+                    <ng-container *ngIf="!campaign.promote_settings.is_end_date">
                         <div class="row pt-2 inputs-group"
-                             *ngIf="this.campaign.promote_settings.donation_goal.active">
+                             *ngIf="!campaign.promote_settings.is_end_date">
                             <div class="col">
                                 <input type="number"
                                        class="number-currency"
-                                       [(ngModel)]="campaign.promote_settings.donation_goal.value"
+                                       [(ngModel)]="campaign.promote_settings.donation_goal_value"
                                        placeholder="Insert donation goal"
 
                                 />
@@ -335,7 +335,7 @@
                         <div class="button-group">
                             <span class="btn btn-default btn-secondary btn-xs" *ngFor="let url of campaign.targeting.url.list; index as i">
                                 <span>{{url.path}}</span>
-                                <a class="icon-delete float-right" (click)="splice(campaign.targeting.url.list,i)">
+                                <a class="icon-delete float-right" (click)="campaign.targeting.url.list.splice(i, 1)">
                                     <i class="icon-delete--cross"></i>
                                 </a>
                             </span>

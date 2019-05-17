@@ -14,6 +14,7 @@ use Modules\Campaigns\Entities\DeviceType;
 use Modules\Campaigns\Entities\Widget;
 use Modules\Campaigns\Entities\WidgetResult;
 use Modules\Campaigns\Entities\WidgetSettings;
+use Modules\Campaigns\Providers\CampaignPromoteService;
 use Modules\Campaigns\Transformers\CampaignResource;
 use Modules\Campaigns\Transformers\CampaignResourceDetail;
 use Modules\Campaigns\Transformers\WidgetResource;
@@ -32,12 +33,14 @@ class CampaignsController extends Controller
     private $campaignId;
     private $targetingService;
     private $userService;
+    private $promoteService;
 
     public function __construct()
     {
         $this->userService = new UserServiceController();
         $this->widgetsController = new WidgetsController();
         $this->targetingService = new TargetingService();
+        $this->promoteService = new CampaignPromoteService();
     }
 
     /**
@@ -85,11 +88,9 @@ class CampaignsController extends Controller
      */
     protected function create(Request $request)
     {
-        $valid = validator($request->only('active', 'name', 'date_from', 'date_to', 'payment_settings', 'promote_settings', 'widget_settings'), [
+        $valid = validator($request->only('active', 'name', 'payment_settings', 'promote_settings', 'widget_settings'), [
             'active' => 'required|boolean',
             'name' => 'required|string',
-            'date_from' => 'required|string',
-            'date_to' => 'required|string',
             'payment_settings' => 'required|array',
             'promote_settings' => 'required|array',
             'widget_settings' => 'required|array'
@@ -105,16 +106,17 @@ class CampaignsController extends Controller
         $campaign = Campaign::create([
             'name' => $request['name'],
             'description' => $request['description'],
-            'headline_text' => $request['headline_text'],
-            'active' => $request['active'],
-            'date_from' => $request['date_from'],
-            'date_to' => $request['date_to']
+            'active' => $request['active']
         ]);
 
         $campaign->save();
         $this->campaignId = $campaign->id;
 
-        $this->campaignSettings($this->campaignId, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+       // $this->campaignSettings($this->campaignId, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+
+        // Create Promote settings
+        dd($request);
+        $this->promoteService->createCampaignPromoteSettings($this->campaignId, $request['promote_settings']);
 
         $this->targetingService->createTargetingFromRequest($this->campaignId, $request['targeting']);
 
@@ -346,7 +348,9 @@ class CampaignsController extends Controller
             'date_to' => $request['date_to']
         ]);
 
-        $this->campaignSettings($id, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+        //$this->campaignSettings($id, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+
+        $this->promoteService->updateCampaignPromoteSettings($id, $request['promote_settings']);
 
         $this->widgetsController->updateWidgetSettingsFromCampaign($id, $request['headline_text'], $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
 
@@ -842,13 +846,18 @@ class CampaignsController extends Controller
         try {
             // user data (is user donator?) with targeting
             $userId = $user->id;
+
+
             // check readArticles, donations
 
             $actualDate = date('Y-m-d');
 
-            $campaignIds = Campaign::all()
+            $campaignIds = Campaign::with('targeting')
                 ->where('active', true)
                 ->where('date_to', '>=', $actualDate)
+                ->whereHas('targeting', function ($query) {
+                    $query->where('signed', true);
+                })
                 ->pluck('id');
             $randomResponse =
                 Widget::inRandomOrder()

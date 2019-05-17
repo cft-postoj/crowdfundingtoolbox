@@ -1,50 +1,38 @@
-import { Targeting } from "./targeting";
+import { Targeting } from './targeting';
 
 export class Campaign {
     id: number = 0;
-
     active: boolean = false;
-    name: string = "";
-    description: string = "";
-    headline_text: string = "";
-    date_from: any = { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()};
-    date_to: any ;
+    name: string = '';
+    description: string = '';
+    headline_text: string = '';
     targeting = new Targeting();
 
     promote_settings = {
-        status_bar: false,
-        donation_goal: {
-            active: false,
-            value: 9000
-        },
-        selected_date: {
-            active: true,
-            value: "2019-03-04"
-        },
-        design: {
-            fill_color: "#0074E9",
-            text_color: "#2E3131"
-        },
+        start_date_value: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()},
+        is_end_date: true,
+        end_date_value: '',
+        donation_goal_value: ''
     };
 
     payment_settings = {
-        payment_type: "both",
-        design:{
-            background_color: "#fff",
+        payment_type: 'both',
+        design: {
+            background_color: '#fff',
             padding: {
-                top: "10",
-                right: "25",
-                bottom: "10",
-                left: "25"
+                top: '10',
+                right: '25',
+                bottom: '10',
+                left: '25'
             },
             margin: {
-                top: "15",
-                right: "10",
-                bottom: "15",
-                left: "10"
+                top: '15',
+                right: '10',
+                bottom: '15',
+                left: '10'
             },
             width: '100%',
-            height:'auto',
+            height: 'auto',
         },
         monthly_prices : {
             /* TODO: moznost pridat min value */
@@ -81,8 +69,8 @@ export class Campaign {
             active: true,
             value: 30,
             styles: {
-                background: "#3B3232",
-                color: "#FFFFFF"
+                background: '#3B3232',
+                color: '#FFFFFF'
             }
         },
 
@@ -91,19 +79,19 @@ export class Campaign {
     widget_settings = {
         general: {
             fontSettings: {
-                fontFamily: "Roboto",
-                fontWeight: "Bold",
-                alignment: "center",
-                color: "#FFFFFF",
+                fontFamily: 'Roboto',
+                fontWeight: 'Bold',
+                alignment: 'center',
+                color: '#FFFFFF',
                 fontSize: 24
             },
             background: {
-                type: "image-overlay",
+                type: 'image-overlay',
                 image: {
                   id: 10,
                   url: ''
                 },
-                color: "#1F4F7B",
+                color: '#1F4F7B',
                 opacity: 33
             },
             text_margin: {
@@ -116,46 +104,46 @@ export class Campaign {
             text_background: '#ffffff',
             common_text: {
                 active: true,
-                value: "Lorem ipsum bla bla"
+                value: 'Lorem ipsum bla bla'
             }
         },
         call_to_action: {
             default: {
                 padding: {
-                    top: "10",
-                    right: "25",
-                    bottom: "10",
-                    left: "25"
+                    top: '10',
+                    right: '25',
+                    bottom: '10',
+                    left: '25'
                 },
                 margin: {
-                    top: "0",
-                    right: "auto",
-                    bottom: "0",
-                    left: "auto"
+                    top: '0',
+                    right: 'auto',
+                    bottom: '0',
+                    left: 'auto'
                 },
                 fontSettings: {
-                    fontFamily: "Roboto",
-                    fontWeight: "bold",
-                    alignment: "center",
-                    color: "#FFFFFF",
+                    fontFamily: 'Roboto',
+                    fontWeight: 'bold',
+                    alignment: 'center',
+                    color: '#FFFFFF',
                     fontSize: 24
                 },
                 display: 'block',
                 design: {
                     fill: {
                         active: true,
-                        color: "#B71100",
+                        color: '#B71100',
                         opacity: 100
                     },
                     border: {
                         active: false,
-                        color: "#B71100",
+                        color: '#B71100',
                         size: 2,
                         opacity: 0
                     },
                     shadow: {
                         active: false,
-                        color: "#777",
+                        color: '#777',
                         x: 2,
                         y: 2,
                         b: 2,
@@ -171,26 +159,26 @@ export class Campaign {
                 }
             },
             hover: {
-                type: "fade",
+                type: 'fade',
                 fontSettings: {
-                    fontWeight: "bold",
-                    color: "#FFFFFF"
+                    fontWeight: 'bold',
+                    color: '#FFFFFF'
                 },
                 design: {
                     fill: {
                         active: true,
-                        color: "#B71100",
+                        color: '#B71100',
                         opacity: 100
                     },
                     border: {
                         active: false,
-                        color: "#B71100",
+                        color: '#B71100',
                         size: 2,
                         opacity: 0
                     },
                     shadow: {
                         active: false,
-                        color: "#777",
+                        color: '#777',
                         x: 2,
                         y: 2,
                         b: 2,
@@ -199,7 +187,7 @@ export class Campaign {
                 }
             }
         }
-    }
+    };
 
 }
 

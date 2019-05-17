@@ -15,7 +15,7 @@ class CampaignResourceDetail extends Resource
      */
     public function toArray($request)
     {
-        $campaignSettings = CampaignSettings::where('campaign_id', $this->id)->first();
+        //$campaignSettings = CampaignSettings::where('campaign_id', $this->id)->first();
         return [
             'id' => $this->id,
             'active' => ($this->active == null) ? false : $this->active,
@@ -24,9 +24,9 @@ class CampaignResourceDetail extends Resource
             'date_to' => $this->date_to,
             'description' => $this->description,
             'headline_text' => $this->headline_text,
-            'payment_settings' => json_decode($campaignSettings->payment_settings, true),
-            'promote_settings' => json_decode($campaignSettings->promote_settings, true),
-            'widget_settings' => json_decode($campaignSettings->widget_settings, true),
+            'payment_settings' => json_decode($this->payment_settings, true),
+            'promote_settings' => json_decode($this->promote_settings, true),
+            'widget_settings' => json_decode($this->widget_settings, true),
             'targeting' => $this->createTargetingJson($this->targeting)
 
         ];
