@@ -25,6 +25,7 @@ class WidgetsController extends Controller
     private $widgetIds = array();
     private $campaignId;
     private $widgetSettings;
+    private $paymentSettings;
     private $widgetVersionService;
 
     public function __construct()
@@ -134,8 +135,9 @@ class WidgetsController extends Controller
         ], Response::HTTP_OK);
     }
 
-    private function initialWidgetSettings($id, $widgetType)
+    private function initialWidgetSettings($id, $widgetTypeId)
     {
+        return $this->createSettingsJson($widgetTypeId);
         $campaignSettingsData = CampaignSettings::where('campaign_id', $id)->first();
         $campaignWidgetSettings = json_decode($campaignSettingsData->widget_settings, true);
         $promoteWidgetSettings = json_decode($campaignSettingsData->promote_settings, true);
@@ -147,16 +149,17 @@ class WidgetsController extends Controller
         return $this->createSettingsJson($campaignData->headline_text, $campaignWidgetSettings, $promoteWidgetSettings, $paymentSettings, $widgetType);
     }
 
-    private function createSettingsJson($headlineText, $widgetSettings, $promoteSettings, $paymentSettings, $widgetType)
+    private function createSettingsJson($widgetType)
     {
-
+        $this->widgetSettings = $this->widgetSettingsStructure();
+        $this->paymentSettings = $this->paymentSettingsStructure();
         // GET GENERAL CAMPAIGN SETTINGS
         $generalSettings = $this->getGeneralSettings();
         $generalWidgetSettings = json_decode($generalSettings['widget_settings'], true);
         $generalSettingsHeadlineText = json_decode($generalSettings['font_settings_headline_text'], true);
         $generalCtaSettings = json_decode($generalSettings['cta'], true);
 
-        $widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
+        $this->widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
             'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
             'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
             'alignment' => 'center',
@@ -165,19 +168,19 @@ class WidgetsController extends Controller
             'fontSize' => $generalSettingsHeadlineText['fontSize']
         ), $widgetType);
 
-        $widgetSettings['general']['background'] = array(
+        $this->widgetSettings['general']['background'] = array(
             'type' => 'color',
             'image' => array('id' => 0, 'url' => null),
             'color' => $generalWidgetSettings['backgroundColor'],
             'opacity' => 100
         );
 
-        $widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $widgetSettings['general']['text_margin'], $widgetType);
+        $this->widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $this->widgetSettings['general']['text_margin'], $widgetType);
 
-        $widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
+        $this->widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
 
         // Additional text
-        $widgetSettings['additional_text'] = array(
+        $this->widgetSettings['additional_text'] = array(
             'text' => $generalWidgetSettings['additional_text']['text'],
             'fontSettings' => array(
                 'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
@@ -197,11 +200,10 @@ class WidgetsController extends Controller
         );
 
 
-        $this->widgetSettings = array(
+        $result = array(
             'headline_text' => $generalWidgetSettings['headline_text']['text'],
-            'widget_settings' => $widgetSettings,
-            'promote_settings' => $promoteSettings,
-            'payment_settings' => $paymentSettings,
+            'widget_settings' => $this->widgetSettings,
+            'payment_settings' => $this->paymentSettings,
             'email_settings' => array(
                 'active' => false,
                 'subscribe_text' => ''
@@ -214,7 +216,7 @@ class WidgetsController extends Controller
                 $this->getAdditionalWidgetSettings($widgetType, $generalSettings)
 
         );
-        return $this->widgetSettings;
+        return $result;
     }
 
     private function overrideGeneralSettings($type, $settings, $widgetType)
@@ -267,7 +269,7 @@ class WidgetsController extends Controller
                     $output['alignment'] = 'left';
                     break;
                 case 3: // leaderboard widget
-                    $output['fontSize'] =  50;
+                    $output['fontSize'] = 50;
                 default:
                     $output = $settings;
             }
@@ -343,7 +345,66 @@ class WidgetsController extends Controller
         $outputJson = array();
         switch ($widgetType) {
             case 1: // landing widget
-                $outputJson = array();
+                $outputJson = array(
+                    'width' => '100%',
+                    'height' => '100%',
+                    'position' => 'relative',
+                    'fixedSettings' => array(),
+                    'display' => 'block',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
+                    'bodyContainer' => array(
+                        'width' => '100%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => '80px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%'
+                        )
+                    ),
+                    'textContainer' => array(
+                        'width' => '50%',
+                        'margin' => array(
+                            'top' => '0',
+                            'right' => 'auto',
+                            'bottom' => '0',
+                            'left' => 'auto'
+                        ),
+                        'position' => 'absolute',
+                        'top' => '80px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'text' => array(
+                            'width' => '100%'
+                        )
+                    ),
+                    'buttonContainer' => array(
+                        'width' => '100%',
+                        'position' => 'absolute',
+                        'top' => '50px',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'textAlign' => 'center',
+                        'button' => array(
+                            'width' => '35%',
+                            'display' => 'inline-block',
+                        )
+                    )
+                );
                 break;
             case 2: // sidebar widget
                 $outputJson = array(
@@ -353,6 +414,12 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
                     'bodyContainer' => array(
                         'width' => '100%',
                         'height' => '100%',
@@ -416,6 +483,12 @@ class WidgetsController extends Controller
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
                     'bodyContainer' => array(
                         'width' => '100%',
                         'margin' => array(
@@ -474,6 +547,12 @@ class WidgetsController extends Controller
                     'maxWidth' => '100%',
                     'height' => '80px',
                     'position' => 'fixed',
+                    'padding' => array(
+                        'top' => '0',
+                        'right' => '0',
+                        'bottom' => '0',
+                        'left' => '0'
+                    ),
                     'fixedSettings' => array(
                         'top' => 'auto',
                         'bottom' => '0',
@@ -631,7 +710,7 @@ class WidgetsController extends Controller
                 ->orderBy('updated_at', 'desc')
                 ->get()
                 ->where('campaign_id', $campaignId)
-                ->whereIn('widget_type_id', [1, 2, 3, 5])); // landing, sidebar, leaderboard, fixed
+                ->whereIn('widget_type_id', [1, 2, 3, 5]));
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e
@@ -824,7 +903,7 @@ class WidgetsController extends Controller
                     ->get()
                     ->where('active', true)
                     ->whereIn('campaign_id', $campaignIds)
-                    ->whereIn('widget_type_id', [2, 3, 5]); // get only widget sidebar, leaderboard and fixed
+                    ->whereIn('widget_type_id', [2, 3, 5]);
             $onlyThreeWidgets = array();
             $usedWidgetIds = array();
             foreach ($randomResponse as $rand) {
@@ -940,7 +1019,7 @@ class WidgetsController extends Controller
         }
 
         try {
-            Widget::where('id', $id)->update([
+            Widget::find($id)->update([
                 'active' => $request['active']
             ]);
         } catch (\Exception $e) {
@@ -953,5 +1032,54 @@ class WidgetsController extends Controller
         return response()->json([
             'message' => 'Successfully updated widget with id ' . $id . '!'
         ], Response::HTTP_CREATED);
+    }
+
+    private function widgetSettingsStructure()
+    {
+        $structure = array(
+            'general' => array(
+                'fontSettings' => array(),
+                'background' => array(),
+                'text_margin' => array(),
+                'text_display' => '',
+                'text_background' => '',
+                'common_text' => array()
+            ),
+            'call_to_action' => array(
+                'default' => array(
+                    'padding' => array(),
+                    'margin' => array(),
+                    'fontSettings' => array(),
+                    'design' => array(
+                        'fill' => array(),
+                        'border' => array(),
+                        'shadow' => array(),
+                        'radius' => array()
+                    )
+                ),
+                'hover' => array(
+                    'type' => '',
+                    'fontSettings' => array(),
+                    'design' => array(
+                        'fill' => array(),
+                        'border' => array(),
+                        'shadow' => array(),
+                        'radius' => array()
+                    )
+                )
+            )
+        );
+        return $structure;
+    }
+
+    private function paymentSettingsStructure()
+    {
+        $structure = array(
+            'payment_type' => '',
+            'monthly_prices' => array(),
+            'one_prices' => array(),
+            'default_price' => array()
+        );
+        return $structure;
     }
 }

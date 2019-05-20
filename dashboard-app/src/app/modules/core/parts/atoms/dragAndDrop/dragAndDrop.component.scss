@@ -1,0 +1,81 @@
+@import '../../../../../../sass/variables';
+@import '../../../../../../sass/mixins';
+
+
+.dragAndDrop {
+  &--container {
+    position:relative;
+    p {
+      font-size: 15px;
+      margin-bottom: 5px;
+      margin-top: 10px;
+      letter-spacing: .8px;
+    }
+  }
+  &--section {
+    position: relative;
+    background: $aquaHaze;
+    color: $bali;
+    width: 100%;
+    height: 96px;
+    letter-spacing: 1.2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    @include transitionSingle(.3s ease);
+    input[type="file"] {
+      position: absolute;
+      left: 0;
+      opacity: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      cursor: pointer;
+    }
+    img {
+      width: 36px;
+      height: 36px;
+      margin-top: 0.5px;
+      margin-right: 7px;
+    }
+    span {
+      z-index: 0;
+      &.imageLoaded {
+        display: none;
+      }
+    }
+    &--overlay {
+      background: rgba($aquaHaze, .9);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+      z-index: 0;
+    }
+    &:hover {
+      background: $geyser;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      .dragAndDrop--section--overlay.active {
+        display: block;
+      }
+      span {
+        &.imageLoaded {
+          display: block;
+        }
+      }
+    }
+    &.active {
+      border: 2px dotted $azure;
+    }
+  }
+  &--recommended {
+    color: $bali;
+  }
+}

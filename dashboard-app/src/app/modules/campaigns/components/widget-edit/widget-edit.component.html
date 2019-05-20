@@ -1,0 +1,1100 @@
+<div class="active bg-overlay"></div>
+<div class="d-flex active settings" [ngClass]="{'preview' : preview}">
+    <div class="settings--head">
+        <b>EDIT <span class="title">{{widget?.widget_type?.name | uppercase }}</span></b>
+        <span
+                [inlineSVG]="'/assets/images/icons/close.svg'"
+                (click)="closeEditWindow()"
+                title="Close"
+                class="settings--close">
+               </span>
+    </div>
+    <ng-container *ngIf="loading">
+        <app-loading [isLoading]="loading"></app-loading>
+    </ng-container>
+
+    <ng-container *ngIf="!loading">
+        <div class="settings--body">
+            <div class="settings--body--content">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}">
+                    <div class="collapsible--header row" (click)="openTab(1)">
+                        <div class="col-11">
+                            BACKGROUND
+                        </div>
+                        <div class="col-1">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(1)" aria-controls="general-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(1)">
+                        <div class="settings--card">
+                            <div class="row">
+                                <span class="col-12 font-weight-bold">
+                                    Width & Height
+                                </span>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 editInput">
+                                    Width: <input type="text" readonly disabled
+                                                  [(ngModel)]="widget.settings[deviceType].additional_settings.width">
+                                </div>
+                                <div class="col-6 editInput">
+                                    Height: <input type="text"
+                                                   [(ngModel)]="widget.settings[deviceType].additional_settings.height">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card" *ngIf="widget.widget_type.method=='fixed'">
+                            <div class="row">
+                                <span class="col font-weight-bold">
+                                    Position
+                                </span>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <app-dropdown [items]="positionSettings"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'Choose position property'"
+                                                  [(currentValue)]="widget.settings[deviceType].additional_settings.fixedSettings.top">
+                                    </app-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="settings--card--header">
+                                <div class="row">
+                                    <span class="col-12">
+                                        Background
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="settings--card--body">
+                                <div class="row mt-2">
+                                    <app-radio-button class="col-12"
+                                                      [name]="'backgroundType'"
+                                                      [radioButtons]="backgroundTypesButtons"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
+                                                      [colClass]="'col'"></app-radio-button>
+                                </div>
+                                <div class="row"
+                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
+                                      widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                    <app-dragAndDrop class="col-12"
+                                                     [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image">
+                                    </app-dragAndDrop>
+                                </div>
+                                <div class="row"
+                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.color.value ||
+                                       widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                    <div class="col-2 vertical-align">
+                                        Color
+                                    </div>
+                                    <div class="col-6 color-picker--simple">
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.background.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
+                                    </div>
+                                    <div class="col-5 col-xxl-2 vertical-align">
+                                        Opacity (%)
+                                    </div>
+                                    <div class="col-3 col-xxl-2 pt-2 pt-xxl-0">
+                                        <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-2 vertical-align">
+                                    Offsets
+                                </div>
+                                <div class="col-10">
+                                    <app-input-group [buttons]="paddingMonetization"
+                                                     (buttonChange)="widget.settings[deviceType].additional_settings.padding[$event.name] = $event.value">
+                                    </app-input-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}"
+                     *ngIf="widget.widget_type.method==widgetTypes.fixed.name">
+                    <div class="row collapsible--header" (click)="openTab(6)">
+                        <div class="col-11">
+                            WIDTHS
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(6)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(6)">
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <div class="col-6 bold flex-center">
+                                        Headline & Addtional texts [%]
+                                    </div>
+                                    <div class="col-6">
+                                        <app-inputNumber type="text"
+                                                         [(value)]="widget.settings[deviceType].additional_settings.textContainer.width">
+                                        </app-inputNumber>
+                                    </div>
+                                    <div class="col-6 bold flex-center">
+                                        Button [%]
+                                    </div>
+                                    <div class="col-6">
+                                        <app-inputNumber type="text"
+                                                         [(value)]="widget.settings[deviceType].additional_settings.buttonContainer.width">
+                                        </app-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(2)}">
+                    <div class="row collapsible--header" (click)="openTab(2)">
+                        <div class="col-11">
+                            HEADLINE
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(2)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(2)">
+                        <div class="settings--card">
+                            <span class="row">
+                                <div class="col font-weight-bold">Headline text</div>
+                            </span>
+                            <div class="settings--card--body">
+                                <div class="row editInput">
+                                    <div class="col-12">
+                                        <angular-editor class="angular-editor--simple"
+                                                        [(ngModel)]="widget.settings[deviceType].headline_text"></angular-editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <span class="row">
+                                <div class="col font-weight-bold">Position</div>
+                            </span>
+                            <div class="row">
+                                <div class="col-4 col-xxl-2 vertical-align">
+                                    Alignment
+                                </div>
+                                <div class="col-8 col-xxl-2 vertical-align">
+                                    <app-radio-button-group [class]="'full-width'"
+                                                            [(currentValue)]="widget.settings[deviceType].widget_settings.general.fontSettings.alignment"
+                                                            [radioButtons]="radioButtons">
+                                    </app-radio-button-group>
+                                </div>
+                                <div class="col-2 vertical-align">
+                                    Margin
+                                </div>
+                                <div class="col-10 col-xxl-6 pt-2 pt-xxl-0">
+                                    <app-input-group [buttons]="marginText"
+                                                     (buttonChange)="widget.settings[deviceType].widget_settings.general.text_margin[$event.name] = $event.value">
+                                    </app-input-group>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <span class="col font-weight-bold">Design</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 vertical-align">
+                                        Font family
+                                    </div>
+                                    <div class="col-3 color-picker--simple">
+                                        <app-dropdown [items]="fontFamilyDropdownButtons"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'Choose font'"
+                                                      [customFonts]="true"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontFamily">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Text color
+                                    </div>
+                                    <div class="col-3 color-picker--simple color-picker--fixed ">
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.color"/>
+                                    </div>
+                                    <div class="col-3 vertical-align ">
+                                        Size (px)
+                                    </div>
+                                    <div class="col-3">
+                                        <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Background color
+                                    </div>
+                                    <div class="col-3 color-picker--simple color-picker--fixed">
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(3)}">
+                    <div class="row collapsible--header" (click)="openTab(3)">
+                        <div class="col-11">
+                            ADDITIONAL TEXT
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(3)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(3)">
+                        <div class="settings--card">
+                            <span class="row">
+                                <div class="col font-weight-bold">Additional text</div>
+                            </span>
+                            <div class="row editInput">
+                                <div class="col-12">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].widget_settings.additional_text.text"></angular-editor>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <div class="col font-weight-bold">Position</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 col-xxl-2 vertical-align">
+                                        Alignment
+                                    </div>
+                                    <div class="col-8 col-xxl-2 vertical-align">
+                                        <app-radio-button-group [class]="'full-width'"
+                                                                [(currentValue)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.alignment"
+                                                                [radioButtons]="radioButtons">
+                                        </app-radio-button-group>
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Margin
+                                    </div>
+                                    <div class="col-10 col-xxl-6 pt-2 pt-xxl-0">
+                                        <app-input-group [buttons]="marginAdditionalText"
+                                                         (buttonChange)="widget.settings[deviceType].widget_settings.additional_text.text_margin[$event.name] = $event.value">
+                                        </app-input-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <span class="col font-weight-bold">Design</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 vertical-align">
+                                        Font family
+                                    </div>
+                                    <div class="col-3">
+                                        <app-dropdown [items]="fontFamilyDropdownButtons"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'Choose font'"
+                                                      [customFonts]="true"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontFamily">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Text color
+                                    </div>
+                                    <div class="col-3 color-picker--simple color-picker--fixed">
+                                        <input [value]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"/>
+                                    </div>
+                                    <div class="col-3 vertical-align ">
+                                        Size (px)
+                                    </div>
+                                    <div class="col-3">
+                                        <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontSize"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+                                    </div>
+                                    <div class="col-3 vertical-align">
+                                        Background color
+                                    </div>
+                                    <div class="col-3 color-picker--simple color-picker--fixed">
+                                        <input [value]="widget.settings[deviceType].widget_settings.additional_text.text_background"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.additional_text.text_background"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.text_background"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(4)}">
+                    <div class="row collapsible--header" (click)="openTab(4)">
+                        <div class="col-11">
+                            CALL TO ACTION BUTTON
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(4)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div [ngbCollapse]="!isOpened(4)">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="btn-group-vertical col-12 mb-3">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button"
+                                                (click)="cta='Default'"
+                                                [class]="(cta == 'Default') ? 'btn active' : 'btn'">
+                                            Default
+                                        </button>
+                                        <button type="button" (click)="cta='Hover'"
+                                                [class]="(cta == 'Hover') ? 'btn active' : 'btn'">Hover
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card--wrapper" *ngIf="cta=='Default'">
+                            <div class="settings--card">
+                                <div class="row">
+                                    <span class="col font-weight-bold">Button text</span>
+                                </div>
+                                <div class="row editInput">
+                                    <div class="col">
+                                        <input #cta id="cta_button"
+                                               placeholder="Please add text for button"
+                                               [(ngModel)]="widget.settings[deviceType].cta.text"
+                                               maxlength="60">
+                                        <span class="actualLength">
+                                           {{widget.settings[deviceType].cta.text?widget.settings[deviceType].cta.text.length:0}} / {{cta?.maxLength}}
+                                         </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col">
+                                        URL
+                                    </div>
+                                </div>
+                                <div class="editInput row">
+                                    <div class="col">
+                                        <input #cta_url id="cta_url"
+                                               placeholder="Please add url"
+                                               [(ngModel)]="widget.settings[deviceType].cta.url"
+                                               maxlength="2000">
+                                        <span class="actualLength">
+                                           {{widget.settings[deviceType].cta.url?widget.settings[deviceType].cta.url.length:0}} / {{cta_url?.maxLength}}
+                                         </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col-12 bold">
+                                        Button offsets
+                                    </div>
+                                    <div class="col-12 col-xxl-6">
+                                        Inside
+                                        <app-input-group [buttons]="paddingButtons"
+                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.padding[$event.name] = $event.value">
+
+                                        </app-input-group>
+                                    </div>
+                                    <div class="col-12 col-xxl-6 pt-3 pt-xxl-0">
+                                        Outside
+                                        <app-input-group [buttons]="marginButtons"
+                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.margin[$event.name] = $event.value">
+                                        </app-input-group>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col-12 bold">
+                                        Button alignment
+                                    </div>
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-6 vertical-align">
+                                            <app-radio-button-group [class]="'full-width'"
+                                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
+                                                                    [radioButtons]="radioButtons"
+                                            >
+                                            </app-radio-button-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col-12 bold">
+                                        Font settings
+                                    </div>
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col vertical-align">
+                                            Font Family
+                                        </div>
+                                        <div class="col vertical-align">
+                                            <app-dropdown [items]="fontFamilyDropdownButtons"
+                                                          [class]="'classic default-border align-right'"
+                                                          [title]="'Choose font'"
+                                                          [customFonts]="true"
+                                                          [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontFamily">
+                                            </app-dropdown>
+                                        </div>
+                                        <div class="col vertical-align">
+                                            Font weight
+                                        </div>
+                                        <div class="col">
+                                            <app-dropdown [items]="fontWeight"
+                                                          [class]="'classic default-border align-right'"
+                                                          [title]="'weight'"
+                                                          [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontWeight">
+                                            </app-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col vertical-align">
+                                            Color
+                                        </div>
+                                        <div class="col">
+                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"/>
+                                        </div>
+                                        <div class="col vertical-align">
+                                            Size (px)
+                                        </div>
+                                        <div class="col">
+                                            <app-inputNumber
+                                                    [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize"
+                                                    [class]="'float-right'">
+                                            </app-inputNumber>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col bold">
+                                        Design
+                                    </div>
+                                </div>
+                                <div class="row pt-1 pb-1">
+                                    <div class="col-3">
+                                        <app-checkbox [name]="'Fill'"
+                                                      [(checked)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.active">
+                                        </app-checkbox>
+                                    </div>
+                                    <div class="col-4"
+                                         *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.active">
+                                        <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"/>
+                                    </div>
+                                </div>
+                                <div class="row pt-1 pb-1">
+                                    <div class="col-3">
+                                        <app-checkbox [name]="'Border'"
+                                                      [(checked)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.active">
+                                        </app-checkbox>
+                                    </div>
+                                    <ng-container
+                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.active">
+                                        <div class="col-4">
+                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"/>
+                                        </div>
+                                        <div class="col-2 offset-1 vertical-align">
+                                            Size (px)
+                                        </div>
+                                        <div class="col-2">
+                                            <app-inputNumber [class]="'float-right'"
+                                                             [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.size"></app-inputNumber>
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                                <div class="row pt-1 pb-1">
+                                    <div class="col-3">
+                                        <app-checkbox [name]="'Shadow'"
+                                                      [(checked)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.active">
+                                        </app-checkbox>
+                                    </div>
+                                    <ng-container
+                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.active">
+                                        <div class="col-4">
+                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"/>
+                                        </div>
+                                        <div class="col-5 vertical-align">
+                                            <app-input-group [buttons]="shadowButtons"
+                                                             (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow[$event.name] = $event.value">
+                                            </app-input-group>
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+                            <div class="settings--card">
+                                <div class="settings--card--header">
+                                    <div class="row ">
+                                        <div class="col">
+                                            Radius
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-3 vertical-align">
+                                            <app-radio-button-group
+                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active"
+                                                    [radioButtons]="radiusButtons">
+                                            </app-radio-button-group>
+                                        </div>
+                                        <ng-container
+                                                *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active">
+                                            <div class="col-3 vertical-align">
+                                                <app-input-group [buttons]="allRadiusesButton"
+                                                                 (buttonChange)="writeRadiusValue($event.value)"
+                                                                 [fill]="true"
+                                                                 [class]="!specificRadius?'active':''"
+                                                                 (click)="setSpecificRadius(false)">
+                                                </app-input-group>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="row">
+                                                    <div class="col-2 vertical-align text-right">
+                                                        or
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <app-input-group [buttons]="specificRadiusButtons"
+                                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius[$event.name] = $event.value"
+                                                                         [fill]="true"
+                                                                         [class]="specificRadius?'active':''"
+                                                                         (click)="setSpecificRadius(true)">
+                                                        </app-input-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card--wrapper" *ngIf="cta=='Hover'">
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col bold">Hover font settings</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2 vertical-align">
+                                        Font weight
+                                    </div>
+                                    <div class="col-4">
+                                        <app-dropdown [class]="'classic default-border'"
+                                                      [title]="'Choose font weight'"
+                                                      [items]="fontWeight"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.fontWeight">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Color
+                                    </div>
+                                    <div class="col-4 color-picker--simple">
+                                        <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col bold">
+                                        Design
+                                    </div>
+                                </div>
+                                <div class="row pt-1 pb-1">
+                                    <div class="col-3">
+                                        <app-checkbox [name]="'Fill'"
+                                                      [(checked)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.active">
+                                        </app-checkbox>
+                                    </div>
+                                    <div class="col-4"
+                                         *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.active">
+                                        <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"
+                                               [cpPosition]="'top'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"/>
+                                    </div>
+                                </div>
+                                <div class="row pt-1 pb-1">
+                                    <div class="col-3">
+                                        <app-checkbox [name]="'Border'"
+                                                      [(checked)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.active">
+                                        </app-checkbox>
+                                    </div>
+                                    <ng-container
+                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.active">
+                                        <div class="col-4">
+                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"/>
+                                        </div>
+                                        <div class="col-2 offset-1 vertical-align">
+                                            Size (px)
+                                        </div>
+                                        <div class="col-2">
+                                            <app-inputNumber [class]="'float-right'"
+                                                             [(value)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.size"></app-inputNumber>
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                                <div class="row pt-1 pb-1">
+                                    <div class="col-3">
+                                        <app-checkbox [name]="'Shadow'"
+                                                      [(checked)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.active">
+                                        </app-checkbox>
+                                    </div>
+                                    <ng-container
+                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.active">
+                                        <div class="col-4">
+                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"/>
+                                        </div>
+                                        <div class="col-5 vertical-align">
+                                            <app-input-group [buttons]="shadowButtons"
+                                                             (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow[$event.name] = $event.value">
+                                            </app-input-group>
+                                        </div>
+                                    </ng-container>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(5)}">
+                    <div class="row collapsible--header" (click)="openTab(5)">
+                        <div class="col-11">
+                            MONETIZATION
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(5)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(5)">
+                        <div class="settings--card">
+                            <div class="row">
+                                <app-checkbox class="col"
+                                              [(checked)]="widget.settings[deviceType].payment_settings.active"
+                                              [name]="'Widget with monetization'"
+                                              disabled
+                                ></app-checkbox>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="widget.settings[deviceType].payment_settings.active">
+                            <div class="settings--card">
+                                <div class="settings--card--header">
+                                    Monetization type
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <app-dropdown  class="classic"
+                                                           [class]="'classic mr15'"
+                                                           [items]="monetizationTypes"
+                                                           [title]="'Choose design'"
+                                                           [(currentValue)]="widget.settings[deviceType].payment_settings.type">
+                                            </app-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="settings--card--header">
+                                    Design
+                                </div>
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-6 editInput">
+                                            Width:
+                                            <input #campaignName id="monetization-width"
+                                                   placeholder="Width in % or px"
+                                                   [(ngModel)]="widget.settings[deviceType].payment_settings.design.width"
+                                                   maxlength="120">
+                                        </div>
+                                        <div class="col-6 editInput">
+                                            Height:
+                                            <input #campaignName id="monetization-height"
+                                                   placeholder="Height in % or px"Design
+                                                   [(ngModel)]="widget.settings[deviceType].payment_settings.design.height"
+                                                   maxlength="120">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 vertical-align">
+                                            Background color
+                                        </div>
+                                        <div class="col-3 color-picker--simple">
+                                            <input [value]="widget.settings[deviceType].payment_settings.design.background_color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].payment_settings.design.background_color"
+                                                   [cpPosition]="'bottom'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.design.background_color"/>
+                                        </div>
+                                        <div class="col-3 vertical-align">
+                                            Text color
+                                        </div>
+                                        <div class="col-3 color-picker--simple col-3 color-picker--fixed">
+                                            <input [value]="widget.settings[deviceType].payment_settings.design.text_color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].payment_settings.design.text_color"
+                                                   [cpPosition]="'bottom'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.design.text_color"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            Inside offsets
+                                        </div>
+                                        <div class="col-12">
+                                            <app-input-group [buttons]="paddingMonetization"
+                                                             (buttonChange)="widget.settings[deviceType].payment_settings.design.padding[$event.name] = $event.value">
+                                            </app-input-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            Outside offsets
+                                        </div>
+                                        <div class="col-12">
+                                            <app-input-group [buttons]="marginMonetization"
+                                                             (buttonChange)="widget.settings[deviceType].payment_settings.design.margin[$event.name] = $event.value">
+                                            </app-input-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col-12 bold">
+                                        Payment type
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <app-radio-button
+                                                [name]="'paymentType'"
+                                                [radioButtons]="paymentTypeRadioButtons"
+                                                [(currentValue)]="widget.settings[deviceType].payment_settings.payment_type"
+                                                [colClass]="'col'"></app-radio-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value ||
+                                                        widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
+                                <div class="settings--card">
+                                    <div class="settings--card--header row">
+                                        <div class="col">
+                                            Monthly prices
+                                        </div>
+                                    </div>
+                                    <div class="settings--card--body">
+                                        <div class="row">
+                                            <div class="col-3 vertical-align">
+                                                Price options
+                                            </div>
+                                            <div class="col-3">
+                                                <app-inputNumber
+                                                        [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
+                                                        (valueChange)="updateNumberOfMonthlyPrices($event)">
+                                                </app-inputNumber>
+                                            </div>
+                                            <div class="col-4 offset-2 pull-right">
+                                                <app-checkbox
+                                                        [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
+                                                        [name]="'Custom price option'"></app-checkbox>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <ng-container
+                                                    *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
+                                                <div class="col-6 pt-3 col-xxl-4">
+                                                    <div class="row">
+                                                        <div class="col-6 vertical-align">
+                                                            Price No.{{i+1}}
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <app-inputNumber [(value)]="option.value">
+                                                            </app-inputNumber>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-10 bold">
+                                                Benefit
+                                            </div>
+                                            <app-switcher class="col-2 text-right"
+                                                    [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"> </app-switcher>
+                                            <div class="col-12">
+                                                <angular-editor class="angular-editor--simple"
+                                                                [(ngModel)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text"></angular-editor>
+                                            </div>
+                                            <div class="col-6 vertical-align">
+                                                Min. donation for benefit
+                                            </div>
+                                            <div class="col-6">
+                                                <app-inputNumber
+                                                    [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
+                                                    [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active" ></app-inputNumber>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value ||
+                                                     widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
+                                <div class="settings--card">
+                                    <div class="settings--card--header">
+                                        <div class="row">
+                                            <div class="col">
+                                                Single payment
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="settings--card--body">
+                                        <div class="row">
+                                            <div *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value"
+                                                 class="col pt-2">
+                                                <app-checkbox [name]="'Copy prices from monthly prices'"
+                                                              [(checked)]="copyPrices">
+                                                </app-checkbox>
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="!copyPrices">
+                                            <div class="row">
+                                                <div class="col-3 vertical-align">
+                                                    Price options
+                                                </div>
+                                                <div class="col-3">
+                                                    <app-inputNumber
+                                                            [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
+                                                            (valueChange)="updateNumberOfSinglePayments($event)">
+                                                    </app-inputNumber>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <ng-container
+                                                        *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options; let i = index">
+                                                    <div class="col-6 pt-3 col-xxl-4">
+                                                        <div class="row">
+                                                            <div class="col-6 vertical-align">
+                                                                Price No.{{i+1}}
+                                                            </div>
+                                                            <div class="col-6 ">
+                                                                <app-inputNumber [(value)]="option.value">
+                                                                </app-inputNumber>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-10 bold">
+                                                    Benefit
+                                                </div>
+                                                <app-switcher class="col-2 text-right"
+                                                              [(checked)]="widget.settings[deviceType].payment_settings.once_prices.benefit.active"> </app-switcher>
+                                                <div class="col-12">
+                                                    <angular-editor class="angular-editor--simple"
+                                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.once_prices.benefit.text"></angular-editor>
+                                                </div>
+                                                <div class="col-6 vertical-align">
+                                                    Min. donation for benefit
+                                                </div>
+                                                <div class="col-6">
+                                                    <app-inputNumber
+                                                            [(value)]="widget.settings[deviceType].payment_settings.once_prices.benefit.value"
+                                                            [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active" ></app-inputNumber>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col bold">
+                                        Active price design
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <app-checkbox class="col"
+                                                  [name]="'Set default active price'"
+                                                  [(checked)]="widget.settings[deviceType].payment_settings.default_price.active">
+                                    </app-checkbox>
+                                </div>
+                                <ng-container *ngIf="widget.settings[deviceType].payment_settings.default_price.active">
+                                    <div class="row pt-2">
+                                        <app-dropdown class="classic col"
+                                                      [class]="'classic mr15'"
+                                                      [items]="createActivePriceOptions()"
+                                                      [title]="'Choose default price'"
+                                                      [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.value"
+                                        ></app-dropdown>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col bold">
+                                            Colors
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col-2 vertical-align">
+                                            Background
+                                        </div>
+                                        <div class="col-4">
+                                            <input [value]="widget.settings[deviceType].payment_settings.default_price.styles.background"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].payment_settings.default_price.styles.background"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.default_price.styles.background"/>
+                                        </div>
+                                        <div class="col-2 vertical-align">
+                                            Font
+                                        </div>
+                                        <div class="col-4">
+                                            <input [value]="widget.settings[deviceType].payment_settings.default_price.styles.color"
+                                                   class="btn color-picker--custom"
+                                                   [style.background]="widget.settings[deviceType].payment_settings.default_price.styles.color"
+                                                   [cpPosition]="'top'"
+                                                   [cpPresetColors]="colors"
+                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.default_price.styles.color"/>
+                                        </div>
+                                    </div>
+                                    <!--  <div class="row mt-3 bold">
+                                          <div class="col-12">Email</div>
+                                          <div class="col-12">
+                                              <app-switcher
+                                                      [(checked)]="widget.settings[deviceType].email_settings.active"></app-switcher>
+                                          </div>
+                                          <div class="col-12 faded"
+                                               *ngIf="widget.settings[deviceType].email_settings.active">
+                                              {{widget.settings[deviceType].email_settings.subscribe_text}}
+                                          </div>
+                                      </div>-->
+                                    <!--<div class="row mt-3">-->
+                                        <!--<div class="col-12 bold">Monetization text-->
+                                            <!--<app-switcher class="float-right" [id]="'additional'"-->
+                                                          <!--[(checked)]="widget.settings[deviceType].additional_text.active"></app-switcher>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="row"-->
+                                         <!--*ngIf="widget.settings[deviceType].additional_text.active">-->
+                                        <!--<div class="col">-->
+                                            <!--<angular-editor class="angular-editor&#45;&#45;simple"-->
+                                                            <!--[(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <app-actions class="actions" [(deviceType)]="deviceType" [live]="true" (submit)="updateWidget()"
+                 (preview)="togglePreview()"
+                 [submitting]="saving" (deviceTypeChange)="recreateRadioButtons()"></app-actions>
+</div>
+
+<app-preview *ngIf="preview" [loading]="loading" [widget]="widget" [deviceType]="deviceType" [(show)]="preview">
+</app-preview>
+<app-preview #previewGenerateHTML *ngIf="creatingHTMLs" [class]="'hide'" [generateHTML]="'true'" [show]="'false'"
+             [widget]="widget" [deviceType]="deviceType"></app-preview>

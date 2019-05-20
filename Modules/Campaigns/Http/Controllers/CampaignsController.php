@@ -115,7 +115,6 @@ class CampaignsController extends Controller
        // $this->campaignSettings($this->campaignId, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
 
         // Create Promote settings
-        dd($request);
         $this->promoteService->createCampaignPromoteSettings($this->campaignId, $request['promote_settings']);
 
         $this->targetingService->createTargetingFromRequest($this->campaignId, $request['targeting']);
@@ -130,7 +129,7 @@ class CampaignsController extends Controller
         return response()->json([
             'message' => 'Successfully created campaign!',
             'campaign_id' => $campaign->id,
-            'widgets' => WidgetResource::collection(Widget::all()->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [2, 3, 5]))
+            'widgets' => WidgetResource::collection(Widget::all()->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]))
         ], Response::HTTP_CREATED);
     }
 
@@ -487,7 +486,7 @@ class CampaignsController extends Controller
                     'message' => 'No results found.'
                 ], Response::HTTP_NOT_FOUND);
             }
-            $campaingWithTargeting = Campaign::with('targeting.urls')->find($id);
+            $campaingWithTargeting = Campaign::with('targeting.urls')->with('promote')->find($id);
             return CampaignResourceDetail::make($campaingWithTargeting);
         } catch (\Exception $e) {
             return $e;

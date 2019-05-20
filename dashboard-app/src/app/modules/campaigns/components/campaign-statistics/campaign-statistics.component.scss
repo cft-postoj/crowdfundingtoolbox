@@ -1,0 +1,34 @@
+@import '../../../../../sass/variables';
+@import '../../../../../sass/mixins';
+.campaignStatistics {
+  position: relative;
+  background: $white;
+  width: 100%;
+  z-index: 8;
+  border-top: 1px solid $aquaHaze;
+  padding: 23px 30px 30px;
+  font-size: 15px;
+  color: $bali;
+  b {
+    display: block;
+    color: $black;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  input {
+    visibility:hidden;
+  }
+  label {
+    margin-left: -5px;
+    padding: 5px 8px;
+    display: inline-block;
+    @include borderRadius(4px);
+    @include transitionSingle(.3s ease);
+    cursor: pointer;
+    &:hover, &.active {
+      background: $azure;
+      color: $white;
+      -webkit-text-stroke: .8px $white;
+    }
+  }
+}

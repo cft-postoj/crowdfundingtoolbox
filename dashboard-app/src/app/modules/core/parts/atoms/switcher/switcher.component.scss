@@ -1,0 +1,47 @@
+@import '../../../../../../sass/variables';
+@import '../../../../../../sass/mixins';
+
+.switcher {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+
+  + label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 31px;
+    height: 10px;
+    background: $mystic;
+    display: inline-block;
+    border-radius: 100px;
+    position: relative;
+    margin-top: -15px;
+    margin-bottom: 0;
+  }
+
+  + label:after {
+    content: '';
+    position: absolute;
+    top: -2.5px;
+    left: 0px;
+    width: 16px;
+    height: 16px;
+    background: $heather;
+    border-radius: 90px;
+    transition: 0.3s;
+  }
+
+  &:checked + label {
+    background: $sail;
+    &:after {
+      background: $azure;
+      left: 100%;
+      transform: translateX(-100%);
+    }
+  }
+
+
+  + label:active:after {
+    width: 31px;
+  }
+}

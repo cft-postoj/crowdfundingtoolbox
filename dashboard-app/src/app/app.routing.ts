@@ -1,25 +1,20 @@
 import {RouterModule, Routes} from '@angular/router';
-
-import {LoginComponent} from './login';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {AboutComponent} from './about/about.component';
-import {ContactComponent} from './contact/contact.component';
-import {TranslationsComponent} from './translations/translations.component';
-import {NewTranslationComponent} from './translations/new-translation/new-translation.component';
-import {CampaignsComponent} from './pages/campaigns/list/campaigns.component';
-import {ConfigurationComponent} from './pages/configuration/configuration.component';
-import {LoginGuard} from './_guard';
-import {CampaignDetailComponent} from "./pages/campaigns/detail/campaignDetail.component";
 import {Routing} from "./constants/config.constants";
-import {CampaignEditComponent} from "./pages/campaigns/edit/campaignEdit.component";
-import {WidgetEditComponent} from "./pages/widget/widget-edit/widget-edit.component";
-import {GeneralSettingsComponent} from "./components/general-settings/general-settings.component";
-import {CtaSettingsComponent} from "./components/cta-settings/cta-settings.component";
-import {WidgetSettingsComponent} from "./components/widget-settings/widget-settings.component";
+import {
+    CtaSettingsComponent,
+    DashboardComponent,
+    GeneralSettingsComponent,
+    WidgetSettingsComponent
+} from "./modules/core/components";
+import {LoginGuard} from "./modules/user-management/services";
+import {AboutComponent, ContactComponent} from "./components";
+import {ConfigurationComponent} from "./modules/core/pages/configuration/configuration.component";
+import {TranslationCreateComponent, TranslationListComponent} from "./modules/translations/components";
 
 export const appRoutes: Routes = [
     {
-        path: 'login', component: LoginComponent
+        path: 'login',
+        loadChildren: './modules/user-management/user-management.module#UserManagementModule'
     },
     {
         path: 'dashboard',
@@ -35,11 +30,11 @@ export const appRoutes: Routes = [
                 component: ContactComponent
             }, {
                 path: 'translations',
-                component: TranslationsComponent
+                component: TranslationListComponent
             },
             {
                 path: 'translations/new',
-                component: NewTranslationComponent,
+                component: TranslationCreateComponent,
                 data: {
                     title: 'Translations'
                 },
@@ -62,43 +57,9 @@ export const appRoutes: Routes = [
                 }]
             },
             {
-                path: Routing.CAMPAIGNS_ALL,
-                component: CampaignsComponent,
-                data: {
-                    title: 'Campaigns'
-                },
-                children: [
-                    {
-                        path: Routing.NEW,
-                        component: CampaignEditComponent,
-                        outlet: Routing.RIGHT_OUTLET,
-                        data: {new: true}
-                    },
-                    {
-                        path: Routing.EDIT + '/:id',
-                        component: CampaignEditComponent,
-                        outlet: Routing.RIGHT_OUTLET
-                    },
-                ]
-
-            },
-            {
-                path: Routing.CAMPAIGNS + '/:id',
-                component: CampaignDetailComponent,
-                data: {parent: null},
-                children: [
-                    {
-                        path: Routing.EDIT + "/:widgetId",
-                        component: WidgetEditComponent,
-                        outlet: Routing.RIGHT_OUTLET
-                    },
-                    {
-                        path: Routing.EDIT,
-                        component: CampaignEditComponent,
-                        outlet: Routing.RIGHT_OUTLET
-                    }
-                ]
-            },
+                path: Routing.CAMPAIGNS,
+                loadChildren: './modules/campaigns/campaigns.module#CampaignsModule'
+            }
         ]
     },
     {

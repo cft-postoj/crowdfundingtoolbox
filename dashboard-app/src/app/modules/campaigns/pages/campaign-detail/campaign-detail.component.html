@@ -1,0 +1,59 @@
+<ng-container *ngIf="loading">
+    <app-loading [isLoading]="loading">
+    </app-loading>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+    <app-breadcrumbs
+            [pageTitle]="pageTitle">
+        <app-switcher [id]="'campaignSwitcher'"
+                      [(checked)]="campaign.active"
+                      (checkedChange)="toggleActive(campaign)"
+                      [extraClass]="'mr30'"
+        ></app-switcher>
+        <app-datepicker
+                [(date)]="campaign.promote_settings.start_date_json"
+                (dateChange)="updateDate(campaign,'date_from','Start date')"
+                [maxDate]="campaign.promote_settings.end_date_json"
+                [type]="'start'">
+        </app-datepicker>
+        <app-datepicker
+                [(date)]="campaign.promote_settings.end_date_json"
+                (dateChange)="updateDate(campaign,'date_to','End date')"
+                [minDate]="campaign.promote_settings.start_date_json"
+                [type]="'end'">
+        </app-datepicker>
+        <span
+                class="actionIcon mr15 ml70"
+                title="Edit"
+                [inlineSVG]="'/assets/images/icons/edit.svg'"
+                [removeSVGAttributes]="['fill']"
+                (click)="edit()"
+        >
+    </span>
+
+        <span
+                class="actionIcon"
+                title="Delete"
+                [inlineSVG]="'/assets/images/icons/delete.svg'"
+                [removeSVGAttributes]="['fill']"
+                (click)="delete()"
+        >
+    </span>
+    </app-breadcrumbs>
+    <app-campaign-statistics></app-campaign-statistics>
+    <app-loading [isLoading]="widgetsLoading"></app-loading>
+    <div id="crowd-content" class="withStatistics" *ngIf="!widgetsLoading">
+        <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+        <div class="container-fluid stats-wrapper">
+            <div class="row">
+                <div class="stats-card col-3 mt-5"
+                     *ngFor="let widget of this.widgets">
+                    <app-status [campaignModel]="campaign" [id]="widget.id" [widget]="widget" (activeEmitter)="toggleWidgetActive(widget)" (previewEmitter)="openPreview($event)"></app-status>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<app-preview *ngIf="previewOpen" [class]="'fullscreen'" [campaignId]="campaign.id" [(show)]="previewOpen" [deviceType]="deviceType" [widgets]="widgets" [widget]="widgetForPreview"></app-preview>
+<router-outlet name="right"></router-outlet>
