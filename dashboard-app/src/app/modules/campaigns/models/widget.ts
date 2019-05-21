@@ -170,7 +170,7 @@ export class Widget {
             payment_settings: {
                 active: true,
                 payment_type: 'both',
-                type: 'classic',
+                type: 'classic' || 'lite', // classic or lite
                 design: {
                     background_color: "#fff",
                     padding: {

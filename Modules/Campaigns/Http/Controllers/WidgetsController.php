@@ -152,7 +152,7 @@ class WidgetsController extends Controller
     private function createSettingsJson($widgetType)
     {
         $this->widgetSettings = $this->widgetSettingsStructure();
-        $this->paymentSettings = $this->paymentSettingsStructure();
+        $this->paymentSettings = $this->paymentSettingsStructure($widgetType);
         // GET GENERAL CAMPAIGN SETTINGS
         $generalSettings = $this->getGeneralSettings();
         $generalWidgetSettings = json_decode($generalSettings['widget_settings'], true);
@@ -1072,13 +1072,70 @@ class WidgetsController extends Controller
         return $structure;
     }
 
-    private function paymentSettingsStructure()
+
+    private function paymentSettingsStructure($widgetTypeId)
     {
         $structure = array(
-            'payment_type' => '',
-            'monthly_prices' => array(),
-            'one_prices' => array(),
-            'default_price' => array()
+            'active' => ($widgetTypeId == 1) ? true : false,
+            'payment_type' => 'both',
+            'type' => 'classic',
+            'design' => array(
+                'background_color' => '#ffffff',
+                'padding' => array(
+                    'top' => '',
+                    'right' => '',
+                    'bottom' => '',
+                    'left' => ''
+                ),
+                'margin' => array(
+                    'top' => '',
+                    'right' => '',
+                    'bottom' => '',
+                    'left' => ''
+                ),
+                'width' => '100%',
+                'height' => 'auto',
+                'text_color'    =>  '#777777'
+            ),
+            'monthly_prices' => array(
+                'custom_price'  =>  false,
+                'count_of_options'  =>  2,
+                'options'   =>  array(
+                    array(
+                        'value' =>  30
+                    ),
+                    array(
+                        'value' =>  40
+                    )
+                ),
+                'benefit'   =>  array(
+                    'active'    =>  true,
+                    'text'  =>  '',
+                    'value' =>  10
+                )
+            ),
+            'once_prices' => array(
+                'custom_price'  =>  false,
+                'count_of_options'  =>  2,
+                'options'   =>  array(
+                    array(
+                        'value' =>  30
+                    ),
+                    array(
+                        'value' =>  40
+                    )
+                ),
+                'benefit'   =>  array(
+                    'active'    =>  true,
+                    'text'  =>  '',
+                    'value' =>  10
+                )
+            ),
+            'default_price' => array(
+                'active'    =>  true,
+                'value' =>  30,
+                'styles'    =>  array()
+            )
         );
         return $structure;
     }
