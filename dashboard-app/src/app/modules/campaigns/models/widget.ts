@@ -172,18 +172,18 @@ export class Widget {
                 payment_type: 'both',
                 type: 'classic' || 'lite', // classic or lite
                 design: {
-                    background_color: "#fff",
+                    background_color: '#fff',
                     padding: {
-                        top: "10",
-                        right: "25",
-                        bottom: "10",
-                        left: "25"
+                        top: '10',
+                        right: '25',
+                        bottom: '10',
+                        left: '25'
                     },
                     margin: {
-                        top: "15",
-                        right: "10",
-                        bottom: "15",
-                        left: "10"
+                        top: '15',
+                        right: '10',
+                        bottom: '15',
+                        left: '10'
                     },
                     width: '100%',
                     height: 'auto',
@@ -226,7 +226,7 @@ export class Widget {
             },
             email_settings: {
                 active: false,
-                subscribe_text: 'Activated email includes "I agree with the processing my personal data an subscribe to the newsletter.'
+                subscribe_text: 'Activated email includes I agree with the processing my personal data an subscribe to the newsletter.'
             },
             additional_text: {
                 active: false,
@@ -470,18 +470,18 @@ export class Widget {
                 payment_type: 'both',
                 type: 'classic',
                 design: {
-                    background_color: "#fff",
+                    background_color: '#fff',
                     padding: {
-                        top: "10",
-                        right: "25",
-                        bottom: "10",
-                        left: "25"
+                        top: '10',
+                        right: '25',
+                        bottom: '10',
+                        left: '25'
                     },
                     margin: {
-                        top: "15",
-                        right: "10",
-                        bottom: "15",
-                        left: "10"
+                        top: '15',
+                        right: '10',
+                        bottom: '15',
+                        left: '10'
                     },
                     width: '100%',
                     height: 'auto',
@@ -738,21 +738,27 @@ export class Widget {
                 },
             },
             payment_settings: {
+                active: false,
                 payment_type: 'both',
                 type: 'classic',
+                monetization_title: {
+                    text: '',
+                    textColor: '#000000',
+                    alignment: 'center'
+                },
                 design: {
-                    background_color: "#fff",
+                    background_color: '#fff',
                     padding: {
-                        top: "10",
-                        right: "25",
-                        bottom: "10",
-                        left: "25"
+                        top: '10',
+                        right: '25',
+                        bottom: '10',
+                        left: '25'
                     },
                     margin: {
-                        top: "15",
-                        right: "10",
-                        bottom: "15",
-                        left: "10"
+                        top: '15',
+                        right: '10',
+                        bottom: '15',
+                        left: '10'
                     },
                     width: '100%',
                     height: 'auto',

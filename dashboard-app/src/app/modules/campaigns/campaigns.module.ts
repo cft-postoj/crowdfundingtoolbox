@@ -18,6 +18,7 @@ import {CampaignDetailComponent} from "./pages/campaign-detail/campaign-detail.c
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { PreviewMonetizationLiteComponent } from './components/preview-monetization-lite/preview-monetization-lite.component';
+import { CampaignNotFoundComponent } from './pages/campaign-not-found/campaign-not-found.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { PreviewMonetizationLiteComponent } from './components/preview-monetizat
         CampaignStatisticsComponent,
         WidgetEditComponent,
         PreviewComponent,
-        PreviewMonetizationLiteComponent
+        PreviewMonetizationLiteComponent,
+        CampaignNotFoundComponent,
     ],
 
     imports: [

@@ -1,6 +1,11 @@
 <div class="cft--monetization--container" [ngStyle]="getMonetizationContainerStyle()" id="cft-monetization__container"
      *ngIf="widget.settings[deviceType].payment_settings.active">
-    <div class="cft--monatization--title">
+    <div class="cft--monatization--title"
+         [ngStyle]="getMonetizationTitleStyles()"
+         [innerHTML]="(widget.settings[deviceType].payment_settings.monetization_title) ?
+         '<h1>' +
+         widget.settings[deviceType].payment_settings.monetization_title.text +
+         '</h1>' : ''">
     </div>
     <div class="cft--monatization--donation-button-wrapper cft--monatization--only-monthly"
          [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value}"
@@ -66,14 +71,16 @@
     </div>
     <div class="cft--monatization--membership cft--monatization--only-monthly"
          *ngIf="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active">
-        <span class="cft--monatization--membership-checkbox" id="cft--monatization--membership-checkbox--monthly"></span>
+        <span class="cft--monatization--membership-checkbox"
+              id="cft--monatization--membership-checkbox--monthly"></span>
         <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()"
              [innerHTML]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text">
         </div>
     </div>
     <div class="cft--monatization--membership cft--monatization--only-one-time cft--monatization--hidden"
          *ngIf="widget.settings[deviceType].payment_settings.once_prices.benefit.active">
-        <span class="cft--monatization--membership-checkbox" id="cft--monatization--membership-checkbox--one-time"></span>
+        <span class="cft--monatization--membership-checkbox"
+              id="cft--monatization--membership-checkbox--one-time"></span>
         <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()"
              [innerHTML]="widget.settings[deviceType].payment_settings.once_prices.benefit.text">
         </div>
@@ -108,7 +115,7 @@
     </form>
     <div class="cft--monatization--additional-links cft--monatization--only-monthly"
          [ngStyle]="additionalLinksStyle()"
-         *ngIf="widget.settings[deviceType].payment_settings.payment_type == paymentTypes.both.value" >
+         *ngIf="widget.settings[deviceType].payment_settings.payment_type == paymentTypes.both.value">
         <a href="javascript:void(0)" onclick="parent.oneTimePayment()">Jednorazový príspevok</a>
     </div>
     <div class="cft--monatization--additional-links cft--monatization--only-one-time cft--monatization--hidden"
