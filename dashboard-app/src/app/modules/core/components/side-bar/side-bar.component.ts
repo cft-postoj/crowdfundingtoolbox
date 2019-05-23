@@ -22,7 +22,7 @@ export class SideBarComponent implements OnInit {
     public readonly statisticsItemName = 'STATISTICS';
     public readonly connectionsItemName = 'CONNECTIONS';
     public readonly campaignsItemName = 'CAMPAIGNS';
-    public readonly usersItemName = 'USERS';
+    public readonly donorsItemName = 'DONORS';
     public readonly paymentsItemName = 'PAYMENTS';
     public readonly translationsItemName = 'TRANSLATIONS';
     public isActive: boolean;
@@ -43,19 +43,23 @@ export class SideBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCampaigns();
-        this.componentComService.alert.subscribe(message=>{
-            this.getCampaignsAndCreateSidebar();
-        }, (error) => {
-            console.error(error);
-        });
+        if (this.router.routerState.snapshot.url.indexOf('campaigns') > -1) {
+            this.getCampaigns();
+            this.componentComService.alert.subscribe(message => {
+                this.getCampaignsAndCreateSidebar();
+            }, (error) => {
+                console.error(error);
+            });
 
-        this.previewService.change.subscribe(isOpen => {
-            this.previewOpen = isOpen;
-        });
+            this.previewService.change.subscribe(isOpen => {
+                this.previewOpen = isOpen;
+            });
+        } else {
+            this.makeItemPublic();
+        }
     }
 
-    getCampaigns(){
+    getCampaigns() {
         this.campaignService.getAll().subscribe((campaigns: any) => {
             this.campaigns = campaigns.data;
         }, (error) => {
@@ -63,9 +67,9 @@ export class SideBarComponent implements OnInit {
         });
     }
 
-    getCampaignsAndCreateSidebar(){
+    getCampaignsAndCreateSidebar() {
         this.campaignService.getAll().subscribe((campaigns: any) => {
-            if (campaigns.data && campaigns.data.length){
+            if (campaigns.data && campaigns.data.length) {
                 this.campaigns = campaigns.data;
                 this.showItem(this.campaignsItemName)
             }
@@ -80,6 +84,32 @@ export class SideBarComponent implements OnInit {
 
     public showWidgets() {
         this.toggleWidgets = !this.toggleWidgets;
+    }
+
+    private makeItemPublic() {
+        const slug = this.router.routerState.snapshot.url.split('/dashboard/')[1].split('/')[0];
+        let itemName = null;
+        console.log(this.donorsItemName);
+        console.log(slug.toUpperCase());
+        console.log(this.donorsItemName === slug.toUpperCase());
+        switch (slug.toUpperCase()) {
+            case this.donorsItemName:
+                itemName = this.donorsItemName;
+                break;
+            case this.paymentsItemName:
+                itemName = this.paymentsItemName;
+                break;
+            case this.statisticsItemName:
+                itemName = this.statisticsItemName;
+                break;
+            case this.connectionsItemName:
+                itemName = this.connectionsItemName;
+                break;
+            case this.translationsItemName:
+                itemName = this.translationsItemName;
+                break;
+        }
+        return this.showItem(itemName);
     }
 
     showItem(itemName: string) {
@@ -97,10 +127,13 @@ export class SideBarComponent implements OnInit {
             }
             this.sidebarItems.push({
                 title: "All campaigns",
-                value: "/"+Routing.CAMPAIGNS_ALL_FULL_PATH
+                value: "/" + Routing.CAMPAIGNS_ALL_FULL_PATH
             });
+            this.isActive = this.activeItem !== this.noActiveItem;
+        } else {
+            this.isActive = false;
         }
         this.activeItem = itemName;
-        this.isActive = this.activeItem !== this.noActiveItem;
+
     }
 }

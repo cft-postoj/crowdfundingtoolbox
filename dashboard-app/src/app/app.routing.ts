@@ -1,15 +1,15 @@
-import {RouterModule, Routes} from '@angular/router';
-import {Routing} from "./constants/config.constants";
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {Routing} from './constants/config.constants';
 import {
     CtaSettingsComponent,
     DashboardComponent,
     GeneralSettingsComponent,
     WidgetSettingsComponent
-} from "./modules/core/components";
-import {LoginGuard} from "./modules/user-management/services";
-import {AboutComponent, ContactComponent} from "./components";
-import {ConfigurationComponent} from "./modules/core/pages/configuration/configuration.component";
-import {TranslationCreateComponent, TranslationListComponent} from "./modules/translations/components";
+} from './modules/core/components';
+import {LoginGuard} from './modules/user-management/services';
+import {AboutComponent, ContactComponent} from './components';
+import {ConfigurationComponent} from './modules/core/pages/configuration/configuration.component';
+import {TranslationCreateComponent, TranslationListComponent} from './modules/translations/components';
 
 export const appRoutes: Routes = [
     {
@@ -59,6 +59,10 @@ export const appRoutes: Routes = [
             {
                 path: Routing.CAMPAIGNS,
                 loadChildren: './modules/campaigns/campaigns.module#CampaignsModule'
+            },
+            {
+                path: Routing.DONORS,
+                loadChildren: './modules/portal-users/portal-users.module#PortalUsersModule'
             }
         ]
     },
@@ -69,5 +73,7 @@ export const appRoutes: Routes = [
     }
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes, {
+    preloadingStrategy: PreloadAllModules
+});
 

@@ -23,8 +23,8 @@ class CreateCampaignDonations extends Migration
             $table->foreign('widget_id')->references('id')->on('widgets');
             $table->integer('referral_widget_id')->nullable();
             $table->foreign('referral_widget_id')->references('id')->on('widgets');
-            $table->string('sum');
-            $table->boolean('monthly_subscription')->default(false);
+            $table->decimal('donation');
+            $table->boolean('is_monthly_donation')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,8 +17,8 @@ class CreateDonations extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('sum');
-            $table->boolean('monthly_subscription')->default(false);
+            $table->decimal('donation'); // price
+            $table->boolean('is_monthly_donation')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
