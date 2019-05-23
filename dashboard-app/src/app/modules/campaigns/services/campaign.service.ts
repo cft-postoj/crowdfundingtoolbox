@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'environments/environment'
-import {Observable, of} from "rxjs";
-import {Campaign} from "../models/campaign";
+import {Observable, of} from 'rxjs';
+import {Campaign} from '../models';
 
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +11,7 @@ export class CampaignService {
     }
 
     public createCampaign(campaign: Campaign): Observable<any> {
-        let campaignToSend = this.writeDatesAsStrings(campaign);
+        const campaignToSend = this.writeDatesAsStrings(campaign);
         return this.http.post(environment.backOfficeUrl + environment.campaignUrl, campaignToSend);
     }
 
@@ -24,8 +24,8 @@ export class CampaignService {
     }
 
     updateCampaign(campaign: Campaign): Observable<any> {
-        let campaignToSend = this.writeDatesAsStrings(campaign);
-        return this.http.put(environment.backOfficeUrl + environment.campaignUrl + "/" + campaign.id, campaignToSend);
+        const campaignToSend = this.writeDatesAsStrings(campaign);
+        return this.http.put(environment.backOfficeUrl + environment.campaignUrl + '/' + campaign.id, campaignToSend);
     }
 
     deleteCampaign(campaignId){
@@ -36,28 +36,29 @@ export class CampaignService {
         return this.http.put<any>(`${environment.backOfficeUrl}${environment.campaignUrl}/${campaignId}${environment.smart}`, smartObject);
     }
 
-    updateWidgetsHTML(campaignId,htmlsWrapper: any) {
-        return this.http.put<any>(`${environment.backOfficeUrl}${environment.campaignUrl}/${campaignId}${environment.result}`, htmlsWrapper);
+    updateWidgetsHTML(campaignId, htmlsWrapper: any) {
+        return this.http.put<any>(`${environment.backOfficeUrl}${environment.campaignUrl}/
+        ${campaignId}${environment.result}`, htmlsWrapper);
     }
 
     smartActive(campaignId, variable, value) {
-        let smartObject = {};
+        const smartObject = {};
         smartObject[variable] = value;
         return this.smart(campaignId, smartObject);
     }
 
     smartDate(campaign, variable) {
-        let campaignToSend = this.writeDatesAsStrings(campaign)
-        let smartObject = {};
+        const campaignToSend = this.writeDatesAsStrings(campaign)
+        const smartObject = {};
         smartObject[variable] = campaignToSend[variable];
          return this.smart(campaign.id, smartObject);
     }
 
 
     private writeDatesAsStrings(campaign: Campaign): Campaign {
-        let result:Campaign = {...campaign}
-        result.date_from = this.writeDateAsString(campaign.date_from)
-        result.date_to = this.writeDateAsString(campaign.date_to)
+        const result: Campaign = {...campaign}
+        result.promote_settings.start_date_value = this.writeDateAsString(campaign.promote_settings.start_date_json);
+        result.promote_settings.end_date_value = this.writeDateAsString(campaign.promote_settings.end_date_json);
         result.targeting.registration.after.date = this.writeDateAsString(result.targeting.registration.after.date);
         result.targeting.registration.before.date = this.writeDateAsString(result.targeting.registration.before.date);
         return result;
@@ -68,16 +69,15 @@ export class CampaignService {
     }
 
     writeDatesAsJson(campaign: Campaign) {
-        campaign.date_from = this.writeDateAsJson(campaign.date_from)
-        campaign.date_to = this.writeDateAsJson(campaign.date_to)
-        campaign.targeting.registration.after.date = this.writeDateAsJson(campaign.targeting.registration.after.date)
-        campaign.targeting.registration.before.date = this.writeDateAsJson(campaign.targeting.registration.before.date)
+        campaign.promote_settings.start_date_json = this.writeDateAsJson(campaign.promote_settings.start_date_value);
+        campaign.promote_settings.end_date_json = this.writeDateAsJson(campaign.promote_settings.end_date_value);
+        campaign.targeting.registration.after.date = this.writeDateAsJson(campaign.targeting.registration.after.date);
+        campaign.targeting.registration.before.date = this.writeDateAsJson(campaign.targeting.registration.before.date);
     }
 
     writeDateAsJson(date) {
-        let resultArray = date.split("-");
-        let result = {year: +resultArray[0], month: +resultArray[1], day: +resultArray[2]};
-        return result;
+        const resultArray = date.split('-');
+        return {year: +resultArray[0], month: +resultArray[1], day: +resultArray[2]};
     }
 
     clone(campaignId) {

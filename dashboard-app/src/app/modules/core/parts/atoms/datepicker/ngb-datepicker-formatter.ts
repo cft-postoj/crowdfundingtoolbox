@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { NgbDateParserFormatter, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { Injectable } from '@angular/core';
+import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 function padNumber(value: number) {
     if (isNumber(value)) {
         return `0${value}`.slice(-2);
     } else {
-        return "";
+        return '';
     }
 }
 
@@ -22,7 +22,7 @@ function toInteger(value: any): number {
 export class DateParserFormatter extends NgbDateParserFormatter {
     parse(value: string): NgbDateStruct {
         if (value) {
-            const dateParts = value.trim().split('/');
+            const dateParts = value.trim().split('.');
             if (dateParts.length === 1 && isNumber(dateParts[0])) {
                 return {year: toInteger(dateParts[0]), month: null, day: null};
             } else if (dateParts.length === 2 && isNumber(dateParts[0]) && isNumber(dateParts[1])) {
@@ -35,10 +35,10 @@ export class DateParserFormatter extends NgbDateParserFormatter {
     }
 
     format(date: NgbDateStruct): string {
-        let stringDate: string = "";
-        if(date) {
-            stringDate += isNumber(date.day) ? padNumber(date.day) + "/" : "";
-            stringDate += isNumber(date.month) ? padNumber(date.month) + "/" : "";
+        let stringDate: string = '';
+        if (date) {
+            stringDate += isNumber(date.day) ? padNumber(date.day) + '.' : '';
+            stringDate += isNumber(date.month) ? padNumber(date.month) + '.' : '';
             stringDate += date.year;
         }
         return stringDate;

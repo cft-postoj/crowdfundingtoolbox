@@ -37,7 +37,6 @@ export class PreviewMonetizationComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.subscription = this.previewService.updatePreviewChange.subscribe(update => {
             this.ref.detectChanges();
             this.recreateStyles();
@@ -341,6 +340,18 @@ export class PreviewMonetizationComponent implements OnInit {
         return {
             'text-align': 'center',
             padding: '16px'
+        }
+    }
+
+    getMonetizationTitleStyles() {
+        const title = this.widget.settings[this.deviceType].payment_settings.monetization_title;
+        if (title) {
+            return {
+                color: title.textColor,
+                textAlign: title.alignment
+            };
+        } else {
+            return {};
         }
     }
 }

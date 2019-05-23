@@ -25,7 +25,8 @@ export class DatepickerComponent implements OnInit {
     public type: string;
 
     @Input()
-    public disabled:boolean;
+    public disabled: boolean;
+
 
     public displayMonths = 1;
     public navigation = 'select';
@@ -35,7 +36,7 @@ export class DatepickerComponent implements OnInit {
 
 
     ngOnInit(): void {
-
+        console.log(this.date);
     }
 
     public changeEvent() {

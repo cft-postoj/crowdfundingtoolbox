@@ -409,7 +409,8 @@
                                                [(ngModel)]="widget.settings[deviceType].cta.text"
                                                maxlength="60">
                                         <span class="actualLength">
-                                           {{widget.settings[deviceType].cta.text?widget.settings[deviceType].cta.text.length:0}} / {{cta?.maxLength}}
+                                           {{widget.settings[deviceType].cta.text ? widget.settings[deviceType].cta.text.length : 0}}
+                                            / {{cta?.maxLength}}
                                          </span>
                                     </div>
                                 </div>
@@ -427,7 +428,8 @@
                                                [(ngModel)]="widget.settings[deviceType].cta.url"
                                                maxlength="2000">
                                         <span class="actualLength">
-                                           {{widget.settings[deviceType].cta.url?widget.settings[deviceType].cta.url.length:0}} / {{cta_url?.maxLength}}
+                                           {{widget.settings[deviceType].cta.url ? widget.settings[deviceType].cta.url.length : 0}}
+                                            / {{cta_url?.maxLength}}
                                          </span>
                                     </div>
                                 </div>
@@ -771,6 +773,41 @@
                                 ></app-checkbox>
                             </div>
                         </div>
+                        <div class="settings--card">
+                            <div class="row">
+                                <div class="col-12 bold">
+                                    <div class="settings--card--header">
+                                        Monetization title
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.monetization_title.text"></angular-editor>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-3 vertical-align">
+                                    Title color:
+                                </div>
+                                <div class="col-3 color-picker--simple">
+                                    <input [value]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
+                                           class="btn color-picker--custom"
+                                           [style.background]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
+                                           [cpPosition]="'bottom'"
+                                           [cpPresetColors]="colors"
+                                           [(colorPicker)]="widget.settings[deviceType].payment_settings.monetization_title.textColor"/>
+                                </div>
+                                <div class="col-3 vertical-align">
+                                    Alignment:
+                                </div>
+                                <div class="col-3">
+                                    <app-radio-button-group [class]="'full-width'"
+                                                            [(currentValue)]="widget.settings[deviceType].payment_settings.monetization_title.alignment"
+                                                            [radioButtons]="radioButtons">
+                                    </app-radio-button-group>
+                                </div>
+                            </div>
+                        </div>
                         <ng-container *ngIf="widget.settings[deviceType].payment_settings.active">
                             <div class="settings--card">
                                 <div class="settings--card--header">
@@ -779,11 +816,11 @@
                                 <div class="settings--card--body">
                                     <div class="row">
                                         <div class="col-12">
-                                            <app-dropdown  class="classic"
-                                                           [class]="'classic mr15'"
-                                                           [items]="monetizationTypes"
-                                                           [title]="'Choose design'"
-                                                           [(currentValue)]="widget.settings[deviceType].payment_settings.type">
+                                            <app-dropdown class="classic"
+                                                          [class]="'classic mr15'"
+                                                          [items]="monetizationTypes"
+                                                          [title]="'Choose design'"
+                                                          [(currentValue)]="widget.settings[deviceType].payment_settings.type">
                                             </app-dropdown>
                                         </div>
                                     </div>
@@ -805,7 +842,7 @@
                                         <div class="col-6 editInput">
                                             Height:
                                             <input #campaignName id="monetization-height"
-                                                   placeholder="Height in % or px"Design
+                                                   placeholder="Height in % or px" Design
                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.design.height"
                                                    maxlength="120">
                                         </div>
@@ -903,7 +940,7 @@
                                                 <div class="col-6 pt-3 col-xxl-4">
                                                     <div class="row">
                                                         <div class="col-6 vertical-align">
-                                                            Price No.{{i+1}}
+                                                            Price No.{{i + 1}}
                                                         </div>
                                                         <div class="col-6">
                                                             <app-inputNumber [(value)]="option.value">
@@ -919,7 +956,7 @@
                                                 Benefit
                                             </div>
                                             <app-switcher class="col-2 text-right"
-                                                    [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"> </app-switcher>
+                                                          [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-switcher>
                                             <div class="col-12">
                                                 <angular-editor class="angular-editor--simple"
                                                                 [(ngModel)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text"></angular-editor>
@@ -929,8 +966,8 @@
                                             </div>
                                             <div class="col-6">
                                                 <app-inputNumber
-                                                    [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
-                                                    [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active" ></app-inputNumber>
+                                                        [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
+                                                        [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-inputNumber>
                                             </div>
                                         </div>
                                     </div>
@@ -973,7 +1010,7 @@
                                                     <div class="col-6 pt-3 col-xxl-4">
                                                         <div class="row">
                                                             <div class="col-6 vertical-align">
-                                                                Price No.{{i+1}}
+                                                                Price No.{{i + 1}}
                                                             </div>
                                                             <div class="col-6 ">
                                                                 <app-inputNumber [(value)]="option.value">
@@ -989,7 +1026,7 @@
                                                     Benefit
                                                 </div>
                                                 <app-switcher class="col-2 text-right"
-                                                              [(checked)]="widget.settings[deviceType].payment_settings.once_prices.benefit.active"> </app-switcher>
+                                                              [(checked)]="widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-switcher>
                                                 <div class="col-12">
                                                     <angular-editor class="angular-editor--simple"
                                                                     [(ngModel)]="widget.settings[deviceType].payment_settings.once_prices.benefit.text"></angular-editor>
@@ -1000,7 +1037,7 @@
                                                 <div class="col-6">
                                                     <app-inputNumber
                                                             [(value)]="widget.settings[deviceType].payment_settings.once_prices.benefit.value"
-                                                            [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active" ></app-inputNumber>
+                                                            [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-inputNumber>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -1069,17 +1106,17 @@
                                           </div>
                                       </div>-->
                                     <!--<div class="row mt-3">-->
-                                        <!--<div class="col-12 bold">Monetization text-->
-                                            <!--<app-switcher class="float-right" [id]="'additional'"-->
-                                                          <!--[(checked)]="widget.settings[deviceType].additional_text.active"></app-switcher>-->
-                                        <!--</div>-->
+                                    <!--<div class="col-12 bold">Monetization text-->
+                                    <!--<app-switcher class="float-right" [id]="'additional'"-->
+                                    <!--[(checked)]="widget.settings[deviceType].additional_text.active"></app-switcher>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <!--<div class="row"-->
-                                         <!--*ngIf="widget.settings[deviceType].additional_text.active">-->
-                                        <!--<div class="col">-->
-                                            <!--<angular-editor class="angular-editor&#45;&#45;simple"-->
-                                                            <!--[(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>-->
-                                        <!--</div>-->
+                                    <!--*ngIf="widget.settings[deviceType].additional_text.active">-->
+                                    <!--<div class="col">-->
+                                    <!--<angular-editor class="angular-editor&#45;&#45;simple"-->
+                                    <!--[(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                 </ng-container>
                             </div>

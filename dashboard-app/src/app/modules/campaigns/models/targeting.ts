@@ -80,8 +80,8 @@ export class Targeting {
     url = {
         specific: false,
         list: [
-            {id:0, path:'https://www.postoj.sk'},
-            {id:0, path:'https://www.postoj.sk/politika'}
+            {id: 0, path: 'https://www.postoj.sk'},
+            {id: 0, path: 'https://www.postoj.sk/politika'}
             ]
     }
 }

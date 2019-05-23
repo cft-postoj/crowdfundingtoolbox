@@ -20,7 +20,7 @@ export class CampaignSettingsComponent  implements OnInit {
     public dateTo: { day: number, year: number, month: number };
     public campaignNameLength: number = 0;
 
-    public opened:number[] = [1,2,3];
+    public opened: number[] = [1, 2, 3];
     public differ: KeyValueDiffer<string, any>;
     public campaignEndRadioButtons: RadioButton[];
     public paymentTypeRadioButtons: RadioButton[];
@@ -31,7 +31,7 @@ export class CampaignSettingsComponent  implements OnInit {
 
     public newUrl: string;
 
-    @ViewChild("newUrlInput") newUrlInput: ElementRef;
+    @ViewChild('newUrlInput') newUrlInput: ElementRef;
 
     constructor(private differs: KeyValueDiffers, private route: ActivatedRoute, private campaignService: CampaignService) {
         this.differ = this.differs.find({}).create();

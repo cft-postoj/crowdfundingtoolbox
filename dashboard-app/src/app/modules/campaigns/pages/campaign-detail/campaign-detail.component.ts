@@ -36,7 +36,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     alertMessage;
     previewOpen;
     deviceType = devices.desktop.name;
-    widgetForPreview:Widget;
+    widgetForPreview: Widget;
     public environment = environment;
 
     constructor(private router: Router, private route: ActivatedRoute, private campaignService: CampaignService,
@@ -70,17 +70,18 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         this.changeSubscription.unsubscribe();
     }
 
-    getData(){
+    getData() {
         this.loading  = true;
         this.widgetsLoading = true;
         this.campaignService.getCampaignById(this.id).subscribe(
             campaign => {
                 this.campaign = campaign.data;
                 this.campaignService.writeDatesAsJson(this.campaign);
+                // this.campaignService.writeDateAsString(this.campaign);
                 this.pageTitle = this.campaign.name;
                 this.loading = false;
             }
-        )
+        );
         this.widgetService.getListByCampaignId(this.id).subscribe(
             widgets => {
                 this.widgets = widgets.data;
@@ -133,7 +134,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
 
     public toggleWidgetActive(widget: Widget) {
-        this.widgetService.smartActive(widget.id, widget.active).subscribe(result => {
+        this.widgetService.smartActive(widget.id, !widget.active).subscribe(result => {
             widget.active = !widget.active;
             this.alertOpen = true;
             this.alertMessage = `Widget status changed to ${widget.active? 'active': 'disabled'}`;

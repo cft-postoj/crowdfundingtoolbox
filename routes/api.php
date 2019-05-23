@@ -105,6 +105,8 @@ Route::group([
     'prefix' => 'portal'
 ], function () {
     Route::get('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
+    //get Campaign
+    Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
     Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
     Route::post('donation-register', '\Modules\UserManagement\Http\Controllers\UserServiceController@donationCreate');
     Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');

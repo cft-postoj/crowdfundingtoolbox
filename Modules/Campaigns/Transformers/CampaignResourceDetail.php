@@ -10,26 +10,28 @@ class CampaignResourceDetail extends Resource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
-        $campaignSettings = CampaignSettings::where('campaign_id', $this->id)->first();
+        //$campaignSettings = CampaignSettings::where('campaign_id', $this->id)->first();
         return [
             'id' => $this->id,
             'active' => ($this->active == null) ? false : $this->active,
             'name' => $this->name,
-            'date_from' => $this->date_from,
-            'date_to' => $this->date_to,
             'description' => $this->description,
             'headline_text' => $this->headline_text,
-            'payment_settings' => json_decode($campaignSettings->payment_settings, true),
-            'promote_settings' => json_decode($campaignSettings->promote_settings, true),
-            'widget_settings' => json_decode($campaignSettings->widget_settings, true),
-            'targeting' => $this->createTargetingJson($this->targeting)
-
+            'payment_settings' => json_decode($this->payment_settings, true),
+            'widget_settings' => json_decode($this->widget_settings, true),
+            'targeting' => $this->createTargetingJson($this->targeting),
+            'promote_settings' => $this->createPromoteSettingsJson($this->promote)
         ];
+    }
+
+    private function createPromoteSettingsJson($promote)
+    {
+        return $promote;
     }
 
     private function createTargetingJson($targeting)

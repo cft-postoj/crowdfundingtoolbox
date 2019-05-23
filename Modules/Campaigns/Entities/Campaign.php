@@ -15,7 +15,11 @@ class Campaign extends Model
         'name', 'active', 'description', 'date_from', 'date_to', 'headline_text', 'updated_at'
     ];
 
-    public function targeting(){
+    public function targeting() {
         return $this->hasOne('\Modules\Targeting\Entities\Targeting');
+    }
+
+    public function promote() {
+        return $this->hasOne('\Modules\Campaigns\Entities\CampaignPromote');
     }
 }

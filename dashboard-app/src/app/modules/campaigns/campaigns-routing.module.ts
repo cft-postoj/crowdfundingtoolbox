@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {Routing} from "../../constants/config.constants";
-import {CommonModule} from "@angular/common";
-import {CampaignEditComponent, WidgetEditComponent} from "./components";
-import {CampaignListComponent} from "./pages/campaign-list/campaign-list.component";
-import {CampaignDetailComponent} from "./pages/campaign-detail/campaign-detail.component";
+import {Routing} from '../../constants/config.constants';
+import {CommonModule} from '@angular/common';
+import {CampaignEditComponent, WidgetEditComponent} from './components';
+import {CampaignListComponent} from './pages/campaign-list/campaign-list.component';
+import {CampaignDetailComponent} from './pages/campaign-detail/campaign-detail.component';
+import {CampaignNotFoundComponent} from "./pages/campaign-not-found/campaign-not-found.component";
 
 const routes: Routes = [
     {
@@ -29,12 +30,12 @@ const routes: Routes = [
 
     },
     {
-        path: ":" + Routing.ID,
+        path: ':' + Routing.ID,
         component: CampaignDetailComponent,
         data: {parent: null},
         children: [
             {
-                path: Routing.EDIT + "/:widgetId",
+                path: Routing.EDIT + '/:widgetId',
                 component: WidgetEditComponent,
                 outlet: Routing.RIGHT_OUTLET
             },
@@ -44,6 +45,10 @@ const routes: Routes = [
                 outlet: Routing.RIGHT_OUTLET
             }
         ]
+    },
+    {path: '404', component: CampaignNotFoundComponent},
+    {
+        path: '**', redirectTo: 'all'
     }
 ];
 

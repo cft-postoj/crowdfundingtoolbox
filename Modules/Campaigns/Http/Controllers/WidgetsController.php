@@ -6,6 +6,7 @@ use Modules\Campaigns\Entities\Campaign;
 use Modules\Campaigns\Entities\CampaignImage;
 use Modules\Campaigns\Entities\CampaignsConfiguration;
 use Modules\Campaigns\Entities\CampaignSettings;
+use Modules\Campaigns\Entities\DeviceType;
 use Modules\Campaigns\Entities\Widget;
 use Modules\Campaigns\Entities\WidgetResult;
 use Modules\Campaigns\Entities\WidgetSettings;
@@ -25,6 +26,7 @@ class WidgetsController extends Controller
     private $widgetIds = array();
     private $campaignId;
     private $widgetSettings;
+    private $paymentSettings;
     private $widgetVersionService;
 
     public function __construct()
@@ -134,29 +136,22 @@ class WidgetsController extends Controller
         ], Response::HTTP_OK);
     }
 
-    private function initialWidgetSettings($id, $widgetType)
+    private function initialWidgetSettings($id, $widgetTypeId)
     {
-        $campaignSettingsData = CampaignSettings::where('campaign_id', $id)->first();
-        $campaignWidgetSettings = json_decode($campaignSettingsData->widget_settings, true);
-        $promoteWidgetSettings = json_decode($campaignSettingsData->promote_settings, true);
-        $paymentSettings = json_decode($campaignSettingsData->payment_settings, true);
-
-        $campaignData = Campaign::find($id);
-
-
-        return $this->createSettingsJson($campaignData->headline_text, $campaignWidgetSettings, $promoteWidgetSettings, $paymentSettings, $widgetType);
+        return $this->createSettingsJson($widgetTypeId);
     }
 
-    private function createSettingsJson($headlineText, $widgetSettings, $promoteSettings, $paymentSettings, $widgetType)
+    private function createSettingsJson($widgetType)
     {
-
+        $this->widgetSettings = $this->widgetSettingsStructure();
+        $this->paymentSettings = $this->paymentSettingsStructure($widgetType);
         // GET GENERAL CAMPAIGN SETTINGS
         $generalSettings = $this->getGeneralSettings();
         $generalWidgetSettings = json_decode($generalSettings['widget_settings'], true);
         $generalSettingsHeadlineText = json_decode($generalSettings['font_settings_headline_text'], true);
         $generalCtaSettings = json_decode($generalSettings['cta'], true);
 
-        $widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
+        $this->widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
             'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
             'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
             'alignment' => 'center',
@@ -165,19 +160,19 @@ class WidgetsController extends Controller
             'fontSize' => $generalSettingsHeadlineText['fontSize']
         ), $widgetType);
 
-        $widgetSettings['general']['background'] = array(
+        $this->widgetSettings['general']['background'] = array(
             'type' => 'color',
             'image' => array('id' => 0, 'url' => null),
             'color' => $generalWidgetSettings['backgroundColor'],
             'opacity' => 100
         );
 
-        $widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $widgetSettings['general']['text_margin'], $widgetType);
+        $this->widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $this->widgetSettings['general']['text_margin'], $widgetType);
 
-        $widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
+        $this->widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
 
         // Additional text
-        $widgetSettings['additional_text'] = array(
+        $this->widgetSettings['additional_text'] = array(
             'text' => $generalWidgetSettings['additional_text']['text'],
             'fontSettings' => array(
                 'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
@@ -197,11 +192,10 @@ class WidgetsController extends Controller
         );
 
 
-        $this->widgetSettings = array(
+        $result = array(
             'headline_text' => $generalWidgetSettings['headline_text']['text'],
-            'widget_settings' => $widgetSettings,
-            'promote_settings' => $promoteSettings,
-            'payment_settings' => $paymentSettings,
+            'widget_settings' => $this->widgetSettings,
+            'payment_settings' => $this->paymentSettings,
             'email_settings' => array(
                 'active' => false,
                 'subscribe_text' => ''
@@ -214,7 +208,7 @@ class WidgetsController extends Controller
                 $this->getAdditionalWidgetSettings($widgetType, $generalSettings)
 
         );
-        return $this->widgetSettings;
+        return $result;
     }
 
     private function overrideGeneralSettings($type, $settings, $widgetType)
@@ -267,7 +261,7 @@ class WidgetsController extends Controller
                     $output['alignment'] = 'left';
                     break;
                 case 3: // leaderboard widget
-                    $output['fontSize'] =  50;
+                    $output['fontSize'] = 50;
                 default:
                     $output = $settings;
             }
@@ -304,7 +298,7 @@ class WidgetsController extends Controller
         try {
             $this->widgetIds = WidgetTypesController::getWidgetTypeIds();
             foreach ($this->widgetIds as $id) {
-                $widgetSettings = json_encode($this->initialWidgetSettings($this->campaignId, $id));
+                $widgetSettings = $this->initialWidgetSettings($this->campaignId, $id);
                 $paymentType = ($id == 1) ? true : false;
                 $widget = Widget::create([
                     'campaign_id' => $this->campaignId,
@@ -315,9 +309,9 @@ class WidgetsController extends Controller
                 $widget->save();
                 WidgetSettings::create([
                     'widget_id' => $widget->id,
-                    'desktop' => $widgetSettings,
-                    'tablet' => $widgetSettings,
-                    'mobile' => $widgetSettings
+                    'desktop' => $this->overrideMonetization(DeviceType::find(1), $widgetSettings, $id),
+                    'tablet' => $this->overrideMonetization(DeviceType::find(2), $widgetSettings, $id),
+                    'mobile' => $this->overrideMonetization(DeviceType::find(3), $widgetSettings, $id)
                 ]);
                 // create Widget results
                 WidgetResult::create([
@@ -767,7 +761,7 @@ class WidgetsController extends Controller
         try {
             $paymentType = (Widget::find($id)->where('widget_type_id', 1)->first() != null) ? true :
                 $request['payment_type'];
-            Widget::find($id)->update([
+            Widget::where('id', $id)->update([
                 'active' => $request['active'],
                 'use_campaign_settings' => false,
                 'payment_type' => $paymentType
@@ -788,29 +782,39 @@ class WidgetsController extends Controller
                     'image_id' => $request['settings']['desktop']['widget_settings']['general']['background']['image']['id'],
                     'device_type' => 1 //desktop
                 ]);
-                CampaignImage::create([
-                    'campaign_id' => Widget::find($id)->only('campaign_id')['campaign_id'],
-                    'widget_id' => $id,
-                    'image_id' => $request['settings']['tablet']['widget_settings']['general']['background']['image']['id'],
-                    'device_type' => 2 //tablet
-                ]);
-                CampaignImage::create([
-                    'campaign_id' => Widget::find($id)->only('campaign_id')['campaign_id'],
-                    'widget_id' => $id,
-                    'image_id' => $request['settings']['mobile']['widget_settings']['general']['background']['image']['id'],
-                    'device_type' => 3 //mobile
-                ]);
+                if ($request['settings']['tablet']['widget_settings']['general']['background']['image']['url'] != null):
+                    CampaignImage::create([
+                        'campaign_id' => Widget::find($id)->only('campaign_id')['campaign_id'],
+                        'widget_id' => $id,
+                        'image_id' => $request['settings']['tablet']['widget_settings']['general']['background']['image']['id'],
+                        'device_type' => 2 //tablet
+                    ]);
+                endif;
+                if ($request['settings']['mobile']['widget_settings']['general']['background']['image']['url'] != null):
+                    CampaignImage::create([
+                        'campaign_id' => Widget::find($id)->only('campaign_id')['campaign_id'],
+                        'widget_id' => $id,
+                        'image_id' => $request['settings']['mobile']['widget_settings']['general']['background']['image']['id'],
+                        'device_type' => 3 //mobile
+                    ]);
+                endif;
             } else {
                 // update image mapping
-                CampaignImage::where('widget_id', $id)->where('device_type', 1)->update([
-                    'image_id' => $request['settings']['desktop']['widget_settings']['general']['background']['image']['id']
-                ]);
-                CampaignImage::where('widget_id', $id)->where('device_type', 2)->update([
-                    'image_id' => $request['settings']['tablet']['widget_settings']['general']['background']['image']['id']
-                ]);
-                CampaignImage::where('widget_id', $id)->where('device_type', 3)->update([
-                    'image_id' => $request['settings']['mobile']['widget_settings']['general']['background']['image']['id']
-                ]);
+                if ($request['settings']['desktop']['widget_settings']['general']['background']['image']['url'] != null):
+                    CampaignImage::where('widget_id', $id)->where('device_type', 1)->update([
+                        'image_id' => $request['settings']['desktop']['widget_settings']['general']['background']['image']['id']
+                    ]);
+                endif;
+                if ($request['settings']['tablet']['widget_settings']['general']['background']['image']['url'] != null):
+                    CampaignImage::where('widget_id', $id)->where('device_type', 2)->update([
+                        'image_id' => $request['settings']['tablet']['widget_settings']['general']['background']['image']['id']
+                    ]);
+                endif;
+                if ($request['settings']['mobile']['widget_settings']['general']['background']['image']['url'] != null):
+                    CampaignImage::where('widget_id', $id)->where('device_type', 3)->update([
+                        'image_id' => $request['settings']['mobile']['widget_settings']['general']['background']['image']['id']
+                    ]);
+                endif;
             }
 
 
@@ -819,7 +823,8 @@ class WidgetsController extends Controller
 
         } catch (\Exception $e) {
             return \response()->json([
-                'error' => 'There was a problem with widget updating.'
+                'error' => 'There was a problem with widget updating.',
+                'message' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -1030,5 +1035,164 @@ class WidgetsController extends Controller
         return response()->json([
             'message' => 'Successfully updated widget with id ' . $id . '!'
         ], Response::HTTP_CREATED);
+    }
+
+    private function widgetSettingsStructure()
+    {
+        $structure = array(
+            'general' => array(
+                'fontSettings' => array(),
+                'background' => array(),
+                'text_margin' => array(),
+                'text_display' => '',
+                'text_background' => '',
+                'common_text' => array()
+            ),
+            'call_to_action' => array(
+                'default' => array(
+                    'padding' => array(),
+                    'margin' => array(),
+                    'fontSettings' => array(),
+                    'design' => array(
+                        'fill' => array(),
+                        'border' => array(),
+                        'shadow' => array(),
+                        'radius' => array()
+                    )
+                ),
+                'hover' => array(
+                    'type' => '',
+                    'fontSettings' => array(),
+                    'design' => array(
+                        'fill' => array(),
+                        'border' => array(),
+                        'shadow' => array(),
+                        'radius' => array()
+                    )
+                )
+            )
+        );
+        return $structure;
+    }
+
+
+    private function paymentSettingsStructure($widgetTypeId)
+    {
+        $structure = array(
+            'active' => ($widgetTypeId == 1) ? true : false,
+            'payment_type' => 'both',
+            'type' => 'classic',
+            'monetization_title' => array(
+                'text' => 'We can write of <br/> your financial support!',
+                'textColor' => '#000000',
+                'alignment' => 'center'
+            ),
+            'design' => array(
+                'background_color' => '#ffffff',
+                'padding' => array(
+                    'top' => '',
+                    'right' => '',
+                    'bottom' => '',
+                    'left' => ''
+                ),
+                'margin' => array(
+                    'top' => '',
+                    'right' => '',
+                    'bottom' => '',
+                    'left' => ''
+                ),
+                'width' => '100%',
+                'height' => 'auto',
+                'text_color' => '#777777',
+                'shadow' => array(
+                    'color' => '#77777',
+                    'opacity' => 0,
+                    'x' => 3,
+                    'y' => 3,
+                    'b' => 3
+                )
+            ),
+            'monthly_prices' => array(
+                'custom_price' => false,
+                'count_of_options' => 2,
+                'options' => array(
+                    array(
+                        'value' => 30
+                    ),
+                    array(
+                        'value' => 40
+                    )
+                ),
+                'benefit' => array(
+                    'active' => true,
+                    'text' => '',
+                    'value' => 10
+                )
+            ),
+            'once_prices' => array(
+                'custom_price' => false,
+                'count_of_options' => 2,
+                'options' => array(
+                    array(
+                        'value' => 30
+                    ),
+                    array(
+                        'value' => 40
+                    )
+                ),
+                'benefit' => array(
+                    'active' => true,
+                    'text' => '',
+                    'value' => 10
+                )
+            ),
+            'default_price' => array(
+                'active' => true,
+                'value' => 30,
+                'styles' => array()
+            )
+        );
+        return $structure;
+    }
+
+    /*
+     * Override Payment options
+     */
+    private function overrideMonetization($deviceType, $settings, $widgetTypeId)
+    {
+        $typeId = $deviceType->id;
+        $overridedSettings = $settings;
+
+        // Landing Page Widget
+        if ($widgetTypeId == 1):
+            switch ($typeId) {
+                case 1: // desktop
+                    $overridedSettings['payment_settings']['design']['width'] = '40%';
+                    $overridedSettings['payment_settings']['design']['padding']['top'] = '15px';
+                    $overridedSettings['payment_settings']['design']['padding']['right'] = '30px';
+                    $overridedSettings['payment_settings']['design']['padding']['bottom'] = '15px';
+                    $overridedSettings['payment_settings']['design']['padding']['left'] = '30px';
+                    $overridedSettings['payment_settings']['design']['shadow']['opacity'] = 1;
+                    $overridedSettings['additional_settings']['buttonContainer']['position'] = 'relative';
+                    $overridedSettings['additional_settings']['buttonContainer']['textAlign'] = 'center';
+                    break;
+                case 2: // tablet
+
+                    break;
+                case 3: // mobile
+
+                    break;
+
+                default:
+                    break;
+            }
+        endif;
+
+        // Hide CTA and Headline text for monetization widget as default
+        if ($overridedSettings['payment_settings']['active']) {
+            $overridedSettings['headline_text'] = '';
+        }
+
+        return json_encode($overridedSettings);
     }
 }

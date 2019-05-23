@@ -1,13 +1,14 @@
 import {ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Routing} from "app/constants/config.constants";
-import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Routing} from 'app/constants/config.constants';
+import {Subscription} from 'rxjs';
 import {environment} from 'environments/environment';
-import {Campaign, Widget} from "../../models";
-import {devices, backgroundTypes} from "../../../core/models";
-import {CampaignService, PreviewService, WidgetService} from "../../services";
-import {ComponentCommunicationService} from "../../../core/services";
+import {Campaign, Widget} from '../../models';
+import {devices, backgroundTypes} from '../../../core/models';
+import {CampaignService, PreviewService, WidgetService} from '../../services';
+import {ComponentCommunicationService} from '../../../core/services';
+
 
 @Component({
     selector: 'app-campaign-edit',
@@ -20,7 +21,7 @@ export class CampaignEditComponent  implements OnInit {
     campaign: Campaign = new Campaign();
     public widgets: Widget[] = [];
 
-    //property with purpose to detect changes before submitting edited campaign
+    // property with purpose to detect changes before submitting edited campaign
     id: string;
     public routing = Routing;
     public newCampaign: boolean;
@@ -74,8 +75,10 @@ export class CampaignEditComponent  implements OnInit {
     ngOnInit() {
         this.newCampaign = this.route.snapshot.data['new'];
         if (!this.newCampaign) {
-            //get id from param map or when param map doesn't contains param id, try to get id from its parent's param map
-            this.id = this.route.snapshot.paramMap.get("id") ? this.route.snapshot.paramMap.get("id") : this.route.parent.snapshot.paramMap.get("id");
+            // get id from param map or when param map doesn't contains param id, try to get id from its parent's param map
+            this.id = this.route.snapshot.paramMap.get('id') ?
+                this.route.snapshot.paramMap.get('id')
+                : this.route.parent.snapshot.paramMap.get('id');
             this.campaignService.getCampaignById(this.id).subscribe((result: any) => {
                 this.campaign = result.data;
                 this.campaignService.writeDatesAsJson(this.campaign);
@@ -95,7 +98,7 @@ export class CampaignEditComponent  implements OnInit {
 
 
     closeEditWindow() {
-        let targetUrl = this.router.url.split("/(" + this.routing.RIGHT_OUTLET)[0];
+        const targetUrl = this.router.url.split('/(' + this.routing.RIGHT_OUTLET)[0];
         this.router.navigateByUrl(targetUrl);
     }
 
@@ -112,9 +115,9 @@ export class CampaignEditComponent  implements OnInit {
                         this.ref.detectChanges();
                         this.previewGenerate.generateHTMLFromWidgets().subscribe(
                             htmlReadyToSend => {
-                                this.campaignService.updateWidgetsHTML(this.campaignId, htmlReadyToSend).subscribe( result=> {
-                                    let targetUrl = Routing.CAMPAIGNS_FULL_PATH+"/"+ this.campaignId;
-                                    // let targetUrl = this.router.url.split("/(" + this.routing.RIGHT_OUTLET)[0];
+                                this.campaignService.updateWidgetsHTML(this.campaignId, htmlReadyToSend).subscribe( result => {
+                                    const targetUrl = Routing.CAMPAIGNS_FULL_PATH + '/' + this.campaignId;
+                                    // let targetUrl = this.router.url.split('/(' + this.routing.RIGHT_OUTLET)[0];
                                     this.router.navigateByUrl(targetUrl);
                                     this.componentComService.setAlertMessage(`Campaign ${this.campaign.name} created. Please set widgets for this campaign.`);
                                     this.creatingHTMLs = false;
@@ -134,37 +137,37 @@ export class CampaignEditComponent  implements OnInit {
                             htmlReadyToSend => {
                                 this.campaignService.updateWidgetsHTML(this.campaignId, htmlReadyToSend).subscribe( result => {
                                     this.componentComService.setAlertMessage(`Campaign ${this.campaign.name} updated`);
-                                    let targetUrl = this.router.url.split("/(" + this.routing.RIGHT_OUTLET)[0];
+                                    const targetUrl = this.router.url.split('/(' + this.routing.RIGHT_OUTLET)[0];
                                     this.router.navigateByUrl(targetUrl);
                                     this.creatingHTMLs = false;
                                 });
-                            })
+                            });
                     }
-                )
+                );
             }
         }
     }
 
     validInput() {
         if (!this.campaign.name) {
-            this.errorMessage = "Campaign name is required";
+            this.errorMessage = 'Campaign name is required';
             this.error = true;
             return false;
         }
         if (!this.campaign.description) {
-            this.errorMessage = "Campaign description is required";
+            this.errorMessage = 'Campaign description is required';
             this.error = true;
             return false;
         }
-        if (!this.campaign.date_to && !this.campaign.promote_settings.donation_goal.active) {
-            this.errorMessage = "End date of campaign is required";
+        if (!this.campaign.promote_settings.is_end_date && !this.campaign.promote_settings.donation_goal_value) {
+            this.errorMessage = 'End date of campaign is required';
             this.error = true;
             return false;
         }
         // if (!this.campaign.widget_settings.general.background.image.url && (
         //     this.campaign.widget_settings.general.background.type == this.backgroundTypes.image.value ||
         //     this.campaign.widget_settings.general.background.type == this.backgroundTypes.imageOverlay.value)) {
-        //     this.errorMessage = "Please upload image or change background type";
+        //     this.errorMessage = 'Please upload image or change background type';
         //     this.error = true;
         //     return false;
         // }

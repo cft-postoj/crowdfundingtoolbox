@@ -33,7 +33,7 @@
     </tr>
     </thead>
     <ng-container *ngIf="!loading">
-      <tbody campaign-list-item [items]="campaigns" (loadingEmitter)="loading = $event" (emitter)="receiveDataFromChild($event)" (activeEmitter)="handleActiveEmitter($event)"
+      <tbody app-tbody-component [items]="campaigns" (loadingEmitter)="loading = $event" (emitter)="receiveDataFromChild($event)" (activeEmitter)="handleActiveEmitter($event)"
              (previewEmitter)="showPreview($event)" (itemDetailEmitter)="redirectCampaignDetail($event)">
       </tbody>
     </ng-container>

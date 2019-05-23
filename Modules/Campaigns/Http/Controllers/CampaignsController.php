@@ -5,6 +5,7 @@ namespace Modules\Campaigns\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Mockery\Exception;
 use Modules\Campaigns\Entities\Campaign;
 use Modules\Campaigns\Entities\CampaignImage;
 use Modules\Campaigns\Entities\CampaignSettings;
@@ -13,13 +14,17 @@ use Modules\Campaigns\Entities\DeviceType;
 use Modules\Campaigns\Entities\Widget;
 use Modules\Campaigns\Entities\WidgetResult;
 use Modules\Campaigns\Entities\WidgetSettings;
+use Modules\Campaigns\Providers\CampaignPromoteService;
 use Modules\Campaigns\Transformers\CampaignResource;
 use Modules\Campaigns\Transformers\CampaignResourceDetail;
 use Modules\Campaigns\Transformers\WidgetResource;
+use Modules\Campaigns\Transformers\WidgetResultResource;
+use Modules\Targeting\Entities\Targeting;
 use Modules\Targeting\Providers\TargetingService;
 use Modules\UserManagement\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use Modules\UserManagement\Http\Controllers\UserServiceController;
+use JWTAuth;
 
 class CampaignsController extends Controller
 {
@@ -28,12 +33,14 @@ class CampaignsController extends Controller
     private $campaignId;
     private $targetingService;
     private $userService;
+    private $promoteService;
 
     public function __construct()
     {
         $this->userService = new UserServiceController();
         $this->widgetsController = new WidgetsController();
         $this->targetingService = new TargetingService();
+        $this->promoteService = new CampaignPromoteService();
     }
 
     /**
@@ -81,11 +88,9 @@ class CampaignsController extends Controller
      */
     protected function create(Request $request)
     {
-        $valid = validator($request->only('active', 'name', 'date_from', 'date_to', 'payment_settings', 'promote_settings', 'widget_settings'), [
+        $valid = validator($request->only('active', 'name', 'payment_settings', 'promote_settings', 'widget_settings'), [
             'active' => 'required|boolean',
             'name' => 'required|string',
-            'date_from' => 'required|string',
-            'date_to' => 'required|string',
             'payment_settings' => 'required|array',
             'promote_settings' => 'required|array',
             'widget_settings' => 'required|array'
@@ -101,16 +106,16 @@ class CampaignsController extends Controller
         $campaign = Campaign::create([
             'name' => $request['name'],
             'description' => $request['description'],
-            'headline_text' => $request['headline_text'],
-            'active' => $request['active'],
-            'date_from' => $request['date_from'],
-            'date_to' => $request['date_to']
+            'active' => $request['active']
         ]);
 
         $campaign->save();
         $this->campaignId = $campaign->id;
 
-        $this->campaignSettings($this->campaignId, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+       // $this->campaignSettings($this->campaignId, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+
+        // Create Promote settings
+        $this->promoteService->createCampaignPromoteSettings($this->campaignId, $request['promote_settings']);
 
         $this->targetingService->createTargetingFromRequest($this->campaignId, $request['targeting']);
 
@@ -124,7 +129,7 @@ class CampaignsController extends Controller
         return response()->json([
             'message' => 'Successfully created campaign!',
             'campaign_id' => $campaign->id,
-            'widgets' => WidgetResource::collection(Widget::all()->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [2, 3, 5]))
+            'widgets' => WidgetResource::collection(Widget::all()->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]))
         ], Response::HTTP_CREATED);
     }
 
@@ -342,7 +347,9 @@ class CampaignsController extends Controller
             'date_to' => $request['date_to']
         ]);
 
-        $this->campaignSettings($id, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+        //$this->campaignSettings($id, $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
+
+        $this->promoteService->updateCampaignPromoteSettings($id, $request['promote_settings']);
 
         $this->widgetsController->updateWidgetSettingsFromCampaign($id, $request['headline_text'], $request['payment_settings'], $request['promote_settings'], $request['widget_settings']);
 
@@ -479,7 +486,7 @@ class CampaignsController extends Controller
                     'message' => 'No results found.'
                 ], Response::HTTP_NOT_FOUND);
             }
-            $campaingWithTargeting = Campaign::with('targeting.urls')->find($id);
+            $campaingWithTargeting = Campaign::with('targeting.urls')->with('promote')->find($id);
             return CampaignResourceDetail::make($campaingWithTargeting);
         } catch (\Exception $e) {
             return $e;
@@ -781,6 +788,95 @@ class CampaignsController extends Controller
         }
 
         return $this->all();
+    }
+
+
+    /*
+     * Portal access - get filtered campaign widgets
+     * 1) by logged in user (donating, etc.)
+     * 2) by unregistered user
+     */
+    protected function getCampaignWidgets()
+    {
+        $user = (JWTAuth::getToken())
+            ? ((JWTAuth::check()) ? JWTAuth::parseToken()->authenticate() : null)
+            : null;
+        if ($user == null) {
+            // unregistered user
+            // TODO: na strane frontendu cez localstorage/cookies kontrolovat kolko clankov uz precital user
+            try {
+                $actualDate = date('Y-m-d');
+                $campaignIds = Campaign::with('targeting')
+                    ->where('active', true)
+                    ->where('date_to', '>=', $actualDate)
+                    ->whereHas('targeting', function ($query) {
+                        $query->where('not_signed', true);
+                    })
+                    ->pluck('id');
+
+                $randomResponse =
+                    Widget::inRandomOrder()
+                        ->get()
+                        ->where('active', true)
+                        ->whereIn('campaign_id', $campaignIds)
+                        ->whereIn('widget_type_id', [2, 3, 5]);
+                $onlyThreeWidgets = array();
+                $usedWidgetIds = array();
+
+                foreach ($randomResponse as $rand) {
+                    if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
+                        array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
+                        array_push($usedWidgetIds, $rand['widget_type_id']);
+                    }
+                }
+                return \response()->json(
+                    array(
+                        'widgets' => $onlyThreeWidgets
+                    ),
+                    Response::HTTP_OK
+                );
+            } catch (Exception $e) {
+                return \response()->json([
+                    'error' => $e
+                ], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        try {
+            // user data (is user donator?) with targeting
+            $userId = $user->id;
+
+
+            // check readArticles, donations
+
+            $actualDate = date('Y-m-d');
+
+            $campaignIds = Campaign::with('targeting')
+                ->where('active', true)
+                ->where('date_to', '>=', $actualDate)
+                ->whereHas('targeting', function ($query) {
+                    $query->where('signed', true);
+                })
+                ->pluck('id');
+            $randomResponse =
+                Widget::inRandomOrder()
+                    ->get()
+                    ->where('active', true)
+                    ->whereIn('campaign_id', $campaignIds)
+                    ->whereIn('widget_type_id', [2, 3, 5]);
+            $onlyThreeWidgets = array();
+            $usedWidgetIds = array();
+            foreach ($randomResponse as $rand) {
+                if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
+                    array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
+                    array_push($usedWidgetIds, $rand['widget_type_id']);
+                }
+            }
+        } catch (Exception $e) {
+            return \response()->json([
+                'error' => $e
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
 }

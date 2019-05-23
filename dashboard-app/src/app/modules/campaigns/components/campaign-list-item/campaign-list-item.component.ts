@@ -1,15 +1,16 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
-import {Campaign} from "../../models";
-import {CampaignService} from "../../services";
-import {ComponentCommunicationService} from "../../../core/services";
-import {ModalComponent} from "../../../core/parts/atoms";
-import {Routing} from "../../../../constants/config.constants";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
+import {Campaign} from '../../models';
+import {CampaignService} from '../../services';
+import {ComponentCommunicationService} from '../../../core/services';
+import {ModalComponent} from '../../../core/parts/atoms';
+import {Routing} from '../../../../constants/config.constants';
 
 @Component({
-    selector: '[campaign-list-item]',
+    /* tslint:disable */ // selector must be defined in this shape (because encapsulated template in tbody)
+    selector: '[app-tbody-component]',
     templateUrl: './campaign-list-item.component.html',
     styleUrls: ['./campaign-list-item.component.scss']
 })
