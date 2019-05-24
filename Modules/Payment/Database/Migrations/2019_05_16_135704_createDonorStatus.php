@@ -15,11 +15,13 @@ class CreateDonorStatus extends Migration
     {
         Schema::create('donor_status', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->boolean('monthly_donor')->default(false); // once when change payment option to monthly, donor status will be changed
-            $table->string('last_monthly_donor_sum')->nullable();
-            $table->string('last_once_donor_sum')->nullable();
+            $table->decimal('last_monthly_donor_donation')->nullable(); // price
+            $table->decimal('last_once_donor_donation')->nullable(); // price
+            $table->date('last_monthly_donor_date')->nullable();
+            $table->date('last_once_donor_date')->nullable();
+            $table->decimal('donation_sum')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

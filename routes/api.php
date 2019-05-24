@@ -99,6 +99,8 @@ Route::group([
 
     });
 
+    Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\DonorsController@getAllPortalUsers');
+
 });
 
 Route::group([

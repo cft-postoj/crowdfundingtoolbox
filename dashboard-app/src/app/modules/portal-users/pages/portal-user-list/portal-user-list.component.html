@@ -1,0 +1,24 @@
+<div class="donors-list d-flex flex-column">
+  <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+  <div id="crowd-content">
+
+    <table class="list-items">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Email</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Monthly donor</th>
+        <th></th>
+      </tr>
+      </thead>
+      <ng-container *ngIf="!loading">
+        <app-donor-list-item></app-donor-list-item>
+      </ng-container>
+    </table>
+  </div>
+
+  <app-loading [isLoading]="loading"></app-loading>
+  <h4 *ngIf="noDonors"> Currently, no donors found... </h4>
+</div>

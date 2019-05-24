@@ -41,15 +41,16 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(usersItemName)">
+                    (click)="showItem(donorsItemName)"
+                    [routerLink]="routing.DONORS_LIST">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/users_default.svg'"
                         [removeSVGAttributes]="['fill']"
-                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === usersItemName}"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === donorsItemName}"
                 >
                 </div>
-                <p *ngIf="!isActive">Users</p>
+                <p *ngIf="!isActive">Donors</p>
             </div>
             <div
                     class="item"
