@@ -1,10 +1,10 @@
-import {Address} from './address';
+import {UserDetail} from './userDetail';
+import {DonorStatus} from './donorStatus';
 
 export class PortalUser {
     id: number = 0;
-    firstName: string = '';
-    lastName: string = '';
     email: string = '';
     isMonthlyDonor: boolean = false;
-    address = new Address();
+    user_detail = new UserDetail();
+    donor_status = [new DonorStatus()];
 }

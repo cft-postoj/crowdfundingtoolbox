@@ -16,7 +16,7 @@ return [
     | JWT Authentication Secret
     |--------------------------------------------------------------------------
     |
-    | Don't forget to set this in your .env file, as it will be used to sign
+    | Don't forget to set this in your ..env file, as it will be used to sign
     | your tokens. A helper command is provided for this:
     | `php artisan jwt:secret`
     |

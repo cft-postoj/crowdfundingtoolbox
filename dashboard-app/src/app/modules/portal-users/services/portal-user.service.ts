@@ -13,6 +13,6 @@ export class PortalUserService {
     }
 
     public getAll(): Observable<PortalUser[]> {
-        return this.http.get<PortalUser[]>(`${environment.backOfficeUrl}${environment.donorAllUrl}`);
+        return this.http.get<PortalUser[]>(`${environment.backOfficeUrl}${environment.portalUsersAllUrl}`);
     }
 }

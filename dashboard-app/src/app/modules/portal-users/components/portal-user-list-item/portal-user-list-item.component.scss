@@ -1,0 +1,11 @@
+@import "../../../../../sass/variables";
+@import "../../../../../sass/mixins";
+.status {
+  width: 15px;
+  height: 15px;
+  @include borderRadius(100%);
+  display: inline-block;
+  &.inactive {
+    background: $red;
+  }
+}

@@ -14,11 +14,11 @@
       </tr>
       </thead>
       <ng-container *ngIf="!loading">
-        <app-donor-list-item></app-donor-list-item>
+        <tbody app-portal-user-item [users]="users"></tbody>
       </ng-container>
     </table>
   </div>
 
   <app-loading [isLoading]="loading"></app-loading>
-  <h4 *ngIf="noDonors"> Currently, no donors found... </h4>
+  <h4 *ngIf="noUsers" class="text-center"> Currently, no users found... </h4>
 </div>

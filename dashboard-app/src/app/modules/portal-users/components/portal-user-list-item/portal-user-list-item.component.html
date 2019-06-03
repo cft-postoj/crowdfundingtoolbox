@@ -1,3 +1,27 @@
-<p>
-  donor-list-item works!
-</p>
+<tr *ngFor="let user of users; let i = index" class="list-items--item">
+  <td>{{i+1}}.</td>
+  <td>{{user.email}}</td>
+  <td>{{user.user_detail.first_name}}</td>
+  <td>{{user.user_detail.last_name}}</td>
+  <td>
+    <span
+            [class]="getDonorStatus(user.donor_status) + ' status'"
+            [title]="getDonorStatus(user.donor_status)">
+    </span>
+  </td>
+  <td>
+    <span title="Show detail" class="list-items--item--action" (click)="showDetail(user.id)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <g id="preview_24px" transform="translate(-1736 -136)">
+            <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1736 136)"
+                  fill="#f2f1ef" opacity="0"/>
+            <g id="eye" transform="translate(1740 44.275)">
+                <path id="Path_40" data-name="Path 40"
+                      d="M8,98.725a9.981,9.981,0,0,0-7.875,4.389.633.633,0,0,0,0,.756A9.976,9.976,0,0,0,8,108.262a9.981,9.981,0,0,0,7.875-4.389.633.633,0,0,0,0-.756A9.976,9.976,0,0,0,8,98.725Zm.219,8.127a3.365,3.365,0,1,1,3.139-3.139A3.367,3.367,0,0,1,8.219,106.852Zm-.1-1.551a1.812,1.812,0,1,1,1.692-1.692A1.809,1.809,0,0,1,8.118,105.3Z"
+                      transform="translate(0)" fill="#8aa1b1"/>
+            </g>
+        </g>
+    </svg>
+    </span>
+  </td>
+</tr>

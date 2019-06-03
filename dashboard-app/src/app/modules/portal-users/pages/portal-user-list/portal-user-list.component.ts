@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {PortalUserService} from "../../services/portal-user.service";
+import {PortalUser} from "../../models/portal-user";
 
 @Component({
   selector: 'app-donor-list',
@@ -11,16 +13,23 @@ export class PortalUserListComponent implements OnInit {
   alertType: string = '';
   alertMessage: string = '';
   loading: boolean = true;
-  noDonors: boolean = true;
+  noUsers: boolean = false;
+  users: PortalUser[];
 
-  constructor() { }
+  constructor(private portalUserService: PortalUserService) { }
 
   ngOnInit() {
-    this.getDonors();
+    this.getUsers();
   }
 
-  getDonors() {
-    return;
+  getUsers() {
+    this.portalUserService.getAll().subscribe((data: PortalUser[]) => {
+      this.users = data;
+      this.loading = false;
+      if (data.length === 0) {
+        this.noUsers = true;
+      }
+    });
   }
 
 }
