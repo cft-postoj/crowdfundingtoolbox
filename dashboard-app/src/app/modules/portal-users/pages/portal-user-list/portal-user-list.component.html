@@ -1,5 +1,6 @@
 <div class="donors-list d-flex flex-column">
   <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+  <app-button [label]="(filterActive) ? 'Reset filter' : 'Filter'" [type]="'button'" [class]="'classic float-right'" (onClick)="showFilter()"></app-button>
   <div id="crowd-content">
 
     <table class="list-items">
@@ -12,6 +13,7 @@
         <th>Monthly donor</th>
         <th></th>
       </tr>
+      <tr app-portal-user-filter *ngIf="filterActive" [active]="filterActive"></tr>
       </thead>
       <ng-container *ngIf="!loading">
         <tbody app-portal-user-item [users]="users"></tbody>

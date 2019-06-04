@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from "@angular/router";
-import {InlineSVGModule} from "ng-inline-svg";
-import {NgxSelectModule} from "ngx-select-ex";
+import {RouterModule} from '@angular/router';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {NgxSelectModule} from 'ngx-select-ex';
 import { ColorPickerModule } from 'ngx-color-picker';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AngularEditorModule} from "@kolkov/angular-editor";
-import {NgCircleProgressModule} from "ng-circle-progress";
-import {BreadcrumbsComponent, GoogleFontSettingsComponent} from "./parts/molecules";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AngularEditorModule} from '@kolkov/angular-editor';
+import {NgCircleProgressModule} from 'ng-circle-progress';
+import {BreadcrumbsComponent, GoogleFontSettingsComponent} from './parts/molecules';
 import {
     AlertComponent,
     ButtonComponent, CheckboxComponent,
@@ -16,12 +16,13 @@ import {
     DropdownComponent, InputGroupComponent, InputNumberComponent, LoadingComponent,
     ProgressComponent, RadioButtonComponent, RadioButtonGroupComponent,
     SwitcherComponent
-}  from "./parts/atoms";
-import {ActionsComponent} from "../../components";
-import {PreviewMonetizationComponent} from "../campaigns/components";
-import {SafePipe} from "./pipes/safe.pipe";
-import {SlovakNumberFormatter} from "./pipes/SlovakNumberFormatter";
-import {WidgetSettingsComponent} from "./components";
+}  from './parts/atoms';
+import {ActionsComponent} from '../../components';
+import {PreviewMonetizationComponent} from '../campaigns/components';
+import {SafePipe} from './pipes/safe.pipe';
+import {SlovakNumberFormatter} from './pipes/SlovakNumberFormatter';
+import {WidgetSettingsComponent} from './components';
+import { InputTextComponent } from './parts/atoms/input-text/input-text.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {WidgetSettingsComponent} from "./components";
         PreviewMonetizationComponent,
 
         SafePipe,
-        SlovakNumberFormatter
+        SlovakNumberFormatter,
+        InputTextComponent
     ],
     imports: [
         CommonModule,
@@ -97,6 +99,7 @@ import {WidgetSettingsComponent} from "./components";
         ColorPickerModule,
         NgxSelectModule,
         AngularEditorModule,
+        InputTextComponent,
 
     ]
 })
