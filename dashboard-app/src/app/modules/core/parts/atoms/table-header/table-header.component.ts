@@ -18,7 +18,7 @@ export class TableHeaderComponent implements OnInit {
     @Input() hide: string[];
 
     public asc;
-    public min = 0;
+    public min;
     public max;
     public textSearch;
 
