@@ -15,7 +15,6 @@
         top: 0;
         background-color: $aquaHaze;
         z-index: 9;
-        min-width: 150px;
     }
     &--item {
         background: transparent;
@@ -43,6 +42,7 @@
 
     &.list-items--orderable {
         th {
+            min-width: 150px;
             div[order=true]:after {
                 content: "";
                 position: absolute;
