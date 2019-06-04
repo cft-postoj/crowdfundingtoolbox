@@ -8,8 +8,13 @@
   <thead>
   <tr>
     <th app-table-header *ngFor="let column of model"
-         [title]="column.description" [column]="column" [(model)]="model"
-         (modelChange)="sortCampaignsStats($event)"></th>
+        [column]="column" [(model)]="model"
+        (modelChange)="sortCampaignsStats($event)" [hide]="['filters']"></th>
+  </tr>
+  <tr>
+    <th app-table-header *ngFor="let column of model"
+        [column]="column" [(model)]="model"
+        (modelChange)="sortCampaignsStats($event)" [hide]="['title']"></th>
   </tr>
   </thead>
   <tr *ngFor="let item of sortedCampaignsStats" class="list-items--item" [ngClass]="{'blur':!item.active}">

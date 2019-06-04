@@ -7,16 +7,15 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class TableHeaderComponent implements OnInit {
 
-    @Input() title;
-
+    //column, that handle current tableHeaderComponent
     @Input() column;
 
-    // name of column of table, that is currently active and is sorted
+    //model with all columns and with filters data
     @Input() model;
 
     @Output() modelChange = new EventEmitter();
 
-    public type: 'number' | 'string';
+    @Input() hide: string[];
 
     public asc;
     public min = 0;
@@ -28,6 +27,7 @@ export class TableHeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.hide.indexOf('title') === -1);
     }
 
     toogleOrdering() {
