@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {environment} from 'environments/environment';
-import {DropdownItem} from "../../models";
-import {Campaign} from "../../../campaigns/models/campaign";
-import {Routing} from "../../../../constants/config.constants";
-import {CampaignService} from "../../../campaigns/services/campaign.service";
-import {PreviewService} from "../../../campaigns/services/preview.service";
-import {ComponentCommunicationService} from "../../services";
-import {AuthenticationService} from "../../../user-management/services";
+import {DropdownItem, sidebarType} from '../../models';
+import {Campaign} from '../../../campaigns/models';
+import {Routing} from '../../../../constants/config.constants';
+import {PreviewService, CampaignService} from '../../../campaigns/services';
+import {ComponentCommunicationService} from '../../services';
+import {AuthenticationService} from '../../../user-management/services';
 
 @Component({
     selector: 'app-side-bar',
@@ -34,6 +33,7 @@ export class SideBarComponent implements OnInit {
 
     public previewOpen: boolean = false;
     public environment = environment;
+    private currentSidebarItemType: { title: string };
 
     constructor(private router: Router,
                 private authService: AuthenticationService,
@@ -120,17 +120,28 @@ export class SideBarComponent implements OnInit {
                     campaign => {
                         this.sidebarItems.push({
                             title: campaign.name,
-                            value: "/" + Routing.CAMPAIGNS_FULL_PATH + "/" + campaign.id
+                            value: '/' + Routing.CAMPAIGNS_FULL_PATH + '/' + campaign.id
                         });
                     }
                 );
             }
             this.sidebarItems.push({
-                title: "All campaigns",
-                value: "/" + Routing.CAMPAIGNS_ALL_FULL_PATH
+                title: 'All campaigns',
+                value: '/' + Routing.CAMPAIGNS_ALL_FULL_PATH
             });
             this.isActive = this.activeItem !== this.noActiveItem;
-        } else {
+            this.currentSidebarItemType = sidebarType.campaigns;
+        }
+        else if (itemName === this.statisticsItemName) {
+            this.sidebarItems = [];
+            this.sidebarItems.push({
+                title: 'Campaigns stats',
+                value: '/' + Routing.CAMPAIGNS_FULL_PATH + '/' + Routing.STATS
+            });
+            this.isActive = this.activeItem !== this.noActiveItem;
+            this.currentSidebarItemType = sidebarType.stats;
+        }
+        else {
             this.isActive = false;
         }
         this.activeItem = itemName;

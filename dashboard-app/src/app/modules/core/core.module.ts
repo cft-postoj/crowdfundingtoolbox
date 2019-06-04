@@ -22,7 +22,8 @@ import {PreviewMonetizationComponent} from "../campaigns/components";
 import {SafePipe} from "./pipes/safe.pipe";
 import {SlovakNumberFormatter} from "./pipes/SlovakNumberFormatter";
 import {WidgetSettingsComponent} from "./components";
-
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { TableHeaderComponent } from './parts/atoms/table-header/table-header.component'
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import {WidgetSettingsComponent} from "./components";
         PreviewMonetizationComponent,
 
         SafePipe,
-        SlovakNumberFormatter
+        SlovakNumberFormatter,
+        TableHeaderComponent
     ],
     imports: [
         CommonModule,
@@ -57,6 +59,7 @@ import {WidgetSettingsComponent} from "./components";
         NgbModule,
         AngularEditorModule,
         FormsModule,
+        SelectDropDownModule,
         NgCircleProgressModule.forRoot({
             space: -5
         }),
@@ -84,6 +87,7 @@ import {WidgetSettingsComponent} from "./components";
         GoogleFontSettingsComponent,
         WidgetSettingsComponent,
         PreviewMonetizationComponent,
+        TableHeaderComponent,
 
         //pipes
         SafePipe,
@@ -97,6 +101,7 @@ import {WidgetSettingsComponent} from "./components";
         ColorPickerModule,
         NgxSelectModule,
         AngularEditorModule,
+        SelectDropDownModule
 
     ]
 })

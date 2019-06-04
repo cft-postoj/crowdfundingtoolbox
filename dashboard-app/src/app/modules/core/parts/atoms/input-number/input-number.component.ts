@@ -16,6 +16,8 @@ export class InputNumberComponent {
     @Input() public name: string;
     @Input() public disabled;
 
+    @Input() public placeholder;
+
     @Output() valueChange: EventEmitter<any> = new EventEmitter();
     public environment = environment;
 

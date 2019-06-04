@@ -60,3 +60,13 @@ export var widgetTypes = {
         method: 'custom'
     }
 }
+
+export var sidebarType = {
+    stats: {
+        title: 'Stats'
+    },
+    campaigns: {
+        title: 'Campagins'
+    }
+
+}

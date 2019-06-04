@@ -1,0 +1,20 @@
+<div class="d-flex flex-column"
+     (click)="toogleOrdering()"
+     [attr.order]="model.sortBy==column"
+     [attr.asc]="model.asc">{{column.description}}
+  <div class="d-flex" (click)="$event.stopPropagation()" *ngIf="column.type=='number'">
+    <app-inputNumber class="crowdfunding-number crowdfunding-number--little" [placeholder]="'min'" [(value)]="min"
+                     (valueChange)="setFilter('min',$event)" type="number"></app-inputNumber>
+    <app-inputNumber class="crowdfunding-number crowdfunding-number--little" [placeholder]="'max'" [(value)]="max"
+                     (valueChange)="setFilter('max',$event)" type="number"></app-inputNumber>
+  </div>
+  <div class="d-flex" (click)="$event.stopPropagation()" *ngIf="column.type=='string'">
+    <input #campaignName
+           class="little"
+           id="column.description"
+           placeholder="search by text"
+           [(ngModel)]="textSearch"
+           (ngModelChange)="setFilter('text',$event)"
+    >
+  </div>
+</div>

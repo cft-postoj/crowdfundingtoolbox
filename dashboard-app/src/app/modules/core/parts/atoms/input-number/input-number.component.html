@@ -5,6 +5,7 @@
             class="crowdfundingNumber--input"
             (keyup)="onChange()"
             [disabled]="disabled"
+            [placeholder]="placeholder"
     />
     <span class="crowdfundingNumber--arrows">
         <button type="button" [disabled]="disabled" [inlineSVG]="'/assets/images/icons/filter_up.svg'" (click)="value = +value+1 ; onChange()"></button>

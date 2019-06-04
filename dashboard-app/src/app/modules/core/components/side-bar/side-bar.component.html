@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="item-content" [ngClass]="{'item-content--active': isActive}">
-            <app-sidebar-item *ngIf="activeItem === campaignsItemName" [items]="sidebarItems" ></app-sidebar-item>
+            <app-sidebar-item *ngIf="isActive" [currentType]="currentSidebarItemType"  [items]="sidebarItems" ></app-sidebar-item>
         </div>
     </div>
     <div class="sidebar-footer">

@@ -13,6 +13,7 @@ export class Routing {
     static readonly EDIT = 'edit';
     static readonly NEW = 'new';
     static readonly ID = 'id';
+    static readonly STATS = 'stats';
 
 
     // specific paths for components
