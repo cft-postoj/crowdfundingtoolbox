@@ -5,75 +5,35 @@ namespace Modules\UserManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\UserManagement\Entities\PortalUser;
+use Modules\UserManagement\Entities\User;
+use Modules\UserManagement\Services\PortalUserService;
+use Modules\UserManagement\Services\UserService;
 
 class PortalUsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
+    private $userService;
+    private $portalUserService;
+
+    public function __construct(PortalUserService $portalUserService, UserService $userService)
     {
-        return view('usermanagement::index');
+        $this->userService = $userService;
+        $this->portalUserService = $portalUserService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+    public function all()
     {
-        return view('usermanagement::create');
+        return \response()->json(
+            $this->portalUserService->getAll(),
+            Response::HTTP_OK
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
+    public function getById($id)
     {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('usermanagement::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('usermanagement::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return \response()->json(
+            $this->portalUserService->getById($id),
+            Response::HTTP_OK
+        );
     }
 }

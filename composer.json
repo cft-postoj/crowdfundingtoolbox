@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "darkaonline/l5-swagger": "5.8.*",
+        "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "jadjoubran/laravel-angular": "^0.4.0",
         "laravel/framework": "5.8.*",

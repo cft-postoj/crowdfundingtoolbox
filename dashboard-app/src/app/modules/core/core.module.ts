@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from "@angular/router";
-import {InlineSVGModule} from "ng-inline-svg";
-import {NgxSelectModule} from "ngx-select-ex";
+import {RouterModule} from '@angular/router';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {NgxSelectModule} from 'ngx-select-ex';
 import { ColorPickerModule } from 'ngx-color-picker';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AngularEditorModule} from "@kolkov/angular-editor";
-import {NgCircleProgressModule} from "ng-circle-progress";
-import {BreadcrumbsComponent, GoogleFontSettingsComponent} from "./parts/molecules";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AngularEditorModule} from '@kolkov/angular-editor';
+import {NgCircleProgressModule} from 'ng-circle-progress';
+import {BreadcrumbsComponent, GoogleFontSettingsComponent} from './parts/molecules';
 import {
     AlertComponent,
     ButtonComponent, CheckboxComponent,
@@ -24,6 +24,7 @@ import {SlovakNumberFormatter} from "./pipes/SlovakNumberFormatter";
 import {WidgetSettingsComponent} from "./components";
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { TableHeaderComponent } from './parts/atoms/table-header/table-header.component'
+import { InputTextComponent } from './parts/atoms/input-text/input-text.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { TableHeaderComponent } from './parts/atoms/table-header/table-header.co
 
         SafePipe,
         SlovakNumberFormatter,
-        TableHeaderComponent
+        TableHeaderComponent,
+        InputTextComponent
     ],
     imports: [
         CommonModule,
@@ -101,7 +103,8 @@ import { TableHeaderComponent } from './parts/atoms/table-header/table-header.co
         ColorPickerModule,
         NgxSelectModule,
         AngularEditorModule,
-        SelectDropDownModule
+        SelectDropDownModule,
+        InputTextComponent,
 
     ]
 })

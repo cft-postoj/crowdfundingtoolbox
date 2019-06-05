@@ -4,8 +4,9 @@ namespace Modules\UserManagement\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserDetail extends Model
+class DonorStatus extends Model
 {
     protected $fillable = [];
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    protected $table = 'donor_status';
+
 }

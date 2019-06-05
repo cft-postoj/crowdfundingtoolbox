@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $hidden = [
-        'password', 'remember_token'
+        'password', 'remember_token', 'created_at', 'updated_at', 'deleted_at', 'generate_password_token'
     ];
 
     public function getJWTIdentifier()
@@ -29,5 +29,20 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function portalUser()
+    {
+        return $this->hasOne('\Modules\UserManagement\Entities\PortalUser');
+    }
+
+    public function userDetail()
+    {
+        return $this->hasOne('\Modules\UserManagement\Entities\UserDetail');
+    }
+
+    public function donorStatus()
+    {
+        return $this->hasMany('\Modules\UserManagement\Entities\DonorStatus');
     }
 }

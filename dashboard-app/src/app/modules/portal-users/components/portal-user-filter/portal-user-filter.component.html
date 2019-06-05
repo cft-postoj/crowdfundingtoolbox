@@ -1,3 +1,30 @@
-<p>
-  donor-filter works!
-</p>
+<td></td>
+<td>
+    <app-input-text
+            [name]="'filterEmail'"
+            [placeholder]="'Filter by email'"
+            [value]="(active) ? filterEmailValue : ''"></app-input-text>
+</td>
+<td>
+    <app-input-text
+            [name]="'filterFirstName'"
+            [placeholder]="'Filter by first name'"
+            [value]="(active) ? filterFirstNameValue : ''"></app-input-text>
+</td>
+<td>
+    <app-input-text
+            [name]="'filterLastName'"
+            [placeholder]="'Filter by last name'"
+            [value]="(active) ? filterLastNameValue : ''"></app-input-text>
+</td>
+<td>
+    <app-dropdown
+            [name]="'filterMonthlyDonor'"
+            [items]="filterMonthlyItems"
+            [class]="'classic'"
+            [title]="'Filter donors by status'"
+            [(currentValue)]="filterMonthlyDonorValue"
+            (currentValueChange)="aaa()"
+    > </app-dropdown>
+</td>
+<td></td>
