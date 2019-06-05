@@ -99,7 +99,8 @@ Route::group([
 
     });
 
-    Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getAllPortalUsers');
+    Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
+    Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');
 
 });
 

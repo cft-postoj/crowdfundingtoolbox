@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PortalUserService} from "../../services/portal-user.service";
 import {PortalUser} from "../../models/portal-user";
+import {Router} from '@angular/router';
+import {Routing} from '../../../../constants/config.constants';
 
 @Component({
     selector: 'app-donor-list',
@@ -17,7 +19,7 @@ export class PortalUserListComponent implements OnInit {
     users: PortalUser[];
     filterActive: boolean = false;
 
-    constructor(private portalUserService: PortalUserService) {
+    constructor(private portalUserService: PortalUserService, private router: Router) {
     }
 
     ngOnInit() {
@@ -36,6 +38,11 @@ export class PortalUserListComponent implements OnInit {
 
     showFilter() {
         this.filterActive = !this.filterActive;
+    }
+
+    redirectUserDetail(id: number) {
+        console.log(Routing.PORTAL_USERS + '/' + id);
+        this.router.navigateByUrl( Routing.PORTAL_USERS_FULL_PATH + '/' + id);
     }
 
 }

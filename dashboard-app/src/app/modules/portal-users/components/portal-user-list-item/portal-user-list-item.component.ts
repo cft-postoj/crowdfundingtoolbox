@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PortalUser} from '../../models/portal-user';
+import {PortalUserService} from '../../services/portal-user.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: '[app-portal-user-item]',
@@ -11,7 +13,10 @@ export class PortalUserListItemComponent implements OnInit {
     @Input()
     users: PortalUser[];
 
-    constructor() {
+    @Output()
+    public userDetailEmitter = new EventEmitter();
+
+    constructor(private router: Router) {
     }
 
     ngOnInit() {
@@ -24,7 +29,7 @@ export class PortalUserListItemComponent implements OnInit {
     }
 
     showDetail(id) {
-
+        this.userDetailEmitter.emit(id);
     }
 
 }

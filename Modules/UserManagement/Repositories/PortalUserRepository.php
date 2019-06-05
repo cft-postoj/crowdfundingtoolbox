@@ -8,6 +8,10 @@ use Modules\UserManagement\Entities\User;
 
 class PortalUserRepository implements PortalUserRepositoryInterface
 {
+    protected function model()
+    {
+
+    }
 
     public function all()
     {

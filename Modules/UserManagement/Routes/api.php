@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/usermanagement', function (Request $request) {
     return $request->user();
 });
+//
+//Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
+//Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');

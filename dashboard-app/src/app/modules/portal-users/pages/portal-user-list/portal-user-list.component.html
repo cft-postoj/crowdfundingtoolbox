@@ -16,7 +16,7 @@
       <tr app-portal-user-filter *ngIf="filterActive" [active]="filterActive"></tr>
       </thead>
       <ng-container *ngIf="!loading">
-        <tbody app-portal-user-item [users]="users"></tbody>
+        <tbody app-portal-user-item [users]="users" (userDetailEmitter)="redirectUserDetail($event)"></tbody>
       </ng-container>
     </table>
   </div>

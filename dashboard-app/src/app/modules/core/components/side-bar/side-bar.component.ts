@@ -22,7 +22,7 @@ export class SideBarComponent implements OnInit {
     public readonly statisticsItemName = 'STATISTICS';
     public readonly connectionsItemName = 'CONNECTIONS';
     public readonly campaignsItemName = 'CAMPAIGNS';
-    public readonly donorsItemName = 'DONORS';
+    public readonly usersItemName = 'USERS';
     public readonly paymentsItemName = 'PAYMENTS';
     public readonly translationsItemName = 'TRANSLATIONS';
     public isActive: boolean;
@@ -89,12 +89,12 @@ export class SideBarComponent implements OnInit {
     private makeItemPublic() {
         const slug = this.router.routerState.snapshot.url.split('/dashboard/')[1].split('/')[0];
         let itemName = null;
-        console.log(this.donorsItemName);
+        console.log(this.usersItemName);
         console.log(slug.toUpperCase());
-        console.log(this.donorsItemName === slug.toUpperCase());
+        console.log(this.usersItemName === slug.toUpperCase());
         switch (slug.toUpperCase()) {
-            case this.donorsItemName:
-                itemName = this.donorsItemName;
+            case this.usersItemName:
+                itemName = this.usersItemName;
                 break;
             case this.paymentsItemName:
                 itemName = this.paymentsItemName;

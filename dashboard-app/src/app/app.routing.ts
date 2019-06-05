@@ -50,7 +50,7 @@ export const appRoutes: Routes = [
                     path: Routing.CTA,
                     component: CtaSettingsComponent,
                     outlet: Routing.RIGHT_OUTLET
-                },{
+                }, {
                     path: Routing.WIDGET,
                     component: WidgetSettingsComponent,
                     outlet: Routing.RIGHT_OUTLET
@@ -61,7 +61,7 @@ export const appRoutes: Routes = [
                 loadChildren: './modules/campaigns/campaigns.module#CampaignsModule'
             },
             {
-                path: Routing.DONORS,
+                path: Routing.PORTAL_USERS,
                 loadChildren: './modules/portal-users/portal-users.module#PortalUsersModule'
             }
         ]

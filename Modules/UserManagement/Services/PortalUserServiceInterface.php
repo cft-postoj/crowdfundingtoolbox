@@ -6,7 +6,7 @@ namespace Modules\UserManagement\Services;
 
 interface PortalUserServiceInterface
 {
-    public function getPortalUsers();
+    public function getAll();
 
-    public function getPortalUserById();
+    public function getById($id);
 }
