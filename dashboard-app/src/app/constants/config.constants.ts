@@ -31,4 +31,5 @@ export class Routing {
     static readonly PORTAL_USERS = 'portal-users';
     static readonly  PORTAL_USER_LIST = `${Routing.PORTAL_USERS}/${Routing.ALL}`;
     static readonly PORTAL_USERS_FULL_PATH = `${Routing.DASHBOARD}/${Routing.PORTAL_USERS}`;
+    static readonly PORTAL_USER_LIST_FULL_PATH = `${Routing.DASHBOARD}/${Routing.PORTAL_USER_LIST}`;
 }

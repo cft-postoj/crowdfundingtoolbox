@@ -1,0 +1,11 @@
+.user-detail {
+  padding: 15px;
+  table {
+    &.borderless td, &.borderless th {
+      border: none;
+    }
+    .titleTd {
+      text-align: right;
+    }
+  }
+}

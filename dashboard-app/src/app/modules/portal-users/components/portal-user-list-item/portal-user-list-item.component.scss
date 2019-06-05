@@ -1,11 +1,14 @@
-@import "../../../../../sass/variables";
-@import "../../../../../sass/mixins";
-.status {
-  width: 15px;
-  height: 15px;
-  @include borderRadius(100%);
-  display: inline-block;
-  &.inactive {
-    background: $red;
+@import '../../../../../sass/variables';
+@import '../../../../../sass/mixins';
+
+.action svg {
+  cursor: pointer;
+  g path {
+    @include transitionSingle(.3s);
+  }
+  &:hover {
+    g path {
+      fill: $azure;
+    }
   }
 }

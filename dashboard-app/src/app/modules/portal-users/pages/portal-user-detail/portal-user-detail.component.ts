@@ -12,6 +12,7 @@ export class PortalUserDetailComponent implements OnInit {
 
     user: PortalUser;
     id: number;
+    loading: boolean = true;
 
     constructor(private portalUserService: PortalUserService, private router: Router, private route: ActivatedRoute) {
     }
@@ -29,6 +30,7 @@ export class PortalUserDetailComponent implements OnInit {
         this.portalUserService.getById(this.id).subscribe((data) => {
             this.user = data[0];
             console.log(data);
+            this.loading = false;
         });
     }
 

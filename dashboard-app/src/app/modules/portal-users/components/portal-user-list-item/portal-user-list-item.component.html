@@ -4,13 +4,10 @@
   <td>{{user.user_detail.first_name}}</td>
   <td>{{user.user_detail.last_name}}</td>
   <td>
-    <span
-            [class]="getDonorStatus(user.donor_status) + ' status'"
-            [title]="getDonorStatus(user.donor_status)">
-    </span>
+    <app-donor-status [donorStatuses]="user.donor_status"></app-donor-status>
   </td>
   <td>
-    <span title="Show detail" class="list-items--item--action" (click)="showDetail(user.id)">
+    <span title="Show detail" class="action" (click)="showDetail(user.id)">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <g id="preview_24px" transform="translate(-1736 -136)">
             <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1736 136)"
