@@ -1,3 +1,23 @@
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .cft--loginButton {
   display: block;
 }
@@ -68,6 +88,64 @@
 .cft--alert.active {
   visibility: visible;
   opacity: 1;
+}
+
+.cft--loginDropdown {
+  display: none;
+  width: 300px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 25px;
+  position: absolute;
+  z-index: 999;
+  background: #ffffff;
+  right: 0;
+  margin-top: 5px;
+}
+
+.cft--loginDropdown label,
+.cft--loginDropdown input {
+  display: block;
+  width: 100%;
+}
+
+.cft--loginDropdown label {
+  font-size: 11px;
+}
+
+.cft--loginDropdown input {
+  height: 40px;
+  border-radius: 3px;
+  background: #f3f8fc;
+  border: 1px solid #d0d3d6;
+  padding: 0 15px;
+  margin-bottom: 15px;
+  transition: 0.3s ease;
+}
+
+.cft--loginDropdown input:focus {
+  border: 1px solid #158eea;
+}
+
+.cft--loginDropdown button[type=submit] {
+  display: block;
+  margin: 0 auto;
+  background: #158eea;
+  color: #ffffff;
+  height: 40px;
+  border-radius: 3px;
+  border: none;
+  width: 162px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.cft--loginDropdown button[type=submit]:hover {
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.cft--loginDropdown.active {
+  display: block;
 }
 
 .cftLogin--cftLoginWrapper {
@@ -179,7 +257,9 @@ button#cft--loginButton:before {
   margin-top: 1px;
 }
 
-button#cft--loginButton:hover {
+button#cft--loginButton:hover,
+button#cft--loginButton:focus,
+button#cft--loginButton:visited {
   border: 1px solid #158eea;
   background: #f3f8fc;
 }

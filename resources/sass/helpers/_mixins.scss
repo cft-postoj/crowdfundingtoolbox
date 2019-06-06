@@ -26,15 +26,15 @@
   box-shadow: $params;
 }
 
-//@mixin fadeIn($time) {
-//  -webkit-animation: fadein $time; /* Safari, Chrome and Opera > 12.1 */
-//  -moz-animation: fadein $time; /* Firefox < 16 */
-//  -ms-animation: fadein $time; /* Internet Explorer */
-//  -o-animation: fadein $time; /* Opera < 12.1 */
-//  animation: fadein $time;
-//}
-//
-//@keyframes fadein {
-//  from { opacity: 0; }
-//  to   { opacity: 1; }
-//}
+@mixin fadeIn($time) {
+  -webkit-animation: fadein $time; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein $time; /* Firefox < 16 */
+  -ms-animation: fadein $time; /* Internet Explorer */
+  -o-animation: fadein $time; /* Opera < 12.1 */
+  animation: fadein $time;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

@@ -277,7 +277,7 @@
 
     <div class="container">
         <div class="row">
-            <div class=" col-xxs-5 col-md-4 ">
+            <div class=" col-xxs-5 col-md-3 ">
 
 
                 <h1>
@@ -310,8 +310,8 @@
             <div class="col-xxs-12 col-md-1">
                 <input type="image" src="https://www.google.com/uds/css/v2/search_box_icon.png" class="google-search-button" title="hľadať">
             </div>
-            <div class="col-xxs-12 col-md-1">
-                <div id="cft--login"></div>
+            <div class="col-xxs-12 col-md-2" style="padding-right: 0">
+                <div id="cft--login" style="float:right"></div>
             </div>
         </div>
 

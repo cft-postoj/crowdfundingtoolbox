@@ -1,0 +1,49 @@
+&--loginDropdown {
+  display: none;
+  width: 300px;
+  @include boxShadow(0px 2px 6px rgba(0,0,0,.2));
+  @include borderRadius(4px);
+  padding: 25px;
+  position: absolute;
+  z-index: 999;
+  background: $white;
+  right: 0;
+  margin-top: 5px;
+  label, input {
+    display: block;
+    width: 100%;
+  }
+  label {
+    font-size: 11px;
+  }
+  input {
+    height: 40px;
+    @include borderRadius(3px);
+    background: $polar;
+    border: 1px solid $iron;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    @include transitionSingle(.3s ease);
+    &:focus {
+      border: 1px solid $curiousBlue;
+    }
+  }
+  button[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    background: $curiousBlue;
+    color: $white;
+    height: 40px;
+    @include borderRadius(3px);
+    border: none;
+    width: 162px;
+    font-weight: 700;
+    font-size: 14px;
+    &:hover {
+      @include boxShadow(0px 2px 6px rgba(0,0,0,.2));
+    }
+  }
+  &.active {
+    display: block;
+  }
+}
