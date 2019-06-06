@@ -6,7 +6,9 @@ const viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 import {successAlert, errorAlert} from "./alert";
 
 document.addEventListener('DOMContentLoaded', function () {
-    fetchLoginTemplate();
+    setTimeout(function () {
+        fetchLoginTemplate();
+    }, 1000);
 });
 
 

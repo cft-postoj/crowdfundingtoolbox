@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
 
 <!-- TODO -- remove scripts. Scripts will be in one external file on portal side. -->
 {{--<script src="{{ mix('js/app.js') }}"></script>--}}
