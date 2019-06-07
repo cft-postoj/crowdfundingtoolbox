@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix
     .browserSync({
-        proxy: 'http://localhost:8000/portal/postoj',
+        proxy: 'http://localhost:8001/portal/postoj',
         files: [
             'public/css/app.css',
             'public/js/app.js',

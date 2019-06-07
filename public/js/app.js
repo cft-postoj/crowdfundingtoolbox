@@ -140,14 +140,29 @@ function errorAlert(text) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crowdFundingToolbox */ "./resources/js/crowdFundingToolbox.js");
-/* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _crowdFundingLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crowdFundingLogin */ "./resources/js/crowdFundingLogin.js");
-/* harmony import */ var _crowdFundingSetPassword__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crowdFundingSetPassword */ "./resources/js/crowdFundingSetPassword.js");
-/* harmony import */ var _crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crowdFundingMyAccount */ "./resources/js/crowdFundingMyAccount.js");
+/* harmony import */ var _crowdFundingRegister__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crowdFundingRegister */ "./resources/js/crowdFundingRegister.js");
 
 
+ // import './crowdFundingSetPassword';
+// import './crowdFundingMyAccount';
 
+/***/ }),
 
+/***/ "./resources/js/constants/url.js":
+/*!***************************************!*\
+  !*** ./resources/js/constants/url.js ***!
+  \***************************************/
+/*! exports provided: apiUrl, viewsUrl */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiUrl", function() { return apiUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "viewsUrl", function() { return viewsUrl; });
+var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
+
+var viewsUrl = 'http://127.0.0.1:8001/portal/';
 
 /***/ }),
 
@@ -161,12 +176,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 
-var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
 
-var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 
 document.addEventListener('DOMContentLoaded', function () {
   fetchLoginTemplate();
@@ -178,7 +192,7 @@ function loginAction() {
     e.preventDefault();
     var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'login', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'login', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
@@ -206,16 +220,16 @@ function registerAction() {
     e.preventDefault();
     var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'register', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'register', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
     xhttp.onload = function () {
       // if there is some error
       if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+        Object(_alert__WEBPACK_IMPORTED_MODULE_2__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
       } else {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["successAlert"])(xhttp.response.message);
+        Object(_alert__WEBPACK_IMPORTED_MODULE_2__["successAlert"])(xhttp.response.message);
       }
     };
 
@@ -236,19 +250,19 @@ function forgotPasswordAction() {
     e.preventDefault();
     var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'forgotPassword', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'forgotPassword', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
     xhttp.onload = function () {
       // if there is some error
       if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+        Object(_alert__WEBPACK_IMPORTED_MODULE_2__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
       } else {
         if (xhttp.status === 200) {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_1__["successAlert"])(xhttp.response.message);
+          Object(_alert__WEBPACK_IMPORTED_MODULE_2__["successAlert"])(xhttp.response.message);
         } else {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(xhttp.response.message);
+          Object(_alert__WEBPACK_IMPORTED_MODULE_2__["errorAlert"])(xhttp.response.message);
         }
       }
     };
@@ -273,7 +287,8 @@ function showMyAccount() {
 }
 
 function fetchLoginTemplate() {
-  var url = viewsUrl + 'login';
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'login';
+  console.log(url);
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
@@ -284,15 +299,17 @@ function fetchLoginTemplate() {
 
 function loginFunctions() {
   document.getElementById('cft--loginButton').onclick = function (e) {
-    e.preventDefault();
-    loginAction(); // TOGGLE LOGIN DROPDOWN
+    e.preventDefault(); //loginAction();
+    // TOGGLE LOGIN DROPDOWN
 
     document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.toggle('active');
 
     if (document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.contains('active')) {
       document.querySelector('body').onclick = function (e) {
-        e.preventDefault();
-        if (e.target.classList.value.indexOf('cft--') === -1 && e.target.classList.value !== '') document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.remove('active');
+        if (e.target.nodeName !== 'A') {
+          e.preventDefault();
+          if (e.target.classList.value.indexOf('cft--') === -1 && e.target.classList.value !== '' && e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'SPAN') document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.remove('active');
+        }
       };
     } // document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
     // document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
@@ -335,195 +352,41 @@ function loginFunctions() {
 
 /***/ }),
 
-/***/ "./resources/js/crowdFundingMyAccount.js":
-/*!***********************************************!*\
-  !*** ./resources/js/crowdFundingMyAccount.js ***!
-  \***********************************************/
+/***/ "./resources/js/crowdFundingRegister.js":
+/*!**********************************************!*\
+  !*** ./resources/js/crowdFundingRegister.js ***!
+  \**********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 
-var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
-
-var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 
 document.addEventListener('DOMContentLoaded', function () {
-  // TODO if user is logged in and has valid token
-  fetchMyAccountTemplate();
+  if (document.getElementById('cft--register') !== null) fetchRegisterTemplate();
 });
 
-function fetchMyAccountTemplate() {
-  var url = viewsUrl + 'my-account-content';
+function fetchRegisterTemplate() {
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'register';
+  console.log(url);
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
-    document.getElementById('cft--myAccountContent').innerHTML = html;
-    showProfileActions();
+    document.getElementById('cft--register').innerHTML = html, showPassword();
   });
 }
 
-function showProfileActions() {
-  var allSections = document.querySelectorAll('.cft--myAccount--body--section');
-  var showCftNewslettersSection = document.getElementById('showCftNewslettersSection');
-  var showCftSavedArticlesSection = document.getElementById('showCftSavedArticlesSection');
-  var showCftDonationSection = document.getElementById('showCftDonationSection');
-  var showCftMyProfileSection = document.getElementById('showCftMyProfileSection');
-  var showCftMyOrdersSection = document.getElementById('showCftMyOrdersSection');
-  var bodyIntro = document.querySelector('.cft--myAccount--body--intro');
-  var newslettersContent = document.getElementById('cft--myAccount--newsletters');
-  var savedArticlesContent = document.getElementById('cft--myAccount--savedArticles');
-  var donationContent = document.getElementById('cft--myAccount--donation');
-  var myProfileContent = document.getElementById('cft--myAccount--myProfile');
-  var myOrdersContent = document.getElementById('cft--myAccount--myOrders');
-
-  showCftNewslettersSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(newslettersContent);
-  };
-
-  showCftSavedArticlesSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(savedArticlesContent);
-  };
-
-  showCftDonationSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(donationContent);
-  };
-
-  showCftMyProfileSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(myProfileContent);
-  };
-
-  showCftMyOrdersSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(myOrdersContent);
-  };
-
-  function showHelper(content) {
-    bodyIntro.style.display = 'none';
-    allSections.forEach(function (s, key) {
-      s.classList.remove('active');
-    });
-
-    if (!content.classList.contains('active')) {
-      content.classList.add('active');
-    }
-  }
-}
-
-/***/ }),
-
-/***/ "./resources/js/crowdFundingSetPassword.js":
-/*!*************************************************!*\
-  !*** ./resources/js/crowdFundingSetPassword.js ***!
-  \*************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
-//const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-
-
-var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
-
-var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
-document.addEventListener('DOMContentLoaded', function () {
-  if (window.location.href.indexOf('?setPassword=') > -1) {
-    isUserExist();
-  }
-});
-
-function isUserExist() {
-  var data = {
-    'token': Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["findGetParameter"])('setPassword')
-  };
-  var xhttp = new XMLHttpRequest();
-  xhttp.open('POST', apiUrl + 'has-user-generated-token', true);
-  xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-  xhttp.responseType = 'json';
-
-  xhttp.onload = function () {
-    if (xhttp.response.isUserExists) {
-      return showSetPasswordTemplate();
+function showPassword() {
+  document.querySelector('input#cft-password + img').onclick = function (e) {
+    if (document.querySelector('input#cft-password').getAttribute('type') === 'password') {
+      document.querySelector('input#cft-password').setAttribute('type', 'text');
+    } else {
+      document.querySelector('input#cft-password').setAttribute('type', 'password');
     }
   };
-
-  xhttp.send(JSON.stringify(data));
-}
-
-function showSetPasswordTemplate() {
-  var url = viewsUrl + 'set-generated-password';
-  console.log('view');
-  fetch(url).then(function (response) {
-    return response.text();
-  }).then(function (html) {
-    document.getElementById('cft--login').innerHTML = html;
-    document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-
-    document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
-      e.preventDefault();
-      if (e.target.className === 'cftLogin--cftLoginWrapper active') document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-      document.querySelector('input[name="token"]').value = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["findGetParameter"])('setPassword');
-      resetPasswordAction();
-    };
-  });
-}
-
-function resetPasswordAction() {
-  var form = document.querySelector('form[name="cftLogin--changePassword--form"]');
-  var submitButton = document.querySelector('form[name="cftLogin--changePassword--form"] button[type="submit"]');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    console.log('submitted');
-    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
-    var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'change-password', true);
-    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    xhttp.responseType = 'json';
-
-    xhttp.onerror = function () {
-      console.log('error');
-    };
-
-    xhttp.onsuccess = function () {
-      console.log('success');
-    }; // xhttp.onload = () => {
-    //     if (xhttp.response.error) {
-    //         errorAlert(getJsonFirstProp(xhttp.response.error));
-    //         submitButton.innerText = 'Submit';
-    //         submitButton.disabled = '';
-    //     }
-    //     xhttp.onreadystatechange = () => {
-    //         if (xhttp.readyState === 4) {
-    //             if (xhttp.status === 200) {
-    //                 console.log(xhttp.response)
-    //                 localStorage.setItem('cft_usertoken', xhttp.response.token);
-    //             } else {
-    //                 console.log('failed');
-    //             }
-    //         }
-    //     }
-    // };
-
-
-    xhttp.send(data);
-  }, false); // code below is required for submitting
-
-  submitButton.addEventListener('click', function (clickEvent) {
-    clickEvent.preventDefault();
-    var domEvent = document.createEvent('Event');
-    domEvent.initEvent('submit', false, true);
-    clickEvent.target.closest('form').dispatchEvent(domEvent);
-  });
 }
 
 /***/ }),
@@ -532,13 +395,14 @@ function resetPasswordAction() {
 /*!*********************************************!*\
   !*** ./resources/js/crowdFundingToolbox.js ***!
   \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 
 document.addEventListener('DOMContentLoaded', function () {
-  //let apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-  var apiUrl = 'http://127.0.0.1:8000/api/portal/'; // TEST API
-
   var sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
   var fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
   var leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
@@ -573,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
-  xhttp.open('GET', apiUrl + 'widgets');
+  xhttp.open('GET', _constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'widgets');
   xhttp.send();
 });
 

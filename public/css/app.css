@@ -95,7 +95,6 @@
   width: 300px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  padding: 25px;
   position: absolute;
   z-index: 999;
   background: #ffffff;
@@ -103,17 +102,21 @@
   margin-top: 5px;
 }
 
-.cft--loginDropdown label,
-.cft--loginDropdown input {
+.cft--loginDropdown form[name=cft-login] {
+  padding: 25px;
+}
+
+.cft--loginDropdown form[name=cft-login] label,
+.cft--loginDropdown form[name=cft-login] input {
   display: block;
   width: 100%;
 }
 
-.cft--loginDropdown label {
+.cft--loginDropdown form[name=cft-login] label {
   font-size: 11px;
 }
 
-.cft--loginDropdown input {
+.cft--loginDropdown form[name=cft-login] input {
   height: 40px;
   border-radius: 3px;
   background: #f3f8fc;
@@ -121,13 +124,24 @@
   padding: 0 15px;
   margin-bottom: 15px;
   transition: 0.3s ease;
+  outline: none;
 }
 
-.cft--loginDropdown input:focus {
+.cft--loginDropdown form[name=cft-login] input:focus {
   border: 1px solid #158eea;
 }
 
-.cft--loginDropdown button[type=submit] {
+.cft--loginDropdown form[name=cft-login] input.error {
+  background: #FFF1F0;
+  border: 1px solid #D47369;
+  outline: none;
+}
+
+.cft--loginDropdown form[name=cft-login] input.error:focus {
+  border: 1px solid #D47369;
+}
+
+.cft--loginDropdown form[name=cft-login] button[type=submit] {
   display: block;
   margin: 0 auto;
   background: #158eea;
@@ -140,12 +154,199 @@
   font-size: 14px;
 }
 
-.cft--loginDropdown button[type=submit]:hover {
+.cft--loginDropdown form[name=cft-login] button[type=submit]:hover {
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.cft--loginDropdown--error {
+  display: none;
+  color: #D47369;
+  font-size: 12px;
+  margin: 5px 0 10px;
+}
+
+.cft--loginDropdown--error a {
+  color: #D47369;
+  text-decoration: underline;
+}
+
+.cft--loginDropdown--error.active {
+  display: block;
+}
+
+.cft--loginDropdown--register {
+  padding: 25px;
+  background: #f3f8fc;
+  font-size: 12px;
+}
+
+.cft--loginDropdown--register b {
+  display: block;
+  color: #1F4E7B;
+  margin-bottom: 7px;
+}
+
+.cft--loginDropdown--register a {
+  display: block;
+  margin: 15px auto 0;
+  background: #ffffff;
+  color: #158eea;
+  padding: 10px 0;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid #158eea;
+  width: 162px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.cft--loginDropdown--register a:hover {
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .cft--loginDropdown.active {
   display: block;
+}
+
+.cft--register {
+  margin: 10% auto;
+  width: 100%;
+  max-width: 340px;
+}
+
+.cft--register h1 {
+  text-align: center;
+  color: #1F4E7B;
+}
+
+.cft--register form[name=cft-register] {
+  padding: 25px;
+}
+
+.cft--register form[name=cft-register] label,
+.cft--register form[name=cft-register] input {
+  display: block;
+  width: 100%;
+}
+
+.cft--register form[name=cft-register] label {
+  font-size: 11px;
+  position: relative;
+}
+
+.cft--register form[name=cft-register] input:not([type=checkbox]) {
+  height: 40px;
+  border-radius: 3px;
+  background: #f3f8fc;
+  border: 1px solid #d0d3d6;
+  padding: 0 15px;
+  margin-bottom: 15px;
+  transition: 0.3s ease;
+  outline: none;
+}
+
+.cft--register form[name=cft-register] input:not([type=checkbox]):focus {
+  border: 1px solid #158eea;
+}
+
+.cft--register form[name=cft-register] input:not([type=checkbox]).error {
+  background: #FFF1F0;
+  border: 1px solid #D47369;
+  outline: none;
+}
+
+.cft--register form[name=cft-register] input:not([type=checkbox]).error:focus {
+  border: 1px solid #D47369;
+}
+
+.cft--register form[name=cft-register] input:not([type=checkbox])[type=password] {
+  background-image: none !important;
+}
+
+.cft--register form[name=cft-register] input:not([type=checkbox])[type=password] + img {
+  position: absolute;
+  cursor: pointer;
+  top: 30px;
+  right: 10px;
+}
+
+.cft--register form[name=cft-register] label.checkbox {
+  position: relative;
+  padding-left: 22px;
+  cursor: pointer;
+  font-weight: 100;
+  color: #000000;
+}
+
+.cft--register form[name=cft-register] label.checkbox input[type=checkbox] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.cft--register form[name=cft-register] label.checkbox input[type=checkbox] + .checkmark {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: #d0d3d6;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.cft--register form[name=cft-register] label.checkbox input[type=checkbox] + .checkmark:after {
+  display: none;
+  position: absolute;
+  content: "";
+  left: 6px;
+  top: 3px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 1px 1px 0;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.cft--register form[name=cft-register] label.checkbox input[type=checkbox]:checked + .checkmark {
+  background-color: #158eea;
+}
+
+.cft--register form[name=cft-register] label.checkbox input[type=checkbox]:checked + .checkmark:after {
+  display: block;
+}
+
+.cft--register form[name=cft-register] label.checkbox:hover input[type=checkbox] + .checkmark {
+  background-color: #8AA1B1;
+}
+
+.cft--register form[name=cft-register] label.checkbox a {
+  color: #158eea;
+}
+
+.cft--register form[name=cft-register] button[type=submit] {
+  display: block;
+  margin: 15px auto 0;
+  background: #158eea;
+  color: #ffffff;
+  height: 40px;
+  border-radius: 3px;
+  border: none;
+  width: 162px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.cft--register form[name=cft-register] button[type=submit]:hover {
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#__lpform_cft-password {
+  display: none !important;
 }
 
 .cftLogin--cftLoginWrapper {
@@ -239,8 +440,8 @@ button#cft--loginButton {
   border-radius: 3px;
   transition: 0.3s ease;
   color: #158eea;
-  height: 40px;
-  margin-top: 23px;
+  height: 44px;
+  margin-top: 21.5px;
   background: transparent;
   position: relative;
   font-weight: bold;

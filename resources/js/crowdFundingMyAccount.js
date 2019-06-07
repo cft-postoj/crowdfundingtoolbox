@@ -1,7 +1,6 @@
 import {formSerialize, getJsonFirstProp} from "./helpers";
+import {apiUrl, viewsUrl} from "./constants/url";
 
-const apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
-const viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 import {successAlert, errorAlert} from "./alert";
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -8,4 +8,10 @@
   @import "cftMyAccount";
   @import "alert";
   @import 'loginDropDown';
+  @import 'register';
+}
+
+// display none for last pass
+#__lpform_cft-password {
+  display: none !important;
 }

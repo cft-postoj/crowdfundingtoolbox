@@ -29,6 +29,9 @@ Route::get('/portal/my-account', function() {
 Route::get('/portal/login', function() {
     return view('portal-templates.parts.login');
 });
+Route::get('/portal/register', function() {
+   return view('portal-templates.parts.register');
+});
 Route::get('/portal/set-generated-password', function() {
     return view('portal-templates.parts.setGeneratedPassword');
 });

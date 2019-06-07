@@ -1,9 +1,7 @@
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 import {findGetParameter, formSerialize, getJsonFirstProp} from "./helpers";
 import {errorAlert} from "./alert";
-
-const apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
-const viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
+import {apiUrl, viewsUrl} from "./constants/url";
 
 document.addEventListener('DOMContentLoaded', function () {
     if (window.location.href.indexOf('?setPassword=') > -1) {

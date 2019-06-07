@@ -1,4 +1,5 @@
 import './crowdFundingToolbox';
 import './crowdFundingLogin';
-import './crowdFundingSetPassword';
-import './crowdFundingMyAccount';
+import './crowdFundingRegister';
+// import './crowdFundingSetPassword';
+// import './crowdFundingMyAccount';

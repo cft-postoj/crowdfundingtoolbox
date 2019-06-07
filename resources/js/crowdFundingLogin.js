@@ -1,8 +1,7 @@
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 import {formSerialize, getJsonFirstProp} from "./helpers";
+import {apiUrl, viewsUrl} from "./constants/url";
 
-const apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
-const viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 import {successAlert, errorAlert} from "./alert";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -109,6 +108,7 @@ function showMyAccount() {
 
 function fetchLoginTemplate() {
     let url = viewsUrl + 'login';
+    console.log(url)
     fetch(url)
         .then(response => response.text())
         .then(
@@ -123,16 +123,21 @@ function loginFunctions() {
     document.getElementById('cft--loginButton').onclick = (e) => {
         e.preventDefault();
 
-        loginAction();
+        //loginAction();
 
         // TOGGLE LOGIN DROPDOWN
         document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.toggle('active');
         if (document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.contains('active')) {
             document.querySelector('body').onclick = (e) => {
-                e.preventDefault();
-                if (e.target.classList.value.indexOf('cft--') === -1
-                    && e.target.classList.value !== '')
-                document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.remove('active');
+                if (e.target.nodeName !== 'A') {
+                    e.preventDefault();
+                    if (e.target.classList.value.indexOf('cft--') === -1
+                        && e.target.classList.value !== ''
+                        && e.target.nodeName !== 'INPUT'
+                        && e.target.nodeName !== 'SPAN')
+                        document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.remove('active');
+                }
+
             }
         }
 
