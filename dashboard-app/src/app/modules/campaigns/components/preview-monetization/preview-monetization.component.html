@@ -74,7 +74,7 @@
         <span class="cft--monatization--membership-checkbox"
               id="cft--monatization--membership-checkbox--monthly"></span>
         <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()"
-             [innerHTML]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text">
+             [innerHTML]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text + '&nbsp;'">
         </div>
     </div>
     <div class="cft--monatization--membership cft--monatization--only-one-time cft--monatization--hidden"

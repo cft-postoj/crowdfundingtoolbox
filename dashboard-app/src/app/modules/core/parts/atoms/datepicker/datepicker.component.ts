@@ -36,7 +36,7 @@ export class DatepickerComponent implements OnInit {
 
 
     ngOnInit(): void {
-        console.log(this.date);
+        // console.log(this.date);
     }
 
     public changeEvent() {

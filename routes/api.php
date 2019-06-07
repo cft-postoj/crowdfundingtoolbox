@@ -81,7 +81,6 @@ Route::group([
         Route::get('campaigns/{campaignId}/widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgetsByCampaignId');
         Route::get('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@show');
         Route::put('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@update');
-        Route::get('widgets/{id}/settings-from-campaign', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateSettingsFromCampaign');
         Route::put('widgets/{id}/result', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateResult');
         Route::put('widgets/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\WidgetsController@smartWidgetUpdate');
 

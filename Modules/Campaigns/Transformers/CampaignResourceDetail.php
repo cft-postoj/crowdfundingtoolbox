@@ -2,7 +2,6 @@
 
 namespace Modules\Campaigns\Transformers;
 
-use Modules\Campaigns\Entities\CampaignSettings;
 use Illuminate\Http\Resources\Json\Resource;
 
 class CampaignResourceDetail extends Resource
@@ -15,7 +14,7 @@ class CampaignResourceDetail extends Resource
      */
     public function toArray($request)
     {
-        //$campaignSettings = CampaignSettings::where('campaign_id', $this->id)->first();
+
         return [
             'id' => $this->id,
             'active' => ($this->active == null) ? false : $this->active,

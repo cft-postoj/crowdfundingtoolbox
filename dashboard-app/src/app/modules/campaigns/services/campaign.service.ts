@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'environments/environment'
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Campaign} from '../models';
 
 
@@ -28,7 +28,7 @@ export class CampaignService {
         return this.http.put(environment.backOfficeUrl + environment.campaignUrl + '/' + campaign.id, campaignToSend);
     }
 
-    deleteCampaign(campaignId){
+    deleteCampaign(campaignId) {
         return this.http.delete(`${environment.backOfficeUrl}${environment.campaignUrl}/${campaignId}`);
     }
 
@@ -50,8 +50,8 @@ export class CampaignService {
     smartDate(campaign, variable) {
         const campaignToSend = this.writeDatesAsStrings(campaign)
         const smartObject = {};
-        smartObject[variable] = campaignToSend[variable];
-         return this.smart(campaign.id, smartObject);
+        smartObject[variable] = campaignToSend.promote_settings[variable];
+        return this.smart(campaign.id, smartObject);
     }
 
 

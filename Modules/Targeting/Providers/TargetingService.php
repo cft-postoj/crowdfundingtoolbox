@@ -52,11 +52,12 @@ class TargetingService
                 ]);
             //create targetingUrl's
             foreach ($requestTargeting['url']['list'] as $url) {
-                TargetingUrl::create([
+                $targeting->urls->add(TargetingUrl::create([
                     'targeting_id' => $targeting->id,
                     'path' => $url['path']
-                ]);
+                ]));
             }
+            return $targeting;
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e

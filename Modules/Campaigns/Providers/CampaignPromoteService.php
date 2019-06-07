@@ -11,7 +11,7 @@ class CampaignPromoteService
     public function createCampaignPromoteSettings($campaign_id, $request)
     {
         try {
-            CampaignPromote::create([
+           return CampaignPromote::create([
                     'campaign_id' => $campaign_id,
                     'start_date_value' => $request['start_date_value'],
                     'is_end_date' => $request['is_end_date'],
@@ -42,4 +42,22 @@ class CampaignPromoteService
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+
+    public function smart($data, $id, $value)
+    {
+        try {
+            $campaignPromote = CampaignPromote::where('campaign_id', $id);
+            $campaignPromote->update([
+                $value => $data[$value]
+            ]);
+            return $campaignPromote;
+        } catch (\Exception $exception) {
+            return \response()->json([
+                'error' =>  $exception
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+    }
+
+
 }

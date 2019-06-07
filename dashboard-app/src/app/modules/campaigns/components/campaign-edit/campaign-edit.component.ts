@@ -109,7 +109,7 @@ export class CampaignEditComponent  implements OnInit {
             if (this.newCampaign) {
                 this.campaignService.createCampaign(this.campaign).subscribe(
                     campaignResult => {
-                        this.campaignId = campaignResult.campaign_id;
+                        this.campaignId = campaignResult.campaign.id;
                         this.createdCampaign = campaignResult;
                         this.creatingHTMLs = true;
                         this.ref.detectChanges();

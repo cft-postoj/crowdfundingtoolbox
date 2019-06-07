@@ -13,13 +13,13 @@
         ></app-switcher>
         <app-datepicker
                 [(date)]="campaign.promote_settings.start_date_json"
-                (dateChange)="updateDate(campaign,'date_from','Start date')"
+                (dateChange)="updateDate(campaign,'start_date_value','Start date')"
                 [maxDate]="campaign.promote_settings.end_date_json"
                 [type]="'start'">
         </app-datepicker>
         <app-datepicker
                 [(date)]="campaign.promote_settings.end_date_json"
-                (dateChange)="updateDate(campaign,'date_to','End date')"
+                (dateChange)="updateDate(campaign,'end_date_value','End date')"
                 [minDate]="campaign.promote_settings.start_date_json"
                 [type]="'end'">
         </app-datepicker>

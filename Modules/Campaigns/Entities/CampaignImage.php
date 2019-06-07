@@ -12,4 +12,6 @@ class CampaignImage extends Model
     protected $fillable = [
         'campaign_id', 'image_id', 'widget_id', 'device_type'
     ];
+
+
 }

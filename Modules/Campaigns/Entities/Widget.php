@@ -12,4 +12,15 @@ class Widget extends Model
     protected $fillable = [
         'widget_type_id', 'campaign_id', 'active', 'use_campaign_settings'
     ];
+
+    public function widgetSettings()
+    {
+        return $this->hasOne('\Modules\Campaigns\Entities\WidgetSettings');
+    }
+
+    public function campaignImage()
+    {
+        return $this->hasMany('\Modules\Campaigns\Entities\CampaignImage');
+    }
+
 }
