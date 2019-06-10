@@ -42,7 +42,9 @@ class CampaignService implements CampaignServiceInterface
         $campaign->widgets = $this->widgetService->createWidgetsForCampaign($campaign->id);
 
         $user = Auth::user();
-        $campaign->tracking = $this->addTracking($campaign->id, $user->id, $this->show($campaign->id));
+        //id 1 should have user with username admin created during migration
+        $userId =  Auth::user() != null ?$user->id : 1;
+        $campaign->tracking = $this->addTracking($campaign->id, $userId, $this->show($campaign->id));
         return $campaign;
     }
 

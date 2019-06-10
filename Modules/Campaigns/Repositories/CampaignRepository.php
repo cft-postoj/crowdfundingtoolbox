@@ -3,6 +3,7 @@
 namespace Modules\Campaigns\Repositories;
 
 use Modules\Campaigns\Entities\Campaign;
+use Modules\Campaigns\Entities\CampaignVersion;
 use Modules\Campaigns\Providers\CampaignPromoteRepository;
 use Modules\Targeting\Providers\TargetingRepository;
 use Modules\UserManagement\Http\Controllers\UserRepositoryController;

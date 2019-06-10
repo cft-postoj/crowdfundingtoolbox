@@ -13,5 +13,5 @@ interface WidgetResultServiceInterface
 {
     public function getByWidgetId($id);
 
-    public function update(Request $request, $id);
+    public function update($request, $id);
 }

@@ -29,7 +29,7 @@ class WidgetResultService implements WidgetResultServiceInterface
      * @param Request $request
      * @param $id
      */
-    public function update(Request $request, $id): void
+    public function update( $request, $id)
     {
         $widgetResults = WidgetResult::all()
             ->where('widget_id', $id);

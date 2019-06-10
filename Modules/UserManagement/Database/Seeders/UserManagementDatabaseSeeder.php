@@ -16,6 +16,7 @@ class UserManagementDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(PortalUserSeeder::class);
         // $this->call("OthersTableSeeder");
     }
 }

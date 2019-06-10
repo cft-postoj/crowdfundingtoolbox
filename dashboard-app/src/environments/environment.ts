@@ -8,9 +8,9 @@ export const environment = {
 
     production: false,
 
-    apiUrl:  'http://localhost:8000/api',
-    backOfficeUrl: 'http://localhost:8000/api/backoffice',
-    authServerUrl: 'http://localhost:8000/api/backoffice',
+    apiUrl:  'http://localhost:8001/api',
+    backOfficeUrl: 'http://localhost:8001/api/backoffice',
+    authServerUrl: 'http://localhost:8001/api/backoffice',
 
     fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + keys.googleApiKey,
 

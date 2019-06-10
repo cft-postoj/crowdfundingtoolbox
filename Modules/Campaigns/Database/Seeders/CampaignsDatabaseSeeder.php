@@ -16,6 +16,8 @@ class CampaignsDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(CreateDummyCampaignSeeder::class);
+
         // $this->call("OthersTableSeeder");
     }
 }
