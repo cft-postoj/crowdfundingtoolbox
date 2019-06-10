@@ -31,7 +31,7 @@ class CampaignService implements CampaignServiceInterface
         $this->campaignRepository = new CampaignRepository();
     }
 
-    //row campagin data contains data from request with data used inf all connected entities to campaign
+    //raw campaign data contains data from request with data used inf all connected entities to campaign
     public function create($rawCampaignData)
     {
         $campaign = $this->campaignRepository->create($rawCampaignData);

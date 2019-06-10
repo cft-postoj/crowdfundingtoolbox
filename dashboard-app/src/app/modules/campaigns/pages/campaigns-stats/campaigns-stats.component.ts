@@ -27,7 +27,7 @@ export class CampaignsStatsComponent implements OnInit {
         let dummyCampaignStats = {
             campaign_name: {title: "Campaign name", value: 5, type: 'string'},
             users_show: {title: "Users saw", value: 5, type: 'number'},
-            users_detail: {title: "Users detail", value: 5, type: 'number'},
+            users_detail: {title: "Users interaction", value: 5, type: 'number'},
             users_new: {title: "New users", value: 5, type: 'number'},
             users_new_monthly: {title: "New monthly users", value: 5, type: 'number'},
             users_new_one_time: {title: "New one time users", value: 5, type: 'number'},

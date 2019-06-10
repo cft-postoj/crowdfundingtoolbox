@@ -142,7 +142,7 @@ class CreateDummyCampaignSeeder extends Seeder
                  "month":6,
                  "day":11
               },
-              "donation_goal_value":""
+              "donation_goal_value":"3000"
            },
            "payment_settings":{  
               "payment_type":"both",
@@ -309,6 +309,7 @@ class CreateDummyCampaignSeeder extends Seeder
                        "shadow":{  
                           "active":false,
                           "color":"#777",
+                          "x":2,
                           "x":2,
                           "y":2,
                           "b":2,
