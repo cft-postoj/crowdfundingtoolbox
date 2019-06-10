@@ -41,7 +41,7 @@
             border: 1px solid $japonica;
           }
         }
-        &[type="password"] {
+        &[type="password"], &[type="text"] {
           background-image: none !important;
           & + img {
             position: absolute;

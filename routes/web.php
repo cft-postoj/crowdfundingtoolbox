@@ -26,6 +26,7 @@ Route::get('/portal/my-account', function() {
 /*******************************************************/
 
 /* Part of routes, which will be showed by some action via JS */
+
 Route::get('/portal/login', function() {
     return view('portal-templates.parts.login');
 });

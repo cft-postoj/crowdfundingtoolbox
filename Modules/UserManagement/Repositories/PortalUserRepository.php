@@ -4,36 +4,31 @@
 namespace Modules\UserManagement\Repositories;
 
 
-use Modules\UserManagement\Entities\User;
+use Modules\UserManagement\Entities\PortalUser;
 
 class PortalUserRepository implements PortalUserRepositoryInterface
 {
-    protected function model()
-    {
+    protected $model;
 
-    }
-
-    public function all()
+    function __construct()
     {
-        return User::has('portalUser')
-            ->has('userDetail')
-            ->with('userDetail')
-            ->with('donorStatus')
-            ->get();
+        $this->model = PortalUser::class;
     }
 
     public function get($userId)
     {
-        // TODO: Implement get() method.
+        return $this->model
+            ::where('user_id', $userId)
+            ->first();
     }
 
-    public function update($userId)
+    public function create($userId)
     {
-        // TODO: Implement update() method.
+        $this->model
+            ::create([
+                'user_id'   =>  $userId
+            ])
+            ->save();
     }
 
-    public function delete($userId)
-    {
-        // TODO: Implement delete() method.
-    }
 }

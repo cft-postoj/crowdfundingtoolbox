@@ -60,3 +60,5 @@ export function formSerialize(formElement) {
     }
     return values;
 }
+
+export const portalUrl = 'http://www.postoj.local:8000';

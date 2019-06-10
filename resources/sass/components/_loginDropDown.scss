@@ -75,6 +75,19 @@
       display: block;
     }
   }
+  &--success {
+    display: none;
+    color: $salem;
+    font-size: 12px;
+    margin: 5px 0 10px;
+    a {
+      color: $salem;
+      text-decoration: underline;
+    }
+    &.active {
+      display: block;
+    }
+  }
 
   &--register {
     padding: 25px;

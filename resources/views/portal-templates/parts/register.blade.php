@@ -4,10 +4,12 @@
         <label for="cft-email">E-MAIL
         <input type="email" name="cft-email" id="cft-email" required/>
         </label>
+        <span class="cft--loginDropdown--error cft-email"></span>
         <label for="cft-password">HESLO
-        <input type="password" name="cft-password" id="cft-password" required/>
-        <img src="http://127.0.0.1:8001/images/visible.svg" />
+        <input type="password" name="cft-password" id="cft-password" data-lpignore="true" required/>
+        <img src="{{env('ASSETS_URL')}}/images/visible.svg" />
         </label>
+        <span class="cft--loginDropdown--error cft-password"></span>
 
         <div class="cft--register--checkbox">
             <label for="cft-mailing" class="checkbox">
@@ -19,11 +21,13 @@
 
         <div class="cft--register--checkbox">
             <label for="cft-agree" class="checkbox">
-                <input type="checkbox" name="cft-agree" id="cft-agree">
+                <input type="checkbox" name="cft-agree" id="cft-agree" required>
                 <span class="checkmark"></span>
                 Súhlasím so spracovaním <a href="#">osobných údajov</a>.
             </label>
         </div>
+        <span class="cft--loginDropdown--error cft-agree"></span>
+        <span class="cft--loginDropdown--success cft-register"></span>
 
         <button type="submit">
             Registrovať sa
