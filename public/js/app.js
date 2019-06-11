@@ -891,6 +891,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crowdFundingToolbox */ "./resources/js/crowdFundingToolbox.js");
 /* harmony import */ var _crowdFundingLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crowdFundingLogin */ "./resources/js/crowdFundingLogin.js");
 /* harmony import */ var _crowdFundingRegister__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crowdFundingRegister */ "./resources/js/crowdFundingRegister.js");
+/* harmony import */ var _crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crowdFundingMyAccount */ "./resources/js/crowdFundingMyAccount.js");
+
 
 
  // import './crowdFundingSetPassword';
@@ -1098,6 +1100,30 @@ function loginFunctions() {
 
   };
 }
+
+/***/ }),
+
+/***/ "./resources/js/crowdFundingMyAccount.js":
+/*!***********************************************!*\
+  !*** ./resources/js/crowdFundingMyAccount.js ***!
+  \***********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
+/* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_json_myAccount__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (document.getElementById('cft--myaccount') !== null) fetchMyAccountTemplate();
+});
+
+function fetchMyAccountTemplate() {}
 
 /***/ }),
 
@@ -1408,6 +1434,18 @@ function formSerialize(formElement) {
   return values;
 }
 var portalUrl = 'http://www.postoj.local:8000';
+
+/***/ }),
+
+/***/ "./resources/js/json/myAccount.json":
+/*!******************************************!*\
+  !*** ./resources/js/json/myAccount.json ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module) {
+
+!(function webpackMissingModule() { var e = new Error("Cannot find module './json/myAccount'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+
 
 /***/ }),
 
