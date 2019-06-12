@@ -109,12 +109,15 @@ Route::group([
     Route::get('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
     //get Campaign
     Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
-    Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
+    Route::post('register', '\Modules\UserManagement\Http\Controllers\PortalUsersController@create');
     Route::post('donation-register', '\Modules\UserManagement\Http\Controllers\UserServiceController@donationCreate');
     Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
     Route::post('forgotPassword', '\Modules\UserManagement\Http\Controllers\UserServiceController@forgotPassword');
     Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@hasUserGeneratedToken');
     Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
+    Route::group(['middleware' => ['jwt.verify']], function () {
+      Route::get('is-user-logged-in', '\Modules\UserManagement\Http\Controllers\PortalUsersController@isUserLoggedIn');
+    });
 });
 
 

@@ -1,0 +1,123 @@
+&--loginDropdown {
+  display: none;
+  width: 300px;
+  @include boxShadow(0px 2px 6px rgba(0, 0, 0, .2));
+  @include borderRadius(4px);
+  position: absolute;
+  z-index: 999;
+  background: $white;
+  right: 0;
+  margin-top: 5px;
+
+  form[name="cft-login"] {
+    padding: 25px;
+
+    label, input {
+      display: block;
+      width: 100%;
+    }
+
+    label {
+      font-size: 11px;
+    }
+
+    input {
+      height: 40px;
+      @include borderRadius(3px);
+      background: $polar;
+      border: 1px solid $iron;
+      padding: 0 15px;
+      margin-bottom: 15px;
+      @include transitionSingle(.3s ease);
+      outline: none;
+
+      &:focus {
+        border: 1px solid $curiousBlue;
+      }
+      &.error {
+        background: $chablis;
+        border: 1px solid $japonica;
+        outline: none;
+        &:focus {
+          border: 1px solid $japonica;
+        }
+      }
+    }
+
+    button[type="submit"] {
+      display: block;
+      margin: 0 auto;
+      background: $curiousBlue;
+      color: $white;
+      height: 40px;
+      @include borderRadius(3px);
+      border: none;
+      width: 162px;
+      font-weight: 700;
+      font-size: 14px;
+
+      &:hover {
+        @include boxShadow(0px 2px 6px rgba(0, 0, 0, .2));
+      }
+    }
+  }
+
+  &--error {
+    display: none;
+    color: $japonica;
+    font-size: 12px;
+    margin: 5px 0 10px;
+    a {
+      color: $japonica;
+      text-decoration: underline;
+    }
+    &.active {
+      display: block;
+    }
+  }
+  &--success {
+    display: none;
+    color: $salem;
+    font-size: 12px;
+    margin: 5px 0 10px;
+    a {
+      color: $salem;
+      text-decoration: underline;
+    }
+    &.active {
+      display: block;
+    }
+  }
+
+  &--register {
+    padding: 25px;
+    background: $polar;
+    font-size: 12px;
+    b {
+      display: block;
+      color: $blumine;
+      margin-bottom: 7px;
+    }
+    a {
+      display: block;
+      margin: 15px auto 0;
+      background: $white;
+      color: $curiousBlue;
+      padding: 10px 0;
+      text-decoration: none;
+      text-align: center;
+      @include borderRadius(3px);
+      border: 1px solid $curiousBlue;
+      width: 162px;
+      font-weight: 700;
+      font-size: 14px;
+      &:hover {
+        @include boxShadow(0px 2px 6px rgba(0, 0, 0, .2));
+      }
+    }
+  }
+
+  &.active {
+    display: block;
+  }
+}

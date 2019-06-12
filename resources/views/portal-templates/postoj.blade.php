@@ -22,7 +22,7 @@
     <meta property="og:description" content="Čítajte nové profesionálne médium, ktoré vyznáva konzervatívne hodnoty. Naša skúsená redakcia prináša každý deň kvalitné články na témy, o ktorých sa mlčí.">
     <meta property="og:image" content="https://www.postoj.sk/frontend/img/placeholder/facebook.png">
 
-    <meta name="csrf-token" content="3suL0nedT0cCa23ID0dkbiyncVdoeDYik0xqXQjL"/>
+    <meta name="csrf-token" content="Msf625wbxrm3kNl2zZY0inGDl9GKhlpvCHRMA0ZM"/>
     <meta name="google-site-verification" content="Bxa67H10I7IKDg_4wM5NjYqeuCDCFiZmqNrLqThmaY0" />
 
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -32,14 +32,28 @@
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"/>
 
 
-    <link rel="stylesheet" href="https://static.postoj.sk/frontend/build/style-055b96b2.css">
+    <link rel="stylesheet" href="https://static.postoj.sk/frontend/build/style-7238b040.css">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css" />
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
+    <script type='text/javascript'>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+        (function() {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') +
+                '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        })();
+    </script>
 
 
     <script type='text/javascript'>
@@ -127,7 +141,34 @@
     </script>
 
 
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+            document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
+        fbq('init', '751421528225259');
+        fbq('track', "PageView");</script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=751421528225259&ev=PageView&noscript=1"
+        /></noscript>
+    <!-- End Facebook Pixel Code -->
+
+    <!-- Google Tag Manager DataLayer -->
+    <script>
+        dataLayer = [];
+    </script>
+    <!-- End Google Tag Manager DataLayer-->
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-7546497677154042",
+            enable_page_level_ads: true
+        });
+    </script>
 
 </head>
 
@@ -236,19 +277,21 @@
 
     <div class="container">
         <div class="row">
-            <div class=" col-xxs-12 col-md-4 ">
+            <div class=" col-xxs-5 col-md-3 ">
 
 
                 <h1>
 
                     <a href=" https://www.postoj.sk"  class="brand-header track-me-pls " data-category="vsade_logo" data-action="click">
                         <img src="https://www.postoj.sk/assets/frontend/build/img/brand-main.png" class="hidden-kd-mobile" alt="Konzervat&iacute;vny denn&iacute;k">
-                        <img src="https://www.postoj.sk/assets/frontend/build/img/brand-responsive.png" class="show-kd-mobile" alt="Konzervat&iacute;vny denn&iacute;k">
+                        <img src="https://www.postoj.sk/assets/frontend/build/img/postoj-responsive.png" class="show-kd-mobile" alt="Konzervat&iacute;vny denn&iacute;k">
                     </a>
 
                 </h1>
             </div>
-
+            <div class="col-xxs-6 text-right show-kd-mobile">
+                <a href="https://podpora.postoj.sk" class="btn btn-kd-red btn--kd-mobile-support track-me-pls" data-category="vsade_podpora-vpravo-hore" data-action="click">Podporiť</a>
+            </div>
 
             <div class="col-xxs-12 col-md-6">
                 <div class="pull-right support-head">
@@ -257,7 +300,7 @@
                     <div id="header-carousel" class="carousel slide pull-right " data-keyboard="false" data-interval="false">
                         <div class="carousel-inner" role="listbox">
                             <div class="item active">
-                                <h3>Bez v&aacute;s by sme tu neboli.</h3>
+                                <h3>Potrebujeme v&aacute;s.</h3>
                             </div>
                         </div>
                     </div>
@@ -267,8 +310,8 @@
             <div class="col-xxs-12 col-md-1">
                 <input type="image" src="https://www.google.com/uds/css/v2/search_box_icon.png" class="google-search-button" title="hľadať">
             </div>
-            <div class="col-xxs-12 col-md-1">
-                <div id="cft--login"></div>
+            <div class="col-xxs-12 col-md-2" style="padding-right: 0">
+                <div id="cft--login" style="float:right"></div>
             </div>
         </div>
 
@@ -433,7 +476,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <form method="POST" action="https://blog.postoj.sk/prihlasit" accept-charset="UTF-8" class="kd-form" novalidate="novalidate"><input name="_token" type="hidden" value="3suL0nedT0cCa23ID0dkbiyncVdoeDYik0xqXQjL">
+                        <form method="POST" action="https://blog.postoj.sk/prihlasit" accept-charset="UTF-8" class="kd-form" novalidate="novalidate"><input name="_token" type="hidden" value="Msf625wbxrm3kNl2zZY0inGDl9GKhlpvCHRMA0ZM">
 
                             <div class="form-group">
                                 <input type="email" name="email" value="" class="form-control form-control-kd form-control-kd-blog required email " id="blog-login-email" placeholder="E-mail" data-err-msg="E-mail je povinný údaj" data-err-msg-email="E-mail je v nesprávnom tvare">
@@ -459,7 +502,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon icon-close"></i></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="https://www.postoj.sk/reset" accept-charset="UTF-8" class="kd-form" novalidate="novalidate"><input name="_token" type="hidden" value="3suL0nedT0cCa23ID0dkbiyncVdoeDYik0xqXQjL">
+                        <form method="POST" action="https://www.postoj.sk/reset" accept-charset="UTF-8" class="kd-form" novalidate="novalidate"><input name="_token" type="hidden" value="Msf625wbxrm3kNl2zZY0inGDl9GKhlpvCHRMA0ZM">
                             <div class="form-group">
                                 <input type="email" name="emailRemember" class="form-control form-control-kd form-control-kd-blog required email" id="blog-forget-password-email" placeholder="E-mail" data-err-msg="E-mail je povinný údaj" data-err-msg-email="E-mail je v nesprávnom tvare">
                                 <div class="err-msg"></div>
@@ -506,39 +549,39 @@
     <div class="container">
         <div class="row equalize" data-equalize-selector=".eq-me" data-equalize-all="true">
             <div class="col-xxs-12 col-md-push-3 col-md-6 col-md-3-push-minus-compensation">
-                <section class="coment-of-the-day-section double-border-bottom eq-me">
+                <section class="coment-of-the-day-section double-border-bottom double-border-bottom--md-hide-bottom eq-me">
                     <article class="coment-of-the-day">
-                        <a href="https://www.postoj.sk/43131/europa-sa-potichu-pripravuje-na-to-ze-taliansko-buchne" class="track-me-pls" data-category="home_hlavny-clanok" data-action="click" data-label="Eur&oacute;pa sa potichu pripravuje na to, že Taliansko buchne-(43131)">
+                        <a href="https://www.postoj.sk/44179/nase-pozvanie-plati-nech-pridu-domov" class="track-me-pls" data-category="home_hlavny-clanok" data-action="click" data-label="Na&scaron;e pozvanie plat&iacute;, nech pr&iacute;du domov-(44179)">
                             <div class="image-wrap">
-                                <img  src="https://www.postoj.sk/uploads/19032/conversions/homepage.jpg"  alt="Eur&oacute;pa sa potichu pripravuje na to, že Taliansko buchne">
+                                <img  src="/uploads/20131/conversions/homepage.jpg"  alt="Na&scaron;e pozvanie plat&iacute;, nech pr&iacute;du domov">
                             </div>
                         </a>
                         <div class="row">
 
                             <div class="col-md-9">
+                                <div class="show-kd-mobile-inline-block">
+                                    <a href="https://www.postoj.sk/autor/fero-mucka" class="">
+                                        <span class="author-name">Fero M&uacute;čka</span>
+                                    </a>
+                                </div>
                                 <header>
                                     <h2 class="article-title">
-                                        <a href="https://www.postoj.sk/43131/europa-sa-potichu-pripravuje-na-to-ze-taliansko-buchne" class="track-me-pls" data-category="home_hlavny-clanok" data-action="click" data-label="Eur&oacute;pa sa potichu pripravuje na to, že Taliansko buchne-(43131)">Eur&oacute;pa sa potichu pripravuje na to, že Taliansko buchne</a>
+                                        <a href="https://www.postoj.sk/44179/nase-pozvanie-plati-nech-pridu-domov" class="track-me-pls" data-category="home_hlavny-clanok" data-action="click" data-label="Na&scaron;e pozvanie plat&iacute;, nech pr&iacute;du domov-(44179)">Na&scaron;e pozvanie plat&iacute;, nech pr&iacute;du domov</a>
                                     </h2>
                                 </header>
                                 <div class="perex">
-                                    <p class="hidden-kd-mobile">Ak&yacute; bude scen&aacute;r, keď sa nahlas povie, že Taliansko so svoj&iacute;m dlhom už nem&ocirc;že ďalej fungovať.</p>
+                                    <p class="hidden-kd-mobile">Dnes by som to už takto nerie&scaron;il, hovor&iacute; predseda KDH Alojz Hlina o blogu, ktor&yacute; nap&iacute;sal po voľb&aacute;ch na adresu Franti&scaron;ka Miklo&scaron;ka.</p>
                                     <p class="show-kd-mobile">
-                                        Ak&yacute; bude scen&aacute;r, keď sa nahlas povie, že Taliansko so svoj&iacute;m dlhom už nem&ocirc;že ďalej fungovať.                            </p>
+                                        Dnes by som to už takto nerie&scaron;il, hovor&iacute; predseda KDH Alojz Hlina o blogu, ktor&yacute; nap&iacute;sal po voľb&aacute;ch na adresu Franti&scaron;ka Miklo&scaron;ka.                            </p>
                                 </div>
 
-                                <footer>
-                                    <a href="https://www.postoj.sk/komentare-nazory" class="category-title">Koment&aacute;re a n&aacute;zory</a>
-                                    <div class="show-kd-mobile-inline-block">
-                                        <a href="https://www.postoj.sk/autor/fero-mucka" class="">
-                                            <span class="author-name">Fero M&uacute;čka</span>
-                                        </a>
-                                    </div>
+                                <footer class="hidden-kd-mobile">
+                                    <a href="https://www.postoj.sk/politika" class="category-title">Politika</a>
                                 </footer>
                             </div>
                             <div class="col-md-3 text-center hidden-kd-mobile">
                                 <a href="https://www.postoj.sk/autor/fero-mucka" class="avatar">
-                                    <img src="https://www.postoj.sk/uploads/1388/conversions/square.jpg" alt="Fero M&uacute;čka">                <span class="author-name">Fero M&uacute;čka</span>
+                                    <img src="/uploads/1388/conversions/square.jpg" alt="Fero M&uacute;čka">                <span class="author-name">Fero M&uacute;čka</span>
                                 </a>
                             </div>
 
@@ -563,11 +606,12 @@
                         <article class="today-must-see-article">
                             <div class="today-must-see-top">
                                 <div class="today-must-see-top-image">
-                                    <img src="https://www.postoj.sk/uploads/19037/conversions/cover.jpg" style="width:100%;height:auto;">
+                                    <img src="/uploads/20139/conversions/cover.jpg" class="hidden-kd-mobile" style="width:100%;height:auto;">
+                                    <img src="/uploads/20139/conversions/homepage.jpg" class="show-kd-mobile" style="width:100%;height:auto;">
                                 </div>
-                                <span class="category-title hidden-kd-mobile">Ekonomika:</span>
+                                <span class="category-title hidden-kd-mobile">Dom&aacute;ce:</span>
                                 <h3 class="article-title">
-                                    <a href="https://www.postoj.sk/43137/rakusky-kancelar-kurz-chce-vsetkymi-prostriedkami-zabranit-dostavbe-mochoviec" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/43137/rakusky-kancelar-kurz-chce-vsetkymi-prostriedkami-zabranit-dostavbe-mochoviec" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="1">Rak&uacute;sky kancel&aacute;r Kurz chce v&scaron;etk&yacute;mi prostriedkami zabr&aacute;niť dostavbe Mochoviec</a>
+                                    <a href="https://www.postoj.sk/44191/pellegrini-sa-dnes-stretne-s-putinom-pozve-ho-na-oslavy-75-vyrocia-snp" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/44191/pellegrini-sa-dnes-stretne-s-putinom-pozve-ho-na-oslavy-75-vyrocia-snp" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="1">Pellegrini sa dnes stretne s Putinom, pozve ho na oslavy 75. v&yacute;ročia SNP </a>
                                 </h3>
                             </div>
                         </article>
@@ -577,24 +621,27 @@
                             <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
 
                                 <header class="clearfix">
-                                    <div class="header-text" style=" margin-left:0px; ">
-                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 19 min</small>
+                                    <div class="image-wrap show">
+                                        <img src="/uploads/9298/conversions/profile.jpg" alt="Pavol R&aacute;bara">
+                                    </div>
+                                    <div class="header-text" style="">
+                                        <div class="author-name">Pavol R&aacute;bara</div><small style="margin-left: 5px;">• pred 1 hod</small>
                                     </div>
                                 </header>
 
                                 <div class="article-text">
-                                    <span class="hidden-kd-mobile">„Telefonoval som so slovenským premiérom Petrom Pellegrinim, aby som ho odhovoril od dostavby jadrovej elektrárne. Jasne som tlmočil bezpečnostné obavy Rakúska a požadoval som čo najväčšiu transparentnosť,“ povedal Kurz.</span>
+                                    <span class="hidden-kd-mobile">Rokovať by mali aj o návrhu udeľovať status veterána vojakom z okupácie v roku 1968.</span>
                                     <span class="show-kd-mobile">
-				      				        „Telefonoval som so slovenským premiérom Petrom Pellegrinim, aby som ho odhovoril od dostavby jadrovej elektrárne. Jasne som tlmočil bezpečnostné obavy Rakúska a požadoval som čo najväčšiu transparentnosť,“ povedal Kurz.
+				      				        Rokovať by mali aj o návrhu udeľovať status veterána vojakom z okupácie v roku 1968.
 				      				    </span>
                                 </div>
 
 
                                 <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/19037/conversions/cover.jpg" style="width:100%;height:auto;">
+                                    <img src="/uploads/20139/conversions/cover.jpg" style="width:100%;height:auto;">
                                 </div>
 
-                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/43137/rakusky-kancelar-kurz-chce-vsetkymi-prostriedkami-zabranit-dostavbe-mochoviec">Čítať článok</a>
+                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/44191/pellegrini-sa-dnes-stretne-s-putinom-pozve-ho-na-oslavy-75-vyrocia-snp">Čítať článok</a>
                             </div>
                         </div>
 
@@ -602,7 +649,7 @@
                         <article class="today-must-see-article">
                             <span class="category-title hidden-kd-mobile">Dom&aacute;ce:</span>
                             <h3 class="article-title">
-                                <a href="https://www.postoj.sk/43135/koalicni-lidri-rokuju-o-socialnych-opatreniach-a-volbe-kandidatov-na-us" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/43135/koalicni-lidri-rokuju-o-socialnych-opatreniach-a-volbe-kandidatov-na-us" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="2">Koaličn&iacute; l&iacute;dri rokuj&uacute; o soci&aacute;lnych opatreniach a voľbe kandid&aacute;tov na &Uacute;S</a>
+                                <a href="https://www.postoj.sk/44189/obvineny-z-vrazdy-kuciaka-tvrdi-ze-si-mal-vrazdu-objednat-cudzinec" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/44189/obvineny-z-vrazdy-kuciaka-tvrdi-ze-si-mal-vrazdu-objednat-cudzinec" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="2">Obvinen&yacute; z vraždy Kuciaka tvrd&iacute;, že si mal vraždu objednať cudzinec </a>
                             </h3>
                         </article>
 
@@ -612,57 +659,23 @@
 
                                 <header class="clearfix">
                                     <div class="header-text" style=" margin-left:0px; ">
-                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 25 min</small>
+                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 1 hod</small>
                                     </div>
                                 </header>
 
                                 <div class="article-text">
-                                    <span class="hidden-kd-mobile">Viacerí predstavitelia koalície už spomínali, že by mohli zvoliť desiatku mien kandidátov na ústavných sudcov, ktoré do výberu chýbajú.</span>
+                                    <span class="hidden-kd-mobile">Povedať mu to mal ďalší obvinený Zoltán A. </span>
                                     <span class="show-kd-mobile">
-				      				        Viacerí predstavitelia koalície už spomínali, že by mohli zvoliť desiatku mien kandidátov na ústavných sudcov, ktoré do výberu chýbajú.
+				      				        Povedať mu to mal ďalší obvinený Zoltán A.
 				      				    </span>
                                 </div>
 
 
                                 <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/19036/conversions/cover.jpg" style="width:100%;height:auto;">
+                                    <img src="/uploads/20137/conversions/cover.jpg" style="width:100%;height:auto;">
                                 </div>
 
-                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/43135/koalicni-lidri-rokuju-o-socialnych-opatreniach-a-volbe-kandidatov-na-us">Čítať článok</a>
-                            </div>
-                        </div>
-
-
-                        <article class="today-must-see-article">
-                            <span class="category-title hidden-kd-mobile">Dom&aacute;ce:</span>
-                            <h3 class="article-title">
-                                <a href="https://www.postoj.sk/43127/absolutnou-slovenkou-roka-2019-sa-stala-andrea-gontkovicova" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/43127/absolutnou-slovenkou-roka-2019-sa-stala-andrea-gontkovicova" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="3">Absol&uacute;tnou Slovenkou roka 2019 sa stala Andrea Gontkovičov&aacute;</a>
-                            </h3>
-                        </article>
-
-                        <div style="display: none;">
-                            <div class="kd-qtip-arrow"></div>
-                            <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
-
-                                <header class="clearfix">
-                                    <div class="header-text" style=" margin-left:0px; ">
-                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 3 hod</small>
-                                    </div>
-                                </header>
-
-                                <div class="article-text">
-                                    <span class="hidden-kd-mobile">Andrea Gontkovičová je členkou manažmentu a riaditeľkou pre inovácie a rozvoj v spoločnosti Philip Morris. Zároveň jej patrí aj prvenstvo v kategórii biznis a manažment.</span>
-                                    <span class="show-kd-mobile">
-				      				        Andrea Gontkovičová je členkou manažmentu a riaditeľkou pre inovácie a rozvoj v spoločnosti Philip Morris. Zároveň jej patrí aj prvenstvo v kategórii biznis a manažment.
-				      				    </span>
-                                </div>
-
-
-                                <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/19028/conversions/cover.jpg" style="width:100%;height:auto;">
-                                </div>
-
-                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/43127/absolutnou-slovenkou-roka-2019-sa-stala-andrea-gontkovicova">Čítať článok</a>
+                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/44189/obvineny-z-vrazdy-kuciaka-tvrdi-ze-si-mal-vrazdu-objednat-cudzinec">Čítať článok</a>
                             </div>
                         </div>
 
@@ -670,7 +683,7 @@
                         <article class="today-must-see-article">
                             <span class="category-title hidden-kd-mobile">Zahraničn&eacute;:</span>
                             <h3 class="article-title">
-                                <a href="https://www.postoj.sk/43134/mesto-negombo-na-sri-lanke-bolo-dejiskom-etnickych-nepokojov" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/43134/mesto-negombo-na-sri-lanke-bolo-dejiskom-etnickych-nepokojov" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="4">Mesto Negombo na Sr&iacute; Lanke bolo dejiskom etnick&yacute;ch nepokojov</a>
+                                <a href="https://www.postoj.sk/44194/ceski-poslanci-odsudili-navrh-ruskeho-zakona-o-veteranoch" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/44194/ceski-poslanci-odsudili-navrh-ruskeho-zakona-o-veteranoch" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="3">Česk&iacute; poslanci ods&uacute;dili n&aacute;vrh rusk&eacute;ho z&aacute;kona o veter&aacute;noch </a>
                             </h3>
                         </article>
 
@@ -680,23 +693,23 @@
 
                                 <header class="clearfix">
                                     <div class="header-text" style=" margin-left:0px; ">
-                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 34 min</small>
+                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 1 hod</small>
                                     </div>
                                 </header>
 
                                 <div class="article-text">
-                                    <span class="hidden-kd-mobile">Od atentátov na Srí Lanke platí výnimočný stav a varovanie pred ďalšími podobnými útokmi.</span>
+                                    <span class="hidden-kd-mobile">Rusko chce podľa názoru poslancov týmto krokom prepisovať a falšovať dejiny. </span>
                                     <span class="show-kd-mobile">
-				      				        Od atentátov na Srí Lanke platí výnimočný stav a varovanie pred ďalšími podobnými útokmi.
+				      				        Rusko chce podľa názoru poslancov týmto krokom prepisovať a falšovať dejiny.
 				      				    </span>
                                 </div>
 
 
                                 <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/19035/conversions/cover.jpg" style="width:100%;height:auto;">
+                                    <img src="/uploads/20142/conversions/cover.jpg" style="width:100%;height:auto;">
                                 </div>
 
-                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/43134/mesto-negombo-na-sri-lanke-bolo-dejiskom-etnickych-nepokojov">Čítať článok</a>
+                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/44194/ceski-poslanci-odsudili-navrh-ruskeho-zakona-o-veteranoch">Čítať článok</a>
                             </div>
                         </div>
 
@@ -704,7 +717,7 @@
                         <article class="today-must-see-article">
                             <span class="category-title hidden-kd-mobile">Zahraničn&eacute;:</span>
                             <h3 class="article-title">
-                                <a href="https://www.postoj.sk/43133/eu-by-podla-orbana-mala-prevziat-rakusky-model-stredopravej-spoluprace" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/43133/eu-by-podla-orbana-mala-prevziat-rakusky-model-stredopravej-spoluprace" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="5">E&Uacute; by podľa Orb&aacute;na mala prevziať rak&uacute;sky model stredopravej spolupr&aacute;ce</a>
+                                <a href="https://www.postoj.sk/44190/dansky-premier-odstupuje-po-prehratych-volbach" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/44190/dansky-premier-odstupuje-po-prehratych-volbach" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="4">D&aacute;nsky premi&eacute;r odstupuje po prehrat&yacute;ch voľb&aacute;ch </a>
                             </h3>
                         </article>
 
@@ -714,23 +727,57 @@
 
                                 <header class="clearfix">
                                     <div class="header-text" style=" margin-left:0px; ">
-                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 40 min</small>
+                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 1 hod</small>
                                     </div>
                                 </header>
 
                                 <div class="article-text">
-                                    <span class="hidden-kd-mobile">„Kresťanskí demokrati v Európe, a to najmä v Nemecku, sa posúvajú doľava. Uzatvárajú koalície so socialistami a preto musia prijímať kompromisy, čím strácajú svoju identitu a svoje hodnoty,“ povedal Orbán pre rakúske noviny Kleine Zeitung.</span>
+                                    <span class="hidden-kd-mobile">Po štyroch rokoch v opozícii v Dánsku pravdepodobne opäť dostane k moci blok stredoľavých strán.</span>
                                     <span class="show-kd-mobile">
-				      				        „Kresťanskí demokrati v Európe, a to najmä v Nemecku, sa posúvajú doľava. Uzatvárajú koalície so socialistami a preto musia prijímať kompromisy, čím strácajú svoju identitu a svoje hodnoty,“ povedal Orbán pre rakúske noviny Kleine Zeitung.
+				      				        Po štyroch rokoch v opozícii v Dánsku pravdepodobne opäť dostane k moci blok stredoľavých strán.
 				      				    </span>
                                 </div>
 
 
                                 <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/19034/conversions/cover.jpg" style="width:100%;height:auto;">
+                                    <img src="/uploads/20138/conversions/cover.jpg" style="width:100%;height:auto;">
                                 </div>
 
-                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/43133/eu-by-podla-orbana-mala-prevziat-rakusky-model-stredopravej-spoluprace">Čítať článok</a>
+                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/44190/dansky-premier-odstupuje-po-prehratych-volbach">Čítať článok</a>
+                            </div>
+                        </div>
+
+
+                        <article class="today-must-see-article">
+                            <span class="category-title hidden-kd-mobile">Ekonomika:</span>
+                            <h3 class="article-title">
+                                <a href="https://www.postoj.sk/44192/koncert-fiat-chrysler-stiahol-ponuku-na-fuziu-s-renaultom" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/44192/koncert-fiat-chrysler-stiahol-ponuku-na-fuziu-s-renaultom" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="5">Koncert Fiat Chrysler stiahol ponuku na f&uacute;ziu s Renaultom </a>
+                            </h3>
+                        </article>
+
+                        <div style="display: none;">
+                            <div class="kd-qtip-arrow"></div>
+                            <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
+
+                                <header class="clearfix">
+                                    <div class="header-text" style=" margin-left:0px; ">
+                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 1 hod</small>
+                                    </div>
+                                </header>
+
+                                <div class="article-text">
+                                    <span class="hidden-kd-mobile">Taliansko-americký koncern zdôvodnil stiahnutie tým, že na realizáciu fúzie v súčasnosti neexistujú vo Francúzsku politické podmienky.</span>
+                                    <span class="show-kd-mobile">
+				      				        Taliansko-americký koncern zdôvodnil stiahnutie tým, že na realizáciu fúzie v súčasnosti neexistujú vo Francúzsku politické podmienky.
+				      				    </span>
+                                </div>
+
+
+                                <div class="article-image">
+                                    <img src="/uploads/20140/conversions/cover.jpg" style="width:100%;height:auto;">
+                                </div>
+
+                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/44192/koncert-fiat-chrysler-stiahol-ponuku-na-fuziu-s-renaultom">Čítať článok</a>
                             </div>
                         </div>
 
@@ -738,7 +785,7 @@
                         <article class="today-must-see-article">
                             <span class="category-title hidden-kd-mobile">&Scaron;port:</span>
                             <h3 class="article-title">
-                                <a href="https://www.postoj.sk/43129/arc-bratislava-s-konopkom-ide-druhykrat-na-24-hodin-le-mans" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/43129/arc-bratislava-s-konopkom-ide-druhykrat-na-24-hodin-le-mans" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="6">ARC Bratislava s Kon&ocirc;pkom ide druh&yacute;kr&aacute;t na 24 hod&iacute;n Le Mans</a>
+                                <a href="https://www.postoj.sk/44193/ronaldo-poslal-hetrikom-portugalsko-do-finale-ligy-narodov" class="track-me-pls tip-me show-ad" data-href="https://www.postoj.sk/44193/ronaldo-poslal-hetrikom-portugalsko-do-finale-ligy-narodov" data-category="home_dnes-treba-vediet-clanok" data-action="click" data-label="position" data-value="6">Ronaldo poslal hetrikom Portugalsko do fin&aacute;le Ligy n&aacute;rodov</a>
                             </h3>
                         </article>
 
@@ -748,180 +795,32 @@
 
                                 <header class="clearfix">
                                     <div class="header-text" style=" margin-left:0px; ">
-                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 2 hod</small>
+                                        <div class="author-name">TASR</div><small style="margin-left: 5px;">• pred 1 hod</small>
                                     </div>
                                 </header>
 
                                 <div class="article-text">
-                                    <span class="hidden-kd-mobile">Po druhý raz v histórii bude na motoristických pretekoch 24 hodín Le Mans štartovať slovenský tím.</span>
+                                    <span class="hidden-kd-mobile">Súperom úradujúcich majstrov Európy v nedeľnom finále bude víťaz zápasu Holandsko - Anglicko.</span>
                                     <span class="show-kd-mobile">
-				      				        Po druhý raz v histórii bude na motoristických pretekoch 24 hodín Le Mans štartovať slovenský tím.
+				      				        Súperom úradujúcich majstrov Európy v nedeľnom finále bude víťaz zápasu Holandsko - Anglicko.
 				      				    </span>
                                 </div>
 
 
                                 <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/19030/conversions/cover.jpg" style="width:100%;height:auto;">
+                                    <img src="/uploads/20141/conversions/cover.jpg" style="width:100%;height:auto;">
                                 </div>
 
-                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/43129/arc-bratislava-s-konopkom-ide-druhykrat-na-24-hodin-le-mans">Čítať článok</a>
+                                <a class="btn btn-blue-grad" href="https://www.postoj.sk/44193/ronaldo-poslal-hetrikom-portugalsko-do-finale-ligy-narodov">Čítať článok</a>
                             </div>
                         </div>
 
 
                     </div>
                 </section>
-            </div>
-            <div class="col-xxs-12 show-kd-mobile hidden">
-                <section class="short-news side-short-news">
-                    <header class="clearfix">
-                        <h2 class="section-title">
-                            <a href="https://www.postoj.sk/kratke-spravy-redakcie" class="track-me-pls" data-category="home_kratke-spravy-nadpis" data-action="click">Krátke správy z redakcie</a>
-                        </h2>
-                    </header>
-                    <div class="short-news-items">
-                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="1"  data-href="https://www.postoj.sk/shortnews/2482" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2482">
-                            <div class="image-wrap">
-                                <img src="https://www.postoj.sk/uploads/18983/conversions/cover.jpg">
-                            </div>
-                            <header>
-                                <h3 class="author-link"><a href="https://www.postoj.sk/autor/jan-duda-1" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">J&aacute;n Duda</a></h3>
-                                <small>• pred 1 d</small>
-                            </header>
-                            <div class="perex">
-                                <p>Evanjelium tretej veľkonočnej nedele (5. 5. 2019) je dosť dlh&eacute; (Jn 21,1-19). K nemu len tri kr&aacute;tke pozn&aacute;mky.</p>    <p>(1) Vyznanie...
-                            </div>
-
-
-                        </article>
-                        <div style="display: none;">
-                            <div class="kd-qtip-arrow"></div>
-                            <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
-                                <header class="clearfix">
-                                    <div class="image-wrap show">
-                                        <img src="https://www.postoj.sk/uploads/1885/conversions/profile.jpg" alt="J&aacute;n Duda">
-                                    </div>
-                                    <div class="header-text" style="">
-                                        <div class="author-name">J&aacute;n Duda</div><small style="margin-left: 5px;">• pred 1 d</small>
-                                    </div>
-                                </header>
-
-                                <div class="article-social-buttons">
-                                    <div class="social-btn">
-                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2482" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
-                                        </div>
-                                    </div>
-                                    <div class="social-btn">
-                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2482"  data-text="Potrebujeme pr&iacute;tomnosť P&aacute;na"  class="twitter-share-button">Tweet</a>
-                                    </div>
-                                </div>
-
-                                <div class="article-text">
-                                    <p>Evanjelium tretej veľkonočnej nedele (5. 5. 2019) je dosť dlh&eacute; (Jn 21,1-19). K nemu len tri kr&aacute;tke pozn&aacute;mky.</p>    <p>(1) Vyznanie viery. Tentoraz ho vyslovil apo&scaron;tol J&aacute;n po tom, ako ulovili veľk&eacute; množstvo r&yacute;b: &bdquo;P&aacute;n je to.&ldquo; Je tu siln&aacute; životn&aacute; sk&uacute;senosť: ulovili 153 r&yacute;b, J&aacute;n si dokonca zapam&auml;tal aj ich počet. A t&aacute;to siln&aacute; sk&uacute;senosť im otvorila oči a oni spoznali, že je to P&aacute;n! Ako my vyhodnocujeme svoje životn&eacute; sk&uacute;senosti? Otv&aacute;raj&uacute; n&aacute;m oči? Spozn&aacute;vame v nich p&ocirc;sobenie P&aacute;na?</p>    <p>(2) Efekt&iacute;vnosť. Peter sa chopil iniciat&iacute;vy a pod jeho vplyvom učen&iacute;ci vy&scaron;li chytať ryby. Ale nechytili nič. Nestač&iacute;, že sme iniciat&iacute;vni, ale pre efektivitu je potrebn&aacute; pr&iacute;tomnosť P&aacute;na! Darmo sa nam&aacute;hame, darmo sme iniciat&iacute;vni. Pri svojich nam&aacute;haniach potrebujeme pr&iacute;tomnosť P&aacute;na.</p>    <p>(3) &bdquo;Kde je Peter, tam je Cirkev.&ldquo; S&uacute; to slov&aacute; sv. Ambr&oacute;za (339 &ndash; 397) a s&uacute; nap&iacute;san&eacute; aj v kaplnke P&aacute;pežsk&eacute;ho slovensk&eacute;ho kol&eacute;gia v R&iacute;me. Ježi&scaron; 3x vyzval &Scaron;imona, aby mu povedal, že ho miluje, a 3x ho vyzval: &bdquo;Pas moje ovce!&ldquo; Katol&iacute;cky v&yacute;klad považuje tieto slov&aacute; za teologick&yacute; z&aacute;klad prim&aacute;tu Petrov&yacute;ch n&aacute;stupcov. Okrem Vyznania viery Petrovo prvenstvo je identick&yacute;m znakom jednoty kresťanov.</p>    <p>Požehnan&uacute; tretiu veľkonočn&uacute; nedeľu prajem v&scaron;etk&yacute;m.</p>    <p>J&aacute;n Duda</p>    <p>&nbsp;</p>    <p><em>Foto: www.ekolist.cz</em></p>
-                                </div>
-
-                                <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/18983/conversions/cover.jpg">
-                                </div>
-                            </div>
-                        </div>
-                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="2"  data-href="https://www.postoj.sk/shortnews/2481" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2481">
-                            <div class="image-wrap">
-                                <img src="https://www.postoj.sk/uploads/18954/conversions/cover.jpg">
-                            </div>
-                            <header>
-                                <h3 class="author-link"><a href="https://www.postoj.sk/autor/martin-hanus" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">Martin Hanus</a></h3>
-                                <small>• pred 2 d</small>
-                            </header>
-                            <div class="perex">
-                                <p>Včeraj&scaron;ie stretnutie Mattea Salviniho s Viktorom Orb&aacute;nom na maďarskej p&ocirc;de dopadlo podľa scen&aacute;ra: obaja rovnako ako vlani v Mil&aacute;ne&nbsp;demon&scaron;trovali vz&aacute;jomn&eacute;...
-                            </div>
-
-
-                        </article>
-                        <div style="display: none;">
-                            <div class="kd-qtip-arrow"></div>
-                            <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
-                                <header class="clearfix">
-                                    <div class="image-wrap show">
-                                        <img src="https://www.postoj.sk/uploads/9311/conversions/profile.jpg" alt="Martin Hanus">
-                                    </div>
-                                    <div class="header-text" style="">
-                                        <div class="author-name">Martin Hanus</div><small style="margin-left: 5px;">• pred 2 d</small>
-                                    </div>
-                                </header>
-
-                                <div class="article-social-buttons">
-                                    <div class="social-btn">
-                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2481" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
-                                        </div>
-                                    </div>
-                                    <div class="social-btn">
-                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2481"  data-text="Viktor Orb&aacute;n: &bdquo;Salvini je najd&ocirc;ležitej&scaron;&iacute; človek v dne&scaron;nej Eur&oacute;pe.&ldquo; "  class="twitter-share-button">Tweet</a>
-                                    </div>
-                                </div>
-
-                                <div class="article-text">
-                                    <p>Včeraj&scaron;ie stretnutie Mattea Salviniho s Viktorom Orb&aacute;nom na maďarskej p&ocirc;de dopadlo podľa scen&aacute;ra: obaja rovnako ako vlani v Mil&aacute;ne&nbsp;demon&scaron;trovali vz&aacute;jomn&eacute; sympatie, taliansky minister vn&uacute;tra pred novin&aacute;rmi vyhl&aacute;sil, že do Budape&scaron;ti pri&scaron;iel, aby videl, ako sa br&aacute;nia hranice. Takže len čo prist&aacute;l v Budape&scaron;ti, helikopt&eacute;ra ho odviezla na hranice so Srbskom, kde ho v R&ouml;szke čakal Orb&aacute;n.</p>    <p>Zhruba v tom čase uverejnil s Orb&aacute;nom&nbsp;rozsiahly <a href="https://www.lastampa.it/2019/05/01/esteri/victor-orban-denaro-sicurezza-mercato-oggi-ci-sono-gi-tre-europe-ma-fingiamo-sia-soltanto-una-hChaJXulkKMsAk4TlKamBN/premium.html" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-exit-link">rozhovor</a> taliansky denn&iacute;k La Stampa (tu je v <a href="https://www.lastampa.it/2019/05/02/esteri/victor-orban-money-safety-market-today-there-are-already-three-europes-but-we-pretend-there-is-only-one-LpGkFQpBBo8xWuge3nuYTI/pagina.html" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-exit-link">anglickej verzii</a>). Orb&aacute;n v ňom&nbsp;označil Salviniho za &bdquo;hrdinu, ktor&yacute; ako prv&yacute; zastavil migr&aacute;ciu na mori, k&yacute;m my sme ju zastavili na s&uacute;&scaron;i&ldquo;&nbsp;a za &bdquo;najd&ocirc;ležitej&scaron;ieho človeka v dne&scaron;nej Eur&oacute;pe&ldquo;. Maďarsk&yacute; premi&eacute;r tiež povedal, že Eur&oacute;pskej&nbsp;ľudovej&nbsp;strane&nbsp;(Fidesz m&aacute; nateraz v EPP pozastaven&eacute; členstvo)&nbsp;hroz&iacute; samovražda, ak bude ďalej pokračovať v spojenectve so socialistami &ndash;&nbsp;jej jedinou z&aacute;chranou je preto spojenie s pravicovou alianciou okolo Salviniho, ktor&eacute;mu žel&aacute; čo najv&auml;č&scaron;&iacute; volebn&yacute; &uacute;spech.&nbsp;&nbsp;</p>    <p>Samozrejme, tieto slov&aacute;, ktor&eacute; trhaj&uacute; u&scaron;i v&auml;č&scaron;ine partnerov v EPP, s&uacute; s&uacute;časťou Orb&aacute;novej&nbsp;eurokampane, v ktorej&nbsp;mobilizuje svojich voličov na migračnej karte. S&uacute;časne t&yacute;m voči EPP vysiela sign&aacute;l, že&nbsp;ak suverenistick&yacute; blok na čele so Salvinim a Le Penovou v&yacute;znamne posilnia, on s&aacute;m bude zvažovať, či zostať form&aacute;lnou s&uacute;časťou &bdquo;samovražedn&eacute;ho&ldquo;&nbsp;spolku alebo stavať na novej osi&nbsp;Budape&scaron;ť &ndash; R&iacute;m.</p>    <p>Ak eur&oacute;pske voľby m&ocirc;žu priniesť v nejakej krajine politick&eacute;&nbsp;zemetrasenie, tak je to pr&aacute;ve v Taliansku. Očak&aacute;va sa, že Salviniho Liga z&iacute;ska takmer dvojn&aacute;sobn&yacute; podiel hlasov&nbsp;oproti 17 percent&aacute;m z parlamentn&yacute;ch&nbsp;volieb&nbsp;v marci 2018 a bude mať tak&nbsp;po nemeckej CDU najviac europoslancov. A keďže v koaličnej vl&aacute;de Hnutia&nbsp;piatich&nbsp;hviezd a Ligy narast&aacute; nap&auml;tie, mnoh&iacute; talianski koment&aacute;tori predpokladaj&uacute;, že ak p&auml;ťhviezdičkov&eacute; hnutie zaznamen&aacute; mas&iacute;vne straty, ako naznačuj&uacute; prieskumy, Liga&nbsp;to využije na vyvolanie skor&yacute;ch predčasn&yacute;ch volieb. Moc v krajine by tak mohol zdvihn&uacute;ť zo zeme len&nbsp;jedin&yacute; muž &ndash;&nbsp;Matteo Salvini.&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</p>    <p><em>Maďarsk&yacute; premi&eacute;r Viktor Orb&aacute;n a taliansky minister vn&uacute;tra Matteo Salvini&nbsp;&nbsp;si pod&aacute;vaj&uacute; ruky počas tlačovej konferencie 2. m&aacute;ja 2019 v Budape&scaron;ti. FOTO TASR/AP</em></p>
-                                </div>
-
-                                <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/18954/conversions/cover.jpg">
-                                </div>
-                            </div>
-                        </div>
-                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="3"  data-href="https://www.postoj.sk/shortnews/2480" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2480">
-                            <div class="image-wrap">
-                                <img src="https://www.postoj.sk/uploads/18929/conversions/cover.jpg">
-                            </div>
-                            <header>
-                                <h3 class="author-link"><a href="https://www.postoj.sk/autor/lukas-krivosik" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</a></h3>
-                                <small>• pred 3 d</small>
-                            </header>
-                            <div class="perex">
-                                <p>Katol&iacute;ci a&nbsp;evanjelici v&nbsp;Nemecku do roku 2060 stratia asi polovicu členov. Podľa &uacute;dajov z&nbsp;roku 2017 sa k&nbsp;dvom najv&auml;č&scaron;&iacute;m cirkv&aacute;m hl&aacute;si 44,8...
-                            </div>
-
-
-                        </article>
-                        <div style="display: none;">
-                            <div class="kd-qtip-arrow"></div>
-                            <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
-                                <header class="clearfix">
-                                    <div class="image-wrap show">
-                                        <img src="https://www.postoj.sk/uploads/9793/conversions/profile.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">
-                                    </div>
-                                    <div class="header-text" style="">
-                                        <div class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</div><small style="margin-left: 5px;">• pred 3 d</small>
-                                    </div>
-                                </header>
-
-                                <div class="article-social-buttons">
-                                    <div class="social-btn">
-                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2480" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
-                                        </div>
-                                    </div>
-                                    <div class="social-btn">
-                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2480"  data-text="Nemeck&eacute; cirkvi stratia polovicu veriacich do roku 2060"  class="twitter-share-button">Tweet</a>
-                                    </div>
-                                </div>
-
-                                <div class="article-text">
-                                    <p>Katol&iacute;ci a&nbsp;evanjelici v&nbsp;Nemecku do roku 2060 stratia asi polovicu členov. Podľa &uacute;dajov z&nbsp;roku 2017 sa k&nbsp;dvom najv&auml;č&scaron;&iacute;m cirkv&aacute;m hl&aacute;si 44,8 mili&oacute;na ľud&iacute;, čo predstavuje 54,4 percenta nemeckej popul&aacute;cie. No v&nbsp;roku 2060 m&aacute; v&nbsp;Nemecku žiť už len 22,7 mili&oacute;na katol&iacute;kov a&nbsp;evanjelikov, teda asi&nbsp;polovica zo s&uacute;časn&eacute;ho počtu.</p>    <p>Vypl&yacute;va to z&nbsp;progn&oacute;zy V&yacute;skumn&eacute;ho centra generačnej zmluvy Univerzity Alberta Ludwiga vo Freiburgu. Informovala o&nbsp;nej Nemeck&aacute; biskupsk&aacute; konferencia na <a href="https://dbk.de/themen/kirche-und-geld/projektion-2060/" class="track-me-pls" data-category="home_kratke-spravy-exit-link">svojej webovej str&aacute;nke</a>.</p>    <p>Katol&iacute;cka cirkev v&nbsp;Nemecku poklesne zo s&uacute;časn&yacute;ch 23,3 mili&oacute;na&nbsp;veriacich na 12,2 mili&oacute;na v&nbsp;roku 2060.</p>    <p>Evanjelick&aacute; cirkev poklesne z&nbsp;teraj&scaron;&iacute;ch 21,5 mili&oacute;na na 10,5 mili&oacute;na veriacich v&nbsp;roku 2060.</p>    <p>Tento v&yacute;voj m&aacute; byť čiastočne d&ocirc;sledkom &uacute;mrtnosti, čiastočne vyst&uacute;peniami z&nbsp;cirkv&iacute;, ktor&eacute; krsty nov&yacute;ch členov nestačia kompenzovať.</p>    <p><em>Kol&iacute;nsky d&oacute;m. FOTO &ndash;&nbsp;TASR/AP</em></p>
-                                </div>
-
-                                <div class="article-image">
-                                    <img src="https://www.postoj.sk/uploads/18929/conversions/cover.jpg">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-
             </div>
             <div class="col-xxs-12 col-md-3 col-md-3-plus-compensation">
-                <div class=" eq-me  double-border-bottom border-left">
+                <div class=" eq-me  double-border-bottom border-left flex-column">
 
 
 
@@ -932,36 +831,36 @@
 
                         <div class="book-item row">
 
-                            <div class="book-detail col-xs-6 col-lg-7">
-                                <a href="https://obchod.postoj.sk/produkt/bud-kde-si/44" class="book-author track-me-pls"
+                            <div class="book-detail col-xxs-6 col-lg-7">
+                                <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50" class="book-author track-me-pls"
                                    data-category="shop_banner_top-title"
                                    data-action="click"
-                                   data-label="bud-kde-si">Buď, kde si</a>
+                                   data-label="cesta-na-zapad">Cesta na Z&aacute;pad</a>
 
-                                <p class="book-perex">O m&uacute;drosti p&uacute;&scaron;tnych otcov a n&aacute;strah&aacute;ch dne&scaron;nej doby</p>
+                                <p class="book-perex">Po stop&aacute;ch ochočen&eacute;ho Boha</p>
 
-                                <h4 class="promo-text">Naša knižná novinka so zľavou 10 %</h4>
+                                <h4 class="promo-text">Novinka obľúbeného autora Štěpána Smolena</h4>
 
-                                <a href="https://obchod.postoj.sk/produkt/bud-kde-si/44" class="book-link track-me-pls"
+                                <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50" class="book-link track-me-pls"
                                    data-category="shop_banner_top-about"
                                    data-action="click"
-                                   data-label="bud-kde-si">O knihe</a>
+                                   data-label="cesta-na-zapad">O knihe</a>
 
                             </div>
 
                             <div class="book-image pull-right">
-                                <a href="https://obchod.postoj.sk/produkt/bud-kde-si/44" class="track-me-pls"
-                                   alt="Buď, kde si"
+                                <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50" class="track-me-pls"
+                                   alt="Cesta na Z&aacute;pad"
                                    data-category="shop_banner_top-img"
                                    data-action="click"
-                                   data-label="bud-kde-si">
+                                   data-label="cesta-na-zapad">
 
-                                    <img src="https://www.postoj.sk/uploads/16476/conversions/variation_thumb.png">
+                                    <img src="/uploads/16520/conversions/variation_thumb.png">
                                 </a>
 
                                 <span class="badge badge-price">
                         Cena u nás:
-                        <span class="price">9,81&nbsp;&euro;</span>
+                        <span class="price">9,90&nbsp;&euro;</span>
                     </span>
                             </div>
                         </div>
@@ -990,118 +889,118 @@
                         <div class="tab-content">
                             <div id="today-popular-articles" class="popular-articles-list tab-pane active" role="tabpanel">
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43103/arcibiskup-stanislav-zvolensky-sprava-o-katolickej-cirkvi-na-slovensku"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="1"  >
+                                    <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="1"  >
                                         <span>1.</span>
-                                        <h3 class="article-title">Arcibiskup Stanislav Zvolensk&yacute;: Spr&aacute;va o Katol&iacute;ckej cirkvi na Slovensku</h3>
+                                        <h3 class="article-title">Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43110/na-zapade-ma-nepovazuju-za-menejcennu-pre-farbu-pleti-ale-pre-prolife-nazory"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="2"  >
+                                    <a href="https://www.postoj.sk/44179/nase-pozvanie-plati-nech-pridu-domov"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="2"  >
                                         <span>2.</span>
-                                        <h3 class="article-title">Na Z&aacute;pade ma nepovažuj&uacute; za menejcenn&uacute; pre farbu pleti, ale pre pro-life n&aacute;zory</h3>
+                                        <h3 class="article-title">Na&scaron;e pozvanie plat&iacute;, nech pr&iacute;du domov</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43035/kostoly-na-sri-lanke-ostavaju-zatvorene-papezske-misijne-diela-ziadaju-o-pomoc"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="3"  >
+                                    <a href="https://www.postoj.sk/44122/vatikan-zbavil-knaza-obvinenia-zo-sexualneho-obtazovania-v-spovednici"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="3"  >
                                         <span>3.</span>
-                                        <h3 class="article-title">Kostoly na Sr&iacute; Lanke ost&aacute;vaj&uacute; zatvoren&eacute;, P&aacute;pežsk&eacute; misijn&eacute; diela žiadaj&uacute; o pomoc</h3>
+                                        <h3 class="article-title">Vatik&aacute;n zbavil kňaza obvinenia zo sexu&aacute;lneho obťažovania v spovednici</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43003/marian-kuffa-v-debate-o-zakovciach-harabinovi-aj-dzenderi-video"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="4"  >
+                                    <a href="https://www.postoj.sk/44162/dobre-otazky-ziadna-odpoved"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="4"  >
                                         <span>4.</span>
-                                        <h3 class="article-title">Mari&aacute;n Kuffa v debate o Žakovciach, Harabinovi aj dženderi (video)</h3>
+                                        <h3 class="article-title">Dobr&eacute; ot&aacute;zky, žiadna odpoveď</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43090/pavol-hrabovecky-o-g-k-chestertonovi-a-burani-modernych-dogiem"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="5"  >
+                                    <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-today" data-value="5"  >
                                         <span>5.</span>
-                                        <h3 class="article-title">Pavol Hraboveck&yacute; o G. K. Chestertonovi a b&uacute;ran&iacute; modern&yacute;ch dogiem</h3>
+                                        <h3 class="article-title">Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu</h3>
                                     </a>
                                 </article>
                             </div>
                             <div id="yesterday-popular-articles" class="popular-articles-list tab-pane" role="tabpanel">
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43103/arcibiskup-stanislav-zvolensky-sprava-o-katolickej-cirkvi-na-slovensku"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="1"  >
+                                    <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="1"  >
                                         <span>1.</span>
-                                        <h3 class="article-title">Arcibiskup Stanislav Zvolensk&yacute;: Spr&aacute;va o Katol&iacute;ckej cirkvi na Slovensku</h3>
+                                        <h3 class="article-title">Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43003/marian-kuffa-v-debate-o-zakovciach-harabinovi-aj-dzenderi-video"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="2"  >
+                                    <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="2"  >
                                         <span>2.</span>
-                                        <h3 class="article-title">Mari&aacute;n Kuffa v debate o Žakovciach, Harabinovi aj dženderi (video)</h3>
+                                        <h3 class="article-title">Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43090/pavol-hrabovecky-o-g-k-chestertonovi-a-burani-modernych-dogiem"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="3"  >
+                                    <a href="https://www.postoj.sk/44076/niektori-knazi-a-reholnicky-sa-nechaju-vylucit-spolu-s-romami"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="3"  >
                                         <span>3.</span>
-                                        <h3 class="article-title">Pavol Hraboveck&yacute; o G. K. Chestertonovi a b&uacute;ran&iacute; modern&yacute;ch dogiem</h3>
+                                        <h3 class="article-title">Niektor&iacute; kňazi a&nbsp;rehoľn&iacute;čky sa nechaj&uacute; vyl&uacute;čiť spolu s&nbsp;R&oacute;mami</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43110/na-zapade-ma-nepovazuju-za-menejcennu-pre-farbu-pleti-ale-pre-prolife-nazory"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="4"  >
+                                    <a href="https://www.postoj.sk/44116/kdh-napadlo-na-ustavnom-sude-rozdelenie-mandatov-z-eurovolieb"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="4"  >
                                         <span>4.</span>
-                                        <h3 class="article-title">Na Z&aacute;pade ma nepovažuj&uacute; za menejcenn&uacute; pre farbu pleti, ale pre pro-life n&aacute;zory</h3>
+                                        <h3 class="article-title">KDH napadlo na &Uacute;stavnom s&uacute;de rozdelenie mand&aacute;tov z eurovolieb</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/42972/ako-obstal-marian-kuffa-v-kaviarni"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="5"  >
+                                    <a href="https://www.postoj.sk/44122/vatikan-zbavil-knaza-obvinenia-zo-sexualneho-obtazovania-v-spovednici"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-yesterday" data-value="5"  >
                                         <span>5.</span>
-                                        <h3 class="article-title">Ako obst&aacute;l Mari&aacute;n Kuffa v&nbsp;kaviarni? (+video)</h3>
+                                        <h3 class="article-title">Vatik&aacute;n zbavil kňaza obvinenia zo sexu&aacute;lneho obťažovania v spovednici</h3>
                                     </a>
                                 </article>
                             </div>
                             <div id="week-popular-articles" class="popular-articles-list tab-pane" role="tabpanel">
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/42972/ako-obstal-marian-kuffa-v-kaviarni"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="1"  >
+                                    <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="1"  >
                                         <span>1.</span>
-                                        <h3 class="article-title">Ako obst&aacute;l Mari&aacute;n Kuffa v&nbsp;kaviarni? (+video)</h3>
+                                        <h3 class="article-title">Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/42845/advokat-martiny-o-connor-z-postupu-vysetrovatelky-som-zhrozeny"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="2"  >
+                                    <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="2"  >
                                         <span>2.</span>
-                                        <h3 class="article-title">Advok&aacute;t Martiny O&#039;Connor: Z postupu vy&scaron;etrovateľky som zhrozen&yacute;</h3>
+                                        <h3 class="article-title">Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43024/musime-ju-pocuvat"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="3"  >
+                                    <a href="https://www.postoj.sk/43941/kauza-prijimanie-kto-by-si-mal-spytovat-svedomie-"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="3"  >
                                         <span>3.</span>
-                                        <h3 class="article-title">Mus&iacute;me ju poč&uacute;vať</h3>
+                                        <h3 class="article-title">Kauza prij&iacute;manie: kto by si mal spytovať svedomie</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43003/marian-kuffa-v-debate-o-zakovciach-harabinovi-aj-dzenderi-video"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="4"  >
+                                    <a href="https://www.postoj.sk/43976/brat-filip-detom-chyba-laskava-tvrdost-rodicov-video"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="4"  >
                                         <span>4.</span>
-                                        <h3 class="article-title">Mari&aacute;n Kuffa v debate o Žakovciach, Harabinovi aj dženderi (video)</h3>
+                                        <h3 class="article-title">Brat Filip: Deťom ch&yacute;ba l&aacute;skav&aacute; tvrdosť rodičov (video)</h3>
                                     </a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/42964/vatikan-zacal-kanonicke-vysetrovanie-pripadu-martiny-o-connor"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="5"  >
+                                    <a href="https://www.postoj.sk/44076/niektori-knazi-a-reholnicky-sa-nechaju-vylucit-spolu-s-romami"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-week" data-value="5"  >
                                         <span>5.</span>
-                                        <h3 class="article-title">Vatik&aacute;n začal kanonick&eacute; vy&scaron;etrovanie pr&iacute;padu Martiny O&acute;Connor</h3>
+                                        <h3 class="article-title">Niektor&iacute; kňazi a&nbsp;rehoľn&iacute;čky sa nechaj&uacute; vyl&uacute;čiť spolu s&nbsp;R&oacute;mami</h3>
                                     </a>
                                 </article>
                             </div>
                             <div id="blog-popular-articles" class="popular-articles-list tab-pane" role="tabpanel">
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/43087/nestrielajte-na-otca-kuffu-otec-kuffa-nestrielajte-na-nas"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-blog" data-value="1"  >
+                                    <a href="https://www.postoj.sk/43989/koalicia-kdhku-by-jednote-krestanov-v-politike-uskodila"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-blog" data-value="1"  >
                                         <span>1.</span>
-                                        <h3 class="article-title">Nestrieľajte na otca Kuffu, otec Kuffa nestrieľajte na n&aacute;s</h3>
-                                    </a> - <a href="https://www.postoj.sk/autor/ema-pagacova"  class="blog-author  track-me-pls "  data-category="kategoria_clanky-autor" data-action="click" >Ema Pag&aacute;čov&aacute;</a>
+                                        <h3 class="article-title">Koal&iacute;cia KDH/K&Uacute; by jednote kresťanov v politike u&scaron;kodila</h3>
+                                    </a> - <a href="https://www.postoj.sk/autor/slavomir-gregorik"  class="blog-author  track-me-pls "  data-category="kategoria_clanky-autor" data-action="click" >Slavom&iacute;r Gregor&iacute;k</a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/42978/ad-vladimir-palko-americka-zakladna-na-slovensku-a-geopolitika"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-blog" data-value="2"  >
+                                    <a href="https://www.postoj.sk/43991/co-sa-to-prave-udialo-v-polsku"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-blog" data-value="2"  >
                                         <span>2.</span>
-                                        <h3 class="article-title">Ad: Vladim&iacute;r Palko - Americk&aacute; z&aacute;kladňa na Slovensku a&nbsp;geopolitika</h3>
-                                    </a> - <a href="https://www.postoj.sk/autor/jaroslav-nad"  class="blog-author  track-me-pls "  data-category="kategoria_clanky-autor" data-action="click" >Jaroslav Naď</a>
+                                        <h3 class="article-title">Čo sa to pr&aacute;ve udialo v Poľsku?</h3>
+                                    </a> - <a href="https://www.postoj.sk/autor/julius-eckhardt"  class="blog-author  track-me-pls "  data-category="kategoria_clanky-autor" data-action="click" >J&uacute;lius Eckhardt</a>
                                 </article>
                                 <article class="popular-article">
-                                    <a href="https://www.postoj.sk/42910/bude-arcibiskup-zvolensky-novym-slovenskym-kardinalom"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-blog" data-value="3"  >
+                                    <a href="https://www.postoj.sk/43954/koho-volili-volici-kdh-po-okresoch"  class="track-me-pls" data-category="home_najcitanejsie-clanok" data-action="click" data-label="position-blog" data-value="3"  >
                                         <span>3.</span>
-                                        <h3 class="article-title">Bude arcibiskup Zvolensk&yacute; nov&yacute;m slovensk&yacute;m kardin&aacute;lom?</h3>
-                                    </a> - <a href="https://www.postoj.sk/autor/lenka-nalevankova"  class="blog-author  track-me-pls "  data-category="kategoria_clanky-autor" data-action="click" >Lenka Nalevankov&aacute; Mi&scaron;enkov&aacute;</a>
+                                        <h3 class="article-title">Koho si vybrali voliči KDH v jednotliv&yacute;ch okresoch?</h3>
+                                    </a> - <a href="https://www.postoj.sk/autor/jozef-simko"  class="blog-author  track-me-pls "  data-category="kategoria_clanky-autor" data-action="click" >Jozef &Scaron;imko</a>
                                 </article>
                             </div>
                         </div>
@@ -1127,16 +1026,30 @@
                                         </h2>
                                     </header>
                                     <div class="short-news-items">
-                                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="1"  data-href="https://www.postoj.sk/shortnews/2482" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2482">
-                                            <div class="image-wrap">
-                                                <img src="https://www.postoj.sk/uploads/18983/conversions/cover.jpg">
+                                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="1"  data-href="https://www.postoj.sk/shortnews/2525" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2525">
+                                            <time datetime="2019-06-05 15:01:30">
+                                            </time>
+                                            <div class="image-wrap hidden-kd-mobile">
+                                                <img src="/uploads/20122/conversions/cover.jpg">
                                             </div>
-                                            <header>
-                                                <h3 class="author-link"><a href="https://www.postoj.sk/autor/jan-duda-1" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">J&aacute;n Duda</a></h3>
-                                                <small>• pred 1 d</small>
+                                            <header class="clearfix">
+                                                <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/martin-hanus" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">Martin Hanus</a></h3>
+                                                <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                                    <a class="author-img" href="https://www.postoj.sk/autor/martin-hanus" data-category="home_kratke-spravy-autor" data-action="click">
+                                                        <img src="/uploads/9311/conversions/square.jpg" alt="Martin Hanus">          </a>
+                                                    <div class="title">
+                                                        <a class="author" href="https://www.postoj.sk/autor/martin-hanus"> <span>Martin Hanus</span> </a>
+                                                        <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2525">
+                                                            <span>Steve Bannon: Ak nacionalisti nedobyj&uacute; E&Uacute;, Č&iacute;na znič&iacute; Z&aacute;pad</span> </a>
+                                                    </div>
+                                                </div>
+                                                <small class="hidden-kd-mobile">• pred 18 hod</small>
                                             </header>
-                                            <div class="perex">
-                                                <p>Evanjelium tretej veľkonočnej nedele (5. 5. 2019) je dosť dlh&eacute; (Jn 21,1-19). K nemu len tri kr&aacute;tke pozn&aacute;mky.</p>    <p>(1) Vyznanie...
+                                            <div class="perex hidden-kd-mobile">
+                                                <p>Steve Bannon, b&yacute;val&yacute; hlavn&yacute; strat&eacute;g Donalda Trumpa, v t&yacute;chto mesiacoch cestuje po Eur&oacute;pe a so svojou mimovl&aacute;dkou The Movement sa...
+                                            </div>
+                                            <div class="perex show-kd-mobile">
+                                                <p>Steve Bannon, b&yacute;val&yacute; hlavn&yacute; strat&eacute;g Donalda Trumpa, v t&yacute;chto mesiacoch cestuje po Eur&oacute;pe a so svojou mimovl&aacute;dkou The Movement sa snaž&iacute; dať dokopy nacionalistick&eacute; a populistick&eacute; strany, aby vytvorili v Eur&oacute;pskom parlamente ak&uacute;si &bdquo;Super Group&ldquo;.<br...
                                             </div>
 
 
@@ -1146,42 +1059,56 @@
                                             <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                                 <header class="clearfix">
                                                     <div class="image-wrap show">
-                                                        <img src="https://www.postoj.sk/uploads/1885/conversions/profile.jpg" alt="J&aacute;n Duda">
+                                                        <img src="/uploads/9311/conversions/profile.jpg" alt="Martin Hanus">
                                                     </div>
                                                     <div class="header-text" style="">
-                                                        <div class="author-name">J&aacute;n Duda</div><small style="margin-left: 5px;">• pred 1 d</small>
+                                                        <div class="author-name">Martin Hanus</div><small style="margin-left: 5px;">• pred 18 hod</small>
                                                     </div>
                                                 </header>
 
                                                 <div class="article-social-buttons">
                                                     <div class="social-btn">
-                                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2482" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2525" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                                         </div>
                                                     </div>
                                                     <div class="social-btn">
-                                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2482"  data-text="Potrebujeme pr&iacute;tomnosť P&aacute;na"  class="twitter-share-button">Tweet</a>
+                                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2525"  data-text="Steve Bannon: Ak nacionalisti nedobyj&uacute; E&Uacute;, Č&iacute;na znič&iacute; Z&aacute;pad"  class="twitter-share-button">Tweet</a>
                                                     </div>
                                                 </div>
 
                                                 <div class="article-text">
-                                                    <p>Evanjelium tretej veľkonočnej nedele (5. 5. 2019) je dosť dlh&eacute; (Jn 21,1-19). K nemu len tri kr&aacute;tke pozn&aacute;mky.</p>    <p>(1) Vyznanie viery. Tentoraz ho vyslovil apo&scaron;tol J&aacute;n po tom, ako ulovili veľk&eacute; množstvo r&yacute;b: &bdquo;P&aacute;n je to.&ldquo; Je tu siln&aacute; životn&aacute; sk&uacute;senosť: ulovili 153 r&yacute;b, J&aacute;n si dokonca zapam&auml;tal aj ich počet. A t&aacute;to siln&aacute; sk&uacute;senosť im otvorila oči a oni spoznali, že je to P&aacute;n! Ako my vyhodnocujeme svoje životn&eacute; sk&uacute;senosti? Otv&aacute;raj&uacute; n&aacute;m oči? Spozn&aacute;vame v nich p&ocirc;sobenie P&aacute;na?</p>    <p>(2) Efekt&iacute;vnosť. Peter sa chopil iniciat&iacute;vy a pod jeho vplyvom učen&iacute;ci vy&scaron;li chytať ryby. Ale nechytili nič. Nestač&iacute;, že sme iniciat&iacute;vni, ale pre efektivitu je potrebn&aacute; pr&iacute;tomnosť P&aacute;na! Darmo sa nam&aacute;hame, darmo sme iniciat&iacute;vni. Pri svojich nam&aacute;haniach potrebujeme pr&iacute;tomnosť P&aacute;na.</p>    <p>(3) &bdquo;Kde je Peter, tam je Cirkev.&ldquo; S&uacute; to slov&aacute; sv. Ambr&oacute;za (339 &ndash; 397) a s&uacute; nap&iacute;san&eacute; aj v kaplnke P&aacute;pežsk&eacute;ho slovensk&eacute;ho kol&eacute;gia v R&iacute;me. Ježi&scaron; 3x vyzval &Scaron;imona, aby mu povedal, že ho miluje, a 3x ho vyzval: &bdquo;Pas moje ovce!&ldquo; Katol&iacute;cky v&yacute;klad považuje tieto slov&aacute; za teologick&yacute; z&aacute;klad prim&aacute;tu Petrov&yacute;ch n&aacute;stupcov. Okrem Vyznania viery Petrovo prvenstvo je identick&yacute;m znakom jednoty kresťanov.</p>    <p>Požehnan&uacute; tretiu veľkonočn&uacute; nedeľu prajem v&scaron;etk&yacute;m.</p>    <p>J&aacute;n Duda</p>    <p>&nbsp;</p>    <p><em>Foto: www.ekolist.cz</em></p>
+                                                    <p>Steve Bannon, b&yacute;val&yacute; hlavn&yacute; strat&eacute;g Donalda Trumpa, v t&yacute;chto mesiacoch cestuje po Eur&oacute;pe a so svojou mimovl&aacute;dkou The Movement sa snaž&iacute; dať dokopy nacionalistick&eacute; a populistick&eacute; strany, aby vytvorili v Eur&oacute;pskom parlamente ak&uacute;si &bdquo;Super Group&ldquo;.<br />  <br />  S Bannonom sa e&scaron;te kr&aacute;tko pred eurovoľbami zhov&aacute;rali novin&aacute;ri z liber&aacute;lneho &scaron;vajčiarskeho denn&iacute;ka Neue Z&uuml;rcher Zeitung (NZZ), v&yacute;sledkom je <a href="https://www.nzz.ch/international/steve-bannon-im-interview-bruessel-wird-zu-stalingrad-ld.1481934?mktcid=nled&amp;mktcval=107_2019-05-16&amp;kid=_2019-5-15" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-exit-link">nap&iacute;nav&aacute; sonda</a> nielen do myslenia Bannona, ale aj samotn&eacute;ho Trumpa.<br />  <br />  Podľa Bannona s&uacute;peria v Eur&oacute;pe dve hlavn&eacute; sily, t&aacute;bor globalistov na čele s Macronom, ktor&eacute;ho cieľom s&uacute; Spojen&eacute; &scaron;t&aacute;ty eur&oacute;pske, teda &bdquo;n&aacute;rody ako spr&aacute;vne jednotky centr&aacute;lnej byrokracie&ldquo;, proti nim stoja z&aacute;stancovia vestf&aacute;lskeho syst&eacute;mu, teda n&aacute;rodn&yacute;ch &scaron;t&aacute;tov, ktor&eacute; tvoria E&Uacute;, ale tak&uacute;, ktor&aacute; by mala mať&nbsp;viac obchodn&yacute; než politick&yacute; charakter.<br />  <br />  Bannon ďalej rozv&aacute;dza, že pre jeho &bdquo;populisticko-nacionalistick&yacute; projekt&ldquo; je kľ&uacute;čovou krajinou Nemecko, preto chod&iacute; radiť najm&auml; AfD&nbsp;a veľmi ho zauj&iacute;ma, ako na jeseň dopadn&uacute; voľby v troch v&yacute;chodonemeck&yacute;ch regi&oacute;noch, kde m&ocirc;že t&aacute;to strana zažiariť.<br />  <br />  Steve Bannon ver&iacute;, že sa pr&aacute;ve zač&iacute;na obrat, po eurovoľb&aacute;ch &bdquo;bude každ&yacute; deň v Bruseli Stalingradom&ldquo;, nacionalisti s&iacute;ce e&scaron;te nepresadia svoju v&ocirc;ľu, ale vo fragmentovanom europarlamente bud&uacute; m&ocirc;cť blokovať globalistov. Bannon čel&iacute; ot&aacute;zke, či jednotn&aacute; aliancia&nbsp;nacionalistov v E&Uacute; nie je len fikciou, pretože Eur&oacute;pa nie je Amerika, Bannon sa vyhne priamej odpovedi.<br />  <br />  Tvrd&iacute;, že jeho cieľom nie je E&Uacute; zru&scaron;iť, ale zmeniť zvn&uacute;tra, aby sa Z&aacute;pad postavil svojmu skutočn&eacute;mu existenčn&eacute;mu nepriateľovi, ktor&yacute;m je Č&iacute;na. Glob&aacute;lne elity vraj č&iacute;nsku hrozbu nechc&uacute; pripustiť, pretože na vzostupe Č&iacute;ny dobre zar&aacute;baj&uacute;.<br />  <br />  Č&iacute;na je podľa Bannona &bdquo;totalit&aacute;rna diktat&uacute;ra&ldquo;, jej čipy, roboty a umel&aacute; inteligencia s&uacute; pre nemeck&eacute; inžinierstvo &bdquo;klincom do rakvy&ldquo;, do roku 2025 bude v&scaron;etko &bdquo;made in China&ldquo;. Preto ho najviac rozčuľuje, že &bdquo;globalisti sa tv&aacute;ria, akoby bol č&iacute;nsky vzostup len nejak&yacute; druh&yacute; termodynamick&yacute; z&aacute;kon&ldquo;. Č&iacute;nski lobisti sedia pritom v City of London a na Wall Street, ale z&aacute;padn&aacute; elita z Davosu &bdquo;sa spr&aacute;va ako roztlieskavačky, je to nechutn&eacute;&ldquo;.<br />  <br />  Na ot&aacute;zku NZZ, ako vn&iacute;ma hrozbu z Ruska, Bannon vrav&iacute;, že celkom by stačilo, keby Nemci s Rusmi neuzavreli Nordstream 2. Ale inak je pre neho oveľa men&scaron;&iacute;m probl&eacute;mom než Č&iacute;na, &bdquo;rusk&aacute; ekonomika je asi tak&aacute; veľk&aacute;, ako ekonomika &scaron;t&aacute;tu New York, krajina sa nach&aacute;dza v demografickej &scaron;pir&aacute;le smrti, nevyr&aacute;ba žiadne vyspel&eacute; technol&oacute;gie, je to kleptokracia, ktor&uacute; riadia zl&iacute; chlap&iacute;ci, m&aacute; v&scaron;ak veľa zbran&iacute;, a preto rob&iacute; starosti v r&ocirc;znych častiach sveta&ldquo;.<br />  <br />  V z&aacute;vere sa Bannon e&scaron;te vyzn&aacute;va, že jeho najvy&scaron;&scaron;ou životnou prioritou je znovuzvolenie Trumpa v roku 2020, &bdquo;ide o&nbsp;absol&uacute;tne existenčn&uacute;&nbsp;ot&aacute;zku, pre USA aj pre Z&aacute;pad&ldquo;. A že najlep&scaron;&iacute;m miestom, odkiaľ m&ocirc;že dnes&nbsp;Trumpovi pom&aacute;hať, je pr&aacute;ve Eur&oacute;pa.</p>    <p><em>Steve Bannon, FOTO TASR /AP&nbsp;</em></p>
                                                 </div>
 
                                                 <div class="article-image">
-                                                    <img src="https://www.postoj.sk/uploads/18983/conversions/cover.jpg">
+                                                    <img src="/uploads/20122/conversions/cover.jpg">
                                                 </div>
                                             </div>
                                         </div>
-                                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="2"  data-href="https://www.postoj.sk/shortnews/2481" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2481">
-                                            <div class="image-wrap">
-                                                <img src="https://www.postoj.sk/uploads/18954/conversions/cover.jpg">
+                                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="2"  data-href="https://www.postoj.sk/shortnews/2524" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2524">
+                                            <time datetime="2019-06-05 12:07:09">
+                                            </time>
+                                            <div class="image-wrap hidden-kd-mobile">
+                                                <img src="/uploads/20114/conversions/cover.jpg">
                                             </div>
-                                            <header>
-                                                <h3 class="author-link"><a href="https://www.postoj.sk/autor/martin-hanus" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">Martin Hanus</a></h3>
-                                                <small>• pred 2 d</small>
+                                            <header class="clearfix">
+                                                <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/jozef-majchrak" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">Jozef Majchr&aacute;k</a></h3>
+                                                <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                                    <a class="author-img" href="https://www.postoj.sk/autor/jozef-majchrak" data-category="home_kratke-spravy-autor" data-action="click">
+                                                        <img src="/uploads/9302/conversions/square.jpg" alt="Jozef Majchr&aacute;k">          </a>
+                                                    <div class="title">
+                                                        <a class="author" href="https://www.postoj.sk/autor/jozef-majchrak"> <span>Jozef Majchr&aacute;k</span> </a>
+                                                        <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2524">
+                                                            <span>Ozve sa aj Pellegrini?</span> </a>
+                                                    </div>
+                                                </div>
+                                                <small class="hidden-kd-mobile">• pred 20 hod</small>
                                             </header>
-                                            <div class="perex">
-                                                <p>Včeraj&scaron;ie stretnutie Mattea Salviniho s Viktorom Orb&aacute;nom na maďarskej p&ocirc;de dopadlo podľa scen&aacute;ra: obaja rovnako ako vlani v Mil&aacute;ne&nbsp;demon&scaron;trovali vz&aacute;jomn&eacute;...
+                                            <div class="perex hidden-kd-mobile">
+                                                <p>Premi&eacute;r Peter Pellegrini je na n&aacute;v&scaron;teve v Moskve. Dnes by sa mal stretn&uacute;ť s premi&eacute;rom Medvedevom a zajtra s prezidentom...
+                                            </div>
+                                            <div class="perex show-kd-mobile">
+                                                <p>Premi&eacute;r Peter Pellegrini je na n&aacute;v&scaron;teve v Moskve. Dnes by sa mal stretn&uacute;ť s premi&eacute;rom Medvedevom a zajtra s prezidentom Putinom.&nbsp;</p>    <p>Premi&eacute;r ide do Ruska v čase, keď sa v ruskom parlamente objavil n&aacute;vrh z&aacute;kona,...
                                             </div>
 
 
@@ -1191,42 +1118,56 @@
                                             <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                                 <header class="clearfix">
                                                     <div class="image-wrap show">
-                                                        <img src="https://www.postoj.sk/uploads/9311/conversions/profile.jpg" alt="Martin Hanus">
+                                                        <img src="/uploads/9302/conversions/profile.jpg" alt="Jozef Majchr&aacute;k">
                                                     </div>
                                                     <div class="header-text" style="">
-                                                        <div class="author-name">Martin Hanus</div><small style="margin-left: 5px;">• pred 2 d</small>
+                                                        <div class="author-name">Jozef Majchr&aacute;k</div><small style="margin-left: 5px;">• pred 20 hod</small>
                                                     </div>
                                                 </header>
 
                                                 <div class="article-social-buttons">
                                                     <div class="social-btn">
-                                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2481" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2524" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                                         </div>
                                                     </div>
                                                     <div class="social-btn">
-                                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2481"  data-text="Viktor Orb&aacute;n: &bdquo;Salvini je najd&ocirc;ležitej&scaron;&iacute; človek v dne&scaron;nej Eur&oacute;pe.&ldquo; "  class="twitter-share-button">Tweet</a>
+                                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2524"  data-text="Ozve sa aj Pellegrini?"  class="twitter-share-button">Tweet</a>
                                                     </div>
                                                 </div>
 
                                                 <div class="article-text">
-                                                    <p>Včeraj&scaron;ie stretnutie Mattea Salviniho s Viktorom Orb&aacute;nom na maďarskej p&ocirc;de dopadlo podľa scen&aacute;ra: obaja rovnako ako vlani v Mil&aacute;ne&nbsp;demon&scaron;trovali vz&aacute;jomn&eacute; sympatie, taliansky minister vn&uacute;tra pred novin&aacute;rmi vyhl&aacute;sil, že do Budape&scaron;ti pri&scaron;iel, aby videl, ako sa br&aacute;nia hranice. Takže len čo prist&aacute;l v Budape&scaron;ti, helikopt&eacute;ra ho odviezla na hranice so Srbskom, kde ho v R&ouml;szke čakal Orb&aacute;n.</p>    <p>Zhruba v tom čase uverejnil s Orb&aacute;nom&nbsp;rozsiahly <a href="https://www.lastampa.it/2019/05/01/esteri/victor-orban-denaro-sicurezza-mercato-oggi-ci-sono-gi-tre-europe-ma-fingiamo-sia-soltanto-una-hChaJXulkKMsAk4TlKamBN/premium.html" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-exit-link">rozhovor</a> taliansky denn&iacute;k La Stampa (tu je v <a href="https://www.lastampa.it/2019/05/02/esteri/victor-orban-money-safety-market-today-there-are-already-three-europes-but-we-pretend-there-is-only-one-LpGkFQpBBo8xWuge3nuYTI/pagina.html" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-exit-link">anglickej verzii</a>). Orb&aacute;n v ňom&nbsp;označil Salviniho za &bdquo;hrdinu, ktor&yacute; ako prv&yacute; zastavil migr&aacute;ciu na mori, k&yacute;m my sme ju zastavili na s&uacute;&scaron;i&ldquo;&nbsp;a za &bdquo;najd&ocirc;ležitej&scaron;ieho človeka v dne&scaron;nej Eur&oacute;pe&ldquo;. Maďarsk&yacute; premi&eacute;r tiež povedal, že Eur&oacute;pskej&nbsp;ľudovej&nbsp;strane&nbsp;(Fidesz m&aacute; nateraz v EPP pozastaven&eacute; členstvo)&nbsp;hroz&iacute; samovražda, ak bude ďalej pokračovať v spojenectve so socialistami &ndash;&nbsp;jej jedinou z&aacute;chranou je preto spojenie s pravicovou alianciou okolo Salviniho, ktor&eacute;mu žel&aacute; čo najv&auml;č&scaron;&iacute; volebn&yacute; &uacute;spech.&nbsp;&nbsp;</p>    <p>Samozrejme, tieto slov&aacute;, ktor&eacute; trhaj&uacute; u&scaron;i v&auml;č&scaron;ine partnerov v EPP, s&uacute; s&uacute;časťou Orb&aacute;novej&nbsp;eurokampane, v ktorej&nbsp;mobilizuje svojich voličov na migračnej karte. S&uacute;časne t&yacute;m voči EPP vysiela sign&aacute;l, že&nbsp;ak suverenistick&yacute; blok na čele so Salvinim a Le Penovou v&yacute;znamne posilnia, on s&aacute;m bude zvažovať, či zostať form&aacute;lnou s&uacute;časťou &bdquo;samovražedn&eacute;ho&ldquo;&nbsp;spolku alebo stavať na novej osi&nbsp;Budape&scaron;ť &ndash; R&iacute;m.</p>    <p>Ak eur&oacute;pske voľby m&ocirc;žu priniesť v nejakej krajine politick&eacute;&nbsp;zemetrasenie, tak je to pr&aacute;ve v Taliansku. Očak&aacute;va sa, že Salviniho Liga z&iacute;ska takmer dvojn&aacute;sobn&yacute; podiel hlasov&nbsp;oproti 17 percent&aacute;m z parlamentn&yacute;ch&nbsp;volieb&nbsp;v marci 2018 a bude mať tak&nbsp;po nemeckej CDU najviac europoslancov. A keďže v koaličnej vl&aacute;de Hnutia&nbsp;piatich&nbsp;hviezd a Ligy narast&aacute; nap&auml;tie, mnoh&iacute; talianski koment&aacute;tori predpokladaj&uacute;, že ak p&auml;ťhviezdičkov&eacute; hnutie zaznamen&aacute; mas&iacute;vne straty, ako naznačuj&uacute; prieskumy, Liga&nbsp;to využije na vyvolanie skor&yacute;ch predčasn&yacute;ch volieb. Moc v krajine by tak mohol zdvihn&uacute;ť zo zeme len&nbsp;jedin&yacute; muž &ndash;&nbsp;Matteo Salvini.&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</p>    <p><em>Maďarsk&yacute; premi&eacute;r Viktor Orb&aacute;n a taliansky minister vn&uacute;tra Matteo Salvini&nbsp;&nbsp;si pod&aacute;vaj&uacute; ruky počas tlačovej konferencie 2. m&aacute;ja 2019 v Budape&scaron;ti. FOTO TASR/AP</em></p>
+                                                    <p>Premi&eacute;r Peter Pellegrini je na n&aacute;v&scaron;teve v Moskve. Dnes by sa mal stretn&uacute;ť s premi&eacute;rom Medvedevom a zajtra s prezidentom Putinom.&nbsp;</p>    <p>Premi&eacute;r ide do Ruska v čase, keď sa v ruskom parlamente objavil n&aacute;vrh z&aacute;kona, ktor&yacute; uzn&aacute;va &uacute;častn&iacute;kov okup&aacute;cie Československa z augusta 1968&nbsp;za vojnov&yacute;ch veter&aacute;nov.</p>    <p>Z&aacute;kon, pochopiteľne, vyvolal v Česku a na Slovensku ostr&eacute; reakcie a zo stoličky <a href="https://www.lidovky.cz/domov/zeman-odsuzuje-navrh-na-uznani-okupantu-z-roku-1968-za-veterany-pozval-si-velvyslance.A190605_110407_ln_domov_ele" class="track-me-pls" data-category="home_kratke-spravy-exit-link">zdvihol </a>aj prezidenta Milo&scaron;a Zemana, ktor&eacute;ho sa určite ned&aacute; podozrievať z rusof&oacute;bie. Zeman si už predvolal rusk&eacute;ho veľvyslanca, od ktor&eacute;ho bude žiadať vysvetlenie tejto iniciat&iacute;vy.&nbsp;</p>    <p>Ot&aacute;zkou t&yacute;ch dn&iacute; tak je, či sa ozve aj n&aacute;&scaron; premi&eacute;r, ktor&yacute; m&aacute; unik&aacute;tnu možnosť povedať svoj n&aacute;zor priamo najvy&scaron;&scaron;&iacute;m rusk&yacute;m l&iacute;drom.&nbsp;</p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>    <p><em>Foto: TASR/Jakub Kotian</em></p>
                                                 </div>
 
                                                 <div class="article-image">
-                                                    <img src="https://www.postoj.sk/uploads/18954/conversions/cover.jpg">
+                                                    <img src="/uploads/20114/conversions/cover.jpg">
                                                 </div>
                                             </div>
                                         </div>
-                                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="3"  data-href="https://www.postoj.sk/shortnews/2480" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2480">
-                                            <div class="image-wrap">
-                                                <img src="https://www.postoj.sk/uploads/18929/conversions/cover.jpg">
+                                        <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-hover" data-action="mouseover" data-label="position" data-value="3"  data-href="https://www.postoj.sk/shortnews/2523" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2523">
+                                            <time datetime="2019-06-04 20:16:42">
+                                            </time>
+                                            <div class="image-wrap hidden-kd-mobile">
+                                                <img src="/uploads/20091/conversions/cover.jpg">
                                             </div>
-                                            <header>
-                                                <h3 class="author-link"><a href="https://www.postoj.sk/autor/lukas-krivosik" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</a></h3>
-                                                <small>• pred 3 d</small>
+                                            <header class="clearfix">
+                                                <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/jaroslav-daniska" class="track-me-pls" data-category="home_kratke-spravy-autor" data-action="click">Jaroslav Dani&scaron;ka</a></h3>
+                                                <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                                    <a class="author-img" href="https://www.postoj.sk/autor/jaroslav-daniska" data-category="home_kratke-spravy-autor" data-action="click">
+                                                        <img src="/uploads/9387/conversions/square.jpg" alt="Jaroslav Dani&scaron;ka">          </a>
+                                                    <div class="title">
+                                                        <a class="author" href="https://www.postoj.sk/autor/jaroslav-daniska"> <span>Jaroslav Dani&scaron;ka</span> </a>
+                                                        <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2523">
+                                                            <span>Proti Babi&scaron;ovi &ndash; a nov&eacute; riziko pre česk&uacute; opoz&iacute;ciu</span> </a>
+                                                    </div>
+                                                </div>
+                                                <small class="hidden-kd-mobile">• pred 1 d</small>
                                             </header>
-                                            <div class="perex">
-                                                <p>Katol&iacute;ci a&nbsp;evanjelici v&nbsp;Nemecku do roku 2060 stratia asi polovicu členov. Podľa &uacute;dajov z&nbsp;roku 2017 sa k&nbsp;dvom najv&auml;č&scaron;&iacute;m cirkv&aacute;m hl&aacute;si 44,8...
+                                            <div class="perex hidden-kd-mobile">
+                                                <p>V Prahe sa dnes podvečer kon&aacute; (konala) demon&scaron;tr&aacute;cia proti tamoj&scaron;iemu premi&eacute;rovi Babi&scaron;ovi a ministerke spravodlivosti M&aacute;rii Bene&scaron;ovej, ľud&iacute; mobilizuje Babi&scaron;ov...
+                                            </div>
+                                            <div class="perex show-kd-mobile">
+                                                <p>V Prahe sa dnes podvečer kon&aacute; (konala) demon&scaron;tr&aacute;cia proti tamoj&scaron;iemu premi&eacute;rovi Babi&scaron;ovi a ministerke spravodlivosti M&aacute;rii Bene&scaron;ovej, ľud&iacute; mobilizuje Babi&scaron;ov podvod s eurofondmi (&bdquo;V&scaron;etci kradn&uacute;, iba ja čerp&aacute;m&ldquo;) a pokus ust&aacute;ť to a urobiť z...
                                             </div>
 
 
@@ -1236,29 +1177,29 @@
                                             <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                                 <header class="clearfix">
                                                     <div class="image-wrap show">
-                                                        <img src="https://www.postoj.sk/uploads/9793/conversions/profile.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">
+                                                        <img src="/uploads/9387/conversions/profile.jpg" alt="Jaroslav Dani&scaron;ka">
                                                     </div>
                                                     <div class="header-text" style="">
-                                                        <div class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</div><small style="margin-left: 5px;">• pred 3 d</small>
+                                                        <div class="author-name">Jaroslav Dani&scaron;ka</div><small style="margin-left: 5px;">• pred 1 d</small>
                                                     </div>
                                                 </header>
 
                                                 <div class="article-social-buttons">
                                                     <div class="social-btn">
-                                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2480" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                                        <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2523" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                                         </div>
                                                     </div>
                                                     <div class="social-btn">
-                                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2480"  data-text="Nemeck&eacute; cirkvi stratia polovicu veriacich do roku 2060"  class="twitter-share-button">Tweet</a>
+                                                        <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2523"  data-text="Proti Babi&scaron;ovi &ndash; a nov&eacute; riziko pre česk&uacute; opoz&iacute;ciu"  class="twitter-share-button">Tweet</a>
                                                     </div>
                                                 </div>
 
                                                 <div class="article-text">
-                                                    <p>Katol&iacute;ci a&nbsp;evanjelici v&nbsp;Nemecku do roku 2060 stratia asi polovicu členov. Podľa &uacute;dajov z&nbsp;roku 2017 sa k&nbsp;dvom najv&auml;č&scaron;&iacute;m cirkv&aacute;m hl&aacute;si 44,8 mili&oacute;na ľud&iacute;, čo predstavuje 54,4 percenta nemeckej popul&aacute;cie. No v&nbsp;roku 2060 m&aacute; v&nbsp;Nemecku žiť už len 22,7 mili&oacute;na katol&iacute;kov a&nbsp;evanjelikov, teda asi&nbsp;polovica zo s&uacute;časn&eacute;ho počtu.</p>    <p>Vypl&yacute;va to z&nbsp;progn&oacute;zy V&yacute;skumn&eacute;ho centra generačnej zmluvy Univerzity Alberta Ludwiga vo Freiburgu. Informovala o&nbsp;nej Nemeck&aacute; biskupsk&aacute; konferencia na <a href="https://dbk.de/themen/kirche-und-geld/projektion-2060/" class="track-me-pls" data-category="home_kratke-spravy-exit-link">svojej webovej str&aacute;nke</a>.</p>    <p>Katol&iacute;cka cirkev v&nbsp;Nemecku poklesne zo s&uacute;časn&yacute;ch 23,3 mili&oacute;na&nbsp;veriacich na 12,2 mili&oacute;na v&nbsp;roku 2060.</p>    <p>Evanjelick&aacute; cirkev poklesne z&nbsp;teraj&scaron;&iacute;ch 21,5 mili&oacute;na na 10,5 mili&oacute;na veriacich v&nbsp;roku 2060.</p>    <p>Tento v&yacute;voj m&aacute; byť čiastočne d&ocirc;sledkom &uacute;mrtnosti, čiastočne vyst&uacute;peniami z&nbsp;cirkv&iacute;, ktor&eacute; krsty nov&yacute;ch členov nestačia kompenzovať.</p>    <p><em>Kol&iacute;nsky d&oacute;m. FOTO &ndash;&nbsp;TASR/AP</em></p>
+                                                    <p>V Prahe sa dnes podvečer kon&aacute; (konala) demon&scaron;tr&aacute;cia proti tamoj&scaron;iemu premi&eacute;rovi Babi&scaron;ovi a ministerke spravodlivosti M&aacute;rii Bene&scaron;ovej, ľud&iacute; mobilizuje Babi&scaron;ov podvod s eurofondmi (&bdquo;V&scaron;etci kradn&uacute;, iba ja čerp&aacute;m&ldquo;) a pokus ust&aacute;ť to a urobiť z jeho konfliktu spor Českej republiky a E&Uacute;. Podľa port&aacute;lu Echo24 pri&scaron;lo na V&aacute;clavsk&eacute; n&aacute;mestie asi 120-tis&iacute;c ľud&iacute;, vystupovala pestr&aacute; zmes ľud&iacute; z regi&oacute;nov, spieval sa protestsong v slovenčine o Babi&scaron;ovi-Bure&scaron;ovi a podobne.</p>    <p>Demon&scaron;tr&aacute;ciou sa niesli odkazy na V&aacute;clava Havla, v&yacute;zvy na vstup do politiky a zmenu pomerov. Demon&scaron;tranti predviedli rad vtipn&yacute;ch aj menej vtipn&yacute;ch sloganov, nabud&uacute;ce chc&uacute; demon&scaron;tr&aacute;ciu zorganizovať na Letnej. Hlavn&yacute;m organiz&aacute;torom je organiz&aacute;cia s n&aacute;zvom Milion chvilek pro demokracii.</p>    <p>Nehroz&iacute;, že by demon&scaron;tr&aacute;cia don&uacute;tila Babi&scaron;a odst&uacute;piť, m&ocirc;že mať ale dosah&nbsp;na podobu českej opozičnej sc&eacute;ny. Na Slovensku m&aacute;me sk&uacute;senosť, ako vznikaj&uacute; cez r&ocirc;zne demon&scaron;tr&aacute;cie nov&eacute; politick&eacute; strany a rastie t&yacute;m fragment&aacute;cia politick&eacute;ho spektra. T&uacute; demon&scaron;tr&aacute;ciu sleduj&uacute; &uacute;plne inak odhodlan&iacute; anti-Babi&scaron;ovci medzi voličmi a inak odhodlan&iacute; anti-Babi&scaron;ovci v politike, najm&auml; politici ODS a Pir&aacute;tov. Keďže sami ulicu neorganizuj&uacute;, pr&aacute;ve im vznik&aacute; konkurencia.</p>    <p>Video z demon&scaron;tr&aacute;cie si <a href="https://echo24.cz/a/SAPDM/zive-vaclavak-proti-babisovi-lez-ma-capi-nohy-skanduje-120-000-lidi" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-exit-link">možno pozrieť v texte na Echu</a>.</p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>    <p><em>Foto: TASR/AP</em></p>
                                                 </div>
 
                                                 <div class="article-image">
-                                                    <img src="https://www.postoj.sk/uploads/18929/conversions/cover.jpg">
+                                                    <img src="/uploads/20091/conversions/cover.jpg">
                                                 </div>
                                             </div>
                                         </div>
@@ -1291,23 +1232,27 @@
                     </div>
                     <div id="article-list-desktop" class="col-md-6 hidden-kd-mobile eq-me">
                         <section class="articles home-articles ">
-                            <article class="articles article  article-more-authors   ">
+                            <article class="articles article   ">
                                 <div class="row">
-
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/lukas-mak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/8706/conversions/square.jpg" alt="Luk&aacute;&scaron; Mak">                    <span class="author-name">Luk&aacute;&scaron; Mak</span>
+                                        </a>
+                                    </div>
                                     <div class="col-xxs-12 col-md-8 show-kd-mobile">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43125/pri-nudzovom-pristati-lietadla-v-moskve-zahynulo-41-ludi" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="1">
-                                                    Pri n&uacute;dzovom prist&aacute;t&iacute; lietadla v Moskve zahynulo 41 ľud&iacute;
+                                                <a href="https://www.postoj.sk/25808/po-stopach-vylodenia-" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="1">
+                                                    Po stop&aacute;ch vylodenia
                                                 </a>
                                             </h3>
                                         </header>
                                     </div>
 
                                     <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43125/pri-nudzovom-pristati-lietadla-v-moskve-zahynulo-41-ludi" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="1">
+                                        <a href="https://www.postoj.sk/25808/po-stopach-vylodenia-" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="1">
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/19026/conversions/square.jpg"  alt="Pri n&uacute;dzovom prist&aacute;t&iacute; lietadla v Moskve zahynulo 41 ľud&iacute;">
+                                                <img  src="/uploads/8707/conversions/square.jpg"  alt="Po stop&aacute;ch vylodenia">
                                             </div>
                                         </a>
                                     </div>
@@ -1315,28 +1260,82 @@
                                     <div class="col-xxs-7 col-md-8 mobile-text-col">
                                         <header class="hidden-kd-mobile">
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43125/pri-nudzovom-pristati-lietadla-v-moskve-zahynulo-41-ludi" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="1">
-                                                    Pri n&uacute;dzovom prist&aacute;t&iacute; lietadla v Moskve zahynulo 41 ľud&iacute;
+                                                <a href="https://www.postoj.sk/25808/po-stopach-vylodenia-" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="1">
+                                                    Po stop&aacute;ch vylodenia
                                                 </a>
                                             </h3>
                                         </header>
                                         <div class="perex">
-                                            <p class="hidden-kd-mobile">Pos&aacute;dka pre Echo Moskvy uviedla, že lietadlo počas letu zasiahol blesk.</p>
+                                            <p class="hidden-kd-mobile">Ako dnes vyzeraj&uacute; miesta, kde sa pred 75 rokmi odohrala najv&auml;č&scaron;ia vyloďovacia oper&aacute;cia v&nbsp;hist&oacute;rii.</p>
                                             <p class="show-kd-mobile">
-                                                Pos&aacute;dka pre Echo Moskvy uviedla, že lietadlo počas letu zasiahol blesk.
+                                                Ako vyzeraj&uacute; miesta, kde sa odohrala najv&auml;č&scaron;ia vyloďovacia oper&aacute;cia v&nbsp;hist&oacute;rii.
 
                                             </p>
                                         </div>
                                     </div>
 
                                     <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spravodajstvo" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spravodajstvo</a>
-                                            <a href="https://www.postoj.sk/autor/tasr" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <span class="author-name">TASR</span>
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
+                                            <a href="https://www.postoj.sk/autor/lukas-mak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/8706/conversions/square.jpg" alt="Luk&aacute;&scaron; Mak">                            <span class="author-name">Luk&aacute;&scaron; Mak</span>
                                             </a>
-                                            <a href="https://www.postoj.sk/autor/postoj" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <span class="author-name">Postoj</span>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <section class="short-news hidden">
+                                <div id="placeholder-for-short-news-0">
+                                </div>
+                            </section>
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/maria-melicherova" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/2464/conversions/square.jpg" alt="M&aacute;ria Melicherov&aacute;">                    <span class="author-name">M&aacute;ria Melicherov&aacute;</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44155/nechat-deti-pobit-sa" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="2">
+                                                    Nechať deti pobiť sa?
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44155/nechat-deti-pobit-sa" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="2">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20117/conversions/square.jpg"  alt="Nechať deti pobiť sa?">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44155/nechat-deti-pobit-sa" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="2">
+                                                    Nechať deti pobiť sa?
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">Kedy m&aacute; rodič zasahovať do s&uacute;rodeneck&yacute;ch &scaron;arv&aacute;tok a ako? Robiť sudcu, medi&aacute;tora alebo si to nev&scaron;&iacute;mať?</p>
+                                            <p class="show-kd-mobile">
+                                                Kedy m&aacute; rodič zasahovať do s&uacute;rodeneck&yacute;ch &scaron;arv&aacute;tok a ako? Robiť sudcu, medi&aacute;tora alebo si to nev&scaron;&iacute;mať?
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/komentare-nazory" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Koment&aacute;re a n&aacute;zory</a>
+                                            <a href="https://www.postoj.sk/autor/maria-melicherova" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/2464/conversions/square.jpg" alt="M&aacute;ria Melicherov&aacute;">                            <span class="author-name">M&aacute;ria Melicherov&aacute;</span>
                                             </a>
                                         </footer>
                                     </div>
@@ -1345,21 +1344,25 @@
 
                             <article class="articles article   ">
                                 <div class="row">
-
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/jaroslav-daniska" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9387/conversions/square.jpg" alt="Jaroslav Dani&scaron;ka">                    <span class="author-name">Jaroslav Dani&scaron;ka</span>
+                                        </a>
+                                    </div>
                                     <div class="col-xxs-12 col-md-8 show-kd-mobile">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43110/na-zapade-ma-nepovazuju-za-menejcennu-pre-farbu-pleti-ale-pre-prolife-nazory" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="2">
-                                                    Na Z&aacute;pade ma nepovažuj&uacute; za menejcenn&uacute; pre farbu pleti, ale pre pro-life n&aacute;zory
+                                                <a href="https://www.postoj.sk/44162/dobre-otazky-ziadna-odpoved" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="3">
+                                                    Dobr&eacute; ot&aacute;zky, žiadna odpoveď
                                                 </a>
                                             </h3>
                                         </header>
                                     </div>
 
                                     <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43110/na-zapade-ma-nepovazuju-za-menejcennu-pre-farbu-pleti-ale-pre-prolife-nazory" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="2">
+                                        <a href="https://www.postoj.sk/44162/dobre-otazky-ziadna-odpoved" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="3">
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/19008/conversions/square.jpg"  alt="Na Z&aacute;pade ma nepovažuj&uacute; za menejcenn&uacute; pre farbu pleti, ale pre pro-life n&aacute;zory">
+                                                <img  src="/uploads/20115/conversions/square.jpg"  alt="Dobr&eacute; ot&aacute;zky, žiadna odpoveď">
                                             </div>
                                         </a>
                                     </div>
@@ -1367,495 +1370,56 @@
                                     <div class="col-xxs-7 col-md-8 mobile-text-col">
                                         <header class="hidden-kd-mobile">
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43110/na-zapade-ma-nepovazuju-za-menejcennu-pre-farbu-pleti-ale-pre-prolife-nazory" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="2">
-                                                    Na Z&aacute;pade ma nepovažuj&uacute; za menejcenn&uacute; pre farbu pleti, ale pre pro-life n&aacute;zory
+                                                <a href="https://www.postoj.sk/44162/dobre-otazky-ziadna-odpoved" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="3">
+                                                    Dobr&eacute; ot&aacute;zky, žiadna odpoveď
                                                 </a>
                                             </h3>
                                         </header>
                                         <div class="perex">
-                                            <p class="hidden-kd-mobile">Rozhovor s Obianujou Ekeochou o tom, že Z&aacute;pad by Afrike najviac pomohol t&yacute;m, keby prestal s rozvojovou pomocou.</p>
+                                            <p class="hidden-kd-mobile">Čo pon&uacute;ka druh&yacute; diel knihy Radosť evanjelia na Slovensku.</p>
                                             <p class="show-kd-mobile">
-                                                Rozhovor s Obianujou Ekeochou o tom, že Z&aacute;pad by Afrike najviac pomohol t&yacute;m, keby prestal s rozvojovou pomocou.
+                                                Čo pon&uacute;ka druh&yacute; diel knihy Radosť evanjelia na Slovensku.
 
                                             </p>
                                         </div>
                                     </div>
 
                                     <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
-                                            <a href="https://www.postoj.sk/autor/lukas-kekelak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/8772/conversions/square.jpg" alt="Luk&aacute;&scaron; Kekel&aacute;k">                      <span class="author-name">Luk&aacute;&scaron; Kekel&aacute;k</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article   ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43103/arcibiskup-stanislav-zvolensky-sprava-o-katolickej-cirkvi-na-slovensku" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="3">
-                                                    Arcibiskup Stanislav Zvolensk&yacute;: Spr&aacute;va o Katol&iacute;ckej cirkvi na Slovensku
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43103/arcibiskup-stanislav-zvolensky-sprava-o-katolickej-cirkvi-na-slovensku" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="3">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/19001/conversions/square.jpg"  alt="Arcibiskup Stanislav Zvolensk&yacute;: Spr&aacute;va o Katol&iacute;ckej cirkvi na Slovensku">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43103/arcibiskup-stanislav-zvolensky-sprava-o-katolickej-cirkvi-na-slovensku" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="3">
-                                                    Arcibiskup Stanislav Zvolensk&yacute;: Spr&aacute;va o Katol&iacute;ckej cirkvi na Slovensku
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">Pozrite si videoz&aacute;znam z pr&iacute;hovoru arcibiskupa metropolitu Stanislava Zvolensk&eacute;ho o s&uacute;časn&yacute;ch v&yacute;zvach a z n&aacute;slednej diskusie.</p>
-                                            <p class="show-kd-mobile">
-                                                Pozrite si videoz&aacute;znam z pr&iacute;hovoru arcibiskupa metropolitu Stanislava Zvolensk&eacute;ho o s&uacute;časn&yacute;ch v&yacute;zvach a z n&aacute;slednej diskusie.
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
-                                            <a href="https://www.postoj.sk/autor/postoj" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <span class="author-name">Postoj</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article   ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43105/uz-zase-cestujem-miroslav-bielik" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="4">
-                                                    Už zase cestujem (Miroslav Bielik)
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43105/uz-zase-cestujem-miroslav-bielik" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="4">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/19003/conversions/square.jpg"  alt="Už zase cestujem (Miroslav Bielik)">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43105/uz-zase-cestujem-miroslav-bielik" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="4">
-                                                    Už zase cestujem (Miroslav Bielik)
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">Zas cestujem domov, zmenene &ndash; zmenenou tmou</p>
-                                            <p class="show-kd-mobile">
-                                                Zas cestujem domov, zmenene &ndash; zmenenou tmou
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/kultura" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Kult&uacute;ra</a>
-                                            <a href="https://www.postoj.sk/autor/michal-chuda" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/2553/conversions/square.jpg" alt="Michal Chuda">                      <span class="author-name">Michal Chuda</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article   hidden-kd-mobile  ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43090/pavol-hrabovecky-o-g-k-chestertonovi-a-burani-modernych-dogiem" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="5">
-                                                    Pavol Hraboveck&yacute; o G. K. Chestertonovi a b&uacute;ran&iacute; modern&yacute;ch dogiem
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43090/pavol-hrabovecky-o-g-k-chestertonovi-a-burani-modernych-dogiem" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="5">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18987/conversions/square.jpg"  alt="Pavol Hraboveck&yacute; o G. K. Chestertonovi a b&uacute;ran&iacute; modern&yacute;ch dogiem">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43090/pavol-hrabovecky-o-g-k-chestertonovi-a-burani-modernych-dogiem" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="5">
-                                                    Pavol Hraboveck&yacute; o G. K. Chestertonovi a b&uacute;ran&iacute; modern&yacute;ch dogiem
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">Pozrite si multiž&aacute;nrov&yacute; profil jedn&eacute;ho z najv&auml;č&scaron;&iacute;ch prorokov modernej doby G. K. Chestertona od Pavla Hraboveck&eacute;ho.</p>
-                                            <p class="show-kd-mobile">
-                                                Pozrite si multiž&aacute;nrov&yacute; profil jedn&eacute;ho z najv&auml;č&scaron;&iacute;ch prorokov modernej doby G. K. Chestertona od Pavla Hraboveck&eacute;ho.
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
-                                            <a href="https://www.postoj.sk/autor/postoj" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <span class="author-name">Postoj</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article  article-more-authors   hidden-kd-mobile  ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42986/nie-je-nic-horsie-ako-len-strielat-fakty-ktore-nemaju-nic-s-dianim-na-lade" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="6">
-                                                    Presun slovensk&yacute;ch hokejistov do Ko&scaron;&iacute;c m&ocirc;že &scaron;ampion&aacute;t oživiť
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42986/nie-je-nic-horsie-ako-len-strielat-fakty-ktore-nemaju-nic-s-dianim-na-lade" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="6">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18874/conversions/square.jpg"  alt="Presun slovensk&yacute;ch hokejistov do Ko&scaron;&iacute;c m&ocirc;že &scaron;ampion&aacute;t oživiť">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42986/nie-je-nic-horsie-ako-len-strielat-fakty-ktore-nemaju-nic-s-dianim-na-lade" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="6">
-                                                    Presun slovensk&yacute;ch hokejistov do Ko&scaron;&iacute;c m&ocirc;že &scaron;ampion&aacute;t oživiť
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">Rozhovor s hokejov&yacute;m koment&aacute;torom Pavlom Ga&scaron;parom. </p>
-                                            <p class="show-kd-mobile">
-                                                Rozhovor s hokejov&yacute;m koment&aacute;torom Pavlom Ga&scaron;parom.
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
-                                            <a href="https://www.postoj.sk/autor/adam-takac" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/9300/conversions/square.jpg" alt="Adam Tak&aacute;č">                      <span class="author-name">Adam Tak&aacute;č</span>
-                                            </a>
-                                            <a href="https://www.postoj.sk/autor/pavol-rabara" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/9298/conversions/square.jpg" alt="Pavol R&aacute;bara">                      <span class="author-name">Pavol R&aacute;bara</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article   hidden-kd-mobile  ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43076/niektore-veci-sa-cenzurovat-musia" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="7">
-                                                    Niektor&eacute; veci sa cenzurovať musia
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43076/niektore-veci-sa-cenzurovat-musia" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="7">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18975/conversions/square.jpg"  alt="Niektor&eacute; veci sa cenzurovať musia">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43076/niektore-veci-sa-cenzurovat-musia" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="7">
-                                                    Niektor&eacute; veci sa cenzurovať musia
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">Nejde o to, či je cenz&uacute;ra dobr&aacute; vec, ale o to, čo by sme mali cenzurovať.</p>
-                                            <p class="show-kd-mobile">
-                                                Nejde o to, či je cenz&uacute;ra dobr&aacute; vec, ale o to, čo by sme mali cenzurovať.
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
-                                            <a href="https://www.postoj.sk/autor/david-warren" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <span class="author-name">David Warren</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article   hidden-kd-mobile  ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43083/slovensko-ma-podla-kisku-stastie-ze-sa-mozeme-opriet-o-stefanikov-odkaz" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="8">
-                                                    Slovensko m&aacute; podľa Kisku &scaron;ťastie, že sa m&ocirc;žeme oprieť o &Scaron;tef&aacute;nikov odkaz
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43083/slovensko-ma-podla-kisku-stastie-ze-sa-mozeme-opriet-o-stefanikov-odkaz" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="8">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18994/conversions/square.jpg"  alt="Slovensko m&aacute; podľa Kisku &scaron;ťastie, že sa m&ocirc;žeme oprieť o &Scaron;tef&aacute;nikov odkaz">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43083/slovensko-ma-podla-kisku-stastie-ze-sa-mozeme-opriet-o-stefanikov-odkaz" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="8">
-                                                    Slovensko m&aacute; podľa Kisku &scaron;ťastie, že sa m&ocirc;žeme oprieť o &Scaron;tef&aacute;nikov odkaz
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">S prejavmi pri pr&iacute;ležitosti 100. v&yacute;ročia tragick&eacute;ho &uacute;mrtia M. R. &Scaron;tef&aacute;nika v Brezovej pod Bradlom vyst&uacute;pili s pr&iacute;hovormi prezident Andrej Kiska, premi...</p>
-                                            <p class="show-kd-mobile">
-                                                S prejavmi pri pr&iacute;ležitosti 100. v&yacute;ročia tragick&eacute;ho &uacute;mrtia M. R. &Scaron;tef&aacute;nika v Brezovej pod Bradlom vyst&uacute;pili s pr&iacute;hovormi prezident Andrej Kiska, premi...
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spravodajstvo" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spravodajstvo</a>
-                                            <a href="https://www.postoj.sk/autor/tasr" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <span class="author-name">TASR</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article   hidden-kd-mobile  ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43020/knihomolov-zapisnik-o-slovakoch-v-ceskoslovenskych-legiach" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="9">
-                                                    Knihomoľov z&aacute;pisn&iacute;k: Slov&aacute;ci v československ&yacute;ch l&eacute;gi&aacute;ch
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43020/knihomolov-zapisnik-o-slovakoch-v-ceskoslovenskych-legiach" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="9">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18909/conversions/square.jpg"  alt="Knihomoľov z&aacute;pisn&iacute;k: Slov&aacute;ci v československ&yacute;ch l&eacute;gi&aacute;ch">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43020/knihomolov-zapisnik-o-slovakoch-v-ceskoslovenskych-legiach" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="9">
-                                                    Knihomoľov z&aacute;pisn&iacute;k: Slov&aacute;ci v československ&yacute;ch l&eacute;gi&aacute;ch
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">&Scaron;esť kn&iacute;h spomienok Slov&aacute;kov, ktor&iacute; počas prvej svetovej vojny sl&uacute;žili v československ&yacute;ch l&eacute;gi&aacute;ch.</p>
-                                            <p class="show-kd-mobile">
-                                                &Scaron;esť kn&iacute;h spomienok Slov&aacute;kov, ktor&iacute; počas prvej svetovej vojny sl&uacute;žili v československ&yacute;ch l&eacute;gi&aacute;ch.
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/kultura" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Kult&uacute;ra</a>
-                                            <a href="https://www.postoj.sk/autor/lukas-krivosik" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/9793/conversions/square.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">                      <span class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article  article-more-authors   hidden-kd-mobile  ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42938/dve-minuty-a-lietadlo-so-stefanikom-by-pristalo" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="10">
-                                                    Dve min&uacute;ty a lietadlo so &Scaron;tef&aacute;nikom by prist&aacute;lo
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42938/dve-minuty-a-lietadlo-so-stefanikom-by-pristalo" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="10">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18818/conversions/square.jpg"  alt="Dve min&uacute;ty a lietadlo so &Scaron;tef&aacute;nikom by prist&aacute;lo">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42938/dve-minuty-a-lietadlo-so-stefanikom-by-pristalo" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="10">
-                                                    Dve min&uacute;ty a lietadlo so &Scaron;tef&aacute;nikom by prist&aacute;lo
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">Rozhovor s Pavlom Kanisom o p&aacute;de lietadla, pri ktorom pred sto rokmi zahynul Milan Rastislav &Scaron;tef&aacute;nik.</p>
-                                            <p class="show-kd-mobile">
-                                                Rozhovor s Pavlom Kanisom o p&aacute;de lietadla, pri ktorom pred sto rokmi zahynul Milan Rastislav &Scaron;tef&aacute;nik.
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
-                                            <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
-                                            <a href="https://www.postoj.sk/autor/martin-hanus" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/9311/conversions/square.jpg" alt="Martin Hanus">                      <span class="author-name">Martin Hanus</span>
-                                            </a>
-                                            <a href="https://www.postoj.sk/autor/lukas-krivosik" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/9793/conversions/square.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">                      <span class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</span>
-                                            </a>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="articles article   hidden-kd-mobile  ">
-                                <div class="row">
-
-                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43051/ako-kristova-trnova-koruna-prezila-kriziacke-vojny-prevraty-a-poziar-notre-dame" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="11">
-                                                    Ako Kristova tŕňov&aacute; koruna prežila križiacke vojny, prevraty a požiar Notre Dame
-                                                </a>
-                                            </h3>
-                                        </header>
-                                    </div>
-
-                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43051/ako-kristova-trnova-koruna-prezila-kriziacke-vojny-prevraty-a-poziar-notre-dame" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="11">
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18953/conversions/square.jpg"  alt="Ako Kristova tŕňov&aacute; koruna prežila križiacke vojny, prevraty a požiar Notre Dame">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
-                                        <header class="hidden-kd-mobile">
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43051/ako-kristova-trnova-koruna-prezila-kriziacke-vojny-prevraty-a-poziar-notre-dame" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="11">
-                                                    Ako Kristova tŕňov&aacute; koruna prežila križiacke vojny, prevraty a požiar Notre Dame
-                                                </a>
-                                            </h3>
-                                        </header>
-                                        <div class="perex">
-                                            <p class="hidden-kd-mobile">Tŕňov&aacute; koruna n&aacute;m pripom&iacute;na, že to, o čo pr&iacute;deme, m&ocirc;že raz op&auml;ť rozkvitn&uacute;ť.</p>
-                                            <p class="show-kd-mobile">
-                                                Tŕňov&aacute; koruna n&aacute;m pripom&iacute;na, že to, o čo pr&iacute;deme, m&ocirc;že raz op&auml;ť rozkvitn&uacute;ť.
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xxs-12 col-md-8">
-                                        <footer>
+                                        <footer class="hidden-kd-mobile">
                                             <a href="https://www.postoj.sk/svet-krestanstva" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Svet kresťanstva</a>
-                                            <a href="https://www.postoj.sk/autor/emily-guerry" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <span class="author-name">Emily Guerry</span>
+                                            <a href="https://www.postoj.sk/autor/jaroslav-daniska" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9387/conversions/square.jpg" alt="Jaroslav Dani&scaron;ka">                            <span class="author-name">Jaroslav Dani&scaron;ka</span>
                                             </a>
                                         </footer>
                                     </div>
                                 </div>
                             </article>
 
-                            <article class="articles article   hidden-kd-mobile  ">
+                            <section class="short-news hidden">
+                                <div id="placeholder-for-short-news-1">
+                                </div>
+                            </section>
+                            <article class="articles article   ">
                                 <div class="row">
-
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/martin-hanus" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9311/conversions/square.jpg" alt="Martin Hanus">                    <span class="author-name">Martin Hanus</span>
+                                        </a>
+                                    </div>
                                     <div class="col-xxs-12 col-md-8 show-kd-mobile">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42542/utecencov-viacej-ako-domacich-no-nikde-ziadna-panika-vitajte-v-ugande" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="12">
-                                                    Utečencov viac ako dom&aacute;cich, no nikde žiadna panika. Vitajte v Ugande!
+                                                <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="4">
+                                                    Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure
                                                 </a>
                                             </h3>
                                         </header>
                                     </div>
 
                                     <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42542/utecencov-viacej-ako-domacich-no-nikde-ziadna-panika-vitajte-v-ugande" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="12">
+                                        <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="4">
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18376/conversions/square.jpg"  alt="Utečencov viac ako dom&aacute;cich, no nikde žiadna panika. Vitajte v Ugande!">
+                                                <img  src="/uploads/20077/conversions/square.jpg"  alt="Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure">
                                             </div>
                                         </a>
                                     </div>
@@ -1863,25 +1427,457 @@
                                     <div class="col-xxs-7 col-md-8 mobile-text-col">
                                         <header class="hidden-kd-mobile">
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42542/utecencov-viacej-ako-domacich-no-nikde-ziadna-panika-vitajte-v-ugande" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="12">
-                                                    Utečencov viac ako dom&aacute;cich, no nikde žiadna panika. Vitajte v Ugande!
+                                                <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="4">
+                                                    Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure
                                                 </a>
                                             </h3>
                                         </header>
                                         <div class="perex">
-                                            <p class="hidden-kd-mobile">Najhor&scaron;ie je prečkať deň s&nbsp;my&scaron;lienkou, čo bude zajtra, keď dnes, včera či aj mesiac predt&yacute;m ste&nbsp;robili to ist&eacute; &ndash; v&ocirc;bec nič. Report&aacute;ž z miesta, kde pom...</p>
+                                            <p class="hidden-kd-mobile">Trojica Pellegrini, Ra&scaron;i a&nbsp;Žiga op&auml;ť pochop&iacute;, že ak chce ukazovať svaly, mus&iacute; ich najsk&ocirc;r mať.</p>
                                             <p class="show-kd-mobile">
-                                                Najhor&scaron;ie je prečkať deň s&nbsp;my&scaron;lienkou, čo bude zajtra, keď dnes, včera či aj mesiac predt&yacute;m ste&nbsp;robili to ist&eacute; &ndash; v&ocirc;bec nič. Report&aacute;ž z miesta, kde pom...
+                                                Trojica Pellegrini, Ra&scaron;i a&nbsp;Žiga op&auml;ť pochop&iacute;, že ak chce ukazovať svaly, mus&iacute; ich najsk&ocirc;r mať.
 
                                             </p>
                                         </div>
                                     </div>
 
                                     <div class="col-xxs-12 col-md-8">
-                                        <footer>
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/politika" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Politika</a>
+                                            <a href="https://www.postoj.sk/autor/martin-hanus" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9311/conversions/square.jpg" alt="Martin Hanus">                            <span class="author-name">Martin Hanus</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/lukas-krivosik" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9793/conversions/square.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">                    <span class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44131/medzi-zapadom-a-vychodom-stale-koliseme-a-nie-sme-v-tom-sami" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="5">
+                                                    Medzi Z&aacute;padom a V&yacute;chodom st&aacute;le kol&iacute;&scaron;eme a nie sme v tom sami
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44131/medzi-zapadom-a-vychodom-stale-koliseme-a-nie-sme-v-tom-sami" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="5">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20084/conversions/square.jpg"  alt="Medzi Z&aacute;padom a V&yacute;chodom st&aacute;le kol&iacute;&scaron;eme a nie sme v tom sami">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44131/medzi-zapadom-a-vychodom-stale-koliseme-a-nie-sme-v-tom-sami" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="5">
+                                                    Medzi Z&aacute;padom a V&yacute;chodom st&aacute;le kol&iacute;&scaron;eme a nie sme v tom sami
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">O čom vypovedaj&uacute; v&yacute;sledky prieskumu GLOBSEC Trends 2019?</p>
+                                            <p class="show-kd-mobile">
+                                                O čom vypovedaj&uacute; v&yacute;sledky prieskumu GLOBSEC Trends 2019?
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/politika" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Politika</a>
+                                            <a href="https://www.postoj.sk/autor/lukas-krivosik" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9793/conversions/square.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">                            <span class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <section class="short-news hidden">
+                                <div id="placeholder-for-short-news-2">
+                                </div>
+                            </section>
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/inzercia" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <span class="author-name">Inzercia</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44171/nedus-nasu-buducnost" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="6">
+                                                    Nedus na&scaron;u bud&uacute;cnosť!
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44171/nedus-nasu-buducnost" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="6">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20121/conversions/square.jpg"  alt="Nedus na&scaron;u bud&uacute;cnosť!">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44171/nedus-nasu-buducnost" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="6">
+                                                    Nedus na&scaron;u bud&uacute;cnosť!
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">Už od roku 1974 je 5. j&uacute;n dňom, kedy cel&yacute; svet venuje &scaron;peci&aacute;lnu pozornosť problematike znečisťovania a&nbsp;ochrany životn&eacute;ho prostredia. Hlavnou t&eacute;mou Sve...</p>
+                                            <p class="show-kd-mobile">
+                                                Už od roku 1974 je 5. j&uacute;n dňom, kedy cel&yacute; svet venuje &scaron;peci&aacute;lnu pozornosť problematike znečisťovania a&nbsp;ochrany životn&eacute;ho prostredia. Hlavnou t&eacute;mou Sve...
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/tlacove-spravy" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Tlačov&eacute; spr&aacute;vy</a>
+                                            <a href="https://www.postoj.sk/autor/inzercia" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <span class="author-name">Inzercia</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/imrich-gazda" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9308/conversions/square.jpg" alt=" Imrich Gazda">                    <span class="author-name"> Imrich Gazda</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44122/vatikan-zbavil-knaza-obvinenia-zo-sexualneho-obtazovania-v-spovednici" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="7">
+                                                    Vatik&aacute;n zbavil kňaza obvinenia zo sexu&aacute;lneho obťažovania v spovednici
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44122/vatikan-zbavil-knaza-obvinenia-zo-sexualneho-obtazovania-v-spovednici" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="7">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20075/conversions/square.jpg"  alt="Vatik&aacute;n zbavil kňaza obvinenia zo sexu&aacute;lneho obťažovania v spovednici">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44122/vatikan-zbavil-knaza-obvinenia-zo-sexualneho-obtazovania-v-spovednici" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="7">
+                                                    Vatik&aacute;n zbavil kňaza obvinenia zo sexu&aacute;lneho obťažovania v spovednici
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">M&aacute;jov&yacute; s&uacute;hrn diania v kresťanskom svete od ved&uacute;ceho rubriky Svet kresťanstva Imricha Gazdu.</p>
+                                            <p class="show-kd-mobile">
+                                                M&aacute;jov&yacute; s&uacute;hrn diania v kresťanskom svete od ved&uacute;ceho rubriky Svet kresťanstva Imricha Gazdu.
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/svet-krestanstva" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Svet kresťanstva</a>
+                                            <a href="https://www.postoj.sk/autor/imrich-gazda" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9308/conversions/square.jpg" alt=" Imrich Gazda">                            <span class="author-name"> Imrich Gazda</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/jozef-majchrak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9302/conversions/square.jpg" alt="Jozef Majchr&aacute;k">                    <span class="author-name">Jozef Majchr&aacute;k</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44116/kdh-napadlo-na-ustavnom-sude-rozdelenie-mandatov-z-eurovolieb" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="8">
+                                                    KDH napadlo na &Uacute;stavnom s&uacute;de rozdelenie mand&aacute;tov z eurovolieb
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44116/kdh-napadlo-na-ustavnom-sude-rozdelenie-mandatov-z-eurovolieb" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="8">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20068/conversions/square.jpg"  alt="KDH napadlo na &Uacute;stavnom s&uacute;de rozdelenie mand&aacute;tov z eurovolieb">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44116/kdh-napadlo-na-ustavnom-sude-rozdelenie-mandatov-z-eurovolieb" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="8">
+                                                    KDH napadlo na &Uacute;stavnom s&uacute;de rozdelenie mand&aacute;tov z eurovolieb
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">Chc&uacute;, aby &uacute;stavn&iacute; sudcovia o ich podan&iacute; rozhodli už do začiatku j&uacute;la.</p>
+                                            <p class="show-kd-mobile">
+                                                Chc&uacute;, aby &uacute;stavn&iacute; sudcovia o ich podan&iacute; rozhodli už do začiatku j&uacute;la.
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/politika" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Politika</a>
+                                            <a href="https://www.postoj.sk/autor/jozef-majchrak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9302/conversions/square.jpg" alt="Jozef Majchr&aacute;k">                            <span class="author-name">Jozef Majchr&aacute;k</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/jozef-majchrak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9302/conversions/square.jpg" alt="Jozef Majchr&aacute;k">                    <span class="author-name">Jozef Majchr&aacute;k</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44097/permanentna-kampan-volodymyra-zelenskeho" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="9">
+                                                    Permanentn&aacute; kampaň Volodymyra Zelensk&eacute;ho
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44097/permanentna-kampan-volodymyra-zelenskeho" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="9">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20048/conversions/square.jpg"  alt="Permanentn&aacute; kampaň Volodymyra Zelensk&eacute;ho">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44097/permanentna-kampan-volodymyra-zelenskeho" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="9">
+                                                    Permanentn&aacute; kampaň Volodymyra Zelensk&eacute;ho
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">Nov&yacute; ukrajinsk&yacute; prezident sľubuje zemetrasenie a chce čo najsk&ocirc;r z&iacute;skať v&auml;č&scaron;inu v parlamente.
+
+                                            </p>
+                                            <p class="show-kd-mobile">
+                                                Nov&yacute; ukrajinsk&yacute; prezident sľubuje zemetrasenie a chce čo najsk&ocirc;r z&iacute;skať v&auml;č&scaron;inu v parlamente.
+
+
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/politika" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Politika</a>
+                                            <a href="https://www.postoj.sk/autor/jozef-majchrak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9302/conversions/square.jpg" alt="Jozef Majchr&aacute;k">                            <span class="author-name">Jozef Majchr&aacute;k</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/jaroslav-daniska" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9387/conversions/square.jpg" alt="Jaroslav Dani&scaron;ka">                    <span class="author-name">Jaroslav Dani&scaron;ka</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44103/cinsky-sen" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="10">
+                                                    Č&iacute;nsky sen
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44103/cinsky-sen" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="10">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20057/conversions/square.jpg"  alt="Č&iacute;nsky sen">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44103/cinsky-sen" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="10">
+                                                    Č&iacute;nsky sen
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">Čo sa stalo pred 30 rokmi a ako to zmenilo svet.</p>
+                                            <p class="show-kd-mobile">
+                                                Čo sa stalo pred 30 rokmi a ako to zmenilo svet.
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/politika" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Politika</a>
+                                            <a href="https://www.postoj.sk/autor/jaroslav-daniska" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9387/conversions/square.jpg" alt="Jaroslav Dani&scaron;ka">                            <span class="author-name">Jaroslav Dani&scaron;ka</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/lukas-obsitnik" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/9304/conversions/square.jpg" alt="Luk&aacute;&scaron; Ob&scaron;itn&iacute;k">                    <span class="author-name">Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44093/netflix-a-disney-planuju-pre-pro-life-zakon-stiahnut-zo-statu-georgia-investicie" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="11">
+                                                    Netflix a Disney pl&aacute;nuj&uacute; pre pro-life z&aacute;kon stiahnuť zo &scaron;t&aacute;tu Georgia invest&iacute;cie
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44093/netflix-a-disney-planuju-pre-pro-life-zakon-stiahnut-zo-statu-georgia-investicie" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="11">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20047/conversions/square.jpg"  alt="Netflix a Disney pl&aacute;nuj&uacute; pre pro-life z&aacute;kon stiahnuť zo &scaron;t&aacute;tu Georgia invest&iacute;cie">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44093/netflix-a-disney-planuju-pre-pro-life-zakon-stiahnut-zo-statu-georgia-investicie" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="11">
+                                                    Netflix a Disney pl&aacute;nuj&uacute; pre pro-life z&aacute;kon stiahnuť zo &scaron;t&aacute;tu Georgia invest&iacute;cie
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">V Georgii sa už nakr&uacute;ca viac ako v Kalifornii. Veľk&eacute; filmov&eacute; spoločnosti sa v&scaron;ak pre pro-life legislat&iacute;vu vyhr&aacute;žaj&uacute; odchodom.</p>
+                                            <p class="show-kd-mobile">
+                                                V Georgii sa už nakr&uacute;ca viac ako v Kalifornii. Veľk&eacute; filmov&eacute; spoločnosti sa v&scaron;ak pre pro-life legislat&iacute;vu vyhr&aacute;žaj&uacute; odchodom.
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
                                             <a href="https://www.postoj.sk/spolocnost" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Spoločnosť</a>
-                                            <a href="https://www.postoj.sk/autor/lukas-kekelak" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
-                                                <img src="https://www.postoj.sk/uploads/8772/conversions/square.jpg" alt="Luk&aacute;&scaron; Kekel&aacute;k">                      <span class="author-name">Luk&aacute;&scaron; Kekel&aacute;k</span>
+                                            <a href="https://www.postoj.sk/autor/lukas-obsitnik" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/9304/conversions/square.jpg" alt="Luk&aacute;&scaron; Ob&scaron;itn&iacute;k">                            <span class="author-name">Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</span>
+                                            </a>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <article class="articles article   ">
+                                <div class="row">
+                                    <div class="col-xxs-12 show-kd-mobile">
+                                        <a href="https://www.postoj.sk/autor/fero-mucka" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                            <img src="/uploads/1388/conversions/square.jpg" alt="Fero M&uacute;čka">                    <span class="author-name">Fero M&uacute;čka</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-xxs-12 col-md-8 show-kd-mobile">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="12">
+                                                    Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu
+                                                </a>
+                                            </h3>
+                                        </header>
+                                    </div>
+
+                                    <div class="col-xxs-5 col-md-4 img-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="12">
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20022/conversions/square.jpg"  alt="Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 mobile-text-col">
+                                        <header class="hidden-kd-mobile">
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu" class="track-me-pls" data-category="home_clanky" data-action="click" data-label="position" data-value="12">
+                                                    Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu
+                                                </a>
+                                            </h3>
+                                        </header>
+                                        <div class="perex">
+                                            <p class="hidden-kd-mobile">Pellegrini ohl&aacute;sil z&aacute;ujem byť predsedom Smeru, Fico by sa s t&yacute;m mohol zmieriť. Čo to sprav&iacute; s bud&uacute;cimi koaličn&yacute;mi kombin&aacute;ciami?</p>
+                                            <p class="show-kd-mobile">
+                                                Pellegrini ohl&aacute;sil z&aacute;ujem byť predsedom Smeru, Fico by sa s t&yacute;m mohol zmieriť. Čo to sprav&iacute; s bud&uacute;cimi koaličn&yacute;mi kombin&aacute;ciami?
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxs-12 col-md-8">
+                                        <footer class="hidden-kd-mobile">
+                                            <a href="https://www.postoj.sk/komentare-nazory" class="category-title track-me-pls" data-category="home_clanky-kategoria" data-action="click">Koment&aacute;re a n&aacute;zory</a>
+                                            <a href="https://www.postoj.sk/autor/fero-mucka" class="avatar avatar-little track-me-pls" data-category="home_clanky-autor" data-action="click">
+                                                <img src="/uploads/1388/conversions/square.jpg" alt="Fero M&uacute;čka">                            <span class="author-name">Fero M&uacute;čka</span>
                                             </a>
                                         </footer>
                                     </div>
@@ -1889,6 +1885,10 @@
                             </article>
 
                         </section>
+                    </div>
+                    <div class="col-md-12 hidden show-kd-mobile">
+                        <div id="our-books__mobile-placeholder">
+                        </div>
                     </div>
                     <div class="col-md-3 col-md-3-plus-compensation eq-me">
                         <section class="banner-wrap side-banner  hidden-kd-mobile ">
@@ -1919,16 +1919,16 @@
                                 <article class="christianity-world-item">
                                     <div class="row">
                                         <div class="col-xxs-5 col-md-5 img-col mobile-img-col">
-                                            <a href="https://www.postoj.sk/43001/bozia-podstata-je-nepochopitelna">
+                                            <a href="https://www.postoj.sk/44162/dobre-otazky-ziadna-odpoved">
                                                 <div class="image-wrap">
-                                                    <img  src="https://www.postoj.sk/uploads/18969/conversions/square.jpg"  alt="Božsk&aacute; podstata je nepochopiteľn&aacute; ">
+                                                    <img  src="/uploads/20115/conversions/square.jpg"  alt="Dobr&eacute; ot&aacute;zky, žiadna odpoveď">
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="col-xxs-7 col-md-7 mobile-text-col">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43001/bozia-podstata-je-nepochopitelna">Božsk&aacute; podstata je nepochopiteľn&aacute; </a>
+                                                    <a href="https://www.postoj.sk/44162/dobre-otazky-ziadna-odpoved">Dobr&eacute; ot&aacute;zky, žiadna odpoveď</a>
                                                 </h3>
                                             </header>
                                         </div>
@@ -1937,16 +1937,16 @@
                                 <article class="christianity-world-item">
                                     <div class="row">
                                         <div class="col-xxs-5 col-md-5 img-col mobile-img-col">
-                                            <a href="https://www.postoj.sk/43108/papez-frantisek-pricestoval-do-bulharska-na-trojdnove-balkanske-turne">
+                                            <a href="https://www.postoj.sk/44148/pred-sudom-v-melbourne-sa-zacalo-odvolacie-konanie-v-pripade-kardinala-pella">
                                                 <div class="image-wrap">
-                                                    <img  src="https://www.postoj.sk/uploads/19005/conversions/square.jpg"  alt="P&aacute;pež Franti&scaron;ek pricestoval do Bulharska. Začal trojdňov&eacute; balk&aacute;nske turn&eacute;">
+                                                    <img  src="/uploads/20102/conversions/square.jpg"  alt="Pred s&uacute;dom v Melbourne sa začalo odvolacie konanie v pr&iacute;pade kardin&aacute;la Pella">
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="col-xxs-7 col-md-7 mobile-text-col">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43108/papez-frantisek-pricestoval-do-bulharska-na-trojdnove-balkanske-turne">P&aacute;pež Franti&scaron;ek pricestoval do Bulharska. Začal trojdňov&eacute; balk&aacute;nske turn&eacute;</a>
+                                                    <a href="https://www.postoj.sk/44148/pred-sudom-v-melbourne-sa-zacalo-odvolacie-konanie-v-pripade-kardinala-pella">Pred s&uacute;dom v Melbourne sa začalo odvolacie konanie v pr&iacute;pade kardin&aacute;la Pella</a>
                                                 </h3>
                                             </header>
                                         </div>
@@ -1955,16 +1955,16 @@
                                 <article class="christianity-world-item">
                                     <div class="row">
                                         <div class="col-xxs-5 col-md-5 img-col mobile-img-col">
-                                            <a href="https://www.postoj.sk/42977/pravoslavie-je-kristovou-cirkvou-na-zemi">
+                                            <a href="https://www.postoj.sk/44122/vatikan-zbavil-knaza-obvinenia-zo-sexualneho-obtazovania-v-spovednici">
                                                 <div class="image-wrap">
-                                                    <img  src="https://www.postoj.sk/uploads/18865/conversions/square.jpg"  alt="Pravosl&aacute;vie je Kristovou cirkvou na zemi">
+                                                    <img  src="/uploads/20075/conversions/square.jpg"  alt="Vatik&aacute;n zbavil kňaza obvinenia zo sexu&aacute;lneho obťažovania v spovednici">
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="col-xxs-7 col-md-7 mobile-text-col">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/42977/pravoslavie-je-kristovou-cirkvou-na-zemi">Pravosl&aacute;vie je Kristovou cirkvou na zemi</a>
+                                                    <a href="https://www.postoj.sk/44122/vatikan-zbavil-knaza-obvinenia-zo-sexualneho-obtazovania-v-spovednici">Vatik&aacute;n zbavil kňaza obvinenia zo sexu&aacute;lneho obťažovania v spovednici</a>
                                                 </h3>
                                             </header>
                                         </div>
@@ -1975,9 +1975,9 @@
                                         <div class="col-xxs-12">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43051/ako-kristova-trnova-koruna-prezila-kriziacke-vojny-prevraty-a-poziar-notre-dame">
+                                                    <a href="https://www.postoj.sk/44115/kardinal-sako-iracania-nemaju-energiu-na-to-aby-vydrzali-viac-konfliktov">
                                                         <i class="icon icon-arrow-right-grey"></i>
-                                                        Ako Kristova tŕňov&aacute; koruna prežila križiacke vojny, prevraty a požiar Notre Dame
+                                                        Kardin&aacute;l Sako: Iračania nemaj&uacute; energiu na to, aby vydržali viac konfliktov
                                                     </a>
                                                 </h3>
                                             </header>
@@ -1989,9 +1989,9 @@
                                         <div class="col-xxs-12">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43035/kostoly-na-sri-lanke-ostavaju-zatvorene-papezske-misijne-diela-ziadaju-o-pomoc">
+                                                    <a href="https://www.postoj.sk/44088/papez-frantisek-blahoreceni-biskupi-zanechali-rumunskemu-ludu-vzacne-dedicstvo">
                                                         <i class="icon icon-arrow-right-grey"></i>
-                                                        Kostoly na Sr&iacute; Lanke ost&aacute;vaj&uacute; zatvoren&eacute;, P&aacute;pežsk&eacute; misijn&eacute; diela žiadaj&uacute; o pomoc
+                                                        P&aacute;pež Franti&scaron;ek: Blahorečen&iacute; biskupi zanechali rumunsk&eacute;mu ľudu vz&aacute;cne dedičstvo
                                                     </a>
                                                 </h3>
                                             </header>
@@ -2003,9 +2003,9 @@
                                         <div class="col-xxs-12">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43023/tak-vyzerali-traja-kosicki-mucenici">
+                                                    <a href="https://www.postoj.sk/44076/niektori-knazi-a-reholnicky-sa-nechaju-vylucit-spolu-s-romami">
                                                         <i class="icon icon-arrow-right-grey"></i>
-                                                        Tak vyzerali traja ko&scaron;ick&iacute; mučen&iacute;ci
+                                                        Niektor&iacute; kňazi a&nbsp;rehoľn&iacute;čky sa nechaj&uacute; vyl&uacute;čiť spolu s&nbsp;R&oacute;mami
                                                     </a>
                                                 </h3>
                                             </header>
@@ -2017,9 +2017,9 @@
                                         <div class="col-xxs-12">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43004/papezska-nadacia-vyjadrila-znepokojenie-nad-utokmi-na-krestanov">
+                                                    <a href="https://www.postoj.sk/44068/papez-vyzval-na-europsku-jednotu-ideologie-podla-jeho-ohrozuju-existenciu-eu">
                                                         <i class="icon icon-arrow-right-grey"></i>
-                                                        P&aacute;pežsk&aacute; nad&aacute;cia vyjadrila znepokojenie nad &uacute;tokmi na kresťanov
+                                                        P&aacute;pež vyzval na eur&oacute;psku jednotu, ideol&oacute;gie podľa neho ohrozuj&uacute; existenciu E&Uacute;
                                                     </a>
                                                 </h3>
                                             </header>
@@ -2031,9 +2031,9 @@
                                         <div class="col-xxs-12">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/42988/papez-pricestuje-na-niekolko-hodin-do-severneho-macedonska">
+                                                    <a href="https://www.postoj.sk/44057/papez-blahorecil-v-rumunsku-sedem-biskupov-prenasledovanych-komunistami">
                                                         <i class="icon icon-arrow-right-grey"></i>
-                                                        P&aacute;pež pricestuje na niekoľko hod&iacute;n do Severn&eacute;ho Maced&oacute;nska
+                                                        P&aacute;pež blahorečil v Rumunsku sedem biskupov a požiadal R&oacute;mov o odpustenie
                                                     </a>
                                                 </h3>
                                             </header>
@@ -2116,16 +2116,30 @@
                     </header>
                     <div class="row equalize" data-equalize-selector=".eq-me" data-equalize-all="true">
                         <div class="col-xxs-12 col-md-6 eq-me ">
-                            <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="1"  data-href="https://www.postoj.sk/shortnews/2479" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2479">
-                                <div class="image-wrap">
-                                    <img src="https://www.postoj.sk/uploads/18922/conversions/cover.jpg">
+                            <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="1"  data-href="https://www.postoj.sk/shortnews/2522" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2522">
+                                <time datetime="2019-06-04 10:39:44">
+                                </time>
+                                <div class="image-wrap hidden-kd-mobile">
+                                    <img src="/uploads/20064/conversions/cover.jpg">
                                 </div>
-                                <header>
-                                    <h3 class="author-link"><a href="https://www.postoj.sk/autor/adam-takac" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Adam Tak&aacute;č</a></h3>
-                                    <small>• pred 3 d</small>
+                                <header class="clearfix">
+                                    <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/lukas-krivosik" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</a></h3>
+                                    <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                        <a class="author-img" href="https://www.postoj.sk/autor/lukas-krivosik" data-category="home_kratke-spravy-dolne-autor" data-action="click">
+                                            <img src="/uploads/9793/conversions/square.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">          </a>
+                                        <div class="title">
+                                            <a class="author" href="https://www.postoj.sk/autor/lukas-krivosik"> <span>Luk&aacute;&scaron; Krivo&scaron;&iacute;k</span> </a>
+                                            <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2522">
+                                                <span>Konzervat&iacute;vny in&scaron;tit&uacute;t osl&aacute;vil dvadsiatku</span> </a>
+                                        </div>
+                                    </div>
+                                    <small class="hidden-kd-mobile">• pred 1 d</small>
                                 </header>
-                                <div class="perex">
-                                    <p>&bdquo;Nie je to dobr&yacute; preklad,&ldquo; <a href="https://svetkrestanstva.postoj.sk/38696/boh-neuvadza-do-pokusenia-vyhlasili-biskupi-a-upravili-preklad-otcenasa" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">povedal</a> koncom predminul&eacute;ho roka p&aacute;pež Franti&scaron;ek na margo ver&scaron;a &bdquo;neuveď n&aacute;s...
+                                <div class="perex hidden-kd-mobile">
+                                    <p>Konzervat&iacute;vny in&scaron;tit&uacute;t M. R. &Scaron;tef&aacute;nika (KI) si včera pripomenul 20. v&yacute;ročie svojho vzniku. Pri tejto pr&iacute;ležitosti sa v&nbsp;P&aacute;lffyho pal&aacute;ci v&nbsp;Bratislave...
+                                </div>
+                                <div class="perex show-kd-mobile">
+                                    <p>Konzervat&iacute;vny in&scaron;tit&uacute;t M. R. &Scaron;tef&aacute;nika (KI) si včera pripomenul 20. v&yacute;ročie svojho vzniku. Pri tejto pr&iacute;ležitosti sa v&nbsp;P&aacute;lffyho pal&aacute;ci v&nbsp;Bratislave konalo sl&aacute;vnostn&eacute; podujatie.</p>    <p>Konzervat&iacute;vny in&scaron;tit&uacute;t, to s&uacute; predov&scaron;etk&yacute;m men&aacute; jeho spolupracovn&iacute;kov, ktor&iacute; prehov&aacute;raj&uacute; k&nbsp;verejn&yacute;m t&eacute;mam:...
                                 </div>
 
 
@@ -2135,44 +2149,58 @@
                                 <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                     <header class="clearfix">
                                         <div class="image-wrap show">
-                                            <img src="https://www.postoj.sk/uploads/9300/conversions/profile.jpg" alt="Adam Tak&aacute;č">
+                                            <img src="/uploads/9793/conversions/profile.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">
                                         </div>
                                         <div class="header-text" style="">
-                                            <div class="author-name">Adam Tak&aacute;č</div><small style="margin-left: 5px;">• pred 3 d</small>
+                                            <div class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</div><small style="margin-left: 5px;">• pred 1 d</small>
                                         </div>
                                     </header>
 
                                     <div class="article-social-buttons">
                                         <div class="social-btn">
-                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2479" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2522" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                             </div>
                                         </div>
                                         <div class="social-btn">
-                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2479"  data-text="P&aacute;pež op&auml;ť vyjadril nes&uacute;hlas s prekladom prosby v modlitbe Otčen&aacute;&scaron;"  class="twitter-share-button">Tweet</a>
+                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2522"  data-text="Konzervat&iacute;vny in&scaron;tit&uacute;t osl&aacute;vil dvadsiatku"  class="twitter-share-button">Tweet</a>
                                         </div>
                                     </div>
 
                                     <div class="article-text">
-                                        <p>&bdquo;Nie je to dobr&yacute; preklad,&ldquo; <a href="https://svetkrestanstva.postoj.sk/38696/boh-neuvadza-do-pokusenia-vyhlasili-biskupi-a-upravili-preklad-otcenasa" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">povedal</a> koncom predminul&eacute;ho roka p&aacute;pež Franti&scaron;ek na margo ver&scaron;a &bdquo;neuveď n&aacute;s do poku&scaron;enia&ldquo; v najzn&aacute;mej&scaron;ej&nbsp;kresťanskej modlitbe Otčen&aacute;&scaron;. Podľa hlavy Katol&iacute;ckej cirkvi vyznieva t&aacute;to formul&aacute;cia tak, že Boh vedie ľud&iacute; k&nbsp;hriechu.</p>    <p>Argent&iacute;nsky p&aacute;pež vtedy rozpr&uacute;dil kritikou prekladu Otčen&aacute;&scaron;a diskusiu o&nbsp;jeho možnej &uacute;prave.</p>    <p>&bdquo;Som to ja, kto pad&aacute;. Ale nie je to Boh, ktor&yacute; by ma postrčil do poku&scaron;enia, aby potom videl, ako som padol. (...) Ten, kto ťa vov&aacute;dza do poku&scaron;enia, je Satan. To je Satanova pr&aacute;ca,&ldquo; povedal Franti&scaron;ek vo vysielan&iacute; talianskej katol&iacute;ckej telev&iacute;zie TV 2000.</p>    <p>Podľa jeho vtedaj&scaron;&iacute;ch slov by bolo lep&scaron;ie znenie &bdquo;nenechaj n&aacute;s podľahn&uacute;ť poku&scaron;eniu&ldquo;.</p>    <p>Na tohtot&yacute;ždňovej gener&aacute;lnej audiencii na N&aacute;mest&iacute; sv. Petra sa p&aacute;pež k&nbsp;rozporupln&eacute;mu prekladu ver&scaron;a znovu <a href="https://www.vaticannews.va/sk/papez/news/2019-05/papez-frantisek-katecheza-o-otcenasi-neuved-nas-do-pokusenia.html" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">kriticky vyjadril</a>. Pr&aacute;ve t&aacute;to časť modlitby bola totiž t&eacute;mou jeho pravideln&yacute;ch katech&eacute;z o&nbsp;Otčen&aacute;&scaron;i, ktor&eacute; predn&aacute;&scaron;a v&nbsp;posledn&yacute;ch t&yacute;ždňoch pri gener&aacute;lnych audienci&aacute;ch.</p>    <p>&bdquo;Ako je zn&aacute;me, p&ocirc;vodn&eacute; gr&eacute;cke vyjadrenie obsiahnut&eacute; v evanjeli&aacute;ch je ťažk&eacute; presne vystihn&uacute;ť&nbsp;a v&scaron;etky modern&eacute; preklady tro&scaron;ku pokrivk&aacute;vaj&uacute;,&ldquo; povedal Franti&scaron;ek v&nbsp;stredaj&scaron;ej katech&eacute;ze. &bdquo;Na jednom prvku sa v&scaron;ak m&ocirc;žeme jednomyseľne zhodn&uacute;ť: pri akomkoľvek ch&aacute;pan&iacute; textu mus&iacute;me vyl&uacute;čiť, že Boh by bol protagonistom poku&scaron;en&iacute;, ktor&eacute; doliehaj&uacute; na ceste človeka. Ako keby Boh č&iacute;hal na svoje deti kladen&iacute;m n&aacute;strah a pasc&iacute;. V&yacute;klad tohto druhu je v rozpore predov&scaron;etk&yacute;m so samotn&yacute;m textom a je ďaleko od obrazu Boha, ktor&yacute; n&aacute;m Ježi&scaron; zjavil.&ldquo;</p>    <p>Podľa p&aacute;pežov&yacute;ch slov kresťania nemaj&uacute; nič do činenia so z&aacute;vistliv&yacute;m Bohom, ktor&yacute; by bol v&nbsp;konkurencii s&nbsp;človekom&nbsp;alebo by sa zab&aacute;val uv&aacute;dzan&iacute;m ho do sk&uacute;&scaron;ky.</p>    <p>&bdquo;Toto s&uacute; obrazy toľk&yacute;ch pohansk&yacute;ch bohov, nie?&ldquo; tvrd&iacute;. &bdquo;V liste apo&scaron;tola Jakuba č&iacute;tame takto: ,Nech nik v poku&scaron;en&iacute; nehovor&iacute;: &laquo;Boh ma pok&uacute;&scaron;a&raquo;. Veď Boha nemožno pok&uacute;&scaron;ať na zl&eacute; a ani on s&aacute;m nikoho nepok&uacute;&scaron;a&lsquo;&nbsp;(1,13). Pr&aacute;ve naopak: Otec nie je p&ocirc;vodcom zla, nijak&eacute;mu synovi, ktor&yacute; pros&iacute; o rybu, ned&aacute; hada (pozri Lk 11,11) &ndash; ako uč&iacute; Ježi&scaron; &ndash; a&nbsp; keď sa zlo objav&iacute; v živote človeka, bojuje po jeho boku, aby mohol byť osloboden&yacute;. Je to Boh, ktor&yacute; vždy bojuje za n&aacute;s, nie proti n&aacute;m. Otec! Toto je ten zmysel, v akom sa modl&iacute;me Otčen&aacute;&scaron;,&ldquo; dodal Franti&scaron;ek.</p>    <p><em>Foto: TASR/AP</em></p>
+                                        <p>Konzervat&iacute;vny in&scaron;tit&uacute;t M. R. &Scaron;tef&aacute;nika (KI) si včera pripomenul 20. v&yacute;ročie svojho vzniku. Pri tejto pr&iacute;ležitosti sa v&nbsp;P&aacute;lffyho pal&aacute;ci v&nbsp;Bratislave konalo sl&aacute;vnostn&eacute; podujatie.</p>    <p>Konzervat&iacute;vny in&scaron;tit&uacute;t, to s&uacute; predov&scaron;etk&yacute;m men&aacute; jeho spolupracovn&iacute;kov, ktor&iacute; prehov&aacute;raj&uacute; k&nbsp;verejn&yacute;m t&eacute;mam: Riaditeľ KI a ekon&oacute;m Peter Gonda, ale tiež Du&scaron;an Sloboda, Radovan Kazda&nbsp;či Ivan Kuhn. Spomen&uacute;ť tiež treba b&yacute;val&eacute;ho riaditeľa a v s&uacute;časnosti poslanca parlamentu Ondreja Dost&aacute;la.&nbsp;</p>    <p>S&nbsp;t&yacute;mto think-tankom je taktiež neodmysliteľne spojen&aacute; Cena Dominika Tatarku&nbsp;či každoročn&yacute; cyklus semin&aacute;rov Akad&eacute;mia klasickej ekon&oacute;mie. A&nbsp;mnoh&eacute; in&eacute; podujatia.</p>    <p>Napr&iacute;klad na dnes večer KI organizuje diskusn&yacute; klub s&nbsp;n&aacute;zvom <a href="http://www.konzervativizmus.sk/article.php?6243" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">Obloha je na&scaron;e more</a> o&nbsp;československ&yacute;ch letcoch, ktor&iacute; počas druhej svetovej vojny bojovali v&nbsp;britskom kr&aacute;ľovskom letectve. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>    <p>Pre mňa je jednou z&nbsp;najlep&scaron;&iacute;ch akci&iacute; KI predn&aacute;&scaron;kov&yacute; cyklus CEQLS (Conservative Economic Quarterly Lecture Series), v&nbsp;r&aacute;mci ktor&eacute;ho každ&yacute; &scaron;tvrťrok na Slovensko zav&iacute;ta zauj&iacute;mav&yacute; renomovan&yacute; ekon&oacute;m zo zahraničia. S&nbsp;viacer&yacute;mi ste sa stretli aj na str&aacute;nkach Postoja.</p>    <p>Na&scaron;e rozhovory s&nbsp;<a href="https://www.postoj.sk/42939/dnes-mi-pripadate-ako-normalna-spolocnost" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">Davidom Anderssonom</a>, <a href="https://www.postoj.sk/34014/ak-chcete-rychlejsie-dobiehanie-zvolte-si-lepsich-politikov" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">Leszekom Balcerowiczom</a>, či <a href="https://www.postoj.sk/32329/svajciarsky-uspech-je-zmesou-usilia-a-stastia" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">Robertom Nefom</a> boli možn&eacute; pr&aacute;ve vďaka tomu, že pri&scaron;li na Slovensko v&nbsp;r&aacute;mci predn&aacute;&scaron;kov&eacute;ho cyklu CEQLS na pozvanie KI...</p>    <p>K narodenin&aacute;m Konzervat&iacute;vnemu in&scaron;tit&uacute;tu žel&aacute;me v&scaron;etko najlep&scaron;ie a e&scaron;te veľa &uacute;spe&scaron;n&yacute;ch rokov.</p>    <p><em>&Uacute;častn&iacute;kom podujatia k 20. narodenin&aacute;m Konzervat&iacute;vneho in&scaron;tit&uacute;tu sa prihovoril aj Franti&scaron;ek Miklo&scaron;ko (vľavo). Vpravo: s&uacute;časn&yacute; riaditeľ KI Peter Gonda a b&yacute;val&yacute; riaditeľ Ondrej Dost&aacute;l. FOTO &ndash;&nbsp;Facebook/Ondrej Dost&aacute;l</em></p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-dolne-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>
                                     </div>
 
                                     <div class="article-image">
-                                        <img src="https://www.postoj.sk/uploads/18922/conversions/cover.jpg">
+                                        <img src="/uploads/20064/conversions/cover.jpg">
                                     </div>
                                 </div>
                             </div>
 
 
-                            <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="2"  data-href="https://www.postoj.sk/shortnews/2478" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2478">
-                                <div class="image-wrap">
-                                    <img src="https://www.postoj.sk/uploads/18901/conversions/cover.jpg">
+                            <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="2"  data-href="https://www.postoj.sk/shortnews/2521" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2521">
+                                <time datetime="2019-06-03 13:51:17">
+                                </time>
+                                <div class="image-wrap hidden-kd-mobile">
+                                    <img src="/uploads/20038/conversions/cover.jpg">
                                 </div>
-                                <header>
-                                    <h3 class="author-link"><a href="https://www.postoj.sk/autor/lukas-obsitnik" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</a></h3>
-                                    <small>• pred 3 d</small>
+                                <header class="clearfix">
+                                    <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/martin-hanus" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Martin Hanus</a></h3>
+                                    <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                        <a class="author-img" href="https://www.postoj.sk/autor/martin-hanus" data-category="home_kratke-spravy-dolne-autor" data-action="click">
+                                            <img src="/uploads/9311/conversions/square.jpg" alt="Martin Hanus">          </a>
+                                        <div class="title">
+                                            <a class="author" href="https://www.postoj.sk/autor/martin-hanus"> <span>Martin Hanus</span> </a>
+                                            <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2521">
+                                                <span>Ktor&aacute; vl&aacute;da padne prv&aacute;, talianska či nemeck&aacute;?</span> </a>
+                                        </div>
+                                    </div>
+                                    <small class="hidden-kd-mobile">• pred 2 d</small>
                                 </header>
-                                <div class="perex">
-                                    <p>Americk&yacute; novin&aacute;r Rod Dreher, autor knihy <a href="https://obchod.postoj.sk/produkt/benediktova-volba/6" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link"><em>Benediktova voľba</em></a>, je v s&uacute;časnosti v Bratislave na Hanusov&yacute;ch dňoch. Na...
+                                <div class="perex hidden-kd-mobile">
+                                    <p>Eur&oacute;pske voľby sp&ocirc;sobili politick&eacute; zemetrasenie v dvoch v&yacute;znamn&yacute;ch &scaron;t&aacute;toch E&Uacute;. V Nemecku dosiahol proces sebazničenia (&bdquo;Selbstzerst&ouml;rung&ldquo;&nbsp;je dnes v nemčine veľmi...
+                                </div>
+                                <div class="perex show-kd-mobile">
+                                    <p>Eur&oacute;pske voľby sp&ocirc;sobili politick&eacute; zemetrasenie v dvoch v&yacute;znamn&yacute;ch &scaron;t&aacute;toch E&Uacute;. V Nemecku dosiahol proces sebazničenia (&bdquo;Selbstzerst&ouml;rung&ldquo;&nbsp;je dnes v nemčine veľmi popul&aacute;rne slovo) SPD nov&yacute; vrchol. Doteraj&scaron;ia &scaron;&eacute;fka soci&aacute;lnych demokratov&nbsp;Andrea Nahles chcela po volebnej katastrofe prin&uacute;tiť...
                                 </div>
 
 
@@ -2182,44 +2210,58 @@
                                 <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                     <header class="clearfix">
                                         <div class="image-wrap show">
-                                            <img src="https://www.postoj.sk/uploads/9304/conversions/profile.jpg" alt="Luk&aacute;&scaron; Ob&scaron;itn&iacute;k">
+                                            <img src="/uploads/9311/conversions/profile.jpg" alt="Martin Hanus">
                                         </div>
                                         <div class="header-text" style="">
-                                            <div class="author-name">Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</div><small style="margin-left: 5px;">• pred 3 d</small>
+                                            <div class="author-name">Martin Hanus</div><small style="margin-left: 5px;">• pred 2 d</small>
                                         </div>
                                     </header>
 
                                     <div class="article-social-buttons">
                                         <div class="social-btn">
-                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2478" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2521" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                             </div>
                                         </div>
                                         <div class="social-btn">
-                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2478"  data-text="Rod Dreher: Pri&scaron;iel som sa učiť z va&scaron;ich sk&uacute;senost&iacute; z čias komunizmu"  class="twitter-share-button">Tweet</a>
+                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2521"  data-text="Ktor&aacute; vl&aacute;da padne prv&aacute;, talianska či nemeck&aacute;?"  class="twitter-share-button">Tweet</a>
                                         </div>
                                     </div>
 
                                     <div class="article-text">
-                                        <p>Americk&yacute; novin&aacute;r Rod Dreher, autor knihy <a href="https://obchod.postoj.sk/produkt/benediktova-volba/6" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link"><em>Benediktova voľba</em></a>, je v s&uacute;časnosti v Bratislave na Hanusov&yacute;ch dňoch. Na svojom blogu v prest&iacute;žnom magaz&iacute;ne <em>The American Conservative</em>&nbsp;p&iacute;&scaron;e&nbsp;kr&aacute;tke postrehy zo svojej n&aacute;v&scaron;tevy.</p>    <p><a href="https://www.theamericanconservative.com/dreher/may-day-in-bratislava-communism/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">V prvom texte</a> hovor&iacute; o svojom stretnut&iacute; s Vladim&iacute;rom Palkom, americk&yacute;m čitateľom približuje pr&iacute;behy&nbsp;Vladim&iacute;ra Jukla, Silvestra Krčm&eacute;ryho a Tomislava Kolakoviča a&nbsp;p&iacute;&scaron;e aj o Sviečkovej&nbsp;manifest&aacute;cii&nbsp;(pridal dokonca aj videoz&aacute;znam zo z&aacute;kroku &Scaron;tB). Palko ho zaviedol na Hviezdoslavovo n&aacute;mestie na miesto, kde spolu s tis&iacute;ckami ďal&scaron;&iacute;ch st&aacute;l počas manifest&aacute;cie. Nesk&ocirc;r nav&scaron;t&iacute;vil aj Dev&iacute;n a na blogu zverejnil fotografie z pam&auml;tn&iacute;ka Br&aacute;na slobody, ktor&yacute; pripom&iacute;na &scaron;tyri stovky ľud&iacute;, ktor&iacute; pri&nbsp;pokuse o &uacute;tek na Z&aacute;pad zomreli n&aacute;silnou smrťou. &bdquo;Tak&yacute;to je pohľad od pam&auml;tn&iacute;ka,&ldquo; p&iacute;&scaron;e pri jednej fotke. &bdquo;Na druhom brehu je Rak&uacute;sko. Železn&aacute; opona prech&aacute;dzala prostriedkom rieky. Takto bl&iacute;zko bola sloboda. &Scaron;tyristo ľud&iacute; zomrelo pri pokuse dostať sa&nbsp;na slobodu. Dnes je ich pam&auml;tn&yacute; deň.&ldquo;</p>    <p><a href="https://www.theamericanconservative.com/dreher/coffee-timo-petra-bratislava-communism/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">V druhom texte</a> p&iacute;&scaron;e o svojom stretnut&iacute; s mlad&yacute;m fotografom Timotejom Križkom a jeho manželkou Petrou. Timotej mu&nbsp;rozpr&aacute;va o svojom dokumente obet&iacute; komunizmu, hovoria spolu, prečo je ich pamiatka d&ocirc;ležit&aacute;,&nbsp;a s Petrou mu približuj&uacute; s&uacute;časn&eacute; spoločensk&eacute; diskusie na Slovensku, v ktor&yacute;ch s&uacute; katol&iacute;ci zo strany liber&aacute;lnych m&eacute;di&iacute; často vytl&aacute;čan&iacute; na okraj. &bdquo;My Slov&aacute;ci vn&iacute;mame len dve možnosti: &iacute;sť na Z&aacute;pad alebo &iacute;sť na V&yacute;chod,&ldquo; hovor&iacute; mu Timo. &bdquo;Veľa ľud&iacute; sa V&yacute;chodu&nbsp;ob&aacute;va pre historick&eacute; sk&uacute;senosti s Ruskom, preto sa obraciame na Z&aacute;pad a k liberalizmu, slovensk&aacute; spoločnosť vn&iacute;ma, že odtiaľ prich&aacute;dza n&aacute;dej.&ldquo; &bdquo;Z&aacute;padn&eacute; spoločnosti s&uacute; v&scaron;ak vo veľk&yacute;ch probl&eacute;moch,&ldquo; oponuje mu Dreher. N&aacute;sledne sa spolu rozpr&aacute;vaj&uacute; o tom, prečo sa gener&aacute;cia rodičov Timoteja a Petry c&iacute;ti ako &bdquo;straten&aacute; gener&aacute;cia&ldquo;, o d&ocirc;vodoch nostalgie za komunizmom, diskutuj&uacute; o vn&iacute;man&iacute; slobody u n&aacute;s a v USA po &uacute;tokoch z 11. septembra 2001. Je to veľmi zauj&iacute;mav&eacute;.</p>    <p>Rod Dreher v s&uacute;časnosti p&iacute;&scaron;e knihu nadv&auml;zuj&uacute;cu na <em>Benediktovu voľbu</em>, v ktorej chce využiť pr&iacute;behy obet&iacute; komunizmu zo strednej Eur&oacute;py. Ch&aacute;pe, že dne&scaron;n&aacute; situ&aacute;cia je omnoho miernej&scaron;ia, no tak&yacute;to uhol pohľadu považuje za d&ocirc;ležit&yacute;. V diskusii na BHD okrem in&eacute;ho zd&ocirc;raznil, že sa na Slovensko pri&scaron;iel učiť z na&scaron;ich&nbsp;sk&uacute;senost&iacute; z čias komunizmu.</p>    <p>Svoj blog zakončil takto: &bdquo;Ľudia, ktor&yacute;ch som stretol tu na Slovensku, s&uacute; skutočne zauj&iacute;mav&iacute;. Ťažko uveriť, že som tu len necel&eacute; dva dni. V dne&scaron;nom programe m&aacute;m&nbsp;stretnutie s historikom tajnej cirkvi, n&aacute;v&scaron;tevu&nbsp;miesta, kde sa tlačil samizdat, potom stretnutie s ďal&scaron;&iacute;mi dvoma hlavn&yacute;mi l&iacute;drami tajnej cirkvi. Nedok&aacute;žem dostatočne poďakovať svojim hostiteľom z&nbsp;festivalu <a href="https://www.hanusovedni.sk/" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">Bratislavsk&eacute; Hanusov&eacute;&nbsp;dni</a>, ktor&yacute;&nbsp;organizuj&uacute; katol&iacute;cki &scaron;tudenti a absolventi, za sprostredkovanie t&yacute;chto stretnut&iacute;. Slov&aacute;ci, predov&scaron;etk&yacute;m slovensk&iacute; katol&iacute;ci, s&uacute; presvedčen&iacute;, že pr&iacute;beh utrpenia ich n&aacute;roda za vl&aacute;dy komunizmu a jeho hrdinsk&yacute; odpor sa na&nbsp;Z&aacute;pade prehliada. Maj&uacute; pravdu.&ldquo;</p>    <p><em>Foto: Rod Dreher počas diskusie na BHD, zdroj:&nbsp;facebook.com/BratislavskeHanusoveDni</em></p>
+                                        <p>Eur&oacute;pske voľby sp&ocirc;sobili politick&eacute; zemetrasenie v dvoch v&yacute;znamn&yacute;ch &scaron;t&aacute;toch E&Uacute;. V Nemecku dosiahol proces sebazničenia (&bdquo;Selbstzerst&ouml;rung&ldquo;&nbsp;je dnes v nemčine veľmi popul&aacute;rne slovo) SPD nov&yacute; vrchol. Doteraj&scaron;ia &scaron;&eacute;fka soci&aacute;lnych demokratov&nbsp;Andrea Nahles chcela po volebnej katastrofe prin&uacute;tiť stran&iacute;kov, aby jej vyjadrili podporu.&nbsp;Udial sa v&scaron;ak prav&yacute; opak, od vlastn&yacute;ch poslancov si musela vypočuť, že je s&iacute;ce fajn, ale na to nem&aacute;.</p>    <p>Dotknut&aacute;&nbsp;Nahles včera&nbsp;ozn&aacute;mila rezign&aacute;ciu, č&iacute;m &scaron;okovala stran&iacute;kov, a t&iacute; sa dnes predh&aacute;ňaj&uacute; v prejavoch&nbsp;zdesenia&nbsp;nad t&yacute;m, ako nemilosrdne SPD zaobch&aacute;dza so svojimi l&iacute;drami. Nahles bola&nbsp;prvou ženou na čele SPD, razila ľavicovej&scaron;&iacute; kurz, nikam to v&scaron;ak neviedlo, pre mlad&yacute;ch voličov s&uacute; soci&aacute;lni demokrati&nbsp;nudnou fos&iacute;liou, oveľa coolovej&scaron;ie je voliť Zelen&yacute;ch. A&nbsp;robotn&iacute;cka trieda&nbsp;v starom zmysle slova sa scvrkla a nechce voliť slniečkarsk&uacute;&nbsp;stranu pr&aacute;ce, ale protimigrantsk&uacute; AfD.</p>    <p>O miere rozkladu&nbsp;SPD svedč&iacute;&nbsp;aj fakt, že najambici&oacute;znej&scaron;&iacute;&nbsp;politici strany odmietli Nahles nahradiť, &iacute;sť do čela&nbsp;SPD sa dnes vn&iacute;ma ako&nbsp;samovražedn&aacute; misia. Medzit&yacute;m v SPD zosilnel&nbsp;hlas, že jedinou možnosťou, ako zachr&aacute;niť stranu pred osudom franc&uacute;zskych socialistov, je ukončiť koal&iacute;ciu s CDU/CSU, &iacute;sť si po por&aacute;žku v predčasn&yacute;ch voľb&aacute;ch&nbsp;a veriť, že potom&nbsp;sa najstar&scaron;ia nemeck&aacute; strana pozviecha.&nbsp;V strane v&scaron;ak už nie je toho, kto by zavelil, takže o ďal&scaron;om smerovan&iacute; rozhodn&uacute; em&oacute;cie v členskej z&aacute;kladni.</p>    <p>Z trochu podobn&eacute;ho d&ocirc;vodu sa otriasa aj talianska vl&aacute;da. Hnutie 5 hviezd utrpelo v eurovoľb&aacute;ch fiasko, k&yacute;m v opoz&iacute;cii sa mu roky darilo, lebo jeho pravou identitou je iba protest, vo vl&aacute;de je bezprizorn&eacute;. V&nbsp;posledn&yacute;ch t&yacute;ždňoch len &uacute;toč&iacute; na Mattea Salviniho, čo ho e&scaron;te viac oslabuje. Naopak, nabuden&yacute; eurov&iacute;ťaz&nbsp;Salvini, ktor&yacute; m&aacute; jasn&uacute; ideologick&uacute; agendu, už dal&nbsp;jasne najavo, že ak mu koaličn&yacute; partner neust&uacute;pi v troch-&scaron;tyroch t&eacute;mach,&nbsp;prestane ho to baviť.</p>    <p>Je zrejm&eacute;, že Salvini už len hľad&aacute; z&aacute;mienku, ako povaliť popul&aacute;rnu vl&aacute;du a vyvolať predčasn&eacute; voľby (len to mus&iacute; zahrať tak, aby nebol vinn&iacute;kom) &ndash;&nbsp;ako povedal jeden jeho spolustran&iacute;k, keby ste videli, že ovocie vis&iacute; tak n&iacute;zko, nesiahli by ste po ňom?&nbsp;</p>    <p>S&uacute;časn&yacute; premi&eacute;r Giuseppe Conte už ch&aacute;pe, že jeho dni &scaron;tatistu sa kr&aacute;tia, dnes večer sa chce prihovoriť Talianom &ndash;&nbsp;očak&aacute;va sa, že vyzve koaličn&yacute;ch partnerov, aby sa pok&uacute;sili o nov&yacute; začiatok, lebo inak to už nebude baviť ani jeho.&nbsp;</p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-dolne-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>    <p><em>Na sn&iacute;mke taliansky minister vn&uacute;tra a l&iacute;der Ligy Matteo Salvini,&nbsp;FOTO TASR/AP&nbsp;</em></p>
                                     </div>
 
                                     <div class="article-image">
-                                        <img src="https://www.postoj.sk/uploads/18901/conversions/cover.jpg">
+                                        <img src="/uploads/20038/conversions/cover.jpg">
                                     </div>
                                 </div>
                             </div>
 
 
-                            <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="3"  data-href="https://www.postoj.sk/shortnews/2477" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2477">
-                                <div class="image-wrap">
-                                    <img src="https://www.postoj.sk/uploads/18883/conversions/cover.jpg">
+                            <article class="short-news-item  with-img     track-me-pls   show-ad "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="3"  data-href="https://www.postoj.sk/shortnews/2520" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2520">
+                                <time datetime="2019-06-03 12:29:21">
+                                </time>
+                                <div class="image-wrap hidden-kd-mobile">
+                                    <img src="/uploads/20037/conversions/cover.jpg">
                                 </div>
-                                <header>
-                                    <h3 class="author-link"><a href="https://www.postoj.sk/autor/lukas-krivosik" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</a></h3>
-                                    <small>• pred 4 d</small>
+                                <header class="clearfix">
+                                    <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/jaroslav-daniska" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Jaroslav Dani&scaron;ka</a></h3>
+                                    <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                        <a class="author-img" href="https://www.postoj.sk/autor/jaroslav-daniska" data-category="home_kratke-spravy-dolne-autor" data-action="click">
+                                            <img src="/uploads/9387/conversions/square.jpg" alt="Jaroslav Dani&scaron;ka">          </a>
+                                        <div class="title">
+                                            <a class="author" href="https://www.postoj.sk/autor/jaroslav-daniska"> <span>Jaroslav Dani&scaron;ka</span> </a>
+                                            <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2520">
+                                                <span>V&aacute;clav Benda, 20. v&yacute;ročie smrti</span> </a>
+                                        </div>
+                                    </div>
+                                    <small class="hidden-kd-mobile">• pred 2 d</small>
                                 </header>
-                                <div class="perex">
-                                    <p>V&nbsp;r&aacute;mci fin&aacute;lov&eacute;ho večera, ktor&yacute; v&nbsp;stredu odvysielala RTVS k&nbsp;ankete Najv&auml;č&scaron;&iacute; Slov&aacute;k, bola vyhl&aacute;sen&aacute; trojica, ktor&aacute; z&iacute;skala najviac hlasov. Na 3. mieste...
+                                <div class="perex hidden-kd-mobile">
+                                    <p>Je to 20 rokov, čo zomrel V&aacute;clav Benda (1946 &ndash; 1999), v&yacute;znamn&yacute; česk&yacute; filozof a disident, konzervat&iacute;vny katol&iacute;k, ktor&yacute; po...
+                                </div>
+                                <div class="perex show-kd-mobile">
+                                    <p>Je to 20 rokov, čo zomrel V&aacute;clav Benda (1946 &ndash; 1999), v&yacute;znamn&yacute; česk&yacute; filozof a disident, konzervat&iacute;vny katol&iacute;k, ktor&yacute; po roku 1989 spojil svoje vn&iacute;manie politiky s ODS, čo sa &ndash;&nbsp;mysl&iacute;m &ndash;&nbsp;uk&aacute;zalo byť nielen spr&aacute;vne,...
                                 </div>
 
 
@@ -2229,88 +2271,58 @@
                                 <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                     <header class="clearfix">
                                         <div class="image-wrap show">
-                                            <img src="https://www.postoj.sk/uploads/9793/conversions/profile.jpg" alt="Luk&aacute;&scaron; Krivo&scaron;&iacute;k">
+                                            <img src="/uploads/9387/conversions/profile.jpg" alt="Jaroslav Dani&scaron;ka">
                                         </div>
                                         <div class="header-text" style="">
-                                            <div class="author-name">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</div><small style="margin-left: 5px;">• pred 4 d</small>
+                                            <div class="author-name">Jaroslav Dani&scaron;ka</div><small style="margin-left: 5px;">• pred 2 d</small>
                                         </div>
                                     </header>
 
                                     <div class="article-social-buttons">
                                         <div class="social-btn">
-                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2477" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2520" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                             </div>
                                         </div>
                                         <div class="social-btn">
-                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2477"  data-text="Anketa: Najv&auml;č&scaron;&iacute; Slov&aacute;k je Milan Rastislav &Scaron;tef&aacute;nik"  class="twitter-share-button">Tweet</a>
+                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2520"  data-text="V&aacute;clav Benda, 20. v&yacute;ročie smrti"  class="twitter-share-button">Tweet</a>
                                         </div>
                                     </div>
 
                                     <div class="article-text">
-                                        <p>V&nbsp;r&aacute;mci fin&aacute;lov&eacute;ho večera, ktor&yacute; v&nbsp;stredu odvysielala RTVS k&nbsp;ankete Najv&auml;č&scaron;&iacute; Slov&aacute;k, bola vyhl&aacute;sen&aacute; trojica, ktor&aacute; z&iacute;skala najviac hlasov. Na 3. mieste skončil katol&iacute;cky kňaz a&nbsp;charitat&iacute;vny pracovn&iacute;k Anton Srholec. Na 2. mieste Ľudov&iacute;t &Scaron;t&uacute;r. A&nbsp;na 1. mieste sa umiestnil Milan Rastislav &Scaron;tef&aacute;nik.</p>    <p>&Uacute;primne, v&yacute;sledok ma neprekvapil. V&nbsp;posledn&yacute;ch t&yacute;ždňoch som sa ponoril do &Scaron;tef&aacute;nikovho života a&nbsp;preč&iacute;tal som niekoľko kn&iacute;h v&nbsp;r&aacute;mci pr&iacute;pravy pre m&ocirc;j <a href="https://www.postoj.sk/42877/preco-stefanik-pisal-masarykovi-po-cesky-a-co-vycital-amerike-a-rusku" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">nedeľn&yacute; čl&aacute;nok</a> a&nbsp;n&aacute;&scaron; <a href="https://www.postoj.sk/42938/dve-minuty-a-lietadlo-so-stefanikom-by-pristalo" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">dne&scaron;n&yacute; rozhovor</a>. Bez p&aacute;tosu - bol to povzn&aacute;&scaron;aj&uacute;ci pocit robiť na tejto t&eacute;me.</p>    <p>V&scaron;etci nejak&yacute; z&aacute;kladn&yacute; prehľad o&nbsp;&Scaron;tef&aacute;nikovom živote m&aacute;me. No keď sa do neho človek naplno ponor&iacute;, nem&ocirc;že prestať žasn&uacute;ť.</p>    <p>&Scaron;tef&aacute;nik v&nbsp;sebe sp&aacute;ja nesmiernu v&ocirc;ľu, &scaron;irok&yacute; rozhľad a&nbsp;schopnosť mať v&yacute;sledky, s&nbsp;romantikou, odvahou a&nbsp;dobrodružstvom. A to v&scaron;etko zapojil pred storoč&iacute;m do zdanlivo nemožnej misie: oslobodenia Slov&aacute;kov.</p>    <p>On bol popravde ten najv&auml;č&scaron;&iacute; spomedzi n&aacute;s.</p>    <p><em>Milan Rastislav &Scaron;tef&aacute;nik -&nbsp;Reprofoto TASR</em></p>
+                                        <p>Je to 20 rokov, čo zomrel V&aacute;clav Benda (1946 &ndash; 1999), v&yacute;znamn&yacute; česk&yacute; filozof a disident, konzervat&iacute;vny katol&iacute;k, ktor&yacute; po roku 1989 spojil svoje vn&iacute;manie politiky s ODS, čo sa &ndash;&nbsp;mysl&iacute;m &ndash;&nbsp;uk&aacute;zalo byť nielen spr&aacute;vne, ale v posledn&yacute;ch rokoch aj prezierav&eacute; a &uacute;spe&scaron;n&eacute;. Celkom iste to plat&iacute; od Klausovho vetovania z&aacute;kona o registrovan&yacute;ch partnerstv&aacute;ch a n&aacute;stupu&nbsp;viacer&yacute;ch katol&iacute;kov do čela ODS, patr&iacute; sa spomen&uacute;ť Petra Nečasa a Petra Fialu.</p>    <p>V ODS sa tiež dar&iacute; Markovi Bendovi, synovi disidenta V&aacute;clava Bendu, a dar&iacute; sa aj konverzi&aacute;m, pred časom konvertoval na vieru Alexander Vondra, b&yacute;val&yacute; bl&iacute;zky spolupracovn&iacute;k V&aacute;clava Havla a po posledn&yacute;ch voľb&aacute;ch europoslanec, pred n&iacute;m napr. b&yacute;val&yacute; premi&eacute;r Topol&aacute;nek.&nbsp;</p>    <p>Benda zostane v pam&auml;ti najm&auml; kv&ocirc;li <a href="https://cs.wikipedia.org/wiki/Paraleln%C3%AD_polis" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">konceptu paralelnej polis</a>, ktor&yacute; patr&iacute; k tomu najorigin&aacute;lnej&scaron;iemu, čo v československom disente vzniklo. Bendovu pamiatku si dnes pripom&iacute;na aj pražsk&yacute; Občiansky in&scaron;tit&uacute;t, na ktor&eacute;ho čele&nbsp;stoj&iacute; ďal&scaron;&iacute; katol&iacute;k Roman Joch (<a href="http://www.obcinst.cz/zizen-po-spravedlnosti-vaclav-benda-1946-1999/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">viac tu</a>), no a na Slovensku by sme nemali zab&uacute;dať, že Benda bol azda najviac pro-slovensk&yacute; spomedzi pražsk&yacute;ch disidentov, dok&aacute;zal to viacer&yacute;mi textami a postojmi, o. i. ocenen&iacute;m mas&iacute;vneho &uacute;spechu p&uacute;te na Velehrad, čo op&iacute;sal v obsiahlej eseji v samizdate Rozmluvy v roku 1986, ako aj docenen&iacute;m veľkej roly, ktor&uacute; na Slovensku zohr&aacute;vala tajn&aacute; Cirkev, čo si na rozdiel od &Scaron;tB viacer&iacute; liber&aacute;lni disidenti ani nev&scaron;imli.</p>    <p>Bendovu pamiatku si treba pripomen&uacute;ť a jeho dielo poznať. S&uacute;bor jeho textov vy&scaron;iel v roku 2009 ako <em><span class="reference-text">Nočn&iacute; k&aacute;drov&yacute; dotazn&iacute;k a jin&eacute; boje</span></em>.</p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-dolne-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>
                                     </div>
 
                                     <div class="article-image">
-                                        <img src="https://www.postoj.sk/uploads/18883/conversions/cover.jpg">
+                                        <img src="/uploads/20037/conversions/cover.jpg">
                                     </div>
                                 </div>
                             </div>
 
                         </div>                                       <div class="col-xxs-12 col-md-6 eq-me  border-left ">
-                            <article class="short-news-item  with-img     track-me-pls  "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="4"  data-href="https://www.postoj.sk/shortnews/2476" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2476">
-                                <div class="image-wrap">
-                                    <img src="https://www.postoj.sk/uploads/18867/conversions/cover.jpg">
+                            <article class="short-news-item  with-img     track-me-pls  "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="4"  data-href="https://www.postoj.sk/shortnews/2519" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2519">
+                                <time datetime="2019-06-03 11:34:51">
+                                </time>
+                                <div class="image-wrap hidden-kd-mobile">
+                                    <img src="/uploads/20031/conversions/cover.jpg">
                                 </div>
-                                <header>
-                                    <h3 class="author-link"><a href="https://www.postoj.sk/autor/pavol-rabara-1" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Pavol R&aacute;bara</a></h3>
-                                    <small>• pred 4 d</small>
+                                <header class="clearfix">
+                                    <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/jaroslav-daniska" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Jaroslav Dani&scaron;ka</a></h3>
+                                    <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                        <a class="author-img" href="https://www.postoj.sk/autor/jaroslav-daniska" data-category="home_kratke-spravy-dolne-autor" data-action="click">
+                                            <img src="/uploads/9387/conversions/square.jpg" alt="Jaroslav Dani&scaron;ka">          </a>
+                                        <div class="title">
+                                            <a class="author" href="https://www.postoj.sk/autor/jaroslav-daniska"> <span>Jaroslav Dani&scaron;ka</span> </a>
+                                            <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2519">
+                                                <span>Ako ir&aacute;nsky politik zabil svoju ženu</span> </a>
+                                        </div>
+                                    </div>
+                                    <small class="hidden-kd-mobile">• pred 2 d</small>
                                 </header>
-                                <div class="perex">
-                                    <p>Organiz&aacute;tori Bratislavsk&yacute;ch Hanusov&yacute;ch dn&iacute; upozorňuj&uacute;, že hoci podľa inform&aacute;ci&iacute; na&nbsp;port&aacute;li&nbsp;ticketmedia&nbsp;s&uacute; niektor&eacute; akcie festivalu už vypredan&eacute;, neznamen&aacute; to, že sa na...
+                                <div class="perex hidden-kd-mobile">
+                                    <p>Tento pr&iacute;beh sa vymyk&aacute; v&scaron;etk&eacute;mu, v Ir&aacute;ne, kde k nemu do&scaron;lo, vyvolal &scaron;ok a vlnu kon&scaron;pir&aacute;ci&iacute;. Mohammad Ali Najafi (na...
                                 </div>
-
-
-                            </article>
-                            <div style="display: none;">
-                                <div class="kd-qtip-arrow"></div>
-                                <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
-                                    <header class="clearfix">
-                                        <div class="header-text" style=" margin-left:0px; ">
-                                            <div class="author-name">Pavol R&aacute;bara</div><small style="margin-left: 5px;">• pred 4 d</small>
-                                        </div>
-                                    </header>
-
-                                    <div class="article-social-buttons">
-                                        <div class="social-btn">
-                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2476" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
-                                            </div>
-                                        </div>
-                                        <div class="social-btn">
-                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2476"  data-text="BHD nie s&uacute; &uacute;plne vypredan&eacute;"  class="twitter-share-button">Tweet</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="article-text">
-                                        <p>Organiz&aacute;tori Bratislavsk&yacute;ch Hanusov&yacute;ch dn&iacute; upozorňuj&uacute;, že hoci podľa inform&aacute;ci&iacute; na&nbsp;port&aacute;li&nbsp;ticketmedia&nbsp;s&uacute; niektor&eacute; akcie festivalu už vypredan&eacute;, neznamen&aacute; to, že sa na diskusiu či predn&aacute;&scaron;ku nedostanete.&nbsp;&nbsp;</p>    <p>Ist&yacute; počet l&iacute;stkov totiž držia pre majiteľov permanentiek, ale iba do 15 min&uacute;t pred začat&iacute;m akcie. Je preto veľk&aacute; &scaron;anca, že aj na ofici&aacute;lne vypredan&yacute;ch eventoch n&aacute;jdete miesto. Stač&iacute; pr&iacute;sť aspoň &scaron;tvrťhodinu&nbsp;pred ich začat&iacute;m a&nbsp;sp&yacute;tať sa organiz&aacute;torov.&nbsp;</p>    <p>Do konca BHD <a href="https://www.hanusovedni.sk/program/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">zost&aacute;va</a> e&scaron;te viacero zauj&iacute;mav&yacute;ch deb&aacute;t, dnes vyst&uacute;pi napr&iacute;klad oxfordsk&yacute; profesor John Finnis a americk&yacute; publicita a spisovateľ Rod Dreher (na sn&iacute;mke Postoja).&nbsp;</p>
-                                    </div>
-
-                                    <div class="article-image">
-                                        <img src="https://www.postoj.sk/uploads/18867/conversions/cover.jpg">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <article class="short-news-item  with-img     track-me-pls  "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="5"  data-href="https://www.postoj.sk/shortnews/2475" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2475">
-                                <div class="image-wrap">
-                                    <img src="https://www.postoj.sk/uploads/18821/conversions/cover.jpg">
-                                </div>
-                                <header>
-                                    <h3 class="author-link"><a href="https://www.postoj.sk/autor/jaroslav-daniska" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Jaroslav Dani&scaron;ka</a></h3>
-                                    <small>• pred 6 d</small>
-                                </header>
-                                <div class="perex">
-                                    <p>Mysl&iacute;m, že Williamovi F. Buckleymu (na obr.) by sa ten n&aacute;pad ohromne p&aacute;čil: Na univerzite Yale vznikla Buckleyho spoločnosť, ktor&aacute;...
+                                <div class="perex show-kd-mobile">
+                                    <p>Tento pr&iacute;beh sa vymyk&aacute; v&scaron;etk&eacute;mu, v Ir&aacute;ne, kde k nemu do&scaron;lo, vyvolal &scaron;ok a vlnu kon&scaron;pir&aacute;ci&iacute;. Mohammad Ali Najafi (na obr. vpravo), ročn&iacute;k 1952, je &scaron;pičkov&yacute; ir&aacute;nsky matematik, absolvent MIT v Amerike, PhD &scaron;t&uacute;dium preru&scaron;il...
                                 </div>
 
 
@@ -2320,44 +2332,58 @@
                                 <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                     <header class="clearfix">
                                         <div class="image-wrap show">
-                                            <img src="https://www.postoj.sk/uploads/9387/conversions/profile.jpg" alt="Jaroslav Dani&scaron;ka">
+                                            <img src="/uploads/9387/conversions/profile.jpg" alt="Jaroslav Dani&scaron;ka">
                                         </div>
                                         <div class="header-text" style="">
-                                            <div class="author-name">Jaroslav Dani&scaron;ka</div><small style="margin-left: 5px;">• pred 6 d</small>
+                                            <div class="author-name">Jaroslav Dani&scaron;ka</div><small style="margin-left: 5px;">• pred 2 d</small>
                                         </div>
                                     </header>
 
                                     <div class="article-social-buttons">
                                         <div class="social-btn">
-                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2475" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2519" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                             </div>
                                         </div>
                                         <div class="social-btn">
-                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2475"  data-text="Klub vyp&iacute;skan&yacute;ch &bdquo;fa&scaron;istov&ldquo;"  class="twitter-share-button">Tweet</a>
+                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2519"  data-text="Ako ir&aacute;nsky politik zabil svoju ženu"  class="twitter-share-button">Tweet</a>
                                         </div>
                                     </div>
 
                                     <div class="article-text">
-                                        <p>Mysl&iacute;m, že Williamovi F. Buckleymu (na obr.) by sa ten n&aacute;pad ohromne p&aacute;čil: Na univerzite Yale vznikla Buckleyho spoločnosť, ktor&aacute; poz&yacute;va na vyst&uacute;penia host&iacute;, ktor&yacute;ch univerzitn&iacute; &scaron;tudenti vyp&iacute;skali, pokrikovali na nich, že s&uacute; fa&scaron;isti či nacisti, pritom na to nebol žiadny d&ocirc;vod.</p>    <p>Port&aacute;l časopisu National Review, ktor&yacute; Buckeley založil a dlh&eacute; desaťročia viedol, <a href="https://www.nationalreview.com/2019/04/henry-kissinger-shouted-down-at-nyu-addresses-yales-wfb-society/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">priniesol</a> naposledy čl&aacute;nok o vyp&iacute;skanom Henrym Kissingerovi, 95-ročnom p&ocirc;vodom nemeckom Židovi, ktor&eacute;mu tiež univerzitn&iacute; nevzdelanci nad&aacute;vali do nacistov a fa&scaron;istov. Pritom Kissiger proti nacistom s&aacute;m bojoval, jeho rodina z Nemecka predt&yacute;m u&scaron;la. Buckleyho spoločnosť ho pozvala medzi seba, je to vyberan&aacute; spoločnosť, ako dokazuj&uacute; aj ďal&scaron;ie men&aacute;: George Will, Charles Murray, Raymond Kelly či Peter Thiel. Ver&iacute;m, že pozv&aacute;nku m&aacute; na ceste aj Ryszard Legutko. Viac o tejto spoločnosti n&aacute;jdete na <a href="https://www.buckleyprogram.com/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">ich webovej str&aacute;nke</a>, dodal by som, že tento vtipn&yacute; a origin&aacute;lny pokus p&iacute;&scaron;e posmrtne posledn&uacute; kapitolu k Buckleyho knižke God and Man at Yale.</p>    <p><em>Foto: YouTube.com</em></p>
+                                        <p>Tento pr&iacute;beh sa vymyk&aacute; v&scaron;etk&eacute;mu, v Ir&aacute;ne, kde k nemu do&scaron;lo, vyvolal &scaron;ok a vlnu kon&scaron;pir&aacute;ci&iacute;. Mohammad Ali Najafi (na obr. vpravo), ročn&iacute;k 1952, je &scaron;pičkov&yacute; ir&aacute;nsky matematik, absolvent MIT v Amerike, PhD &scaron;t&uacute;dium preru&scaron;il a nedokončil kv&ocirc;li tomu, že sa po vypuknut&iacute; ir&aacute;nskej revol&uacute;cie vr&aacute;til domov.&nbsp;</p>    <p>Doma sa mu darilo, <a href="https://en.wikipedia.org/wiki/Mohammad-Ali_Najafi" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">zast&aacute;val vysok&eacute; poz&iacute;cie</a> v akademickej sf&eacute;re, viedol techno-in&scaron;tit&uacute;t, univerzitu, opakovane bol ministrom alebo vysok&yacute;m &uacute;radn&iacute;kom či poradcom vo vl&aacute;dach s reformn&yacute;m premi&eacute;rom. Bol napr&iacute;klad ministrom &scaron;kolstva, ministrom vedy a napokon v rokoch 2017-2018 prim&aacute;torom Teher&aacute;nu. &nbsp;</p>    <p>Pred dvomi rokmi ho oslovila v&yacute;razne mlad&scaron;ia herečka&nbsp;Mitra Ostadov&aacute; (na obr. vľavo), ktor&aacute; chcela kandidovať do zastupiteľstva, Ali Najafi ju podporil, ale ona neuspela. Minul&yacute; rok sa v&scaron;ak zosob&aacute;&scaron;ili, kr&aacute;tko predt&yacute;m sa rozviedol so svojou ženou, čo bol prv&yacute; &scaron;ok, keďže ir&aacute;nska spoločnosť a vl&aacute;dnuci klerici s&uacute; k tak&yacute;mto veciam kritick&iacute;. V tom istom roku Ali Najafi odst&uacute;pil z postu prim&aacute;tora Teher&aacute;nu, kde mal blokovať niektor&eacute; developersk&eacute; projekty napojen&eacute; na tvrd&scaron;iu l&iacute;niu ir&aacute;nskych politikov. D&ocirc;vodom jeho odst&uacute;penia bolo pre niektor&yacute;ch jeho zdravie, pre in&yacute;ch video, kde mal byť &uacute;častn&yacute; na večierku s tancuj&uacute;cimi ženami.</p>    <p>&Scaron;ok pri&scaron;iel na konci minul&eacute;ho t&yacute;ždňa: Ali Najafi doma zastrelil svoju ženu Mitru, mala 35 rokov.&nbsp;</p>    <p>K vražde sa priznal, pr&aacute;vnici tvrdia, že nebola pl&aacute;novan&aacute;, že bol popuden&yacute; t&yacute;m, čo si preč&iacute;tal na jej Whatsuppe, keď sa sprchovala, zobral pi&scaron;toľ, pri&scaron;iel do k&uacute;peľne, ona na neho skočila a do&scaron;lo k tragickej nehode. Pol&iacute;cia hovor&iacute; o dvoch v&yacute;streloch a dvoch poraneniach, Mitra Ostadov&aacute; bola na mieste mŕtva.</p>    <p>Ali Najafi najsk&ocirc;r z miesta činu u&scaron;iel, cestoval 300 km na hrob svojho otca, potom i&scaron;iel na pol&iacute;ciu a k činu sa priznal. Za d&ocirc;vod popudlivej akcie označil to, že jeho žena mala kontakt s tajn&yacute;mi službami. Minister pre tajn&eacute; služby to poprel. Ali Najafi je moment&aacute;lne zadržan&yacute; a čak&aacute; na vznesenie obvinenia, matka Mitry Ostadovej žiada trest smrti.</p>    <p>Podľa <a href="https://www.ft.com/content/fdf51926-82a5-11e9-9935-ad75bb96c849" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">čl&aacute;nku denn&iacute;ka Financial Times</a> mal byť Ali Najafi bud&uacute;cim kandid&aacute;tom na &uacute;rad ir&aacute;nskeho prezidenta, FT tiež opisuje vlnu kon&scaron;piračn&yacute;ch te&oacute;ri&iacute;, ktor&eacute;&nbsp;za vraždou vidia pascu proti nemu, Ali Najafi podľa nich nevystupuje ako vrah, do&scaron;lo totiž k ďal&scaron;ej netradičnej veci &ndash;&nbsp;Najafi verejne vyst&uacute;pil v telev&iacute;zii, po vražde, kde sa k činu priznal. Jeho obhajcovia vidia v tejto vražde dve obete, tak či onak, mimoriadne z&uacute;fal&yacute; obraz s&uacute;časn&eacute;ho Ir&aacute;nu.</p>    <p>Na YouTube n&aacute;jdete viacero vide&iacute;, ktor&eacute; sa t&eacute;me venuj&uacute;, <a href="https://www.youtube.com/watch?v=4jK1dI06mSg" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">uk&aacute;žka napr. tu</a>.&nbsp;</p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-dolne-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>
                                     </div>
 
                                     <div class="article-image">
-                                        <img src="https://www.postoj.sk/uploads/18821/conversions/cover.jpg">
+                                        <img src="/uploads/20031/conversions/cover.jpg">
                                     </div>
                                 </div>
                             </div>
 
 
-                            <article class="short-news-item  with-img     track-me-pls  "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="6"  data-href="https://www.postoj.sk/shortnews/2474" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2474">
-                                <div class="image-wrap">
-                                    <img src="https://www.postoj.sk/uploads/18807/conversions/cover.jpg">
+                            <article class="short-news-item  with-img     track-me-pls  "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="5"  data-href="https://www.postoj.sk/shortnews/2518" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2518">
+                                <time datetime="2019-06-01 17:55:01">
+                                </time>
+                                <div class="image-wrap hidden-kd-mobile">
+                                    <img src="/uploads/19999/conversions/cover.jpg">
                                 </div>
-                                <header>
-                                    <h3 class="author-link"><a href="https://www.postoj.sk/autor/jaroslav-daniska" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Jaroslav Dani&scaron;ka</a></h3>
-                                    <small>• pred 6 d</small>
+                                <header class="clearfix">
+                                    <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/jan-duda-1" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">J&aacute;n Duda</a></h3>
+                                    <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                        <a class="author-img" href="https://www.postoj.sk/autor/jan-duda-1" data-category="home_kratke-spravy-dolne-autor" data-action="click">
+                                            <img src="/uploads/1885/conversions/square.jpg" alt="J&aacute;n Duda">          </a>
+                                        <div class="title">
+                                            <a class="author" href="https://www.postoj.sk/autor/jan-duda-1"> <span>J&aacute;n Duda</span> </a>
+                                            <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2518">
+                                                <span>Jednota medzi človekom a Bohom</span> </a>
+                                        </div>
+                                    </div>
+                                    <small class="hidden-kd-mobile">• pred 4 d</small>
                                 </header>
-                                <div class="perex">
-                                    <p>Lidov&eacute; noviny <a href="https://www.lidovenoviny.cz/nahled.aspx?d=27.04.2019&amp;e=LN-PRAHA&amp;id=8245505" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">priniesli</a> zauj&iacute;mav&yacute; text o proteste umelca Domenica Esposita z Bostonu, ktor&yacute; minul&yacute; rok pred...
+                                <div class="perex hidden-kd-mobile">
+                                    <p>Evanjelium siedmej veľkonočnej nedele (2. 6. 2019) patr&iacute; k Ježi&scaron;ovej rozl&uacute;čkovej reči (Jn 17,20-26). Ježi&scaron; ju povedal e&scaron;te pred svoj&iacute;m...
+                                </div>
+                                <div class="perex show-kd-mobile">
+                                    <p>Evanjelium siedmej veľkonočnej nedele (2. 6. 2019) patr&iacute; k Ježi&scaron;ovej rozl&uacute;čkovej reči (Jn 17,20-26). Ježi&scaron; ju povedal e&scaron;te pred svoj&iacute;m utrpen&iacute;m a smrťou, liturgia n&aacute;m text predklad&aacute; v nedeľu pred sviatkom Zoslania Ducha Sv&auml;t&eacute;ho. Ježi&scaron;...
                                 </div>
 
 
@@ -2367,29 +2393,90 @@
                                 <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
                                     <header class="clearfix">
                                         <div class="image-wrap show">
-                                            <img src="https://www.postoj.sk/uploads/9387/conversions/profile.jpg" alt="Jaroslav Dani&scaron;ka">
+                                            <img src="/uploads/1885/conversions/profile.jpg" alt="J&aacute;n Duda">
                                         </div>
                                         <div class="header-text" style="">
-                                            <div class="author-name">Jaroslav Dani&scaron;ka</div><small style="margin-left: 5px;">• pred 6 d</small>
+                                            <div class="author-name">J&aacute;n Duda</div><small style="margin-left: 5px;">• pred 4 d</small>
                                         </div>
                                     </header>
 
                                     <div class="article-social-buttons">
                                         <div class="social-btn">
-                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2474" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2518" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
                                             </div>
                                         </div>
                                         <div class="social-btn">
-                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2474"  data-text="Lyžička ako protest"  class="twitter-share-button">Tweet</a>
+                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2518"  data-text="Jednota medzi človekom a Bohom"  class="twitter-share-button">Tweet</a>
                                         </div>
                                     </div>
 
                                     <div class="article-text">
-                                        <p>Lidov&eacute; noviny <a href="https://www.lidovenoviny.cz/nahled.aspx?d=27.04.2019&amp;e=LN-PRAHA&amp;id=8245505" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">priniesli</a> zauj&iacute;mav&yacute; text o proteste umelca Domenica Esposita z Bostonu, ktor&yacute; minul&yacute; rok pred s&iacute;dlom farmaceutickej firmy Purdue Pharma in&scaron;taloval 360-kilogramov&uacute; hlin&iacute;kov&uacute; lyžičku, ktor&aacute; m&aacute; evokovať lyžičku, ak&uacute; použ&iacute;vaj&uacute; narkomani na pr&iacute;pravu heroinu.</p>    <p>Vo febru&aacute;ri tohto roku na Rhode Islande tento protest zopakoval pred s&iacute;dlom ďal&scaron;ej farmafirmy Rhodes Pharmaceuticals, ktor&aacute; zar&aacute;ba na predaji upokojuj&uacute;cich&nbsp;liekov, ktor&eacute; s&uacute; sp&aacute;jan&eacute; s vypuknut&iacute;m opi&aacute;tovej epid&eacute;mie v Amerike. Esposito sa angažuje aj kv&ocirc;li tomu, že jeho brat Danny, ktor&eacute;mu boli po &uacute;raze predp&iacute;san&eacute; upokojuj&uacute;ce lieky s n&aacute;zvom OxyContin, ktor&eacute; nemali vytv&aacute;rať z&aacute;vilosť, boli, naopak, prudko n&aacute;vykov&eacute;&nbsp;a množstvo ich už&iacute;vateľov (podobne ako jeho brat) z nich pre&scaron;li na hero&iacute;n, čo pre jeho brata a mnoh&yacute;ch ďal&scaron;&iacute;ch znamenalo smrť.</p>    <p>V USA zomrie podľa Lidov&yacute;ch nov&iacute;n denne na pred&aacute;vkovanie opi&aacute;tmi 130 ľud&iacute;, čo je viac, ako je počet obet&iacute; sp&aacute;jan&yacute;ch s voľnou držbou streľn&yacute;ch zbran&iacute; (108 denne). Umelec sa tak&yacute;mito protestami <a href="https://www.stamfordadvocate.com/business/article/Purdue-Pharma-spoon-sculpture-protest-reprised-in-13598545.php" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">snaž&iacute; upozorniť</a> na to, že prebiehaj&uacute;ce s&uacute;dy proti firm&aacute;m, ako je t&aacute;, ktor&aacute; patr&iacute; rodine Sacklerov&yacute;ch, nie s&uacute; efekt&iacute;vne, že super-bohat&eacute; firmy st&aacute;le ne&uacute;merne zar&aacute;baj&uacute; miliardy dol&aacute;rov a obete prib&uacute;daj&uacute;, že pr&aacute;vna situ&aacute;cia st&aacute;le nahr&aacute;va pred&aacute;torom a nechr&aacute;ni obete. A to aj napriek tomu, že napr. na rodinu Sacklerov&yacute;ch je podan&yacute;ch vy&scaron;e 1 600 žal&ocirc;b a koncom marca prehrali s&uacute;d, ktor&yacute; im k&aacute;že zaplatiť 240 mil. eur ako od&scaron;kodn&eacute; rodin&aacute;m obet&iacute;.</p>    <p>Protestu sa venuje aj <a href="http://www.theopioidspoonproject.com/press/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">&scaron;pecializovan&aacute; webstr&aacute;nka</a>.</p>    <p><em>Foto: YouTube</em></p>
+                                        <p>Evanjelium siedmej veľkonočnej nedele (2. 6. 2019) patr&iacute; k Ježi&scaron;ovej rozl&uacute;čkovej reči (Jn 17,20-26). Ježi&scaron; ju povedal e&scaron;te pred svoj&iacute;m utrpen&iacute;m a smrťou, liturgia n&aacute;m text predklad&aacute; v nedeľu pred sviatkom Zoslania Ducha Sv&auml;t&eacute;ho. Ježi&scaron; pros&iacute; o tak&uacute; jednotu medzi veriacimi, ak&aacute; existuje medzi n&iacute;m a jeho Otcom, ba pros&iacute; o jednotu medzi ľuďmi a Bohom!</p>    <p>(1) Jednotu medzi človekom a Bohom pripom&iacute;na nedeľn&eacute; prv&eacute; č&iacute;tanie. &Scaron;tefan, pln&yacute; Ducha Sv&auml;t&eacute;ho, videl otvoren&eacute; nebo a Syna človeka st&aacute;ť po pravici Boha (Sk 7,55). T&uacute;to mystick&uacute; jednotu s Bohom zažil v kľ&uacute;čovom momente svojho života: v momente svojej mučen&iacute;ckej smrti. Prečo dne&scaron;n&yacute; svet tak m&aacute;lo in&scaron;piruj&uacute; mučen&iacute;ci, ľudia mor&aacute;lne čist&iacute;? &bdquo;Ľud, ktor&yacute; zabudol na svojich hrdinov, je mŕtvym ľudom. Cirkev, ktor&aacute; zab&uacute;da na svojich hrdinov, je nemocnou.&ldquo; (R. Laurentin, s. 213)</p>    <p>(2) Ježi&scaron; hovor&iacute; o l&aacute;ske svojho Otca pr&iacute;tomnej v n&aacute;s (Jn 17,26), Skutky apo&scaron;tolov hovoria, že &bdquo;&Scaron;tefan bol pln&yacute; Ducha Sv&auml;t&eacute;ho&ldquo; (Sk 7,55). Každ&aacute; inform&aacute;cia o Duchu Sv&auml;tom nie je postačuj&uacute;cou. Ale možno to trochu objasniť pr&iacute;kladom. Muž a žena, ktor&iacute; vst&uacute;pia do manželstva, nikdy nebud&uacute; mať dostatok inform&aacute;ci&iacute; jeden o druhom. Taktiež nikdy nebud&uacute; mať primeran&eacute; prirodzen&eacute; kvality, ktor&eacute; by potrebovali pre v&yacute;chovu svojich det&iacute;. Ale v konečnom d&ocirc;sledku, je to l&aacute;ska muža a ženy, otca a matky, ktor&aacute; najviac formuje hodnoty a vlastnosti v ich deťoch (Laurentin, s. 10).</p>    <p>Požehnan&uacute; veľkonočn&uacute; nedeľu prajem v&scaron;etk&yacute;m.</p>    <p>J&aacute;n Duda</p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-dolne-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>    <p><em>Na sn&iacute;mke: Bernardo Daddi &ndash; Umučenie sv. &Scaron;tefana (freska, 1324), kostol Santa Croce, Florencia.</em></p>
                                     </div>
 
                                     <div class="article-image">
-                                        <img src="https://www.postoj.sk/uploads/18807/conversions/cover.jpg">
+                                        <img src="/uploads/19999/conversions/cover.jpg">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <article class="short-news-item  with-img     track-me-pls  "  data-category="home_kratke-spravy-dolne-hover" data-action="mouseover" data-label="position" data-value="6"  data-href="https://www.postoj.sk/shortnews/2517" data-real-href="https://www.postoj.sk/kratke-spravy-redakcie/2517">
+                                <time datetime="2019-06-01 13:10:36">
+                                </time>
+                                <div class="image-wrap hidden-kd-mobile">
+                                    <img src="/uploads/19990/conversions/cover.jpg">
+                                </div>
+                                <header class="clearfix">
+                                    <h3 class="author-link hidden-kd-mobile"><a href="https://www.postoj.sk/autor/lukas-obsitnik" class="track-me-pls" data-category="home_kratke-spravy-dolne-autor" data-action="click">Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</a></h3>
+                                    <div class="avatar avatar--show-kd-mobile show-kd-mobile">
+                                        <a class="author-img" href="https://www.postoj.sk/autor/lukas-obsitnik" data-category="home_kratke-spravy-dolne-autor" data-action="click">
+                                            <img src="/uploads/9304/conversions/square.jpg" alt="Luk&aacute;&scaron; Ob&scaron;itn&iacute;k">          </a>
+                                        <div class="title">
+                                            <a class="author" href="https://www.postoj.sk/autor/lukas-obsitnik"> <span>Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</span> </a>
+                                            <a class="article-title" href="https://www.postoj.sk/kratke-spravy-redakcie/2517">
+                                                <span>Louisiana je už &ocirc;smym &scaron;t&aacute;tom USA, kde pro-life z&aacute;kon o bit&iacute; srdca podp&iacute;sal guvern&eacute;r</span> </a>
+                                        </div>
+                                    </div>
+                                    <small class="hidden-kd-mobile">• pred 4 d</small>
+                                </header>
+                                <div class="perex hidden-kd-mobile">
+                                    <p>Guvern&eacute;r americk&eacute;ho &scaron;t&aacute;tu&nbsp;Louisiana John Bel Edwards <a href="https://www.lifenews.com/2019/05/30/louisiana-gov-john-bel-edwards-signs-banning-abortions-when-unborn-babys-heartbeat-begins/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">podp&iacute;sal</a> z&aacute;kon na ochranu života nenaroden&yacute;ch det&iacute;, ktor&yacute; predt&yacute;m <a...
+                                </div>
+                                <div class="perex show-kd-mobile">
+                                    <p>Guvern&eacute;r americk&eacute;ho &scaron;t&aacute;tu&nbsp;Louisiana John Bel Edwards <a href="https://www.lifenews.com/2019/05/30/louisiana-gov-john-bel-edwards-signs-banning-abortions-when-unborn-babys-heartbeat-begins/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">podp&iacute;sal</a> z&aacute;kon na ochranu života nenaroden&yacute;ch det&iacute;, ktor&yacute; predt&yacute;m <a href="https://www.postoj.sk/43961/v-louisiane-schvalili-prisny-zakaz-interrupcii-od-6-tyzdna" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">schv&aacute;lil</a> louisiansk&yacute; parlament. Z&aacute;kon zakazuje vykonanie potratu po tom, čo je plodu diagnostikovan&eacute;...
+                                </div>
+
+
+                            </article>
+                            <div style="display: none;">
+                                <div class="kd-qtip-arrow"></div>
+                                <div style="overflow-x:hidden; overflow-y:auto; max-height:490px;">
+                                    <header class="clearfix">
+                                        <div class="image-wrap show">
+                                            <img src="/uploads/9304/conversions/profile.jpg" alt="Luk&aacute;&scaron; Ob&scaron;itn&iacute;k">
+                                        </div>
+                                        <div class="header-text" style="">
+                                            <div class="author-name">Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</div><small style="margin-left: 5px;">• pred 4 d</small>
+                                        </div>
+                                    </header>
+
+                                    <div class="article-social-buttons">
+                                        <div class="social-btn">
+                                            <div class="fb-like" data-href="https://www.postoj.sk/kratke-spravy-redakcie/2517" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true">
+                                            </div>
+                                        </div>
+                                        <div class="social-btn">
+                                            <a href="https://twitter.com/intent/tweet?url=https://www.postoj.sk/kratke-spravy-redakcie/2517"  data-text="Louisiana je už &ocirc;smym &scaron;t&aacute;tom USA, kde pro-life z&aacute;kon o bit&iacute; srdca podp&iacute;sal guvern&eacute;r"  class="twitter-share-button">Tweet</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="article-text">
+                                        <p>Guvern&eacute;r americk&eacute;ho &scaron;t&aacute;tu&nbsp;Louisiana John Bel Edwards <a href="https://www.lifenews.com/2019/05/30/louisiana-gov-john-bel-edwards-signs-banning-abortions-when-unborn-babys-heartbeat-begins/" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">podp&iacute;sal</a> z&aacute;kon na ochranu života nenaroden&yacute;ch det&iacute;, ktor&yacute; predt&yacute;m <a href="https://www.postoj.sk/43961/v-louisiane-schvalili-prisny-zakaz-interrupcii-od-6-tyzdna" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">schv&aacute;lil</a> louisiansk&yacute; parlament. Z&aacute;kon zakazuje vykonanie potratu po tom, čo je plodu diagnostikovan&eacute; bitie srdca (približne &scaron;iesty t&yacute;ždeň&nbsp;tehotenstva), umožňuje ho len v pr&iacute;pade ohrozenia života matky.</p>    <p>Z&aacute;kon predt&yacute;m <a href="http://www.legis.la.gov/legis/BillInfo.aspx?s=19RS&amp;b=SB184&amp;sbi=y" target="_blank" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">schv&aacute;lil</a>&nbsp;louisiansk&yacute; Sen&aacute;t s v&yacute;raznou v&auml;č&scaron;inou v pomere hlasov 31 k 5 a podobne&nbsp;Snemovňa reprezentantov v pomere 79 k 23. Zauj&iacute;mav&eacute; je, že ho podp&iacute;sal guvern&eacute;r Edwards, ktor&yacute; je jedn&yacute;m z m&aacute;la pro-life demokratov. Pri podpise povedal: &bdquo;Uvedomujem si, že vec&nbsp;potratov mnoho ľud&iacute; vn&iacute;ma veľmi z&aacute;sadne a že so mnou nes&uacute;hlasia &ndash; a ja ich n&aacute;zory re&scaron;pektujem. O&nbsp;&uacute;rad guvern&eacute;ra som sa uch&aacute;dzal ako pro-life kandid&aacute;t po &ocirc;smich rokoch svojho p&ocirc;sobenia ako pro-life z&aacute;konodarca. Ako guvern&eacute;r si stoj&iacute;m za svoj&iacute;m slovom a presvedčen&iacute;m. Ale tiež &uacute;primne ver&iacute;m v to, že byť pro-life znamen&aacute; viac než len &sbquo;pro-narodenie&lsquo;. Moja vl&aacute;da za posledn&eacute; tri roky prijala rad opatren&iacute; pre to, aby mohli byť mnoh&eacute; deti prijat&eacute; do n&aacute;&scaron;ho syst&eacute;mu pest&uacute;nskej starostlivosti.&ldquo;</p>    <p>Z&aacute;kon&nbsp;v Louisiane vst&uacute;pi do platnosti, ak podobn&eacute; ustanovenie v susednom Mississippi uspeje pred odvolac&iacute;m s&uacute;dom, keďže mu dočasne pozastavil platnosť feder&aacute;lny sudca.</p>    <p>Louisiana sa tak stala &ocirc;smym americk&yacute;m &scaron;t&aacute;tom, v ktorom z&aacute;konodarn&yacute; zbor schv&aacute;lil tzv. <a href="https://www.postoj.sk/42381/zakony-o-biti-srdca-nenarodenych-prijme-mozno-az-10-statov-usa" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">z&aacute;kon o bit&iacute; srdca</a>&nbsp;a s&uacute;časne ho podp&iacute;sal aj guvern&eacute;r. V minulom obdob&iacute; tak&yacute; z&aacute;kon schv&aacute;lili &scaron;t&aacute;ty Arkansas, Severn&aacute; Dakota, Iowa, Kentucky, Mississippi, Ohio a&nbsp;Georgia. Jeho schv&aacute;lenie je na dobrej ceste aj vo viacer&yacute;ch ďal&scaron;&iacute;ch &scaron;t&aacute;toch. Podobn&yacute; pro-life z&aacute;kon (neviažuci sa na bitie srdca) pred p&aacute;r t&yacute;ždňami schv&aacute;lili aj <a href="https://www.postoj.sk/43632/cim-prolife-zakon-v-alabame-je-a-cim-nie-je" class="track-me-pls" data-category="home_kratke-spravy-dolne-exit-link">v Alabame</a>.</p>    <p>Vzhľadom na platn&eacute; rozhodnutie Najvy&scaron;&scaron;ieho s&uacute;du USA z roku 1973 v pr&iacute;pade Roe vs. Wade tak&aacute;to legislat&iacute;va konč&iacute; na s&uacute;doch.&nbsp;Očak&aacute;va sa v&scaron;ak, že sa &scaron;t&aacute;ty odvolaj&uacute; a pr&iacute;pad op&auml;tovne presk&uacute;ma Najvy&scaron;&scaron;&iacute; s&uacute;d, ktor&yacute; m&ocirc;že svoje predo&scaron;l&eacute; stanovisko teraz opraviť.</p>    <p><em>Foto: Mapa &scaron;t&aacute;tov s pro-life legislat&iacute;vou &bdquo;o bit&iacute; srdca&ldquo;: ikona srdca: &scaron;t&aacute;ty, kde bol z&aacute;kon schv&aacute;len&yacute; oboma komorami parlamentu a podp&iacute;san&yacute; guvern&eacute;rom, modr&aacute; farba: z&aacute;kon schv&aacute;lili obe komory parlamentu, zelen&aacute;: z&aacute;kon pre&scaron;iel jednou komorou parlamentu v roku 2019, červen&aacute;: z&aacute;kon bol v roku 2019 uveden&yacute; v parlamente, ružov&aacute;: z&aacute;kon bol uveden&yacute; v parlamente v predo&scaron;l&yacute;ch rokoch a v s&uacute;časnosti sa v ňom nekon&aacute;. Stav k 30. m&aacute;ju 2019.&nbsp;Zdroj: Population Research&nbsp;Institute (pop.org)</em></p>    <p><em>Ďakujeme, že č&iacute;tate Postoj. P&iacute;&scaron;eme vďaka darom od na&scaron;ich čitateľov, ľud&iacute;, ako ste vy.&nbsp;<strong><u><a data-category="home_kratke-spravy-dolne-exit-link" href="https://podpora.postoj.sk/nova-kampan?utm_source=postoj&amp;utm_medium=kratka_sprava&amp;utm_campaign=na_zaciatku" target="_blank" class="track-me-pls">Podporte n&aacute;s, pros&iacute;me</a>.</u></strong></em></p>
+                                    </div>
+
+                                    <div class="article-image">
+                                        <img src="/uploads/19990/conversions/cover.jpg">
                                     </div>
                                 </div>
                             </div>
@@ -2466,17 +2553,17 @@
                                         <div class="blog-about pull-left">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43113/s-biblickymi-jazykmi-blizsie-k-boziemu-slovu">S biblick&yacute;mi jazykmi bliž&scaron;ie k Božiemu slovu</a>
+                                                    <a href="https://www.postoj.sk/44169/pisanie-v-kryte">P&iacute;sanie v kryte</a>
                                                 </h3>
                                             </header>
 
 
                                             <footer>
                                                 <h3 class="author-link">
-                                                    <a href="https://www.postoj.sk/autor/centrum-pre-studium-biblickeho-a-blizkovychodneho-sveta-centrum-pre-studium-biblickeho-a-blizkovychodneho-sveta" class="avatar avatar-little">
-                                                        <img src="https://www.postoj.sk/uploads/11870/conversions/square.jpg" alt="Centrum pre &scaron;t&uacute;dium biblick&eacute;ho a bl&iacute;zkov&yacute;chodn&eacute;ho sveta">
+                                                    <a href="https://www.postoj.sk/autor/dominika-marusakova" class="avatar avatar-little">
+                                                        <img src="/uploads/20054/conversions/square.jpg" alt="Dominika Maru&scaron;akov&aacute;">
 
-                                                        <span class="author-name">Centrum pre &scaron;t&uacute;dium biblick&eacute;ho a bl&iacute;zkov&yacute;chodn&eacute;ho sveta</span>
+                                                        <span class="author-name">Dominika Maru&scaron;akov&aacute;</span>
                                                     </a>
                                                 </h3>
                                             </footer>
@@ -2495,17 +2582,17 @@
                                         <div class="blog-about pull-left">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43132/glosa-na-zamyslenie">Glosa na zamyslenie...</a>
+                                                    <a href="https://www.postoj.sk/44172/zomierajuce-dedicstvo-svateho-bonifaca">Zomieraj&uacute;ce dedičstvo sv&auml;t&eacute;ho Bonif&aacute;ca</a>
                                                 </h3>
                                             </header>
 
 
                                             <footer>
                                                 <h3 class="author-link">
-                                                    <a href="https://www.postoj.sk/autor/robert-dick" class="avatar avatar-little">
-                                                        <img src="https://www.postoj.sk/uploads/16154/conversions/square.jpg" alt="Robert Dick">
+                                                    <a href="https://www.postoj.sk/autor/gabriel-huncaga-1" class="avatar avatar-little">
+                                                        <img src="/uploads/6526/conversions/square.jpg" alt="Gabriel Hunčaga">
 
-                                                        <span class="author-name">Robert Dick</span>
+                                                        <span class="author-name">Gabriel Hunčaga</span>
                                                     </a>
                                                 </h3>
                                             </footer>
@@ -2524,17 +2611,17 @@
                                         <div class="blog-about pull-left">
                                             <header>
                                                 <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43130/spomienky-zo-zivota-mamy-marty-babalovej-23-4-2019">Spomienky zo života mamy Marty Bab&aacute;lovej&nbsp;(&dagger; 23. 4. 2019)</a>
+                                                    <a href="https://www.postoj.sk/44170/po-vyjadreniach-hlinu-sa-kardinal-sarah-prihovara-mlciacim-clenom-kdh">Po vyjadreniach Hlinu sa kardin&aacute;l Sarah prihov&aacute;ra mlčiacim členom KDH</a>
                                                 </h3>
                                             </header>
 
 
                                             <footer>
                                                 <h3 class="author-link">
-                                                    <a href="https://www.postoj.sk/autor/kolektiv-autorov-deti-a-vnucata-marty-babalovej-kolektiv-autorov-deti-a-vnucata-marty-babalovej" class="avatar avatar-little">
-                                                        <img src="https://www.postoj.sk/uploads/19020/conversions/square.jpg" alt="Deti a vn&uacute;čat&aacute; Marty Bab&aacute;lovej">
+                                                    <a href="https://www.postoj.sk/autor/ferdinand-turinic" class="avatar avatar-little">
+                                                        <img src="/uploads/11874/conversions/square.jpg" alt="Ferdinand Turinič">
 
-                                                        <span class="author-name">Deti a vn&uacute;čat&aacute; Marty Bab&aacute;lovej</span>
+                                                        <span class="author-name">Ferdinand Turinič</span>
                                                     </a>
                                                 </h3>
                                             </footer>
@@ -2556,13 +2643,13 @@
                                                 <header>
 
                                                     <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/anton-sumichrast ">
-                                                            Anton &Scaron;umichrast
+                                                        <a href="https://www.postoj.sk/autor/jan-pola ">
+                                                            J&aacute;n Poľa
                                                         </a>
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43124/mesiac-lasky-hokeja-a-eurovolieb-alebo-kto-ma-najsilnejsiu-zostavu">Mesiac l&aacute;sky, hokeja a eurovolieb,  alebo kto m&aacute; najsilnej&scaron;iu zostavu? </a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44159/preco-si-vsetci-gejovia-nezasluzia-legislativnu-podporu">Prečo si v&scaron;etci gejovia nezasl&uacute;žia legislat&iacute;vnu podporu?</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2583,13 +2670,13 @@
                                                 <header>
 
                                                     <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/juraj-vnencak ">
-                                                            Juraj Vnenč&aacute;k
+                                                        <a href="https://www.postoj.sk/autor/radomir-tomecek ">
+                                                            Radom&iacute;r Tomeček
                                                         </a>
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43119/europa-aj-v-tvojich-rukach">Eur&oacute;pa aj v tvojich ruk&aacute;ch</a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44111/peklo-je-vecne">Peklo je večn&eacute;</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2610,13 +2697,13 @@
                                                 <header>
 
                                                     <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/juraj-kriz ">
-                                                            Juraj Kr&iacute;ž
+                                                        <a href="https://www.postoj.sk/autor/alex-trstensky ">
+                                                            Alex Trstensk&yacute;
                                                         </a>
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43117/dalsia-obet-metoo-sa-vola-bond-james-bond"> Ďal&scaron;ia obeť #MeToo sa vol&aacute;... Bond, James Bond!</a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44091/edgar-allan-poe-annabel-lee-1849">Edgar Allan Poe: Annabel Lee (1849)</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2639,13 +2726,215 @@
                                                 <header>
 
                                                     <h3 class="author-link">
+                                                        <a href="https://www.postoj.sk/autor/jakub-malota ">
+                                                            Jakub  Malota
+                                                        </a>
+                                                    </h3>
+                                                    <div class="center">
+                                                        <div class="center-me">
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44080/ako-sme-vymenili-mece-za-smartfony">Ako sme vymenili meče za smartf&oacute;ny</a></h3>
+                                                        </div>
+                                                    </div>
+
+                                                </header>
+                                            </div>
+                                        </div>
+                                    </article>
+
+
+
+
+
+
+                                    <article class="blog-summary-half-item">
+                                        <div class="row">
+                                            <div class="col-xxs-12">
+                                                <i class="icon icon-arrow-right-grey"></i>
+                                                <header>
+
+                                                    <h3 class="author-link">
                                                         <a href="https://www.postoj.sk/autor/miroslav-klobucnik ">
                                                             Miroslav Klobučn&iacute;k
                                                         </a>
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43112/eurovolebny-bonus-andyho-hryca">Eurovolebn&yacute; bonus Andyho Hryca</a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44079/kto-bude-stat-po-boku-prezidentky">Kto bude st&aacute;ť po boku prezidentky?</a></h3>
+                                                        </div>
+                                                    </div>
+
+                                                </header>
+                                            </div>
+                                        </div>
+                                    </article>
+
+
+
+
+
+
+                                    <article class="blog-summary-half-item">
+                                        <div class="row">
+                                            <div class="col-xxs-12">
+                                                <i class="icon icon-arrow-right-grey"></i>
+                                                <header>
+
+                                                    <h3 class="author-link">
+                                                        <a href="https://www.postoj.sk/autor/robert-puk ">
+                                                            Robert  Puk
+                                                        </a>
+                                                    </h3>
+                                                    <div class="center">
+                                                        <div class="center-me">
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44067/ako-hojsik-nastupuje-do-europarlamentu">Ako &quot;ochran&aacute;r&quot; Hojs&iacute;k nastupuje do europarlamentu</a></h3>
+                                                        </div>
+                                                    </div>
+
+                                                </header>
+                                            </div>
+                                        </div>
+                                    </article>
+
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="most-popular" class="blog-summary-list tab-pane" role="tabpanel">
+                            <article class="blog-summary-full-item">
+                                <i class="icon icon-arrow-right-grey"></i>
+                                <div class="row">
+                                    <div class="col-xxs-12 col-md-12">
+                                        <div class="blog-about pull-left">
+                                            <header>
+                                                <h3 class="article-title">
+                                                    <a href="https://www.postoj.sk/43989/koalicia-kdhku-by-jednote-krestanov-v-politike-uskodila">Koal&iacute;cia KDH/K&Uacute; by jednote kresťanov v politike u&scaron;kodila</a>
+                                                </h3>
+                                            </header>
+
+
+                                            <footer>
+                                                <h3 class="author-link">
+                                                    <a href="https://www.postoj.sk/autor/slavomir-gregorik" class="avatar avatar-little">
+                                                        <img src="/uploads/16175/conversions/square.jpg" alt="Slavom&iacute;r Gregor&iacute;k">
+
+                                                        <span class="author-name">Slavom&iacute;r Gregor&iacute;k</span>
+                                                    </a>
+                                                </h3>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+
+
+
+                            <article class="blog-summary-full-item">
+                                <i class="icon icon-arrow-right-grey"></i>
+                                <div class="row">
+                                    <div class="col-xxs-12 col-md-12">
+                                        <div class="blog-about pull-left">
+                                            <header>
+                                                <h3 class="article-title">
+                                                    <a href="https://www.postoj.sk/43991/co-sa-to-prave-udialo-v-polsku">Čo sa to pr&aacute;ve udialo v Poľsku?</a>
+                                                </h3>
+                                            </header>
+
+
+                                            <footer>
+                                                <h3 class="author-link">
+                                                    <a href="https://www.postoj.sk/autor/julius-eckhardt" class="avatar avatar-little">
+                                                        <img src="/uploads/6495/conversions/square.jpg" alt="J&uacute;lius Eckhardt">
+
+                                                        <span class="author-name">J&uacute;lius Eckhardt</span>
+                                                    </a>
+                                                </h3>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+
+
+
+                            <article class="blog-summary-full-item">
+                                <i class="icon icon-arrow-right-grey"></i>
+                                <div class="row">
+                                    <div class="col-xxs-12 col-md-12">
+                                        <div class="blog-about pull-left">
+                                            <header>
+                                                <h3 class="article-title">
+                                                    <a href="https://www.postoj.sk/43954/koho-volili-volici-kdh-po-okresoch">Koho si vybrali voliči KDH v jednotliv&yacute;ch okresoch?</a>
+                                                </h3>
+                                            </header>
+
+
+                                            <footer>
+                                                <h3 class="author-link">
+                                                    <a href="https://www.postoj.sk/autor/jozef-simko" class="avatar avatar-little">
+                                                        <img src="/uploads/11375/conversions/square.jpg" alt="Jozef &Scaron;imko">
+
+                                                        <span class="author-name">Jozef &Scaron;imko</span>
+                                                    </a>
+                                                </h3>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <div class="row">
+                                <div class="col-xxs-12 col-md-6 blog-summary-articles-list hidden-kd-mobile">
+
+
+
+
+                                    <article class="blog-summary-half-item">
+                                        <div class="row">
+                                            <div class="col-xxs-12">
+                                                <i class="icon icon-arrow-right-grey"></i>
+                                                <header>
+
+                                                    <h3 class="author-link">
+                                                        <a href="https://www.postoj.sk/autor/pavol-prikryl ">
+                                                            Pavol Prikryl
+                                                        </a>
+                                                    </h3>
+                                                    <div class="center">
+                                                        <div class="center-me">
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44036/blaznive-a-pohorsujuce">Bl&aacute;zniv&eacute; a pohor&scaron;uj&uacute;ce</a></h3>
+                                                        </div>
+                                                    </div>
+
+                                                </header>
+                                            </div>
+                                        </div>
+                                    </article>
+
+
+
+
+
+
+                                    <article class="blog-summary-half-item">
+                                        <div class="row">
+                                            <div class="col-xxs-12">
+                                                <i class="icon icon-arrow-right-grey"></i>
+                                                <header>
+
+                                                    <h3 class="author-link">
+                                                        <a href="https://www.postoj.sk/autor/miroslav-klobucnik ">
+                                                            Miroslav Klobučn&iacute;k
+                                                        </a>
+                                                    </h3>
+                                                    <div class="center">
+                                                        <div class="center-me">
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44014/co-riesite-fico-skoncil">Čo rie&scaron;ite?, Fico skončil</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2672,208 +2961,7 @@
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43097/kto-nam-nanutil-korupciu-teolog-carlotti-versus-arcibiskup-zvolensky">Kto n&aacute;m nan&uacute;til korupciu - teol&oacute;g Carlotti versus arcibiskup Zvolensk&yacute;</a></h3>
-                                                        </div>
-                                                    </div>
-
-                                                </header>
-                                            </div>
-                                        </div>
-                                    </article>
-
-
-
-
-
-
-                                    <article class="blog-summary-half-item">
-                                        <div class="row">
-                                            <div class="col-xxs-12">
-                                                <i class="icon icon-arrow-right-grey"></i>
-                                                <header>
-
-                                                    <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/ema-pagacova ">
-                                                            Ema Pag&aacute;čov&aacute;
-                                                        </a>
-                                                    </h3>
-                                                    <div class="center">
-                                                        <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43087/nestrielajte-na-otca-kuffu-otec-kuffa-nestrielajte-na-nas">Nestrieľajte na otca Kuffu, otec Kuffa nestrieľajte na n&aacute;s</a></h3>
-                                                        </div>
-                                                    </div>
-
-                                                </header>
-                                            </div>
-                                        </div>
-                                    </article>
-
-
-
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div id="most-popular" class="blog-summary-list tab-pane" role="tabpanel">
-                            <article class="blog-summary-full-item">
-                                <i class="icon icon-arrow-right-grey"></i>
-                                <div class="row">
-                                    <div class="col-xxs-12 col-md-12">
-                                        <div class="blog-about pull-left">
-                                            <header>
-                                                <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/43087/nestrielajte-na-otca-kuffu-otec-kuffa-nestrielajte-na-nas">Nestrieľajte na otca Kuffu, otec Kuffa nestrieľajte na n&aacute;s</a>
-                                                </h3>
-                                            </header>
-
-
-                                            <footer>
-                                                <h3 class="author-link">
-                                                    <a href="https://www.postoj.sk/autor/ema-pagacova" class="avatar avatar-little">
-
-                                                        <span class="author-name">Ema Pag&aacute;čov&aacute;</span>
-                                                    </a>
-                                                </h3>
-                                            </footer>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-
-
-
-
-                            <article class="blog-summary-full-item">
-                                <i class="icon icon-arrow-right-grey"></i>
-                                <div class="row">
-                                    <div class="col-xxs-12 col-md-12">
-                                        <div class="blog-about pull-left">
-                                            <header>
-                                                <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/42978/ad-vladimir-palko-americka-zakladna-na-slovensku-a-geopolitika">Ad: Vladim&iacute;r Palko - Americk&aacute; z&aacute;kladňa na Slovensku a&nbsp;geopolitika</a>
-                                                </h3>
-                                            </header>
-
-
-                                            <footer>
-                                                <h3 class="author-link">
-                                                    <a href="https://www.postoj.sk/autor/jaroslav-nad" class="avatar avatar-little">
-                                                        <img src="https://www.postoj.sk/uploads/18989/conversions/square.jpg" alt="Jaroslav Naď">
-
-                                                        <span class="author-name">Jaroslav Naď</span>
-                                                    </a>
-                                                </h3>
-                                            </footer>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-
-
-
-
-                            <article class="blog-summary-full-item">
-                                <i class="icon icon-arrow-right-grey"></i>
-                                <div class="row">
-                                    <div class="col-xxs-12 col-md-12">
-                                        <div class="blog-about pull-left">
-                                            <header>
-                                                <h3 class="article-title">
-                                                    <a href="https://www.postoj.sk/42910/bude-arcibiskup-zvolensky-novym-slovenskym-kardinalom">Bude arcibiskup Zvolensk&yacute; nov&yacute;m slovensk&yacute;m kardin&aacute;lom?</a>
-                                                </h3>
-                                            </header>
-
-
-                                            <footer>
-                                                <h3 class="author-link">
-                                                    <a href="https://www.postoj.sk/autor/lenka-nalevankova" class="avatar avatar-little">
-                                                        <img src="https://www.postoj.sk/uploads/10004/conversions/square.jpg" alt="Lenka Nalevankov&aacute; Mi&scaron;enkov&aacute;">
-
-                                                        <span class="author-name">Lenka Nalevankov&aacute; Mi&scaron;enkov&aacute;</span>
-                                                    </a>
-                                                </h3>
-                                            </footer>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <div class="row">
-                                <div class="col-xxs-12 col-md-6 blog-summary-articles-list hidden-kd-mobile">
-
-
-
-
-                                    <article class="blog-summary-half-item">
-                                        <div class="row">
-                                            <div class="col-xxs-12">
-                                                <i class="icon icon-arrow-right-grey"></i>
-                                                <header>
-
-                                                    <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/viliam-oberhauser ">
-                                                            Viliam Oberhauser
-                                                        </a>
-                                                    </h3>
-                                                    <div class="center">
-                                                        <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/42949/ach-ten-nestastny-sex-a-dokedy-budu-trestne-organy-necinne">Ach ten ne&scaron;ťastn&yacute; sex a dokedy bud&uacute; trestn&eacute; org&aacute;ny nečinn&eacute; ?</a></h3>
-                                                        </div>
-                                                    </div>
-
-                                                </header>
-                                            </div>
-                                        </div>
-                                    </article>
-
-
-
-
-
-
-                                    <article class="blog-summary-half-item">
-                                        <div class="row">
-                                            <div class="col-xxs-12">
-                                                <i class="icon icon-arrow-right-grey"></i>
-                                                <header>
-
-                                                    <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/lukas-martiska ">
-                                                            Luk&aacute;&scaron; Marti&scaron;ka
-                                                        </a>
-                                                    </h3>
-                                                    <div class="center">
-                                                        <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43045/ako-krestanska-unia-podporuje-kotlebu-kollara-a-liberalne-strany">Ako Kresťansk&aacute; &uacute;nia podporuje Kotlebu, Koll&aacute;ra a liber&aacute;lne strany  </a></h3>
-                                                        </div>
-                                                    </div>
-
-                                                </header>
-                                            </div>
-                                        </div>
-                                    </article>
-
-
-
-
-
-
-                                    <article class="blog-summary-half-item">
-                                        <div class="row">
-                                            <div class="col-xxs-12">
-                                                <i class="icon icon-arrow-right-grey"></i>
-                                                <header>
-
-                                                    <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/katarina-mikulova ">
-                                                            Katar&iacute;na Mikulov&aacute;
-                                                        </a>
-                                                    </h3>
-                                                    <div class="center">
-                                                        <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/42765/odkaz-pre-knazov">Odkaz pre kňazov.</a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44048/poucenie-z-krizoveho-vyvoja-krestanskej-politiky">Poučenie z kr&iacute;zov&eacute;ho v&yacute;voja kresťanskej politiky</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2896,13 +2984,13 @@
                                                 <header>
 
                                                     <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/juraj-kriz ">
-                                                            Juraj Kr&iacute;ž
+                                                        <a href="https://www.postoj.sk/autor/miroslav-klobucnik ">
+                                                            Miroslav Klobučn&iacute;k
                                                         </a>
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/42903/styri-zle-spravy-pre-vladimira-palka">&Scaron;tyri zl&eacute; spr&aacute;vy pre Vladim&iacute;ra Palka </a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43965/trump-musi-padnut">Trump mus&iacute; padn&uacute;ť,</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2923,13 +3011,13 @@
                                                 <header>
 
                                                     <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/branislav-skripek-1 ">
-                                                            Branislav &Scaron;kripek
+                                                        <a href="https://www.postoj.sk/autor/miroslav-klobucnik ">
+                                                            Miroslav Klobučn&iacute;k
                                                         </a>
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/42976/slovenske-zdravotnictvo-zbavit-sa-pacienta-ako-sutaz">Slovensk&eacute; zdravotn&iacute;ctvo: zbaviť sa pacienta ako s&uacute;ťaž</a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44079/kto-bude-stat-po-boku-prezidentky">Kto bude st&aacute;ť po boku prezidentky?</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2950,13 +3038,13 @@
                                                 <header>
 
                                                     <h3 class="author-link">
-                                                        <a href="https://www.postoj.sk/autor/samuel-miklas ">
-                                                            Samuel Mikl&aacute;&scaron;
+                                                        <a href="https://www.postoj.sk/autor/viliam-oberhauser ">
+                                                            Viliam Oberhauser
                                                         </a>
                                                     </h3>
                                                     <div class="center">
                                                         <div class="center-me">
-                                                            <h3 class="article-title"><a href="https://www.postoj.sk/43070/neuved-nas-do-pokusenia">Neuveď n&aacute;s do poku&scaron;enia?</a></h3>
+                                                            <h3 class="article-title"><a href="https://www.postoj.sk/44063/co-hovoria-krestanom-vysledky-volieb-do-ep">Čo hovoria kresťanom v&yacute;sledky volieb do EP</a></h3>
                                                         </div>
                                                     </div>
 
@@ -2983,82 +3071,153 @@
 <section class="category-articles-section">
     <div class="container">
         <div class="row equalize" data-equalize-selector=".eq-me" data-equalize-all="true">
-            <div class="col-xxs-12 col-md-9-minus-compensation eq-me">
-                <section class="category-articles double-border-bottom">
-                    <header class="triangle">
-                        <h2 class="section-title">
-                            <a href="https://obchod.postoj.sk" class="track-me-pls" data-category="shop_banner_bottom-title" data-action="click">Naše knihy</a>
-                        </h2>
-                    </header>
+            <div class="col-xxs-12 col-md-9-minus-compensation hidden-kd-mobile eq-me">
+                <div id="our-books">
+                    <section class="category-articles double-border-bottom" >
+                        <header class="triangle">
+                            <h2 class="section-title">
+                                <a href="https://obchod.postoj.sk" class="track-me-pls" data-category="shop_banner_bottom-title" data-action="click">Naše knihy</a>
+                            </h2>
+                        </header>
 
-                    <div class="row">
-                        <div class="col-xxs-12 col-md-8 left-col mobile-img-col">
-                            <article class="category-article-item category-article-item-big  border-right  book-item book-item book-item">
-                                <div class="row category-article-item-big-row">
+                        <div class="row">
+                            <div class="col-md-8 left-col mobile-img-col hidden-kd-mobile">
+                                <article class="category-article-item category-article-item-big  border-right  book-item book-item book-item">
+                                    <div class="row category-article-item-big-row">
 
-                                    <div class="category-article-item-big-left mobile-img-col">
-                                        <a href="https://obchod.postoj.sk/balik/bud-kde-si-do-boja-s-ruzencom"  class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="1" >
-                                            <img src="https://www.postoj.sk/uploads/16690/conversions/detail.png" alt="Buď, kde si + Do boja s ružencom">
-                                        </a>
+                                        <div class="category-article-item-big-left mobile-img-col">
+                                            <a href="https://obchod.postoj.sk/balik/bud-kde-si-do-boja-s-ruzencom"  class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="1" >
+                                                <img src="/uploads/16690/conversions/detail.png" alt="Buď, kde si + Do boja s ružencom">
+                                            </a>
+                                        </div>
+
+                                        <div class="category-article-item-big-right mobile-text-col">
+                                            <a href="https://obchod.postoj.sk/balik/bud-kde-si-do-boja-s-ruzencom" class="book-author  track-me-pls "  data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="1" >Buď, kde si + Do boja s ružencom</a>
+                                            <p class="book-perex">V&yacute;hodn&yacute; bal&iacute;k na&scaron;ich kn&iacute;h</p>
+
+                                            <p class="book-our-price">Cena u nás:  11,84 €</p>
+                                            <p class="book-save-percent">Ušetríte: 20 %</p>
+                                        </div>
                                     </div>
+                                </article>
+                            </div>
+                            <div class="col-md-4 right-col mobile-text-col hidden-kd-mobile">
+                                <article class="category-article-item book-item  border-bottom ">
+                                    <div class="row">
+                                        <div class="col-xxs-5 left-col mobile-img-col">
+                                            <a href="https://obchod.postoj.sk/produkt/klub-nerozbitnych-deti/27"   class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="2" >
+                                                <div class="image-wrap">
+                                                    <img src="/uploads/13296/conversions/variation_thumb.png" alt="Klub nerozbitn&yacute;ch det&iacute;">
+                                                </div>
+                                            </a>
+                                        </div>
 
-                                    <div class="category-article-item-big-right mobile-text-col">
-                                        <a href="https://obchod.postoj.sk/balik/bud-kde-si-do-boja-s-ruzencom" class="book-author  track-me-pls "  data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="1" >Buď, kde si + Do boja s ružencom</a>
-                                        <p class="book-perex">V&yacute;hodn&yacute; bal&iacute;k na&scaron;ich kn&iacute;h</p>
+                                        <div class="col-xxs-7 right-col mobile-text-col">
+                                            <a href="https://obchod.postoj.sk/produkt/klub-nerozbitnych-deti/27" class="book-author  track-me-pls "   data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="2" >Klub nerozbitn&yacute;ch det&iacute;</a>
+                                            <p class="book-perex">Sedem vec&iacute;, ktor&eacute; pom&ocirc;žu va&scaron;im deťom prežiť v modernej dobe</p>
 
-                                        <p class="book-our-price">Cena u nás:  11,84 €</p>
-                                        <p class="book-save-percent">Ušetríte: 20 %</p>
+                                            <p class="book-our-price">Cena u nás:  11,73 €</p>
+                                            <p class="book-save-percent">Ušetríte: 15 %</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </article>
+                                </article>
+
+
+
+                                <article class="category-article-item book-item ">
+                                    <div class="row">
+                                        <div class="col-xxs-5 left-col mobile-img-col">
+                                            <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50"   class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="3" >
+                                                <div class="image-wrap">
+                                                    <img src="/uploads/16520/conversions/variation_thumb.png" alt="Cesta na Z&aacute;pad">
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-xxs-7 right-col mobile-text-col">
+                                            <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50" class="book-author  track-me-pls "   data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="3" >Cesta na Z&aacute;pad</a>
+                                            <p class="book-perex">Po stop&aacute;ch ochočen&eacute;ho Boha</p>
+
+                                            <p class="book-our-price">Cena u nás:  9,90 €</p>
+                                        </div>
+                                    </div>
+                                </article>
+
+
+
+                            </div>
+
+                            <div class="col-xxs-12 left-col mobile-img-col show-kd-mobile">
+                                <article class="category-article-item book-item  border-bottom ">
+                                    <div class="row">
+                                        <div class="col-xxs-5 left-col mobile-img-col">
+                                            <a href="https://obchod.postoj.sk/balik/bud-kde-si-do-boja-s-ruzencom"   class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="1" >
+                                                <div class="image-wrap">
+                                                    <img src="/uploads/16692/conversions/product_thumb.png" alt="Buď, kde si + Do boja s ružencom">
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-xxs-7 right-col mobile-text-col">
+                                            <a href="https://obchod.postoj.sk/balik/bud-kde-si-do-boja-s-ruzencom" class="book-author  track-me-pls "   data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="1" >Buď, kde si + Do boja s ružencom</a>
+                                            <p class="book-perex">V&yacute;hodn&yacute; bal&iacute;k na&scaron;ich kn&iacute;h</p>
+
+                                            <p class="book-our-price">Cena u nás:  11,84 €</p>
+                                            <p class="book-save-percent">Ušetríte: 20 %</p>
+                                        </div>
+                                    </div>
+                                </article>
+
+
+
+                                <article class="category-article-item book-item  border-bottom ">
+                                    <div class="row">
+                                        <div class="col-xxs-5 left-col mobile-img-col">
+                                            <a href="https://obchod.postoj.sk/produkt/klub-nerozbitnych-deti/27"   class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="2" >
+                                                <div class="image-wrap">
+                                                    <img src="/uploads/13296/conversions/variation_thumb.png" alt="Klub nerozbitn&yacute;ch det&iacute;">
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-xxs-7 right-col mobile-text-col">
+                                            <a href="https://obchod.postoj.sk/produkt/klub-nerozbitnych-deti/27" class="book-author  track-me-pls "   data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="2" >Klub nerozbitn&yacute;ch det&iacute;</a>
+                                            <p class="book-perex">Sedem vec&iacute;, ktor&eacute; pom&ocirc;žu va&scaron;im deťom prežiť v modernej dobe</p>
+
+                                            <p class="book-our-price">Cena u nás:  11,73 €</p>
+                                            <p class="book-save-percent">Ušetríte: 15 %</p>
+                                        </div>
+                                    </div>
+                                </article>
+
+
+
+                                <article class="category-article-item book-item ">
+                                    <div class="row">
+                                        <div class="col-xxs-5 left-col mobile-img-col">
+                                            <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50"   class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="3" >
+                                                <div class="image-wrap">
+                                                    <img src="/uploads/16520/conversions/variation_thumb.png" alt="Cesta na Z&aacute;pad">
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-xxs-7 right-col mobile-text-col">
+                                            <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50" class="book-author  track-me-pls "   data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="3" >Cesta na Z&aacute;pad</a>
+                                            <p class="book-perex">Po stop&aacute;ch ochočen&eacute;ho Boha</p>
+
+                                            <p class="book-our-price">Cena u nás:  9,90 €</p>
+                                        </div>
+                                    </div>
+                                </article>
+
+
+
+                            </div>
                         </div>
-                        <div class="col-xxs-12 col-md-4 right-col mobile-text-col">
-                            <article class="category-article-item book-item  border-bottom ">
-                                <div class="row">
-                                    <div class="col-xxs-5 left-col mobile-img-col">
-                                        <a href="https://obchod.postoj.sk/produkt/klub-nerozbitnych-deti/27"   class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="2" >
-                                            <div class="image-wrap">
-                                                <img src="https://www.postoj.sk/uploads/13296/conversions/variation_thumb.png" alt="Klub nerozbitn&yacute;ch det&iacute;">
-                                            </div>
-                                        </a>
-                                    </div>
 
-                                    <div class="col-xxs-7 right-col mobile-text-col">
-                                        <a href="https://obchod.postoj.sk/produkt/klub-nerozbitnych-deti/27" class="book-author  track-me-pls "   data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="2" >Klub nerozbitn&yacute;ch det&iacute;</a>
-                                        <p class="book-perex">Sedem vec&iacute;, ktor&eacute; pom&ocirc;žu va&scaron;im deťom prežiť v modernej dobe</p>
-
-                                        <p class="book-our-price">Cena u nás:  11,73 €</p>
-                                        <p class="book-save-percent">Ušetríte: 15 %</p>
-                                    </div>
-                                </div>
-                            </article>
-
-
-
-                            <article class="category-article-item book-item ">
-                                <div class="row">
-                                    <div class="col-xxs-5 left-col mobile-img-col">
-                                        <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50"   class="track-me-pls" data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="3" >
-                                            <div class="image-wrap">
-                                                <img src="https://www.postoj.sk/uploads/16520/conversions/variation_thumb.png" alt="Cesta na Z&aacute;pad">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 right-col mobile-text-col">
-                                        <a href="https://obchod.postoj.sk/produkt/cesta-na-zapad/50" class="book-author  track-me-pls "   data-category="shop_banner_bottom" data-action="click" data-label="position" data-value="3" >Cesta na Z&aacute;pad</a>
-                                        <p class="book-perex">Po stop&aacute;ch ochočen&eacute;ho Boha</p>
-
-                                        <p class="book-our-price">Cena u nás:  9,90 €</p>
-                                    </div>
-                                </div>
-                            </article>
-
-
-
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
 
                 <section class="category-articles double-border-bottom">
                     <header class="triangle">
@@ -3069,28 +3228,28 @@
                     <div class="row">
                         <div class="col-xxs-12 col-md-6 left-col mobile-img-col">
                             <article class="category-article-item category-article-item-big border-right">
-                                <a href="https://www.postoj.sk/43131/europa-sa-potichu-pripravuje-na-to-ze-taliansko-buchne"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
+                                <a href="https://www.postoj.sk/44155/nechat-deti-pobit-sa"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
                                     <div class="image-wrap">
-                                        <img  src="https://www.postoj.sk/uploads/19032/conversions/square.jpg"  alt="Eur&oacute;pa sa potichu pripravuje na to, že Taliansko buchne">
+                                        <img  src="/uploads/20117/conversions/square.jpg"  alt="Nechať deti pobiť sa?">
                                     </div>
                                 </a>
                                 <header>
                                     <h3 class="article-title">
-                                        <a href="https://www.postoj.sk/43131/europa-sa-potichu-pripravuje-na-to-ze-taliansko-buchne"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Eur&oacute;pa sa potichu pripravuje na to, že Taliansko buchne</a>
+                                        <a href="https://www.postoj.sk/44155/nechat-deti-pobit-sa"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Nechať deti pobiť sa?</a>
                                     </h3>
                                 </header>
 
                                 <div class="perex">
-                                    <p class="hidden-kd-mobile">Ak&yacute; bude scen&aacute;r, keď sa nahlas povie, že Taliansko so svoj&iacute;m dlhom už nem&ocirc;že ďalej fungovať.</p>
+                                    <p class="hidden-kd-mobile">Kedy m&aacute; rodič zasahovať do s&uacute;rodeneck&yacute;ch &scaron;arv&aacute;tok a ako? Robiť sudcu, medi&aacute;tora alebo si to nev&scaron;&iacute;mať?</p>
                                     <p class="show-kd-mobile">
-                                        Ak&yacute; bude scen&aacute;r, keď sa nahlas povie, že Taliansko so svoj&iacute;m dlhom už nem&ocirc;že ďalej fungovať.
+                                        Kedy m&aacute; rodič zasahovať do s&uacute;rodeneck&yacute;ch &scaron;arv&aacute;tok a ako? Robiť sudcu, medi&aacute;tora alebo si to nev&scaron;&iacute;mať?
 
                                     </p>
                                 </div>
 
                                 <footer>
-                                    <a href="https://www.postoj.sk/autor/fero-mucka" class="author-link">Fero M&uacute;čka</a>
-                                    <small>• 06. 05. 2019</small>
+                                    <a href="https://www.postoj.sk/autor/maria-melicherova" class="author-link">M&aacute;ria Melicherov&aacute;</a>
+                                    <small>• 05. 06. 2019</small>
                                 </footer>
                             </article>
                         </div>
@@ -3098,9 +3257,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43024/musime-ju-pocuvat"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
+                                        <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18913/conversions/square.jpg"  alt="Mus&iacute;me ju poč&uacute;vať">
+                                                <img  src="/uploads/20022/conversions/square.jpg"  alt="Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu">
                                             </div>
                                         </a>
                                     </div>
@@ -3108,12 +3267,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43024/musime-ju-pocuvat"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Mus&iacute;me ju poč&uacute;vať</a>
+                                                <a href="https://www.postoj.sk/44074/ako-sa-prekresli-politicka-mapa-ak-fico-pojde-do-utlmu"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Ako sa prekresl&iacute; politick&aacute; mapa, ak Fico p&ocirc;jde do &uacute;tlmu</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/zuzana-hanusova" class="author-link">Zuzana Hanusov&aacute;</a>
-                                            <small>• 02. 05. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/fero-mucka" class="author-link">Fero M&uacute;čka</a>
+                                            <small>• 03. 06. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3121,9 +3280,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43007/fico-s-kotlebom-vladnut-nechce-kalkuluje-s-nim-inak"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
+                                        <a href="https://www.postoj.sk/43986/progresivizmus-a-zapad"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18897/conversions/square.jpg"  alt="Fico s Kotlebom vl&aacute;dnuť nechce, kalkuluje s n&iacute;m inak">
+                                                <img  src="/uploads/19933/conversions/square.jpg"  alt="Progresivizmus a Z&aacute;pad">
                                             </div>
                                         </a>
                                     </div>
@@ -3131,12 +3290,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43007/fico-s-kotlebom-vladnut-nechce-kalkuluje-s-nim-inak"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Fico s Kotlebom vl&aacute;dnuť nechce, kalkuluje s n&iacute;m inak</a>
+                                                <a href="https://www.postoj.sk/43986/progresivizmus-a-zapad"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Progresivizmus a Z&aacute;pad</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/jozef-majchrak" class="author-link">Jozef Majchr&aacute;k</a>
-                                            <small>• 02. 05. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/bo-winegard" class="author-link">Bo Winegard</a>
+                                            <small>• 30. 05. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3144,9 +3303,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42957/skutocne-len-utopicky-zapas-redakcna-polemika"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
+                                        <a href="https://www.postoj.sk/43966/revolticka"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18841/conversions/square.jpg"  alt="Skutočne len utopick&yacute; z&aacute;pas? (Redakčn&aacute; polemika)">
+                                                <img  src="/uploads/19909/conversions/square.jpg"  alt="Revoltička">
                                             </div>
                                         </a>
                                     </div>
@@ -3154,12 +3313,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42957/skutocne-len-utopicky-zapas-redakcna-polemika"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Skutočne len utopick&yacute; z&aacute;pas? (Redakčn&aacute; polemika)</a>
+                                                <a href="https://www.postoj.sk/43966/revolticka"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Revoltička</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/lukas-kekelak" class="author-link">Luk&aacute;&scaron; Kekel&aacute;k</a>
-                                            <small>• 30. 04. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/fero-mucka" class="author-link">Fero M&uacute;čka</a>
+                                            <small>• 30. 05. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3176,28 +3335,28 @@
                     <div class="row">
                         <div class="col-xxs-12 col-md-6 left-col mobile-img-col">
                             <article class="category-article-item category-article-item-big border-right">
-                                <a href="https://www.postoj.sk/42932/vitaz-pokazenej-debaty-o-fasizme"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
+                                <a href="https://www.postoj.sk/44179/nase-pozvanie-plati-nech-pridu-domov"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
                                     <div class="image-wrap">
-                                        <img  src="https://www.postoj.sk/uploads/18817/conversions/square.jpg"  alt="V&iacute;ťaz pokazenej debaty o fa&scaron;izme">
+                                        <img  src="/uploads/20131/conversions/square.jpg"  alt="Na&scaron;e pozvanie plat&iacute;, nech pr&iacute;du domov">
                                     </div>
                                 </a>
                                 <header>
                                     <h3 class="article-title">
-                                        <a href="https://www.postoj.sk/42932/vitaz-pokazenej-debaty-o-fasizme"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >V&iacute;ťaz pokazenej debaty o fa&scaron;izme</a>
+                                        <a href="https://www.postoj.sk/44179/nase-pozvanie-plati-nech-pridu-domov"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Na&scaron;e pozvanie plat&iacute;, nech pr&iacute;du domov</a>
                                     </h3>
                                 </header>
 
                                 <div class="perex">
-                                    <p class="hidden-kd-mobile">Dne&scaron;n&yacute; s&uacute;d nemohol dopadn&uacute;ť dobre.</p>
+                                    <p class="hidden-kd-mobile">Dnes by som to už takto nerie&scaron;il, hovor&iacute; predseda KDH Alojz Hlina o blogu, ktor&yacute; nap&iacute;sal po voľb&aacute;ch na adresu Franti&scaron;ka Miklo&scaron;ka.</p>
                                     <p class="show-kd-mobile">
-                                        Dne&scaron;n&yacute; s&uacute;d nemohol dopadn&uacute;ť dobre.
+                                        Dnes by som to už takto nerie&scaron;il, hovor&iacute; predseda KDH Alojz Hlina o blogu, ktor&yacute; nap&iacute;sal po voľb&aacute;ch na adresu Franti&scaron;ka Miklo&scaron;ka.
 
                                     </p>
                                 </div>
 
                                 <footer>
-                                    <a href="https://www.postoj.sk/autor/jaroslav-daniska" class="author-link">Jaroslav Dani&scaron;ka</a>
-                                    <small>• 29. 04. 2019</small>
+                                    <a href="https://www.postoj.sk/autor/fero-mucka" class="author-link">Fero M&uacute;čka</a>
+                                    <small>• 05. 06. 2019</small>
                                 </footer>
                             </article>
                         </div>
@@ -3205,9 +3364,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42895/ako-verit-v-system-ktory-za-tridsat-rokov-nedokaze-postavit-nemocnicu"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
+                                        <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18773/conversions/square.jpg"  alt="Ako veriť v syst&eacute;m, ktor&yacute; za tridsať rokov nedok&aacute;že postaviť nemocnicu?">
+                                                <img  src="/uploads/20077/conversions/square.jpg"  alt="Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure">
                                             </div>
                                         </a>
                                     </div>
@@ -3215,58 +3374,58 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42895/ako-verit-v-system-ktory-za-tridsat-rokov-nedokaze-postavit-nemocnicu"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Ako veriť v syst&eacute;m, ktor&yacute; za tridsať rokov nedok&aacute;že postaviť nemocnicu?</a>
+                                                <a href="https://www.postoj.sk/44124/zajtra-sa-fico-vrati-a-bude-po-kosickej-vzbure"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Zajtra sa Fico vr&aacute;ti a bude po ko&scaron;ickej vzbure</a>
+                                            </h3>
+                                        </header>
+                                        <footer>
+                                            <a href="https://www.postoj.sk/autor/martin-hanus" class="author-link">Martin Hanus</a>
+                                            <small>• 05. 06. 2019</small>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="category-article-item">
+                                <div class="row">
+                                    <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44131/medzi-zapadom-a-vychodom-stale-koliseme-a-nie-sme-v-tom-sami"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20084/conversions/square.jpg"  alt="Medzi Z&aacute;padom a V&yacute;chodom st&aacute;le kol&iacute;&scaron;eme a nie sme v tom sami">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44131/medzi-zapadom-a-vychodom-stale-koliseme-a-nie-sme-v-tom-sami"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Medzi Z&aacute;padom a V&yacute;chodom st&aacute;le kol&iacute;&scaron;eme a nie sme v tom sami</a>
+                                            </h3>
+                                        </header>
+                                        <footer>
+                                            <a href="https://www.postoj.sk/autor/lukas-krivosik" class="author-link">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</a>
+                                            <small>• 04. 06. 2019</small>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="category-article-item">
+                                <div class="row">
+                                    <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/44116/kdh-napadlo-na-ustavnom-sude-rozdelenie-mandatov-z-eurovolieb"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/20068/conversions/square.jpg"  alt="KDH napadlo na &Uacute;stavnom s&uacute;de rozdelenie mand&aacute;tov z eurovolieb">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/44116/kdh-napadlo-na-ustavnom-sude-rozdelenie-mandatov-z-eurovolieb"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >KDH napadlo na &Uacute;stavnom s&uacute;de rozdelenie mand&aacute;tov z eurovolieb</a>
                                             </h3>
                                         </header>
                                         <footer>
                                             <a href="https://www.postoj.sk/autor/jozef-majchrak" class="author-link">Jozef Majchr&aacute;k</a>
-                                            <small>• 29. 04. 2019</small>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="category-article-item">
-                                <div class="row">
-                                    <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42844/talianski-populisti-isli-navzdy-porazit-chudobu-len-im-to-akosi-nevychadza"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18715/conversions/square.jpg"  alt="Talianski populisti i&scaron;li navždy poraziť chudobu, len im to akosi nevych&aacute;dza">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42844/talianski-populisti-isli-navzdy-porazit-chudobu-len-im-to-akosi-nevychadza"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Talianski populisti i&scaron;li navždy poraziť chudobu, len im to akosi nevych&aacute;dza</a>
-                                            </h3>
-                                        </header>
-                                        <footer>
-                                            <a href="https://www.postoj.sk/autor/martin-leidenfrost" class="author-link">Martin Leidenfrost</a>
-                                            <small>• 26. 04. 2019</small>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="category-article-item">
-                                <div class="row">
-                                    <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42831/trump-vytiahol-proti-demokratom-vlastnu-zbran"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18705/conversions/square.jpg"  alt="Trump vytiahol proti mest&aacute;m demokratov ich vlastn&uacute; zbraň">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42831/trump-vytiahol-proti-demokratom-vlastnu-zbran"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Trump vytiahol proti mest&aacute;m demokratov ich vlastn&uacute; zbraň</a>
-                                            </h3>
-                                        </header>
-                                        <footer>
-                                            <a href="https://www.postoj.sk/autor/lukas-kekelak" class="author-link">Luk&aacute;&scaron; Kekel&aacute;k</a>
-                                            <small>• 25. 04. 2019</small>
+                                            <small>• 04. 06. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3283,28 +3442,28 @@
                     <div class="row">
                         <div class="col-xxs-12 col-md-6 left-col mobile-img-col">
                             <article class="category-article-item category-article-item-big border-right">
-                                <a href="https://www.postoj.sk/43105/uz-zase-cestujem-miroslav-bielik"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
+                                <a href="https://www.postoj.sk/44053/dieta-rudolf-dobias"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
                                     <div class="image-wrap">
-                                        <img  src="https://www.postoj.sk/uploads/19003/conversions/square.jpg"  alt="Už zase cestujem (Miroslav Bielik)">
+                                        <img  src="/uploads/20003/conversions/square.jpg"  alt="Dieťa (Rudolf Dobi&aacute;&scaron;)">
                                     </div>
                                 </a>
                                 <header>
                                     <h3 class="article-title">
-                                        <a href="https://www.postoj.sk/43105/uz-zase-cestujem-miroslav-bielik"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Už zase cestujem (Miroslav Bielik)</a>
+                                        <a href="https://www.postoj.sk/44053/dieta-rudolf-dobias"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Dieťa (Rudolf Dobi&aacute;&scaron;)</a>
                                     </h3>
                                 </header>
 
                                 <div class="perex">
-                                    <p class="hidden-kd-mobile">Zas cestujem domov, zmenene &ndash; zmenenou tmou</p>
+                                    <p class="hidden-kd-mobile">B&aacute;seň ku Dňu det&iacute;.</p>
                                     <p class="show-kd-mobile">
-                                        Zas cestujem domov, zmenene &ndash; zmenenou tmou
+                                        B&aacute;seň ku Dňu det&iacute;.
 
                                     </p>
                                 </div>
 
                                 <footer>
                                     <a href="https://www.postoj.sk/autor/michal-chuda" class="author-link">Michal Chuda</a>
-                                    <small>• 05. 05. 2019</small>
+                                    <small>• 02. 06. 2019</small>
                                 </footer>
                             </article>
                         </div>
@@ -3312,9 +3471,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43020/knihomolov-zapisnik-o-slovakoch-v-ceskoslovenskych-legiach"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
+                                        <a href="https://www.postoj.sk/44006/knihomolov-zapisnik-kosican-marai-odhaluje-traumy-madarov"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18909/conversions/square.jpg"  alt="Knihomoľov z&aacute;pisn&iacute;k: Slov&aacute;ci v československ&yacute;ch l&eacute;gi&aacute;ch">
+                                                <img  src="/uploads/19955/conversions/square.jpg"  alt="Knihomoľov z&aacute;pisn&iacute;k: Horthy v Ko&scaron;iciach a smutn&yacute; S&aacute;ndor M&aacute;rai">
                                             </div>
                                         </a>
                                     </div>
@@ -3322,12 +3481,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43020/knihomolov-zapisnik-o-slovakoch-v-ceskoslovenskych-legiach"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Knihomoľov z&aacute;pisn&iacute;k: Slov&aacute;ci v československ&yacute;ch l&eacute;gi&aacute;ch</a>
+                                                <a href="https://www.postoj.sk/44006/knihomolov-zapisnik-kosican-marai-odhaluje-traumy-madarov"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Knihomoľov z&aacute;pisn&iacute;k: Horthy v Ko&scaron;iciach a smutn&yacute; S&aacute;ndor M&aacute;rai</a>
                                             </h3>
                                         </header>
                                         <footer>
                                             <a href="https://www.postoj.sk/autor/lukas-krivosik" class="author-link">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</a>
-                                            <small>• 04. 05. 2019</small>
+                                            <small>• 01. 06. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3335,9 +3494,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42893/bytie-moje-stefan-bucko"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
+                                        <a href="https://www.postoj.sk/44000/ked-jedina-gitara-nahradi-cely-orchester"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18768/conversions/square.jpg"  alt="Bytie moje... (&Scaron;tefan Bučko)">
+                                                <img  src="/uploads/19950/conversions/square.jpg"  alt="Keď jedin&aacute; gitara nahrad&iacute; cel&yacute; orchester">
                                             </div>
                                         </a>
                                     </div>
@@ -3345,35 +3504,35 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42893/bytie-moje-stefan-bucko"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Bytie moje... (&Scaron;tefan Bučko)</a>
+                                                <a href="https://www.postoj.sk/44000/ked-jedina-gitara-nahradi-cely-orchester"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Keď jedin&aacute; gitara nahrad&iacute; cel&yacute; orchester</a>
+                                            </h3>
+                                        </header>
+                                        <footer>
+                                            <a href="https://www.postoj.sk/autor/jan-vinter" class="author-link">Jana Vinterov&aacute;</a>
+                                            <small>• 31. 05. 2019</small>
+                                        </footer>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="category-article-item">
+                                <div class="row">
+                                    <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
+                                        <a href="https://www.postoj.sk/43828/dialog-s-bohom-jan-motulko"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
+                                            <div class="image-wrap">
+                                                <img  src="/uploads/19775/conversions/square.jpg"  alt="Dial&oacute;g s Bohom (J&aacute;n Motulko)">
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
+                                        <header>
+                                            <h3 class="article-title">
+                                                <a href="https://www.postoj.sk/43828/dialog-s-bohom-jan-motulko"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Dial&oacute;g s Bohom (J&aacute;n Motulko)</a>
                                             </h3>
                                         </header>
                                         <footer>
                                             <a href="https://www.postoj.sk/autor/michal-chuda" class="author-link">Michal Chuda</a>
-                                            <small>• 28. 04. 2019</small>
-                                        </footer>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="category-article-item">
-                                <div class="row">
-                                    <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42858/knihomolov-zapisnik-diplomati-stroskotanec-a-viera-na-pracovisku"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
-                                            <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18752/conversions/square.jpg"  alt="Knihomoľov z&aacute;pisn&iacute;k: Diplomati, stroskotanec a viera na pracovisku">
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
-                                        <header>
-                                            <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42858/knihomolov-zapisnik-diplomati-stroskotanec-a-viera-na-pracovisku"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Knihomoľov z&aacute;pisn&iacute;k: Diplomati, stroskotanec a viera na pracovisku</a>
-                                            </h3>
-                                        </header>
-                                        <footer>
-                                            <a href="https://www.postoj.sk/autor/lukas-krivosik" class="author-link">Luk&aacute;&scaron; Krivo&scaron;&iacute;k</a>
-                                            <small>• 26. 04. 2019</small>
+                                            <small>• 26. 05. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3390,28 +3549,28 @@
                     <div class="row">
                         <div class="col-xxs-12 col-md-6 left-col mobile-img-col">
                             <article class="category-article-item category-article-item-big border-right">
-                                <a href="https://www.postoj.sk/43110/na-zapade-ma-nepovazuju-za-menejcennu-pre-farbu-pleti-ale-pre-prolife-nazory"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
+                                <a href="https://www.postoj.sk/44093/netflix-a-disney-planuju-pre-pro-life-zakon-stiahnut-zo-statu-georgia-investicie"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
                                     <div class="image-wrap">
-                                        <img  src="https://www.postoj.sk/uploads/19008/conversions/square.jpg"  alt="Na Z&aacute;pade ma nepovažuj&uacute; za menejcenn&uacute; pre farbu pleti, ale pre pro-life n&aacute;zory">
+                                        <img  src="/uploads/20047/conversions/square.jpg"  alt="Netflix a Disney pl&aacute;nuj&uacute; pre pro-life z&aacute;kon stiahnuť zo &scaron;t&aacute;tu Georgia invest&iacute;cie">
                                     </div>
                                 </a>
                                 <header>
                                     <h3 class="article-title">
-                                        <a href="https://www.postoj.sk/43110/na-zapade-ma-nepovazuju-za-menejcennu-pre-farbu-pleti-ale-pre-prolife-nazory"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Na Z&aacute;pade ma nepovažuj&uacute; za menejcenn&uacute; pre farbu pleti, ale pre pro-life n&aacute;zory</a>
+                                        <a href="https://www.postoj.sk/44093/netflix-a-disney-planuju-pre-pro-life-zakon-stiahnut-zo-statu-georgia-investicie"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Netflix a Disney pl&aacute;nuj&uacute; pre pro-life z&aacute;kon stiahnuť zo &scaron;t&aacute;tu Georgia invest&iacute;cie</a>
                                     </h3>
                                 </header>
 
                                 <div class="perex">
-                                    <p class="hidden-kd-mobile">Rozhovor s Obianujou Ekeochou o tom, že Z&aacute;pad by Afrike najviac pomohol t&yacute;m, keby prestal s rozvojovou pomocou.</p>
+                                    <p class="hidden-kd-mobile">V Georgii sa už nakr&uacute;ca viac ako v Kalifornii. Veľk&eacute; filmov&eacute; spoločnosti sa v&scaron;ak pre pro-life legislat&iacute;vu vyhr&aacute;žaj&uacute; odchodom.</p>
                                     <p class="show-kd-mobile">
-                                        Rozhovor s Obianujou Ekeochou o tom, že Z&aacute;pad by Afrike najviac pomohol t&yacute;m, keby prestal s rozvojovou pomocou.
+                                        V Georgii sa už nakr&uacute;ca viac ako v Kalifornii. Veľk&eacute; filmov&eacute; spoločnosti sa v&scaron;ak pre pro-life legislat&iacute;vu vyhr&aacute;žaj&uacute; odchodom.
 
                                     </p>
                                 </div>
 
                                 <footer>
-                                    <a href="https://www.postoj.sk/autor/lukas-kekelak" class="author-link">Luk&aacute;&scaron; Kekel&aacute;k</a>
-                                    <small>• 05. 05. 2019</small>
+                                    <a href="https://www.postoj.sk/autor/lukas-obsitnik" class="author-link">Luk&aacute;&scaron; Ob&scaron;itn&iacute;k</a>
+                                    <small>• 03. 06. 2019</small>
                                 </footer>
                             </article>
                         </div>
@@ -3419,9 +3578,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43103/arcibiskup-stanislav-zvolensky-sprava-o-katolickej-cirkvi-na-slovensku"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
+                                        <a href="https://www.postoj.sk/44011/mam-pocit-ze-zacinam-odznova"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/19001/conversions/square.jpg"  alt="Arcibiskup Stanislav Zvolensk&yacute;: Spr&aacute;va o Katol&iacute;ckej cirkvi na Slovensku">
+                                                <img  src="/uploads/19960/conversions/square.jpg"  alt="M&aacute;m pocit, že zač&iacute;nam odznova">
                                             </div>
                                         </a>
                                     </div>
@@ -3429,12 +3588,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43103/arcibiskup-stanislav-zvolensky-sprava-o-katolickej-cirkvi-na-slovensku"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Arcibiskup Stanislav Zvolensk&yacute;: Spr&aacute;va o Katol&iacute;ckej cirkvi na Slovensku</a>
+                                                <a href="https://www.postoj.sk/44011/mam-pocit-ze-zacinam-odznova"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >M&aacute;m pocit, že zač&iacute;nam odznova</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/postoj" class="author-link">Postoj</a>
-                                            <small>• 05. 05. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/jaroslav-daniska" class="author-link">Jaroslav Dani&scaron;ka</a>
+                                            <small>• 02. 06. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3442,9 +3601,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43090/pavol-hrabovecky-o-g-k-chestertonovi-a-burani-modernych-dogiem"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
+                                        <a href="https://www.postoj.sk/43975/den-ked-britania-mohla-prehrat-vojnu"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18987/conversions/square.jpg"  alt="Pavol Hraboveck&yacute; o G. K. Chestertonovi a b&uacute;ran&iacute; modern&yacute;ch dogiem">
+                                                <img  src="/uploads/19921/conversions/square.jpg"  alt="Deň, keď Brit&aacute;nia mohla prehrať vojnu">
                                             </div>
                                         </a>
                                     </div>
@@ -3452,12 +3611,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43090/pavol-hrabovecky-o-g-k-chestertonovi-a-burani-modernych-dogiem"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Pavol Hraboveck&yacute; o G. K. Chestertonovi a b&uacute;ran&iacute; modern&yacute;ch dogiem</a>
+                                                <a href="https://www.postoj.sk/43975/den-ked-britania-mohla-prehrat-vojnu"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Deň, keď Brit&aacute;nia mohla prehrať vojnu</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/postoj" class="author-link">Postoj</a>
-                                            <small>• 04. 05. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/andrej-ziarovsky" class="author-link">Andrej Žiarovsk&yacute;</a>
+                                            <small>• 31. 05. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3465,9 +3624,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/43076/niektore-veci-sa-cenzurovat-musia"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
+                                        <a href="https://www.postoj.sk/43942/uber-neurcuje-a-ani-nemoze-urcit-cenu-jazdneho"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18975/conversions/square.jpg"  alt="Niektor&eacute; veci sa cenzurovať musia">
+                                                <img  src="/uploads/19886/conversions/square.jpg"  alt="Uber neurčuje a ani nem&ocirc;že určiť cenu jazdn&eacute;ho">
                                             </div>
                                         </a>
                                     </div>
@@ -3475,12 +3634,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/43076/niektore-veci-sa-cenzurovat-musia"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Niektor&eacute; veci sa cenzurovať musia</a>
+                                                <a href="https://www.postoj.sk/43942/uber-neurcuje-a-ani-nemoze-urcit-cenu-jazdneho"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Uber neurčuje a ani nem&ocirc;že určiť cenu jazdn&eacute;ho</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/david-warren" class="author-link">David Warren</a>
-                                            <small>• 04. 05. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/robert-chovanculiak" class="author-link">R&oacute;bert Chovanculiak</a>
+                                            <small>• 30. 05. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3497,28 +3656,28 @@
                     <div class="row">
                         <div class="col-xxs-12 col-md-6 left-col mobile-img-col">
                             <article class="category-article-item category-article-item-big border-right">
-                                <a href="https://www.postoj.sk/42716/ma-sibacka-a-oblievacka-buducnost"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
+                                <a href="https://www.postoj.sk/43912/komu-drzat-stranu-ked-si-stat-pyta-paetrocne-deti-videodebata"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >
                                     <div class="image-wrap">
-                                        <img  src="https://www.postoj.sk/uploads/18574/conversions/square.jpg"  alt="M&aacute; &scaron;ibačka a oblievačka bud&uacute;cnosť? ">
+                                        <img  src="/uploads/19856/conversions/square.jpg"  alt="Komu držať stranu, keď si &scaron;t&aacute;t p&yacute;ta p&auml;ťročn&eacute; deti? (Videodebata)">
                                     </div>
                                 </a>
                                 <header>
                                     <h3 class="article-title">
-                                        <a href="https://www.postoj.sk/42716/ma-sibacka-a-oblievacka-buducnost"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >M&aacute; &scaron;ibačka a oblievačka bud&uacute;cnosť? </a>
+                                        <a href="https://www.postoj.sk/43912/komu-drzat-stranu-ked-si-stat-pyta-paetrocne-deti-videodebata"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="1" >Komu držať stranu, keď si &scaron;t&aacute;t p&yacute;ta p&auml;ťročn&eacute; deti? (Videodebata)</a>
                                     </h3>
                                 </header>
 
                                 <div class="perex">
-                                    <p class="hidden-kd-mobile">M&aacute;me k tomu viesť svoje deti?</p>
+                                    <p class="hidden-kd-mobile">Krist&iacute;na Visolajsk&aacute; a Marta Glossov&aacute; polemizuj&uacute; o chystanej zmene v z&aacute;kone, ktor&aacute; m&aacute; spr&iacute;sniť pravidl&aacute; pre deti, ktor&eacute; nechodia do &scaron;k&ocirc;lky.</p>
                                     <p class="show-kd-mobile">
-                                        M&aacute;me k tomu viesť svoje deti?
+                                        Krist&iacute;na Visolajsk&aacute; a Marta Glossov&aacute; polemizuj&uacute; o chystanej zmene v z&aacute;kone, ktor&aacute; m&aacute; spr&iacute;sniť pravidl&aacute; pre deti, ktor&eacute; nechodia do &scaron;k&ocirc;lky.
 
                                     </p>
                                 </div>
 
                                 <footer>
-                                    <a href="https://www.postoj.sk/autor/zuzana-hanusova" class="author-link">Zuzana Hanusov&aacute;</a>
-                                    <small>• 22. 04. 2019</small>
+                                    <a href="https://www.postoj.sk/autor/fero-mucka" class="author-link">Fero M&uacute;čka</a>
+                                    <small>• 28. 05. 2019</small>
                                 </footer>
                             </article>
                         </div>
@@ -3526,9 +3685,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42615/vychova-deti-k-nabozenstvu-a-spiritualite-moze-ochranit-ich-mentalne-zdravie"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
+                                        <a href="https://www.postoj.sk/43903/ako-zistit-ci-dieta-patri-do-skoly"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18457/conversions/square.jpg"  alt="V&yacute;chova det&iacute; k n&aacute;boženstvu a spiritualite m&ocirc;že ochr&aacute;niť ich ment&aacute;lne zdravie">
+                                                <img  src="/uploads/19854/conversions/square.jpg"  alt="Ako zistiť, či už dieťa patr&iacute; do &scaron;koly?">
                                             </div>
                                         </a>
                                     </div>
@@ -3536,12 +3695,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42615/vychova-deti-k-nabozenstvu-a-spiritualite-moze-ochranit-ich-mentalne-zdravie"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >V&yacute;chova det&iacute; k n&aacute;boženstvu a spiritualite m&ocirc;že ochr&aacute;niť ich ment&aacute;lne zdravie</a>
+                                                <a href="https://www.postoj.sk/43903/ako-zistit-ci-dieta-patri-do-skoly"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="2" >Ako zistiť, či už dieťa patr&iacute; do &scaron;koly?</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/zuzana-hanusova" class="author-link">Zuzana Hanusov&aacute;</a>
-                                            <small>• 18. 04. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/maria-melicherova" class="author-link">M&aacute;ria Melicherov&aacute;</a>
+                                            <small>• 28. 05. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3549,9 +3708,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42535/brat-deti-na-velkonocne-obrady"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
+                                        <a href="https://www.postoj.sk/43383/smer-to-skusa-na-mladych-chce-vyraznejsie-zvysit-rodicovsky-prispevok"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18368/conversions/square.jpg"  alt="Brať deti na veľkonočn&eacute; obrady?">
+                                                <img  src="/uploads/19301/conversions/square.jpg"  alt="Smer to sk&uacute;&scaron;a na mlad&yacute;ch, chce v&yacute;raznej&scaron;ie zv&yacute;&scaron;iť rodičovsk&yacute; pr&iacute;spevok">
                                             </div>
                                         </a>
                                     </div>
@@ -3559,12 +3718,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42535/brat-deti-na-velkonocne-obrady"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Brať deti na veľkonočn&eacute; obrady?</a>
+                                                <a href="https://www.postoj.sk/43383/smer-to-skusa-na-mladych-chce-vyraznejsie-zvysit-rodicovsky-prispevok"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="3" >Smer to sk&uacute;&scaron;a na mlad&yacute;ch, chce v&yacute;raznej&scaron;ie zv&yacute;&scaron;iť rodičovsk&yacute; pr&iacute;spevok</a>
                                             </h3>
                                         </header>
                                         <footer>
-                                            <a href="https://www.postoj.sk/autor/zuzana-hanusova" class="author-link">Zuzana Hanusov&aacute;</a>
-                                            <small>• 16. 04. 2019</small>
+                                            <a href="https://www.postoj.sk/autor/pavol-rabara" class="author-link">Pavol R&aacute;bara</a>
+                                            <small>• 14. 05. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3572,9 +3731,9 @@
                             <article class="category-article-item">
                                 <div class="row">
                                     <div class="col-xxs-5 col-md-4 left-col mobile-img-col">
-                                        <a href="https://www.postoj.sk/42364/zeny-maju-menej-deti-ako-si-naozaj-zelali"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
+                                        <a href="https://www.postoj.sk/42716/ma-sibacka-a-oblievacka-buducnost"   class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >
                                             <div class="image-wrap">
-                                                <img  src="https://www.postoj.sk/uploads/18179/conversions/square.jpg"  alt="Ženy maj&uacute; menej det&iacute;, ako si naozaj želali">
+                                                <img  src="/uploads/18574/conversions/square.jpg"  alt="M&aacute; &scaron;ibačka a oblievačka bud&uacute;cnosť? ">
                                             </div>
                                         </a>
                                     </div>
@@ -3582,12 +3741,12 @@
                                     <div class="col-xxs-7 col-md-8 right-col mobile-text-col">
                                         <header>
                                             <h3 class="article-title">
-                                                <a href="https://www.postoj.sk/42364/zeny-maju-menej-deti-ako-si-naozaj-zelali"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >Ženy maj&uacute; menej det&iacute;, ako si naozaj želali</a>
+                                                <a href="https://www.postoj.sk/42716/ma-sibacka-a-oblievacka-buducnost"  class="track-me-pls" data-category="home_spodne-clanky" data-action="click" data-label="position" data-value="4" >M&aacute; &scaron;ibačka a oblievačka bud&uacute;cnosť? </a>
                                             </h3>
                                         </header>
                                         <footer>
                                             <a href="https://www.postoj.sk/autor/zuzana-hanusova" class="author-link">Zuzana Hanusov&aacute;</a>
-                                            <small>• 10. 04. 2019</small>
+                                            <small>• 22. 04. 2019</small>
                                         </footer>
                                     </div>
                                 </div>
@@ -3607,16 +3766,16 @@
                         <article class="press-releases-item">
                             <div class="row">
                                 <div class="col-xxs-5 col-md-5 img-col mobile-img-col">
-                                    <a href="https://www.postoj.sk/42956/eurovolby-co-caka-eu-v-najblizsich-rokoch-anketa">
+                                    <a href="https://www.postoj.sk/44171/nedus-nasu-buducnost">
                                         <div class="image-wrap">
-                                            <img  src="https://www.postoj.sk/uploads/18839/conversions/square.jpg"  alt="Eurovoľby: Čo čak&aacute; E&Uacute; v najbliž&scaron;&iacute;ch rokoch? (anketa)">
+                                            <img  src="/uploads/20121/conversions/square.jpg"  alt="Nedus na&scaron;u bud&uacute;cnosť!">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="col-xxs-7 col-md-7 mobile-text-col">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/42956/eurovolby-co-caka-eu-v-najblizsich-rokoch-anketa">Eurovoľby: Čo čak&aacute; E&Uacute; v najbliž&scaron;&iacute;ch rokoch? (anketa)</a>
+                                            <a href="https://www.postoj.sk/44171/nedus-nasu-buducnost">Nedus na&scaron;u bud&uacute;cnosť!</a>
                                         </h3>
                                     </header>
                                 </div>
@@ -3625,16 +3784,16 @@
                         <article class="press-releases-item">
                             <div class="row">
                                 <div class="col-xxs-5 col-md-5 img-col mobile-img-col">
-                                    <a href="https://www.postoj.sk/42819/b-skripek-z-krestanskej-unie-sa-stal-najvplyvnejsim-slovenskym-europoslancom">
+                                    <a href="https://www.postoj.sk/44009/ukrajinski-chlapci-patria-do-rodiny-aku-ste-nezazili">
                                         <div class="image-wrap">
-                                            <img  src="https://www.postoj.sk/uploads/18689/conversions/square.jpg"  alt="B. &Scaron;kripek z Kresťanskej &uacute;nie sa stal najvplyvnej&scaron;&iacute;m slovensk&yacute;m europoslancom">
+                                            <img  src="/uploads/19958/conversions/square.jpg"  alt="Ukrajinsk&iacute; chlapci patria do rodiny, ak&uacute; ste nezažili">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="col-xxs-7 col-md-7 mobile-text-col">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/42819/b-skripek-z-krestanskej-unie-sa-stal-najvplyvnejsim-slovenskym-europoslancom">B. &Scaron;kripek z Kresťanskej &uacute;nie sa stal najvplyvnej&scaron;&iacute;m slovensk&yacute;m europoslancom</a>
+                                            <a href="https://www.postoj.sk/44009/ukrajinski-chlapci-patria-do-rodiny-aku-ste-nezazili">Ukrajinsk&iacute; chlapci patria do rodiny, ak&uacute; ste nezažili</a>
                                         </h3>
                                     </header>
                                 </div>
@@ -3643,16 +3802,16 @@
                         <article class="press-releases-item">
                             <div class="row">
                                 <div class="col-xxs-5 col-md-5 img-col mobile-img-col">
-                                    <a href="https://www.postoj.sk/42623/pre-vitazstvo-zivota-musime-nieco-urobit">
+                                    <a href="https://www.postoj.sk/43664/eurovolby-ako-chcete-motivovat-ludi-aby-prisli-volit-anketa">
                                         <div class="image-wrap">
-                                            <img  src="https://www.postoj.sk/uploads/18459/conversions/square.jpg"  alt="Pre v&iacute;ťazstvo života mus&iacute;me niečo urobiť">
+                                            <img  src="/uploads/19590/conversions/square.jpg"  alt="Eurovoľby: Ako chcete motivovať ľud&iacute;, aby pri&scaron;li voliť? (anketa)">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="col-xxs-7 col-md-7 mobile-text-col">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/42623/pre-vitazstvo-zivota-musime-nieco-urobit">Pre v&iacute;ťazstvo života mus&iacute;me niečo urobiť</a>
+                                            <a href="https://www.postoj.sk/43664/eurovolby-ako-chcete-motivovat-ludi-aby-prisli-volit-anketa">Eurovoľby: Ako chcete motivovať ľud&iacute;, aby pri&scaron;li voliť? (anketa)</a>
                                         </h3>
                                     </header>
                                 </div>
@@ -3663,9 +3822,9 @@
                                 <div class="col-xxs-12">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/42365/vdaka-slovakom-moze-chodit-do-skoly-viac-ako-3-700-deti">
+                                            <a href="https://www.postoj.sk/43481/papez-by-ma-vyhodil-keby-som-s-tymto-suhlasila">
                                                 <i class="icon icon-arrow-right-grey"></i>
-                                                Vďaka Slov&aacute;kom m&ocirc;že chodiť do &scaron;koly viac ako 3 700 det&iacute;
+                                                P&aacute;pež by ma vyhodil, keby som s&nbsp;t&yacute;mto s&uacute;hlasila
                                             </a>
                                         </h3>
                                     </header>
@@ -3677,9 +3836,9 @@
                                 <div class="col-xxs-12">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/42294/europoslanci-anna-zaborska-a-branislav-skripek-ideme-spolocne">
+                                            <a href="https://www.postoj.sk/43398/eurovolby-ako-chcete-motivovat-ludi-aby-prisli-volit-anketa">
                                                 <i class="icon icon-arrow-right-grey"></i>
-                                                Europoslanci Anna Z&aacute;borsk&aacute; a Branislav &Scaron;kripek: Ideme spoločne
+                                                Eurovoľby: Ako chcete motivovať ľud&iacute;, aby pri&scaron;li voliť? (anketa)
                                             </a>
                                         </h3>
                                     </header>
@@ -3691,9 +3850,9 @@
                                 <div class="col-xxs-12">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/42003/dopravne-zapchy-su-problem-verejna-doprava-je-jeho-riesenim-ak-bude-dobra">
+                                            <a href="https://www.postoj.sk/43391/konzervativni-lidri-v-eurovolbach-podporili-miriam-lexmann">
                                                 <i class="icon icon-arrow-right-grey"></i>
-                                                Dopravn&eacute; z&aacute;pchy s&uacute; probl&eacute;m &ndash; verejn&aacute; doprava je jeho rie&scaron;en&iacute;m. Ak bude dobr&aacute;
+                                                Konzervat&iacute;vni l&iacute;dri v eurovoľb&aacute;ch podporili Miriam Lexmann
                                             </a>
                                         </h3>
                                     </header>
@@ -3705,9 +3864,9 @@
                                 <div class="col-xxs-12">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/41434/bojujem-za-slusne-slovensko-cely-zivot-video">
+                                            <a href="https://www.postoj.sk/43194/eurovolby-co-caka-eu-v-najblizsich-rokoch-anketa">
                                                 <i class="icon icon-arrow-right-grey"></i>
-                                                Bojujem za slu&scaron;n&eacute; Slovensko cel&yacute; život (video)
+                                                Eurovoľby: Čo čak&aacute; E&Uacute; v najbliž&scaron;&iacute;ch rokoch? (anketa)
                                             </a>
                                         </h3>
                                     </header>
@@ -3719,9 +3878,9 @@
                                 <div class="col-xxs-12">
                                     <header>
                                         <h3 class="article-title">
-                                            <a href="https://www.postoj.sk/41137/zlo-sa-moze-premenit-na-dobro-len-ak-ostaneme-verni-spravnym-hodnotam">
+                                            <a href="https://www.postoj.sk/42956/eurovolby-co-caka-eu-v-najblizsich-rokoch-anketa">
                                                 <i class="icon icon-arrow-right-grey"></i>
-                                                Zlo sa m&ocirc;že premeniť na dobro, len ak ostaneme vern&iacute; spr&aacute;vnym hodnot&aacute;m
+                                                Eurovoľby: Čo čak&aacute; E&Uacute; v najbliž&scaron;&iacute;ch rokoch? (anketa)
                                             </a>
                                         </h3>
                                     </header>
@@ -3887,7 +4046,7 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="https://static.postoj.sk/frontend/build/main-d57218b1.js"></script>
+<script type="text/javascript" src="https://static.postoj.sk/frontend/build/main-5cdba7bf.js"></script>
 
 <script>
     $(function() {
@@ -4045,8 +4204,9 @@
 
 </script>
 
-<script src="{{ mix('js/app.js') }}"></script>
 
+<!-- CFT SCRIPT -->
+<script src="{{ mix('js/app.js') }}"></script>
 
 </body>
 </html>

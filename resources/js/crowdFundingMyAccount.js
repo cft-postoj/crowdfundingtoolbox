@@ -1,72 +1,95 @@
-import {formSerialize, getJsonFirstProp} from "./helpers";
-
-const apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
-const viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
-import {successAlert, errorAlert} from "./alert";
+import {formSerialize, getJsonFirstProp, isUserLoggedIn} from "./helpers";
+import {apiUrl, viewsUrl} from "./constants/url";
+import * as myAccountTexts from "./json/myAccount";
 
 document.addEventListener('DOMContentLoaded', function () {
-    // TODO if user is logged in and has valid token
+    if (document.getElementById('cft--myaccount') !== null)
+        if (isUserLoggedIn() === false) {
+            location.href = '/';
+        }
     fetchMyAccountTemplate();
+
+    setTimeout(() => {
+        myAccountButton();
+    }, 2000);
+
 });
 
+
 function fetchMyAccountTemplate() {
-    let url = viewsUrl + 'my-account-content';
+    const url = viewsUrl + 'my-account';
     fetch(url)
         .then(response => response.text())
         .then(
             html => {
-                document.getElementById('cft--myAccountContent').innerHTML = html
-                showProfileActions();
+                document.getElementById('cft--myaccount').innerHTML = html,
+                    getSection(),
+                    changeMyAccountView()
             }
-        )
+        );
 }
 
-function showProfileActions() {
-    let allSections= document.querySelectorAll('.cft--myAccount--body--section');
+function myAccountButton() {
+    const button = document.getElementById('cft--loginButton');
+    if (button != null)
+        button.classList.add('active');
+}
 
-    let showCftNewslettersSection = document.getElementById('showCftNewslettersSection');
-    let showCftSavedArticlesSection = document.getElementById('showCftSavedArticlesSection');
-    let showCftDonationSection = document.getElementById('showCftDonationSection');
-    let showCftMyProfileSection = document.getElementById('showCftMyProfileSection');
-    let showCftMyOrdersSection = document.getElementById('showCftMyOrdersSection');
-    let bodyIntro = document.querySelector('.cft--myAccount--body--intro');
-
-    let newslettersContent = document.getElementById('cft--myAccount--newsletters');
-    let savedArticlesContent = document.getElementById('cft--myAccount--savedArticles');
-    let donationContent = document.getElementById('cft--myAccount--donation');
-    let myProfileContent = document.getElementById('cft--myAccount--myProfile');
-    let myOrdersContent = document.getElementById('cft--myAccount--myOrders');
-
-    showCftNewslettersSection.onclick = (clickEvent) => {
-        clickEvent.preventDefault();
-        showHelper(newslettersContent);
-    };
-    showCftSavedArticlesSection.onclick = (clickEvent) => {
-       clickEvent.preventDefault();
-       showHelper(savedArticlesContent);
-    };
-    showCftDonationSection.onclick = (clickEvent) => {
-       clickEvent.preventDefault();
-       showHelper(donationContent);
-    };
-    showCftMyProfileSection.onclick = (clickEvent) => {
-        clickEvent.preventDefault();
-        showHelper(myProfileContent);
-    };
-    showCftMyOrdersSection.onclick = (clickEvent) => {
-        clickEvent.preventDefault();
-        showHelper(myOrdersContent);
-    };
-
-    function showHelper(content) {
-        bodyIntro.style.display = 'none';
-        allSections.forEach((s, key) => {
-            s.classList.remove('active');
-        });
-        if (!content.classList.contains('active')) {
-            content.classList.add('active');
-        }
+function getSection() {
+    const splitter = location.href.split('#')[1];
+    console.log(splitter)
+    changeActiveMenu(splitter);
+    switch (splitter) {
+        case myAccountTexts.newsletterSlug:
+            sectionContent('newsletter');
+            break;
+        case myAccountTexts.savedArticlesSlug:
+            sectionContent('saved-articles');
+            break;
+        case myAccountTexts.donationSlug:
+            sectionContent('donation');
+            break;
+        case myAccountTexts.ordersSlug:
+            sectionContent('orders');
+            break;
+        case myAccountTexts.accountSlug:
+            sectionContent('account');
+            break;
+        default:
+            sectionContent('preview');
+            break;
     }
 }
 
+function sectionContent(section) {
+    const url = viewsUrl + 'my-account/' + section;
+    fetch(url)
+        .then(response => response.text())
+        .then(
+            html => {
+                document.getElementById('cft-myAccount-body-section').innerHTML = html
+            }
+        );
+}
 
+function changeActiveMenu(splitter) {
+    let menuSlug = '#' + splitter;
+    if (splitter == null || splitter == '') {
+        menuSlug = '#';
+    }
+    document.querySelectorAll('.cft--myAccount--sidebar a').forEach((e) => {
+        e.parentElement.classList.remove('active');
+    });
+    document.querySelector('.cft--myAccount--sidebar a[href="' + menuSlug + '"]').parentElement.classList.add('active');
+}
+
+
+function changeMyAccountView() {
+    document.querySelectorAll('.cft--myAccount--sidebar a').forEach((el) => {
+        el.addEventListener('click', (e) => {
+            setTimeout(() => {
+                getSection();
+            }, 100);
+        })
+    });
+}

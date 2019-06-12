@@ -36,4 +36,14 @@ class PortalUsersController extends Controller
             Response::HTTP_OK
         );
     }
+
+    public function create(Request $request)
+    {
+        return $this->portalUserService->create($request);
+    }
+
+    public function isUserLoggedIn()
+    {
+        return $this->portalUserService->checkToken();
+    }
 }

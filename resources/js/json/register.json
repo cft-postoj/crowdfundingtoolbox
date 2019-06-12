@@ -1,0 +1,8 @@
+{
+  "emailExists": "Zadaný email existuje, prosím <a href='/'>Prihláste sa</a>.",
+  "emailIncorrect": "Prosím, zadajte e-mail v správnom tvare.",
+  "passwordIncorrect": "Heslo musí obsahovať aspoň 6 znakov.",
+  "agreeConfirm": "Pre pokračovanie musíte súhlasiť so spracovaním osobných údajov.",
+  "undefinedError": "Počas registrácie nastala neočakávaná chyba. Skúste znova alebo kontaktujte administrátora.",
+  "registerSuccess": "Registrácia prebehla úspešne. Na Vašu emailovú adresu bola zaslaná rekapitulácia registrácie.<br />O <span id='cft-seconds'>5</span> sekúnd prebehne presmerovanie na hlavnú stránku, kde sa môžete prihlásiť."
+}

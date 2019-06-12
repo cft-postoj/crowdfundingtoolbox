@@ -20,9 +20,23 @@ class UserRepository implements UserRepositoryInterface
         // TODO: Implement getAll() method.
     }
 
-    public function getById($id)
+    public function get($id)
     {
         // TODO: Implement getById() method.
+    }
+
+    public function updatePassword($id, $pasword)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->update([
+                'password'  =>  bcrypt($pasword)
+            ]);
+    }
+
+    public function getByEmail($email)
+    {
+        return User::where('email', $email)->first();
     }
 
     public function getPortalUsers()
@@ -42,5 +56,24 @@ class UserRepository implements UserRepositoryInterface
             ->with('userDetail')
             ->with('donorStatus')
             ->get();
+    }
+
+    public function create($email, $password, $username)
+    {
+        $user = $this->model
+            ::create([
+                'email' =>  $email,
+                'password'  =>  bcrypt($password),
+                'username' => explode('@', $email)[0]
+            ]);
+        $user->save();
+        return $user->id;
+    }
+
+    public function isUsernameUsed($username)
+    {
+        return $this->model
+            ::where('username', $username)
+            ->first();
     }
 }

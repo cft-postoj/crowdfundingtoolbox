@@ -86,6 +86,755 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/regenerator-runtime/runtime.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+
+/***/ }),
+
 /***/ "./resources/js/alert.js":
 /*!*******************************!*\
   !*** ./resources/js/alert.js ***!
@@ -140,14 +889,31 @@ function errorAlert(text) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crowdFundingToolbox */ "./resources/js/crowdFundingToolbox.js");
-/* harmony import */ var _crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_crowdFundingToolbox__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _crowdFundingLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crowdFundingLogin */ "./resources/js/crowdFundingLogin.js");
-/* harmony import */ var _crowdFundingSetPassword__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crowdFundingSetPassword */ "./resources/js/crowdFundingSetPassword.js");
+/* harmony import */ var _crowdFundingRegister__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crowdFundingRegister */ "./resources/js/crowdFundingRegister.js");
 /* harmony import */ var _crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crowdFundingMyAccount */ "./resources/js/crowdFundingMyAccount.js");
 
 
 
+ // import './crowdFundingSetPassword';
+// import './crowdFundingMyAccount';
 
+/***/ }),
+
+/***/ "./resources/js/constants/url.js":
+/*!***************************************!*\
+  !*** ./resources/js/constants/url.js ***!
+  \***************************************/
+/*! exports provided: apiUrl, viewsUrl */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiUrl", function() { return apiUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "viewsUrl", function() { return viewsUrl; });
+var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
+
+var viewsUrl = 'http://127.0.0.1:8001/portal/';
 
 /***/ }),
 
@@ -161,12 +927,14 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
+var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/myAccount */ "./resources/js/json/myAccount.json", 1);
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 
-var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
 
-var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
+
 
 document.addEventListener('DOMContentLoaded', function () {
   fetchLoginTemplate();
@@ -178,7 +946,7 @@ function loginAction() {
     e.preventDefault();
     var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'login', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'login', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
@@ -206,16 +974,16 @@ function registerAction() {
     e.preventDefault();
     var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'register', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'register', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
     xhttp.onload = function () {
       // if there is some error
       if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
       } else {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["successAlert"])(xhttp.response.message);
+        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["successAlert"])(xhttp.response.message);
       }
     };
 
@@ -236,19 +1004,19 @@ function forgotPasswordAction() {
     e.preventDefault();
     var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'forgotPassword', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'forgotPassword', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
     xhttp.onload = function () {
       // if there is some error
       if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
       } else {
         if (xhttp.status === 200) {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_1__["successAlert"])(xhttp.response.message);
+          Object(_alert__WEBPACK_IMPORTED_MODULE_3__["successAlert"])(xhttp.response.message);
         } else {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_1__["errorAlert"])(xhttp.response.message);
+          Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(xhttp.response.message);
         }
       }
     };
@@ -273,7 +1041,8 @@ function showMyAccount() {
 }
 
 function fetchLoginTemplate() {
-  var url = viewsUrl + 'login';
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'login';
+  console.log(url);
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
@@ -283,50 +1052,30 @@ function fetchLoginTemplate() {
 }
 
 function loginFunctions() {
-  document.getElementById('cft--loginButton').onclick = function (e) {
-    e.preventDefault();
-    loginAction();
-    document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
+  var button = document.getElementById('cft--loginButton');
 
-    document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
-      e.preventDefault();
-      if (e.target.className === 'cftLogin--cftLoginWrapper active') document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-    }; // SHOW REGISTER
+  if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() !== false) {
+    button.innerHTML = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountButton"];
 
-
-    document.querySelector('.cftLogin--cftLoginWrapper--content--login .cftLogin--cftLoginWrapper--content--button').onclick = function (e) {
-      e.preventDefault();
-      registerAction();
-      document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'none';
-      document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'block';
-    }; // SHOW LOGIN
-
-
-    document.querySelector('.cftLogin--cftLoginWrapper--content--register .cftLogin--cftLoginWrapper--content--button').onclick = function (e) {
-      e.preventDefault();
-      document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'none';
-      document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'block';
-    }; // SHOW FORGOT PASSWORD
-
-
-    document.querySelector('.cftLogin--cftLoginWrapper--content--login .cftLogin--cftLoginWrapper--content--button.forgotPassword').onclick = function (e) {
-      e.preventDefault();
-      forgotPasswordAction();
-      document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'none';
-      document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'none';
-      document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword').style.display = 'block';
-
-      document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword .cftLogin--cftLoginWrapper--content--button.login').onclick = function (e) {
-        document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword').style.display = 'none';
-        document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'block';
-      };
-
-      document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword .cftLogin--cftLoginWrapper--content--button.register').onclick = function (e) {
-        document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword').style.display = 'none';
-        document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'block';
-      };
+    button.onclick = function () {
+      if (location.href.indexOf(_json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"]) === -1) location.href = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"];
     };
-  };
+  } else {
+    button.onclick = function (e) {
+      e.preventDefault(); // TOGGLE LOGIN DROPDOWN
+
+      document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.toggle('active');
+
+      if (document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.contains('active')) {
+        document.querySelector('body').onclick = function (e) {
+          if (e.target.nodeName !== 'A') {
+            e.preventDefault();
+            if (e.target.classList.value.indexOf('cft--') === -1 && e.target.classList.value !== '' && e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'SPAN') document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.remove('active');
+          }
+        };
+      }
+    };
+  }
 }
 
 /***/ }),
@@ -341,184 +1090,265 @@ function loginFunctions() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
+var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/myAccount */ "./resources/js/json/myAccount.json", 1);
 
-var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
 
-var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
 
 document.addEventListener('DOMContentLoaded', function () {
-  // TODO if user is logged in and has valid token
+  if (document.getElementById('cft--myaccount') !== null) if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() === false) {
+    location.href = '/';
+  }
   fetchMyAccountTemplate();
+  setTimeout(function () {
+    myAccountButton();
+  }, 2000);
 });
 
 function fetchMyAccountTemplate() {
-  var url = viewsUrl + 'my-account-content';
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'my-account';
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
-    document.getElementById('cft--myAccountContent').innerHTML = html;
-    showProfileActions();
+    document.getElementById('cft--myaccount').innerHTML = html, getSection(), changeMyAccountView();
   });
 }
 
-function showProfileActions() {
-  var allSections = document.querySelectorAll('.cft--myAccount--body--section');
-  var showCftNewslettersSection = document.getElementById('showCftNewslettersSection');
-  var showCftSavedArticlesSection = document.getElementById('showCftSavedArticlesSection');
-  var showCftDonationSection = document.getElementById('showCftDonationSection');
-  var showCftMyProfileSection = document.getElementById('showCftMyProfileSection');
-  var showCftMyOrdersSection = document.getElementById('showCftMyOrdersSection');
-  var bodyIntro = document.querySelector('.cft--myAccount--body--intro');
-  var newslettersContent = document.getElementById('cft--myAccount--newsletters');
-  var savedArticlesContent = document.getElementById('cft--myAccount--savedArticles');
-  var donationContent = document.getElementById('cft--myAccount--donation');
-  var myProfileContent = document.getElementById('cft--myAccount--myProfile');
-  var myOrdersContent = document.getElementById('cft--myAccount--myOrders');
+function myAccountButton() {
+  var button = document.getElementById('cft--loginButton');
+  if (button != null) button.classList.add('active');
+}
 
-  showCftNewslettersSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(newslettersContent);
-  };
+function getSection() {
+  var splitter = location.href.split('#')[1];
+  console.log(splitter);
+  changeActiveMenu(splitter);
 
-  showCftSavedArticlesSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(savedArticlesContent);
-  };
+  switch (splitter) {
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["newsletterSlug"]:
+      sectionContent('newsletter');
+      break;
 
-  showCftDonationSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(donationContent);
-  };
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["savedArticlesSlug"]:
+      sectionContent('saved-articles');
+      break;
 
-  showCftMyProfileSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(myProfileContent);
-  };
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["donationSlug"]:
+      sectionContent('donation');
+      break;
 
-  showCftMyOrdersSection.onclick = function (clickEvent) {
-    clickEvent.preventDefault();
-    showHelper(myOrdersContent);
-  };
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["ordersSlug"]:
+      sectionContent('orders');
+      break;
 
-  function showHelper(content) {
-    bodyIntro.style.display = 'none';
-    allSections.forEach(function (s, key) {
-      s.classList.remove('active');
-    });
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["accountSlug"]:
+      sectionContent('account');
+      break;
 
-    if (!content.classList.contains('active')) {
-      content.classList.add('active');
-    }
+    default:
+      sectionContent('preview');
+      break;
   }
+}
+
+function sectionContent(section) {
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'my-account/' + section;
+  fetch(url).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    document.getElementById('cft-myAccount-body-section').innerHTML = html;
+  });
+}
+
+function changeActiveMenu(splitter) {
+  var menuSlug = '#' + splitter;
+
+  if (splitter == null || splitter == '') {
+    menuSlug = '#';
+  }
+
+  document.querySelectorAll('.cft--myAccount--sidebar a').forEach(function (e) {
+    e.parentElement.classList.remove('active');
+  });
+  document.querySelector('.cft--myAccount--sidebar a[href="' + menuSlug + '"]').parentElement.classList.add('active');
+}
+
+function changeMyAccountView() {
+  document.querySelectorAll('.cft--myAccount--sidebar a').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      setTimeout(function () {
+        getSection();
+      }, 100);
+    });
+  });
 }
 
 /***/ }),
 
-/***/ "./resources/js/crowdFundingSetPassword.js":
-/*!*************************************************!*\
-  !*** ./resources/js/crowdFundingSetPassword.js ***!
-  \*************************************************/
+/***/ "./resources/js/crowdFundingRegister.js":
+/*!**********************************************!*\
+  !*** ./resources/js/crowdFundingRegister.js ***!
+  \**********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
-//const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _json_register__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./json/register */ "./resources/js/json/register.json");
+var _json_register__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/register */ "./resources/js/json/register.json", 1);
 
 
-var apiUrl = 'http://localhost/crowdfundingToolbox/public/api/portal/'; // TEST API
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-var viewsUrl = 'http://localhost/crowdfundingToolbox/public/portal/';
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
-  if (window.location.href.indexOf('?setPassword=') > -1) {
-    isUserExist();
-  }
+  if (document.getElementById('cft--register') !== null) fetchRegisterTemplate();
 });
 
-function isUserExist() {
-  var data = {
-    'token': Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["findGetParameter"])('setPassword')
-  };
-  var xhttp = new XMLHttpRequest();
-  xhttp.open('POST', apiUrl + 'has-user-generated-token', true);
-  xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-  xhttp.responseType = 'json';
-
-  xhttp.onload = function () {
-    if (xhttp.response.isUserExists) {
-      return showSetPasswordTemplate();
-    }
-  };
-
-  xhttp.send(JSON.stringify(data));
-}
-
-function showSetPasswordTemplate() {
-  var url = viewsUrl + 'set-generated-password';
-  console.log('view');
+function fetchRegisterTemplate() {
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_2__["viewsUrl"] + 'register';
+  console.log(url);
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
-    document.getElementById('cft--login').innerHTML = html;
-    document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-
-    document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
-      e.preventDefault();
-      if (e.target.className === 'cftLogin--cftLoginWrapper active') document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-      document.querySelector('input[name="token"]').value = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["findGetParameter"])('setPassword');
-      resetPasswordAction();
-    };
+    document.getElementById('cft--register').innerHTML = html, showPassword(), register();
   });
 }
 
-function resetPasswordAction() {
-  var form = document.querySelector('form[name="cftLogin--changePassword--form"]');
-  var submitButton = document.querySelector('form[name="cftLogin--changePassword--form"] button[type="submit"]');
+function showPassword() {
+  document.querySelector('input#cft-password + img').onclick = function (e) {
+    if (document.querySelector('input#cft-password').getAttribute('type') === 'password') {
+      document.querySelector('input#cft-password').setAttribute('type', 'text');
+    } else {
+      document.querySelector('input#cft-password').setAttribute('type', 'password');
+    }
+  };
+}
+
+function register() {
+  var form = document.querySelector('form[name="cft-register"]');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    console.log('submitted');
-    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
+    var data = {
+      'email': document.querySelector('form[name="cft-register"] input[name="cft-email"]').value,
+      'password': document.querySelector('form[name="cft-register"] input[name="cft-password"]').value,
+      'agreeMailing': document.querySelector('form[name="cft-register"] input[name="cft-mailing"]').checked,
+      'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked
+    };
+
+    if (!data.agreePersonalData) {
+      return errorShowing('form[name="cft-register"] span.cft-agree', 'form[name="cft-register"] input[name="cft-agree"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["agreeConfirm"]);
+    }
+
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', apiUrl + 'change-password', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_2__["apiUrl"] + 'register', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
-    xhttp.onerror = function () {
-      console.log('error');
+    xhttp.onload = function () {
+      // if there is some error
+      if (xhttp.response.error !== undefined) {
+        switch (xhttp.response.error.type) {
+          case 'email-registered':
+            errorShowing('form[name="cft-register"] span.cft-email', 'form[name="cft-register"] input[name="cft-email"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["emailExists"]);
+            break;
+
+          case 'email':
+            errorShowing('form[name="cft-register"] span.cft-email', 'form[name="cft-register"] input[name="cft-email"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["emailIncorrect"]);
+            break;
+
+          default:
+            if (xhttp.response.password !== undefined) {
+              errorShowing('form[name="cft-register"] span.cft-password', 'form[name="cft-register"] input[name="cft-password"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["passwordIncorrect"]);
+              break;
+            }
+
+            errorShowing('form[name="cft-register"] span.cft-agree', 'form[name="cft-register"] button[type="submit"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["undefinedError"]);
+            break;
+        }
+      } else {
+        document.querySelectorAll('form[name="cft-register"] input').forEach(function (e) {
+          e.value = '';
+          e.checked = false;
+        });
+        document.querySelector('form[name="cft-register"] span.cft-register').classList.add('active');
+        document.querySelector('form[name="cft-register"] span.cft-register').innerHTML = _json_register__WEBPACK_IMPORTED_MODULE_3__["registerSuccess"];
+        setTimeout(
+        /*#__PURE__*/
+        _asyncToGenerator(
+        /*#__PURE__*/
+        _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var i;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  i = 5;
+
+                case 1:
+                  if (!(i >= 0)) {
+                    _context.next = 9;
+                    break;
+                  }
+
+                  document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i;
+
+                  if (i === 0) {
+                    window.location.href = _helpers__WEBPACK_IMPORTED_MODULE_1__["portalUrl"];
+                  }
+
+                  _context.next = 6;
+                  return sleep(1000);
+
+                case 6:
+                  i--;
+                  _context.next = 1;
+                  break;
+
+                case 9:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })), 500);
+      }
     };
 
-    xhttp.onsuccess = function () {
-      console.log('success');
-    }; // xhttp.onload = () => {
-    //     if (xhttp.response.error) {
-    //         errorAlert(getJsonFirstProp(xhttp.response.error));
-    //         submitButton.innerText = 'Submit';
-    //         submitButton.disabled = '';
-    //     }
-    //     xhttp.onreadystatechange = () => {
-    //         if (xhttp.readyState === 4) {
-    //             if (xhttp.status === 200) {
-    //                 console.log(xhttp.response)
-    //                 localStorage.setItem('cft_usertoken', xhttp.response.token);
-    //             } else {
-    //                 console.log('failed');
-    //             }
-    //         }
-    //     }
-    // };
+    return xhttp.send(JSON.stringify(data));
+  }); // code below is required for submitting
 
-
-    xhttp.send(data);
-  }, false); // code below is required for submitting
-
+  var submitButton = document.querySelector('form[name="cft-register"] button[type="submit"]');
   submitButton.addEventListener('click', function (clickEvent) {
     clickEvent.preventDefault();
     var domEvent = document.createEvent('Event');
     domEvent.initEvent('submit', false, true);
     clickEvent.target.closest('form').dispatchEvent(domEvent);
+  });
+}
+
+function errorShowing(selector, element, errorText) {
+  document.querySelector(selector).classList.add('active');
+  document.querySelector(element).classList.add('error');
+  document.querySelector(selector).innerHTML = errorText;
+  document.querySelector(element).addEventListener('change', function (e) {
+    document.querySelector(selector).classList.remove('active');
+    document.querySelector(element).classList.remove('error');
+  });
+}
+
+function sleep(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
   });
 }
 
@@ -528,13 +1358,14 @@ function resetPasswordAction() {
 /*!*********************************************!*\
   !*** ./resources/js/crowdFundingToolbox.js ***!
   \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 
 document.addEventListener('DOMContentLoaded', function () {
-  //let apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-  var apiUrl = 'http://127.0.0.1:8000/api/portal/'; // TEST API
-
   var sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
   var fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
   var leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
@@ -569,7 +1400,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
-  xhttp.open('GET', apiUrl + 'widgets');
+  xhttp.open('GET', _constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'widgets');
   xhttp.send();
 });
 
@@ -593,7 +1424,7 @@ function cr0wdGetDeviceType() {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize */
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, portalUrl, isUserLoggedIn */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -605,6 +1436,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFormData", function() { return removeFormData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findGetParameter", function() { return findGetParameter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formSerialize", function() { return formSerialize; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUserLoggedIn", function() { return isUserLoggedIn; });
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+
 function toggleClassLists(array, remove, el) {
   removeClassLists(remove, el);
   setTimeout(function () {
@@ -660,6 +1495,47 @@ function formSerialize(formElement) {
 
   return values;
 }
+var portalUrl = 'http://www.postoj.local:8000';
+function isUserLoggedIn() {
+  var token = localStorage.getItem('cft_usertoken');
+
+  if (token !== null) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('GET', _constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
+    xhttp.responseType = 'json';
+
+    xhttp.onload = function () {
+      return xhttp.response.isLoggedIn;
+    };
+
+    xhttp.send();
+  } else {
+    return false;
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/json/myAccount.json":
+/*!******************************************!*\
+  !*** ./resources/js/json/myAccount.json ***!
+  \******************************************/
+/*! exports provided: myAccountButton, myAccountUrl, previewSlug, newsletterSlug, savedArticlesSlug, donationSlug, ordersSlug, accountSlug, default */
+/***/ (function(module) {
+
+module.exports = {"myAccountButton":"Môj účet","myAccountUrl":"/moj-ucet","previewSlug":"prehlad","newsletterSlug":"newsletter","savedArticlesSlug":"ulozene-clanky","donationSlug":"vasa-podpora","ordersSlug":"objednavky","accountSlug":"ucet"};
+
+/***/ }),
+
+/***/ "./resources/js/json/register.json":
+/*!*****************************************!*\
+  !*** ./resources/js/json/register.json ***!
+  \*****************************************/
+/*! exports provided: emailExists, emailIncorrect, passwordIncorrect, agreeConfirm, undefinedError, registerSuccess, default */
+/***/ (function(module) {
+
+module.exports = {"emailExists":"Zadaný email existuje, prosím <a href='/'>Prihláste sa</a>.","emailIncorrect":"Prosím, zadajte e-mail v správnom tvare.","passwordIncorrect":"Heslo musí obsahovať aspoň 6 znakov.","agreeConfirm":"Pre pokračovanie musíte súhlasiť so spracovaním osobných údajov.","undefinedError":"Počas registrácie nastala neočakávaná chyba. Skúste znova alebo kontaktujte administrátora.","registerSuccess":"Registrácia prebehla úspešne. Na Vašu emailovú adresu bola zaslaná rekapitulácia registrácie.<br />O <span id='cft-seconds'>5</span> sekúnd prebehne presmerovanie na hlavnú stránku, kde sa môžete prihlásiť."};
 
 /***/ }),
 
@@ -681,8 +1557,8 @@ function formSerialize(formElement) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/crowdfundingToolbox/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/crowdfundingToolbox/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\PROJECTS\LOCAL\htdocs\crowdfundingToolbox\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\PROJECTS\LOCAL\htdocs\crowdfundingToolbox\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

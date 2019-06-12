@@ -26,15 +26,41 @@ Route::get('/portal/my-account', function() {
 /*******************************************************/
 
 /* Part of routes, which will be showed by some action via JS */
+
 Route::get('/portal/login', function() {
     return view('portal-templates.parts.login');
+});
+Route::get('/portal/register', function() {
+   return view('portal-templates.parts.register');
 });
 Route::get('/portal/set-generated-password', function() {
     return view('portal-templates.parts.setGeneratedPassword');
 });
-Route::get('/portal/my-account-content', function() {
-    return view('portal-templates.parts.myaccountContent');
+
+// MY ACCOUNT
+Route::get('/portal/my-account', function() {
+    return view('portal-templates.myAccount.index');
 });
+// MY ACCOUNT parts
+Route::get('/portal/my-account/preview', function() {
+    return view('portal-templates.myAccount.parts.preview');
+});
+Route::get('/portal/my-account/newsletter', function() {
+   return view('portal-templates.myAccount.parts.newsletter');
+});
+Route::get('/portal/my-account/saved-articles', function() {
+   return view('portal-templates.myAccount.parts.savedArticles');
+});
+Route::get('/portal/my-account/donation', function() {
+   return view('portal-templates.myAccount.parts.donation');
+});
+Route::get('/portal/my-account/orders', function() {
+   return view('portal-templates.myAccount.parts.orders');
+});
+Route::get('/portal/my-account/account', function() {
+   return view('portal-templates.myAccount.parts.account');
+});
+
 /**************************************/
 
 Route::any('{slug}', function($slug)

@@ -33,6 +33,7 @@
     "ng-circle-progress": "^1.4.0",
     "ng-inline-svg": "^8.3.0",
     "ngx-color-picker": "^7.3.1",
+    "ngx-select-dropdown": "^1.0.1",
     "ngx-select-ex": "^3.6.8",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.4.0",

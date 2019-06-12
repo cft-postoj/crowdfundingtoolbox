@@ -1,0 +1,32 @@
+button {
+  &#cft--loginButton {
+    border: 1px solid $iron;
+    @include borderRadius(3px);
+    @include transitionSingle(.3s ease);
+    color: $curiousBlue;
+    height: 44px;
+    margin-top: 21.5px;
+    background: transparent;
+    position: relative;
+    font-weight: bold;
+    padding: 0 25px 0 50px;
+    &:before {
+      position: absolute;
+      content: '';
+      width: 16px;
+      height: 16px;
+      background: url(../../img/icons/user.svg) no-repeat center;
+      margin-left: -25px;
+      margin-top: 1px;
+    }
+    &.active {
+      border: 1px solid $selago;
+      background: $selago;
+    }
+    &:hover, &:focus, &:visited {
+      border: 1px solid $curiousBlue;
+      background: $selago;
+    }
+
+  }
+}
