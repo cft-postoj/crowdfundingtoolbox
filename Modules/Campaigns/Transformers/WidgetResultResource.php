@@ -20,6 +20,7 @@ class WidgetResultResource extends Resource
             ->first()
             ->only('id', 'name', 'description', 'method');
         return [
+            'show_id'=> $this->show_id,
             'widget_type' => $widgetType,
             'response'   =>  WidgetResult::where('widget_id', $this->id)
                 ->first()

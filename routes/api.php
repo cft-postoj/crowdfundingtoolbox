@@ -106,7 +106,7 @@ Route::group([
 Route::group([
     'prefix' => 'portal'
 ], function () {
-    Route::get('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
+    Route::post('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
     //get Campaign
     Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
     Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
@@ -115,6 +115,8 @@ Route::group([
     Route::post('forgotPassword', '\Modules\UserManagement\Http\Controllers\UserServiceController@forgotPassword');
     Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@hasUserGeneratedToken');
     Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
+
+    Route::post('tracking/click', '\Modules\UserManagement\Http\Controllers\TrackingController@click');
 });
 
 

@@ -5,11 +5,13 @@ namespace Modules\Campaigns\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Campaigns\Services\WidgetResultService;
 use Modules\Campaigns\Services\WidgetService;
 use Modules\Campaigns\Services\WidgetSettingsService;
 use Modules\Campaigns\Transformers\WidgetResource;
+use Modules\UserManagement\Services\TrackingService;
 
 class WidgetsController extends Controller
 {
@@ -18,6 +20,7 @@ class WidgetsController extends Controller
     private $widgetSettingsService;
     private $widgetService;
     private $widgetResultService;
+    private $trackingService;
 
     public function __construct()
     {
@@ -25,6 +28,7 @@ class WidgetsController extends Controller
         $this->widgetService = new WidgetService();
         $this->widgetSettingsService = new WidgetSettingsService();
         $this->widgetResultService = new WidgetResultService();
+        $this->trackingService = new TrackingService();
     }
 
 
@@ -216,17 +220,16 @@ class WidgetsController extends Controller
     /*
      * GET widgets from all types - FOR PORTAL SIDE
      */
-    protected function getWidgets()
+    protected function getWidgets(Request $request)
     {
         try {
-            $onlyThreeWidgets = $this->widgetService->getWidgets();
+            $onlyThreeWidgets = $this->widgetService->getWidgets(
+                request()->headers->get('origin' ), $request['title'], $request['user_cookie'], $request['user_id']);
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e
             ], Response::HTTP_BAD_REQUEST);
         }
-
-
         return $onlyThreeWidgets;
     }
 

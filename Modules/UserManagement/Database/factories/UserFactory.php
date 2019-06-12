@@ -9,7 +9,7 @@ $factory->define(Modules\UserManagement\Entities\User::class, function (Faker $f
         'last_name' => $faker->lastName,
         'email' => $faker->email,
         'telephone' => $faker->phoneNumber,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
+        'password' => bcrypt('test123'),
         'username' => $faker->uuid
 
     ];

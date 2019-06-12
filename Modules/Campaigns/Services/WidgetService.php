@@ -17,6 +17,8 @@ use Modules\Campaigns\Entities\WidgetVersion;
 use Modules\Campaigns\Http\Controllers\WidgetTypesController;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Campaigns\Transformers\WidgetResultResource;
+use Modules\UserManagement\Services\TrackingService;
+use Modules\UserManagement\Services\UserService;
 
 class WidgetService implements WidgetServiceInterface
 {
@@ -24,6 +26,14 @@ class WidgetService implements WidgetServiceInterface
 
     private $widgetSettings;
     private $paymentSettings;
+    private $trackingService;
+    private $userService;
+
+    public function __construct()
+    {
+        $this->trackingService = new TrackingService();
+        $this->userService = new UserService();
+    }
 
     public function createWidgetsForCampaign($campaignId)
     {
@@ -459,6 +469,7 @@ class WidgetService implements WidgetServiceInterface
                 ),
                 'benefit' => array(
                     'active' => true,
+                    'active' => true,
                     'text' => '',
                     'value' => 10
                 )
@@ -821,6 +832,7 @@ class WidgetService implements WidgetServiceInterface
     {
         if ($user == null) {
             // unregistered user
+            //TODO: na toto je uz iny endpoint, pre neprihlasenych. (premazat?)
             // TODO: na strane frontendu cez localstorage/cookies kontrolovat kolko clankov uz precital user
 
             $actualDate = date('Y-m-d');
@@ -865,6 +877,7 @@ class WidgetService implements WidgetServiceInterface
                     $query->where('signed', true);
                 })
                 ->pluck('id');
+
             $randomResponse =
                 Widget::inRandomOrder()
                     ->get()
@@ -894,12 +907,12 @@ class WidgetService implements WidgetServiceInterface
     /**
      * @return array
      */
-    public function getWidgets(): array
+    public function getWidgets($origin, $title, $userCookie, $userId)
     {
         $actualDate = date('Y-m-d');
         $campaignIds = Campaign::all()
             ->where('active', true)
-            ->where('date_to', '>=', $actualDate)
+            ->where('promote.start_date_value', '<=', $actualDate)
             ->pluck('id');
         $randomResponse =
             Widget::inRandomOrder()
@@ -909,13 +922,24 @@ class WidgetService implements WidgetServiceInterface
                 ->whereIn('widget_type_id', [2, 3, 5]);
         $onlyThreeWidgets = array();
         $usedWidgetIds = array();
+        $user = Auth::user();
+        $userId = $user != null ? $user->id : null;
+        $newCookie = $this->userService->createCookieIfNew($userCookie, $userId);
+        if ($newCookie!=null) {
+            $userCookie = $newCookie->id;
+        }
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
+
+                $trackingShow = $this->trackingService->show($userId, $rand['widget_type_id'], $origin, $title, $userCookie);
+                $rand['show_id'] = $trackingShow->id;
                 array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
                 array_push($usedWidgetIds, $rand['widget_type_id']);
             }
         }
-        return $onlyThreeWidgets;
+        $result['widgets'] = $onlyThreeWidgets;
+        $result['user_cookie'] = $userCookie;
+        return $result;
     }
 
     public function smartUpdate($id, $active)
