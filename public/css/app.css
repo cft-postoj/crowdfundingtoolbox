@@ -28,11 +28,13 @@
 
 .cft--myAccount {
   margin: 30px 0;
+  background: #ffffff;
 }
 
 .cft--myAccount--sidebar {
   float: left;
-  width: 30%;
+  width: 200px;
+  padding: 50px 0;
 }
 
 .cft--myAccount--sidebar ul {
@@ -44,21 +46,72 @@
   padding: 0;
 }
 
-.cft--myAccount--body {
-  float: right;
-  width: 70%;
+.cft--myAccount--sidebar ul li a {
+  display: block;
+  padding: 10px 25px;
+  color: #1F4E7B;
+  font-size: 15px;
+  position: relative;
 }
 
-.cft--myAccount--body--section {
-  width: 100%;
-  display: none;
-  opacity: 0;
+.cft--myAccount--sidebar ul li a:hover,
+.cft--myAccount--sidebar ul li a:focus {
+  text-decoration: none;
+  color: #158eea;
+}
+
+.cft--myAccount--sidebar ul li a:hover:after,
+.cft--myAccount--sidebar ul li a:focus:after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: url(/images/arrow.svg) no-repeat;
+  position: absolute;
+  right: 30px;
+  top: 15px;
+}
+
+.cft--myAccount--sidebar ul li.active a {
+  background: #E5F1FB;
+  color: #158eea;
+  position: relative;
+}
+
+.cft--myAccount--sidebar ul li.active a:before {
+  content: "";
+  width: 2px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #158eea;
+}
+
+.cft--myAccount--sidebar ul li.active a:after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: url(/images/arrow.svg) no-repeat;
+  position: absolute;
+  right: 30px;
+  top: 15px;
   transition: 0.3s ease;
 }
 
-.cft--myAccount--body--section.active {
-  display: block;
-  opacity: 1;
+.cft--myAccount--sidebar ul li.active:hover a:after {
+  right: 15px;
+}
+
+.cft--myAccount--body {
+  float: right;
+  width: calc(100% - 200px);
+  background: #F0F3F6;
+  height: 100%;
+  padding: 50px;
+}
+
+.cft--myAccount--body--loading {
+  margin: 0 auto;
 }
 
 .cft--myAccount--body > div h2 {
@@ -476,10 +529,15 @@ button#cft--loginButton:before {
   margin-top: 1px;
 }
 
+button#cft--loginButton.active {
+  border: 1px solid #E5F1FB;
+  background: #E5F1FB;
+}
+
 button#cft--loginButton:hover,
 button#cft--loginButton:focus,
 button#cft--loginButton:visited {
   border: 1px solid #158eea;
-  background: #f3f8fc;
+  background: #E5F1FB;
 }
 

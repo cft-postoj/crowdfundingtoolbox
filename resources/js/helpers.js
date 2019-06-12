@@ -1,3 +1,5 @@
+import {apiUrl} from "./constants/url";
+
 export function toggleClassLists(array, remove, el) {
     removeClassLists(remove, el);
     setTimeout(() => {
@@ -62,3 +64,20 @@ export function formSerialize(formElement) {
 }
 
 export const portalUrl = 'http://www.postoj.local:8000';
+
+export function isUserLoggedIn() {
+    const token = localStorage.getItem('cft_usertoken');
+    if (token !== null) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.open('GET', apiUrl + 'is-user-logged-in', true);
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
+        xhttp.responseType = 'json';
+        xhttp.onload = () => {
+            return xhttp.response.isLoggedIn;
+        };
+        xhttp.send();
+    } else {
+        return false;
+    }
+
+}

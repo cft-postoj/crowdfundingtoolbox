@@ -1,28 +1,79 @@
 &--myAccount {
   margin: 30px 0;
+  background: $white;
   &--sidebar {
     float: left;
-    width: 30%;
+    width: 200px;
+    padding: 50px 0;
     ul {
       list-style: none;
       padding: 0;
       li {
         padding: 0;
+        a {
+          display: block;
+          padding: 10px 25px;
+          color: $blumine;
+          font-size: 15px;
+          position: relative;
+          &:hover, &:focus {
+            text-decoration: none;
+            color: $curiousBlue;
+            &:after {
+              content: '';
+              width: 12px;
+              height: 12px;
+              background: url(/images/arrow.svg) no-repeat;
+              position: absolute;
+              right: 30px;
+              top: 15px;
+            }
+          }
+        }
+        &.active {
+          a {
+            background: $selago;
+            color: $curiousBlue;
+            position: relative;
+            &:before {
+              content: '';
+              width: 2px;
+              height: 100%;
+              position: absolute;
+              left: 0;
+              top: 0;
+              background: $curiousBlue;
+            }
+            &:after {
+              content: '';
+              width: 12px;
+              height: 12px;
+              background: url(/images/arrow.svg) no-repeat;
+              position: absolute;
+              right: 30px;
+              top: 15px;
+              @include transitionSingle(.3s ease);
+            }
+          }
+          &:hover {
+            a {
+              &:after {
+                right: 15px;
+              }
+            }
+          }
+        }
       }
     }
   }
   &--body {
     float: right;
-    width: 70%;
-    &--section {
-      width: 100%;
-      display: none;
-      opacity: 0;
-      @include transitionSingle(.3s ease);
-      &.active {
-        display: block;
-        opacity: 1;
-      }
+    width: calc(100% - 200px);
+    background: $athensGray;
+    height: 100%;
+    padding: 50px;
+    &--loading {
+      margin: 0 auto;
     }
     > div {
       h2 {

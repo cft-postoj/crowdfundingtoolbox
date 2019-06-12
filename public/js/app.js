@@ -928,8 +928,11 @@ var viewsUrl = 'http://127.0.0.1:8001/portal/';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+/* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
+var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/myAccount */ "./resources/js/json/myAccount.json", 1);
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+
 
 
 
@@ -978,9 +981,9 @@ function registerAction() {
     xhttp.onload = function () {
       // if there is some error
       if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_2__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
       } else {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_2__["successAlert"])(xhttp.response.message);
+        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["successAlert"])(xhttp.response.message);
       }
     };
 
@@ -1008,12 +1011,12 @@ function forgotPasswordAction() {
     xhttp.onload = function () {
       // if there is some error
       if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_2__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
       } else {
         if (xhttp.status === 200) {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_2__["successAlert"])(xhttp.response.message);
+          Object(_alert__WEBPACK_IMPORTED_MODULE_3__["successAlert"])(xhttp.response.message);
         } else {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_2__["errorAlert"])(xhttp.response.message);
+          Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(xhttp.response.message);
         }
       }
     };
@@ -1049,56 +1052,30 @@ function fetchLoginTemplate() {
 }
 
 function loginFunctions() {
-  document.getElementById('cft--loginButton').onclick = function (e) {
-    e.preventDefault(); //loginAction();
-    // TOGGLE LOGIN DROPDOWN
+  var button = document.getElementById('cft--loginButton');
 
-    document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.toggle('active');
+  if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() !== false) {
+    button.innerHTML = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountButton"];
 
-    if (document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.contains('active')) {
-      document.querySelector('body').onclick = function (e) {
-        if (e.target.nodeName !== 'A') {
-          e.preventDefault();
-          if (e.target.classList.value.indexOf('cft--') === -1 && e.target.classList.value !== '' && e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'SPAN') document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.remove('active');
-        }
-      };
-    } // document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-    // document.querySelector('.cftLogin--cftLoginWrapper').onclick = function (e) {
-    //     e.preventDefault();
-    //     if (e.target.className === 'cftLogin--cftLoginWrapper active')
-    //         document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-    // };
-    // SHOW REGISTER
-    // document.querySelector('.cftLogin--cftLoginWrapper--content--login .cftLogin--cftLoginWrapper--content--button').onclick = function (e) {
-    //     e.preventDefault();
-    //     registerAction();
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'none';
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'block';
-    // };
-    // SHOW LOGIN
-    // document.querySelector('.cftLogin--cftLoginWrapper--content--register .cftLogin--cftLoginWrapper--content--button').onclick = function (e) {
-    //     e.preventDefault();
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'none';
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'block';
-    // };
-    // SHOW FORGOT PASSWORD
-    // document.querySelector('.cftLogin--cftLoginWrapper--content--login .cftLogin--cftLoginWrapper--content--button.forgotPassword').onclick = function (e) {
-    //     e.preventDefault();
-    //     forgotPasswordAction();
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'none';
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'none';
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword').style.display = 'block';
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword .cftLogin--cftLoginWrapper--content--button.login').onclick = function (e) {
-    //         document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword').style.display = 'none';
-    //         document.querySelector('.cftLogin--cftLoginWrapper--content--login').style.display = 'block';
-    //     };
-    //     document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword .cftLogin--cftLoginWrapper--content--button.register').onclick = function (e) {
-    //         document.querySelector('.cftLogin--cftLoginWrapper--content--forgotPassword').style.display = 'none';
-    //         document.querySelector('.cftLogin--cftLoginWrapper--content--register').style.display = 'block';
-    //     };
-    // };
+    button.onclick = function () {
+      if (location.href.indexOf(_json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"]) === -1) location.href = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"];
+    };
+  } else {
+    button.onclick = function (e) {
+      e.preventDefault(); // TOGGLE LOGIN DROPDOWN
 
-  };
+      document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.toggle('active');
+
+      if (document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.contains('active')) {
+        document.querySelector('body').onclick = function (e) {
+          if (e.target.nodeName !== 'A') {
+            e.preventDefault();
+            if (e.target.classList.value.indexOf('cft--') === -1 && e.target.classList.value !== '' && e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'SPAN') document.querySelector('#cft--loginButton + .cft--loginDropdown').classList.remove('active');
+          }
+        };
+      }
+    };
+  }
 }
 
 /***/ }),
@@ -1115,15 +1092,97 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 /* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
-/* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_json_myAccount__WEBPACK_IMPORTED_MODULE_2__);
+var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/myAccount */ "./resources/js/json/myAccount.json", 1);
 
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  if (document.getElementById('cft--myaccount') !== null) fetchMyAccountTemplate();
+  if (document.getElementById('cft--myaccount') !== null) if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() === false) {
+    location.href = '/';
+  }
+  fetchMyAccountTemplate();
+  setTimeout(function () {
+    myAccountButton();
+  }, 2000);
 });
 
-function fetchMyAccountTemplate() {}
+function fetchMyAccountTemplate() {
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'my-account';
+  fetch(url).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    document.getElementById('cft--myaccount').innerHTML = html, getSection(), changeMyAccountView();
+  });
+}
+
+function myAccountButton() {
+  var button = document.getElementById('cft--loginButton');
+  if (button != null) button.classList.add('active');
+}
+
+function getSection() {
+  var splitter = location.href.split('#')[1];
+  console.log(splitter);
+  changeActiveMenu(splitter);
+
+  switch (splitter) {
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["newsletterSlug"]:
+      sectionContent('newsletter');
+      break;
+
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["savedArticlesSlug"]:
+      sectionContent('saved-articles');
+      break;
+
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["donationSlug"]:
+      sectionContent('donation');
+      break;
+
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["ordersSlug"]:
+      sectionContent('orders');
+      break;
+
+    case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["accountSlug"]:
+      sectionContent('account');
+      break;
+
+    default:
+      sectionContent('preview');
+      break;
+  }
+}
+
+function sectionContent(section) {
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'my-account/' + section;
+  fetch(url).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    document.getElementById('cft-myAccount-body-section').innerHTML = html;
+  });
+}
+
+function changeActiveMenu(splitter) {
+  var menuSlug = '#' + splitter;
+
+  if (splitter == null || splitter == '') {
+    menuSlug = '#';
+  }
+
+  document.querySelectorAll('.cft--myAccount--sidebar a').forEach(function (e) {
+    e.parentElement.classList.remove('active');
+  });
+  document.querySelector('.cft--myAccount--sidebar a[href="' + menuSlug + '"]').parentElement.classList.add('active');
+}
+
+function changeMyAccountView() {
+  document.querySelectorAll('.cft--myAccount--sidebar a').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      setTimeout(function () {
+        getSection();
+      }, 100);
+    });
+  });
+}
 
 /***/ }),
 
@@ -1365,7 +1424,7 @@ function cr0wdGetDeviceType() {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, portalUrl */
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, portalUrl, isUserLoggedIn */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1378,6 +1437,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findGetParameter", function() { return findGetParameter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formSerialize", function() { return formSerialize; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUserLoggedIn", function() { return isUserLoggedIn; });
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+
 function toggleClassLists(array, remove, el) {
   removeClassLists(remove, el);
   setTimeout(function () {
@@ -1434,6 +1496,24 @@ function formSerialize(formElement) {
   return values;
 }
 var portalUrl = 'http://www.postoj.local:8000';
+function isUserLoggedIn() {
+  var token = localStorage.getItem('cft_usertoken');
+
+  if (token !== null) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('GET', _constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
+    xhttp.responseType = 'json';
+
+    xhttp.onload = function () {
+      return xhttp.response.isLoggedIn;
+    };
+
+    xhttp.send();
+  } else {
+    return false;
+  }
+}
 
 /***/ }),
 
@@ -1441,11 +1521,10 @@ var portalUrl = 'http://www.postoj.local:8000';
 /*!******************************************!*\
   !*** ./resources/js/json/myAccount.json ***!
   \******************************************/
-/*! no static exports found */
+/*! exports provided: myAccountButton, myAccountUrl, previewSlug, newsletterSlug, savedArticlesSlug, donationSlug, ordersSlug, accountSlug, default */
 /***/ (function(module) {
 
-!(function webpackMissingModule() { var e = new Error("Cannot find module './json/myAccount'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-
+module.exports = {"myAccountButton":"Môj účet","myAccountUrl":"/moj-ucet","previewSlug":"prehlad","newsletterSlug":"newsletter","savedArticlesSlug":"ulozene-clanky","donationSlug":"vasa-podpora","ordersSlug":"objednavky","accountSlug":"ucet"};
 
 /***/ }),
 

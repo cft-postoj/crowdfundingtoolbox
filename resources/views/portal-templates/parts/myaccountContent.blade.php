@@ -1,4 +1,5 @@
 <!-- MY ACCOUNT PART SECTION, you can customize it like you want. Please, don't change used classes and identificators. -->
+
 <div class="container">
     <div class="cft--myAccount">
         <div class="cft--myAccount--sidebar">
@@ -58,3 +59,6 @@
         </div>
     </div>
 </div>
+
+<!-- CFT SCRIPT -->
+<script src="{{ mix('js/app.js') }}"></script>

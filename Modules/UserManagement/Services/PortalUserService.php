@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Repositories\UserRepository;
+use JWTAuth;
 
 class PortalUserService implements PortalUserServiceInterface
 {
@@ -117,6 +118,20 @@ class PortalUserService implements PortalUserServiceInterface
             ], Response::HTTP_BAD_REQUEST);
         }
 
+    }
+
+    public function checkToken()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $loggedIn = false;
+
+        if ($user->id !== null) {
+            $loggedIn = true;
+        }
+
+        return \response()->json([
+            'isLoggedIn'    =>  $loggedIn
+        ], Response::HTTP_OK);
     }
 
     private function checkUniqueUsername($username)

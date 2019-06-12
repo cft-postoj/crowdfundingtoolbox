@@ -116,6 +116,9 @@ Route::group([
     Route::post('forgotPassword', '\Modules\UserManagement\Http\Controllers\UserServiceController@forgotPassword');
     Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@hasUserGeneratedToken');
     Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
+    Route::group(['middleware' => ['jwt.verify']], function () {
+      Route::get('is-user-logged-in', '\Modules\UserManagement\Http\Controllers\PortalUsersController@isUserLoggedIn');
+    });
 });
 
 

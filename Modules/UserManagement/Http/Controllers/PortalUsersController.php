@@ -37,7 +37,13 @@ class PortalUsersController extends Controller
         );
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         return $this->portalUserService->create($request);
+    }
+
+    public function isUserLoggedIn()
+    {
+        return $this->portalUserService->checkToken();
     }
 }

@@ -19,9 +19,14 @@ button {
       margin-left: -25px;
       margin-top: 1px;
     }
+    &.active {
+      border: 1px solid $selago;
+      background: $selago;
+    }
     &:hover, &:focus, &:visited {
       border: 1px solid $curiousBlue;
-      background: $polar;
+      background: $selago;
     }
+
   }
 }

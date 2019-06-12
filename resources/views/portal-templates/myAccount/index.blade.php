@@ -33,24 +33,12 @@
             </li>
         </ul>
     </div>
+
     <div class="cft--myAccount--body">
-        <div id="cft-myAccount--preview">
-            @include('portal-templates.myAccount.parts.preview')
-        </div>
-        <div id="cft-myAccount--newsletter" style="display: none;">
-            @include('portal-templates.myAccount.parts.newsletter')
-        </div>
-        <div id="cft-myAccount--savedArticles" style="display: none;">
-            @include('portal-templates.myAccount.parts.savedArticles')
-        </div>
-        <div id="cft-myAccount--donations" style="display: none;">
-            @include('portal-templates.myAccount.parts.donations')
-        </div>
-        <div id="cft-myAccount--orders" style="display: none;">
-            @include('portal-templates.myAccount.parts.orders')
-        </div>
-        <div id="cft-myAccount--account" style="display: none;">
-            @include('portal-templates.myAccount.parts.account')
+        <div id="cft-myAccount-body-section">
+            <div class="cft-myAccount--body--loading">
+                <img src="{{env('ASSETS_URL')}}/images/cft-loading.svg" />
+            </div>
         </div>
     </div>
 </div>
