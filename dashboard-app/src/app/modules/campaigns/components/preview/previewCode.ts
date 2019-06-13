@@ -41,10 +41,6 @@ export const globalStyles = `
         transition: all .3s ease
     }
     
-    .cft--monatization--membership-checkbox.active:before {
-        background-color: #3cc300;
-        border: 1px solid #32a300
-    }
     .cft--monatization--membership-checkbox.active:after{
         content: "";
         position: absolute;
@@ -53,7 +49,6 @@ export const globalStyles = `
         top: 10px;
         width: 6px;
         height: 10px;
-        border: solid white;
         border-width: 0 2px 2px 0;
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);

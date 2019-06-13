@@ -72,7 +72,7 @@ export class PreviewMonetizationComponent implements OnInit {
         
             .cft--monatization--membership-checkbox.active:before{
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
-                    border: 1px solid #32a300
+                    border: 1px solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color}
                 }
             .cft--monatization--membership-checkbox.active:after{
                     border: solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
