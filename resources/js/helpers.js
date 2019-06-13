@@ -81,3 +81,15 @@ export function isUserLoggedIn() {
     }
 
 }
+
+
+export function showCountryPhones(obj) {
+    let result = [];
+    for (let p in obj) {
+        if( obj.hasOwnProperty(p) ) {
+            let number = (obj[p].indexOf('+') > -1) ? obj[p] : '+' + obj[p];
+            result.push(p + ' (' + number + ')');
+        }
+    }
+    return result;
+}

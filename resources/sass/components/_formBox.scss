@@ -1,0 +1,5 @@
+&--formBox {
+  background: $white;
+  @include borderRadius(3px);
+  padding: 25px;
+}

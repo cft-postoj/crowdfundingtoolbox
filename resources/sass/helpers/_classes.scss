@@ -1,0 +1,45 @@
+@for $i from 0 through 20 {
+  .cft--mt-#{$i*5} {
+    margin-top: #{$i*5}px !important;
+  }
+
+  .cft--mr-#{$i*5} {
+    margin-right: #{$i*5}px !important;
+  }
+
+  .cft--mb-#{$i*5} {
+    margin-bottom: #{$i*5}px !important;
+  }
+
+  .cft--ml-#{$i*5} {
+    margin-left: #{$i*5}px !important;
+  }
+}
+
+.cft {
+  &--border-radius-left-none {
+    border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+  }
+  &--border-radius-right-none {
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+  &--border-right-none {
+    border-right: none !important;
+  }
+}
+
+.cft {
+  &--font-weight {
+    &-bold {
+      font-weight: bold !important;
+    }
+    &-bolder {
+      font-weight: 500 !important;
+    }
+    &-light {
+      font-weight: 100 !important;
+    }
+  }
+}

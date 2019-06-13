@@ -1,6 +1,7 @@
-import {formSerialize, getJsonFirstProp, isUserLoggedIn} from "./helpers";
+import {formSerialize, getJsonFirstProp, isUserLoggedIn, showCountryPhones} from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as myAccountTexts from "./json/myAccount";
+import * as countryPhones from './json/countryPhone';
 
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('cft--myaccount') !== null)
@@ -67,7 +68,11 @@ function sectionContent(section) {
         .then(response => response.text())
         .then(
             html => {
-                document.getElementById('cft-myAccount-body-section').innerHTML = html
+                document.getElementById('cft-myAccount-body-section').innerHTML = html;
+                    if (section === 'account') {
+                        getCountryPhones(),
+                            getUserData()
+                    }
             }
         );
 }
@@ -92,4 +97,23 @@ function changeMyAccountView() {
             }, 100);
         })
     });
+}
+
+function getCountryPhones() {
+    const countryPhoneSelect = document.querySelector('select[name="cft-countryNumber"]');
+    if (countryPhoneSelect !== null && countryPhones.default !== null) {
+        showCountryPhones(countryPhones.default).forEach((option) => {
+            let el = document.createElement('option');
+            el.value = option.split('(')[1].split(')')[0];
+            el.text = option;
+            if (option.indexOf('SK (+421') > -1) {
+                el.selected = true;
+            }
+            countryPhoneSelect.appendChild(el);
+        })
+    }
+}
+
+function getUserData() {
+
 }
