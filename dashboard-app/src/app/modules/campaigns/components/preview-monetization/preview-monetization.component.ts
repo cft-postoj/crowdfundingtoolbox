@@ -93,6 +93,8 @@ export class PreviewMonetizationComponent implements OnInit {
         }
 
         let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.charset = 'utf-8';
         script.setAttribute("class", "previewScripts");
 
         let scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',

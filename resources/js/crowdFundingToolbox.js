@@ -25,9 +25,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.log(el);
                     switch (el.widget_type.method) {
                         case 'sidebar':
-                            (sidebarPlaceholder != null) &&
-                            (sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]) &&
-                            (sidebarPlaceholder.dataset.show_id = el.show_id);
+                            var scriptElement = document.createElement('script');
+                            var inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
+                            scriptElement.appendChild(inlineScript);
+                            if (sidebarPlaceholder != null) {
+                                sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                sidebarPlaceholder.dataset.show_id = el.show_id;
+                                sidebarPlaceholder.appendChild(scriptElement);
+                            }
                             break;
                         case 'leaderboard':
                             (leaderboardPlaceholder != null) &&
@@ -106,4 +111,14 @@ function getCookie(cname) {
 function setCookie(cname, cvalue, exdays) {
     var expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function parseScriptFromResponse(response) {
+    scripts = response;
+    indexStart = response.indexOf('id="scripts">');
+    indexStart = scripts.indexOf('>', indexStart);
+    indexStart = scripts.indexOf('>', indexStart + 1);
+    indexEnd = response.indexOf('</script>');
+    scripts = scripts.substr(indexStart + 1, indexEnd - indexStart - 1);
+    return scripts;
 }

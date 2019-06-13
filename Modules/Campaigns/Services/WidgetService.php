@@ -232,6 +232,17 @@ class WidgetService implements WidgetServiceInterface
         $typeId = $deviceType->id;
         $overridedSettings = $settings;
 
+        $overridedSettings['payment_settings']['design']['padding']['top'] = '5px';
+        $overridedSettings['payment_settings']['design']['padding']['right'] = '5px';
+        $overridedSettings['payment_settings']['design']['padding']['bottom'] = '5px';
+        $overridedSettings['payment_settings']['design']['padding']['left'] = '5px';
+
+
+        $overridedSettings['payment_settings']['design']['margin']['top'] = '5px';
+        $overridedSettings['payment_settings']['design']['margin']['right'] = '5px';
+        $overridedSettings['payment_settings']['design']['margin']['bottom'] = '5px';
+        $overridedSettings['payment_settings']['design']['margin']['left'] = '5px';
+
         // Landing Page Widget
         if ($widgetTypeId == 1):
             switch ($typeId) {
@@ -336,6 +347,7 @@ class WidgetService implements WidgetServiceInterface
                     break;
                 case 2: // sidebar widget
                     $output = $settings;
+                    $output['default']['display'] = 'relative';
                     $output['default']['margin'] = array(
                         'top' => '420',
                         'right' => 'auto',
@@ -477,7 +489,10 @@ class WidgetService implements WidgetServiceInterface
             'default_price' => array(
                 'active' => true,
                 'value' => 30,
-                'styles' => array()
+                'styles' => array(
+                    'background' => "#0087ed",
+                    'color' => "#ffffff"
+                ),
             )
         );
         return $structure;

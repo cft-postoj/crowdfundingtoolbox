@@ -1,5 +1,16 @@
 export const iframeCode = `
-<style>
+  <div class="content"></div>
+  <script type="text/javascript">
+    if (dataFromParent) {
+      // Subscribe to the Subject so you can trigger changes from Angular
+      dataFromParent.subscribe(res => {
+        document.querySelector('.content').innerHTML = res;
+      })
+    }
+  </script>
+`;
+export const globalStyles = `
+    <style>
     body {height: 100%; background: #FFFFFF;}
     .content {width: 100%;}
     
@@ -60,16 +71,6 @@ export const iframeCode = `
     
     .submitted input:invalid ~ label.error {
         display: none;
-    }
-    
+    }    
 </style>
-  <div class="content"></div>
-  <script type="text/javascript">
-    if (dataFromParent) {
-      // Subscribe to the Subject so you can trigger changes from Angular
-      dataFromParent.subscribe(res => {
-        document.querySelector('.content').innerHTML = res;
-      })
-    }
-  </script>
 `
