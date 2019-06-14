@@ -46,4 +46,24 @@ class PortalUsersController extends Controller
     {
         return $this->portalUserService->checkToken();
     }
+
+    public function getDetailsByToken()
+    {
+        return $this->portalUserService->getUserByToken();
+    }
+
+    public function logout()
+    {
+        return $this->portalUserService->logout();
+    }
+
+    protected function authenticate(Request $request)
+    {
+        return $this->portalUserService->authenticate($request);
+    }
+
+    protected function resetPassword(Request $request)
+    {
+        return $this->portalUserService->resetPassword($request);
+    }
 }

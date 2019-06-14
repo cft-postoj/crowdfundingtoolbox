@@ -1,19 +1,34 @@
-import {formSerialize, getJsonFirstProp, isUserLoggedIn, showCountryPhones} from "./helpers";
+import {
+    formSerialize,
+    getJsonFirstProp,
+    getRequest,
+    isUserLoggedIn,
+    setTokenHeader,
+    showCountryPhones
+} from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as myAccountTexts from "./json/myAccount";
 import * as countryPhones from './json/countryPhone';
+import * as countries from './json/countries';
+import {errorAlert, successAlert} from "./alert";
 
 document.addEventListener('DOMContentLoaded', function () {
-    if (document.getElementById('cft--myaccount') !== null)
-        if (isUserLoggedIn() === false) {
-            location.href = '/';
+    if (document.getElementById('cft--myaccount') !== null) {
+        if (location.href.indexOf('?generatedResetToken') > -1) {
+            isValidGeneratedToken(location.href.split('?generatedResetToken')[1]);
+        } else {
+            if (isUserLoggedIn() === false) {
+                location.href = '/';
+            } else {
+                fetchMyAccountTemplate();
+
+                setTimeout(() => {
+                    myAccountButton();
+                }, 2000);
+            }
         }
-    fetchMyAccountTemplate();
 
-    setTimeout(() => {
-        myAccountButton();
-    }, 2000);
-
+    }
 });
 
 
@@ -69,10 +84,12 @@ function sectionContent(section) {
         .then(
             html => {
                 document.getElementById('cft-myAccount-body-section').innerHTML = html;
-                    if (section === 'account') {
-                        getCountryPhones(),
-                            getUserData()
-                    }
+                if (section === 'account') {
+                    getCountryPhones(),
+                        getUserData(),
+                        getCountries(),
+                        logout()
+                }
             }
         );
 }
@@ -114,6 +131,53 @@ function getCountryPhones() {
     }
 }
 
-function getUserData() {
+function getCountries() {
+    const countrySelect = document.querySelector('select[name="cft-country"]');
+    if (countrySelect !== null) {
+        countries.map((c) => {
+            let el = document.createElement('option');
+            el.value = c.name;
+            el.text = c.name;
+            if (c.code === 'SK') {
+                el.selected = true;
+            }
+            countrySelect.appendChild(el);
+        })
+    }
+}
 
+function logout() {
+    const logoutButton = document.getElementById('cft--logout');
+    logoutButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let header = [];
+        if (getRequest(apiUrl + 'logout', setTokenHeader(header)).status === 'logout') {
+            location.href = '/';
+        }
+    });
+}
+
+function getUserData() {
+    let actualHeader = [];
+    console.log(getRequest(apiUrl + 'user-details', setTokenHeader(actualHeader)));
+}
+
+function isValidGeneratedToken(token) {
+    let data = {
+        generatedToken: token
+    };
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', apiUrl + 'has-user-generated-token', true);
+    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.responseType = 'json';
+    xhttp.onload = () => {
+        console.log(xhttp.response)
+
+        alert('Dopyt pre generovany token...');
+
+        /*
+        TODO: ADD ALERT NOTIFICATION FOR THIS USER IN MY ACCOUNT VIEW .. to change password
+         */
+    };
+    xhttp.send(JSON.stringify(data));
 }

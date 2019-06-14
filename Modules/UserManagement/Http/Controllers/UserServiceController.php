@@ -2,10 +2,10 @@
 
 namespace Modules\UserManagement\Http\Controllers;
 
+use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Entities\BackOfficeUser;
 use Modules\UserManagement\Entities\BackOfficeRole;
-use App\Mail\AutoRegistrationEmail;
 use App\Mail\ForgottenPasswordEmail;
 use App\Mail\RegisterEmail;
 use Modules\UserManagement\Entities\PortalUser;

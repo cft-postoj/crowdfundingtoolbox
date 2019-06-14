@@ -1,17 +1,26 @@
 <button type="button" id="cft--loginButton" class="cft--loginButton">Prihlásiť sa</button>
 <div class="cft--loginDropdown">
-    <form name="cft-login">
+    <form name="cft-forgottenPassword">
+        <h3>Zabudnuté heslo</h3>
+        <label for="cft-emailPassword">
+            E-MAIL
+        </label>
+        <input type="email" id="cft-emailPassword" name="cft-email" class="" required>
+        <span class="cft--loginDropdown--message cft-email"></span>
+        <button type="submit">Reset hesla</button>
+        <button type="button" id="cft--showLogin">Prihlásiť sa</button>
+    </form>
+    <form name="cft-login" class="active">
         <label for="cft-email">
             E-MAIL
         </label>
-        <input type="email" id="cft-email" name="cft-email" class="error" required>
-        <span class="cft--loginDropdown--error cft-email active">Nesprávny e-mail. Nemáte ešte registráciu?<br/>
-            <a href="http://registracia.postoj.local:8000" target="_blank">Registrujte sa</a>.</span>
+        <input type="email" id="cft-email" name="cft-email" class="" required>
+        <span class="cft--loginDropdown--message cft-email"></span>
         <label for="cft-password">
-            HESLO
+            HESLO <button type="button" id="cft--forgottenPassword">Zabudli ste heslo?</button>
         </label>
-        <input type="password" id="cft-password" name="cft-password" required>
-        <span class="cft--loginDropdown--error cft-password"></span>
+        <input type="password" id="cft-password" name="cft-password" class="" required>
+        <span class="cft--loginDropdown--message cft-password"></span>
         <button type="submit">Prihlásiť sa</button>
     </form>
     <div class="cft--loginDropdown--register">

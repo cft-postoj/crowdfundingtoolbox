@@ -1,4 +1,4 @@
-import {formSerialize, getJsonFirstProp, portalUrl} from "./helpers";
+import {errorShowing, formSerialize, getJsonFirstProp, portalUrl} from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as registerTexts from "./json/register";
 
@@ -110,15 +110,7 @@ function register() {
 }
 
 
-function errorShowing(selector, element, errorText) {
-    document.querySelector(selector).classList.add('active');
-    document.querySelector(element).classList.add('error');
-    document.querySelector(selector).innerHTML = errorText;
-    document.querySelector(element).addEventListener('change', (e) => {
-        document.querySelector(selector).classList.remove('active');
-        document.querySelector(element).classList.remove('error');
-    });
-}
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

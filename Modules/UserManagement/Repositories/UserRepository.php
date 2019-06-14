@@ -4,6 +4,7 @@
 namespace Modules\UserManagement\Repositories;
 
 
+use http\Env\Response;
 use Modules\UserManagement\Entities\User;
 
 class UserRepository implements UserRepositoryInterface
@@ -75,5 +76,14 @@ class UserRepository implements UserRepositoryInterface
         return $this->model
             ::where('username', $username)
             ->first();
+    }
+
+    public function addGeneratedToken($id, $token)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->update([
+                'generate_password_token'   =>  $token
+            ]);
     }
 }
