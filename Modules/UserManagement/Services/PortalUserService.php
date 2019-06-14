@@ -4,12 +4,16 @@
 namespace Modules\UserManagement\Services;
 
 
+use const http\Client\Curl\Features\HTTP2;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
+use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Repositories\UserRepository;
 use JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class PortalUserService implements PortalUserServiceInterface
 {
@@ -130,7 +134,16 @@ class PortalUserService implements PortalUserServiceInterface
         }
 
         return \response()->json([
-            'isLoggedIn'    =>  $loggedIn
+            'isLoggedIn' => $loggedIn
+        ], Response::HTTP_OK);
+    }
+
+    public function logout()
+    {
+        JWTAuth::invalidate(JWTAuth::getToken());
+        return \response()->json([
+            'status' => 'logout',
+            'message' => 'Token was successfully invalidated.'
         ], Response::HTTP_OK);
     }
 
@@ -141,5 +154,106 @@ class PortalUserService implements PortalUserServiceInterface
         }
         $this->usernameUsedCounter++;
         return $this->checkUniqueUsername($username . $this->usernameUsedCounter);
+    }
+
+    public function getUserByToken()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        if ($user->id !== null) {
+            return \response()->json([
+                $this->portalUserRepository->get($user->id)
+            ], Response::HTTP_OK);
+        }
+
+        return \response()->json([
+            'error' => 'unauthorized'
+        ], Response::HTTP_BAD_REQUEST);
+    }
+
+    public function authenticate($request)
+    {
+        $prefix = $request->route()->getPrefix();
+        /*
+         * check if there is portal endpoint (not for backoffice users)
+         */
+        if (strpos($prefix, 'backoffice') !== false) {
+            return \response()->json([
+                'error' => 'invalid_access',
+                'message' => 'You don\'t have an access to this.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        // if user post username
+        if (strpos($request['email'], '@') === false) {
+            $credentials = [
+                'username' => $request['email'],
+                'password' => $request['password']
+            ];
+        }
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                $possibleUser = $this->userRepository->getByEmail($request['email']);
+                if ($possibleUser !== null) {
+                    // check if user exist like Portal user
+                    if ($this->portalUserRepository->get($possibleUser->id) !== null) {
+                        return \response()->json([
+                            'error' => true,
+                            'type' => 'password'
+                        ], Response::HTTP_BAD_REQUEST);
+                    }
+                }
+                return \response()->json([
+                    'error' => true,
+                    'type' => 'email'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+        } catch (JWTException $e) {
+            return \response()->json(['error' => 'could_not_create_token', 'message' => $e], 500);
+        }
+
+        $user = Auth::user();
+        $token = JWTAuth::fromUser($user);
+        return \response()->json([
+            'token' => $token
+        ], Response::HTTP_OK);
+    }
+
+    public function resetPassword($request)
+    {
+        try {
+            $possibleUser = $this->userRepository->getByEmail($request['email']);
+            if ($possibleUser !== null) {
+                // check if user exist like Portal user
+                if ($this->portalUserRepository->get($possibleUser->id) !== null) {
+                    $generatedToken = $this->generatePasswordToken();
+                    $this->userRepository->addGeneratedToken($possibleUser->id, $generatedToken);
+                    Mail::to($request['email'])->send(new ForgottenPasswordEmail($generatedToken));
+                    return \response()->json([
+                        'error' =>  false,
+                        'message'   =>  'Email with password was successfully sent.'
+                    ], Response::HTTP_OK);
+                }
+            }
+            return \response()->json([
+                'error' => true,
+                'type' => 'email'
+            ], Response::HTTP_BAD_REQUEST);
+
+        } catch (JWTException $e) {
+            return \response()->json(['error' => 'could_not_create_token', 'message' => $e], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    private function generatePasswordToken()
+    {
+        $length = 32;
+        try {
+            return bin2hex(random_bytes($length));
+        } catch (\Exception $e) {
+            return $e;
+        }
+
     }
 }

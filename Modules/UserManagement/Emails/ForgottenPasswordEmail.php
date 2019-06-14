@@ -29,8 +29,8 @@ class ForgottenPasswordEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Reset password')
-            ->from('smtp@crowdfundingtoolbox.news')
+        return $this->subject('Zabudnuté heslo')
+            ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
             ->view('emails.forgottenPassword');
     }
 }

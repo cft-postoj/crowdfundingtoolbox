@@ -21,4 +21,6 @@ interface UserRepositoryInterface
     public function getPortalUsers();
 
     public function getPortalUserById($id);
+
+    public function addGeneratedToken($id, $token);
 }

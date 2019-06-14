@@ -1,7 +1,9 @@
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-import {formSerialize, getJsonFirstProp, isUserLoggedIn} from "./helpers";
+import {errorShowing, successShowing, isUserLoggedIn, fadeIn, resetFormInputs} from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as myAccountTexts from './json/myAccount';
+import * as loginTexts from './json/login';
+
 
 import {successAlert, errorAlert} from "./alert";
 
@@ -11,54 +13,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function loginAction() {
-    const form = document.querySelector('form[name="cftLogin--login--form"]');
+    const form = document.querySelector('form[name="cft-login"]');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        let data = JSON.stringify(formSerialize(form));
+        let data = {
+            'email': document.querySelector('form[name="cft-login"] input[name="cft-email"]').value,
+            'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value
+        };
         let xhttp = new XMLHttpRequest();
         xhttp.open('POST', apiUrl + 'login', true);
         xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         xhttp.responseType = 'json';
         xhttp.onload = () => {
+            if (xhttp.response.error) {
+                switch (xhttp.response.type) {
+                    case 'email':
+                        errorShowing('form[name="cft-login"] span.cft-email',
+                            'form[name="cft-login"] input[name="cft-email"]',
+                            loginTexts.incorrectEmail);
+                        break;
+
+                    case 'password':
+                        errorShowing('form[name="cft-login"] span.cft-password',
+                            'form[name="cft-login"] input[name="cft-password"]',
+                            loginTexts.incorrectPassword);
+                        break;
+                }
+            }
             if (xhttp.response.token) {
                 localStorage.setItem('cft_usertoken', xhttp.response.token);
                 showMyAccount();
             }
         }
-        xhttp.send(data);
+        xhttp.send(JSON.stringify(data));
     });
 
     // code below is required for submitting
-    const submitButton = document.querySelector('form[name="cftLogin--login--form"] button[type="submit"]');
-    submitButton.addEventListener('click', (clickEvent) => {
-        const domEvent = document.createEvent('Event');
-        domEvent.initEvent('submit', false, true);
-        clickEvent.target.closest('form').dispatchEvent(domEvent);
-    })
-}
-
-function registerAction() {
-    const form = document.querySelector('form[name="cftLogin--register--form"]');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = JSON.stringify(formSerialize(form));
-        let xhttp = new XMLHttpRequest();
-        xhttp.open('POST', apiUrl + 'register', true);
-        xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        xhttp.responseType = 'json';
-        xhttp.onload = () => {
-            // if there is some error
-            if (xhttp.response.error) {
-                errorAlert(getJsonFirstProp(xhttp.response.error));
-            } else {
-                successAlert(xhttp.response.message);
-            }
-        };
-        xhttp.send(data);
-    });
-
-    // code below is required for submitting
-    const submitButton = document.querySelector('form[name="cftLogin--register--form"] button[type="submit"]');
+    const submitButton = document.querySelector('form[name="cft-login"] button[type="submit"]');
     submitButton.addEventListener('click', (clickEvent) => {
         const domEvent = document.createEvent('Event');
         domEvent.initEvent('submit', false, true);
@@ -67,31 +58,34 @@ function registerAction() {
 }
 
 function forgotPasswordAction() {
-    const form = document.querySelector('form[name="cftLogin--forgotPassword--form"]');
+    const form = document.querySelector('form[name="cft-forgottenPassword"]');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        let data = JSON.stringify(formSerialize(form));
+        let data = {
+            email: document.querySelector('form[name="cft-forgottenPassword"] input[name="cft-email"]').value
+        };
         let xhttp = new XMLHttpRequest();
-        xhttp.open('POST', apiUrl + 'forgotPassword', true);
+        xhttp.open('POST', apiUrl + 'forgotten-password', true);
         xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         xhttp.responseType = 'json';
         xhttp.onload = () => {
             // if there is some error
             if (xhttp.response.error) {
-                errorAlert(getJsonFirstProp(xhttp.response.error));
+                errorShowing('form[name="cft-forgottenPassword"] span.cft-email',
+                    'form[name="cft-forgottenPassword"] input[name="cft-email"]',
+                    loginTexts.incorrectEmail);
             } else {
-                if (xhttp.status === 200) {
-                    successAlert(xhttp.response.message);
-                } else {
-                    errorAlert(xhttp.response.message);
-                }
+                successShowing('form[name="cft-forgottenPassword"] span.cft-email',
+                    'form[name="cft-forgottenPassword"] input[name="cft-email"]',
+                    loginTexts.successResetPassword);
+                resetFormInputs('form[name="cft-forgottenPassword"]');
             }
         };
-        xhttp.send(data);
+        xhttp.send(JSON.stringify(data));
     });
 
     // code below is required for submitting
-    const submitButton = document.querySelector('form[name="cftLogin--forgotPassword--form"] button[type="submit"]');
+    const submitButton = document.querySelector('form[name="cft-forgottenPassword"] button[type="submit"]');
     submitButton.addEventListener('click', (clickEvent) => {
         const domEvent = document.createEvent('Event');
         domEvent.initEvent('submit', false, true);
@@ -100,11 +94,14 @@ function forgotPasswordAction() {
 }
 
 function showMyAccount() {
-    document.getElementById('cft--loginButton').style.display = 'none';
-    setTimeout(() => {
-        document.getElementById('cft--myAccountButton').style.display = 'block';
-        document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-    }, 500);
+    const button = document.getElementById('cft--loginButton');
+    const loginDropdown = document.querySelector('.cft--loginDropdown');
+    loginDropdown.classList.remove('active');
+    button.innerHTML = myAccountTexts.myAccountButton;
+    button.onclick = () => {
+        if (location.href.indexOf(myAccountTexts.myAccountUrl) === -1)
+            location.href = myAccountTexts.myAccountUrl;
+    }
 }
 
 function fetchLoginTemplate() {
@@ -147,9 +144,36 @@ function loginFunctions() {
 
                 }
             }
+
+            loginAction();
+            showForgottenPassword();
         };
     }
 
+}
+
+function showForgottenPassword() {
+    const button = document.getElementById('cft--forgottenPassword');
+    const forgottenPasswordForm = document.querySelector('form[name="cft-forgottenPassword"]');
+    const loginForm = document.querySelector('form[name="cft-login"]');
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        fadeIn(forgottenPasswordForm, 500);
+    });
+    forgotPasswordAction();
+    showLogin();
+}
+
+function showLogin() {
+    const button = document.getElementById('cft--showLogin');
+    const forgottenPasswordForm = document.querySelector('form[name="cft-forgottenPassword"]');
+    const loginForm = document.querySelector('form[name="cft-login"]');
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        forgottenPasswordForm.style.display = 'none';
+        fadeIn(loginForm, 500);
+    });
 }
 
 

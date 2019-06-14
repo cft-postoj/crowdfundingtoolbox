@@ -12,7 +12,7 @@
         <span class="cft--loginDropdown--error cft-password"></span>
 
         <div class="cft--register--checkbox">
-            <label for="cft-mailing" class="checkbox">
+            <label for="cft-mailing" class="checkbox cft--checkbox">
                 <input type="checkbox" name="cft-mailing" id="cft-mailing">
                 <span class="checkmark"></span>
                 Súhlasím s posielaním mailov z Postoja.
@@ -20,7 +20,7 @@
         </div>
 
         <div class="cft--register--checkbox">
-            <label for="cft-agree" class="checkbox">
+            <label for="cft-agree" class="checkbox cft--checkbox">
                 <input type="checkbox" name="cft-agree" id="cft-agree" required>
                 <span class="checkmark"></span>
                 Súhlasím so spracovaním <a href="#">osobných údajov</a>.

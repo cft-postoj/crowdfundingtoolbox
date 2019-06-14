@@ -1,0 +1,35 @@
+&--input {
+  display: block;
+  width: 100%;
+  &:not([type="checkbox"]) {
+    height: 40px;
+    @include borderRadius(3px);
+    background: $polar;
+    border: 1px solid $iron;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    @include transitionSingle(.3s ease);
+    outline: none;
+
+    &:focus {
+      border: 1px solid $curiousBlue;
+    }
+    &.error {
+      background: $chablis;
+      border: 1px solid $japonica;
+      outline: none;
+      &:focus {
+        border: 1px solid $japonica;
+      }
+    }
+    &[type="password"], &[type="text"] {
+      background-image: none !important;
+      & + img {
+        position: absolute;
+        cursor: pointer;
+        top: 30px;
+        right: 10px;
+      }
+    }
+  }
+}

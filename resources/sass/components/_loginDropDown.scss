@@ -9,7 +9,11 @@
   right: 0;
   margin-top: 5px;
 
-  form[name="cft-login"] {
+  form[name="cft-login"], form[name="cft-forgottenPassword"] {
+    h3 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
     padding: 25px;
 
     label, input {
@@ -58,6 +62,40 @@
 
       &:hover {
         @include boxShadow(0px 2px 6px rgba(0, 0, 0, .2));
+      }
+    }
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+
+  &--message {
+    display: none;
+    &.error {
+      display: none;
+      color: $japonica;
+      font-size: 12px;
+      margin: 5px 0 10px;
+      a {
+        color: $japonica;
+        text-decoration: underline;
+      }
+      &.active {
+        display: block;
+      }
+    }
+    &.success {
+      display: none;
+      color: $salem;
+      font-size: 12px;
+      margin: 5px 0 10px;
+      a {
+        color: $salem;
+        text-decoration: underline;
+      }
+      &.active {
+        display: block;
       }
     }
   }
@@ -119,5 +157,30 @@
 
   &.active {
     display: block;
+  }
+
+  #cft--forgottenPassword {
+    float: right;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $curiousBlue;
+    padding-bottom: 5px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  #cft--showLogin {
+    display: block;
+    margin: 30px auto 0;
+    text-align: center;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $curiousBlue;
+    padding-bottom: 5px;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

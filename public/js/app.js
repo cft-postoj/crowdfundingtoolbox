@@ -930,8 +930,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 /* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
 var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/myAccount */ "./resources/js/json/myAccount.json", 1);
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+/* harmony import */ var _json_login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./json/login */ "./resources/js/json/login.json");
+var _json_login__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/login */ "./resources/js/json/login.json", 1);
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+
 
 
 
@@ -941,56 +944,41 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function loginAction() {
-  var form = document.querySelector('form[name="cftLogin--login--form"]');
+  var form = document.querySelector('form[name="cft-login"]');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
+    var data = {
+      'email': document.querySelector('form[name="cft-login"] input[name="cft-email"]').value,
+      'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value
+    };
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'login', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
     xhttp.onload = function () {
+      if (xhttp.response.error) {
+        switch (xhttp.response.type) {
+          case 'email':
+            Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["errorShowing"])('form[name="cft-login"] span.cft-email', 'form[name="cft-login"] input[name="cft-email"]', _json_login__WEBPACK_IMPORTED_MODULE_3__["incorrectEmail"]);
+            break;
+
+          case 'password':
+            Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["errorShowing"])('form[name="cft-login"] span.cft-password', 'form[name="cft-login"] input[name="cft-password"]', _json_login__WEBPACK_IMPORTED_MODULE_3__["incorrectPassword"]);
+            break;
+        }
+      }
+
       if (xhttp.response.token) {
         localStorage.setItem('cft_usertoken', xhttp.response.token);
         showMyAccount();
       }
     };
 
-    xhttp.send(data);
+    xhttp.send(JSON.stringify(data));
   }); // code below is required for submitting
 
-  var submitButton = document.querySelector('form[name="cftLogin--login--form"] button[type="submit"]');
-  submitButton.addEventListener('click', function (clickEvent) {
-    var domEvent = document.createEvent('Event');
-    domEvent.initEvent('submit', false, true);
-    clickEvent.target.closest('form').dispatchEvent(domEvent);
-  });
-}
-
-function registerAction() {
-  var form = document.querySelector('form[name="cftLogin--register--form"]');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
-    var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'register', true);
-    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    xhttp.responseType = 'json';
-
-    xhttp.onload = function () {
-      // if there is some error
-      if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
-      } else {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["successAlert"])(xhttp.response.message);
-      }
-    };
-
-    xhttp.send(data);
-  }); // code below is required for submitting
-
-  var submitButton = document.querySelector('form[name="cftLogin--register--form"] button[type="submit"]');
+  var submitButton = document.querySelector('form[name="cft-login"] button[type="submit"]');
   submitButton.addEventListener('click', function (clickEvent) {
     var domEvent = document.createEvent('Event');
     domEvent.initEvent('submit', false, true);
@@ -999,32 +987,31 @@ function registerAction() {
 }
 
 function forgotPasswordAction() {
-  var form = document.querySelector('form[name="cftLogin--forgotPassword--form"]');
+  var form = document.querySelector('form[name="cft-forgottenPassword"]');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var data = JSON.stringify(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["formSerialize"])(form));
+    var data = {
+      email: document.querySelector('form[name="cft-forgottenPassword"] input[name="cft-email"]').value
+    };
     var xhttp = new XMLHttpRequest();
-    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'forgotPassword', true);
+    xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'forgotten-password', true);
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
 
     xhttp.onload = function () {
       // if there is some error
       if (xhttp.response.error) {
-        Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getJsonFirstProp"])(xhttp.response.error));
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["errorShowing"])('form[name="cft-forgottenPassword"] span.cft-email', 'form[name="cft-forgottenPassword"] input[name="cft-email"]', _json_login__WEBPACK_IMPORTED_MODULE_3__["incorrectEmail"]);
       } else {
-        if (xhttp.status === 200) {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_3__["successAlert"])(xhttp.response.message);
-        } else {
-          Object(_alert__WEBPACK_IMPORTED_MODULE_3__["errorAlert"])(xhttp.response.message);
-        }
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["successShowing"])('form[name="cft-forgottenPassword"] span.cft-email', 'form[name="cft-forgottenPassword"] input[name="cft-email"]', _json_login__WEBPACK_IMPORTED_MODULE_3__["successResetPassword"]);
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["resetFormInputs"])('form[name="cft-forgottenPassword"]');
       }
     };
 
-    xhttp.send(data);
+    xhttp.send(JSON.stringify(data));
   }); // code below is required for submitting
 
-  var submitButton = document.querySelector('form[name="cftLogin--forgotPassword--form"] button[type="submit"]');
+  var submitButton = document.querySelector('form[name="cft-forgottenPassword"] button[type="submit"]');
   submitButton.addEventListener('click', function (clickEvent) {
     var domEvent = document.createEvent('Event');
     domEvent.initEvent('submit', false, true);
@@ -1033,11 +1020,14 @@ function forgotPasswordAction() {
 }
 
 function showMyAccount() {
-  document.getElementById('cft--loginButton').style.display = 'none';
-  setTimeout(function () {
-    document.getElementById('cft--myAccountButton').style.display = 'block';
-    document.querySelector('.cftLogin--cftLoginWrapper').classList.toggle('active');
-  }, 500);
+  var button = document.getElementById('cft--loginButton');
+  var loginDropdown = document.querySelector('.cft--loginDropdown');
+  loginDropdown.classList.remove('active');
+  button.innerHTML = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountButton"];
+
+  button.onclick = function () {
+    if (location.href.indexOf(_json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"]) === -1) location.href = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"];
+  };
 }
 
 function fetchLoginTemplate() {
@@ -1074,8 +1064,35 @@ function loginFunctions() {
           }
         };
       }
+
+      loginAction();
+      showForgottenPassword();
     };
   }
+}
+
+function showForgottenPassword() {
+  var button = document.getElementById('cft--forgottenPassword');
+  var forgottenPasswordForm = document.querySelector('form[name="cft-forgottenPassword"]');
+  var loginForm = document.querySelector('form[name="cft-login"]');
+  button.addEventListener('click', function (e) {
+    e.preventDefault();
+    loginForm.style.display = 'none';
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["fadeIn"])(forgottenPasswordForm, 500);
+  });
+  forgotPasswordAction();
+  showLogin();
+}
+
+function showLogin() {
+  var button = document.getElementById('cft--showLogin');
+  var forgottenPasswordForm = document.querySelector('form[name="cft-forgottenPassword"]');
+  var loginForm = document.querySelector('form[name="cft-login"]');
+  button.addEventListener('click', function (e) {
+    e.preventDefault();
+    forgottenPasswordForm.style.display = 'none';
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["fadeIn"])(loginForm, 500);
+  });
 }
 
 /***/ }),
@@ -1093,17 +1110,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 /* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
 var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/myAccount */ "./resources/js/json/myAccount.json", 1);
+/* harmony import */ var _json_countryPhone__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./json/countryPhone */ "./resources/js/json/countryPhone.json");
+var _json_countryPhone__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/countryPhone */ "./resources/js/json/countryPhone.json", 1);
+/* harmony import */ var _json_countries__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./json/countries */ "./resources/js/json/countries.json");
+var _json_countries__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/countries */ "./resources/js/json/countries.json", 1);
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
+
+
+
 
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  if (document.getElementById('cft--myaccount') !== null) if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() === false) {
-    location.href = '/';
+  if (document.getElementById('cft--myaccount') !== null) {
+    if (location.href.indexOf('?generatedResetToken') > -1) {
+      isValidGeneratedToken(location.href.split('?generatedResetToken')[1]);
+    } else {
+      if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() === false) {
+        location.href = '/';
+      } else {
+        fetchMyAccountTemplate();
+        setTimeout(function () {
+          myAccountButton();
+        }, 2000);
+      }
+    }
   }
-  fetchMyAccountTemplate();
-  setTimeout(function () {
-    myAccountButton();
-  }, 2000);
 });
 
 function fetchMyAccountTemplate() {
@@ -1158,6 +1190,10 @@ function sectionContent(section) {
     return response.text();
   }).then(function (html) {
     document.getElementById('cft-myAccount-body-section').innerHTML = html;
+
+    if (section === 'account') {
+      getCountryPhones(), getUserData(), getCountries(), logout();
+    }
   });
 }
 
@@ -1182,6 +1218,79 @@ function changeMyAccountView() {
       }, 100);
     });
   });
+}
+
+function getCountryPhones() {
+  var countryPhoneSelect = document.querySelector('select[name="cft-countryNumber"]');
+
+  if (countryPhoneSelect !== null && _json_countryPhone__WEBPACK_IMPORTED_MODULE_3__ !== null) {
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["showCountryPhones"])(_json_countryPhone__WEBPACK_IMPORTED_MODULE_3__).forEach(function (option) {
+      var el = document.createElement('option');
+      el.value = option.split('(')[1].split(')')[0];
+      el.text = option;
+
+      if (option.indexOf('SK (+421') > -1) {
+        el.selected = true;
+      }
+
+      countryPhoneSelect.appendChild(el);
+    });
+  }
+}
+
+function getCountries() {
+  var countrySelect = document.querySelector('select[name="cft-country"]');
+
+  if (countrySelect !== null) {
+    _json_countries__WEBPACK_IMPORTED_MODULE_4__["map"](function (c) {
+      var el = document.createElement('option');
+      el.value = c.name;
+      el.text = c.name;
+
+      if (c.code === 'SK') {
+        el.selected = true;
+      }
+
+      countrySelect.appendChild(el);
+    });
+  }
+}
+
+function logout() {
+  var logoutButton = document.getElementById('cft--logout');
+  logoutButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    var header = [];
+
+    if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'logout', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])(header)).status === 'logout') {
+      location.href = '/';
+    }
+  });
+}
+
+function getUserData() {
+  var actualHeader = [];
+  console.log(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'user-details', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])(actualHeader)));
+}
+
+function isValidGeneratedToken(token) {
+  var data = {
+    generatedToken: token
+  };
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'has-user-generated-token', true);
+  xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  xhttp.responseType = 'json';
+
+  xhttp.onload = function () {
+    console.log(xhttp.response);
+    alert('Dopyt pre generovany token...');
+    /*
+    TODO: ADD ALERT NOTIFICATION FOR THIS USER IN MY ACCOUNT VIEW .. to change password
+     */
+  };
+
+  xhttp.send(JSON.stringify(data));
 }
 
 /***/ }),
@@ -1246,7 +1355,7 @@ function register() {
     };
 
     if (!data.agreePersonalData) {
-      return errorShowing('form[name="cft-register"] span.cft-agree', 'form[name="cft-register"] input[name="cft-agree"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["agreeConfirm"]);
+      return Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["errorShowing"])('form[name="cft-register"] span.cft-agree', 'form[name="cft-register"] input[name="cft-agree"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["agreeConfirm"]);
     }
 
     var xhttp = new XMLHttpRequest();
@@ -1259,20 +1368,20 @@ function register() {
       if (xhttp.response.error !== undefined) {
         switch (xhttp.response.error.type) {
           case 'email-registered':
-            errorShowing('form[name="cft-register"] span.cft-email', 'form[name="cft-register"] input[name="cft-email"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["emailExists"]);
+            Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["errorShowing"])('form[name="cft-register"] span.cft-email', 'form[name="cft-register"] input[name="cft-email"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["emailExists"]);
             break;
 
           case 'email':
-            errorShowing('form[name="cft-register"] span.cft-email', 'form[name="cft-register"] input[name="cft-email"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["emailIncorrect"]);
+            Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["errorShowing"])('form[name="cft-register"] span.cft-email', 'form[name="cft-register"] input[name="cft-email"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["emailIncorrect"]);
             break;
 
           default:
             if (xhttp.response.password !== undefined) {
-              errorShowing('form[name="cft-register"] span.cft-password', 'form[name="cft-register"] input[name="cft-password"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["passwordIncorrect"]);
+              Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["errorShowing"])('form[name="cft-register"] span.cft-password', 'form[name="cft-register"] input[name="cft-password"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["passwordIncorrect"]);
               break;
             }
 
-            errorShowing('form[name="cft-register"] span.cft-agree', 'form[name="cft-register"] button[type="submit"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["undefinedError"]);
+            Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["errorShowing"])('form[name="cft-register"] span.cft-agree', 'form[name="cft-register"] button[type="submit"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["undefinedError"]);
             break;
         }
       } else {
@@ -1333,16 +1442,6 @@ function register() {
     var domEvent = document.createEvent('Event');
     domEvent.initEvent('submit', false, true);
     clickEvent.target.closest('form').dispatchEvent(domEvent);
-  });
-}
-
-function errorShowing(selector, element, errorText) {
-  document.querySelector(selector).classList.add('active');
-  document.querySelector(element).classList.add('error');
-  document.querySelector(selector).innerHTML = errorText;
-  document.querySelector(element).addEventListener('change', function (e) {
-    document.querySelector(selector).classList.remove('active');
-    document.querySelector(element).classList.remove('error');
   });
 }
 
@@ -1424,7 +1523,7 @@ function cr0wdGetDeviceType() {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, portalUrl, isUserLoggedIn */
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, portalUrl, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1438,6 +1537,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formSerialize", function() { return formSerialize; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUserLoggedIn", function() { return isUserLoggedIn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showCountryPhones", function() { return showCountryPhones; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRequest", function() { return getRequest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTokenHeader", function() { return setTokenHeader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "errorShowing", function() { return errorShowing; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "successShowing", function() { return successShowing; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetFormInputs", function() { return resetFormInputs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fadeIn", function() { return fadeIn; });
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 
 function toggleClassLists(array, remove, el) {
@@ -1500,20 +1606,128 @@ function isUserLoggedIn() {
   var token = localStorage.getItem('cft_usertoken');
 
   if (token !== null) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open('GET', _constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', true);
-    xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
-    xhttp.responseType = 'json';
+    var header = [];
+    console.log(getRequest(_constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', setTokenHeader(header)).isLoggedIn);
 
-    xhttp.onload = function () {
-      return xhttp.response.isLoggedIn;
-    };
+    if (getRequest(_constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', setTokenHeader(header)).isLoggedIn === true) {
+      return true;
+    }
 
-    xhttp.send();
+    return false;
   } else {
     return false;
   }
 }
+function showCountryPhones(obj) {
+  var result = [];
+
+  for (var p in obj) {
+    if (obj.hasOwnProperty(p)) {
+      var number = obj[p].indexOf('+') > -1 ? obj[p] : '+' + obj[p];
+      result.push(p + ' (' + number + ')');
+    }
+  }
+
+  return result;
+}
+function getRequest(url, header) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.open('GET', url, false);
+
+  if (header !== null) {
+    header.map(function (h) {
+      xhttp.setRequestHeader(h.name, h.value);
+    });
+  }
+
+  xhttp.send(null);
+  return JSON.parse(xhttp.response);
+}
+function setTokenHeader(actualHeader) {
+  var token = localStorage.getItem('cft_usertoken');
+  var header = {
+    name: 'Authorization',
+    value: 'Bearer ' + token
+  };
+  actualHeader.push(header);
+  return actualHeader;
+}
+function errorShowing(selector, element, errorText) {
+  document.querySelector(selector).classList.add('active');
+  document.querySelector(selector).classList.add('error');
+  document.querySelector(element).classList.add('error');
+  document.querySelector(selector).innerHTML = errorText;
+  document.querySelector(element).addEventListener('change', function (e) {
+    document.querySelector(selector).classList.remove('active');
+    document.querySelector(selector).classList.remove('error');
+    document.querySelector(element).classList.remove('error');
+  });
+}
+function successShowing(selector, element, successText) {
+  document.querySelector(selector).classList.add('active');
+  document.querySelector(selector).classList.add('success');
+  document.querySelector(element).classList.add('success');
+  document.querySelector(selector).innerHTML = successText;
+  document.querySelector(element).addEventListener('change', function (e) {
+    document.querySelector(selector).classList.remove('active');
+    document.querySelector(selector).classList.remove('success');
+    document.querySelector(element).classList.remove('success');
+  });
+}
+function resetFormInputs(form) {
+  document.querySelectorAll(form + ' input').forEach(function (s) {
+    s.value = '';
+  });
+}
+function fadeIn(el, time) {
+  el.style.opacity = 0;
+  el.style.display = 'block';
+  var last = +new Date();
+
+  var tick = function tick() {
+    el.style.opacity = +el.style.opacity + (new Date() - last) / time;
+    last = +new Date();
+
+    if (+el.style.opacity < 1) {
+      window.requestAnimationFrame && requestAnimationFrame(tick) || setTimeout(tick, 16);
+    }
+  };
+
+  tick();
+}
+
+/***/ }),
+
+/***/ "./resources/js/json/countries.json":
+/*!******************************************!*\
+  !*** ./resources/js/json/countries.json ***!
+  \******************************************/
+/*! exports provided: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, default */
+/***/ (function(module) {
+
+module.exports = [{"name":"Afghanistan","code":"AF"},{"name":"Åland Islands","code":"AX"},{"name":"Albania","code":"AL"},{"name":"Algeria","code":"DZ"},{"name":"American Samoa","code":"AS"},{"name":"AndorrA","code":"AD"},{"name":"Angola","code":"AO"},{"name":"Anguilla","code":"AI"},{"name":"Antarctica","code":"AQ"},{"name":"Antigua and Barbuda","code":"AG"},{"name":"Argentina","code":"AR"},{"name":"Armenia","code":"AM"},{"name":"Aruba","code":"AW"},{"name":"Australia","code":"AU"},{"name":"Austria","code":"AT"},{"name":"Azerbaijan","code":"AZ"},{"name":"Bahamas","code":"BS"},{"name":"Bahrain","code":"BH"},{"name":"Bangladesh","code":"BD"},{"name":"Barbados","code":"BB"},{"name":"Belarus","code":"BY"},{"name":"Belgium","code":"BE"},{"name":"Belize","code":"BZ"},{"name":"Benin","code":"BJ"},{"name":"Bermuda","code":"BM"},{"name":"Bhutan","code":"BT"},{"name":"Bolivia","code":"BO"},{"name":"Bosnia and Herzegovina","code":"BA"},{"name":"Botswana","code":"BW"},{"name":"Bouvet Island","code":"BV"},{"name":"Brazil","code":"BR"},{"name":"British Indian Ocean Territory","code":"IO"},{"name":"Brunei Darussalam","code":"BN"},{"name":"Bulgaria","code":"BG"},{"name":"Burkina Faso","code":"BF"},{"name":"Burundi","code":"BI"},{"name":"Cambodia","code":"KH"},{"name":"Cameroon","code":"CM"},{"name":"Canada","code":"CA"},{"name":"Cape Verde","code":"CV"},{"name":"Cayman Islands","code":"KY"},{"name":"Central African Republic","code":"CF"},{"name":"Chad","code":"TD"},{"name":"Chile","code":"CL"},{"name":"China","code":"CN"},{"name":"Christmas Island","code":"CX"},{"name":"Cocos (Keeling) Islands","code":"CC"},{"name":"Colombia","code":"CO"},{"name":"Comoros","code":"KM"},{"name":"Congo","code":"CG"},{"name":"Congo, The Democratic Republic of the","code":"CD"},{"name":"Cook Islands","code":"CK"},{"name":"Costa Rica","code":"CR"},{"name":"Cote D\"Ivoire","code":"CI"},{"name":"Croatia","code":"HR"},{"name":"Cuba","code":"CU"},{"name":"Cyprus","code":"CY"},{"name":"Czech Republic","code":"CZ"},{"name":"Denmark","code":"DK"},{"name":"Djibouti","code":"DJ"},{"name":"Dominica","code":"DM"},{"name":"Dominican Republic","code":"DO"},{"name":"Ecuador","code":"EC"},{"name":"Egypt","code":"EG"},{"name":"El Salvador","code":"SV"},{"name":"Equatorial Guinea","code":"GQ"},{"name":"Eritrea","code":"ER"},{"name":"Estonia","code":"EE"},{"name":"Ethiopia","code":"ET"},{"name":"Falkland Islands (Malvinas)","code":"FK"},{"name":"Faroe Islands","code":"FO"},{"name":"Fiji","code":"FJ"},{"name":"Finland","code":"FI"},{"name":"France","code":"FR"},{"name":"French Guiana","code":"GF"},{"name":"French Polynesia","code":"PF"},{"name":"French Southern Territories","code":"TF"},{"name":"Gabon","code":"GA"},{"name":"Gambia","code":"GM"},{"name":"Georgia","code":"GE"},{"name":"Germany","code":"DE"},{"name":"Ghana","code":"GH"},{"name":"Gibraltar","code":"GI"},{"name":"Greece","code":"GR"},{"name":"Greenland","code":"GL"},{"name":"Grenada","code":"GD"},{"name":"Guadeloupe","code":"GP"},{"name":"Guam","code":"GU"},{"name":"Guatemala","code":"GT"},{"name":"Guernsey","code":"GG"},{"name":"Guinea","code":"GN"},{"name":"Guinea-Bissau","code":"GW"},{"name":"Guyana","code":"GY"},{"name":"Haiti","code":"HT"},{"name":"Heard Island and Mcdonald Islands","code":"HM"},{"name":"Holy See (Vatican City State)","code":"VA"},{"name":"Honduras","code":"HN"},{"name":"Hong Kong","code":"HK"},{"name":"Hungary","code":"HU"},{"name":"Iceland","code":"IS"},{"name":"India","code":"IN"},{"name":"Indonesia","code":"ID"},{"name":"Iran, Islamic Republic Of","code":"IR"},{"name":"Iraq","code":"IQ"},{"name":"Ireland","code":"IE"},{"name":"Isle of Man","code":"IM"},{"name":"Israel","code":"IL"},{"name":"Italy","code":"IT"},{"name":"Jamaica","code":"JM"},{"name":"Japan","code":"JP"},{"name":"Jersey","code":"JE"},{"name":"Jordan","code":"JO"},{"name":"Kazakhstan","code":"KZ"},{"name":"Kenya","code":"KE"},{"name":"Kiribati","code":"KI"},{"name":"Korea, Democratic People\"S Republic of","code":"KP"},{"name":"Korea, Republic of","code":"KR"},{"name":"Kuwait","code":"KW"},{"name":"Kyrgyzstan","code":"KG"},{"name":"Lao People\"S Democratic Republic","code":"LA"},{"name":"Latvia","code":"LV"},{"name":"Lebanon","code":"LB"},{"name":"Lesotho","code":"LS"},{"name":"Liberia","code":"LR"},{"name":"Libyan Arab Jamahiriya","code":"LY"},{"name":"Liechtenstein","code":"LI"},{"name":"Lithuania","code":"LT"},{"name":"Luxembourg","code":"LU"},{"name":"Macao","code":"MO"},{"name":"Macedonia, The Former Yugoslav Republic of","code":"MK"},{"name":"Madagascar","code":"MG"},{"name":"Malawi","code":"MW"},{"name":"Malaysia","code":"MY"},{"name":"Maldives","code":"MV"},{"name":"Mali","code":"ML"},{"name":"Malta","code":"MT"},{"name":"Marshall Islands","code":"MH"},{"name":"Martinique","code":"MQ"},{"name":"Mauritania","code":"MR"},{"name":"Mauritius","code":"MU"},{"name":"Mayotte","code":"YT"},{"name":"Mexico","code":"MX"},{"name":"Micronesia, Federated States of","code":"FM"},{"name":"Moldova, Republic of","code":"MD"},{"name":"Monaco","code":"MC"},{"name":"Mongolia","code":"MN"},{"name":"Montserrat","code":"MS"},{"name":"Morocco","code":"MA"},{"name":"Mozambique","code":"MZ"},{"name":"Myanmar","code":"MM"},{"name":"Namibia","code":"NA"},{"name":"Nauru","code":"NR"},{"name":"Nepal","code":"NP"},{"name":"Netherlands","code":"NL"},{"name":"Netherlands Antilles","code":"AN"},{"name":"New Caledonia","code":"NC"},{"name":"New Zealand","code":"NZ"},{"name":"Nicaragua","code":"NI"},{"name":"Niger","code":"NE"},{"name":"Nigeria","code":"NG"},{"name":"Niue","code":"NU"},{"name":"Norfolk Island","code":"NF"},{"name":"Northern Mariana Islands","code":"MP"},{"name":"Norway","code":"NO"},{"name":"Oman","code":"OM"},{"name":"Pakistan","code":"PK"},{"name":"Palau","code":"PW"},{"name":"Palestinian Territory, Occupied","code":"PS"},{"name":"Panama","code":"PA"},{"name":"Papua New Guinea","code":"PG"},{"name":"Paraguay","code":"PY"},{"name":"Peru","code":"PE"},{"name":"Philippines","code":"PH"},{"name":"Pitcairn","code":"PN"},{"name":"Poland","code":"PL"},{"name":"Portugal","code":"PT"},{"name":"Puerto Rico","code":"PR"},{"name":"Qatar","code":"QA"},{"name":"Reunion","code":"RE"},{"name":"Romania","code":"RO"},{"name":"Russian Federation","code":"RU"},{"name":"RWANDA","code":"RW"},{"name":"Saint Helena","code":"SH"},{"name":"Saint Kitts and Nevis","code":"KN"},{"name":"Saint Lucia","code":"LC"},{"name":"Saint Pierre and Miquelon","code":"PM"},{"name":"Saint Vincent and the Grenadines","code":"VC"},{"name":"Samoa","code":"WS"},{"name":"San Marino","code":"SM"},{"name":"Sao Tome and Principe","code":"ST"},{"name":"Saudi Arabia","code":"SA"},{"name":"Senegal","code":"SN"},{"name":"Serbia and Montenegro","code":"CS"},{"name":"Seychelles","code":"SC"},{"name":"Sierra Leone","code":"SL"},{"name":"Singapore","code":"SG"},{"name":"Slovensko","code":"SK"},{"name":"Slovenia","code":"SI"},{"name":"Solomon Islands","code":"SB"},{"name":"Somalia","code":"SO"},{"name":"South Africa","code":"ZA"},{"name":"South Georgia and the South Sandwich Islands","code":"GS"},{"name":"Spain","code":"ES"},{"name":"Sri Lanka","code":"LK"},{"name":"Sudan","code":"SD"},{"name":"Suriname","code":"SR"},{"name":"Svalbard and Jan Mayen","code":"SJ"},{"name":"Swaziland","code":"SZ"},{"name":"Sweden","code":"SE"},{"name":"Switzerland","code":"CH"},{"name":"Syrian Arab Republic","code":"SY"},{"name":"Taiwan, Province of China","code":"TW"},{"name":"Tajikistan","code":"TJ"},{"name":"Tanzania, United Republic of","code":"TZ"},{"name":"Thailand","code":"TH"},{"name":"Timor-Leste","code":"TL"},{"name":"Togo","code":"TG"},{"name":"Tokelau","code":"TK"},{"name":"Tonga","code":"TO"},{"name":"Trinidad and Tobago","code":"TT"},{"name":"Tunisia","code":"TN"},{"name":"Turkey","code":"TR"},{"name":"Turkmenistan","code":"TM"},{"name":"Turks and Caicos Islands","code":"TC"},{"name":"Tuvalu","code":"TV"},{"name":"Uganda","code":"UG"},{"name":"Ukraine","code":"UA"},{"name":"United Arab Emirates","code":"AE"},{"name":"United Kingdom","code":"GB"},{"name":"United States","code":"US"},{"name":"United States Minor Outlying Islands","code":"UM"},{"name":"Uruguay","code":"UY"},{"name":"Uzbekistan","code":"UZ"},{"name":"Vanuatu","code":"VU"},{"name":"Venezuela","code":"VE"},{"name":"Viet Nam","code":"VN"},{"name":"Virgin Islands, British","code":"VG"},{"name":"Virgin Islands, U.S.","code":"VI"},{"name":"Wallis and Futuna","code":"WF"},{"name":"Western Sahara","code":"EH"},{"name":"Yemen","code":"YE"},{"name":"Zambia","code":"ZM"},{"name":"Zimbabwe","code":"ZW"}];
+
+/***/ }),
+
+/***/ "./resources/js/json/countryPhone.json":
+/*!*********************************************!*\
+  !*** ./resources/js/json/countryPhone.json ***!
+  \*********************************************/
+/*! exports provided: BD, BE, BF, BG, BA, BB, WF, BL, BM, BN, BO, BH, BI, BJ, BT, JM, BV, BW, WS, BQ, BR, BS, JE, BY, BZ, RU, RW, RS, TL, RE, TM, TJ, RO, TK, GW, GU, GT, GS, GR, GQ, GP, JP, GY, GG, GF, GE, GD, GB, GA, SV, GN, GM, GL, GI, GH, OM, TN, JO, HR, HT, HU, HK, HN, HM, VE, PR, PS, PW, PT, SJ, PY, IQ, PA, PF, PG, PE, PK, PH, PN, PL, PM, ZM, EH, EE, EG, ZA, EC, IT, VN, SB, ET, SO, ZW, SA, ES, ER, ME, MD, MG, MF, MA, MC, UZ, MM, ML, MO, MN, MH, MK, MU, MT, MW, MV, MQ, MP, MS, MR, IM, UG, TZ, MY, MX, IL, FR, IO, SH, FI, FJ, FK, FM, FO, NI, NL, NO, NA, VU, NC, NE, NF, NG, NZ, NP, NR, NU, CK, XK, CI, CH, CO, CN, CM, CL, CC, CA, CG, CF, CD, CZ, CY, CX, CR, CW, CV, CU, SZ, SY, SX, KG, KE, SS, SR, KI, KH, KN, KM, ST, SK, KR, SI, KP, KW, SN, SM, SL, SC, KZ, KY, SG, SE, SD, DO, DM, DJ, DK, VG, DE, YE, DZ, US, UY, YT, UM, LB, LC, LA, TV, TW, TT, TR, LK, LI, LV, TO, LT, LU, LR, LS, TH, TF, TG, TD, TC, LY, VA, VC, AE, AD, AG, AF, AI, VI, IS, IR, AM, AL, AO, AQ, AS, AR, AU, AT, AW, IN, AX, AZ, IE, ID, UA, QA, MZ, default */
+/***/ (function(module) {
+
+module.exports = {"BD":"880","BE":"32","BF":"226","BG":"359","BA":"387","BB":"+1-246","WF":"681","BL":"590","BM":"+1-441","BN":"673","BO":"591","BH":"973","BI":"257","BJ":"229","BT":"975","JM":"+1-876","BV":"","BW":"267","WS":"685","BQ":"599","BR":"55","BS":"+1-242","JE":"+44-1534","BY":"375","BZ":"501","RU":"7","RW":"250","RS":"381","TL":"670","RE":"262","TM":"993","TJ":"992","RO":"40","TK":"690","GW":"245","GU":"+1-671","GT":"502","GS":"","GR":"30","GQ":"240","GP":"590","JP":"81","GY":"592","GG":"+44-1481","GF":"594","GE":"995","GD":"+1-473","GB":"44","GA":"241","SV":"503","GN":"224","GM":"220","GL":"299","GI":"350","GH":"233","OM":"968","TN":"216","JO":"962","HR":"385","HT":"509","HU":"36","HK":"852","HN":"504","HM":" ","VE":"58","PR":"+1-787 and 1-939","PS":"970","PW":"680","PT":"351","SJ":"47","PY":"595","IQ":"964","PA":"507","PF":"689","PG":"675","PE":"51","PK":"92","PH":"63","PN":"870","PL":"48","PM":"508","ZM":"260","EH":"212","EE":"372","EG":"20","ZA":"27","EC":"593","IT":"39","VN":"84","SB":"677","ET":"251","SO":"252","ZW":"263","SA":"966","ES":"34","ER":"291","ME":"382","MD":"373","MG":"261","MF":"590","MA":"212","MC":"377","UZ":"998","MM":"95","ML":"223","MO":"853","MN":"976","MH":"692","MK":"389","MU":"230","MT":"356","MW":"265","MV":"960","MQ":"596","MP":"+1-670","MS":"+1-664","MR":"222","IM":"+44-1624","UG":"256","TZ":"255","MY":"60","MX":"52","IL":"972","FR":"33","IO":"246","SH":"290","FI":"358","FJ":"679","FK":"500","FM":"691","FO":"298","NI":"505","NL":"31","NO":"47","NA":"264","VU":"678","NC":"687","NE":"227","NF":"672","NG":"234","NZ":"64","NP":"977","NR":"674","NU":"683","CK":"682","XK":"","CI":"225","CH":"41","CO":"57","CN":"86","CM":"237","CL":"56","CC":"61","CA":"1","CG":"242","CF":"236","CD":"243","CZ":"420","CY":"357","CX":"61","CR":"506","CW":"599","CV":"238","CU":"53","SZ":"268","SY":"963","SX":"599","KG":"996","KE":"254","SS":"211","SR":"597","KI":"686","KH":"855","KN":"+1-869","KM":"269","ST":"239","SK":"421","KR":"82","SI":"386","KP":"850","KW":"965","SN":"221","SM":"378","SL":"232","SC":"248","KZ":"7","KY":"+1-345","SG":"65","SE":"46","SD":"249","DO":"+1-809 and 1-829","DM":"+1-767","DJ":"253","DK":"45","VG":"+1-284","DE":"49","YE":"967","DZ":"213","US":"1","UY":"598","YT":"262","UM":"1","LB":"961","LC":"+1-758","LA":"856","TV":"688","TW":"886","TT":"+1-868","TR":"90","LK":"94","LI":"423","LV":"371","TO":"676","LT":"370","LU":"352","LR":"231","LS":"266","TH":"66","TF":"","TG":"228","TD":"235","TC":"+1-649","LY":"218","VA":"379","VC":"+1-784","AE":"971","AD":"376","AG":"+1-268","AF":"93","AI":"+1-264","VI":"+1-340","IS":"354","IR":"98","AM":"374","AL":"355","AO":"244","AQ":"","AS":"+1-684","AR":"54","AU":"61","AT":"43","AW":"297","IN":"91","AX":"+358-18","AZ":"994","IE":"353","ID":"62","UA":"380","QA":"974","MZ":"258"};
+
+/***/ }),
+
+/***/ "./resources/js/json/login.json":
+/*!**************************************!*\
+  !*** ./resources/js/json/login.json ***!
+  \**************************************/
+/*! exports provided: incorrectEmail, incorrectPassword, successResetPassword, default */
+/***/ (function(module) {
+
+module.exports = {"incorrectEmail":"Nesprávny e-mail. Nemáte ešte registráciu?<br/><a href='http://registracia.postoj.local:8000'>Registrujte sa</a>","incorrectPassword":"Nesprávne heslo.","successResetPassword":"Link s možnosťou zmeniť heslo bol zaslaný na Vašu e-mailovú adresu."};
 
 /***/ }),
 
