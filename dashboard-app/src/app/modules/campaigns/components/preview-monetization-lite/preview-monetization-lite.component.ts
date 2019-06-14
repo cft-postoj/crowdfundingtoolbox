@@ -10,7 +10,7 @@ import {
     setActiveButtonMonthly,
     setActiveButtonOneTime,
     validateForm
-} from "./monetization-lite";
+} from "../preview/landing";
 
 @Component({
     selector: 'app-preview-monetization-lite',

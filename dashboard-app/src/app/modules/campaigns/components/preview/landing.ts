@@ -1,6 +1,26 @@
-export function setActiveButtonMonthly(chosenButton, focusInput:false) {
+//track
+export function trackInsertValue(chosenButton, frequency, apiUrl: string) {
+    let xhttp = new XMLHttpRequest();
+    var data = JSON.stringify(
+        {
+            'value': chosenButton.getElementsByTagName('input')[0].value,
+            'frequency': frequency,
+            'show_id': chosenButton.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
+        }
+    );
+    xhttp.open('POST', apiUrl + 'tracking/insertValue', true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
+    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.responseType = 'json';
+    xhttp.send(data);
+}
+
+export function setActiveButtonMonthly(chosenButton, focusInput:false, track:boolean=true ) {
+   //TODO get from  env
+    const apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
     var target;
     var landingDocument = document;
+    // to work inside iframe
     if (document.getElementById('crowdWidgetContent-preview')) {
         let iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
         landingDocument = iframe.contentWindow.document;
@@ -28,8 +48,13 @@ export function setActiveButtonMonthly(chosenButton, focusInput:false) {
     else {
         checkbox.className = checkbox.className.replace(/ active/g, '');
     }
+
+    if (track) {
+        trackInsertValue(chosenButton, 'monthly', apiUrl);
+    }
+
 }
-export function setActiveButtonOneTime(chosenButton, focusInput:false) {
+export function setActiveButtonOneTime(chosenButton, focusInput:false, track: boolean = true) {
     var target;
     var landingDocument = document;
     if (document.getElementById('crowdWidgetContent-preview')) {
@@ -91,6 +116,12 @@ export function oneTimePayment() {
     for (let monthly of monthlyElements){
         monthly.className +=' cft--monatization--hidden'
     }
+
+    var oneTimeButton = landingDocument.getElementById('cft--monatization--donation--one-time')
+    var monthlyButton = landingDocument.getElementById('cft--monatization--donation--monthly')
+    oneTimeButton.className += ' active';
+    monthlyButton.className = monthlyButton.className.replace(/ active/g, '');
+
 }
 
 export function monthlyPayment() {
@@ -108,5 +139,9 @@ export function monthlyPayment() {
     for (let monthly of monthlyElements){
         monthly.className = monthly.className.replace(/ cft--monatization--hidden/g, '');
     }
-}
 
+    var oneTimeButton = landingDocument.getElementById('cft--monatization--donation--one-time')
+    var monthlyButton = landingDocument.getElementById('cft--monatization--donation--monthly')
+    monthlyButton.className += ' active';
+    oneTimeButton.className = oneTimeButton.className.replace( / active/g, '');
+}

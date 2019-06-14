@@ -1,6 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-    //let apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-    let apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
+function getWidgets(apiUrl) {
     let sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
     let fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
     let leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
@@ -19,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.response != null) {
-                setCookie('cr0wdFundingToolbox-user_cookie',xhttp.response['user_cookie']);
+                setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
                 for (let i = 0; i < xhttp.response['widgets'].length; i++) {
                     let el = xhttp.response['widgets'][i];
                     console.log(el);
@@ -49,11 +47,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     };
-
     xhttp.open('POST', apiUrl + 'widgets');
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.send(data);
+}
 
+function registerClick(apiUrl) {
     clickedDom = event.path[0];
     cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
     cftPlaceholders.forEach(node => {
@@ -78,6 +77,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
         })
     });
+}
+
+
+function registerInsertValue(apiUrl) {
+    cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
+    cftPlaceholders.forEach(node => {
+        node.addEventListener('click', function ($event) {
+
+            clickedDom = event.path[0];
+            let xhttp = new XMLHttpRequest();
+            data = JSON.stringify(
+                {
+                    'node_id': clickedDom.id,
+                    'node_class': clickedDom.className,
+                    'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
+                }
+            );
+
+            xhttp.open('POST', apiUrl + 'tracking/click', true);
+            xhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
+            xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xhttp.responseType = 'json';
+            xhttp.send(data);
+
+        })
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    //let apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
+    let apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
+    getWidgets(apiUrl);
+    registerClick(apiUrl);
+    registerInsertValue(apiUrl);
 });
 
 function cr0wdGetDeviceType() {

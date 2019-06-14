@@ -117,6 +117,7 @@ Route::group([
     Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
 
     Route::post('tracking/click', '\Modules\UserManagement\Http\Controllers\TrackingController@click');
+    Route::post('tracking/insertValue', '\Modules\UserManagement\Http\Controllers\TrackingController@insertValue');
 });
 
 

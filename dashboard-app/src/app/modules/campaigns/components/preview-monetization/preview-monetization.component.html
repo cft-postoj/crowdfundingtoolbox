@@ -2,7 +2,7 @@
      *ngIf="widget.settings[deviceType].payment_settings.active">
     <div class="cft--monatization--title"
          [ngStyle]="getMonetizationTitleStyles()"
-         [innerHTML]="(widget.settings[deviceType].payment_settings.monetization_title) ?
+         [innerHTML]="(widget.settings[deviceType].payment_settings.monetization_title.text) ?
          '<h1>' +
          widget.settings[deviceType].payment_settings.monetization_title.text +
          '</h1>' : ''">
@@ -11,7 +11,7 @@
          [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value}"
          [ngStyle]="getRowStyle()">
         <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
-             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == option.value}"
+             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == option.value}"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
-             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == 'custom' }"
+             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == 'custom' }"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngIf="widget.settings[deviceType].payment_settings.monthly_prices.custom_price">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
@@ -46,7 +46,7 @@
          [ngStyle]="getRowStyle()">
         <div id="cft--monatization--donation-button--one-time"
              class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
-             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == option.value}"
+             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.one_time_value == option.value}"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
@@ -58,7 +58,8 @@
             </div>
         </div>
         <div class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
-             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == 'custom' }"
+
+             [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.one_time_value == 'custom' }"
              [ngStyle]="getMonatizationDonationButtonStyle()"
              *ngIf="widget.settings[deviceType].payment_settings.once_prices.custom_price">
             <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
@@ -72,6 +73,7 @@
     <div class="cft--monatization--membership cft--monatization--only-monthly"
          *ngIf="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active">
         <span class="cft--monatization--membership-checkbox"
+              [ngClass]="{'active' : monthlyBenefitReached()}"
               id="cft--monatization--membership-checkbox--monthly"></span>
         <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()"
              [innerHTML]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text + '&nbsp;'">
@@ -80,6 +82,7 @@
     <div class="cft--monatization--membership cft--monatization--only-one-time cft--monatization--hidden"
          *ngIf="widget.settings[deviceType].payment_settings.once_prices.benefit.active">
         <span class="cft--monatization--membership-checkbox"
+              [ngClass]="{'active' : oneTimeBenefitReached()}"
               id="cft--monatization--membership-checkbox--one-time"></span>
         <div class="cft--monatization--membership-membership-text" [ngStyle]="getMembershipStyle()"
              [innerHTML]="widget.settings[deviceType].payment_settings.once_prices.benefit.text">
@@ -98,7 +101,7 @@
         </div>
         <div class="cft--monatization--form--donate--terms" [ngStyle]="getFormGroupStyle()">
             <input id="cft--monatization--form--donate--terms" type="checkbox" name="terms_agreed" value="0" required>
-            <label for="cft--monatization--form--donate--terms">Súhlasím so spracovaním <a
+            <label style="display: inline;" for="cft--monatization--form--donate--terms">Súhlasím so spracovaním <a
                     href="https://podpora.postoj.sk/assets/donations-widget/pdf/suhlas_so_spracovanim_osobnych_udajov.pdf">osobných
                 údajov</a> a zasielaním noviniek</label>
             <label id="cft--monatization--form--donate--terms-error"

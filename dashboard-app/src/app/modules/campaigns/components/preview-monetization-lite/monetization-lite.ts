@@ -77,11 +77,6 @@ export function oneTimePayment() {
     for (let monthly of monthlyElements) {
         monthly.className += ' cft--monatization--hidden'
     }
-    var oneTimeButton = landingDocument.getElementById('cft--monatization--donation--one-time')
-    var monthlyButton = landingDocument.getElementById('cft--monatization--donation--monthly')
-    oneTimeButton.className += ' active';
-    monthlyButton.className = monthlyButton.className.replace(/ active/g, '');
-
 
 }
 
@@ -100,12 +95,6 @@ export function monthlyPayment() {
     for (let monthly of monthlyElements) {
         monthly.className = monthly.className.replace(/ cft--monatization--hidden/g, '');
     }
-
-    var oneTimeButton = landingDocument.getElementById('cft--monatization--donation--one-time')
-    var monthlyButton = landingDocument.getElementById('cft--monatization--donation--monthly')
-    monthlyButton.className += ' active';
-    oneTimeButton.className = oneTimeButton.className.replace( / active/g, '');
-
 
 }
 

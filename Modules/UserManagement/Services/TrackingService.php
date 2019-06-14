@@ -4,6 +4,7 @@ namespace Modules\UserManagement\Services;
 
 use Modules\UserManagement\Entities\TrackingBasic;
 use Modules\UserManagement\Entities\TrackingClick;
+use Modules\UserManagement\Entities\TrackingInsertValue;
 use Modules\UserManagement\Entities\TrackingShow;
 
 class TrackingService
@@ -47,6 +48,21 @@ class TrackingService
             dd($e->getMessage(), $e->getTrace());
         }
         return $trackingClick;
+    }
+
+    public function insertValue( $data)
+    {
+        try {
+            $trackingInsertValue = TrackingInsertValue::create([
+                "show_id" => $data['show_id'],
+                "value" => $data['value'],
+                "frequency" => $data['frequency']
+            ]) ;
+        } catch (\Exception $e) {
+            dd($e->getMessage(), $e->getTrace());
+        }
+        return $trackingInsertValue;
+
     }
 
 }

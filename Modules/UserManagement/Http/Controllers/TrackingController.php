@@ -24,4 +24,9 @@ class TrackingController extends Controller
         return $this->trackingService->click($request);
     }
 
+    protected function insertValue(Request $request)
+    {
+        return $this->trackingService->insertValue($request);
+    }
+
 }
