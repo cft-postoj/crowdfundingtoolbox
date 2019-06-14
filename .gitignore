@@ -20,3 +20,5 @@ yarn-error.log
 .env
 /dashboard-app/src/environments
 /dashboard-app/src/keys.ts
+/public/css/app.css
+/public/js/app.js
