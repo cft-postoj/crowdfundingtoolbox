@@ -2,7 +2,7 @@
      *ngIf="widget.settings[deviceType].payment_settings.active">
     <div class="cft--monatization--title"
          [ngStyle]="getMonetizationTitleStyles()"
-         [innerHTML]="(widget.settings[deviceType].payment_settings.monetization_title.text) ?
+         [innerHTML]="(widget.settings[deviceType].payment_settings.monetization_title?.text) ?
          '<h1>' +
          widget.settings[deviceType].payment_settings.monetization_title.text +
          '</h1>' : ''">

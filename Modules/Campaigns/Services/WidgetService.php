@@ -609,7 +609,7 @@ class WidgetService implements WidgetServiceInterface
                     ),
                     'buttonContainer' => array(
                         'width' => '100%',
-                        'position' => 'absolute',
+                        'position' => 'relative',
                         'top' => 'auto',
                         'right' => 'auto',
                         'bottom' => '50px',

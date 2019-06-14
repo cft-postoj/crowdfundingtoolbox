@@ -22,7 +22,6 @@ export class SidebarItemComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(sidebarType)
     }
 
 }
