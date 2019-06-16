@@ -48,7 +48,8 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     @ViewChild('previewGenerateHTML') previewGenerateHTML;
     public subcriptions: Subscription;
     cta: string = "Default";
-    private pricesOptions: DropdownItem[];
+    private pricesOptionsMonthly: DropdownItem[];
+    private pricesOptionsOneTime: DropdownItem[];
     public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
         '#ED1C24', '#0087ED', '#F7AF00', '#8DC63F', '#fff', '#555555'];
     fontFamily = [];
@@ -173,7 +174,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         }
     }
 
-    createActivePriceOptions(): DropdownItem[] {
+    createActivePriceOptionsMonthly(): DropdownItem[] {
         var result: DropdownItem[] = [];
         this.widget.settings[this.deviceType].payment_settings.monthly_prices.options.forEach((option, i) => {
             result.push({
@@ -187,10 +188,30 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
                 value: 'custom'
             })
         }
-        if (!this.pricesOptions || this.pricesOptions.length == 0 || this.pricesOptions.length != result.length) {
-            this.pricesOptions = result
+        if (!this.pricesOptionsMonthly || this.pricesOptionsMonthly.length == 0 || this.pricesOptionsMonthly.length != result.length) {
+            this.pricesOptionsMonthly = result;
         }
-        return this.pricesOptions;
+        return this.pricesOptionsMonthly;
+    }
+
+    createActivePriceOptionsOneTime(): DropdownItem[] {
+        var result: DropdownItem[] = [];
+        this.widget.settings[this.deviceType].payment_settings.once_prices.options.forEach((option, i) => {
+            result.push({
+                title: 'Price No.' + (i + 1),
+                value: option.value
+            })
+        })
+        if (this.widget.settings[this.deviceType].payment_settings.once_prices.custom_price) {
+            result.push({
+                title: 'Custom price option',
+                value: 'custom'
+            })
+        }
+        if (!this.pricesOptionsOneTime || this.pricesOptionsOneTime.length == 0 || this.pricesOptionsOneTime.length != result.length) {
+            this.pricesOptionsOneTime = result;
+        }
+        return this.pricesOptionsOneTime;
     }
 
     togglePreview() {
