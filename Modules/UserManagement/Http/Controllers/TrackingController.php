@@ -6,7 +6,6 @@ namespace Modules\UserManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Modules\UserManagement\Services\TrackingService;
 
 class TrackingController extends Controller
@@ -29,4 +28,14 @@ class TrackingController extends Controller
         return $this->trackingService->insertValue($request);
     }
 
+    protected function insertEmail(Request $request)
+    {
+        return $this->trackingService->insertEmail($request);
+    }
+
+    protected function initializeDonationInvalid(Request $request)
+    {
+        return $this->trackingService->initializeDonationInvalid($request);
+
+    }
 }

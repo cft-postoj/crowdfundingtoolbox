@@ -6,7 +6,9 @@ import {
     setActiveButtonMonthly,
     setActiveButtonOneTime,
     validateForm,
-    trackInsertValue
+    trackInsertValue,
+    trackEmailOnChange,
+    handleSubmit
 } from "../preview/landing";
 import {Widget} from "../../models";
 import {PreviewService} from "../../services";
@@ -111,9 +113,9 @@ export class PreviewMonetizationComponent implements OnInit {
         script.appendChild(document.createTextNode(oneTimePayment.toString() + "\n"));
         script.appendChild(document.createTextNode(monthlyPayment.toString() + "\n"));
         script.appendChild(document.createTextNode(trackInsertValue.toString() + "\n"));
+        script.appendChild(document.createTextNode(trackEmailOnChange.toString() + "\n"));
+        script.appendChild(document.createTextNode(handleSubmit.toString() + "\n"));
         parentScript.appendChild(script);
-
-
     }
 
     //functions to create inline styles
@@ -360,12 +362,12 @@ export class PreviewMonetizationComponent implements OnInit {
 
     monthlyBenefitReached() {
         return this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value <=
-        this.widget.settings[this.deviceType].payment_settings.default_price.value;
+        this.widget.settings[this.deviceType].payment_settings.default_price.monthly_value;
     }
 
     oneTimeBenefitReached() {
-        return this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value <=
-            this.widget.settings[this.deviceType].payment_settings.default_price.value;
+        return this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value <=
+            this.widget.settings[this.deviceType].payment_settings.default_price.one_time_value;
     }
 
 }

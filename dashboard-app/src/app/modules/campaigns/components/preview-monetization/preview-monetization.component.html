@@ -88,14 +88,16 @@
              [innerHTML]="widget.settings[deviceType].payment_settings.once_prices.benefit.text">
         </div>
     </div>
-    <form id="cft--monatization--form--donate" onsubmit="return parent.validateForm(this)" class="form" action="#"
+    <form id="cft--monatization--form--donate" onsubmit="parent.handleSubmit(this, event)" class="form"
           method="post" novalidate>
         <div class="cft--monatization--form-group--donate" [ngStyle]="getFormGroupStyle()">
             <label for="cft--monatization--form--donate--email" class="label" [ngStyle]="getLabelStyle()">Váš
                 e-mail</label>
             <input class="cft--monatization--form--donate--email" type="email"
                    id="cft--monatization--form--donate--email" [ngStyle]="getEmailDonateStyle()"
-                   name="email" required>
+                   name="email"
+                   onchange="parent.trackEmailOnChange(this)"
+                   required>
             <label id="cft--monatization--form-email-error" class="error" [ngStyle]="getErrorStyle()"
                    for="cft--monatization--form--donate--email">Nesprávny e-mail</label>
         </div>
