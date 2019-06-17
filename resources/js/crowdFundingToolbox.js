@@ -4,7 +4,7 @@ function getWidgets(apiUrl) {
     let leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
 
     //get widgets for users and track, that user has been on specific page
-    data = JSON.stringify(
+    let data = JSON.stringify(
         {
             'article_title': document.querySelector('title').innerText,
             'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie"),
@@ -53,13 +53,12 @@ function getWidgets(apiUrl) {
 }
 
 function registerClick(apiUrl) {
-    clickedDom = event.path[0];
-    cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
+    let clickedDom = event.path[0];
+    let cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
     cftPlaceholders.forEach(node => {
         node.addEventListener('click', function ($event) {
 
             localStorage.getItem('cr0wdFundingToolbox');
-            clickedDom = event.path[0];
             let xhttp = new XMLHttpRequest();
             data = JSON.stringify(
                 {
@@ -68,7 +67,6 @@ function registerClick(apiUrl) {
                     'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
                 }
             );
-
             xhttp.open('POST', apiUrl + 'tracking/click', true);
             xhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
             xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -81,7 +79,7 @@ function registerClick(apiUrl) {
 
 
 function registerInsertValue(apiUrl) {
-    cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
+    let cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
     cftPlaceholders.forEach(node => {
         node.addEventListener('click', function ($event) {
 
@@ -126,9 +124,9 @@ function cr0wdGetDeviceType() {
 }
 
 function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
     for(var i = 0; i <ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) == ' ') {
@@ -142,16 +140,16 @@ function getCookie(cname) {
 }
 
 function setCookie(cname, cvalue, exdays) {
-    var expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
+    let expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 function parseScriptFromResponse(response) {
-    scripts = response;
-    indexStart = response.indexOf('id="scripts">');
+   let scripts = response;
+    let indexStart = response.indexOf('id="scripts">');
     indexStart = scripts.indexOf('>', indexStart);
     indexStart = scripts.indexOf('>', indexStart + 1);
-    indexEnd = response.indexOf('</script>');
+    let indexEnd = response.indexOf('</script>');
     scripts = scripts.substr(indexStart + 1, indexEnd - indexStart - 1);
     return scripts;
 }
