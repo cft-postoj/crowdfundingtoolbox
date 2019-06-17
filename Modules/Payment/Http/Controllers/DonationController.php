@@ -5,9 +5,20 @@ namespace Modules\Payment\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Payment\Services\DonationService;
+use Modules\UserManagement\Services\TrackingService;
 
-class DonationsController extends Controller
+class DonationController extends Controller
 {
+
+    private $donationService;
+    private $trackingService;
+
+    public function __construct()
+    {
+        $this->donationService= new DonationService();
+        $this->trackingService = new TrackingService();
+    }
     /**
      * Display a listing of the resource.
      * @return Response
@@ -76,4 +87,11 @@ class DonationsController extends Controller
     {
         //
     }
+
+    protected function initialize(Request $request)
+    {
+        //pripojit sa na service a zavolat endpoint
+        return $this->donationService->initialize($request);
+    }
+
 }

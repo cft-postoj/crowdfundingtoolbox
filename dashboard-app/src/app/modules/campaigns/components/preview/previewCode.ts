@@ -1,5 +1,16 @@
 export const iframeCode = `
-<style>
+  <div class="content"></div>
+  <script type="text/javascript">
+    if (dataFromParent) {
+      // Subscribe to the Subject so you can trigger changes from Angular
+      dataFromParent.subscribe(res => {
+        document.querySelector('.content').innerHTML = res;
+      })
+    }
+  </script>
+`;
+export const globalStyles = `
+    <style>
     body {height: 100%; background: #FFFFFF;}
     .content {width: 100%;}
     
@@ -30,10 +41,6 @@ export const iframeCode = `
         transition: all .3s ease
     }
     
-    .cft--monatization--membership-checkbox.active:before {
-        background-color: #3cc300;
-        border: 1px solid #32a300
-    }
     .cft--monatization--membership-checkbox.active:after{
         content: "";
         position: absolute;
@@ -42,7 +49,6 @@ export const iframeCode = `
         top: 10px;
         width: 6px;
         height: 10px;
-        border: solid white;
         border-width: 0 2px 2px 0;
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
@@ -60,16 +66,6 @@ export const iframeCode = `
     
     .submitted input:invalid ~ label.error {
         display: none;
-    }
-    
+    }    
 </style>
-  <div class="content"></div>
-  <script type="text/javascript">
-    if (dataFromParent) {
-      // Subscribe to the Subject so you can trigger changes from Angular
-      dataFromParent.subscribe(res => {
-        document.querySelector('.content').innerHTML = res;
-      })
-    }
-  </script>
 `

@@ -10,7 +10,7 @@ import {
     setActiveButtonMonthly,
     setActiveButtonOneTime,
     validateForm
-} from "./monetization-lite";
+} from "../preview/landing";
 
 @Component({
     selector: 'app-preview-monetization-lite',
@@ -96,6 +96,9 @@ export class PreviewMonetizationLiteComponent implements OnInit {
 
         let script = document.createElement('script');
         script.setAttribute("class", "previewScripts");
+        script.type = 'text/javascript';
+        script.charset = 'utf-8';
+        script.setAttribute('script', 'text/javascript');
 
         let scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',
             'var target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';

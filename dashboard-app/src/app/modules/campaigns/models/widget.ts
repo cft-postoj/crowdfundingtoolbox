@@ -216,8 +216,10 @@ export class Widget {
                     }
                 },
                 default_price: {
-                    active: true,
-                    value: 30,
+                    monthly_active: true,
+                    monthly_value: 30,
+                    one_time_active: true,
+                    one_time_value: 30,
                     styles: {
                         background: '#3b3232',
                         color: '#ffffff'
@@ -514,8 +516,10 @@ export class Widget {
                     }
                 },
                 default_price: {
-                    active: true,
-                    value: 30,
+                    monthly_active: true,
+                    monthly_value: 30,
+                    one_time_active: true,
+                    one_time_value: 30,
                     styles: {
                         background: '#3b3232',
                         color: '#ffffff'
@@ -791,8 +795,10 @@ export class Widget {
                     }
                 },
                 default_price: {
-                    active: true,
-                    value: 30,
+                    monthly_active: true,
+                    monthly_value: 30,
+                    one_time_active: true,
+                    one_time_value: 30,
                     styles: {
                         background: '#3b3232',
                         color: '#ffffff'

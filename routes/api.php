@@ -106,7 +106,7 @@ Route::group([
 Route::group([
     'prefix' => 'portal'
 ], function () {
-    Route::get('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
+    Route::post('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
     //get Campaign
     Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
     Route::post('register', '\Modules\UserManagement\Http\Controllers\PortalUsersController@create');
@@ -123,6 +123,14 @@ Route::group([
       Route::get('user-details', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDetailsByToken');
       Route::get('logout', '\Modules\UserManagement\Http\Controllers\PortalUsersController@logout');
     });
+
+
+    Route::post('tracking/click', '\Modules\UserManagement\Http\Controllers\TrackingController@click');
+    Route::post('tracking/insertValue', '\Modules\UserManagement\Http\Controllers\TrackingController@insertValue');
+    Route::post('tracking/insertEmail', '\Modules\UserManagement\Http\Controllers\TrackingController@insertEmail');
+    Route::post('tracking/initialize-donation-invalid', '\Modules\UserManagement\Http\Controllers\TrackingController@initializeDonationInvalid');
+
+    Route::post('donation/initialize', '\Modules\Payment\Http\Controllers\DonationController@initialize');
 
 });
 

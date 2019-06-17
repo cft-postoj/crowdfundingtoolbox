@@ -5,7 +5,10 @@ import {
     oneTimePayment,
     setActiveButtonMonthly,
     setActiveButtonOneTime,
-    validateForm
+    validateForm,
+    trackInsertValue,
+    trackEmailOnChange,
+    handleSubmit
 } from "../preview/landing";
 import {Widget} from "../../models";
 import {PreviewService} from "../../services";
@@ -72,7 +75,7 @@ export class PreviewMonetizationComponent implements OnInit {
         
             .cft--monatization--membership-checkbox.active:before{
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
-                    border: 1px solid #32a300
+                    border: 1px solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color}
                 }
             .cft--monatization--membership-checkbox.active:after{
                     border: solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
@@ -93,6 +96,8 @@ export class PreviewMonetizationComponent implements OnInit {
         }
 
         let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.charset = 'utf-8';
         script.setAttribute("class", "previewScripts");
 
         let scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',
@@ -107,10 +112,10 @@ export class PreviewMonetizationComponent implements OnInit {
         script.appendChild(document.createTextNode(validateForm.toString() + "\n"));
         script.appendChild(document.createTextNode(oneTimePayment.toString() + "\n"));
         script.appendChild(document.createTextNode(monthlyPayment.toString() + "\n"));
-
+        script.appendChild(document.createTextNode(trackInsertValue.toString() + "\n"));
+        script.appendChild(document.createTextNode(trackEmailOnChange.toString() + "\n"));
+        script.appendChild(document.createTextNode(handleSubmit.toString() + "\n"));
         parentScript.appendChild(script);
-
-
     }
 
     //functions to create inline styles
@@ -275,8 +280,8 @@ export class PreviewMonetizationComponent implements OnInit {
 
     getEmailDonateStyle() {
         return {
+            'color': 'inherit',
             'padding': '6px',
-            'margin-top': '12px',
             'max-width': '320px'
         }
     }
@@ -354,4 +359,15 @@ export class PreviewMonetizationComponent implements OnInit {
             return {};
         }
     }
+
+    monthlyBenefitReached() {
+        return this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value <=
+        this.widget.settings[this.deviceType].payment_settings.default_price.monthly_value;
+    }
+
+    oneTimeBenefitReached() {
+        return this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value <=
+            this.widget.settings[this.deviceType].payment_settings.default_price.one_time_value;
+    }
+
 }

@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {of, Subscription} from "rxjs";
-import {iframeCode} from "../preview/previewCode"
+import {iframeCode, globalStyles} from "../preview/previewCode"
 import {DomSanitizer} from '@angular/platform-browser';
 import {Widget} from "../../models";
 import {devices, widgetTypes, backgroundTypes, RadioButton} from "../../../core/models";
@@ -72,6 +72,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public scale: number = 50;
 
     public iframeCode = iframeCode;
+    public globalStyles = globalStyles;
     private subscription: Subscription;
 
 
@@ -126,8 +127,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         let style = document.createElement('style');
         style.setAttribute("class", "globalStyles");
         style.type = 'text/css';
-        const css = `#cr0wdWidgetContent-${this.widget.widget_type.method} .cft--button:hover{${this.getHoverButtonStyles()}}body{overflow:hidden;}`;
-
+        const css = globalStyles;
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
 
@@ -152,7 +152,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             for (let type in this.deviceTypes) {
                 if (this.deviceTypes.hasOwnProperty(type)) {
                     this.ref.detectChanges();
-                    this.deviceType = this.deviceTypes[type].name
+                    this.deviceType = this.deviceTypes[type].name;
                     this.recreateStyles();
                     htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML + "";
                 }

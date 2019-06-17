@@ -1052,19 +1052,35 @@
                                 </div>
                                 <div class="row pt-2">
                                     <app-checkbox class="col"
-                                                  [name]="'Set default active price'"
-                                                  [(checked)]="widget.settings[deviceType].payment_settings.default_price.active">
+                                                  [name]="'Set monthly default active price'"
+                                                  [(checked)]="widget.settings[deviceType].payment_settings.default_price.monthly_active">
                                     </app-checkbox>
                                 </div>
-                                <ng-container *ngIf="widget.settings[deviceType].payment_settings.default_price.active">
-                                    <div class="row pt-2">
-                                        <app-dropdown class="classic col"
-                                                      [class]="'classic mr15'"
-                                                      [items]="createActivePriceOptions()"
-                                                      [title]="'Choose default price'"
-                                                      [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.value"
-                                        ></app-dropdown>
-                                    </div>
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active" class="row pt-2">
+                                    <app-dropdown class="classic col"
+                                                  [class]="'classic mr15'"
+                                                  [items]="createActivePriceOptionsMonthly()"
+                                                  [title]="'Choose default price'"
+                                                  [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.monthly_value"
+                                    ></app-dropdown>
+                                </div>
+
+                                <div class="row pt-2">
+                                    <app-checkbox class="col"
+                                                  [name]="'Set one time default active price'"
+                                                  [(checked)]="widget.settings[deviceType].payment_settings.default_price.one_time_active">
+                                    </app-checkbox>
+                                </div>
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active" class="row pt-2">
+                                    <app-dropdown class="classic col"
+                                                  [class]="'classic mr15'"
+                                                  [items]="createActivePriceOptionsOneTime()"
+                                                  [title]="'Choose default price'"
+                                                  [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.one_time_value"
+                                    ></app-dropdown>
+                                </div>
+                                <ng-container *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active ||
+                                 widget.settings[deviceType].payment_settings.default_price.one_time_active">
                                     <div class="row pt-2">
                                         <div class="col bold">
                                             Colors
@@ -1131,7 +1147,6 @@
                  [submitting]="saving" (deviceTypeChange)="recreateRadioButtons()"></app-actions>
 </div>
 
-<app-preview *ngIf="preview" [loading]="loading" [widget]="widget" [deviceType]="deviceType" [(show)]="preview">
+<app-preview #previewGenerateHTML *ngIf="preview" [loading]="loading" [widget]="widget"
+             [deviceType]="deviceType" [(show)]="preview">
 </app-preview>
-<app-preview #previewGenerateHTML *ngIf="creatingHTMLs" [class]="'hide'" [generateHTML]="'true'" [show]="'false'"
-             [widget]="widget" [deviceType]="deviceType"></app-preview>
