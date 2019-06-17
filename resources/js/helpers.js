@@ -161,3 +161,24 @@ export function fadeIn(el, time) {
 
     tick();
 }
+
+export function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+export function setCookie(cname, cvalue, exdays) {
+    let expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}

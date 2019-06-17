@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\Services;
 
-use Modules\UserManagement\Entities\TrackingBasic;
+use Modules\UserManagement\Entities\TrackingVisit;
 use Modules\UserManagement\Entities\TrackingClick;
 use Modules\UserManagement\Entities\TrackingInsertEmail;
 use Modules\UserManagement\Entities\TrackingInsertValue;
@@ -17,21 +17,28 @@ class TrackingService
 
     }
 
-    public function show($userId, $widgetId, $url, $title, $userCookie)
+    public function createVisit($userId, $userCookie, $url, $title, $articleId)
+    {
+       try {
+           return TrackingVisit::create([
+               'user_id' => $userId,
+               'user_cookie' => $userCookie,
+               'url' => $url,
+               'article_id' => $articleId,
+               'title' => $title
+           ]);
+       } catch (\Exception $e) {
+           dd($e->getMessage(), $e->getTrace());
+       }
+    }
+
+    public function show($trackingVisitId, $widgetId)
     {
         try {
-            $trackingBasic = TrackingBasic::create([
-                'user_id' => $userId,
-                'user_cookie' => $userCookie,
-                'url' => $url
-            ]);
             $trackingShow = TrackingShow::create([
-                'basic_id' => $trackingBasic->id,
+                'visit_id' => $trackingVisitId,
                 'widget_id' => $widgetId,
-                'article_id' => '6',
-                'title' => $title
             ]);
-            $trackingShow->basic = $trackingBasic;
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getTrace());
         }

@@ -922,7 +922,7 @@ class WidgetService implements WidgetServiceInterface
     /**
      * @return array
      */
-    public function getWidgets($origin, $title, $userCookie, $userId)
+    public function getWidgets($url, $title, $userCookie, $userId)
     {
         $actualDate = date('Y-m-d');
         $campaignIds = Campaign::all()
@@ -943,10 +943,12 @@ class WidgetService implements WidgetServiceInterface
         if ($newCookie!=null) {
             $userCookie = $newCookie->id;
         }
+        //TODO: use env
+        $articleId = explode("/",explode("http://www.postoj.local:8000/",$url)[1])[0];
+        $trackingVisit =  $this->trackingService->createVisit($userId,$userCookie, $url, $title, $articleId);
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
-
-                $trackingShow = $this->trackingService->show($userId, $rand['widget_type_id'], $origin, $title, $userCookie);
+                $trackingShow = $this->trackingService->show($trackingVisit->id, $rand['widget_type_id']);
                 $rand['show_id'] = $trackingShow->id;
                 array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
                 array_push($usedWidgetIds, $rand['widget_type_id']);

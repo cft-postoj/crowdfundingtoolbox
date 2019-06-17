@@ -134,7 +134,7 @@ function getCountryPhones() {
 function getCountries() {
     const countrySelect = document.querySelector('select[name="cft-country"]');
     if (countrySelect !== null) {
-        countries.map((c) => {
+        JSON.parse(countries).map((c) => {
             let el = document.createElement('option');
             el.value = c.name;
             el.text = c.name;

@@ -224,7 +224,8 @@ class WidgetsController extends Controller
     {
         try {
             $onlyThreeWidgets = $this->widgetService->getWidgets(
-                request()->headers->get('origin' ), $request['title'], $request['user_cookie'], $request['user_id']);
+                request()->headers->get('referer' ), $request['title'],
+                $request['user_cookie'], $request['user_id']);
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e
