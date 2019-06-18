@@ -21,7 +21,9 @@ function getWidgets(apiUrl) {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.response != null) {
-                setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
+                if(!getCookie("cr0wdFundingToolbox-user_cookie")) {
+                    setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
+                }
                 for (let i = 0; i < xhttp.response['widgets'].length; i++) {
                     let el = xhttp.response['widgets'][i];
                     console.log(el);
@@ -57,14 +59,12 @@ function getWidgets(apiUrl) {
 }
 
 function registerClick(apiUrl) {
-    let clickedDom = event.path[0];
     let cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
     cftPlaceholders.forEach(node => {
         node.addEventListener('click', function ($event) {
-
-            localStorage.getItem('cr0wdFundingToolbox');
+            let clickedDom = event.path[0];
             let xhttp = new XMLHttpRequest();
-            data = JSON.stringify(
+            let data = JSON.stringify(
                 {
                     'node_id': clickedDom.id,
                     'node_class': clickedDom.className,
@@ -87,9 +87,9 @@ function registerInsertValue(apiUrl) {
     cftPlaceholders.forEach(node => {
         node.addEventListener('click', function ($event) {
 
-            clickedDom = event.path[0];
+            let clickedDom = event.path[0];
             let xhttp = new XMLHttpRequest();
-            data = JSON.stringify(
+            let data = JSON.stringify(
                 {
                     'node_id': clickedDom.id,
                     'node_class': clickedDom.className,

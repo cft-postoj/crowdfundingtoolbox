@@ -5,6 +5,7 @@ namespace Modules\UserManagement\Repositories;
 
 
 use http\Env\Response;
+use Modules\UserManagement\Entities\UserCookieCouple;
 use Modules\UserManagement\Entities\User;
 
 class UserRepository implements UserRepositoryInterface
@@ -85,5 +86,13 @@ class UserRepository implements UserRepositoryInterface
             ->update([
                 'generate_password_token'   =>  $token
             ]);
+    }
+
+    public function coupleUserWithCookie($newUserId, $user_cookie)
+    {
+        return UserCookieCouple::create([
+            'user_cookie_id' => $user_cookie,
+            'portal_user_id' => $newUserId
+        ]);
     }
 }

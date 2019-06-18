@@ -21,7 +21,7 @@ class TrackingService
     {
        try {
            return TrackingVisit::create([
-               'user_id' => $userId,
+               'portal_user_id' => $userId,
                'user_cookie' => $userCookie,
                'url' => $url,
                'article_id' => $articleId,
@@ -36,7 +36,7 @@ class TrackingService
     {
         try {
             $trackingShow = TrackingShow::create([
-                'visit_id' => $trackingVisitId,
+                'tracking_visit_id' => $trackingVisitId,
                 'widget_id' => $widgetId,
             ]);
         } catch (\Exception $e) {

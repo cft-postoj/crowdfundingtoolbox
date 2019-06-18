@@ -21,4 +21,6 @@ interface PortalUserServiceInterface
     public function resetPassword($request);
 
     public function logout();
+
+    public function registerDuringDonation(String $email, int $cookie);
 }

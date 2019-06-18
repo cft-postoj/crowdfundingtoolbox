@@ -12,12 +12,11 @@ class TrackingShow extends Model
     public $timestamps = true;
 
     protected $table = 'tracking_show';
-    protected $fillable = ['visit_id', 'widget_id'];
+    protected $fillable = ['tracking_visit_id', 'widget_id'];
 
     public function visit()
     {
-        return $this->hasOne('Modules\UserManagement\Entities\TrackingVisit');
+        return $this->belongsTo('Modules\UserManagement\Entities\TrackingVisit','id');
     }
-
 
 }

@@ -1,4 +1,4 @@
-import {errorShowing, formSerialize, getJsonFirstProp, portalUrl} from "./helpers";
+import {errorShowing, formSerialize, getCookie, getJsonFirstProp, portalUrl} from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as registerTexts from "./json/register";
 
@@ -39,8 +39,9 @@ function register() {
             'email': document.querySelector('form[name="cft-register"] input[name="cft-email"]').value,
             'password': document.querySelector('form[name="cft-register"] input[name="cft-password"]').value,
             'agreeMailing': document.querySelector('form[name="cft-register"] input[name="cft-mailing"]').checked,
-            'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked
-        };
+            'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked,
+            'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie")
+    };
         if (!data.agreePersonalData) {
             return errorShowing('form[name="cft-register"] span.cft-agree',
                 'form[name="cft-register"] input[name="cft-agree"]',

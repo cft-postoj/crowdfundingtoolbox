@@ -15,12 +15,10 @@ class CreateTrackingShow extends Migration
     {
         Schema::create('tracking_show', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('visit_id');
-            $table->foreign('visit_id')->references('id')->on('tracking_visit');
+            $table->integer('tracking_visit_id');
+            $table->foreign('tracking_visit_id')->references('id')->on('tracking_visit');
             $table->integer('widget_id')->nullable();
             $table->foreign('widget_id')->references('id')->on('widgets');
-            $table->integer('article_id')->nullable();
-            $table->string('title')->nullable();
             $table->timestamps();
         });
     }

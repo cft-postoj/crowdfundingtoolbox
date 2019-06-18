@@ -10,6 +10,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class AutoRegistrationEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    private $username;
+    private $emailToken;
 
     /**
      * Create a new message instance.
@@ -31,6 +33,7 @@ class AutoRegistrationEmail extends Mailable
     {
         return $this->subject('Thank you for your support')
             ->from('smtp@crowdfundingtoolbox.news')
-            ->view('emails.autoRegister');
+            ->view('emails.autoRegister', ['username' => $this->username,
+                'emailToken' => $this->emailToken]);
     }
 }

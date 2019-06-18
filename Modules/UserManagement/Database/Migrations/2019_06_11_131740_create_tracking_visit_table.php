@@ -15,8 +15,8 @@ class CreateTrackingVisitTable extends Migration
     {
         Schema::create('tracking_visit', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('portal_user_id')->nullable();
+            $table->foreign('portal_user_id')->references('id')->on('portal_users');
             $table->integer('user_cookie')->nullable();
             $table->string('url');
             $table->string('article_id')->nullable();

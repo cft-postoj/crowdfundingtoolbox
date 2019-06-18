@@ -4,16 +4,19 @@
 namespace Modules\UserManagement\Services;
 
 
-use const http\Client\Curl\Features\HTTP2;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use JWTAuth;
+use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
+use Modules\UserManagement\Entities\PortalUser;
+use Modules\UserManagement\Entities\User;
+use Modules\UserManagement\Entities\UserCookieCouple;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Repositories\UserRepository;
-use JWTAuth;
-use Illuminate\Support\Facades\Auth;
+use const http\Client\Curl\Features\HTTP2;
 
 class PortalUserService implements PortalUserServiceInterface
 {
@@ -22,10 +25,10 @@ class PortalUserService implements PortalUserServiceInterface
     private $portalUserRepository;
     private $usernameUsedCounter;
 
-    public function __construct(PortalUserRepository $portalUserRepository, UserRepository $userRepository)
+    public function __construct()
     {
-        $this->portalUserRepository = $portalUserRepository;
-        $this->userRepository = $userRepository;
+        $this->portalUserRepository = new PortalUserRepository();
+        $this->userRepository = new UserRepository();
         $this->usernameUsedCounter = 0;
     }
 
@@ -100,7 +103,8 @@ class PortalUserService implements PortalUserServiceInterface
 
             $username = explode('@', $request['email'])[0];
             $newUserId = $this->userRepository->create($request['email'], $request['password'], $this->checkUniqueUsername($username));
-            $this->portalUserRepository->create($newUserId);
+            $portalUser = $this->portalUserRepository->create($newUserId);
+            $this->userRepository->coupleUserWithCookie($portalUser->id, intval($request['user_cookie']));
             return \response()->json([
                 'message' => 'Account was successfully created.'
             ], Response::HTTP_CREATED);
@@ -108,7 +112,8 @@ class PortalUserService implements PortalUserServiceInterface
         } catch (\Exception $exception) {
             $error = array(
                 'type' => 'undefined',
-                'message' => 'There was an error during the registration process.'
+                'message' => $exception->getMessage(),
+                'trace' => $exception->getTrace()
             );
 
             if (!filter_var($request['email'], FILTER_VALIDATE_EMAIL)) {
@@ -214,6 +219,8 @@ class PortalUserService implements PortalUserServiceInterface
         }
 
         $user = Auth::user();
+        $portalUser = PortalUser::where('user_id',$user->id)->select('id')->first();
+        $this->coupleUserIdAndUserCookie($portalUser->id, $request['user_cookie']);
         $token = JWTAuth::fromUser($user);
         return \response()->json([
             'token' => $token
@@ -231,8 +238,8 @@ class PortalUserService implements PortalUserServiceInterface
                     $this->userRepository->addGeneratedToken($possibleUser->id, $generatedToken);
                     Mail::to($request['email'])->send(new ForgottenPasswordEmail($generatedToken));
                     return \response()->json([
-                        'error' =>  false,
-                        'message'   =>  'Email with password was successfully sent.'
+                        'error' => false,
+                        'message' => 'Email with password was successfully sent.'
                     ], Response::HTTP_OK);
                 }
             }
@@ -255,5 +262,41 @@ class PortalUserService implements PortalUserServiceInterface
             return $e;
         }
 
+    }
+
+    public function registerDuringDonation(String $email, int $cookie): User
+    {
+        //find user by email. if email is already in database, don't create new user but return that user
+        $userByMail = User::where('email', $email)->first();
+        if ($userByMail) {
+            return $userByMail;
+        }
+        $generatedPassword = $this->generatePasswordToken();
+
+        $username = explode('@', $email)[0];
+        $user = User::create([
+            'email' => $email,
+            'username' => $username,
+            'password' => bcrypt($generatedPassword),
+            'generate_password_token' => $generatedPassword
+        ]);
+
+        $user->portalUser = PortalUser::create([
+            'user_id' => $user->id
+        ]);
+
+        $user->portalUser->userCookieCouple = $this->coupleUserIdAndUserCookie($cookie, $user['id']);
+
+        Mail::to($email)->send(new AutoRegistrationEmail($username, $generatedPassword));
+
+        return $user;
+    }
+
+    public function coupleUserIdAndUserCookie($userId, $cookieId): UserCookieCouple
+    {
+        return UserCookieCouple::create([
+            'user_cookie_id' => $cookieId,
+            'portal_user_id' => $userId
+        ]);
     }
 }

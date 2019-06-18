@@ -10,7 +10,7 @@ class DonationInitialize extends Model
     protected $fillable = [
         //information from frontend
         'show_id',
-        'email',
+        'user_id',
         'terms',
         'frequency',
         'donation_value'
