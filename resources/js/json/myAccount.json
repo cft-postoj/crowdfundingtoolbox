@@ -6,5 +6,6 @@
   "savedArticlesSlug": "ulozene-clanky",
   "donationSlug": "vasa-podpora",
   "ordersSlug": "objednavky",
-  "accountSlug": "ucet"
+  "accountSlug": "ucet",
+  "resetYourPasswordAlert": "Prosím, resetujte si svoje heslo."
 }

@@ -1,4 +1,5 @@
-import {errorShowing, formSerialize, getJsonFirstProp, portalUrl} from "./helpers";
+import {errorShowing, formSerialize, getJsonFirstProp} from "./helpers";
+import portalUrl from './constants/url';
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as registerTexts from "./json/register";
 

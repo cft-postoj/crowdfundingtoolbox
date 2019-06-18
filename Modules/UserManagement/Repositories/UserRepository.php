@@ -23,7 +23,9 @@ class UserRepository implements UserRepositoryInterface
 
     public function get($id)
     {
-        // TODO: Implement getById() method.
+        return $this->model
+            ::where('id', $id)
+            ->first();
     }
 
     public function updatePassword($id, $pasword)

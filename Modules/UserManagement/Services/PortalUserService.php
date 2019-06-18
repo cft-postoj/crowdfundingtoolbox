@@ -4,12 +4,16 @@
 namespace Modules\UserManagement\Services;
 
 
+use Carbon\Carbon;
 use const http\Client\Curl\Features\HTTP2;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
+use Modules\UserManagement\Jobs\RemoveGeneratedToken;
+use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Repositories\UserRepository;
 use JWTAuth;
@@ -20,12 +24,20 @@ class PortalUserService implements PortalUserServiceInterface
 
     private $userRepository;
     private $portalUserRepository;
+    private $generatedUserTokenRepository;
     private $usernameUsedCounter;
+    private $generatedTokenJob;
+    private $generatedUserTokenService;
 
-    public function __construct(PortalUserRepository $portalUserRepository, UserRepository $userRepository)
+    public function __construct(PortalUserRepository $portalUserRepository,
+                                UserRepository $userRepository,
+                                GeneratedUserTokenRepository $generatedUserTokenRepository,
+                                RemoveGeneratedToken $generatedTokenJob)
     {
         $this->portalUserRepository = $portalUserRepository;
         $this->userRepository = $userRepository;
+        $this->generatedUserTokenRepository = $generatedUserTokenRepository;
+        $this->generatedTokenJob = $generatedTokenJob;
         $this->usernameUsedCounter = 0;
     }
 
@@ -223,16 +235,15 @@ class PortalUserService implements PortalUserServiceInterface
     public function resetPassword($request)
     {
         try {
+            $this->generatedUserTokenService = new GeneratedUserTokenService();
             $possibleUser = $this->userRepository->getByEmail($request['email']);
             if ($possibleUser !== null) {
                 // check if user exist like Portal user
                 if ($this->portalUserRepository->get($possibleUser->id) !== null) {
-                    $generatedToken = $this->generatePasswordToken();
-                    $this->userRepository->addGeneratedToken($possibleUser->id, $generatedToken);
-                    Mail::to($request['email'])->send(new ForgottenPasswordEmail($generatedToken));
+                    Mail::to($request['email'])->send(new ForgottenPasswordEmail($this->generatedUserTokenService->create($possibleUser->id)));
                     return \response()->json([
-                        'error' =>  false,
-                        'message'   =>  'Email with password was successfully sent.'
+                        'error' => false,
+                        'message' => 'Email with password was successfully sent.'
                     ], Response::HTTP_OK);
                 }
             }
@@ -246,14 +257,5 @@ class PortalUserService implements PortalUserServiceInterface
         }
     }
 
-    private function generatePasswordToken()
-    {
-        $length = 32;
-        try {
-            return bin2hex(random_bytes($length));
-        } catch (\Exception $e) {
-            return $e;
-        }
 
-    }
 }

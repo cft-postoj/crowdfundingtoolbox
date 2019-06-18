@@ -63,7 +63,6 @@ export function formSerialize(formElement) {
     return values;
 }
 
-export const portalUrl = 'http://www.postoj.local:8000';
 
 export function isUserLoggedIn() {
     const token = localStorage.getItem('cft_usertoken');

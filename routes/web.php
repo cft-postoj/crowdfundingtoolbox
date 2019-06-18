@@ -60,6 +60,10 @@ Route::get('/portal/my-account/orders', function() {
 Route::get('/portal/my-account/account', function() {
    return view('portal-templates.myAccount.parts.account');
 });
+Route::get('/portal/my-account/bad-request', function() {
+    return view('portal-templates.myAccount.badRequest');
+});
+
 
 /**************************************/
 

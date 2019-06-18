@@ -80,4 +80,16 @@
       }
     }
   }
+  &.badRequest {
+    .cft--myAccount--body {
+      width: 100%;
+      text-align: center;
+      h4 {
+        margin: 15px 0;
+      }
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
 }

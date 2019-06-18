@@ -114,7 +114,7 @@ Route::group([
     Route::post('login', '\Modules\UserManagement\Http\Controllers\PortalUsersController@authenticate');
     //Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
     Route::post('forgotten-password', '\Modules\UserManagement\Http\Controllers\PortalUsersController@resetPassword');
-    Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@hasUserGeneratedToken');
+    Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\GeneratedUserTokenController@hasUserGeneratedToken');
     Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
 
 
