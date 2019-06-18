@@ -904,16 +904,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/js/constants/url.js ***!
   \***************************************/
-/*! exports provided: apiUrl, viewsUrl */
+/*! exports provided: apiUrl, viewsUrl, portalUrl */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiUrl", function() { return apiUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "viewsUrl", function() { return viewsUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
 var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
 
 var viewsUrl = 'http://127.0.0.1:8001/portal/';
+var portalUrl = 'http://www.postoj.local:8000';
 
 /***/ }),
 
@@ -1123,8 +1125,10 @@ var _json_countries__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webp
 
 document.addEventListener('DOMContentLoaded', function () {
   if (document.getElementById('cft--myaccount') !== null) {
+    document.querySelector('footer').style.margin = 0;
+
     if (location.href.indexOf('?generatedResetToken') > -1) {
-      isValidGeneratedToken(location.href.split('?generatedResetToken')[1]);
+      isValidGeneratedToken(location.href.split('?generatedResetToken=')[1]);
     } else {
       if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() === false) {
         location.href = '/';
@@ -1138,12 +1142,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-function fetchMyAccountTemplate() {
+function fetchMyAccountTemplate(message) {
   var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'my-account';
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
-    document.getElementById('cft--myaccount').innerHTML = html, getSection(), changeMyAccountView();
+    document.getElementById('cft--myaccount').innerHTML = html, getSection(message), changeMyAccountView();
   });
 }
 
@@ -1152,8 +1156,13 @@ function myAccountButton() {
   if (button != null) button.classList.add('active');
 }
 
-function getSection() {
+function getSection(message) {
   var splitter = location.href.split('#')[1];
+
+  if (splitter.indexOf('?') > -1) {
+    splitter = splitter.split('?')[0];
+  }
+
   console.log(splitter);
   changeActiveMenu(splitter);
 
@@ -1175,7 +1184,7 @@ function getSection() {
       break;
 
     case _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["accountSlug"]:
-      sectionContent('account');
+      sectionContent('account', message);
       break;
 
     default:
@@ -1184,7 +1193,7 @@ function getSection() {
   }
 }
 
-function sectionContent(section) {
+function sectionContent(section, message) {
   var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'my-account/' + section;
   fetch(url).then(function (response) {
     return response.text();
@@ -1192,7 +1201,7 @@ function sectionContent(section) {
     document.getElementById('cft-myAccount-body-section').innerHTML = html;
 
     if (section === 'account') {
-      getCountryPhones(), getUserData(), getCountries(), logout();
+      getCountryPhones(), getUserData(), getCountries(), logout(), addAlertMessage(message);
     }
   });
 }
@@ -1283,14 +1292,39 @@ function isValidGeneratedToken(token) {
   xhttp.responseType = 'json';
 
   xhttp.onload = function () {
-    console.log(xhttp.response);
-    alert('Dopyt pre generovany token...');
-    /*
-    TODO: ADD ALERT NOTIFICATION FOR THIS USER IN MY ACCOUNT VIEW .. to change password
-     */
+    if (xhttp.response != null) {
+      localStorage.setItem('cft_usertoken', xhttp.response.token);
+      fetchMyAccountTemplate('resetPassword');
+    } else {
+      showMyAccountNotValidView();
+    }
   };
 
   xhttp.send(JSON.stringify(data));
+}
+
+function showMyAccountNotValidView() {
+  // Bad request view
+  var url = _constants_url__WEBPACK_IMPORTED_MODULE_1__["viewsUrl"] + 'my-account/bad-request';
+  fetch(url).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    document.getElementById('cft--myaccount').innerHTML = html;
+  });
+}
+
+function addAlertMessage(message) {
+  var alertElement = document.querySelector('#cft--myAccount .cft--alert');
+  alertElement.classList.add('active');
+  var resultText = '';
+
+  switch (message) {
+    case 'resetPassword':
+      resultText = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["resetYourPasswordAlert"];
+      break;
+  }
+
+  alertElement.innerHTML = resultText;
 }
 
 /***/ }),
@@ -1315,6 +1349,7 @@ var _json_register__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpa
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -1412,7 +1447,7 @@ function register() {
                   document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i;
 
                   if (i === 0) {
-                    window.location.href = _helpers__WEBPACK_IMPORTED_MODULE_1__["portalUrl"];
+                    window.location.href = _constants_url__WEBPACK_IMPORTED_MODULE_2__["default"];
                   }
 
                   _context.next = 6;
@@ -1627,7 +1662,7 @@ function parseScriptFromResponse(response) {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, portalUrl, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn */
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1639,7 +1674,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFormData", function() { return removeFormData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findGetParameter", function() { return findGetParameter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formSerialize", function() { return formSerialize; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUserLoggedIn", function() { return isUserLoggedIn; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showCountryPhones", function() { return showCountryPhones; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRequest", function() { return getRequest; });
@@ -1705,7 +1739,6 @@ function formSerialize(formElement) {
 
   return values;
 }
-var portalUrl = 'http://www.postoj.local:8000';
 function isUserLoggedIn() {
   var token = localStorage.getItem('cft_usertoken');
 
@@ -1839,10 +1872,10 @@ module.exports = {"incorrectEmail":"Nesprávny e-mail. Nemáte ešte registráci
 /*!******************************************!*\
   !*** ./resources/js/json/myAccount.json ***!
   \******************************************/
-/*! exports provided: myAccountButton, myAccountUrl, previewSlug, newsletterSlug, savedArticlesSlug, donationSlug, ordersSlug, accountSlug, default */
+/*! exports provided: myAccountButton, myAccountUrl, previewSlug, newsletterSlug, savedArticlesSlug, donationSlug, ordersSlug, accountSlug, resetYourPasswordAlert, default */
 /***/ (function(module) {
 
-module.exports = {"myAccountButton":"Môj účet","myAccountUrl":"/moj-ucet","previewSlug":"prehlad","newsletterSlug":"newsletter","savedArticlesSlug":"ulozene-clanky","donationSlug":"vasa-podpora","ordersSlug":"objednavky","accountSlug":"ucet"};
+module.exports = {"myAccountButton":"Môj účet","myAccountUrl":"/moj-ucet","previewSlug":"prehlad","newsletterSlug":"newsletter","savedArticlesSlug":"ulozene-clanky","donationSlug":"vasa-podpora","ordersSlug":"objednavky","accountSlug":"ucet","resetYourPasswordAlert":"Prosím, resetujte si svoje heslo."};
 
 /***/ }),
 

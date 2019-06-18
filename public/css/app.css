@@ -748,6 +748,19 @@
   color: #000000;
 }
 
+.cft--myAccount.badRequest .cft--myAccount--body {
+  width: 100%;
+  text-align: center;
+}
+
+.cft--myAccount.badRequest .cft--myAccount--body h4 {
+  margin: 15px 0;
+}
+
+.cft--myAccount.badRequest .cft--myAccount--body a {
+  text-decoration: underline;
+}
+
 .cft--alert {
   visibility: hidden;
   opacity: 0;

@@ -66,4 +66,9 @@ class PortalUsersController extends Controller
     {
         return $this->portalUserService->resetPassword($request);
     }
+
+    protected function hasUserGeneratedToken(Request $request)
+    {
+        return $this->portalUserService->hasUserGeneratedToken($request);
+    }
 }

@@ -14,8 +14,9 @@ import {errorAlert, successAlert} from "./alert";
 
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('cft--myaccount') !== null) {
+        document.querySelector('footer').style.margin = 0;
         if (location.href.indexOf('?generatedResetToken') > -1) {
-            isValidGeneratedToken(location.href.split('?generatedResetToken')[1]);
+            isValidGeneratedToken(location.href.split('?generatedResetToken=')[1]);
         } else {
             if (isUserLoggedIn() === false) {
                 location.href = '/';
@@ -32,14 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function fetchMyAccountTemplate() {
+function fetchMyAccountTemplate(message) {
     const url = viewsUrl + 'my-account';
     fetch(url)
         .then(response => response.text())
         .then(
             html => {
                 document.getElementById('cft--myaccount').innerHTML = html,
-                    getSection(),
+                    getSection(message),
                     changeMyAccountView()
             }
         );
@@ -51,8 +52,11 @@ function myAccountButton() {
         button.classList.add('active');
 }
 
-function getSection() {
-    const splitter = location.href.split('#')[1];
+function getSection(message) {
+    let splitter = location.href.split('#')[1];
+    if (splitter.indexOf('?') > -1) {
+        splitter = splitter.split('?')[0];
+    }
     console.log(splitter)
     changeActiveMenu(splitter);
     switch (splitter) {
@@ -69,7 +73,7 @@ function getSection() {
             sectionContent('orders');
             break;
         case myAccountTexts.accountSlug:
-            sectionContent('account');
+            sectionContent('account', message);
             break;
         default:
             sectionContent('preview');
@@ -77,7 +81,7 @@ function getSection() {
     }
 }
 
-function sectionContent(section) {
+function sectionContent(section, message) {
     const url = viewsUrl + 'my-account/' + section;
     fetch(url)
         .then(response => response.text())
@@ -88,7 +92,8 @@ function sectionContent(section) {
                     getCountryPhones(),
                         getUserData(),
                         getCountries(),
-                        logout()
+                        logout(),
+                        addAlertMessage(message)
                 }
             }
         );
@@ -171,13 +176,36 @@ function isValidGeneratedToken(token) {
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.responseType = 'json';
     xhttp.onload = () => {
-        console.log(xhttp.response)
-
-        alert('Dopyt pre generovany token...');
-
-        /*
-        TODO: ADD ALERT NOTIFICATION FOR THIS USER IN MY ACCOUNT VIEW .. to change password
-         */
+        if (xhttp.response != null) {
+            localStorage.setItem('cft_usertoken', xhttp.response.token);
+            fetchMyAccountTemplate('resetPassword');
+        } else {
+            showMyAccountNotValidView();
+        }
     };
     xhttp.send(JSON.stringify(data));
+}
+
+function showMyAccountNotValidView() {
+    // Bad request view
+    const url = viewsUrl + 'my-account/bad-request';
+    fetch(url)
+        .then(response => response.text())
+        .then(
+            html => {
+                document.getElementById('cft--myaccount').innerHTML = html
+            }
+        );
+}
+
+function addAlertMessage(message) {
+    const alertElement = document.querySelector('#cft--myAccount .cft--alert');
+    alertElement.classList.add('active');
+    let resultText = '';
+    switch (message) {
+        case 'resetPassword':
+            resultText = myAccountTexts.resetYourPasswordAlert;
+            break;
+    }
+    alertElement.innerHTML = resultText;
 }
