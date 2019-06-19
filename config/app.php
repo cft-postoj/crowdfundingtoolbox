@@ -181,8 +181,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Nwidart\Modules\LaravelModulesServiceProvider::class
-
+        Nwidart\Modules\LaravelModulesServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class
 
 
     ],
@@ -236,6 +236,7 @@ return [
 //        'Passport' => Laravel\Passport\PassportServiceProvider::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 
