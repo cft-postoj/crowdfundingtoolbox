@@ -17,7 +17,8 @@ class DonationInitialize extends Migration
             $table->increments('id');
             $table->integer('show_id');
             $table->foreign('show_id')->references('id')->on('tracking_show');
-            $table->string('email');
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('terms');
             //TODO; frequency - replace with enum
             $table->string('frequency');

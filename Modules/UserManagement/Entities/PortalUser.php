@@ -21,4 +21,10 @@ class PortalUser extends Model
     public function targeting() {
 
     }
+
+    public function visit()
+    {
+        return $this->hasOne('Modules\UserManagement\Entities\TrackingVisit');
+    }
+
 }

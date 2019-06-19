@@ -1,4 +1,4 @@
-import {apiUrl} from "./constants/url";
+import {apiUrl, domain} from "./constants/url";
 
 export function toggleClassLists(array, remove, el) {
     removeClassLists(remove, el);
@@ -179,5 +179,5 @@ export function getCookie(cname) {
 
 export function setCookie(cname, cvalue, exdays) {
     let expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;domain="+ domain;
 }

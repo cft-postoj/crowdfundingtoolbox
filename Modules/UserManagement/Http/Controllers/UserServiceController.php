@@ -244,52 +244,6 @@ class UserServiceController extends Controller
         ], 201);
     }
 
-
-    /*
-     * In donation case (only email is required)
-     */
-    protected function donationCreate(Request $request)
-    {
-        $valid = validator($request->only(
-            'email'
-        ), [
-            'email' => 'required|string|email|max:255',
-        ]);
-        if ($valid->fails()) {
-            $jsonError = response()->json([
-                'error' => $valid->errors(),
-                'message' => 'Email is incorrect.'
-            ], 400);
-            return $jsonError;
-        }
-
-        if (User::where('email', $request['email'])->first()) {
-            // make donation response -- store to donation table by user id
-            return null;
-        }
-
-        $generatedPassword = $this->generatePasswordToken();
-
-        $username = explode('@', $request['email'])[0];
-        $user = User::create([
-            'email' => $request['email'],
-            'username' => $username,
-            'password' => bcrypt($generatedPassword),
-            'generate_password_token' => $generatedPassword
-        ]);
-        $user->save();
-
-        PortalUser::create([
-            'user_id' => $user->id
-        ])->save();
-
-        // donation functions
-
-        //return mailing;
-        return Mail::to($request['email'])->send(new AutoRegistrationEmail($username, $generatedPassword));
-
-    }
-
     private function generatePasswordToken()
     {
         $length = 32;

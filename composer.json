@@ -14,6 +14,7 @@
         "fideloper/proxy": "^4.0",
         "illuminated/helper-functions": "^5.8",
         "jadjoubran/laravel-angular": "^0.4.0",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "mpociot/laravel-apidoc-generator": "^3.3",

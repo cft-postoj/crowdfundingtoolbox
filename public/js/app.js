@@ -904,7 +904,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/js/constants/url.js ***!
   \***************************************/
-/*! exports provided: apiUrl, viewsUrl, portalUrl */
+/*! exports provided: apiUrl, viewsUrl, portalUrl, domain */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -912,10 +912,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiUrl", function() { return apiUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "viewsUrl", function() { return viewsUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "domain", function() { return domain; });
 var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
 
 var viewsUrl = 'http://127.0.0.1:8001/portal/';
 var portalUrl = 'http://www.postoj.local:8000';
+var domain = 'postoj.local';
 
 /***/ }),
 
@@ -937,7 +939,7 @@ var _json_login__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 
-var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
+
 
 
 
@@ -951,7 +953,8 @@ function loginAction() {
     e.preventDefault();
     var data = {
       'email': document.querySelector('form[name="cft-login"] input[name="cft-email"]').value,
-      'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value
+      'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value,
+      'user_cookie': Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getCookie"])("cr0wdFundingToolbox-user_cookie")
     };
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'login', true);
@@ -1251,7 +1254,7 @@ function getCountries() {
   var countrySelect = document.querySelector('select[name="cft-country"]');
 
   if (countrySelect !== null) {
-    _json_countries__WEBPACK_IMPORTED_MODULE_4__["map"](function (c) {
+    JSON.parse(_json_countries__WEBPACK_IMPORTED_MODULE_4___namespace).map(function (c) {
       var el = document.createElement('option');
       el.value = c.name;
       el.text = c.name;
@@ -1353,7 +1356,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 document.addEventListener('DOMContentLoaded', function () {
   if (document.getElementById('cft--register') !== null) fetchRegisterTemplate();
 });
@@ -1386,7 +1388,8 @@ function register() {
       'email': document.querySelector('form[name="cft-register"] input[name="cft-email"]').value,
       'password': document.querySelector('form[name="cft-register"] input[name="cft-password"]').value,
       'agreeMailing': document.querySelector('form[name="cft-register"] input[name="cft-mailing"]').checked,
-      'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked
+      'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked,
+      'user_cookie': Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["getCookie"])("cr0wdFundingToolbox-user_cookie")
     };
 
     if (!data.agreePersonalData) {
@@ -1447,7 +1450,7 @@ function register() {
                   document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i;
 
                   if (i === 0) {
-                    window.location.href = _constants_url__WEBPACK_IMPORTED_MODULE_2__["default"];
+                    window.location.href = _constants_url__WEBPACK_IMPORTED_MODULE_2__["portalUrl"];
                   }
 
                   _context.next = 6;
@@ -1497,16 +1500,17 @@ function sleep(ms) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+
 
 function getWidgets(apiUrl) {
   var sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
   var fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
   var leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard'); //get widgets for users and track, that user has been on specific page
 
-  data = JSON.stringify({
+  var data = JSON.stringify({
     'article_title': document.querySelector('title').innerText,
-    'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie"),
+    'user_cookie': Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getCookie"])("cr0wdFundingToolbox-user_cookie"),
     'user_id': localStorage.getItem('cft_usertoken')
   });
   var xhttp = new XMLHttpRequest();
@@ -1515,7 +1519,9 @@ function getWidgets(apiUrl) {
   xhttp.onreadystatechange = function () {
     if (xhttp.readyState === XMLHttpRequest.DONE) {
       if (xhttp.response != null) {
-        setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
+        if (!Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getCookie"])("cr0wdFundingToolbox-user_cookie")) {
+          Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setCookie"])('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
+        }
 
         for (var i = 0; i < xhttp.response['widgets'].length; i++) {
           var el = xhttp.response['widgets'][i];
@@ -1557,14 +1563,12 @@ function getWidgets(apiUrl) {
 }
 
 function registerClick(apiUrl) {
-  clickedDom = event.path[0];
-  cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
+  var cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
   cftPlaceholders.forEach(function (node) {
     node.addEventListener('click', function ($event) {
-      localStorage.getItem('cr0wdFundingToolbox');
-      clickedDom = event.path[0];
+      var clickedDom = event.path[0];
       var xhttp = new XMLHttpRequest();
-      data = JSON.stringify({
+      var data = JSON.stringify({
         'node_id': clickedDom.id,
         'node_class': clickedDom.className,
         'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
@@ -1579,12 +1583,12 @@ function registerClick(apiUrl) {
 }
 
 function registerInsertValue(apiUrl) {
-  cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
+  var cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
   cftPlaceholders.forEach(function (node) {
     node.addEventListener('click', function ($event) {
-      clickedDom = event.path[0];
+      var clickedDom = event.path[0];
       var xhttp = new XMLHttpRequest();
-      data = JSON.stringify({
+      var data = JSON.stringify({
         'node_id': clickedDom.id,
         'node_class': clickedDom.className,
         'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
@@ -1621,37 +1625,12 @@ function cr0wdGetDeviceType() {
   return device;
 }
 
-function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-
-  return "";
-}
-
-function setCookie(cname, cvalue, exdays) {
-  var expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
 function parseScriptFromResponse(response) {
-  scripts = response;
-  indexStart = response.indexOf('id="scripts">');
+  var scripts = response;
+  var indexStart = response.indexOf('id="scripts">');
   indexStart = scripts.indexOf('>', indexStart);
   indexStart = scripts.indexOf('>', indexStart + 1);
-  indexEnd = response.indexOf('</script>');
+  var indexEnd = response.indexOf('</script>');
   scripts = scripts.substr(indexStart + 1, indexEnd - indexStart - 1);
   return scripts;
 }
@@ -1662,7 +1641,7 @@ function parseScriptFromResponse(response) {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn */
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn, getCookie, setCookie */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1682,6 +1661,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "successShowing", function() { return successShowing; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetFormInputs", function() { return resetFormInputs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fadeIn", function() { return fadeIn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return getCookie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCookie", function() { return setCookie; });
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 
 function toggleClassLists(array, remove, el) {
@@ -1831,6 +1812,29 @@ function fadeIn(el, time) {
   };
 
   tick();
+}
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+
+  return "";
+}
+function setCookie(cname, cvalue, exdays) {
+  var expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;domain=" + _constants_url__WEBPACK_IMPORTED_MODULE_0__["domain"];
 }
 
 /***/ }),

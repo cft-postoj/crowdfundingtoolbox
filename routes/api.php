@@ -110,7 +110,6 @@ Route::group([
     //get Campaign
     Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
     Route::post('register', '\Modules\UserManagement\Http\Controllers\PortalUsersController@create');
-    Route::post('donation-register', '\Modules\UserManagement\Http\Controllers\UserServiceController@donationCreate');
     Route::post('login', '\Modules\UserManagement\Http\Controllers\PortalUsersController@authenticate');
     //Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
     Route::post('forgotten-password', '\Modules\UserManagement\Http\Controllers\PortalUsersController@resetPassword');

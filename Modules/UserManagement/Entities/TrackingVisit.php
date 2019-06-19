@@ -18,8 +18,12 @@ class TrackingVisit extends Model
 
     public function show()
     {
-        return $this->belongsTo('Modules\UserManagement\Entities\TrackingShow');
+        return $this->hasMany('Modules\UserManagement\Entities\TrackingShow');
     }
-       
+
+    public function user()
+    {
+        return $this->belongsTo('Modules\UserManagement\Entities\PortalUser','id');
+    }
 
 }

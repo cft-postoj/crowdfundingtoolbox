@@ -15,6 +15,10 @@ class CreateUserCookie extends Migration
     {
         Schema::create('user_cookie', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('device_type')->nullable();
+            $table->string('browser')->nullable();
+            $table->string('platform')->nullable();
+            $table->string('ip')->nullable();
             $table->timestamps();
         });
     }

@@ -1,5 +1,5 @@
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-import {errorShowing, successShowing, isUserLoggedIn, fadeIn, resetFormInputs} from "./helpers";
+import {errorShowing, successShowing, isUserLoggedIn, fadeIn, resetFormInputs, getCookie} from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as myAccountTexts from './json/myAccount';
 import * as loginTexts from './json/login';
@@ -18,7 +18,8 @@ function loginAction() {
         e.preventDefault();
         let data = {
             'email': document.querySelector('form[name="cft-login"] input[name="cft-email"]').value,
-            'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value
+            'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value,
+            'user_cookie' : getCookie("cr0wdFundingToolbox-user_cookie")
         };
         let xhttp = new XMLHttpRequest();
         xhttp.open('POST', apiUrl + 'login', true);
