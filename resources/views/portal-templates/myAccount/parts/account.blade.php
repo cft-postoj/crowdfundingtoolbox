@@ -43,7 +43,7 @@
             </label>
             <div class="cft--grid--row">
                 <div class="cft--grid--lg-4 withoutPadding-lg">
-                    <select name="cft-countryNumber" class="cft--select cft--border-right-none cft--border-radius-right-none"></select>
+                    <select name="cft-telephone-prefix" class="cft--select cft--border-right-none cft--border-radius-right-none"></select>
                 </div>
                 <div class="cft--grid--lg-8 withoutPadding-lg">
                     <input type="text" name="cft-telephone" id="cft-telephone" class="cft--input cft--border-radius-left-none"/>
@@ -77,10 +77,10 @@
                     <input type="text" name="cft-street" id="cft-street" class="cft--input"/>
                 </div>
                 <div class="cft--grid--lg-4 withoutPadding-lg">
-                    <label for="cft-number">
+                    <label for="cft-house-number">
                         ČÍSLO
                     </label>
-                    <input type="text" name="cft-number" id="cft-number" class="cft--input"/>
+                    <input type="text" name="cft-house-number" id="cft-house-number" class="cft--input"/>
                 </div>
             </div>
         </div>

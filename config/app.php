@@ -181,7 +181,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Nwidart\Modules\LaravelModulesServiceProvider::class
+        Nwidart\Modules\LaravelModulesServiceProvider::class,
+        App\Providers\PortalGlobalVariables::class
 
 
 

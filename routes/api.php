@@ -120,7 +120,7 @@ Route::group([
 
     Route::group(['middleware' => ['jwt.verify']], function () {
       Route::get('is-user-logged-in', '\Modules\UserManagement\Http\Controllers\PortalUsersController@isUserLoggedIn');
-      Route::get('user-details', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDetailsByToken');
+      Route::get('user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@get');
       Route::get('logout', '\Modules\UserManagement\Http\Controllers\PortalUsersController@logout');
     });
 

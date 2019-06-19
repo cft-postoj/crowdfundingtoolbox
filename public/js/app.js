@@ -937,7 +937,7 @@ var _json_login__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_
 /* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
 //const apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
 
-var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
+
 
 
 
@@ -1159,11 +1159,12 @@ function myAccountButton() {
 function getSection(message) {
   var splitter = location.href.split('#')[1];
 
-  if (splitter.indexOf('?') > -1) {
-    splitter = splitter.split('?')[0];
+  if (splitter !== '') {
+    if (splitter.indexOf('?') > -1) {
+      splitter = splitter.split('?')[0];
+    }
   }
 
-  console.log(splitter);
   changeActiveMenu(splitter);
 
   switch (splitter) {
@@ -1201,7 +1202,7 @@ function sectionContent(section, message) {
     document.getElementById('cft-myAccount-body-section').innerHTML = html;
 
     if (section === 'account') {
-      getCountryPhones(), getUserData(), getCountries(), logout(), addAlertMessage(message);
+      getCountryPhones(), getUserData(), logout(), getCountries(), addAlertMessage(message);
     }
   });
 }
@@ -1230,7 +1231,7 @@ function changeMyAccountView() {
 }
 
 function getCountryPhones() {
-  var countryPhoneSelect = document.querySelector('select[name="cft-countryNumber"]');
+  var countryPhoneSelect = document.querySelector('select[name="cft-telephone-prefix"]');
 
   if (countryPhoneSelect !== null && _json_countryPhone__WEBPACK_IMPORTED_MODULE_3__ !== null) {
     Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["showCountryPhones"])(_json_countryPhone__WEBPACK_IMPORTED_MODULE_3__).forEach(function (option) {
@@ -1251,7 +1252,7 @@ function getCountries() {
   var countrySelect = document.querySelector('select[name="cft-country"]');
 
   if (countrySelect !== null) {
-    _json_countries__WEBPACK_IMPORTED_MODULE_4__["map"](function (c) {
+    _json_countries__WEBPACK_IMPORTED_MODULE_4__.map(function (c) {
       var el = document.createElement('option');
       el.value = c.name;
       el.text = c.name;
@@ -1279,7 +1280,23 @@ function logout() {
 
 function getUserData() {
   var actualHeader = [];
-  console.log(Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'user-details', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])(actualHeader)));
+  var jwtEmail = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["parseJwt"])().email;
+  document.querySelector('input[name="cft-email"]').value = jwtEmail;
+  document.querySelector('input[name="cft-password"]').value = '********';
+  var userData = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'user-details', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])(actualHeader));
+
+  if (userData !== null) {
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-firstName"]', userData.first_name);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-lastName"]', userData.last_name);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-street"]', userData.street);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-house-number"]', userData.house_number);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["makeOptionSelected"])('select[name="cft-telephone-prefix"]', userData.telephone_prefix);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-telephone"]', userData.telephone);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-city"]', userData.city);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-zip"]', userData.zip);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["makeOptionSelected"])('select[name="cft-country"]', userData.country);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setCheckboxValue"])('input[name="cft-deliveryAddressSame"]', userData.delivery_address_is_same);
+  }
 }
 
 function isValidGeneratedToken(token) {
@@ -1322,6 +1339,9 @@ function addAlertMessage(message) {
     case 'resetPassword':
       resultText = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["resetYourPasswordAlert"];
       break;
+
+    default:
+      alertElement.classList.remove('active');
   }
 
   alertElement.innerHTML = resultText;
@@ -1497,16 +1517,17 @@ function sleep(ms) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+
 
 function getWidgets(apiUrl) {
   var sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
   var fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
   var leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard'); //get widgets for users and track, that user has been on specific page
 
-  data = JSON.stringify({
+  var data = JSON.stringify({
     'article_title': document.querySelector('title').innerText,
-    'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie"),
+    'user_cookie': Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getCookie"])("cr0wdFundingToolbox-user_cookie"),
     'user_id': localStorage.getItem('cft_usertoken')
   });
   var xhttp = new XMLHttpRequest();
@@ -1515,7 +1536,7 @@ function getWidgets(apiUrl) {
   xhttp.onreadystatechange = function () {
     if (xhttp.readyState === XMLHttpRequest.DONE) {
       if (xhttp.response != null) {
-        setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
+        Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setCookie"])('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
 
         for (var i = 0; i < xhttp.response['widgets'].length; i++) {
           var el = xhttp.response['widgets'][i];
@@ -1557,12 +1578,11 @@ function getWidgets(apiUrl) {
 }
 
 function registerClick(apiUrl) {
-  clickedDom = event.path[0];
-  cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
+  var clickedDom = event.path[0];
+  var cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
   cftPlaceholders.forEach(function (node) {
     node.addEventListener('click', function ($event) {
       localStorage.getItem('cr0wdFundingToolbox');
-      clickedDom = event.path[0];
       var xhttp = new XMLHttpRequest();
       data = JSON.stringify({
         'node_id': clickedDom.id,
@@ -1579,7 +1599,7 @@ function registerClick(apiUrl) {
 }
 
 function registerInsertValue(apiUrl) {
-  cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
+  var cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
   cftPlaceholders.forEach(function (node) {
     node.addEventListener('click', function ($event) {
       clickedDom = event.path[0];
@@ -1621,37 +1641,12 @@ function cr0wdGetDeviceType() {
   return device;
 }
 
-function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-
-  return "";
-}
-
-function setCookie(cname, cvalue, exdays) {
-  var expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
 function parseScriptFromResponse(response) {
-  scripts = response;
-  indexStart = response.indexOf('id="scripts">');
+  var scripts = response;
+  var indexStart = response.indexOf('id="scripts">');
   indexStart = scripts.indexOf('>', indexStart);
   indexStart = scripts.indexOf('>', indexStart + 1);
-  indexEnd = response.indexOf('</script>');
+  var indexEnd = response.indexOf('</script>');
   scripts = scripts.substr(indexStart + 1, indexEnd - indexStart - 1);
   return scripts;
 }
@@ -1662,7 +1657,7 @@ function parseScriptFromResponse(response) {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn */
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn, getCookie, setCookie, getToken, parseJwt, makeOptionSelected, setValueIfNotNull, setCheckboxValue */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1682,6 +1677,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "successShowing", function() { return successShowing; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetFormInputs", function() { return resetFormInputs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fadeIn", function() { return fadeIn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return getCookie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCookie", function() { return setCookie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getToken", function() { return getToken; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseJwt", function() { return parseJwt; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeOptionSelected", function() { return makeOptionSelected; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setValueIfNotNull", function() { return setValueIfNotNull; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCheckboxValue", function() { return setCheckboxValue; });
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 
 function toggleClassLists(array, remove, el) {
@@ -1832,6 +1834,62 @@ function fadeIn(el, time) {
 
   tick();
 }
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+
+  return "";
+}
+function setCookie(cname, cvalue, exdays) {
+  var expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getToken() {
+  return localStorage.getItem('cft_usertoken');
+}
+function parseJwt() {
+  var token = getToken();
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  return JSON.parse(jsonPayload);
+}
+function makeOptionSelected(selectEl, value) {
+  document.querySelectorAll(selectEl + ' option').forEach(function (el) {
+    if (el.value.indexOf('(' + value + ')') > -1) {
+      el.selected = true;
+    }
+  });
+}
+function setValueIfNotNull(element, value) {
+  if (document.querySelector(element) !== null && value !== null) {
+    return document.querySelector(element).value = value;
+  }
+
+  return null;
+}
+function setCheckboxValue(element, checked) {
+  if (document.querySelector(element) !== null && checked !== null) {
+    return checked ? document.querySelector(element).checked = true : document.querySelector(element).checked = false;
+  }
+
+  return null;
+}
 
 /***/ }),
 
@@ -1908,8 +1966,8 @@ module.exports = {"emailExists":"Zadaný email existuje, prosím <a href='/'>Pri
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\crowdfundingToolbox\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\crowdfundingToolbox\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\PROJECTS\LOCAL\htdocs\crowdfundingToolbox\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\PROJECTS\LOCAL\htdocs\crowdfundingToolbox\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

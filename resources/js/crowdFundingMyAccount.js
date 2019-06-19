@@ -2,8 +2,8 @@ import {
     formSerialize,
     getJsonFirstProp,
     getRequest,
-    isUserLoggedIn,
-    setTokenHeader,
+    isUserLoggedIn, makeOptionSelected, parseJwt, setCheckboxValue,
+    setTokenHeader, setValueIfNotNull,
     showCountryPhones
 } from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
@@ -54,10 +54,11 @@ function myAccountButton() {
 
 function getSection(message) {
     let splitter = location.href.split('#')[1];
-    if (splitter.indexOf('?') > -1) {
-        splitter = splitter.split('?')[0];
+    if (splitter !== '') {
+        if (splitter.indexOf('?') > -1) {
+            splitter = splitter.split('?')[0];
+        }
     }
-    console.log(splitter)
     changeActiveMenu(splitter);
     switch (splitter) {
         case myAccountTexts.newsletterSlug:
@@ -91,8 +92,8 @@ function sectionContent(section, message) {
                 if (section === 'account') {
                     getCountryPhones(),
                         getUserData(),
-                        getCountries(),
                         logout(),
+                        getCountries(),
                         addAlertMessage(message)
                 }
             }
@@ -122,7 +123,7 @@ function changeMyAccountView() {
 }
 
 function getCountryPhones() {
-    const countryPhoneSelect = document.querySelector('select[name="cft-countryNumber"]');
+    const countryPhoneSelect = document.querySelector('select[name="cft-telephone-prefix"]');
     if (countryPhoneSelect !== null && countryPhones.default !== null) {
         showCountryPhones(countryPhones.default).forEach((option) => {
             let el = document.createElement('option');
@@ -139,7 +140,7 @@ function getCountryPhones() {
 function getCountries() {
     const countrySelect = document.querySelector('select[name="cft-country"]');
     if (countrySelect !== null) {
-        JSON.parse(countries).map((c) => {
+        countries.default.map((c) => {
             let el = document.createElement('option');
             el.value = c.name;
             el.text = c.name;
@@ -164,7 +165,24 @@ function logout() {
 
 function getUserData() {
     let actualHeader = [];
-    console.log(getRequest(apiUrl + 'user-details', setTokenHeader(actualHeader)));
+    const jwtEmail = parseJwt().email;
+    document.querySelector('input[name="cft-email"]').value = jwtEmail;
+    document.querySelector('input[name="cft-password"]').value = '********';
+
+    const userData = getRequest(apiUrl + 'user-details', setTokenHeader(actualHeader));
+    if (userData !== null) {
+        setValueIfNotNull('input[name="cft-firstName"]', userData.first_name);
+        setValueIfNotNull('input[name="cft-lastName"]', userData.last_name);
+        setValueIfNotNull('input[name="cft-street"]', userData.street);
+        setValueIfNotNull('input[name="cft-house-number"]', userData.house_number);
+        makeOptionSelected('select[name="cft-telephone-prefix"]', userData.telephone_prefix);
+        setValueIfNotNull('input[name="cft-telephone"]', userData.telephone);
+        setValueIfNotNull('input[name="cft-city"]', userData.city);
+        setValueIfNotNull('input[name="cft-zip"]', userData.zip);
+        makeOptionSelected('select[name="cft-country"]', userData.country);
+        setCheckboxValue('input[name="cft-deliveryAddressSame"]', userData.delivery_address_is_same);
+    }
+
 }
 
 function isValidGeneratedToken(token) {
@@ -206,6 +224,8 @@ function addAlertMessage(message) {
         case 'resetPassword':
             resultText = myAccountTexts.resetYourPasswordAlert;
             break;
+        default:
+            alertElement.classList.remove('active');
     }
     alertElement.innerHTML = resultText;
 }

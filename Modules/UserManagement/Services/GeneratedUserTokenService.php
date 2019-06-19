@@ -7,6 +7,7 @@ namespace Modules\UserManagement\Services;
 
 use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use Modules\UserManagement\Jobs\RemoveGeneratedToken;
 use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use JWTAuth;
@@ -53,7 +54,7 @@ class GeneratedUserTokenService implements GeneratedUserTokenServiceInterface
 
         try {
             foreach ($this->generatedUserTokenRepository->getAll() as $generatedToken) {
-                if (password_verify($request['generatedToken'], $generatedToken->generated_token)) {
+                if (Hash::check($request['generatedToken'], $generatedToken->generated_token)) {
                     $token = JWTAuth::fromUser($this->userService->getById($generatedToken->user_id));
                     $this->generatedUserTokenRepository->deleteByUserId($generatedToken->user_id);
                     return \response()->json([

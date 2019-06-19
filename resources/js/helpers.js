@@ -181,3 +181,40 @@ export function setCookie(cname, cvalue, exdays) {
     let expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+
+export function getToken() {
+    return localStorage.getItem('cft_usertoken');
+}
+
+export function parseJwt () {
+    const token = getToken();
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+export function makeOptionSelected(selectEl, value) {
+    document.querySelectorAll(selectEl + ' option').forEach((el) => {
+        if (el.value.indexOf('(' + value + ')') > -1) {
+            el.selected = true;
+        }
+    })
+}
+
+export function setValueIfNotNull(element, value) {
+    if (document.querySelector(element) !== null && value !== null) {
+        return document.querySelector(element).value = value;
+    }
+    return null;
+}
+
+export function setCheckboxValue(element, checked) {
+    if (document.querySelector(element) !== null && checked !== null) {
+        return (checked) ? document.querySelector(element).checked = true : document.querySelector(element).checked = false;
+    }
+    return null;
+}

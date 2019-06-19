@@ -168,19 +168,6 @@ class PortalUserService implements PortalUserServiceInterface
         return $this->checkUniqueUsername($username . $this->usernameUsedCounter);
     }
 
-    public function getUserByToken()
-    {
-        $user = JWTAuth::parseToken()->authenticate();
-        if ($user->id !== null) {
-            return \response()->json([
-                $this->portalUserRepository->get($user->id)
-            ], Response::HTTP_OK);
-        }
-
-        return \response()->json([
-            'error' => 'unauthorized'
-        ], Response::HTTP_BAD_REQUEST);
-    }
 
     public function authenticate($request)
     {
@@ -227,10 +214,13 @@ class PortalUserService implements PortalUserServiceInterface
 
         $user = Auth::user();
         $token = JWTAuth::fromUser($user);
+
+        //$myPayload = $token->getPayload();
         return \response()->json([
             'token' => $token
         ], Response::HTTP_OK);
     }
+
 
     public function resetPassword($request)
     {

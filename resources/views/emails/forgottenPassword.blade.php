@@ -4,7 +4,7 @@
 @section('body')
     Dobrý deň,<br/>zaznamenali sme požiadavku na reset hesla pre Vašu e-mailovú adresu na portáli www.postoj.sk.<br/>
     <br/>
-    Pre reset hesla prosím kliknite na nasledujúce tlačidlo: <br/>
+    Pre reset hesla prosím kliknite na nasledujúce tlačidlo, <b>odkaz je platný 1 hodinu</b>: <br/>
 @endsection
 
 @section('displayButton', 'table')

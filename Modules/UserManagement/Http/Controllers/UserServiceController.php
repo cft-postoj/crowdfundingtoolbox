@@ -92,6 +92,7 @@ class UserServiceController extends Controller
 
         $user = Auth::user();
 
+
         if (strpos($prefix, 'backoffice') !== false) {
             if (BackOfficeUser::where('user_id', $user->id)->first()) {
                 $token = JWTAuth::fromUser($user);

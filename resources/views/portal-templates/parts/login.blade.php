@@ -26,7 +26,7 @@
     <div class="cft--loginDropdown--register">
         <b>Nie ste ešte registrovaný?</b>
         <p>Ukladajte si články, spravujte newslettre, získajte prehľad objednávok z eshopu...</p>
-        <a href="http://registracia.postoj.local:8000" target="_blank">
+        <a href="{{$portal_register_url}}" target="_blank">
             Registrovať sa
         </a>
     </div>
