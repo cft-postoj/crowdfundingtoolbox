@@ -1,6 +1,5 @@
 import {errorShowing, formSerialize, getCookie, getJsonFirstProp} from "./helpers";
-import portalUrl from './constants/url';
-import {apiUrl, viewsUrl} from "./constants/url";
+import {apiUrl, viewsUrl, portalUrl} from "./constants/url";
 import * as registerTexts from "./json/register";
 
 document.addEventListener('DOMContentLoaded', function () {

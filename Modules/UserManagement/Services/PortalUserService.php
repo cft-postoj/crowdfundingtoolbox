@@ -265,9 +265,7 @@ class PortalUserService implements PortalUserServiceInterface
     }
 
 
-    }
-
-    public function registerDuringDonation(String $email, int $cookie): User
+        public function registerDuringDonation(String $email, int $cookie): User
     {
         //find user by email. if email is already in database, don't create new user but return that user
         $userByMail = User::where('email', $email)->first();

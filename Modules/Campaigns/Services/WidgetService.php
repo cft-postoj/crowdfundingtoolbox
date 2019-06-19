@@ -939,9 +939,7 @@ class WidgetService implements WidgetServiceInterface
         $usedWidgetIds = array();
         $user = Auth::user();
         $userId = $user != null ? $user->id : null;
-
         $newCookie = $this->userService->createCookieIfNew($userCookie, $userId, $ip);
-
         if ($newCookie!=null) {
             $userCookie = $newCookie->id;
         }
