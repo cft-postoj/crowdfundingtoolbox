@@ -18,6 +18,11 @@ class PortalUser extends Model
         'user_id'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('Modules\UserManagement\Entities\User');
+    }
+
     public function targeting() {
 
     }

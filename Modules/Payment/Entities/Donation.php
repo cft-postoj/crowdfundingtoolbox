@@ -8,10 +8,23 @@ class Donation extends Model
 {
     protected $table = 'donations';
     protected $fillable = [
-        'user_id',
-        'campaign_id',
-        'widget_id',
-        'referral_widget_id',
-        'sum'
+        'donation',
+        'is_monthly_donation'
     ];
+
+    public function portalUser()
+    {
+        return $this->belongsTo('\Modules\UserManagement\Entities\PortalUser');
+    }
+
+    public function widget()
+    {
+        return $this->belongsTo('\Modules\Campaigns\Entities\Widget', 'id', 'widget_id');
+    }
+
+    public function widgetReferral()
+    {
+        return $this->belongsTo('\Modules\Campaigns\Entities\Widget', 'id', 'referral_widget_id');
+    }
+
 }

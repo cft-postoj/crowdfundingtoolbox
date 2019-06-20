@@ -6,7 +6,7 @@ $factory->define(Modules\UserManagement\Entities\User::class, function (Faker $f
     $email = $faker->email;
     return [
         'email' => $email,
-        'username' => explode("@",$email)[0],
+        'username' => explode("@",$email)[0].$faker->uuid,
         'password' => bcrypt('test123')
     ];
 });
