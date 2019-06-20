@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder;
 use Modules\Payment\Entities\CampaignDonation;
 use Modules\Payment\Entities\Donation;
+use Modules\UserManagement\Database\Seeders\PortalUserSeeder;
 use Modules\UserManagement\Entities\PortalUser;
 
 class TestDashboardSeeder extends Seeder
