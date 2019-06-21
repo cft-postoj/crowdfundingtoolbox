@@ -22,8 +22,8 @@ export function removeClassLists(classes, el) {
 
 export function getJsonFirstProp(jsonObj) {
     let firstProp;
-    for(let key in jsonObj) {
-        if(jsonObj.hasOwnProperty(key)) {
+    for (let key in jsonObj) {
+        if (jsonObj.hasOwnProperty(key)) {
             firstProp = jsonObj[key];
             break;
         }
@@ -33,7 +33,7 @@ export function getJsonFirstProp(jsonObj) {
 
 export function removeFormData(formElement) {
     document.querySelectorAll(formElement + ' input').forEach((el, index) => {
-       el.value = '';
+        el.value = '';
     });
     document.querySelectorAll(formElement + ' textarea').forEach((el, index) => {
         el.value = '';
@@ -65,14 +65,13 @@ export function formSerialize(formElement) {
 
 
 export function isUserLoggedIn() {
-    const token = localStorage.getItem('cft_usertoken');
+    const token = getToken();
     if (token !== null) {
         let header = [];
-        console.log(getRequest(apiUrl + 'is-user-logged-in', setTokenHeader(header)).isLoggedIn);
-        if (getRequest(apiUrl + 'is-user-logged-in', setTokenHeader(header)).isLoggedIn === true) {
+        if (getRequest(apiUrl + 'is-user-logged-in', setTokenHeader(header))) {
             return true;
         }
-    return false;
+        return false;
     } else {
         return false;
     }
@@ -83,7 +82,7 @@ export function isUserLoggedIn() {
 export function showCountryPhones(obj) {
     let result = [];
     for (let p in obj) {
-        if( obj.hasOwnProperty(p) ) {
+        if (obj.hasOwnProperty(p)) {
             let number = (obj[p].indexOf('+') > -1) ? obj[p] : '+' + obj[p];
             result.push(p + ' (' + number + ')');
         }
@@ -140,7 +139,7 @@ export function successShowing(selector, element, successText) {
 
 export function resetFormInputs(form) {
     document.querySelectorAll(form + ' input').forEach((s) => {
-       s.value = '';
+        s.value = '';
     });
 }
 
@@ -149,7 +148,7 @@ export function fadeIn(el, time) {
     el.style.display = 'block';
 
     let last = +new Date();
-    let tick = function() {
+    let tick = function () {
         el.style.opacity = +el.style.opacity + (new Date() - last) / time;
         last = +new Date();
 
@@ -165,7 +164,7 @@ export function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
@@ -180,4 +179,80 @@ export function getCookie(cname) {
 export function setCookie(cname, cvalue, exdays) {
     let expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;domain="+ domain;
+}
+
+export function getToken() {
+    return localStorage.getItem('cft_usertoken');
+}
+
+export function setToken(token) {
+    // for async and sync call
+    Promise.resolve()
+        .then(() => {
+            localStorage.removeItem('cft_usertoken');
+            localStorage.setItem('cft_usertoken', token);
+        });
+}
+
+export function parseJwt() {
+    const token = getToken();
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+export function makeOptionSelected(selectEl, value) {
+    document.querySelectorAll(selectEl + ' option').forEach((el) => {
+        if (el.value.indexOf('(' + value + ')') > -1) {
+            el.selected = true;
+        }
+    })
+}
+
+export function setValueIfNotNull(element, value) {
+    if (document.querySelector(element) !== null && value !== undefined) {
+        return document.querySelector(element).value = value;
+    }
+    return null;
+}
+
+export function setCheckboxValue(element, checked) {
+    if (document.querySelector(element) !== null && checked !== null) {
+        return (checked) ? document.querySelector(element).checked = true : document.querySelector(element).checked = false;
+    }
+    return null;
+}
+
+export function scrollToElement(element, to, duration) {
+    if (duration < 0) return;
+    let difference = to - element.scrollTop;
+    let perTick = difference / duration * 2;
+
+    setTimeout(() => {
+        element.scrollTop = element.scrollTop + perTick;
+        scrollToElement(element, to, duration - 2);
+    }, 10);
+}
+
+export function addSubmitFormHack(formSelector) {
+    const submitButton = document.querySelector(formSelector + ' button[type="submit"]');
+    submitButton.addEventListener('click', (clickEvent) => {
+        const domEvent = document.createEvent('Event');
+        domEvent.initEvent('submit', false, true);
+        clickEvent.target.closest('form').dispatchEvent(domEvent);
+    })
+}
+
+export function hideElementAfterTimeout(element, timeout) {
+    setTimeout(() => {
+        if (element.classList.contains('active')) {
+            element.classList.remove('active');
+        } else {
+            element.style.display = 'none';
+        }
+    }, timeout);
 }

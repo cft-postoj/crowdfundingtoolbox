@@ -1,5 +1,6 @@
-import {errorShowing, formSerialize, getCookie, getJsonFirstProp} from "./helpers";
-import {apiUrl, viewsUrl, portalUrl} from "./constants/url";
+import {errorShowing, formSerialize, getJsonFirstProp, getToken, setToken} from "./helpers";
+import {portalUrl, myAccountUrl} from './constants/url';
+import {apiUrl, viewsUrl} from "./constants/url";
 import * as registerTexts from "./json/register";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -39,9 +40,8 @@ function register() {
             'email': document.querySelector('form[name="cft-register"] input[name="cft-email"]').value,
             'password': document.querySelector('form[name="cft-register"] input[name="cft-password"]').value,
             'agreeMailing': document.querySelector('form[name="cft-register"] input[name="cft-mailing"]').checked,
-            'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked,
-            'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie")
-    };
+            'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked
+        };
         if (!data.agreePersonalData) {
             return errorShowing('form[name="cft-register"] span.cft-agree',
                 'form[name="cft-register"] input[name="cft-agree"]',
@@ -66,7 +66,7 @@ function register() {
                             registerTexts.emailIncorrect);
                         break;
                     default:
-                        if (xhttp.response.password !== undefined) {
+                        if (xhttp.response.password !== null) {
                             errorShowing('form[name="cft-register"] span.cft-password',
                                 'form[name="cft-register"] input[name="cft-password"]',
                                 registerTexts.passwordIncorrect);
@@ -84,14 +84,27 @@ function register() {
                 });
                 document.querySelector('form[name="cft-register"] span.cft-register').classList.add('active');
                 document.querySelector('form[name="cft-register"] span.cft-register').innerHTML = registerTexts.registerSuccess;
+
+                let token = '';
+                if (xhttp.response.token) {
+                    token = xhttp.response.token;
+                }
+
                 setTimeout(async () => {
                     // redirect counter
                     for (let i = 5; i >= 0; i--) {
-                            document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i;
-                            if (i === 0) {
-                                window.location.href = portalUrl;
-                            }
-                            await sleep(1000);
+                        let secondsText = registerTexts.secondsRedirectMoreThan4Or0;
+                        if (i < 5 && i > 1) {
+                            secondsText = registerTexts.secondsRedirect2To4;
+                        } else if (i === 1) {
+                            secondsText = registerTexts.secondRedirect;
+                        }
+                        document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i + ' ' + secondsText;
+                        if (i === 0) {
+
+                            window.location.href = myAccountUrl + '?generatedResetToken=' + token + '&loggedIn=true';
+                        }
+                        await sleep(1000);
 
                     }
                 }, 500);
@@ -109,8 +122,6 @@ function register() {
         clickEvent.target.closest('form').dispatchEvent(domEvent);
     });
 }
-
-
 
 
 function sleep(ms) {

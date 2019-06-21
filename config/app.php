@@ -182,7 +182,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Nwidart\Modules\LaravelModulesServiceProvider::class,
-        Jenssegers\Agent\AgentServiceProvider::class
+        Jenssegers\Agent\AgentServiceProvider::class,
+        App\Providers\PortalGlobalVariables::class
+
 
 
     ],

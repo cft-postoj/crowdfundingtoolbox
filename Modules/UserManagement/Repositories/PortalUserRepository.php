@@ -22,6 +22,7 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->first();
     }
 
+
     public function create($userId)
     {
         return $this->model

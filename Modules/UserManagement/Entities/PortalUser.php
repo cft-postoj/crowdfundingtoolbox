@@ -18,8 +18,8 @@ class PortalUser extends Model
         'user_id'
     ];
 
-    public function targeting() {
-
+    public function gdpr() {
+        return $this->hasOne('\Modules\UserManagement\Entities\UserGdpr');
     }
 
     public function visit()

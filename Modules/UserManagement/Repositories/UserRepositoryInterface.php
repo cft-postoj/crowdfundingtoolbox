@@ -12,6 +12,8 @@ interface UserRepositoryInterface
 
     public function create($email, $password, $username);
 
+    public function update($request, $user_id);
+
     public function isUsernameUsed($username);
 
     public function updatePassword($id, $password);

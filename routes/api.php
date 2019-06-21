@@ -16,7 +16,7 @@ use \Illuminate\Http\Request;
 
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
-header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-Requested-With, Origin, Authorization');
+header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-Requested-With, Origin, Authorization, X-CSRF-TOKEN');
 
 
 // Backoffice routes
@@ -117,9 +117,11 @@ Route::group([
     Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
 
 
-    Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::group(['middleware' => ['jwt.auth']], function () {
       Route::get('is-user-logged-in', '\Modules\UserManagement\Http\Controllers\PortalUsersController@isUserLoggedIn');
-      Route::get('user-details', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDetailsByToken');
+      Route::get('user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@get');
+      Route::put('update-user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@update');
+      Route::get('base-user-data', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getBase');
       Route::get('logout', '\Modules\UserManagement\Http\Controllers\PortalUsersController@logout');
     });
 

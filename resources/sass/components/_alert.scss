@@ -1,5 +1,5 @@
 &--alert {
-  visibility: hidden;
+  display: none;
   opacity: 0;
   width: 100%;
   text-align: center;
@@ -16,7 +16,7 @@
     color: $white;
   }
   &.active {
-    visibility: visible;
+    display: block;
     opacity: 1;
   }
 }

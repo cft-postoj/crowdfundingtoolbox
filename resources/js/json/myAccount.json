@@ -7,5 +7,8 @@
   "donationSlug": "vasa-podpora",
   "ordersSlug": "objednavky",
   "accountSlug": "ucet",
-  "resetYourPasswordAlert": "Prosím, resetujte si svoje heslo."
+  "resetYourPasswordAlert": "Prosím, resetujte si svoje heslo.",
+  "endRegister": "Dokončite svoju registráciu. Doplňte vyznačené chýbajúce údaje.",
+  "successUpdate": "Váš účet bol úspešne aktualizovaný.",
+  "errorUpdate": "Počas akutalizácie osobných údajov nastala chyba. Prosím, skúste neskôr alebo kontaktujte administrátora."
 }

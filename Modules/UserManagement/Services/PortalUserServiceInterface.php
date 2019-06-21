@@ -4,8 +4,6 @@
 namespace Modules\UserManagement\Services;
 
 
-use Illuminate\Http\Request;
-
 interface PortalUserServiceInterface
 {
     public function getAll();
@@ -13,8 +11,6 @@ interface PortalUserServiceInterface
     public function getById($id);
 
     public function checkToken();
-
-    public function getUserByToken();
 
     public function authenticate($request);
 
