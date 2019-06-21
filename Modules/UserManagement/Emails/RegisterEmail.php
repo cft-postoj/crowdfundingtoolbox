@@ -11,14 +11,16 @@ class RegisterEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $token;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -28,8 +30,8 @@ class RegisterEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Successfully register')
-            ->from('smtp@crowdfundingtoolbox.news')
+        return $this->subject('Registrácia na www.postoj.sk')
+            ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
             ->view('emails.register');
     }
 }

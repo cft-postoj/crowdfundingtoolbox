@@ -8,6 +8,6 @@
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', 'http://www.postoj.local:8000/moj-ucet#ucet?generatedResetToken=' . $token)
+@section('buttonUrl', $portal_url . '/moj-ucet#ucet?generatedResetToken=' . $token)
 @section('buttonText', 'Reset hesla')
 @section('buttonAlternative', 'V prípade, že nemôžete kliknúť na tlačidlo, skopírujte si nasledujúci link do prehliadača manuálne: ')

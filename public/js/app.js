@@ -904,7 +904,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/js/constants/url.js ***!
   \***************************************/
-/*! exports provided: apiUrl, viewsUrl, portalUrl */
+/*! exports provided: apiUrl, viewsUrl, portalUrl, myAccountUrl */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -912,10 +912,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiUrl", function() { return apiUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "viewsUrl", function() { return viewsUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "myAccountUrl", function() { return myAccountUrl; });
 var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
 
 var viewsUrl = 'http://127.0.0.1:8001/portal/';
-var portalUrl = 'http://www.postoj.local:8000';
+var portalUrl = 'http://www.postoj.local:8000/';
+var myAccountUrl = portalUrl + 'moj-ucet';
 
 /***/ }),
 
@@ -1103,21 +1105,19 @@ function showLogin() {
 /*!***********************************************!*\
   !*** ./resources/js/crowdFundingMyAccount.js ***!
   \***********************************************/
-/*! no exports provided */
+/*! exports provided: addAlertMessage, removeAlertMessage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addAlertMessage", function() { return addAlertMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeAlertMessage", function() { return removeAlertMessage; });
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 /* harmony import */ var _json_myAccount__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./json/myAccount */ "./resources/js/json/myAccount.json");
 var _json_myAccount__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/myAccount */ "./resources/js/json/myAccount.json", 1);
-/* harmony import */ var _json_countryPhone__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./json/countryPhone */ "./resources/js/json/countryPhone.json");
-var _json_countryPhone__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/countryPhone */ "./resources/js/json/countryPhone.json", 1);
-/* harmony import */ var _json_countries__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./json/countries */ "./resources/js/json/countries.json");
-var _json_countries__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./json/countries */ "./resources/js/json/countries.json", 1);
-/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./alert */ "./resources/js/alert.js");
-
+/* harmony import */ var _my_account_account__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./my-account/account */ "./resources/js/my-account/account.js");
+/* harmony import */ var _my_account_preview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./my-account/preview */ "./resources/js/my-account/preview.js");
 
 
 
@@ -1128,7 +1128,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('footer').style.margin = 0;
 
     if (location.href.indexOf('?generatedResetToken') > -1) {
-      isValidGeneratedToken(location.href.split('?generatedResetToken=')[1]);
+      var generatedToken = location.href.split('?generatedResetToken=')[1];
+
+      if (generatedToken.indexOf('&loggedIn') > -1) {
+        generatedToken = generatedToken.split('&loggedIn')[0];
+      }
+
+      isValidGeneratedToken(generatedToken);
     } else {
       if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["isUserLoggedIn"])() === false) {
         location.href = '/';
@@ -1159,7 +1165,7 @@ function myAccountButton() {
 function getSection(message) {
   var splitter = location.href.split('#')[1];
 
-  if (splitter !== '') {
+  if (splitter !== undefined) {
     if (splitter.indexOf('?') > -1) {
       splitter = splitter.split('?')[0];
     }
@@ -1202,8 +1208,12 @@ function sectionContent(section, message) {
     document.getElementById('cft-myAccount-body-section').innerHTML = html;
 
     if (section === 'account') {
-      getCountryPhones(), getUserData(), logout(), getCountries(), addAlertMessage(message);
+      Object(_my_account_account__WEBPACK_IMPORTED_MODULE_3__["accountInit"])(message);
+    } else if (section === 'preview') {
+      Object(_my_account_preview__WEBPACK_IMPORTED_MODULE_4__["previewInit"])();
     }
+
+    showSubmenu();
   });
 }
 
@@ -1230,73 +1240,15 @@ function changeMyAccountView() {
   });
 }
 
-function getCountryPhones() {
-  var countryPhoneSelect = document.querySelector('select[name="cft-telephone-prefix"]');
-
-  if (countryPhoneSelect !== null && _json_countryPhone__WEBPACK_IMPORTED_MODULE_3__ !== null) {
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["showCountryPhones"])(_json_countryPhone__WEBPACK_IMPORTED_MODULE_3__).forEach(function (option) {
-      var el = document.createElement('option');
-      el.value = option.split('(')[1].split(')')[0];
-      el.text = option;
-
-      if (option.indexOf('SK (+421') > -1) {
-        el.selected = true;
-      }
-
-      countryPhoneSelect.appendChild(el);
+function showSubmenu() {
+  var element = document.querySelectorAll('.cft--showSubMenu');
+  element.forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      setTimeout(function () {
+        getSection();
+      }, 100);
     });
-  }
-}
-
-function getCountries() {
-  var countrySelect = document.querySelector('select[name="cft-country"]');
-
-  if (countrySelect !== null) {
-    _json_countries__WEBPACK_IMPORTED_MODULE_4__.map(function (c) {
-      var el = document.createElement('option');
-      el.value = c.name;
-      el.text = c.name;
-
-      if (c.code === 'SK') {
-        el.selected = true;
-      }
-
-      countrySelect.appendChild(el);
-    });
-  }
-}
-
-function logout() {
-  var logoutButton = document.getElementById('cft--logout');
-  logoutButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    var header = [];
-
-    if (Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'logout', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])(header)).status === 'logout') {
-      location.href = '/';
-    }
   });
-}
-
-function getUserData() {
-  var actualHeader = [];
-  var jwtEmail = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["parseJwt"])().email;
-  document.querySelector('input[name="cft-email"]').value = jwtEmail;
-  document.querySelector('input[name="cft-password"]').value = '********';
-  var userData = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'user-details', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])(actualHeader));
-
-  if (userData !== null) {
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-firstName"]', userData.first_name);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-lastName"]', userData.last_name);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-street"]', userData.street);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-house-number"]', userData.house_number);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["makeOptionSelected"])('select[name="cft-telephone-prefix"]', userData.telephone_prefix);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-telephone"]', userData.telephone);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-city"]', userData.city);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setValueIfNotNull"])('input[name="cft-zip"]', userData.zip);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["makeOptionSelected"])('select[name="cft-country"]', userData.country);
-    Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setCheckboxValue"])('input[name="cft-deliveryAddressSame"]', userData.delivery_address_is_same);
-  }
 }
 
 function isValidGeneratedToken(token) {
@@ -1330,21 +1282,66 @@ function showMyAccountNotValidView() {
   });
 }
 
-function addAlertMessage(message) {
+function addAlertMessage(message, elements) {
   var alertElement = document.querySelector('#cft--myAccount .cft--alert');
   alertElement.classList.add('active');
+  alertElement.classList.remove('error');
+  alertElement.classList.remove('success');
   var resultText = '';
 
   switch (message) {
     case 'resetPassword':
       resultText = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["resetYourPasswordAlert"];
+      document.querySelector('input[name="cft-password"]').classList.add('error');
+      break;
+
+    case 'endRegister':
+      resultText = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["endRegister"];
+      alertElement.classList.add('error');
+      break;
+
+    case 'successUpdateAccountDetails':
+      resultText = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["successUpdate"];
+      alertElement.classList.add('success');
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["hideElementAfterTimeout"])(alertElement, 5000);
+      break;
+
+    case 'errorUpdateAccountDetails':
+      resultText = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["errorUpdate"];
+      alertElement.classList.add('error');
       break;
 
     default:
       alertElement.classList.remove('active');
+      break;
   }
 
   alertElement.innerHTML = resultText;
+
+  if (elements !== [] && elements !== undefined) {
+    elements.map(function (e) {
+      document.querySelector(e).classList.add('error');
+      document.querySelector(e).addEventListener('keyup', function () {
+        document.querySelector(e).classList.remove('error');
+        removeAlertMessage();
+      });
+    });
+  }
+
+  removeAlertMessage();
+}
+function removeAlertMessage() {
+  var alertElement = document.querySelector('#cft--myAccount .cft--alert');
+  var hasInputErrorClass = false;
+  document.querySelectorAll('#cft--myAccount input').forEach(function (input) {
+    if (input.classList.contains('error')) {
+      hasInputErrorClass = true;
+    }
+  });
+
+  if (!hasInputErrorClass && !alertElement.classList.contains('success')) {
+    alertElement.classList.remove('active');
+  }
 }
 
 /***/ }),
@@ -1431,7 +1428,7 @@ function register() {
             break;
 
           default:
-            if (xhttp.response.password !== undefined) {
+            if (xhttp.response.password !== null) {
               Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["errorShowing"])('form[name="cft-register"] span.cft-password', 'form[name="cft-register"] input[name="cft-password"]', _json_register__WEBPACK_IMPORTED_MODULE_3__["passwordIncorrect"]);
               break;
             }
@@ -1446,12 +1443,18 @@ function register() {
         });
         document.querySelector('form[name="cft-register"] span.cft-register').classList.add('active');
         document.querySelector('form[name="cft-register"] span.cft-register').innerHTML = _json_register__WEBPACK_IMPORTED_MODULE_3__["registerSuccess"];
+        var token = '';
+
+        if (xhttp.response.token) {
+          token = xhttp.response.token;
+        }
+
         setTimeout(
         /*#__PURE__*/
         _asyncToGenerator(
         /*#__PURE__*/
         _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var i;
+          var i, secondsText;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -1460,25 +1463,33 @@ function register() {
 
                 case 1:
                   if (!(i >= 0)) {
-                    _context.next = 9;
+                    _context.next = 11;
                     break;
                   }
 
-                  document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i;
+                  secondsText = _json_register__WEBPACK_IMPORTED_MODULE_3__["secondsRedirectMoreThan4Or0"];
 
-                  if (i === 0) {
-                    window.location.href = _constants_url__WEBPACK_IMPORTED_MODULE_2__["default"];
+                  if (i < 5 && i > 1) {
+                    secondsText = _json_register__WEBPACK_IMPORTED_MODULE_3__["secondsRedirect2To4"];
+                  } else if (i === 1) {
+                    secondsText = _json_register__WEBPACK_IMPORTED_MODULE_3__["secondRedirect"];
                   }
 
-                  _context.next = 6;
+                  document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i + ' ' + secondsText;
+
+                  if (i === 0) {
+                    window.location.href = _constants_url__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"] + '?generatedResetToken=' + token + '&loggedIn=true';
+                  }
+
+                  _context.next = 8;
                   return sleep(1000);
 
-                case 6:
+                case 8:
                   i--;
                   _context.next = 1;
                   break;
 
-                case 9:
+                case 11:
                 case "end":
                   return _context.stop();
               }
@@ -1657,7 +1668,7 @@ function parseScriptFromResponse(response) {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn, getCookie, setCookie, getToken, parseJwt, makeOptionSelected, setValueIfNotNull, setCheckboxValue */
+/*! exports provided: toggleClassLists, addClassLists, removeClassLists, getJsonFirstProp, removeFormData, findGetParameter, formSerialize, isUserLoggedIn, showCountryPhones, getRequest, setTokenHeader, errorShowing, successShowing, resetFormInputs, fadeIn, getCookie, setCookie, getToken, setToken, parseJwt, makeOptionSelected, setValueIfNotNull, setCheckboxValue, scrollToElement, addSubmitFormHack, hideElementAfterTimeout */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1680,10 +1691,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return getCookie; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCookie", function() { return setCookie; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getToken", function() { return getToken; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setToken", function() { return setToken; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseJwt", function() { return parseJwt; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeOptionSelected", function() { return makeOptionSelected; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setValueIfNotNull", function() { return setValueIfNotNull; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCheckboxValue", function() { return setCheckboxValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrollToElement", function() { return scrollToElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSubmitFormHack", function() { return addSubmitFormHack; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideElementAfterTimeout", function() { return hideElementAfterTimeout; });
 /* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
 
 function toggleClassLists(array, remove, el) {
@@ -1742,13 +1757,12 @@ function formSerialize(formElement) {
   return values;
 }
 function isUserLoggedIn() {
-  var token = localStorage.getItem('cft_usertoken');
+  var token = getToken();
 
   if (token !== null) {
     var header = [];
-    console.log(getRequest(_constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', setTokenHeader(header)).isLoggedIn);
 
-    if (getRequest(_constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', setTokenHeader(header)).isLoggedIn === true) {
+    if (getRequest(_constants_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"] + 'is-user-logged-in', setTokenHeader(header))) {
       return true;
     }
 
@@ -1860,6 +1874,13 @@ function setCookie(cname, cvalue, exdays) {
 function getToken() {
   return localStorage.getItem('cft_usertoken');
 }
+function setToken(token) {
+  // for async and sync call
+  Promise.resolve().then(function () {
+    localStorage.removeItem('cft_usertoken');
+    localStorage.setItem('cft_usertoken', token);
+  });
+}
 function parseJwt() {
   var token = getToken();
   var base64Url = token.split('.')[1];
@@ -1877,7 +1898,7 @@ function makeOptionSelected(selectEl, value) {
   });
 }
 function setValueIfNotNull(element, value) {
-  if (document.querySelector(element) !== null && value !== null) {
+  if (document.querySelector(element) !== null && value !== undefined) {
     return document.querySelector(element).value = value;
   }
 
@@ -1889,6 +1910,32 @@ function setCheckboxValue(element, checked) {
   }
 
   return null;
+}
+function scrollToElement(element, to, duration) {
+  if (duration < 0) return;
+  var difference = to - element.scrollTop;
+  var perTick = difference / duration * 2;
+  setTimeout(function () {
+    element.scrollTop = element.scrollTop + perTick;
+    scrollToElement(element, to, duration - 2);
+  }, 10);
+}
+function addSubmitFormHack(formSelector) {
+  var submitButton = document.querySelector(formSelector + ' button[type="submit"]');
+  submitButton.addEventListener('click', function (clickEvent) {
+    var domEvent = document.createEvent('Event');
+    domEvent.initEvent('submit', false, true);
+    clickEvent.target.closest('form').dispatchEvent(domEvent);
+  });
+}
+function hideElementAfterTimeout(element, timeout) {
+  setTimeout(function () {
+    if (element.classList.contains('active')) {
+      element.classList.remove('active');
+    } else {
+      element.style.display = 'none';
+    }
+  }, timeout);
 }
 
 /***/ }),
@@ -1930,10 +1977,10 @@ module.exports = {"incorrectEmail":"Nesprávny e-mail. Nemáte ešte registráci
 /*!******************************************!*\
   !*** ./resources/js/json/myAccount.json ***!
   \******************************************/
-/*! exports provided: myAccountButton, myAccountUrl, previewSlug, newsletterSlug, savedArticlesSlug, donationSlug, ordersSlug, accountSlug, resetYourPasswordAlert, default */
+/*! exports provided: myAccountButton, myAccountUrl, previewSlug, newsletterSlug, savedArticlesSlug, donationSlug, ordersSlug, accountSlug, resetYourPasswordAlert, endRegister, successUpdate, errorUpdate, default */
 /***/ (function(module) {
 
-module.exports = {"myAccountButton":"Môj účet","myAccountUrl":"/moj-ucet","previewSlug":"prehlad","newsletterSlug":"newsletter","savedArticlesSlug":"ulozene-clanky","donationSlug":"vasa-podpora","ordersSlug":"objednavky","accountSlug":"ucet","resetYourPasswordAlert":"Prosím, resetujte si svoje heslo."};
+module.exports = {"myAccountButton":"Môj účet","myAccountUrl":"/moj-ucet","previewSlug":"prehlad","newsletterSlug":"newsletter","savedArticlesSlug":"ulozene-clanky","donationSlug":"vasa-podpora","ordersSlug":"objednavky","accountSlug":"ucet","resetYourPasswordAlert":"Prosím, resetujte si svoje heslo.","endRegister":"Dokončite svoju registráciu. Doplňte vyznačené chýbajúce údaje.","successUpdate":"Váš účet bol úspešne aktualizovaný.","errorUpdate":"Počas akutalizácie osobných údajov nastala chyba. Prosím, skúste neskôr alebo kontaktujte administrátora."};
 
 /***/ }),
 
@@ -1941,10 +1988,203 @@ module.exports = {"myAccountButton":"Môj účet","myAccountUrl":"/moj-ucet","pr
 /*!*****************************************!*\
   !*** ./resources/js/json/register.json ***!
   \*****************************************/
-/*! exports provided: emailExists, emailIncorrect, passwordIncorrect, agreeConfirm, undefinedError, registerSuccess, default */
+/*! exports provided: emailExists, emailIncorrect, passwordIncorrect, agreeConfirm, undefinedError, registerSuccess, secondsRedirectMoreThan4Or0, secondsRedirect2To4, secondRedirect, default */
 /***/ (function(module) {
 
-module.exports = {"emailExists":"Zadaný email existuje, prosím <a href='/'>Prihláste sa</a>.","emailIncorrect":"Prosím, zadajte e-mail v správnom tvare.","passwordIncorrect":"Heslo musí obsahovať aspoň 6 znakov.","agreeConfirm":"Pre pokračovanie musíte súhlasiť so spracovaním osobných údajov.","undefinedError":"Počas registrácie nastala neočakávaná chyba. Skúste znova alebo kontaktujte administrátora.","registerSuccess":"Registrácia prebehla úspešne. Na Vašu emailovú adresu bola zaslaná rekapitulácia registrácie.<br />O <span id='cft-seconds'>5</span> sekúnd prebehne presmerovanie na hlavnú stránku, kde sa môžete prihlásiť."};
+module.exports = {"emailExists":"Zadaný email existuje, prosím <a href='/'>Prihláste sa</a>.","emailIncorrect":"Prosím, zadajte e-mail v správnom tvare.","passwordIncorrect":"Heslo musí obsahovať aspoň 6 znakov.","agreeConfirm":"Pre pokračovanie musíte súhlasiť so spracovaním osobných údajov.","undefinedError":"Počas registrácie nastala neočakávaná chyba. Skúste znova alebo kontaktujte administrátora.","registerSuccess":"Registrácia prebehla úspešne. Na Vašu emailovú adresu bolo zaslané potvrdenie o registrácii.<br />O <span id='cft-seconds'>5 sekúnd</span> prebehne presmerovanie na Váš účet, kde si môžete zmeniť údaje.","secondsRedirectMoreThan4Or0":"sekúnd","secondsRedirect2To4":"sekundy","secondRedirect":"sekunda"};
+
+/***/ }),
+
+/***/ "./resources/js/my-account/account.js":
+/*!********************************************!*\
+  !*** ./resources/js/my-account/account.js ***!
+  \********************************************/
+/*! exports provided: accountInit */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "accountInit", function() { return accountInit; });
+/* harmony import */ var _json_countryPhone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../json/countryPhone */ "./resources/js/json/countryPhone.json");
+var _json_countryPhone__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../json/countryPhone */ "./resources/js/json/countryPhone.json", 1);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _json_countries__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../json/countries */ "./resources/js/json/countries.json");
+var _json_countries__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../json/countries */ "./resources/js/json/countries.json", 1);
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants/url */ "./resources/js/constants/url.js");
+/* harmony import */ var _crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../crowdFundingMyAccount */ "./resources/js/crowdFundingMyAccount.js");
+
+
+
+
+
+function accountInit(message) {
+  getCountryPhones(), Object(_crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_4__["addAlertMessage"])(message), getUserData(), logout(), getCountries();
+}
+
+function getCountryPhones() {
+  var countryPhoneSelect = document.querySelector('select[name="cft-telephone-prefix"]');
+
+  if (countryPhoneSelect !== null && _json_countryPhone__WEBPACK_IMPORTED_MODULE_0__ !== null) {
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["showCountryPhones"])(_json_countryPhone__WEBPACK_IMPORTED_MODULE_0__).forEach(function (option) {
+      var el = document.createElement('option');
+      el.value = option.split('(')[1].split(')')[0];
+      el.text = option;
+
+      if (option.indexOf('SK (+421') > -1) {
+        el.selected = true;
+      }
+
+      countryPhoneSelect.appendChild(el);
+    });
+  }
+}
+
+function getCountries() {
+  var countrySelect = document.querySelector('select[name="cft-country"]');
+
+  if (countrySelect !== null) {
+    _json_countries__WEBPACK_IMPORTED_MODULE_2__.map(function (c) {
+      var el = document.createElement('option');
+      el.value = c.name;
+      el.text = c.name;
+
+      if (c.code === 'SK') {
+        el.selected = true;
+      }
+
+      countrySelect.appendChild(el);
+    });
+  }
+}
+
+function logout() {
+  var logoutButton = document.getElementById('cft--logout');
+  logoutButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    var header = [];
+
+    if (Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_3__["apiUrl"] + 'logout', Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setTokenHeader"])(header)).status === 'logout') {
+      location.href = '/';
+    }
+  });
+}
+
+function getUserData() {
+  var actualHeader = [];
+  var jwtEmail = Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["parseJwt"])().email;
+  document.querySelector('input[name="cft-email"]').value = jwtEmail;
+  document.querySelector('input[name="cft-password"]').value = '********';
+  var userData = Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_3__["apiUrl"] + 'user-details', Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setTokenHeader"])(actualHeader));
+
+  if (userData !== null) {
+    if (userData.user_details !== null) {
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setValueIfNotNull"])('input[name="cft-firstName"]', userData.user_details.first_name);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setValueIfNotNull"])('input[name="cft-lastName"]', userData.user_details.last_name);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setValueIfNotNull"])('input[name="cft-street"]', userData.user_details.street);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setValueIfNotNull"])('input[name="cft-house-number"]', userData.user_details.house_number);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeOptionSelected"])('select[name="cft-telephone-prefix"]', userData.user_details.telephone_prefix);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setValueIfNotNull"])('input[name="cft-telephone"]', userData.user_details.telephone);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setValueIfNotNull"])('input[name="cft-city"]', userData.user_details.city);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setValueIfNotNull"])('input[name="cft-zip"]', userData.user_details.zip);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeOptionSelected"])('select[name="cft-country"]', userData.user_details.country);
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setCheckboxValue"])('input[name="cft-deliveryAddressSame"]', userData.user_details.delivery_address_is_same);
+    }
+
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setCheckboxValue"])('input[name="cft-mailing"]', userData.user_gdpr.agree_mail_sending);
+    Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setCheckboxValue"])('input[name="cft-agree"]', userData.user_gdpr.agree_general_conditions);
+    editAccountDetails();
+  } // if some input is empty, show error
+
+
+  var emptyElements = [];
+  document.querySelectorAll('#cft--myaccount input').forEach(function (input) {
+    if (input.value === '') {
+      emptyElements.push('input[name="' + input.name + '"]');
+    }
+  });
+
+  if (emptyElements !== []) {
+    Object(_crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_4__["addAlertMessage"])('endRegister', emptyElements);
+  }
+}
+
+function editAccountDetails() {
+  var formSelector = 'form[name="cft-myAccountDetails"]';
+  var form = document.querySelector(formSelector);
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = {
+      'cft-agree': document.querySelector(formSelector + ' input[name="cft-agree"]').checked,
+      'cft-city': document.querySelector(formSelector + ' input[name="cft-city"]').value,
+      'cft-country': document.querySelector(formSelector + ' select[name="cft-country"]').value,
+      'cft-deliveryAddressSame': document.querySelector(formSelector + ' input[name="cft-deliveryAddressSame"]').checked,
+      'cft-email': document.querySelector(formSelector + ' input[name="cft-email"]').value,
+      'cft-firstName': document.querySelector(formSelector + ' input[name="cft-firstName"]').value,
+      'cft-house-number': document.querySelector(formSelector + ' input[name="cft-house-number"]').value,
+      'cft-lastName': document.querySelector(formSelector + ' input[name="cft-lastName"]').value,
+      'cft-mailing': document.querySelector(formSelector + ' input[name="cft-mailing"]').checked,
+      'cft-password': document.querySelector(formSelector + ' input[name="cft-password"]').value,
+      'cft-street': document.querySelector(formSelector + ' input[name="cft-street"]').value,
+      'cft-telephone': document.querySelector(formSelector + ' input[name="cft-telephone"]').value,
+      'cft-telephone-prefix': document.querySelector(formSelector + ' select[name="cft-telephone-prefix"]').value,
+      'cft-zip': document.querySelector(formSelector + ' input[name="cft-zip"]').value
+    };
+    var xhttp = new XMLHttpRequest();
+    xhttp.open('PUT', _constants_url__WEBPACK_IMPORTED_MODULE_3__["apiUrl"] + 'update-user-details', true);
+    var header = [];
+    header.push({
+      name: 'Content-type',
+      value: 'application/json; charset=utf8'
+    });
+    header = Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["setTokenHeader"])(header);
+    header.map(function (h) {
+      xhttp.setRequestHeader(h.name, h.value);
+    });
+    xhttp.responseType = 'json';
+
+    xhttp.onload = function () {
+      if (xhttp.response.error) {
+        Object(_crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_4__["addAlertMessage"])('errorUpdateAccountDetails', []);
+      } else {
+        console.log(xhttp.response);
+        Object(_crowdFundingMyAccount__WEBPACK_IMPORTED_MODULE_4__["addAlertMessage"])('successUpdateAccountDetails', []);
+      }
+
+      Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["scrollToElement"])(document.querySelector('body'), 0, 50);
+    };
+
+    xhttp.send(JSON.stringify(data));
+  }, false);
+}
+
+/***/ }),
+
+/***/ "./resources/js/my-account/preview.js":
+/*!********************************************!*\
+  !*** ./resources/js/my-account/preview.js ***!
+  \********************************************/
+/*! exports provided: previewInit */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "previewInit", function() { return previewInit; });
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants/url */ "./resources/js/constants/url.js");
+
+
+function previewInit() {
+  getBasicUserData();
+}
+
+function getBasicUserData() {
+  var data = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'base-user-data', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])([]));
+
+  if (data !== null) {
+    document.querySelector('#cft--myaccount .cft--myAccount--preview--user').innerHTML = data.first_name + ' ' + data.last_name;
+    document.querySelector('#cft--myaccount .cft--myAccount--preview--username').innerHTML = data.username;
+  }
+}
 
 /***/ }),
 

@@ -33,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
         return $this->model
             ::where('id', $id)
             ->update([
-                'password'  =>  bcrypt($pasword)
+                'password' => bcrypt($pasword)
             ]);
     }
 
@@ -65,9 +65,9 @@ class UserRepository implements UserRepositoryInterface
     {
         $user = $this->model
             ::create([
-                'email' =>  $email,
-                'password'  =>  bcrypt($password),
-                'username' => explode('@', $email)[0]
+                'email' => $email,
+                'password' => bcrypt($password),
+                'username' => $username
             ]);
         $user->save();
         return $user->id;
@@ -85,7 +85,22 @@ class UserRepository implements UserRepositoryInterface
         return $this->model
             ::where('id', $id)
             ->update([
-                'generate_password_token'   =>  $token
+                'generate_password_token' => $token
             ]);
+    }
+
+    public function update($request, $user_id)
+    {
+        return $this->model
+            ::where('id', $user_id)
+            ->update($request);
+    }
+
+    public function createUserDetail($user_id)
+    {
+        return $this->model
+            ::where('id', $user_id)
+            ->userDetail()
+            ->create();
     }
 }

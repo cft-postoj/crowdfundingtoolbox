@@ -1,22 +1,21 @@
 import {
-    formSerialize,
-    getJsonFirstProp,
-    getRequest,
-    isUserLoggedIn, makeOptionSelected, parseJwt, setCheckboxValue,
-    setTokenHeader, setValueIfNotNull,
-    showCountryPhones
+    hideElementAfterTimeout,
+    isUserLoggedIn
 } from "./helpers";
 import {apiUrl, viewsUrl} from "./constants/url";
 import * as myAccountTexts from "./json/myAccount";
-import * as countryPhones from './json/countryPhone';
-import * as countries from './json/countries';
-import {errorAlert, successAlert} from "./alert";
+import {accountInit} from "./my-account/account";
+import {previewInit} from "./my-account/preview";
 
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('cft--myaccount') !== null) {
         document.querySelector('footer').style.margin = 0;
         if (location.href.indexOf('?generatedResetToken') > -1) {
-            isValidGeneratedToken(location.href.split('?generatedResetToken=')[1]);
+            let generatedToken = location.href.split('?generatedResetToken=')[1];
+            if (generatedToken.indexOf('&loggedIn') > -1) {
+                generatedToken = generatedToken.split('&loggedIn')[0];
+            }
+            isValidGeneratedToken(generatedToken);
         } else {
             if (isUserLoggedIn() === false) {
                 location.href = '/';
@@ -54,7 +53,7 @@ function myAccountButton() {
 
 function getSection(message) {
     let splitter = location.href.split('#')[1];
-    if (splitter !== '') {
+    if (splitter !== undefined) {
         if (splitter.indexOf('?') > -1) {
             splitter = splitter.split('?')[0];
         }
@@ -90,12 +89,11 @@ function sectionContent(section, message) {
             html => {
                 document.getElementById('cft-myAccount-body-section').innerHTML = html;
                 if (section === 'account') {
-                    getCountryPhones(),
-                        getUserData(),
-                        logout(),
-                        getCountries(),
-                        addAlertMessage(message)
+                    accountInit(message)
+                } else if (section === 'preview') {
+                    previewInit();
                 }
+                showSubmenu();
             }
         );
 }
@@ -122,68 +120,19 @@ function changeMyAccountView() {
     });
 }
 
-function getCountryPhones() {
-    const countryPhoneSelect = document.querySelector('select[name="cft-telephone-prefix"]');
-    if (countryPhoneSelect !== null && countryPhones.default !== null) {
-        showCountryPhones(countryPhones.default).forEach((option) => {
-            let el = document.createElement('option');
-            el.value = option.split('(')[1].split(')')[0];
-            el.text = option;
-            if (option.indexOf('SK (+421') > -1) {
-                el.selected = true;
-            }
-            countryPhoneSelect.appendChild(el);
-        })
-    }
-}
-
-function getCountries() {
-    const countrySelect = document.querySelector('select[name="cft-country"]');
-    if (countrySelect !== null) {
-        countries.default.map((c) => {
-            let el = document.createElement('option');
-            el.value = c.name;
-            el.text = c.name;
-            if (c.code === 'SK') {
-                el.selected = true;
-            }
-            countrySelect.appendChild(el);
-        })
-    }
-}
-
-function logout() {
-    const logoutButton = document.getElementById('cft--logout');
-    logoutButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        let header = [];
-        if (getRequest(apiUrl + 'logout', setTokenHeader(header)).status === 'logout') {
-            location.href = '/';
-        }
+function showSubmenu() {
+    const element = document.querySelectorAll('.cft--showSubMenu');
+    element.forEach((el) => {
+       el.addEventListener('click', (e) => {
+         setTimeout(() => {
+             getSection();
+         }, 100);
+       });
     });
 }
 
-function getUserData() {
-    let actualHeader = [];
-    const jwtEmail = parseJwt().email;
-    document.querySelector('input[name="cft-email"]').value = jwtEmail;
-    document.querySelector('input[name="cft-password"]').value = '********';
 
-    const userData = getRequest(apiUrl + 'user-details', setTokenHeader(actualHeader));
-    if (userData !== null) {
-        setValueIfNotNull('input[name="cft-firstName"]', userData.first_name);
-        setValueIfNotNull('input[name="cft-lastName"]', userData.last_name);
-        setValueIfNotNull('input[name="cft-street"]', userData.street);
-        setValueIfNotNull('input[name="cft-house-number"]', userData.house_number);
-        makeOptionSelected('select[name="cft-telephone-prefix"]', userData.telephone_prefix);
-        setValueIfNotNull('input[name="cft-telephone"]', userData.telephone);
-        setValueIfNotNull('input[name="cft-city"]', userData.city);
-        setValueIfNotNull('input[name="cft-zip"]', userData.zip);
-        makeOptionSelected('select[name="cft-country"]', userData.country);
-        setCheckboxValue('input[name="cft-deliveryAddressSame"]', userData.delivery_address_is_same);
-    }
 
-}
 
 function isValidGeneratedToken(token) {
     let data = {
@@ -216,16 +165,56 @@ function showMyAccountNotValidView() {
         );
 }
 
-function addAlertMessage(message) {
+export function addAlertMessage(message, elements) {
     const alertElement = document.querySelector('#cft--myAccount .cft--alert');
     alertElement.classList.add('active');
+    alertElement.classList.remove('error');
+    alertElement.classList.remove('success');
     let resultText = '';
     switch (message) {
         case 'resetPassword':
             resultText = myAccountTexts.resetYourPasswordAlert;
+            document.querySelector('input[name="cft-password"]').classList.add('error');
+            break;
+        case 'endRegister':
+            resultText = myAccountTexts.endRegister;
+            alertElement.classList.add('error');
+            break;
+        case 'successUpdateAccountDetails':
+            resultText = myAccountTexts.successUpdate;
+            alertElement.classList.add('success');
+            hideElementAfterTimeout(alertElement, 5000);
+            break;
+        case 'errorUpdateAccountDetails':
+            resultText = myAccountTexts.errorUpdate;
+            alertElement.classList.add('error');
             break;
         default:
             alertElement.classList.remove('active');
+            break;
     }
     alertElement.innerHTML = resultText;
+    if (elements !== [] && elements !== undefined) {
+        elements.map((e) => {
+            document.querySelector(e).classList.add('error');
+            document.querySelector(e).addEventListener('keyup', () => {
+                document.querySelector(e).classList.remove('error');
+                removeAlertMessage();
+            });
+        });
+    }
+    removeAlertMessage();
+}
+
+export function removeAlertMessage() {
+    const alertElement = document.querySelector('#cft--myAccount .cft--alert');
+    let hasInputErrorClass = false;
+    document.querySelectorAll('#cft--myAccount input').forEach((input) => {
+        if (input.classList.contains('error')) {
+            hasInputErrorClass = true;
+        }
+    });
+    if (!hasInputErrorClass && !alertElement.classList.contains('success')) {
+        alertElement.classList.remove('active');
+    }
 }

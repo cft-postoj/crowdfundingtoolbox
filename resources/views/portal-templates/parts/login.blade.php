@@ -1,3 +1,4 @@
+<meta name="cft-csrf-token" content="{{ csrf_token() }}">
 <button type="button" id="cft--loginButton" class="cft--loginButton">Prihlásiť sa</button>
 <div class="cft--loginDropdown">
     <form name="cft-forgottenPassword">

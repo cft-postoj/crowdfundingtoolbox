@@ -22,13 +22,13 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->first();
     }
 
+
     public function create($userId)
     {
-        $this->model
+        return $this->model
             ::create([
                 'user_id'   =>  $userId
-            ])
-            ->save();
+            ]);
     }
 
 }

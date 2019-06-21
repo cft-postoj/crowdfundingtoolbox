@@ -15,8 +15,8 @@ class CreateUserGdpr extends Migration
     {
         Schema::create('user_gdpr', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('portal_user_id');
+            $table->foreign('portal_user_id')->references('id')->on('portal_users');
             $table->boolean('agree_mail_sending')->default(false)->nullable();
             $table->boolean('agree_general_conditions')->default(false)->nullable();
             $table->timestamps();

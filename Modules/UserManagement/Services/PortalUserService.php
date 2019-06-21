@@ -12,9 +12,12 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
+use Modules\UserManagement\Emails\RegisterEmail;
 use Modules\UserManagement\Jobs\RemoveGeneratedToken;
 use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use Modules\UserManagement\Repositories\PortalUserRepository;
+use Modules\UserManagement\Repositories\UserDetailRepository;
+use Modules\UserManagement\Repositories\UserGdprRepository;
 use Modules\UserManagement\Repositories\UserRepository;
 use JWTAuth;
 use Illuminate\Support\Facades\Auth;
@@ -28,16 +31,22 @@ class PortalUserService implements PortalUserServiceInterface
     private $usernameUsedCounter;
     private $generatedTokenJob;
     private $generatedUserTokenService;
+    private $userGdprRepository;
+    private $userDetailRepository;
 
     public function __construct(PortalUserRepository $portalUserRepository,
                                 UserRepository $userRepository,
                                 GeneratedUserTokenRepository $generatedUserTokenRepository,
-                                RemoveGeneratedToken $generatedTokenJob)
+                                RemoveGeneratedToken $generatedTokenJob,
+                                UserGdprRepository $userGdprRepository,
+                                UserDetailRepository $userDetailRepository)
     {
         $this->portalUserRepository = $portalUserRepository;
         $this->userRepository = $userRepository;
         $this->generatedUserTokenRepository = $generatedUserTokenRepository;
         $this->generatedTokenJob = $generatedTokenJob;
+        $this->userGdprRepository = $userGdprRepository;
+        $this->userDetailRepository = $userDetailRepository;
         $this->usernameUsedCounter = 0;
     }
 
@@ -86,6 +95,7 @@ class PortalUserService implements PortalUserServiceInterface
             $existInUserTable = ($user !== null) ? true : false;
             $existInPortalUserTable = ($user === null) ? false :
                 (($this->portalUserRepository->get($user->id) !== null) ? true : false);
+            $this->generatedUserTokenService = new GeneratedUserTokenService();
             if ($existInUserTable && $existInPortalUserTable) {
                 return \response()->json([
                     'error' => array(
@@ -99,10 +109,20 @@ class PortalUserService implements PortalUserServiceInterface
                  * the same email address
                  */
                 $this->portalUserRepository->create($user->id);
+                $this->userGdprRepository->create($request, $this->portalUserRepository->get($user->id)['id']);
+
                 // update user password
                 $this->userRepository->updatePassword($user->id, $request['password']);
 
+                $generatedToken = $this->generatedUserTokenService->create($user->id);
+                Mail::to($user->email)->send(new RegisterEmail($generatedToken));
+
+                if ($this->userDetailRepository->get($user->id) === null) {
+                    $this->userDetailRepository->create($user->id);
+                }
+
                 return \response()->json([
+                    'token' =>  $generatedToken,
                     'message' => 'Account was successfully created.'
                 ], Response::HTTP_CREATED);
             }
@@ -113,12 +133,23 @@ class PortalUserService implements PortalUserServiceInterface
             $username = explode('@', $request['email'])[0];
             $newUserId = $this->userRepository->create($request['email'], $request['password'], $this->checkUniqueUsername($username));
             $this->portalUserRepository->create($newUserId);
+            $this->userGdprRepository->create($request, $this->portalUserRepository->get($newUserId)['id']);
+
+            $userData = $this->userRepository->get($newUserId);
+            $generatedToken = $this->generatedUserTokenService->create($newUserId);
+            Mail::to($userData->email)->send(new RegisterEmail($generatedToken));
+            if ($this->userDetailRepository->get($newUserId) === null) {
+                $this->userDetailRepository->create($newUserId);
+            }
+
             return \response()->json([
+                'token' =>  $generatedToken,
                 'message' => 'Account was successfully created.'
             ], Response::HTTP_CREATED);
 
         } catch (\Exception $exception) {
             $error = array(
+                'error' =>  $exception->getMessage(),
                 'type' => 'undefined',
                 'message' => 'There was an error during the registration process.'
             );
@@ -216,9 +247,12 @@ class PortalUserService implements PortalUserServiceInterface
         $token = JWTAuth::fromUser($user);
 
         //$myPayload = $token->getPayload();
-        return \response()->json([
-            'token' => $token
+        $response = \response()->json([
+            'message'   =>  'Successfully logged in.',
+            'token' =>  $token,
+            'ip'    =>  $request->ip()
         ], Response::HTTP_OK);
+        return $response;
     }
 
 

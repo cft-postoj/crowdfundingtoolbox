@@ -20,4 +20,14 @@ class UserDetailsController extends Controller
     {
         return $this->userDetailService->getDetailsByToken();
     }
+
+    protected function update(Request $request)
+    {
+        return $this->userDetailService->update($request);
+    }
+
+    protected function getBase()
+    {
+        return $this->userDetailService->getBase();
+    }
 }

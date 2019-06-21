@@ -738,6 +738,7 @@
   width: calc(100% - 200px);
   background: #F0F3F6;
   padding: 50px;
+  min-height: 60%;
 }
 
 .cft--myAccount--body--loading {
@@ -746,6 +747,10 @@
 
 .cft--myAccount--body > div h2 {
   color: #000000;
+}
+
+.cft--myAccount--body > div p a {
+  text-decoration: underline;
 }
 
 .cft--myAccount.badRequest .cft--myAccount--body {
@@ -762,7 +767,7 @@
 }
 
 .cft--alert {
-  visibility: hidden;
+  display: none;
   opacity: 0;
   width: 100%;
   text-align: center;
@@ -782,7 +787,7 @@
 }
 
 .cft--alert.active {
-  visibility: visible;
+  display: block;
   opacity: 1;
 }
 

@@ -71,12 +71,18 @@
     width: calc(100% - 200px);
     background: $athensGray;
     padding: 50px;
+    min-height: 60%;
     &--loading {
       margin: 0 auto;
     }
     > div {
       h2 {
         color: $black;
+      }
+      p {
+        a {
+          text-decoration: underline;
+        }
       }
     }
   }
