@@ -135,7 +135,7 @@ class PortalUserService implements PortalUserServiceInterface
 
             $username = explode('@', $request['email'])[0];
             $newUserId = $this->userRepository->create($request['email'], $request['password'], $this->checkUniqueUsername($username));
-            $this->portalUserRepository->create($newUserId);
+            $portalUser = $this->portalUserRepository->create($newUserId);
             $this->userGdprRepository->create($request, $this->portalUserRepository->get($newUserId)['id']);
 
             $userData = $this->userRepository->get($newUserId);
@@ -145,7 +145,7 @@ class PortalUserService implements PortalUserServiceInterface
                 $this->userDetailRepository->create($newUserId);
             }
 
-            $portalUser = $this->portalUserRepository->create($newUserId);
+            // TODO check this
             $this->userRepository->coupleUserWithCookie($portalUser->id, intval($request['user_cookie']));
             return \response()->json([
                 'token' =>  $generatedToken,
@@ -249,8 +249,9 @@ class PortalUserService implements PortalUserServiceInterface
         }
 
         $user = Auth::user();
-        $portalUser = PortalUser::where('user_id',$user->id)->select('id')->first();
-        $this->coupleUserIdAndUserCookie($portalUser->id, $request['user_cookie']);
+        // TODO fix this (get null for login..why???)
+        //$portalUser = PortalUser::where('user_id',$user->id)->select('id')->first();
+        //$this->coupleUserIdAndUserCookie($portalUser->id, $request['user_cookie']);
         $token = JWTAuth::fromUser($user);
 
         //$myPayload = $token->getPayload();

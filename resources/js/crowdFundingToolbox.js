@@ -1,6 +1,7 @@
 import {
-    setCookie,  getCookie
+    setCookie, getCookie
 } from "./helpers";
+import {apiUrl} from './constants/url';
 
 function getWidgets(apiUrl) {
     let sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
@@ -21,16 +22,18 @@ function getWidgets(apiUrl) {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.response != null) {
-                if(!getCookie("cr0wdFundingToolbox-user_cookie")) {
-                    setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
+                if (!getCookie("cr0wdFundingToolbox-user_cookie")) {
+                    console.log(xhttp.response)
+                    setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response.user_cookie);
                 }
                 for (let i = 0; i < xhttp.response['widgets'].length; i++) {
                     let el = xhttp.response['widgets'][i];
                     console.log(el);
                     switch (el.widget_type.method) {
                         case 'sidebar':
-                            var scriptElement = document.createElement('script');
-                            var inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
+                            // TODO fix this -- error when not script included (not monetization widget)
+                            let scriptElement = document.createElement('script');
+                            let inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
                             scriptElement.appendChild(inlineScript);
                             if (sidebarPlaceholder != null) {
                                 sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
@@ -109,7 +112,6 @@ function registerInsertValue(apiUrl) {
 
 document.addEventListener('DOMContentLoaded', function () {
     //let apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-    let apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
     getWidgets(apiUrl);
     registerClick(apiUrl);
     registerInsertValue(apiUrl);

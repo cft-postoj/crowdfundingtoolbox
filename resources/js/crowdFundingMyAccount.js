@@ -38,15 +38,21 @@ function fetchMyAccountTemplate(message) {
         .then(response => response.text())
         .then(
             html => {
-                document.getElementById('cft--myaccount').innerHTML = html,
-                    getSection(message),
-                    changeMyAccountView()
+                document.getElementById('cft--myaccount').innerHTML = html;
+                    myAccountButton();
+                    getSection(message);
+                    changeMyAccountView();
             }
         );
 }
 
 function myAccountButton() {
     const button = document.getElementById('cft--loginButton');
+    button.innerHTML = myAccountTexts.myAccountButton;
+    button.onclick = () => {
+        if (location.href.indexOf(myAccountTexts.myAccountUrl) === -1)
+            location.href = myAccountTexts.myAccountUrl;
+    }
     if (button != null)
         button.classList.add('active');
 }
