@@ -3,9 +3,10 @@
 namespace Modules\Payment\Services;
 
 
+use Illuminate\Support\Facades\DB;
+use Modules\Payment\Entities\Donation;
 use Modules\Payment\Entities\DonationInitialize;
 use Modules\UserManagement\Entities\TrackingShow;
-use Modules\UserManagement\Entities\UserCookieCouple;
 use Modules\UserManagement\Services\PortalUserService;
 
 class DonationService
@@ -13,9 +14,9 @@ class DonationService
 
     private $portalUserService;
 
-    public function __construct()
+    public function __construct(PortalUserService $portalUserService)
     {
-        $this->portalUserService = new PortalUserService();
+        $this->portalUserService = $portalUserService;
     }
 
     public function initialize($data)

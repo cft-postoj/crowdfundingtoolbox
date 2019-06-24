@@ -12,7 +12,8 @@
             </div>
             <div class="col-2 offset-2 vertical-align">
                 <ng-container *ngIf="campaignId">
-                    <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType" [class]="'small'">
+                    <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType"
+                                            [clazz]="'radio-button-group--little radio-button-group--white'">
                     </app-radio-button-group>
                 </ng-container>
             </div>

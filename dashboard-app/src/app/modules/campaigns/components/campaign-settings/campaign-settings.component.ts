@@ -57,13 +57,13 @@ export class CampaignSettingsComponent  implements OnInit {
 
 
         this.campaignEndRadioButtons = [];
-        this.campaignEndRadioButtons.push(new RadioButton("Date", false))
-        this.campaignEndRadioButtons.push(new RadioButton("Donation goal", true))
+        this.campaignEndRadioButtons.push(new RadioButton('Date', false));
+        this.campaignEndRadioButtons.push(new RadioButton('Donation goal', true));
 
         this.paymentTypeRadioButtons = [];
-        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value))
-        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value))
-        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value))
+        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value));
+        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value));
+        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value));
 
     }
 

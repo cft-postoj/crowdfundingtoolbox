@@ -1504,6 +1504,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function getWidgets(apiUrl) {
+  console.log("test", "testujem toto tu");
   var sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
   var fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
   var leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard'); //get widgets for users and track, that user has been on specific page

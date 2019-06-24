@@ -35,12 +35,11 @@ class TestDashboardSeeder extends Seeder
             $currentSupporter = $monthlySupporters[$i];
             $referralWidget = $widgets[array_rand($widgets)];
             $userDonation = $this->getRandomDonation();
-            //get random time in current date to simulate different times of donations
-            $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59));
+            //get random time in current date to simulate different times of donations, sub random days to simulate donations during whole month
+            $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59))->subDays(rand(0,30));
             //get random months, when user stopped with supporting ($rand is number of months)
             $rand = rand(0, 20) - 15;
             $j = $rand < 0 ? 0 : $rand;
-            var_dump($j);
             for (; $j < rand($j, 20); $j++) {
                 $userDonation = $this->changeMonthlySupport($userDonation, 0.1);
                 Donation::create([
@@ -55,7 +54,7 @@ class TestDashboardSeeder extends Seeder
                 ]);
             }
         }
-//create 300 one time donations
+        // create 300 one time donations
         for ($i = 0; $i < 300; $i++) {
             $currentSupporter = $users[array_rand($users)];
             $referralWidget = $widgets[array_rand($widgets)];

@@ -30,15 +30,21 @@
             fill: #F4F7F9;
         }
     }
-    &.small {
-        height: 32px;
+    &--white {
         .item--icon {
             background-color: white;
             border: none;
             border-radius: 4px;
+        }
+    }
+
+    &--little {
+        height: 32px;
+        .item--icon {
             &.icon--active{
                 background: $azure;
                 fill: white;
+                color: white
             }
         }
     }

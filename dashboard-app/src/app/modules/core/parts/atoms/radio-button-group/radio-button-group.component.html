@@ -1,8 +1,9 @@
-<div class="row m-0 radio-button-group" [ngClass]="class">
+<div class="row m-0 radio-button-group" [ngClass]="clazz">
     <div *ngFor="let rb of radioButtons" (click)="setActive(rb)"
-            class="col p-0 item--icon flex-center"
-            [inlineSVG]="rb.icon"
-            [removeSVGAttributes]="['fill']"
-            [ngClass]="{'icon--active': rb === currentButton , 'default-color':fill}">
+         class="col p-0 item--icon flex-center"
+         [inlineSVG]="rb.icon"
+         [removeSVGAttributes]="['fill']"
+         [ngClass]="{'icon--active': rb === currentButton , 'default-color':fill}">
+        {{rb.displayName}}
     </div>
 </div>

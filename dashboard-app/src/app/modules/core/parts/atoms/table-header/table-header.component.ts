@@ -27,7 +27,6 @@ export class TableHeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.hide.indexOf('title') === -1);
     }
 
     toogleOrdering() {

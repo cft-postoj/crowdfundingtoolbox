@@ -59,4 +59,18 @@
             @include rotate(180deg);
         }
     }
+    &.selectWrapper--small {
+        select {
+            height: 32px;
+        }
+        &:after {
+            top: 8px;
+        }
+    }
+
+    &.selectWrapper--dark {
+        select {
+            background: $aquaHaze;
+        }
+    }
 }

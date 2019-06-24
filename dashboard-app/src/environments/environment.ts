@@ -36,6 +36,8 @@ export const environment = {
     cftSettings: '/crowdfunding-settings',
 
     portalUsersUrl: '/portal-users',
-    portalUsersAllUrl: '/portal-users/all'
+    portalUsersAllUrl: '/portal-users/all',
+
+    donationUrl: '/statistics/donations',
 
 };
