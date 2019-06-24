@@ -1,4 +1,14 @@
-import {Component, ElementRef, Input, KeyValueDiffer, KeyValueDiffers, OnInit, ViewChild} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    KeyValueDiffer,
+    KeyValueDiffers,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Campaign} from "../../models";
 import {DropdownItem, RadioButton, paymentTypes} from "../../../core/models";
@@ -30,6 +40,9 @@ export class CampaignSettingsComponent  implements OnInit {
     public paymentTypes = paymentTypes;
 
     public newUrl: string;
+
+    @Output()
+    public targetingUsersCountEmit = new EventEmitter();
 
     @ViewChild('newUrlInput') newUrlInput: ElementRef;
 
@@ -152,6 +165,8 @@ export class CampaignSettingsComponent  implements OnInit {
     }
 
     changeUsersCount() {
-        console.log(this.campaign.targeting)
+        this.campaignService.getUsersTargetingCount(this.campaign.targeting).subscribe((data) => {
+            this.targetingUsersCountEmit.emit(data);
+        });
     }
 }

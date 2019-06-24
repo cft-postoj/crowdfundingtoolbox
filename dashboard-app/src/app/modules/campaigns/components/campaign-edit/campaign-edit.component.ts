@@ -38,6 +38,9 @@ export class CampaignEditComponent  implements OnInit {
     @ViewChild('previewGenerate') previewGenerate;
     public environment = environment;
 
+    public targetedUsersCount: number;
+    public targetedVisitorsCount: number;
+
     public subscription: Subscription;
     backgroundTypes = backgroundTypes;
     editorConfig: AngularEditorConfig = {
@@ -172,6 +175,11 @@ export class CampaignEditComponent  implements OnInit {
         //     return false;
         // }
         return true;
+    }
+
+    setTargetUsers(data) {
+        this.targetedUsersCount = data.count_users;
+        this.targetedVisitorsCount = data.count_visitors;
     }
 
 

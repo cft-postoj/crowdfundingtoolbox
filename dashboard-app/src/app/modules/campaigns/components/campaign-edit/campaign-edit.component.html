@@ -1,5 +1,5 @@
 <div class="active bg-overlay">
-    <app-target-modal></app-target-modal>
+    <app-target-modal [usersCount]="targetedUsersCount" [visitorsCount]="targetedVisitorsCount"></app-target-modal>
 </div>
 <div class="active settings">
     <div class="settings--head">
@@ -25,7 +25,8 @@
     <!--</div>-->
     <app-loading [isLoading]="loading"></app-loading>
     <ng-container *ngIf="!loading">
-            <app-campaign-settings class="d-flex settings--body" style="overflow: hidden" [campaign]="campaign"></app-campaign-settings>
+            <app-campaign-settings class="d-flex settings--body" style="overflow: hidden" [campaign]="campaign"
+                                   (targetingUsersCountEmit)="setTargetUsers($event)"></app-campaign-settings>
             <!--<div>-->
             <!--<mat-tab-group mat-align-tabs="start">-->
             <!--<mat-tab label="Campaign settings">-->

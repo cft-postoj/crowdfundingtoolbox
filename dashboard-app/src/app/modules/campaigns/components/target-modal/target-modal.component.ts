@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-target-modal',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TargetModalComponent implements OnInit {
 
+  @Input()
+  public usersCount: number;
+
+  @Input()
+  public visitorsCount: number;
+
   constructor() { }
 
   ngOnInit() {
+    this.usersCount = 0;
   }
 
 }

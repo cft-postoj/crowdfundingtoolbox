@@ -2,7 +2,11 @@
     <div class="targetModal--content">
         <h4>This campaign will be targeted on:</h4>
 
-        <div class="usersCount">N/A <span>signed users</span></div>
+        <div class="usersCount">{{usersCount}} <span>signed users</span></div>
+
+        <hr>
+
+        <div class="visitorsCount">{{(visitorsCount === 999999) ? '∞' : visitorsCount}} <span>not signed users</span></div>
 
 
         <p class="targetModal--content--notes">If you change some of targeting values, you can specify set of targeted
