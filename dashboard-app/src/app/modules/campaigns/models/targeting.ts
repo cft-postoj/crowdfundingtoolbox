@@ -70,11 +70,11 @@ export class Targeting {
     registration: any  = {
         before: {
             active: false,
-            date:  { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()},
+            date:  { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()},
         },
         after: {
             active: false,
-            date: { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()}
+            date: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()}
         }
     }
     url = {

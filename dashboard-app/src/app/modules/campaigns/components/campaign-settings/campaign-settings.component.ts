@@ -122,13 +122,13 @@ export class CampaignSettingsComponent  implements OnInit {
         }
     }
 
-    createActivePriceOptions():DropdownItem[]{
-        let result : DropdownItem[] = [];
-        this.campaign.payment_settings.monthly_prices.options.forEach( (option,i) => {
+    createActivePriceOptions(): DropdownItem[]{
+        const result: DropdownItem[] = [];
+        this.campaign.payment_settings.monthly_prices.options.forEach( (option, i) => {
             result.push({
-                title: 'Price No.'+(i+1),
+                title: 'Price No.' + (i + 1),
                 value: option.value
-            })
+            });
         })
         return result;
     }
@@ -141,13 +141,17 @@ export class CampaignSettingsComponent  implements OnInit {
         if (this.campaign.targeting.url.specific) {
             if (this.newUrl) {
                 this.campaign.targeting.url.list.push({
-                    id:0,
-                    path:this.newUrl
+                    id: 0,
+                    path: this.newUrl
                 });
                 this.newUrl = undefined;
             } else {
                 this.newUrlInput.nativeElement.focus();
             }
         }
+    }
+
+    changeUsersCount() {
+        console.log(this.campaign.targeting)
     }
 }

@@ -77,6 +77,9 @@ Route::group([
         Route::put('campaigns/{id}/result', '\Modules\Campaigns\Http\Controllers\CampaignsController@updateResult');
         Route::get('campaigns/{id}/clone', '\Modules\Campaigns\Http\Controllers\CampaignsController@cloneCampaign');
 
+        // Campaign Targeting
+        Route::post('campaign-targeting/users', '\Modules\Targeting\Http\Controllers\CampaignTargetingController@getUsersCount');
+
         // Widgets
         Route::get('campaigns/{campaignId}/widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgetsByCampaignId');
         Route::get('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@show');

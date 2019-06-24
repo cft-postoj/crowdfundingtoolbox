@@ -34,7 +34,7 @@
                                    [(ngModel)]="campaign.name"
                                    maxlength="120">
                             <span class="actualLength">
-                                {{campaign.name ? campaign.name.length: " 0 "}} / {{campaignName?.maxLength}}
+                                {{campaign.name ? campaign.name.length : " 0 "}} / {{campaignName?.maxLength}}
                             </span>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <div class="bold"> Start </div>
+                            <div class="bold"> Start</div>
                             <app-datepicker
                                     [(date)]="campaign.promote_settings.start_date_json"
                                     [maxDate]="campaign.promote_settings.is_end_date ? campaign.promote_settings.end_date_json : null"
@@ -68,18 +68,18 @@
                             </app-datepicker>
                         </div>
                         <!--<div class="col-6">-->
-                            <!--<div class="fs15">End</div>-->
-                            <!--<app-datepicker-->
-                                    <!--[(date)]="campaign.date_to"-->
-                                    <!--[minDate]="campaign.date_from"-->
-                                    <!--[type]="'end'">-->
+                        <!--<div class="fs15">End</div>-->
+                        <!--<app-datepicker-->
+                        <!--[(date)]="campaign.date_to"-->
+                        <!--[minDate]="campaign.date_from"-->
+                        <!--[type]="'end'">-->
 
-                            <!--</app-datepicker>-->
+                        <!--</app-datepicker>-->
                         <!--</div>-->
                     </div>
                     <div class="row mt-3">
                         <div class="col bold">
-                           End
+                            End
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -141,13 +141,19 @@
                     </div>
                     <div class="settings--card--body">
 
-                        <div class="row" [ngClass]="{'blur':!campaign.targeting.signed_status.signed.active}">
-                            <div class="col-10">Signed user</div>
-                            <app-switcher class="col-2 text-right" [id]="'signed'" [(checked)]="campaign.targeting.signed_status.signed.active"></app-switcher>
+                        <div class="row"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.signed_status.signed.active}">
+                            <div class="col-10 targetBigger">Signed user</div>
+                            <app-switcher class="col-2 text-right" [id]="'signed'"
+                                          [(checked)]="campaign.targeting.signed_status.signed.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
-                        <div class="row" [ngClass]="{'blur':!campaign.targeting.signed_status.not_signed.active}">
-                            <div class="col-10">Not signed user</div>
-                            <app-switcher class="col-2 text-right" [id]="'not_signed'" [(checked)]="campaign.targeting.signed_status.not_signed.active"></app-switcher>
+                        <div class="row"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.signed_status.not_signed.active}">
+                            <div class="col-10 targetBigger">Not signed user</div>
+                            <app-switcher class="col-2 text-right" [id]="'not_signed'"
+                                          [(checked)]="campaign.targeting.signed_status.not_signed.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
                     </div>
                 </div>
@@ -156,105 +162,175 @@
                         Targeting based on support
                     </div>
                     <div class="settings--card--body">
-                       <div class="row" [ngClass]="{'blur':!campaign.targeting.support.one_time.active}">
-                           <div class="col-10">One-time supporter</div>
-                           <app-switcher class="col-2 text-right" [id]="'one-time'" [(checked)]="campaign.targeting.support.one_time.active"></app-switcher>
-                       </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.older_than.active }" disabled>
-                            <div class="col-5">Payment older than</div>
-                            <div class="col-3">
-                                <app-inputNumber
-                                        [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.older_than.active"
-                                        [(value)]="campaign.targeting.support.one_time.older_than.value"></app-inputNumber>
-                            </div>
-                            <div class="col-2">days</div>
-                            <app-switcher class="col-2 text-right" [id]="'one-time__older_than'" [(checked)]="campaign.targeting.support.one_time.older_than.active"></app-switcher>
+                        <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.support.one_time.active}">
+                            <div class="col-10 targetBigger">One-time supporter</div>
+                            <app-switcher class="col-2 text-right" [id]="'one-time'"
+                                          [(checked)]="campaign.targeting.support.one_time.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.not_older_than.active }" disabled>
-                            <div class="col-5">Payment not older than</div>
-                            <div class="col-3">
-                                <app-inputNumber
-                                        [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.not_older_than.active"
-                                        [(value)]="campaign.targeting.support.one_time.not_older_than.value"></app-inputNumber>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.one_time.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.older_than.active }"
+                                 disabled>
+                                <div class="col-5">Payment older than</div>
+                                <div class="col-3">
+                                    <app-inputNumber
+                                            [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.older_than.active"
+                                            [(value)]="campaign.targeting.support.one_time.older_than.value"></app-inputNumber>
+                                </div>
+                                <div class="col-2">days</div>
+                                <app-switcher class="col-2 text-right" [id]="'one-time__older_than'"
+                                              [(checked)]="campaign.targeting.support.one_time.older_than.active"
+                                              (change)="changeUsersCount()"></app-switcher>
+                                <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                             </div>
-                            <div class="col-2">days</div>
-                            <app-switcher class="col-2 text-right" [id]="'one-time__not-older-yhan'" [(checked)]="campaign.targeting.support.one_time.not_older_than.active"></app-switcher>
                         </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.min.active }" disabled>
-                            <div class="col-5">Donation bigger than</div>
-                            <div class="col-3">
-                                <app-inputNumber
-                                        [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.min.active"
-                                        [(value)]="campaign.targeting.support.one_time.min.value"></app-inputNumber>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.one_time.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.not_older_than.active }"
+                                 disabled>
+                                <div class="col-5">Payment not older than</div>
+                                <div class="col-3">
+                                    <app-inputNumber
+                                            [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.not_older_than.active"
+                                            [(value)]="campaign.targeting.support.one_time.not_older_than.value"
+                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                </div>
+                                <div class="col-2">days</div>
+                                <app-switcher class="col-2 text-right" [id]="'one-time__not-older-yhan'"
+                                              [(checked)]="campaign.targeting.support.one_time.not_older_than.active"
+                                              (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <div class="col-2">€</div>
-                            <app-switcher class="col-2 text-right" [id]="'one-time__min'" [(checked)]="campaign.targeting.support.one_time.min.active"></app-switcher>
+                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                         </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.max.active }" disabled>
-                            <div class="col-5">Donation bigger than</div>
-                            <div class="col-3">
-                                <app-inputNumber
-                                        [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.max.active"
-                                        [(value)]="campaign.targeting.support.one_time.max.value"></app-inputNumber>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.one_time.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.min.active }"
+                                 disabled>
+                                <div class="col-5">Donation bigger than</div>
+                                <div class="col-3">
+                                    <app-inputNumber
+                                            [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.min.active"
+                                            [(value)]="campaign.targeting.support.one_time.min.value"
+                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                </div>
+                                <div class="col-2">€</div>
+                                <app-switcher class="col-2 text-right" [id]="'one-time__min'"
+                                              [(checked)]="campaign.targeting.support.one_time.min.active"
+                                              (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <div class="col-2">€</div>
-                            <app-switcher class="col-2 text-right" [id]="'one-time__max'" [(checked)]="campaign.targeting.support.one_time.max.active"></app-switcher>
+                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                         </div>
-                        <hr>
-                        <div class="row" [ngClass]="{'blur':!campaign.targeting.support.monthly.active}">
-                            <div class="col-10">Monthly supporter</div>
-                            <app-switcher class="col-2 text-right" [id]="'monthly'" [(checked)]="campaign.targeting.support.monthly.active"></app-switcher>
-                        </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur': !campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.older_than.active }" disabled>
-                            <div class="col-5">Last payment older than</div>
-                            <div class="col-3">
-                                <app-inputNumber
-                                        [disabled]="!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.older_than.active"
-                                        [(value)]="campaign.targeting.support.monthly.older_than.value"></app-inputNumber>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.one_time.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur': !campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.max.active }"
+                                 disabled>
+                                <div class="col-5">Donation less than</div>
+                                <div class="col-3">
+                                    <app-inputNumber
+                                            [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.max.active"
+                                            [(value)]="campaign.targeting.support.one_time.max.value"
+                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                </div>
+                                <div class="col-2">€</div>
+                                <app-switcher class="col-2 text-right" [id]="'one-time__max'"
+                                              [(checked)]="campaign.targeting.support.one_time.max.active"
+                                              (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <div class="col-2">days</div>
-                            <app-switcher class="col-2 text-right" [id]="'monthly__older-than'" [(checked)]="campaign.targeting.support.monthly.older_than.active"></app-switcher>
-                        </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur': !campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.not_older_than.active }" disabled>
-                            <div class="col-5">Last payment not older than</div>
-                            <div class="col-3">
-                                <app-inputNumber
-                                        [disabled]="!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.not_older_than.active"
-                                        [(value)]="campaign.targeting.support.monthly.not_older_than.value"></app-inputNumber>
-                            </div>
-                            <div class="col-2">days</div>
-                            <app-switcher class="col-2 text-right" [id]="'monthly__not-older-than'" [(checked)]="campaign.targeting.support.monthly.not_older_than.active"></app-switcher>
-                        </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur':!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.min.active}">
-                            <div class="col-5">
-                                Donation bigger than:
-                            </div>
-                            <div class="col-3">
-                               <app-inputNumber [(value)]="campaign.targeting.support.monthly.min.value" [disabled]="!campaign.targeting.support.monthly.min.active">
-                               </app-inputNumber>
-                            </div>
-                            <div class="col-2">
-                                €
-                            </div>
-                            <app-switcher class="col-2 text-right"  [id]="'monthly__bigger-than'" [(checked)]="campaign.targeting.support.monthly.min.active"></app-switcher>
-                        </div>
-                        <div class="row flex-center--vertical" [ngClass]="{'blur':!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.max.active}">
-                            <div class="col-5">
-                                Donation less than:
-                            </div>
-                            <div class="col-3">
-                                <app-inputNumber [(value)]="campaign.targeting.support.monthly.max.value" [disabled]="!campaign.targeting.support.monthly.max.active">
-                                </app-inputNumber>
-                            </div>
-                            <div class="col-2">
-                                €
-                            </div>
-                            <app-switcher class="col-2 text-right"  [id]="'monthly__less-than'" [(checked)]="campaign.targeting.support.monthly.max.active"></app-switcher>
+                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                         </div>
                         <hr>
-                        <div class="row" [ngClass]="{'blur':!campaign.targeting.support.not_supporter.active}">
-                            <div class="col-10">Not supporter</div>
-                            <app-switcher class="col-2 text-right" [id]="'not-donator'" [(checked)]="campaign.targeting.support.not_supporter.active"></app-switcher>
+                        <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.support.monthly.active}">
+                            <div class="col-10 targetBigger">Monthly supporter</div>
+                            <app-switcher class="col-2 text-right" [id]="'monthly'"
+                                          [(checked)]="campaign.targeting.support.monthly.active"
+                                          (change)="changeUsersCount()"></app-switcher>
+                        </div>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.monthly.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur': !campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.older_than.active }"
+                                 disabled>
+                                <div class="col-5">Last payment older than</div>
+                                <div class="col-3">
+                                    <app-inputNumber
+                                            [disabled]="!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.older_than.active"
+                                            [(value)]="campaign.targeting.support.monthly.older_than.value"
+                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                </div>
+                                <div class="col-2">days</div>
+                                <app-switcher class="col-2 text-right" [id]="'monthly__older-than'"
+                                              [(checked)]="campaign.targeting.support.monthly.older_than.active"
+                                              (change)="changeUsersCount()"></app-switcher>
+                            </div>
+                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                        </div>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.monthly.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur': !campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.not_older_than.active }"
+                                 disabled>
+                                <div class="col-5">Last payment not older than</div>
+                                <div class="col-3">
+                                    <app-inputNumber
+                                            [disabled]="!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.not_older_than.active"
+                                            [(value)]="campaign.targeting.support.monthly.not_older_than.value"
+                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                </div>
+                                <div class="col-2">days</div>
+                                <app-switcher class="col-2 text-right" [id]="'monthly__not-older-than'"
+                                              [(checked)]="campaign.targeting.support.monthly.not_older_than.active"
+                                              (change)="changeUsersCount()"></app-switcher>
+                            </div>
+                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                        </div>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.monthly.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur':!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.min.active}">
+                                <div class="col-5">
+                                    Donation bigger than:
+                                </div>
+                                <div class="col-3">
+                                    <app-inputNumber [(value)]="campaign.targeting.support.monthly.min.value"
+                                                     [disabled]="!campaign.targeting.support.monthly.min.active"
+                                                     (keyup)="changeUsersCount()">
+                                    </app-inputNumber>
+                                </div>
+                                <div class="col-2">
+                                    €
+                                </div>
+                                <app-switcher class="col-2 text-right" [id]="'monthly__bigger-than'"
+                                              [(checked)]="campaign.targeting.support.monthly.min.active"
+                                              (change)="changeUsersCount()"></app-switcher>
+                            </div>
+                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                        </div>
+                        <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.monthly.active}">
+                            <div class="row flex-center--vertical"
+                                 [ngClass]="{'blur':!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.max.active}">
+                                <div class="col-5">
+                                    Donation less than:
+                                </div>
+                                <div class="col-3">
+                                    <app-inputNumber [(value)]="campaign.targeting.support.monthly.max.value"
+                                                     [disabled]="!campaign.targeting.support.monthly.max.active"
+                                                     (keyup)="changeUsersCount()">
+                                    </app-inputNumber>
+                                </div>
+                                <div class="col-2">
+                                    €
+                                </div>
+                                <app-switcher class="col-2 text-right" [id]="'monthly__less-than'"
+                                              [(checked)]="campaign.targeting.support.monthly.max.active"
+                                              (change)="changeUsersCount()"></app-switcher>
+                            </div>
+                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                        </div>
+                        <hr>
+                        <div class="row"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.support.not_supporter.active}">
+                            <div class="col-10 targetBigger">Not supporter</div>
+                            <app-switcher class="col-2 text-right" [id]="'not-donator'"
+                                          [(checked)]="campaign.targeting.support.not_supporter.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
                     </div>
                 </div>
@@ -263,7 +339,8 @@
                         Count of read articles
                     </div>
                     <div class="settings--card--body">
-                        <div class="row flex-center--vertical" [ngClass]="{'blur':!campaign.targeting.read_articles.today.active}">
+                        <div class="row flex-center--vertical"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.read_articles.today.active}">
                             <div class="col-2">
                                 Today
                             </div>
@@ -272,20 +349,25 @@
                             </div>
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.today.min"
-                                                 [disabled]="!campaign.targeting.read_articles.today.active"></app-inputNumber>
+                                                 [disabled]="!campaign.targeting.read_articles.today.active"
+                                                 (keyup)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <div class="col-2">
                                 max
                             </div>
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.today.max"
-                                                 [disabled]="!campaign.targeting.read_articles.today.active"></app-inputNumber>
+                                                 [disabled]="!campaign.targeting.read_articles.today.active"
+                                                 (keyup)="changeUsersCount()"></app-inputNumber>
                             </div>
-                            <app-switcher class="col-2 text-right" [id]="'read_article_today'" [(checked)]="campaign.targeting.read_articles.today.active"></app-switcher>
+                            <app-switcher class="col-2 text-right" [id]="'read_article_today'"
+                                          [(checked)]="campaign.targeting.read_articles.today.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
                     </div>
                     <div class="settings--card--body">
-                        <div class="row flex-center--vertical" [ngClass]="{'blur':!campaign.targeting.read_articles.week.active}">
+                        <div class="row flex-center--vertical"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.read_articles.week.active}">
                             <div class="col-2">
                                 Week
                             </div>
@@ -294,20 +376,25 @@
                             </div>
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.week.min"
-                                                 [disabled]="!campaign.targeting.read_articles.week.active"></app-inputNumber>
+                                                 [disabled]="!campaign.targeting.read_articles.week.active"
+                                                 (keyup)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <div class="col-2">
                                 max
                             </div>
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.week.max"
-                                                 [disabled]="!campaign.targeting.read_articles.week.active"></app-inputNumber>
+                                                 [disabled]="!campaign.targeting.read_articles.week.active"
+                                                 (keyup)="changeUsersCount()"></app-inputNumber>
                             </div>
-                            <app-switcher class="col-2 text-right" [id]="'read_article_week'" [(checked)]="campaign.targeting.read_articles.week.active"></app-switcher>
+                            <app-switcher class="col-2 text-right" [id]="'read_article_week'"
+                                          [(checked)]="campaign.targeting.read_articles.week.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
                     </div>
                     <div class="settings--card--body">
-                        <div class="row flex-center--vertical" [ngClass]="{'blur':!campaign.targeting.read_articles.month.active}">
+                        <div class="row flex-center--vertical"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.read_articles.month.active}">
                             <div class="col-2">
                                 Month
                             </div>
@@ -316,50 +403,60 @@
                             </div>
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.month.min"
-                                                 [disabled]="!campaign.targeting.read_articles.month.active"></app-inputNumber>
+                                                 [disabled]="!campaign.targeting.read_articles.month.active"
+                                                 (keyup)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <div class="col-2">
                                 max
                             </div>
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.month.max"
-                                                 [disabled]="!campaign.targeting.read_articles.month.active"></app-inputNumber>
+                                                 [disabled]="!campaign.targeting.read_articles.month.active"
+                                                 (keyup)="changeUsersCount()"></app-inputNumber>
                             </div>
-                            <app-switcher class="col-2 text-right" [id]="'read_article_month'" [(checked)]="campaign.targeting.read_articles.month.active"></app-switcher>
+                            <app-switcher class="col-2 text-right" [id]="'read_article_month'"
+                                          [(checked)]="campaign.targeting.read_articles.month.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
                     </div>
 
                 </div>
                 <div class="settings--card" [ngClass]="{'blur':!campaign.targeting.signed_status.signed.active}">
                     <div class="settings--card--header">
-                       Additional settings
+                        Additional settings
                     </div>
                     <div class="settings--card--body">
-                        <div class="row" [ngClass]="{'blur':!campaign.targeting.registration.after.active}">
+                        <div class="row"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.registration.after.active}">
                             <div class="col-5">Registration after:</div>
                             <div class="col-5">
                                 <app-datepicker
                                         [(date)]="campaign.targeting.registration.after.date"
                                         [maxDate]="campaign.targeting.registration.before.active ? campaign.targeting.registration.before.date : null"
                                         [type]="'start'"
-                                        [disabled]="!campaign.targeting.registration.after.active">
+                                        [disabled]="!campaign.targeting.registration.after.active"
+                                        (change)="changeUsersCount()">
                                 </app-datepicker>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'target_after'"
-                                          [(checked)]="campaign.targeting.registration.after.active"></app-switcher>
+                                          [(checked)]="campaign.targeting.registration.after.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
-                        <div class="row" [ngClass]="{'blur':!campaign.targeting.registration.before.active}">
+                        <div class="row"
+                             [ngClass]="{'blur--targetBigger':!campaign.targeting.registration.before.active}">
                             <div class="col-5">Registration before:</div>
                             <div class="col-5">
                                 <app-datepicker
                                         [(date)]="campaign.targeting.registration.before.date"
                                         [minDate]="campaign.targeting.registration.after.active ? campaign.targeting.registration.after.date : null"
                                         [type]="'end'"
-                                        [disabled]="!campaign.targeting.registration.before.active">
+                                        [disabled]="!campaign.targeting.registration.before.active"
+                                        (change)="changeUsersCount()">
                                 </app-datepicker>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'target_before'"
-                                          [(checked)]="campaign.targeting.registration.before.active"></app-switcher>
+                                          [(checked)]="campaign.targeting.registration.before.active"
+                                          (change)="changeUsersCount()"></app-switcher>
                         </div>
                     </div>
                 </div>
@@ -367,13 +464,19 @@
                     <div class="settings--card--header">
                         URL
                     </div>
-                    <div class="row" [ngClass]="{'blur':!campaign.targeting.url.specific}">
-                        <div class="col-10">{{campaign.targeting.url.specific?'Specific URLs':'All URLs'}}</div>
-                        <app-switcher class="col-2 text-right" [id]="'specificUrls'" [(checked)]="campaign.targeting.url.specific"></app-switcher>
+                    <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.url.specific}">
+                        <div class="col-10">Specific URLs *<br/>
+                            <small><i>* if you won't specify urls, all portal urls are tracked.</i></small>
+                        </div>
+                        <!--                        <div class="col-10">{{campaign.targeting.url.specific?'Specific URLs':'All URLs'}}</div>-->
+                        <app-switcher class="col-2 text-right" [id]="'specificUrls'"
+                                      [(checked)]="campaign.targeting.url.specific"
+                                      (change)="changeUsersCount()"></app-switcher>
                     </div>
                     <div class="row" [ngClass]="{'blur':!campaign.targeting.url.specific}">
                         <div class="button-group">
-                            <span class="btn btn-default btn-secondary btn-xs" *ngFor="let url of campaign.targeting.url.list; index as i">
+                            <span class="btn btn-default btn-secondary btn-xs"
+                                  *ngFor="let url of campaign.targeting.url.list; index as i">
                                 <span>{{url.path}}</span>
                                 <a class="icon-delete float-right" (click)="campaign.targeting.url.list.splice(i, 1)">
                                     <i class="icon-delete--cross"></i>
@@ -390,7 +493,8 @@
                         </div>
                         <div class="col-10">
                             <input class="ng-pristine ng-valid ng-touched" #newUrlInput id="newUrl"
-                                   placeholder="Add url" [(ngModel)]="newUrl" (keydown.enter)="addUrl()" [disabled]="!campaign.targeting.url.specific">
+                                   placeholder="Add url" [(ngModel)]="newUrl" (keydown.enter)="addUrl();changeUsersCount();"
+                                   [disabled]="!campaign.targeting.url.specific">
                         </div>
                     </div>
                 </div>

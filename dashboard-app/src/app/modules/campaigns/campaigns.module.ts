@@ -20,6 +20,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { PreviewMonetizationLiteComponent } from './components/preview-monetization-lite/preview-monetization-lite.component';
 import { CampaignNotFoundComponent } from './pages/campaign-not-found/campaign-not-found.component';
 import { CampaignsStatsComponent } from './pages/campaigns-stats/campaigns-stats.component';
+import { TargetModalComponent } from './components/target-modal/target-modal.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import { CampaignsStatsComponent } from './pages/campaigns-stats/campaigns-stats
         PreviewMonetizationLiteComponent,
         CampaignNotFoundComponent,
         CampaignsStatsComponent,
+        TargetModalComponent,
     ],
 
     imports: [
