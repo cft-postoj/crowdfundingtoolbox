@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
 import {
     monthlyPayment,
     oneTimePayment,
@@ -8,12 +8,14 @@ import {
     validateForm,
     trackInsertValue,
     trackEmailOnChange,
-    handleSubmit
-} from "../preview/landing";
-import {Widget} from "../../models";
-import {PreviewService} from "../../services";
-import {ConvertHexService} from "../../../core/services";
-import {widgetTypes, paymentTypes} from "../../../core/models";
+    handleSubmit,
+    getEnvs
+} from '../preview/landing';
+import {Widget} from '../../models';
+import {PreviewService} from '../../services';
+import {ConvertHexService} from '../../../core/services';
+import {widgetTypes, paymentTypes} from '../../../core/models';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-preview-monetization',
@@ -35,8 +37,10 @@ export class PreviewMonetizationComponent implements OnInit {
 
     public paymentTypes = paymentTypes;
 
+    public environment = environment;
+
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
-                private ref: ChangeDetectorRef,) {
+                private ref: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -100,25 +104,39 @@ export class PreviewMonetizationComponent implements OnInit {
         script.charset = 'utf-8';
         script.setAttribute("class", "previewScripts");
 
-        let scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',
-            'var target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';
+        const scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('let target;',
+            'let target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';
 
-        let scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('var target;',
-            'var target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
+        const scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('let target;',
+            'let target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
 
-        script.appendChild(document.createTextNode(scriptActiveButtonMonthly + "\n"));
-        script.appendChild(document.createTextNode(scriptActiveButtonOneTime + "\n"));
+        script.appendChild(document.createTextNode(scriptActiveButtonMonthly + '\n'));
+        script.appendChild(document.createTextNode(scriptActiveButtonOneTime + '\n'));
 
-        script.appendChild(document.createTextNode(validateForm.toString() + "\n"));
-        script.appendChild(document.createTextNode(oneTimePayment.toString() + "\n"));
-        script.appendChild(document.createTextNode(monthlyPayment.toString() + "\n"));
-        script.appendChild(document.createTextNode(trackInsertValue.toString() + "\n"));
-        script.appendChild(document.createTextNode(trackEmailOnChange.toString() + "\n"));
-        script.appendChild(document.createTextNode(handleSubmit.toString() + "\n"));
+
+        script.appendChild(document.createTextNode(validateForm.toString() + '\n'));
+        script.appendChild(document.createTextNode(oneTimePayment.toString() + '\n'));
+        script.appendChild(document.createTextNode(monthlyPayment.toString() + '\n'));
+        script.appendChild(document.createTextNode(trackInsertValue.toString() + '\n'));
+        script.appendChild(document.createTextNode(trackEmailOnChange.toString() + '\n'));
+        script.appendChild(document.createTextNode(handleSubmit.toString() + '\n'));
+
+        // change path in getEnvs and add domain if there is relative path in envs
+        const isAbsolute = new RegExp('^([a-z]+://|//)', 'i');
+        let absolutePath;
+        if (isAbsolute.test( this.environment.apiUrl)) {
+            absolutePath = this.environment.apiUrl;
+        } else {
+            absolutePath = window.location.origin + this.environment.apiUrl ;
+        }
+        const scriptGetEnvs = getEnvs.toString().replace( 'apiPublicUrlValue',  absolutePath);
+
+        script.appendChild(document.createTextNode(scriptGetEnvs + '\n'));
+
         parentScript.appendChild(script);
     }
 
-    //functions to create inline styles
+    // functions to create inline styles
 
     getButtonStyles() {
         let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
