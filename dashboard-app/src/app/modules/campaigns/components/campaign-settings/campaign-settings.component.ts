@@ -13,6 +13,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Campaign} from "../../models";
 import {DropdownItem, RadioButton, paymentTypes} from "../../../core/models";
 import {CampaignService} from "../../services";
+import {take} from 'rxjs/operators';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-campaign-settings',
@@ -20,7 +22,7 @@ import {CampaignService} from "../../services";
     styleUrls: ['../../../core/components/settings/settings.component.scss', './campaign-settings.component.scss']
 })
 
-export class CampaignSettingsComponent  implements OnInit {
+export class CampaignSettingsComponent implements OnInit {
 
 
     @Input()
@@ -40,6 +42,8 @@ export class CampaignSettingsComponent  implements OnInit {
     public paymentTypes = paymentTypes;
 
     public newUrl: string;
+
+    private changeUsersCountSubscribtion: Subscription;
 
     @Output()
     public targetingUsersCountEmit = new EventEmitter();
@@ -85,21 +89,20 @@ export class CampaignSettingsComponent  implements OnInit {
     }
 
 
-
     public campaignNameChange(event) {
         this.campaignNameLength = event.target.value.length;
     }
 
     public openTab(tabNumber: number) {
         if (this.isOpened(tabNumber)) {
-            this.opened.splice(this.opened.indexOf(tabNumber),1)
+            this.opened.splice(this.opened.indexOf(tabNumber), 1)
         } else {
             this.opened.push(tabNumber);
         }
     }
 
     public isOpened(tabNumber: number) {
-        return this.opened.indexOf(tabNumber)>-1;
+        return this.opened.indexOf(tabNumber) > -1;
     }
 
 
@@ -110,7 +113,7 @@ export class CampaignSettingsComponent  implements OnInit {
 
     //add or remove items in monthly_prices to match with value from monthly_prices
     updateNumberOfMonthlyPrices(event) {
-        while(this.campaign.payment_settings.monthly_prices.count_of_options !== event && (!!event || event === 0) ) {
+        while (this.campaign.payment_settings.monthly_prices.count_of_options !== event && (!!event || event === 0)) {
             if (this.campaign.payment_settings.monthly_prices.count_of_options > event) {
                 this.campaign.payment_settings.monthly_prices.count_of_options--;
                 this.campaign.payment_settings.monthly_prices.options.pop();
@@ -125,7 +128,7 @@ export class CampaignSettingsComponent  implements OnInit {
 
     //add or remove items in once_prices to match with value from monthly_prices
     updateNumberOfOnOfPrices(event) {
-        while(this.campaign.payment_settings.once_prices.count_of_options !== event && (!!event || event === 0) ) {
+        while (this.campaign.payment_settings.once_prices.count_of_options !== event && (!!event || event === 0)) {
             if (this.campaign.payment_settings.once_prices.count_of_options > event) {
                 this.campaign.payment_settings.once_prices.count_of_options--;
                 this.campaign.payment_settings.once_prices.options.pop();
@@ -133,15 +136,15 @@ export class CampaignSettingsComponent  implements OnInit {
             if (this.campaign.payment_settings.once_prices.count_of_options < event) {
                 this.campaign.payment_settings.once_prices.count_of_options++;
                 this.campaign.payment_settings.once_prices.options.push(
-                    { value: this.campaign.payment_settings.once_prices.count_of_options * 5}
-                    );
+                    {value: this.campaign.payment_settings.once_prices.count_of_options * 5}
+                );
             }
         }
     }
 
-    createActivePriceOptions(): DropdownItem[]{
+    createActivePriceOptions(): DropdownItem[] {
         const result: DropdownItem[] = [];
-        this.campaign.payment_settings.monthly_prices.options.forEach( (option, i) => {
+        this.campaign.payment_settings.monthly_prices.options.forEach((option, i) => {
             result.push({
                 title: 'Price No.' + (i + 1),
                 value: option.value
@@ -169,8 +172,11 @@ export class CampaignSettingsComponent  implements OnInit {
     }
 
     changeUsersCount() {
+        if (this.changeUsersCountSubscribtion !== undefined) {
+            this.changeUsersCountSubscribtion.unsubscribe();
+        }
         this.targetingUsersLoadingEmit.emit(true);
-        this.campaignService.getUsersTargetingCount(this.campaign.targeting).subscribe((data) => {
+        this.changeUsersCountSubscribtion = this.campaignService.getUsersTargetingCount(this.campaign.targeting).subscribe((data) => {
             this.targetingUsersCountEmit.emit(data);
             this.targetingUsersLoadingEmit.emit(false);
         });
