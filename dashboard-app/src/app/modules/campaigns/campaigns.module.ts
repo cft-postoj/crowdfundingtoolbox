@@ -21,6 +21,7 @@ import { PreviewMonetizationLiteComponent } from './components/preview-monetizat
 import { CampaignNotFoundComponent } from './pages/campaign-not-found/campaign-not-found.component';
 import { CampaignsStatsComponent } from './pages/campaigns-stats/campaigns-stats.component';
 import { TargetModalComponent } from './components/target-modal/target-modal.component';
+import { SignedUsersListComponent } from './components/signed-users-list/signed-users-list.component';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { TargetModalComponent } from './components/target-modal/target-modal.com
         CampaignNotFoundComponent,
         CampaignsStatsComponent,
         TargetModalComponent,
+        SignedUsersListComponent,
     ],
 
     imports: [

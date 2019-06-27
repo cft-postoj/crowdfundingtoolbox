@@ -59,7 +59,7 @@ class UserRepository implements UserRepositoryInterface
             ::where('id', $id)
             ->with('userDetail')
             ->with('donorStatus')
-            ->get();
+            ->first();
     }
 
     public function create($email, $password, $username)

@@ -2,11 +2,17 @@
     <div class="targetModal--content">
         <h4>This campaign will be targeted on:</h4>
 
-        <div class="usersCount">{{usersCount}} <span>signed users</span></div>
+        <div class="usersCount">
+            <p *ngIf="!loading" (click)="showSignedUsersList()" title="Show list">{{usersCount}}</p>
+            <img src="/assets/images/icons/white-loading.svg" *ngIf="loading" />
+            <span>signed users</span></div>
 
         <hr>
 
-        <div class="visitorsCount">{{(visitorsCount === 999999) ? '∞' : visitorsCount}} <span>not signed users</span></div>
+        <div class="visitorsCount">
+            <p *ngIf="!loading">{{(visitorsCount === 999999) ? '∞' : visitorsCount}}</p>
+            <img src="/assets/images/icons/white-loading.svg" *ngIf="loading" />
+            <span>not signed users</span></div>
 
 
         <p class="targetModal--content--notes">If you change some of targeting values, you can specify set of targeted

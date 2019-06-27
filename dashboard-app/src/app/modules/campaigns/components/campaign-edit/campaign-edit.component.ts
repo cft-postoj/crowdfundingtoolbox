@@ -40,6 +40,11 @@ export class CampaignEditComponent  implements OnInit {
 
     public targetedUsersCount: number;
     public targetedVisitorsCount: number;
+    public targetedUsers: any = [];
+
+    public targetingLoading: boolean = true;
+
+    public showUsersList: boolean = false;
 
     public subscription: Subscription;
     backgroundTypes = backgroundTypes;
@@ -180,6 +185,7 @@ export class CampaignEditComponent  implements OnInit {
     setTargetUsers(data) {
         this.targetedUsersCount = data.count_users;
         this.targetedVisitorsCount = data.count_visitors;
+        this.targetedUsers = data.users;
     }
 
 

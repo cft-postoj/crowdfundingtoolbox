@@ -18,13 +18,24 @@ class PortalUser extends Model
         'user_id'
     ];
 
-    public function gdpr() {
+    public function gdpr()
+    {
         return $this->hasOne('\Modules\UserManagement\Entities\UserGdpr');
     }
 
-    public function visit()
+    public function user()
     {
-        return $this->hasOne('Modules\UserManagement\Entities\TrackingVisit');
+        return $this->belongsTo('Modules\UserManagement\Entities\User');
     }
 
+
+    public function visit()
+    {
+        return $this->hasMany('Modules\UserManagement\Entities\TrackingVisit');
+    }
+
+    public function donation()
+    {
+        return $this->hasMany('Modules\Payment\Entities\Donation');
+    }
 }

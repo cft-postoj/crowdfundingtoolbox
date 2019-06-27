@@ -64,6 +64,17 @@ class PortalUserService implements PortalUserServiceInterface
         }
     }
 
+    public function getAllWithDonations() {
+        try {
+            return \response()->json($this->portalUserRepository->getAllWithDonations(),
+                Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return \response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
     public function getById($id)
     {
         try {
@@ -125,7 +136,7 @@ class PortalUserService implements PortalUserServiceInterface
                 }
 
                 return \response()->json([
-                    'token' =>  $generatedToken,
+                    'token' => $generatedToken,
                     'message' => 'Account was successfully created.'
                 ], Response::HTTP_CREATED);
             }
@@ -148,13 +159,13 @@ class PortalUserService implements PortalUserServiceInterface
             // TODO check this
             $this->userRepository->coupleUserWithCookie($portalUser->id, intval($request['user_cookie']));
             return \response()->json([
-                'token' =>  $generatedToken,
+                'token' => $generatedToken,
                 'message' => 'Account was successfully created.'
             ], Response::HTTP_CREATED);
 
         } catch (\Exception $exception) {
             $error = array(
-                'error' =>  $exception->getMessage(),
+                'error' => $exception->getMessage(),
                 'type' => 'undefined',
                 'message' => 'There was an error during the registration process.'
             );
@@ -256,9 +267,9 @@ class PortalUserService implements PortalUserServiceInterface
 
         //$myPayload = $token->getPayload();
         $response = \response()->json([
-            'message'   =>  'Successfully logged in.',
-            'token' =>  $token,
-            'ip'    =>  $request->ip()
+            'message' => 'Successfully logged in.',
+            'token' => $token,
+            'ip' => $request->ip()
         ], Response::HTTP_OK);
         return $response;
     }
@@ -290,7 +301,7 @@ class PortalUserService implements PortalUserServiceInterface
     }
 
 
-        public function registerDuringDonation(String $email, int $cookie): User
+    public function registerDuringDonation(string $email, int $cookie): User
     {
         //find user by email. if email is already in database, don't create new user but return that user
         $userByMail = User::where('email', $email)->first();
@@ -324,5 +335,10 @@ class PortalUserService implements PortalUserServiceInterface
             'user_cookie_id' => $cookieId,
             'portal_user_id' => $userId
         ]);
+    }
+
+    public function getDonationsByUser($userId)
+    {
+        return $this->portalUserRepository->getDonationsByUser($userId);
     }
 }

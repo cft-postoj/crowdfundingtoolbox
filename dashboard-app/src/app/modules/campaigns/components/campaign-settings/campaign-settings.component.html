@@ -176,7 +176,9 @@
                                 <div class="col-3">
                                     <app-inputNumber
                                             [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.older_than.active"
-                                            [(value)]="campaign.targeting.support.one_time.older_than.value"></app-inputNumber>
+                                            [(value)]="campaign.targeting.support.one_time.older_than.value"
+                                            (valueChange)="changeUsersCount()"
+                                    ></app-inputNumber>
                                 </div>
                                 <div class="col-2">days</div>
                                 <app-switcher class="col-2 text-right" [id]="'one-time__older_than'"
@@ -194,7 +196,7 @@
                                     <app-inputNumber
                                             [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.not_older_than.active"
                                             [(value)]="campaign.targeting.support.one_time.not_older_than.value"
-                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                            (valueChange)="changeUsersCount()"></app-inputNumber>
                                 </div>
                                 <div class="col-2">days</div>
                                 <app-switcher class="col-2 text-right" [id]="'one-time__not-older-yhan'"
@@ -212,7 +214,7 @@
                                     <app-inputNumber
                                             [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.min.active"
                                             [(value)]="campaign.targeting.support.one_time.min.value"
-                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                            (valueChange)="changeUsersCount()"></app-inputNumber>
                                 </div>
                                 <div class="col-2">€</div>
                                 <app-switcher class="col-2 text-right" [id]="'one-time__min'"
@@ -230,7 +232,7 @@
                                     <app-inputNumber
                                             [disabled]="!campaign.targeting.support.one_time.active || !campaign.targeting.support.one_time.max.active"
                                             [(value)]="campaign.targeting.support.one_time.max.value"
-                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                            (valueChange)="changeUsersCount()"></app-inputNumber>
                                 </div>
                                 <div class="col-2">€</div>
                                 <app-switcher class="col-2 text-right" [id]="'one-time__max'"
@@ -255,7 +257,7 @@
                                     <app-inputNumber
                                             [disabled]="!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.older_than.active"
                                             [(value)]="campaign.targeting.support.monthly.older_than.value"
-                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                            (valueChange)="changeUsersCount()"></app-inputNumber>
                                 </div>
                                 <div class="col-2">days</div>
                                 <app-switcher class="col-2 text-right" [id]="'monthly__older-than'"
@@ -273,7 +275,7 @@
                                     <app-inputNumber
                                             [disabled]="!campaign.targeting.support.monthly.active || !campaign.targeting.support.monthly.not_older_than.active"
                                             [(value)]="campaign.targeting.support.monthly.not_older_than.value"
-                                            (keyup)="changeUsersCount()"></app-inputNumber>
+                                            (valueChange)="changeUsersCount()"></app-inputNumber>
                                 </div>
                                 <div class="col-2">days</div>
                                 <app-switcher class="col-2 text-right" [id]="'monthly__not-older-than'"
@@ -291,7 +293,7 @@
                                 <div class="col-3">
                                     <app-inputNumber [(value)]="campaign.targeting.support.monthly.min.value"
                                                      [disabled]="!campaign.targeting.support.monthly.min.active"
-                                                     (keyup)="changeUsersCount()">
+                                                     (valueChange)="changeUsersCount()">
                                     </app-inputNumber>
                                 </div>
                                 <div class="col-2">
@@ -312,7 +314,7 @@
                                 <div class="col-3">
                                     <app-inputNumber [(value)]="campaign.targeting.support.monthly.max.value"
                                                      [disabled]="!campaign.targeting.support.monthly.max.active"
-                                                     (keyup)="changeUsersCount()">
+                                                     (valueChange)="changeUsersCount()">
                                     </app-inputNumber>
                                 </div>
                                 <div class="col-2">
@@ -350,7 +352,7 @@
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.today.min"
                                                  [disabled]="!campaign.targeting.read_articles.today.active"
-                                                 (keyup)="changeUsersCount()"></app-inputNumber>
+                                                 (valueChange)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <div class="col-2">
                                 max
@@ -358,7 +360,7 @@
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.today.max"
                                                  [disabled]="!campaign.targeting.read_articles.today.active"
-                                                 (keyup)="changeUsersCount()"></app-inputNumber>
+                                                 (valueChange)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'read_article_today'"
                                           [(checked)]="campaign.targeting.read_articles.today.active"
@@ -377,7 +379,7 @@
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.week.min"
                                                  [disabled]="!campaign.targeting.read_articles.week.active"
-                                                 (keyup)="changeUsersCount()"></app-inputNumber>
+                                                 (valueChange)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <div class="col-2">
                                 max
@@ -385,7 +387,7 @@
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.week.max"
                                                  [disabled]="!campaign.targeting.read_articles.week.active"
-                                                 (keyup)="changeUsersCount()"></app-inputNumber>
+                                                 (valueChange)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'read_article_week'"
                                           [(checked)]="campaign.targeting.read_articles.week.active"
@@ -404,7 +406,7 @@
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.month.min"
                                                  [disabled]="!campaign.targeting.read_articles.month.active"
-                                                 (keyup)="changeUsersCount()"></app-inputNumber>
+                                                 (valueChange)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <div class="col-2">
                                 max
@@ -412,7 +414,7 @@
                             <div class="col-2">
                                 <app-inputNumber [(value)]="campaign.targeting.read_articles.month.max"
                                                  [disabled]="!campaign.targeting.read_articles.month.active"
-                                                 (keyup)="changeUsersCount()"></app-inputNumber>
+                                                 (valueChange)="changeUsersCount()"></app-inputNumber>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'read_article_month'"
                                           [(checked)]="campaign.targeting.read_articles.month.active"
@@ -435,7 +437,7 @@
                                         [maxDate]="campaign.targeting.registration.before.active ? campaign.targeting.registration.before.date : null"
                                         [type]="'start'"
                                         [disabled]="!campaign.targeting.registration.after.active"
-                                        (change)="changeUsersCount()">
+                                        (dateChange)="changeUsersCount()">
                                 </app-datepicker>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'target_after'"
@@ -451,7 +453,7 @@
                                         [minDate]="campaign.targeting.registration.after.active ? campaign.targeting.registration.after.date : null"
                                         [type]="'end'"
                                         [disabled]="!campaign.targeting.registration.before.active"
-                                        (change)="changeUsersCount()">
+                                        (dateChange)="changeUsersCount()">
                                 </app-datepicker>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'target_before'"

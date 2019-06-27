@@ -2,34 +2,31 @@
 
 namespace Modules\UserManagement\Services;
 
+use Carbon\Carbon;
 use Modules\UserManagement\Entities\TrackingVisit;
 use Modules\UserManagement\Entities\TrackingClick;
 use Modules\UserManagement\Entities\TrackingInsertEmail;
 use Modules\UserManagement\Entities\TrackingInsertValue;
 use Modules\UserManagement\Entities\TrackingShow;
 use Modules\UserManagement\Entities\TrackingInitializeDonationInvalid;
+use Modules\UserManagement\Repositories\TrackingVisitRepository;
 
 class TrackingService
 {
 
-    public function __construct()
-    {
-
-    }
-
     public function createVisit($userId, $userCookie, $url, $title, $articleId)
     {
-       try {
-           return TrackingVisit::create([
-               'portal_user_id' => $userId,
-               'user_cookie' => $userCookie,
-               'url' => $url,
-               'article_id' => $articleId,
-               'title' => $title
-           ]);
-       } catch (\Exception $e) {
-           dd($e->getMessage(), $e->getTrace());
-       }
+        try {
+            return TrackingVisit::create([
+                'portal_user_id' => $userId,
+                'user_cookie' => $userCookie,
+                'url' => $url,
+                'article_id' => $articleId,
+                'title' => $title
+            ]);
+        } catch (\Exception $e) {
+            dd($e->getMessage(), $e->getTrace());
+        }
     }
 
     public function show($trackingVisitId, $widgetId)
@@ -102,6 +99,29 @@ class TrackingService
             dd($e);
         }
 
+    }
+
+    public function hasUserReadArticles($visits, $term, $min, $max)
+    {
+        $count = 0;
+        if (sizeof($visits) === 0) {
+            return false;
+        }
+        foreach ($visits as $visit) {
+            // min date is today for today term, else is tomorrow for today term, today + 7 days for week term and today + 30 days for month term
+            $minDate = ($term === 'today') ? Carbon::today() : (($term === 'week') ? Carbon::today()->subDays(7) : Carbon::today()->subDays(30));
+            // max date is tomorrow and today for other terms
+            $maxDate = ($term === 'today') ? Carbon::tomorrow() : Carbon::today();
+            $articleDate = Carbon::createFromFormat('Y-m-d H:i:s', $visit->created_at);
+
+            if ($articleDate <= $maxDate && $articleDate >= $minDate) {
+                $count++;
+            }
+        }
+        if ($count >= $min && $count <= $max) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -43,6 +43,8 @@ export class CampaignSettingsComponent  implements OnInit {
 
     @Output()
     public targetingUsersCountEmit = new EventEmitter();
+    @Output()
+    public targetingUsersLoadingEmit = new EventEmitter();
 
     @ViewChild('newUrlInput') newUrlInput: ElementRef;
 
@@ -70,13 +72,15 @@ export class CampaignSettingsComponent  implements OnInit {
 
 
         this.campaignEndRadioButtons = [];
-        this.campaignEndRadioButtons.push(new RadioButton("Date", false))
-        this.campaignEndRadioButtons.push(new RadioButton("Donation goal", true))
+        this.campaignEndRadioButtons.push(new RadioButton("Date", false));
+        this.campaignEndRadioButtons.push(new RadioButton("Donation goal", true));
 
         this.paymentTypeRadioButtons = [];
-        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value))
-        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value))
-        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value))
+        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value));
+        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value));
+        this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value));
+
+        this.changeUsersCount();
 
     }
 
@@ -106,7 +110,7 @@ export class CampaignSettingsComponent  implements OnInit {
 
     //add or remove items in monthly_prices to match with value from monthly_prices
     updateNumberOfMonthlyPrices(event) {
-        while(this.campaign.payment_settings.monthly_prices.count_of_options != event && (!!event || event==0) ) {
+        while(this.campaign.payment_settings.monthly_prices.count_of_options !== event && (!!event || event === 0) ) {
             if (this.campaign.payment_settings.monthly_prices.count_of_options > event) {
                 this.campaign.payment_settings.monthly_prices.count_of_options--;
                 this.campaign.payment_settings.monthly_prices.options.pop();
@@ -121,7 +125,7 @@ export class CampaignSettingsComponent  implements OnInit {
 
     //add or remove items in once_prices to match with value from monthly_prices
     updateNumberOfOnOfPrices(event) {
-        while(this.campaign.payment_settings.once_prices.count_of_options != event && (!!event || event==0) ) {
+        while(this.campaign.payment_settings.once_prices.count_of_options !== event && (!!event || event === 0) ) {
             if (this.campaign.payment_settings.once_prices.count_of_options > event) {
                 this.campaign.payment_settings.once_prices.count_of_options--;
                 this.campaign.payment_settings.once_prices.options.pop();
@@ -165,8 +169,10 @@ export class CampaignSettingsComponent  implements OnInit {
     }
 
     changeUsersCount() {
+        this.targetingUsersLoadingEmit.emit(true);
         this.campaignService.getUsersTargetingCount(this.campaign.targeting).subscribe((data) => {
             this.targetingUsersCountEmit.emit(data);
+            this.targetingUsersLoadingEmit.emit(false);
         });
     }
 }

@@ -1,5 +1,10 @@
 <div class="active bg-overlay">
-    <app-target-modal [usersCount]="targetedUsersCount" [visitorsCount]="targetedVisitorsCount"></app-target-modal>
+    <app-target-modal
+            [usersCount]="targetedUsersCount"
+            [visitorsCount]="targetedVisitorsCount"
+            [loading]="targetingLoading"
+            (signedUsersListEmit)="showUsersList = $event"
+    ></app-target-modal>
 </div>
 <div class="active settings">
     <div class="settings--head">
@@ -25,8 +30,12 @@
     <!--</div>-->
     <app-loading [isLoading]="loading"></app-loading>
     <ng-container *ngIf="!loading">
-            <app-campaign-settings class="d-flex settings--body" style="overflow: hidden" [campaign]="campaign"
-                                   (targetingUsersCountEmit)="setTargetUsers($event)"></app-campaign-settings>
+            <app-campaign-settings
+                    class="d-flex settings--body"
+                    style="overflow: hidden"
+                    [campaign]="campaign"
+                    (targetingUsersCountEmit)="setTargetUsers($event)"
+                    (targetingUsersLoadingEmit)="targetingLoading = $event"></app-campaign-settings>
             <!--<div>-->
             <!--<mat-tab-group mat-align-tabs="start">-->
             <!--<mat-tab label="Campaign settings">-->
@@ -41,6 +50,10 @@
         <!--<ngb-alert *ngIf="!validInput()"  [type]="'danger'" >{{ errorMessage }}</ngb-alert>-->
         <app-alert *ngIf="!validInput() && submitted" [type]="'danger'" [(open)]="error" [message]="errorMessage" > </app-alert>
         <app-actions (preview)="previewOpen = !previewOpen" class="actions" (submit)="handleSubmit()" [submitting]="saving" [hidePreviewButton]="newCampaign"></app-actions>
+        <app-signed-users-list
+            [showSignedUsersModal]="showUsersList"
+            (showSignedUsersModalChange)="showUsersList = $event"
+            [targetedUsers]="targetedUsers"></app-signed-users-list>
     </ng-container>
 </div>
 

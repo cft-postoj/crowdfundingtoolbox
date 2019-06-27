@@ -1,22 +1,33 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-target-modal',
-  templateUrl: './target-modal.component.html',
-  styleUrls: ['./target-modal.component.scss']
+    selector: 'app-target-modal',
+    templateUrl: './target-modal.component.html',
+    styleUrls: ['./target-modal.component.scss']
 })
 export class TargetModalComponent implements OnInit {
+    @Input()
+    public loading: boolean;
 
-  @Input()
-  public usersCount: number;
+    @Input()
+    public usersCount: number;
 
-  @Input()
-  public visitorsCount: number;
+    @Input()
+    public visitorsCount: number;
 
-  constructor() { }
+    @Output()
+    public signedUsersListEmit = new EventEmitter();
 
-  ngOnInit() {
-    this.usersCount = 0;
-  }
+    constructor() {
+    }
+
+    ngOnInit() {
+        this.usersCount = 0;
+        this.loading = true;
+    }
+
+    showSignedUsersList() {
+        this.signedUsersListEmit.emit(true);
+    }
 
 }
