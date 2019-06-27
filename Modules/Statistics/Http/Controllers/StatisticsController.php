@@ -17,12 +17,31 @@ class StatisticsController extends Controller
         $this->statsDonationService = $statsDonationService;
     }
 
-    protected function getAllDonations(Request $request)
+    protected function getDonationsGroup(Request $request)
     {
         return \response()->json(
             array(
-                'donations' => $this->statsDonationService->getDonationsBetweenOverall($request['from'], $request['to'], $request['interval'])
+                'donations' => $this->statsDonationService->getDonationsGroup($request['from'], $request['to'], $request['interval'])
             ),
+            Response::HTTP_OK
+        );
+    }
+
+    protected function getDonorsGroup(Request $request)
+    {
+        return \response()->json(
+            array(
+                'donors' => $this->statsDonationService->getDonorsGroup($request['from'], $request['to'], $request['interval'])
+            ),
+            Response::HTTP_OK
+        );
+    }
+
+    protected function getDonorsAndDonationTotal(Request $request)
+    {
+        return \response()->json(
+            $this->statsDonationService->getDonorsAndDonationsTotalWithHistoric($request['from'], $request['to'])
+            ,
             Response::HTTP_OK
         );
     }

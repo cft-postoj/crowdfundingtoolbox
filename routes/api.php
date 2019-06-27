@@ -89,8 +89,10 @@ Route::group([
         Route::post('upload', '\Modules\Campaigns\Http\Controllers\ImagesController@upload');
 
         // Statistics
-        Route::get('statistics/donations', '\Modules\Statistics\Http\Controllers\StatisticsController@getAllDonations');
+        Route::get('statistics/donations/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonationsGroup');
+        Route::get('statistics/donors/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsGroup');
 
+        Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
     });
 
     Route::group([

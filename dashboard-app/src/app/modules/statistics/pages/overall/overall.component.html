@@ -1,0 +1,180 @@
+<div class="h-100 d-flex flex-column">
+    <app-breadcrumbs
+        [pageTitle]="'Overall'">
+        <div class="row">
+            <div class="col-6">
+                from:
+                <app-datepicker
+                    [(date)]="from"
+                    (dateChange)="getDataForGraph();getOverallData()"
+                    [maxDate]="to"
+                    [type]="'start'">
+                </app-datepicker>
+            </div>
+            <div class="col-6">
+                to:
+                <app-datepicker
+                    [(date)]="to"
+                    (dateChange)="getDataForGraph();getOverallData()"
+                    [minDate]="from"
+                    [type]="'end'">
+                </app-datepicker>
+            </div>
+            <div class="col-6 pt-2">
+                <app-dropdown [class]="'classic'"
+                              [clazz]="'selectWrapper--small selectWrapper--dark'" [items]="typeDropdownButtons"
+                              [(currentValue)]="type"
+                              (currentValueChange)="getDataForGraph()">
+                </app-dropdown>
+            </div>
+
+            <div class="col-6 pt-2">
+                <app-radio-button-group [clazz]="'radio-button-group--little'" [radioButtons]="intervalRadioButtons"
+                                        [(currentValue)]="interval" (currentValueChange)="getDataForGraph()">
+                </app-radio-button-group>
+            </div>
+        </div>
+
+    </app-breadcrumbs>
+    <div id="crowd-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p-chart *ngIf="!graphLoading" type="line" [data]="data" [options]="options"
+                             [height]="'40vh'" [responsive]=""></p-chart>
+                </div>
+            </div>
+        </div>
+        <app-loading [isLoading]="graphLoading || donorsAndDonationsLoading" [height]="'40vh'"></app-loading>
+
+        <div class="container" *ngIf="!donorsAndDonationsLoading">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="card">
+                        <div class="container">
+                            <div class="row">
+                                <div class="card-header">
+                                    <div class="col">
+                                        <h4>Donations</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_sum'"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_sum'"
+                                        [currency]="'€'">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    total donations
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_sum':true"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_sum':true"
+                                        [currency]="'€'">
+                                    </app-total-current-and-previous>
+
+                                </div>
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_sum':false"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_sum':false"
+                                        [currency]="'€'">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    monthly donations
+                                </div>
+                                <div class="col-6">
+                                    one time donations
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_avg':true"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_avg':true"
+                                        [currency]="'€'">
+                                    </app-total-current-and-previous>
+                                </div>
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_avg':false"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_avg':false"
+                                        [currency]="'€'">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Avg monthly donations
+                                </div>
+                                <div class="col-6">
+                                    Avg one time donations
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="card">
+                        <div class="container">
+                            <div class="row">
+                                <div class="card-header">
+                                    <div class="col">
+                                        <h4>Donors</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donors_count'"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donors_count'">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    total donations
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donors_count':true"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donors_count':true">
+                                    </app-total-current-and-previous>
+                                </div>
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                        [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donors_count':false"
+                                        [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donors_count':false">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    monthly donors
+                                </div>
+                                <div class="col-6">
+                                    one time donors
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,11 +14,15 @@ export const environment = {
     logout: '/logout',
     refreshToken: '/refresh-token',
 
+    // key words
     smart: '/smart-settings',
     imageUploadUrl: '/upload',
     result: '/result',
     clone: '/clone',
+    group: '/group',
+    total: '/total',
 
+    // domain specific paths
     campaignUrl: '/campaigns',
     campaignAllUrl: '/campaigns/all',
 
@@ -36,5 +40,8 @@ export const environment = {
     portalUsersAllUrl: '/portal-users/all',
 
     donationUrl: '/statistics/donations',
+    donorUrl: '/statistics/donors',
+
+    statisticsUrl: '/statistics/donation-and-donor-total'
 };
 
