@@ -100,7 +100,13 @@ export function getRequest(url, header) {
         })
     }
     xhttp.send(null);
-    return JSON.parse(xhttp.response);
+    console.log(xhttp.status);
+    if (xhttp.status !== 401) {
+        return JSON.parse(xhttp.response);
+    } else {
+        return null;
+    }
+
 }
 
 export function setTokenHeader(actualHeader) {

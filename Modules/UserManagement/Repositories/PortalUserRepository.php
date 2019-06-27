@@ -27,8 +27,26 @@ class PortalUserRepository implements PortalUserRepositoryInterface
     {
         return $this->model
             ::create([
-                'user_id'   =>  $userId
+                'user_id' => $userId
             ]);
+    }
+
+    public function getDonationsByUser($id)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->with('donation')
+            ->first();
+    }
+
+    public function getAllWithDonations() {
+        return $this->model
+            ::has('donation')
+            ->with('donation')
+            ->has('user')
+            ->with('user.userDetail')
+            ->with('visit')
+            ->get();
     }
 
 }

@@ -25,6 +25,27 @@
     }
 }
 
+.blur {
+    &--subTarget {
+        position: relative;
+        &--span {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            right: 0;
+            top: 0;
+            background: rgba(255, 255, 255, .8);
+            z-index: 9;
+        }
+    }
+    &--targetBigger {
+        opacity: .6;
+    }
+}
+.targetBigger {
+    font-size: 22px;
+}
+
 .ngx-select__clear-icon[_ngcontent-c17]:before {
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);

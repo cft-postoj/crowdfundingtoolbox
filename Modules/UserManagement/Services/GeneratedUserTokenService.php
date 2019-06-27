@@ -32,6 +32,7 @@ class GeneratedUserTokenService implements GeneratedUserTokenServiceInterface
                      */
         $job = (new RemoveGeneratedToken($lastToken))->delay(Carbon::now()->addMinutes(60));
         dispatch($job);
+        // TODO SERVER FIX
         call_in_background('queue:work --deamon');
         return $generatedToken;
     }

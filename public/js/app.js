@@ -904,7 +904,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/js/constants/url.js ***!
   \***************************************/
-/*! exports provided: apiUrl, viewsUrl, portalUrl, myAccountUrl */
+/*! exports provided: apiUrl, viewsUrl, portalUrl, myAccountUrl, domain */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -913,11 +913,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "viewsUrl", function() { return viewsUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "portalUrl", function() { return portalUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "myAccountUrl", function() { return myAccountUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "domain", function() { return domain; });
 var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
+//export const apiUrl = 'https://test.crowdfundingtoolbox.news/api/portal/';
 
-var viewsUrl = 'http://127.0.0.1:8001/portal/';
-var portalUrl = 'http://www.postoj.local:8000/';
+var viewsUrl = 'http://127.0.0.1:8001/portal/'; //export const viewsUrl = 'https://test.crowdfundingtoolbox.news/portal/';
+
+var portalUrl = 'http://www.postoj.local:8000/'; //export const portalUrl = 'https://www.postoj.ondas.me/';
+
 var myAccountUrl = portalUrl + 'moj-ucet';
+var domain = 'postoj.local'; //export const domain = 'postoj.ondas.me';
 
 /***/ }),
 
@@ -953,7 +958,8 @@ function loginAction() {
     e.preventDefault();
     var data = {
       'email': document.querySelector('form[name="cft-login"] input[name="cft-email"]').value,
-      'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value
+      'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value,
+      'user_cookie': Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getCookie"])("cr0wdFundingToolbox-user_cookie")
     };
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', _constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'login', true);
@@ -1153,12 +1159,21 @@ function fetchMyAccountTemplate(message) {
   fetch(url).then(function (response) {
     return response.text();
   }).then(function (html) {
-    document.getElementById('cft--myaccount').innerHTML = html, getSection(message), changeMyAccountView();
+    document.getElementById('cft--myaccount').innerHTML = html;
+    myAccountButton();
+    getSection(message);
+    changeMyAccountView();
   });
 }
 
 function myAccountButton() {
   var button = document.getElementById('cft--loginButton');
+  button.innerHTML = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountButton"];
+
+  button.onclick = function () {
+    if (location.href.indexOf(_json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"]) === -1) location.href = _json_myAccount__WEBPACK_IMPORTED_MODULE_2__["myAccountUrl"];
+  };
+
   if (button != null) button.classList.add('active');
 }
 
@@ -1403,7 +1418,8 @@ function register() {
       'email': document.querySelector('form[name="cft-register"] input[name="cft-email"]').value,
       'password': document.querySelector('form[name="cft-register"] input[name="cft-password"]').value,
       'agreeMailing': document.querySelector('form[name="cft-register"] input[name="cft-mailing"]').checked,
-      'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked
+      'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked,
+      'user_cookie': Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["getCookie"])("cr0wdFundingToolbox-user_cookie")
     };
 
     if (!data.agreePersonalData) {
@@ -1529,6 +1545,8 @@ function sleep(ms) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+/* harmony import */ var _constants_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants/url */ "./resources/js/constants/url.js");
+
 
 
 function getWidgets(apiUrl) {
@@ -1548,7 +1566,10 @@ function getWidgets(apiUrl) {
   xhttp.onreadystatechange = function () {
     if (xhttp.readyState === XMLHttpRequest.DONE) {
       if (xhttp.response != null) {
-        Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setCookie"])('cr0wdFundingToolbox-user_cookie', xhttp.response['user_cookie']);
+        if (!Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getCookie"])("cr0wdFundingToolbox-user_cookie")) {
+          console.log(xhttp.response);
+          Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setCookie"])('cr0wdFundingToolbox-user_cookie', xhttp.response.user_cookie);
+        }
 
         for (var i = 0; i < xhttp.response['widgets'].length; i++) {
           var el = xhttp.response['widgets'][i];
@@ -1556,6 +1577,7 @@ function getWidgets(apiUrl) {
 
           switch (el.widget_type.method) {
             case 'sidebar':
+              // TODO fix this -- error when not script included (not monetization widget)
               var scriptElement = document.createElement('script');
               var inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
               scriptElement.appendChild(inlineScript);
@@ -1590,13 +1612,12 @@ function getWidgets(apiUrl) {
 }
 
 function registerClick(apiUrl) {
-  var clickedDom = event.path[0];
   var cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
   cftPlaceholders.forEach(function (node) {
     node.addEventListener('click', function ($event) {
-      localStorage.getItem('cr0wdFundingToolbox');
+      var clickedDom = event.path[0];
       var xhttp = new XMLHttpRequest();
-      data = JSON.stringify({
+      var data = JSON.stringify({
         'node_id': clickedDom.id,
         'node_class': clickedDom.className,
         'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
@@ -1614,9 +1635,9 @@ function registerInsertValue(apiUrl) {
   var cftPlaceholders = document.querySelectorAll('[class=cft--monatization--donation-button]');
   cftPlaceholders.forEach(function (node) {
     node.addEventListener('click', function ($event) {
-      clickedDom = event.path[0];
+      var clickedDom = event.path[0];
       var xhttp = new XMLHttpRequest();
-      data = JSON.stringify({
+      var data = JSON.stringify({
         'node_id': clickedDom.id,
         'node_class': clickedDom.className,
         'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
@@ -1632,11 +1653,9 @@ function registerInsertValue(apiUrl) {
 
 document.addEventListener('DOMContentLoaded', function () {
   //let apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
-  var apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
-
-  getWidgets(apiUrl);
-  registerClick(apiUrl);
-  registerInsertValue(apiUrl);
+  getWidgets(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"]);
+  registerClick(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"]);
+  registerInsertValue(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"]);
 });
 
 function cr0wdGetDeviceType() {
@@ -1795,7 +1814,13 @@ function getRequest(url, header) {
   }
 
   xhttp.send(null);
-  return JSON.parse(xhttp.response);
+  console.log(xhttp.status);
+
+  if (xhttp.status !== 401) {
+    return JSON.parse(xhttp.response);
+  } else {
+    return null;
+  }
 }
 function setTokenHeader(actualHeader) {
   var token = localStorage.getItem('cft_usertoken');
@@ -1870,7 +1895,7 @@ function getCookie(cname) {
 }
 function setCookie(cname, cvalue, exdays) {
   var expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;domain=" + _constants_url__WEBPACK_IMPORTED_MODULE_0__["domain"];
 }
 function getToken() {
   return localStorage.getItem('cft_usertoken');
@@ -2182,7 +2207,9 @@ function getBasicUserData() {
   var data = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["getRequest"])(_constants_url__WEBPACK_IMPORTED_MODULE_1__["apiUrl"] + 'base-user-data', Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["setTokenHeader"])([]));
 
   if (data !== null) {
-    document.querySelector('#cft--myaccount .cft--myAccount--preview--user').innerHTML = data.first_name + ' ' + data.last_name;
+    var firstName = data.first_name === null ? '' : data.first_name;
+    var lastName = data.last_name === null ? '' : data.last_name;
+    document.querySelector('#cft--myaccount .cft--myAccount--preview--user').innerHTML = firstName + ' ' + lastName;
     document.querySelector('#cft--myaccount .cft--myAccount--preview--username').innerHTML = data.username;
   }
 }

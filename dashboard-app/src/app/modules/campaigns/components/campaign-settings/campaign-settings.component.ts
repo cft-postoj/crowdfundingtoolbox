@@ -1,4 +1,14 @@
-import {Component, ElementRef, Input, KeyValueDiffer, KeyValueDiffers, OnInit, ViewChild} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    KeyValueDiffer,
+    KeyValueDiffers,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Campaign} from "../../models";
 import {DropdownItem, RadioButton, paymentTypes} from "../../../core/models";
@@ -31,6 +41,11 @@ export class CampaignSettingsComponent  implements OnInit {
 
     public newUrl: string;
 
+    @Output()
+    public targetingUsersCountEmit = new EventEmitter();
+    @Output()
+    public targetingUsersLoadingEmit = new EventEmitter();
+
     @ViewChild('newUrlInput') newUrlInput: ElementRef;
 
     constructor(private differs: KeyValueDiffers, private route: ActivatedRoute, private campaignService: CampaignService) {
@@ -57,13 +72,15 @@ export class CampaignSettingsComponent  implements OnInit {
 
 
         this.campaignEndRadioButtons = [];
-        this.campaignEndRadioButtons.push(new RadioButton('Date', false));
-        this.campaignEndRadioButtons.push(new RadioButton('Donation goal', true));
+        this.campaignEndRadioButtons.push(new RadioButton("Date", false));
+        this.campaignEndRadioButtons.push(new RadioButton("Donation goal", true));
 
         this.paymentTypeRadioButtons = [];
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value));
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value));
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value));
+
+        this.changeUsersCount();
 
     }
 
@@ -93,7 +110,7 @@ export class CampaignSettingsComponent  implements OnInit {
 
     //add or remove items in monthly_prices to match with value from monthly_prices
     updateNumberOfMonthlyPrices(event) {
-        while(this.campaign.payment_settings.monthly_prices.count_of_options != event && (!!event || event==0) ) {
+        while(this.campaign.payment_settings.monthly_prices.count_of_options !== event && (!!event || event === 0) ) {
             if (this.campaign.payment_settings.monthly_prices.count_of_options > event) {
                 this.campaign.payment_settings.monthly_prices.count_of_options--;
                 this.campaign.payment_settings.monthly_prices.options.pop();
@@ -108,7 +125,7 @@ export class CampaignSettingsComponent  implements OnInit {
 
     //add or remove items in once_prices to match with value from monthly_prices
     updateNumberOfOnOfPrices(event) {
-        while(this.campaign.payment_settings.once_prices.count_of_options != event && (!!event || event==0) ) {
+        while(this.campaign.payment_settings.once_prices.count_of_options !== event && (!!event || event === 0) ) {
             if (this.campaign.payment_settings.once_prices.count_of_options > event) {
                 this.campaign.payment_settings.once_prices.count_of_options--;
                 this.campaign.payment_settings.once_prices.options.pop();
@@ -122,13 +139,13 @@ export class CampaignSettingsComponent  implements OnInit {
         }
     }
 
-    createActivePriceOptions():DropdownItem[]{
-        let result : DropdownItem[] = [];
-        this.campaign.payment_settings.monthly_prices.options.forEach( (option,i) => {
+    createActivePriceOptions(): DropdownItem[]{
+        const result: DropdownItem[] = [];
+        this.campaign.payment_settings.monthly_prices.options.forEach( (option, i) => {
             result.push({
-                title: 'Price No.'+(i+1),
+                title: 'Price No.' + (i + 1),
                 value: option.value
-            })
+            });
         })
         return result;
     }
@@ -141,13 +158,21 @@ export class CampaignSettingsComponent  implements OnInit {
         if (this.campaign.targeting.url.specific) {
             if (this.newUrl) {
                 this.campaign.targeting.url.list.push({
-                    id:0,
-                    path:this.newUrl
+                    id: 0,
+                    path: this.newUrl
                 });
                 this.newUrl = undefined;
             } else {
                 this.newUrlInput.nativeElement.focus();
             }
         }
+    }
+
+    changeUsersCount() {
+        this.targetingUsersLoadingEmit.emit(true);
+        this.campaignService.getUsersTargetingCount(this.campaign.targeting).subscribe((data) => {
+            this.targetingUsersCountEmit.emit(data);
+            this.targetingUsersLoadingEmit.emit(false);
+        });
     }
 }

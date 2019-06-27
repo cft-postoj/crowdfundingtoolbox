@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {Campaign} from '../models';
+import {Campaign, Targeting} from '../models';
 
 
 @Injectable({providedIn: 'root'})
@@ -82,5 +82,9 @@ export class CampaignService {
 
     clone(campaignId) {
         return this.http.get(`${environment.backOfficeUrl}${environment.campaignUrl}/${campaignId}${environment.clone}`);
+    }
+
+    getUsersTargetingCount(targeting: Targeting): Observable<any> {
+        return this.http.post(`${environment.backOfficeUrl}${environment.campaignTargeting}/users`, targeting);
     }
 }
