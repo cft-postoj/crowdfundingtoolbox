@@ -10,9 +10,9 @@ export class DonorsAndDonationsPipe implements PipeTransform {
     // key => donations_sum or donors_count based on model DonorsAndDonations.DonorsAndDonationsValue
     // monthly => true to get only monthly donation, false to get only one time donations and undefined to get both
     transform(input: DonorsAndDonations, field: 'current' | 'previous' | 'diff', key: 'donations_sum' | 'donors_count' | 'donations_avg',
-              monthly?: boolean): number | 'loading' {
+              monthly?: boolean): number {
         if (input === undefined) {
-            return 'loading';
+            return 0;
         }
         // handle diff between current month and
         if (field === 'diff') {
