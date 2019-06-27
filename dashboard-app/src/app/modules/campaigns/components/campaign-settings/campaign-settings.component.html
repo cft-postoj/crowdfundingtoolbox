@@ -480,7 +480,7 @@
                             <span class="btn btn-default btn-secondary btn-xs"
                                   *ngFor="let url of campaign.targeting.url.list; index as i">
                                 <span>{{url.path}}</span>
-                                <a class="icon-delete float-right" (click)="campaign.targeting.url.list.splice(i, 1)">
+                                <a class="icon-delete float-right" (click)="campaign.targeting.url.list.splice(i, 1);changeUsersCount();">
                                     <i class="icon-delete--cross"></i>
                                 </a>
                             </span>
