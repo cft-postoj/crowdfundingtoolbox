@@ -7,14 +7,14 @@
   &--content {
     color: $white;
     max-width: 500px;
-    height: 450px;
-    margin: calc(50% - 225px) auto 0;
+    margin: calc(50% - 270px) auto 0;
+    height: 600px;
     background: rgba(0,116,233, .8);
     padding: 30px;
     position: relative;
     div.usersCount {
       display: block;
-      margin: 30px 0;
+      margin: 15px 0;
       font-size: 40px;
       font-weight: bold;
       p {
@@ -29,7 +29,7 @@
     }
     div.visitorsCount {
       display: block;
-      margin: 30px 0;
+      margin: 15px 0;
       font-size: 40px;
       font-weight: bold;
       span {
@@ -44,6 +44,19 @@
       bottom: 0;
       left: 15px;
       right: 15px;
+    }
+    &--choosed {
+      margin-bottom: 30px;
+      div {
+        max-height: 120px;
+        overflow-y: auto;
+        ::ng-deep ul {
+          margin-bottom: 0 !important;
+        }
+        ::ng-deep u {
+          display: block;
+        }
+      }
     }
   }
 }

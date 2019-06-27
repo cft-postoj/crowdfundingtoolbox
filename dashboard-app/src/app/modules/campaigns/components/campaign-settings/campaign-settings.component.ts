@@ -49,6 +49,8 @@ export class CampaignSettingsComponent implements OnInit {
     public targetingUsersCountEmit = new EventEmitter();
     @Output()
     public targetingUsersLoadingEmit = new EventEmitter();
+    @Output()
+    public targetingDataEmit = new EventEmitter();
 
     @ViewChild('newUrlInput') newUrlInput: ElementRef;
 
@@ -178,6 +180,7 @@ export class CampaignSettingsComponent implements OnInit {
         this.targetingUsersLoadingEmit.emit(true);
         this.changeUsersCountSubscribtion = this.campaignService.getUsersTargetingCount(this.campaign.targeting).subscribe((data) => {
             this.targetingUsersCountEmit.emit(data);
+            this.targetingDataEmit.emit(this.campaign.targeting);
             this.targetingUsersLoadingEmit.emit(false);
         });
     }

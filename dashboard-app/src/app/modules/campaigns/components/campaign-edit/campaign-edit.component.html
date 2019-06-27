@@ -3,6 +3,7 @@
             [usersCount]="targetedUsersCount"
             [visitorsCount]="targetedVisitorsCount"
             [loading]="targetingLoading"
+            [targeting]="targetingData"
             (signedUsersListEmit)="showUsersList = $event"
     ></app-target-modal>
 </div>
@@ -35,7 +36,8 @@
                     style="overflow: hidden"
                     [campaign]="campaign"
                     (targetingUsersCountEmit)="setTargetUsers($event)"
-                    (targetingUsersLoadingEmit)="targetingLoading = $event"></app-campaign-settings>
+                    (targetingUsersLoadingEmit)="targetingLoading = $event"
+                    (targetingDataEmit)="targetingData = $event"></app-campaign-settings>
             <!--<div>-->
             <!--<mat-tab-group mat-align-tabs="start">-->
             <!--<mat-tab label="Campaign settings">-->

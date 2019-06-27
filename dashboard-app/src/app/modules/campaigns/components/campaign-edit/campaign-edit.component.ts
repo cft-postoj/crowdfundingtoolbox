@@ -4,10 +4,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Routing} from 'app/constants/config.constants';
 import {Subscription} from 'rxjs';
 import {environment} from 'environments/environment';
-import {Campaign, Widget} from '../../models';
+import {Campaign, Targeting, Widget} from '../../models';
 import {devices, backgroundTypes} from '../../../core/models';
 import {CampaignService, PreviewService, WidgetService} from '../../services';
 import {ComponentCommunicationService} from '../../../core/services';
+import {Target} from '@angular/compiler';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class CampaignEditComponent  implements OnInit {
     public targetedUsers: any = [];
 
     public targetingLoading: boolean = true;
+    public targetingData: Targeting;
 
     public showUsersList: boolean = false;
 
