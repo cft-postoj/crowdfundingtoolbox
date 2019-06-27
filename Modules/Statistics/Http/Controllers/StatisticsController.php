@@ -5,75 +5,45 @@ namespace Modules\Statistics\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Statistics\Services\StatsDonationService;
 
 class StatisticsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function index()
+
+    private $statsDonationService;
+
+    public function __construct(StatsDonationService $statsDonationService)
     {
-        return view('statistics::index');
+        $this->statsDonationService = $statsDonationService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+    protected function getDonationsGroup(Request $request)
     {
-        return view('statistics::create');
+        return \response()->json(
+            array(
+                'donations' => $this->statsDonationService->getDonationsGroup($request['from'], $request['to'], $request['interval'])
+            ),
+            Response::HTTP_OK
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
+    protected function getDonorsGroup(Request $request)
     {
-        //
+        return \response()->json(
+            array(
+                'donors' => $this->statsDonationService->getDonorsGroup($request['from'], $request['to'], $request['interval'])
+            ),
+            Response::HTTP_OK
+        );
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
+    protected function getDonorsAndDonationTotal(Request $request)
     {
-        return view('statistics::show');
+        return \response()->json(
+            $this->statsDonationService->getDonorsAndDonationsTotalWithHistoric($request['from'], $request['to'])
+            ,
+            Response::HTTP_OK
+        );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('statistics::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

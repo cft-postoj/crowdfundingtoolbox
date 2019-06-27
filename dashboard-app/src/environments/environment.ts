@@ -8,7 +8,7 @@ export const environment = {
 
     production: false,
 
-    apiUrl:  'http://localhost:8001/api',
+    apiUrl: 'http://localhost:8001/api',
     backOfficeUrl: 'http://localhost:8001/api/backoffice',
     authServerUrl: 'http://localhost:8001/api/backoffice',
 
@@ -18,11 +18,15 @@ export const environment = {
     logout: '/logout',
     refreshToken: '/refresh-token',
 
+    // key words
     smart: '/smart-settings',
     imageUploadUrl: '/upload',
     result: '/result',
     clone: '/clone',
+    group: '/group',
+    total: '/total',
 
+    // domain specific paths
     campaignUrl: '/campaigns',
     campaignAllUrl: '/campaigns/all',
 
@@ -36,6 +40,11 @@ export const environment = {
     cftSettings: '/crowdfunding-settings',
 
     portalUsersUrl: '/portal-users',
-    portalUsersAllUrl: '/portal-users/all'
+    portalUsersAllUrl: '/portal-users/all',
+
+    donationUrl: '/statistics/donations',
+    donorUrl: '/statistics/donors',
+
+    statisticsUrl: '/statistics/donation-and-donor-total'
 
 };

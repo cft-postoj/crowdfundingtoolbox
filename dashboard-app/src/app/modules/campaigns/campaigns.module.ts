@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {CampaignsRoutingModule} from './campaigns-routing.module';
-import {NgCircleProgressModule} from "ng-circle-progress";
-import {CoreModule} from "../core/core.module";
-import {InlineSVGModule} from "ng-inline-svg";
+import {NgCircleProgressModule} from 'ng-circle-progress';
+import {CoreModule} from '../core/core.module';
+import {InlineSVGModule} from 'ng-inline-svg';
 import {
     CampaignEditComponent, CampaignListItemComponent,
     CampaignSettingsComponent,
@@ -12,11 +12,11 @@ import {
     CampaignStatusComponent,
     PreviewComponent,
     WidgetEditComponent
-} from "./components";
-import {CampaignListComponent} from "./pages/campaign-list/campaign-list.component";
-import {CampaignDetailComponent} from "./pages/campaign-detail/campaign-detail.component";
-import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+} from './components';
+import {CampaignListComponent} from './pages/campaign-list/campaign-list.component';
+import {CampaignDetailComponent} from './pages/campaign-detail/campaign-detail.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PreviewMonetizationLiteComponent } from './components/preview-monetization-lite/preview-monetization-lite.component';
 import { CampaignNotFoundComponent } from './pages/campaign-not-found/campaign-not-found.component';
 import { CampaignsStatsComponent } from './pages/campaigns-stats/campaigns-stats.component';
@@ -38,7 +38,6 @@ import { CampaignsStatsComponent } from './pages/campaigns-stats/campaigns-stats
     ],
 
     imports: [
-        //3th party modules
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

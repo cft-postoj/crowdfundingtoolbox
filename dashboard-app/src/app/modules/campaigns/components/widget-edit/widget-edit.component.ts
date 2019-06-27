@@ -99,7 +99,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
             this.positionSettings.push({title: 'Bottom', value: 'auto'}); // top: auto
 
             this.monetizationTypes.push({title:'Classic', value:'classic'});
-            this.monetizationTypes.push({title:'Lite', value:'lite'});
+            this.monetizationTypes.push({title:'Lite', value: 'lite'});
 
             this.recreateRadioButtons();
 

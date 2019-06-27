@@ -1,6 +1,6 @@
 <link [href]="'https://fonts.googleapis.com/css?family='+currentFonts | safe" rel="stylesheet">
 
-<div (click)="active = !active" [class]="(active) ? 'selectWrapper active' : 'selectWrapper'">
+<div (click)="active = !active" [class]="(active) ? 'selectWrapper active' : 'selectWrapper'"  [ngClass]="clazz">
     <select [ngStyle]="customFonts && {'font-family':currentValue}" name={{name}} class={{class}} (change)="onButtonClick($event)" [compareWith]="byTitle" [(ngModel)]="selectedItem">
         <option [ngValue]="defaultDropdown" disabled selected hidden>{{title}}</option>
         <option [ngStyle]="customFonts && {'font-family':item.value}"

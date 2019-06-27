@@ -35,7 +35,6 @@ import {HttpErrorInterceptor, TokenInterceptor} from "./modules/user-management/
         ReactiveFormsModule,
         HttpClientModule,
         BrowserAnimationsModule,
-
         InlineSVGModule.forRoot(),
         routing,
     ],

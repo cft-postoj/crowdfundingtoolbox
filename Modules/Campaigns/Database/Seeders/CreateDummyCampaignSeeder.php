@@ -26,8 +26,6 @@ class CreateDummyCampaignSeeder extends Seeder
         $this->campaignService->create(json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $json), true));
     }
 
-    private $test = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
     private $dummyRequest = '
       {  
            "id":0,

@@ -14,11 +14,15 @@ export const environment = {
     logout: '/logout',
     refreshToken: '/refresh-token',
 
+    // key words
     smart: '/smart-settings',
     imageUploadUrl: '/upload',
     result: '/result',
     clone: '/clone',
+    group: '/group',
+    total: '/total',
 
+    // domain specific paths
     campaignUrl: '/campaigns',
     campaignAllUrl: '/campaigns/all',
 
@@ -32,7 +36,12 @@ export const environment = {
     widgetsUrl: '/widgets',
     cftSettings: '/crowdfunding-settings',
 
-    donorUrl: '/portal-users',
-    donorAllUrl: '/portal-users/all'
+    portalUsersUrl: '/portal-users',
+    portalUsersAllUrl: '/portal-users/all',
+
+    donationUrl: '/statistics/donations',
+    donorUrl: '/statistics/donors',
+
+    statisticsUrl: '/statistics/donation-and-donor-total'
 };
 

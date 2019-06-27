@@ -14,11 +14,12 @@ export class DropdownComponent implements OnInit, OnChanges{
 
     @Input() name: string;
     @Input() class: string;
+    @Input() clazz: string;
     @Input() items: DropdownItem[];
     @Input() title: string;
 
-    //set true if you want to change font of each option. Font family for option is value of dropdownItem
-    @Input() customFonts:boolean = false;
+    // set true if you want to change font of each option. Font family for option is value of dropdownItem
+    @Input() customFonts: boolean = false;
 
     @Input() currentValue;
     @Output() currentValueChange = new EventEmitter<any>();
@@ -34,6 +35,7 @@ export class DropdownComponent implements OnInit, OnChanges{
 
     ngOnInit() {
         this.setUp();
+        console.log('currentValue', this.currentValue);
     }
 
     ngOnChanges(){

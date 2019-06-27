@@ -63,6 +63,11 @@ export const appRoutes: Routes = [
             {
                 path: Routing.PORTAL_USERS,
                 loadChildren: './modules/portal-users/portal-users.module#PortalUsersModule'
+            },
+            {
+                path: Routing.STATS,
+                loadChildren: './modules/statistics/statistics.module#StatisticsModule'
+
             }
         ]
     },

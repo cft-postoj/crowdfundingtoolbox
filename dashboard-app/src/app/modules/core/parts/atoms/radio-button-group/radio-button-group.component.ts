@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, OnChanges} from '@angular/core';
-import {RadioButton} from "../../../models/radio-button";
+import {RadioButton} from '../../../models';
 
 @Component({
     selector: 'app-radio-button-group',
@@ -11,7 +11,7 @@ export class RadioButtonGroupComponent implements OnInit, OnChanges {
     @Input()
     public radioButtons: RadioButton[] = [];
 
-    public currentButton: RadioButton
+    public currentButton: RadioButton;
 
     @Input()
     public currentValue;
@@ -20,7 +20,7 @@ export class RadioButtonGroupComponent implements OnInit, OnChanges {
     public currentValueChange: EventEmitter<any> = new EventEmitter();
 
     @Input()
-    public class;
+    public clazz;
 
     constructor() {
     }
@@ -28,7 +28,7 @@ export class RadioButtonGroupComponent implements OnInit, OnChanges {
     ngOnInit() {
         if (this.radioButtons) {
             this.radioButtons.forEach(rb => {
-                if (rb.value == this.currentValue) {
+                if (rb.value === this.currentValue) {
                     this.currentButton = rb;
                 }
             })
@@ -38,10 +38,10 @@ export class RadioButtonGroupComponent implements OnInit, OnChanges {
     ngOnChanges() {
         if (this.radioButtons) {
             this.radioButtons.forEach(rb => {
-                if (rb.value == this.currentValue) {
+                if (rb.value === this.currentValue) {
                     this.currentButton = rb;
                 }
-            })
+            });
         }
     }
 
@@ -49,7 +49,7 @@ export class RadioButtonGroupComponent implements OnInit, OnChanges {
     setActive(selected: RadioButton) {
         this.currentButton = selected;
         this.currentValue = this.currentButton.value;
-        this.currentValueChange.emit(this.currentValue)
+        this.currentValueChange.emit(this.currentValue);
     }
 
 }

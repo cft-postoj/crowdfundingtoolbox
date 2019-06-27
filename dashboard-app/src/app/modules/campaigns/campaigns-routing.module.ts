@@ -5,8 +5,8 @@ import {CommonModule} from '@angular/common';
 import {CampaignEditComponent, WidgetEditComponent} from './components';
 import {CampaignListComponent} from './pages/campaign-list/campaign-list.component';
 import {CampaignDetailComponent} from './pages/campaign-detail/campaign-detail.component';
-import {CampaignNotFoundComponent} from "./pages/campaign-not-found/campaign-not-found.component";
-import {CampaignsStatsComponent} from "./pages/campaigns-stats/campaigns-stats.component";
+import {CampaignNotFoundComponent} from './pages/campaign-not-found/campaign-not-found.component';
+import {CampaignsStatsComponent} from './pages/campaigns-stats/campaigns-stats.component';
 
 const routes: Routes = [
     {

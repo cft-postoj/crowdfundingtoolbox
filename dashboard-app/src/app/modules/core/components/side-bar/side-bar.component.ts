@@ -135,6 +135,10 @@ export class SideBarComponent implements OnInit {
         else if (itemName === this.statisticsItemName) {
             this.sidebarItems = [];
             this.sidebarItems.push({
+                title: 'Dashboard',
+                value: '/' + Routing.DASHBOARD + '/' +  Routing.STATS
+            });
+            this.sidebarItems.push({
                 title: 'Campaigns stats',
                 value: '/' + Routing.CAMPAIGNS_FULL_PATH + '/' + Routing.STATS
             });

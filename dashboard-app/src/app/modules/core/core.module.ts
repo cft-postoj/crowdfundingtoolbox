@@ -16,14 +16,14 @@ import {
     DropdownComponent, InputGroupComponent, InputNumberComponent, LoadingComponent,
     ProgressComponent, RadioButtonComponent, RadioButtonGroupComponent,
     SwitcherComponent
-}  from "./parts/atoms";
-import {ActionsComponent} from "../../components";
-import {PreviewMonetizationComponent} from "../campaigns/components";
-import {SafePipe} from "./pipes/safe.pipe";
-import {SlovakNumberFormatter} from "./pipes/SlovakNumberFormatter";
-import {WidgetSettingsComponent} from "./components";
+} from './parts/atoms';
+import {ActionsComponent} from '../../components';
+import {PreviewMonetizationComponent} from '../campaigns/components';
+import {SafePipe} from './pipes/safe.pipe';
+import {SlovakNumberFormatter} from './pipes/SlovakNumberFormatter';
+import {WidgetSettingsComponent} from './components';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
-import { TableHeaderComponent } from './parts/atoms/table-header/table-header.component'
+import { TableHeaderComponent } from './parts/atoms/table-header/table-header.component';
 import { InputTextComponent } from './parts/atoms/input-text/input-text.component';
 
 @NgModule({
@@ -70,7 +70,7 @@ import { InputTextComponent } from './parts/atoms/input-text/input-text.componen
 
         FormsModule,
         ReactiveFormsModule,
-        //components
+        // components
         BreadcrumbsComponent,
         DatepickerComponent,
         ProgressComponent,
@@ -91,15 +91,15 @@ import { InputTextComponent } from './parts/atoms/input-text/input-text.componen
         PreviewMonetizationComponent,
         TableHeaderComponent,
 
-        //pipes
+        // pipes
         SafePipe,
         SlovakNumberFormatter,
-        //modules
+        // modules
         CommonModule,
         RouterModule,
         NgbModule,
         FormsModule,
-        //custom modules
+        // custom modules
         ColorPickerModule,
         NgxSelectModule,
         AngularEditorModule,
