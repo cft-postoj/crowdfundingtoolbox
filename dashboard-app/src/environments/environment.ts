@@ -48,6 +48,8 @@ export const environment = {
 
     statisticsUrl: '/statistics/donation-and-donor-total',
 
-    campaignTargeting: '/campaign-targeting'
+    campaignTargeting: '/campaign-targeting',
+
+    userDetail: '/user-detail'
 
 };

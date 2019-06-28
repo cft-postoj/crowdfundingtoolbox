@@ -74,6 +74,9 @@ import {HttpErrorInterceptor, TokenInterceptor} from "./modules/user-management/
             multi: true,
         }
     ],
+    exports: [
+        TopPanelComponent
+    ],
     bootstrap: [AppComponent]
 
 })

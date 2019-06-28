@@ -10,6 +10,8 @@ import {LoginGuard} from './modules/user-management/services';
 import {AboutComponent, ContactComponent} from './components';
 import {ConfigurationComponent} from './modules/core/pages/configuration/configuration.component';
 import {TranslationCreateComponent, TranslationListComponent} from './modules/translations/components';
+import {UserSettingsComponent} from './modules/user-management/components/user-settings/user-settings.component';
+import {CreateUserComponent} from './modules/user-management/components/create-user/create-user.component';
 
 export const appRoutes: Routes = [
     {
@@ -38,6 +40,14 @@ export const appRoutes: Routes = [
                 data: {
                     title: 'Translations'
                 },
+            },
+            {
+                path: 'user-settings',
+                component: UserSettingsComponent
+            },
+            {
+                path: 'user-settings/create-user',
+                component: CreateUserComponent
             },
             {
                 path: Routing.CONFIGURATION,

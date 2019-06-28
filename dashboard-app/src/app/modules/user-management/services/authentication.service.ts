@@ -59,9 +59,10 @@ export class AuthenticationService {
             'email': email,
             'password': password
         }).subscribe((response: TokenModel) => {
+                console.log(response)
                 localStorage.setItem('token', response.token);
-                localStorage.setItem('user_firstName', response.user.first_name);
-                localStorage.setItem('user_lastName', response.user.last_name);
+                localStorage.setItem('user_firstName', (response.user_detail === null) ? 'Backoffice' : response.user_detail.first_name);
+                localStorage.setItem('user_lastName', (response.user_detail === null) ? 'User' : response.user_detail.last_name);
                 localStorage.setItem('user_role', response.user_role);
                 callback(response);
             }, (error) => {

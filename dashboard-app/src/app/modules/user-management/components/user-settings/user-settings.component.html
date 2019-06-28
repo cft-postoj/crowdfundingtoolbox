@@ -1,0 +1,69 @@
+<div class="userSettings">
+    <h2>User settings</h2>
+    <div *ngIf="isAdmin">
+        You have an <b>admin</b> user role. You can manage whole toolbox, create new backoffice users and delete the
+        campaigns.
+    </div>
+    <div *ngIf="!isAdmin">
+        You have a <b>manager</b> user role. You can manage whole toolbox except create new backoffice users and delete
+        the campaigns.
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-10">
+            <form [formGroup]="userForm"  name="userDetail" (submit)="storeUserDetail()">
+                <app-alert [(open)]="alertOpen" [fixed]="alertFixed" [type]="alertType" [message]="alertMessage"></app-alert>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <input
+                                type="text"
+                                formControlName="username"
+                                required
+                                placeholder="Username"
+                                value="{{username}}">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <input
+                                type="password"
+                                formControlName="password"
+                                required
+                                value="{{password}}"
+                                placeholder="Password">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <input
+                                type="text"
+                                formControlName="firstName"
+                                placeholder="First name"
+                                value="{{firstName}}">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <input
+                                type="text"
+                                formControlName="lastName"
+                                placeholder="Last name"
+                                value="{{lastName}}">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <input
+                                type="email"
+                                formControlName="email"
+                                required
+                                placeholder="Email"
+                                value="{{email}}">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <button type="submit" *ngIf="!loading">Save</button>
+                        <img src="../assets/images/loading.svg" *ngIf="loading" style="margin-top: -15px">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-sm-12 col-md-2">
+            <button *ngIf="isAdmin" (click)="createUser()" class="userSettings--createNewUser">
+                Create backoffice user
+            </button>
+        </div>
+    </div>
+
+
+</div>

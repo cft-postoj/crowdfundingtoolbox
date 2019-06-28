@@ -4,6 +4,11 @@
 namespace Modules\UserManagement\Services;
 
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Modules\UserManagement\Entities\BackOfficeUser;
+use Modules\UserManagement\Entities\PortalUser;
+use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Repositories\UserRepository;
 use Jenssegers\Agent\Agent;
 use Modules\UserManagement\Entities\UserCookie;
@@ -47,5 +52,65 @@ class UserService implements UserServiceInterface
                 'ip' => $ip,
             ]);
         }
+    }
+
+    public function create($request) {
+        $prefix = $request->route()->getPrefix();
+
+        $valid = validator($request->only(
+            'email',
+            //'username',
+            'first_name',
+            'last_name',
+            'password'
+        ), [
+            'email' => 'required|string|email|max:255|unique:users',
+            // 'username' => 'string|max:255|unique:users',
+            'first_name' => 'string|max:255',
+            'last_name' => 'string|max:255',
+            'password' => 'required|string|max:255'
+        ]);
+
+        if ($valid->fails()) {
+            /* TODO: pridat podmienku pre situaciu, kedy uz pouzivatel existuje, no nie ako portal user alebo backoffice - teda email/username is exist */
+            $jsonError = response()->json([
+                'error' => $valid->errors()
+            ], 400);
+            return $jsonError;
+        }
+
+        $data = \request()->only('email', 'username', 'password');
+
+        $user = User::create([
+            'username' => (isset($data['username'])) ? $data['username'] : explode('@', $data['email'])[0],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password'])
+        ]);
+        $user->save();
+
+        if (strpos($prefix, 'backoffice') !== false) {
+            $currentAdmin = Auth::user();
+            if (BackOfficeUser::where('user_id', $currentAdmin->id)->first()->only('role_id')['role_id'] == 1) {
+                $backOfficeUser = BackOfficeUser::create([
+                    'user_id' => $user->id,
+                    'role_id' => ($request['role'] === 'admin') ? 1 : 2   // admin / manager user
+                ]);
+                $backOfficeUser->save();
+            } else {
+                return response()->json([
+                    'message' => 'You don\'t have permissions to this action'
+                ], 400);
+            }
+        } else {
+            PortalUser::create([
+                'user_id' => $user->id
+            ])->save();
+            Mail::to($data['email'])->send(new RegisterEmail());
+        }
+
+        return response()->json([
+            'message' => 'Successfully created user!',
+            'user' => $user
+        ], 201);
     }
 }

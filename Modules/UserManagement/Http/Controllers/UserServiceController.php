@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Modules\UserManagement\Entities\UserDetail;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 
@@ -98,6 +99,7 @@ class UserServiceController extends Controller
                 $token = JWTAuth::fromUser($user);
                 return \response()->json([
                     'user' => $user,
+                    'user_detail'   =>  UserDetail::where('user_id', $user->id)->first(),
                     'user_role' => BackOfficeRole::where('id', BackOfficeUser::where('user_id', $user->id)->first()['role_id'])->first()['slug'],
                     'token' => $token
                 ], Response::HTTP_OK);
