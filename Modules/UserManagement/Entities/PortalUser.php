@@ -35,8 +35,30 @@ class PortalUser extends Model
         return $this->hasMany('Modules\UserManagement\Entities\TrackingVisit');
     }
 
-    public function donation()
+    public function donations()
     {
-        return $this->hasMany('Modules\Payment\Entities\Donation');
+        return $this->hasMany('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->orderBy('created_at', 'desc');
+//            ->selectRaw('donations.portal_user_id, sum(donations.donation) as donation_sum')
+//            ->groupBy('donations.portal_user_id');
+    }
+
+    public function donationsSum()
+    {
+        return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->selectRaw('donations.portal_user_id, sum(donations.donation) as donations_sum')
+            ->groupBy('donations.portal_user_id');
+    }
+
+    public function last()
+    {
+        $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->orderBy('created_at', 'DESC');
+    }
+
+    public function lastSql()
+    {
+        return $this->belongsTo('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->orderBy('created_at', 'DESC')->toSql();
     }
 }

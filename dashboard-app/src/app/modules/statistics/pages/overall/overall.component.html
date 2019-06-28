@@ -146,7 +146,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    total donors
+                                    <span (click)="openModal('Donors')">total donors</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -165,10 +165,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    monthly donors
+                                    <span (click)="openModal('Monthly donors' ,true)"> monthly donors </span>
                                 </div>
                                 <div class="col-6">
-                                    one time donors
+                                    <span (click)="openModal('Monthly donors' ,true)"> one time donors </span>
                                 </div>
                             </div>
                         </div>
@@ -178,3 +178,7 @@
         </div>
     </div>
 </div>
+
+<app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">
+    <app-table-portal-users [from]="from" [to]="to" [monthly]="monthly" [title]="tableTitle"></app-table-portal-users>
+</app-modal-full-size>

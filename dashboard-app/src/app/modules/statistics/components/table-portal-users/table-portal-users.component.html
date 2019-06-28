@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6 text-center">
+            <h2>{{title}}</h2>
+        </div>
+        <div class="col-3 d-flex align-items-center">
+            from:
+            <app-datepicker
+                [(date)]="from"
+                (dateChange)="getDataForGraph();getOverallData()"
+                [maxDate]="to"
+                [type]="'start'"
+                [disabled]="true">
+            </app-datepicker>
+        </div>
+        <div class="col-3 d-flex align-items-center">
+            to:
+            <app-datepicker
+                [(date)]="to"
+                (dateChange)="getDataForGraph();getOverallData()"
+                [minDate]="from"
+                [type]="'end'"
+                [disabled]="true">
+            </app-datepicker>
+        </div>
+    </div>
+</div>
+<table class="list-items list-items--orderable">
+    <thead>
+    <tr>
+        <th> User name</th>
+        <th> Last donation value</th>
+        <th> Last donation date</th>
+        <th> Donation type</th>
+        <th> First donation</th>
+        <th> Total donations</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let portalUser of portalUsers" class="list-items--item">
+        <td class="pointer">
+            {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
+        </td>
+        <td>
+            {{portalUser.last_donation_value}} {{portalUser.last_donation_monthly | monthly}}
+        </td>
+        <td>
+            {{portalUser.last_donation_at}}
+        </td>
+        <td>
+            {{portalUser.lastDonationType}}
+        </td>
+        <td>
+            {{portalUser.first_donation_at}}
+        </td>
+        <td>
+            {{portalUser.donations_sum}}
+        </td>
+    </tr>
+    </tbody>
+</table>
