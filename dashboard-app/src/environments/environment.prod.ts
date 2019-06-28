@@ -21,6 +21,7 @@ export const environment = {
     clone: '/clone',
     group: '/group',
     total: '/total',
+    all: '/all',
 
     // domain specific paths
     campaignUrl: '/campaigns',

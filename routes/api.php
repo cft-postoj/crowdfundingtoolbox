@@ -94,6 +94,7 @@ Route::group([
         // Statistics
         Route::get('statistics/donations/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonationsGroup');
         Route::get('statistics/donors/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsGroup');
+        Route::get('statistics/donors/all', '\Modules\Statistics\Http\Controllers\StatisticsController@donorsAll');
 
         Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
     });

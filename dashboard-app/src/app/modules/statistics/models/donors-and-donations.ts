@@ -1,3 +1,4 @@
+// used to show data in table in overall.component
 export class DonorsAndDonations {
     current: [DonorsAndDonationsValue];
     previous: [DonorsAndDonationsValue];

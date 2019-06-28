@@ -22,6 +22,9 @@ export class OverallComponent implements OnInit {
     donorsAndDonations: DonorsAndDonations;
     graphLoading: boolean = true;
     donorsAndDonationsLoading: boolean = true;
+    modalOpened: boolean = false;
+    private monthly: boolean;
+    private tableTitle: string;
 
     constructor(private donationService: DonationService) {
     }
@@ -111,5 +114,11 @@ export class OverallComponent implements OnInit {
                 this.donorsAndDonationsLoading = false;
             }
         );
+    }
+
+    public openModal(title: string, pericodicity: boolean) {
+        this.tableTitle = title;
+        this.monthly = pericodicity;
+        this.modalOpened = true;
     }
 }

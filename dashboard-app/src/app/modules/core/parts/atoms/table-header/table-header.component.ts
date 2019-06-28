@@ -7,10 +7,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class TableHeaderComponent implements OnInit {
 
-    //column, that handle current tableHeaderComponent
+    // column, that handle current tableHeaderComponent
     @Input() column;
 
-    //model with all columns and with filters data
+    // model with all columns and with filters data
     @Input() model;
 
     @Output() modelChange = new EventEmitter();

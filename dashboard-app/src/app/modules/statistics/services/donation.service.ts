@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {DonorsAndDonations} from '../models/donors-and-donations';
+import {DonorStats} from '../models/donor-stats';
+
 
 @Injectable({
     providedIn: 'root'
@@ -83,4 +85,21 @@ export class DonationService {
     }
 
 
+    public getDonors(from: { year: number; month: number; day: number },
+                     to: { year: number; month: number; day: number },
+                     monthly) {
+        const headers = new HttpHeaders().append('Content-Type', 'application/json');
+        let params = new HttpParams()
+            .append('from', this.writeDateAsString(from))
+            .append('to', this.writeDateAsString(to));
+        if (monthly !== undefined) {
+            params = params.append('monthly', monthly);
+        }
+        return this.http.get<[DonorStats]>(
+            `${environment.backOfficeUrl}${environment.donorUrl}${environment.all}`,
+            {
+                headers: headers,
+                params: params
+            });
+    }
 }
