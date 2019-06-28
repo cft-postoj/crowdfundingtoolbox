@@ -59,7 +59,7 @@
         @include transitionSingle(.3s ease);
         opacity: .33;
       }
-      &:hover {
+      &:hover, &.active {
         svg {
           opacity: 1;
         }

@@ -34,7 +34,17 @@ class UserDetailRepository implements UserDetailRepositoryInterface
     {
         return $this->model
             ::create([
-                'user_id'   =>  $user_id
+                'user_id' => $user_id
+            ]);
+    }
+
+    public function createWithRequest($request, $user_id)
+    {
+        return $this->model
+            ::create([
+                'user_id' => $user_id,
+                'first_name' => $request['first_name'],
+                'last_name' => $request['last_name']
             ]);
     }
 }

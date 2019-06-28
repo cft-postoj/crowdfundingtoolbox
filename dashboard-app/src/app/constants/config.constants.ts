@@ -28,9 +28,13 @@ export class Routing {
     static readonly GENERAL = 'general';
     static readonly CTA = 'cta';
     static readonly WIDGET = 'widget';
-    // user routing
+    // portal user routing
     static readonly PORTAL_USERS = 'portal-users';
     static readonly PORTAL_USER_LIST = `${Routing.PORTAL_USERS}/${Routing.ALL}`;
     static readonly PORTAL_USERS_FULL_PATH = `${Routing.DASHBOARD}/${Routing.PORTAL_USERS}`;
     static readonly PORTAL_USER_LIST_FULL_PATH = `${Routing.DASHBOARD}/${Routing.PORTAL_USER_LIST}`;
+
+    // user settings
+    static readonly USER_SETTINGS = 'user-settings';
+    static readonly CREATE_USER = 'create-user';
 }

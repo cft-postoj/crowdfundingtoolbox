@@ -10,10 +10,14 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
 import {FormsModule} from '@angular/forms';
 import {NgCircleProgressModule} from 'ng-circle-progress';
 import {UserManagementRoutingModule} from './user-management-routing.module';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 @NgModule({
     declarations: [
         LoginComponent,
+        UserSettingsComponent,
+        CreateUserComponent,
     ],
     imports: [
         CommonModule,

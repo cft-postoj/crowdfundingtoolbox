@@ -43,6 +43,9 @@ Route::group([
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         // Create new user - only admin role can do this
+        Route::get('user-detail', '\Modules\UserManagement\Http\Controllers\BackofficeUsersController@get');
+        Route::put('user-detail', '\Modules\UserManagement\Http\Controllers\BackofficeUsersController@update');
+        Route::post('user-detail', '\Modules\UserManagement\Http\Controllers\BackofficeUsersController@create');
 
         // Sign out backoffice user
         Route::get('logout', '\Modules\UserManagement\Http\Controllers\UserServiceController@logout');

@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.compComService.getLogoutMessage()){
+    if (this.compComService.getLogoutMessage()) {
         this.alertMessage = this.compComService.getLogoutMessage();
         this.alertType = 'danger';
         this.alertOpen = true;
