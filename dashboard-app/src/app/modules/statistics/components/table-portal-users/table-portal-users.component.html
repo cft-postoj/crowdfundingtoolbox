@@ -7,7 +7,6 @@
             from:
             <app-datepicker
                 [(date)]="from"
-                (dateChange)="getDataForGraph();getOverallData()"
                 [maxDate]="to"
                 [type]="'start'"
                 [disabled]="true">
@@ -17,7 +16,6 @@
             to:
             <app-datepicker
                 [(date)]="to"
-                (dateChange)="getDataForGraph();getOverallData()"
                 [minDate]="from"
                 [type]="'end'"
                 [disabled]="true">
@@ -39,7 +37,7 @@
     <tbody>
     <tr *ngFor="let portalUser of portalUsers" class="list-items--item">
         <td class="pointer">
-            {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
+            {{donation.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
         </td>
         <td>
             {{portalUser.last_donation_value}} {{portalUser.last_donation_monthly | monthly}}

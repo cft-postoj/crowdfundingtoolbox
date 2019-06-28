@@ -33,7 +33,6 @@ export const environment = {
     translationsUrl: '/translations',
     translationsAllUrl: '/translations/all',
 
-
     widgetsUrl: '/widgets',
     cftSettings: '/crowdfunding-settings',
 
@@ -44,7 +43,7 @@ export const environment = {
     donorUrl: '/statistics/donors',
 
     statisticsUrl: '/statistics/donation-and-donor-total',
-    $portalUsers: '/portal-users',
-    donorAllUrl: '/portal-users/all',
+
+    campaignTargeting: '/campaign-targeting'
 };
 
