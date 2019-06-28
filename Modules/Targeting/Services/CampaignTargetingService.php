@@ -51,7 +51,7 @@ class CampaignTargetingService implements CampaignTargetingServiceInterface
                 $this->countUsers = sizeof($this->users);
 
                 foreach ($this->users as $user) {
-                    $actualUserDonations = $user->donation;
+                    $actualUserDonations = $user->donations;
                     $this->removeItemStatus = false;
 
                     // if is not supporter active

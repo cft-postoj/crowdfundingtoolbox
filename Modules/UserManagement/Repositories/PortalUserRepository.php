@@ -35,14 +35,14 @@ class PortalUserRepository implements PortalUserRepositoryInterface
     {
         return $this->model
             ::where('id', $id)
-            ->with('donation')
+            ->with('donations')
             ->first();
     }
 
     public function getAllWithDonations() {
         return $this->model
-            ::has('donation')
-            ->with('donation')
+            ::has('donations')
+            ->with('donations')
             ->has('user')
             ->with('user.userDetail')
             ->with('visit')
