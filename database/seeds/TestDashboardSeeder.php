@@ -17,9 +17,9 @@ class TestDashboardSeeder extends Seeder
     public function run()
     {
         //create 5 campaigns
-        for ($i = 0; $i < 5; $i++) {
-            $this->call(CreateDummyCampaignSeeder::class);
-        }
+//        for ($i = 0; $i < 5; $i++) {
+//            $this->call(CreateDummyCampaignSeeder::class);
+//        }
 
         //create 50 users
         for ($i = 0; $i < 5; $i++) {

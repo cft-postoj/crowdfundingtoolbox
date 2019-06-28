@@ -26,6 +26,7 @@ class BackOfficeUsersController extends Controller
     }
 
     protected function create(Request $request) {
+        // TODO SEND EMAILS
         return $this->backofficeUserService->create($request);
     }
 }
