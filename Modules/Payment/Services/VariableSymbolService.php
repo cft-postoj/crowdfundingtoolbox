@@ -29,12 +29,7 @@ class VariableSymbolService
     public function create($portal_user_id)
     {
         try {
-            $lastVariableSymbol = $this->variableSymbolRepository->getLast();
-            $userVariableSymbol = $this->initialVariableSymbol;
-            if ($this->variableSymbolRepository->getLast() !== null) {
-                $userVariableSymbol = $lastVariableSymbol['variable_symbol'] + 1;
-            }
-            $this->variableSymbolRepository->create($portal_user_id, $userVariableSymbol);
+            $this->variableSymbolRepository->create($portal_user_id, $this->generateVariableSymbol());
         } catch (\Exception $exception) {
             return \response()->json([
                 'error' => $exception->getMessage()
@@ -50,6 +45,11 @@ class VariableSymbolService
 
     private function generateVariableSymbol()
     {
-
+        $userVariableSymbol = $this->initialVariableSymbol;
+        $lastVariableSymbol = $this->variableSymbolRepository->getLast();
+        if ($this->variableSymbolRepository->getLast() !== null) {
+            $userVariableSymbol = $lastVariableSymbol['variable_symbol'] + 1;
+        }
+        return $userVariableSymbol;
     }
 }
