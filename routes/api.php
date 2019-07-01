@@ -24,6 +24,7 @@ Route::group([
     'prefix' => 'backoffice'
 ], function () {
     Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
+    Route::post('check-generated-reset-token', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@checkGeneratedToken');
 
     // Languages and Translations
 //    Route::get('default-strings', 'BackOfficeAPI\TranslationsController@getDefault');
@@ -43,9 +44,9 @@ Route::group([
 
     Route::group(['middleware' => ['jwt.verify']], function () {
         // Create new user - only admin role can do this
-        Route::get('user-detail', '\Modules\UserManagement\Http\Controllers\BackofficeUsersController@get');
-        Route::put('user-detail', '\Modules\UserManagement\Http\Controllers\BackofficeUsersController@update');
-        Route::post('user-detail', '\Modules\UserManagement\Http\Controllers\BackofficeUsersController@create');
+        Route::get('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@get');
+        Route::put('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@update');
+        Route::post('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@create');
 
         // Sign out backoffice user
         Route::get('logout', '\Modules\UserManagement\Http\Controllers\UserServiceController@logout');

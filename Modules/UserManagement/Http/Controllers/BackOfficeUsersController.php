@@ -21,12 +21,18 @@ class BackOfficeUsersController extends Controller
         return $this->backofficeUserService->get();
     }
 
-    protected function update(Request $request) {
+    protected function update(Request $request)
+    {
         return $this->backofficeUserService->update($request);
     }
 
-    protected function create(Request $request) {
-        // TODO SEND EMAILS
+    protected function create(Request $request)
+    {
         return $this->backofficeUserService->create($request);
+    }
+
+    protected function checkGeneratedToken(Request $request)
+    {
+        return $this->backofficeUserService->checkGeneratedResetToken($request, $request->route()->getPrefix());
     }
 }

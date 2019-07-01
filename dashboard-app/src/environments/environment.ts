@@ -50,6 +50,8 @@ export const environment = {
 
     campaignTargeting: '/campaign-targeting',
 
-    userDetail: '/user-detail'
+    userDetail: '/user-detail',
+
+    checkGeneratedResetToken: '/check-generated-reset-token'
 
 };

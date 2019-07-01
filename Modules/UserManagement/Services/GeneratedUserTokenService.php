@@ -8,7 +8,11 @@ namespace Modules\UserManagement\Services;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Modules\UserManagement\Entities\BackOfficeRole;
+use Modules\UserManagement\Entities\BackOfficeUser;
+use Modules\UserManagement\Entities\UserDetail;
 use Modules\UserManagement\Jobs\RemoveGeneratedToken;
+use Modules\UserManagement\Repositories\BackOfficeUserRepository;
 use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use JWTAuth;
 
@@ -16,11 +20,14 @@ class GeneratedUserTokenService implements GeneratedUserTokenServiceInterface
 {
     private $generatedUserTokenRepository;
     private $userService;
+    private $backOfficeUserService;
+    private $backOfficeUserRepository;
 
-    public function __construct()
+    public function __construct(BackOfficeUserRepository $backOfficeUserRepository)
     {
         $this->generatedUserTokenRepository = new GeneratedUserTokenRepository();
         $this->userService = new UserService();
+        $this->backOfficeUserRepository = $backOfficeUserRepository;
     }
 
     public function create($userId)
@@ -37,7 +44,7 @@ class GeneratedUserTokenService implements GeneratedUserTokenServiceInterface
         return $generatedToken;
     }
 
-    public function isValid($request)
+    public function isValid($request, $prefix = null)
     {
         $valid = validator($request->only(
             'generatedToken'
@@ -54,13 +61,26 @@ class GeneratedUserTokenService implements GeneratedUserTokenServiceInterface
 
 
         try {
+
             foreach ($this->generatedUserTokenRepository->getAll() as $generatedToken) {
                 if (Hash::check($request['generatedToken'], $generatedToken->generated_token)) {
-                    $token = JWTAuth::fromUser($this->userService->getById($generatedToken->user_id));
-                    $this->generatedUserTokenRepository->deleteByUserId($generatedToken->user_id);
-                    return \response()->json([
-                        'token' =>  $token
-                    ], Response::HTTP_OK);
+                    if ($prefix === 'api/backoffice') {
+                        if ($this->backOfficeUserRepository->get($generatedToken->user_id) !== null) {
+                            $token = JWTAuth::fromUser($this->userService->getById($generatedToken->user_id));
+                            $this->generatedUserTokenRepository->deleteByUserId($generatedToken->user_id);
+                            return \response()->json([
+                                'user_detail'   =>  UserDetail::where('user_id', $generatedToken->user_id)->first(),
+                                'user_role' => BackOfficeRole::where('id', BackOfficeUser::where('user_id', $generatedToken->user_id)->first()['role_id'])->first()['slug'],
+                                'token' =>  $token
+                            ], Response::HTTP_OK);
+                        }
+                    } else {
+                        $token = JWTAuth::fromUser($this->userService->getById($generatedToken->user_id));
+                        $this->generatedUserTokenRepository->deleteByUserId($generatedToken->user_id);
+                        return \response()->json([
+                            'token' =>  $token
+                        ], Response::HTTP_OK);
+                    }
                 }
             }
 

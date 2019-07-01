@@ -10,6 +10,7 @@ import {ComponentCommunicationService} from "../../../core/services";
 import {Routing} from "../../../../constants/config.constants";
 import {ModalComponent} from "../../../core/parts/atoms";
 import {CampaignListComponent} from "../campaign-list/campaign-list.component";
+import {UserService} from '../../../user-management/services';
 
 @Component({
     templateUrl: './campaign-detail.component.html',
@@ -40,7 +41,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     public environment = environment;
 
     constructor(private router: Router, private route: ActivatedRoute, private campaignService: CampaignService,
-                private widgetService: WidgetService, private _modalService: NgbModal,
+                private widgetService: WidgetService, private userService: UserService, private _modalService: NgbModal,
                 private componentComService: ComponentCommunicationService) {
         this.isActiveOverlay = false;
         this.pageTitle = 'Campaign name From API';
@@ -96,19 +97,32 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
     public delete() {
         const modalRef = this._modalService.open(ModalComponent);
-        modalRef.componentInstance.title = "Delete campaign"
-        modalRef.componentInstance.text = "Are you sure you want to delete campaign"
-        modalRef.componentInstance.textPrimary = this.campaign.name;
+        this.userService.getUserDetail().subscribe((data) => {
+            if (data.role.id === 1) { // if user is admin
+                modalRef.componentInstance.title = 'Delete campaign'
+                modalRef.componentInstance.text = 'Are you sure you want to delete campaign'
+                modalRef.componentInstance.textPrimary = this.campaign.name;
+                modalRef.componentInstance.loading = false;
 
-        modalRef.result.then((data) => {
-            //delete
-            this.campaignService.deleteCampaign(this.campaign.id).subscribe(result => {
-                this.changeSubscription.unsubscribe();
-                this.componentComService.setAlertMessage(`Campaign ${this.campaign.name} deleted`)
-                this.router.navigateByUrl(`${Routing.CAMPAIGNS_ALL_FULL_PATH}`);
-            });
-        }, (reason) => {
+                modalRef.result.then((data) => {
+                    //delete
+                    this.campaignService.deleteCampaign(this.campaign.id).subscribe(result => {
+                        this.changeSubscription.unsubscribe();
+                        this.componentComService.setAlertMessage(`Campaign ${this.campaign.name} deleted`)
+                        this.router.navigateByUrl(`${Routing.CAMPAIGNS_ALL_FULL_PATH}`);
+                    });
+                }, (reason) => {
+                });
+            } else { // user is manager
+                modalRef.componentInstance.title = 'Delete campaign'
+                modalRef.componentInstance.text = null
+                modalRef.componentInstance.textPrimary = 'You don\'t have permissions to make this action!';
+                modalRef.componentInstance.loading = false;
+            }
+        }, (error) => {
+            console.log(error);
         });
+
 
     }
 

@@ -61,6 +61,11 @@ export class CreateUserComponent implements OnInit {
             this.alertMessage = 'Successfully created backoffice user.';
             this.alertType = 'success';
             this.alertOpen = true;
+            this.userForm.value.password = '';
+            this.userForm.value.email = '';
+            this.userForm.value.firstName = '';
+            this.userForm.value.lastName = '';
+            this.userForm.value.role = '';
         }, (e) => {
             this.pageLoading = false;
             if (e.error !== null) {

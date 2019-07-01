@@ -22,6 +22,12 @@ export class UserService {
         return this.http.post(`${environment.backOfficeUrl}${environment.userDetail}`, userDetail);
     }
 
+    public checkGeneratedResetToken(generatedToken: string): Observable<any> {
+        return this.http.post(`${environment.backOfficeUrl}${environment.checkGeneratedResetToken}`, {
+            'generatedToken': generatedToken
+        });
+    }
+
     getAll() {
         return this.http.get<User[]>(`${environment.backOfficeUrl}/all`);
     }

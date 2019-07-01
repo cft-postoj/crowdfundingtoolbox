@@ -16,6 +16,7 @@ use Modules\UserManagement\Entities\UserCookie;
 class UserService implements UserServiceInterface
 {
     private $userRepository;
+    private $usernameUsedCounter = 0;
 
     public function __construct()
     {
@@ -81,8 +82,11 @@ class UserService implements UserServiceInterface
 
         $data = \request()->only('email', 'username', 'password');
 
+        $username = $this->checkUniqueUsername(isset($data['username'])
+            ? $data['username'] : explode('@', $data['email'])[0]);
+
         $user = User::create([
-            'username' => (isset($data['username'])) ? $data['username'] : explode('@', $data['email'])[0],
+            'username' => $username,
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
@@ -112,5 +116,14 @@ class UserService implements UserServiceInterface
             'message' => 'Successfully created user!',
             'user' => $user
         ], 201);
+    }
+
+    private function checkUniqueUsername($username)
+    {
+        if ($this->userRepository->isUsernameUsed($username) === null) {
+            return $username;
+        }
+        $this->usernameUsedCounter++;
+        return $this->checkUniqueUsername($username . $this->usernameUsedCounter);
     }
 }

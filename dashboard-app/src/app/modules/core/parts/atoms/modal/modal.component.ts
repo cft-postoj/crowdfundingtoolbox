@@ -16,6 +16,8 @@ export class ModalComponent {
 
     @Input() duplicate;
 
+    @Input() loading = true;
+
 
     constructor(public modal: NgbActiveModal) {
     }

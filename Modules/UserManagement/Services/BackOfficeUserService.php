@@ -5,7 +5,10 @@ namespace Modules\UserManagement\Services;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Modules\UserManagement\Emails\BackOfficeRegisterEmail;
 use Modules\UserManagement\Repositories\BackOfficeUserRepository;
+use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use Modules\UserManagement\Repositories\UserDetailRepository;
 use Modules\UserManagement\Repositories\UserRepository;
 
@@ -16,15 +19,17 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
     private $userRepository;
     private $userDetailRepository;
     private $userService;
+    private $generatedUserTokenService;
 
     public function __construct(BackOfficeUserRepository $backOfficeUserRepository,
                                 UserRepository $userRepository, UserDetailRepository $userDetailRepository,
-                                UserService $userService)
+                                UserService $userService, GeneratedUserTokenService $generatedUserTokenService)
     {
         $this->backOfficeUserRepository = $backOfficeUserRepository;
         $this->userRepository = $userRepository;
         $this->userDetailRepository = $userDetailRepository;
         $this->userService = $userService;
+        $this->generatedUserTokenService = $generatedUserTokenService;
     }
 
     public function get()
@@ -98,7 +103,7 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
         ), [
             'email' => 'required|email|max:255',
             'password' => 'required|string|max:255|min:6',
-            'role'  =>  'required|string|min:3'
+            'role' => 'required|string|min:3'
         ]);
 
         if ($valid->fails()) {
@@ -118,19 +123,35 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
             ($request['lastName'] !== '') && array_push($resultDetail, array('last_name' => $request['lastName']));
             ($request['role'] !== '') && array_push($resultRole, array('role' => $request['role']));
 
-            $newUserId = json_encode($this->userService->create($request), true);
-            $newUserId = json_decode($newUserId)->original->user->id;
+            $newUser = json_encode($this->userService->create($request), true);
+            $newUserId = json_decode($newUser)->original->user->id;
+            $newUserUsername = json_decode($newUser)->original->user->username;
+            $newUserEmail = json_decode($newUser)->original->user->email;
 
             $this->userDetailRepository->createWithRequest(array_merge(...$resultDetail), $newUserId);
+
+            $token = $this->generatedUserTokenService->create($newUserId);
+
+            Mail::to($newUserEmail)
+                ->send(new BackOfficeRegisterEmail($token, $newUserUsername));
         } catch (\Exception $exception) {
             return \response()->json([
-                'error' =>  $exception->getMessage()
+                'error' => $exception->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
 
         return \response()->json([
-        'meesage'   =>  'Successfully created backoffice user.'
+            'meesage' => 'Successfully created backoffice user.'
         ], Response::HTTP_CREATED);
     }
 
+    public function checkGeneratedResetToken($request, $prefix)
+    {
+        return $this->generatedUserTokenService->isValid($request, $prefix);
+    }
+
+    public function getById($id)
+    {
+        return $this->backOfficeUserRepository->get($id);
+    }
 }
