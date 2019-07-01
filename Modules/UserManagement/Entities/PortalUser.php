@@ -61,4 +61,9 @@ class PortalUser extends Model
         return $this->belongsTo('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
             ->orderBy('created_at', 'DESC')->toSql();
     }
+
+    public function variableSymbol()
+    {
+        return $this->hasOne('Modules\Payment\Entities\VariableSymbol', 'portal_user_id', 'id');
+    }
 }
