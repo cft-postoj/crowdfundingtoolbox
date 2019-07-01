@@ -28,8 +28,8 @@ export class PortalUserDetailComponent implements OnInit {
 
     private showDetail() {
         this.portalUserService.getById(this.id).subscribe((data) => {
-            this.user = data[0];
-            console.log(data);
+            this.user = data;
+            console.log(this.user)
             this.loading = false;
         });
     }

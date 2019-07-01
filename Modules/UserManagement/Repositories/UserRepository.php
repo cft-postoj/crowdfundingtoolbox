@@ -59,6 +59,7 @@ class UserRepository implements UserRepositoryInterface
             ::where('id', $id)
             ->with('userDetail')
             ->with('donorStatus')
+            ->with('variableSymbol')
             ->first();
     }
 
