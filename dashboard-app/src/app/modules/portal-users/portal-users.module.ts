@@ -8,9 +8,10 @@ import { PortalUserFilterComponent } from './components/portal-user-filter/porta
 import { PortalUserListItemComponent } from './components/portal-user-list-item/portal-user-list-item.component';
 import { BackToListComponent } from './components/back-to-list/back-to-list.component';
 import { DonorStatusComponent } from './components/donor-status/donor-status.component';
+import { UserDonationsItemComponent } from './components/user-donations-item/user-donations-item.component';
 
 @NgModule({
-  declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent, BackToListComponent, DonorStatusComponent],
+  declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent, BackToListComponent, DonorStatusComponent, UserDonationsItemComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,
