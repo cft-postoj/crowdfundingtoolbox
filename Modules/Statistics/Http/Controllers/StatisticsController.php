@@ -24,8 +24,7 @@ class StatisticsController extends Controller
     {
         return \response()->json(
             array(
-                'donations' => $this->statsDonationService->getDonationsGroup($request['from'], $request['to'], $request['interval'])
-            ),
+                'donations' => $this->statsDonationService->getDonationsGroup($request['from'], $request['to'], $request['interval'])),
             Response::HTTP_OK
         );
     }
@@ -34,8 +33,7 @@ class StatisticsController extends Controller
     {
         return \response()->json(
             array(
-                'donors' => $this->statsDonationService->getDonorsGroup($request['from'], $request['to'], $request['interval'])
-            ),
+                'donors' => $this->statsDonationService->getDonorsGroup($request['from'], $request['to'], $request['interval'])),
             Response::HTTP_OK
         );
     }
@@ -43,8 +41,7 @@ class StatisticsController extends Controller
     protected function getDonorsAndDonationTotal(Request $request)
     {
         return \response()->json(
-            $this->statsDonationService->getDonorsAndDonationsTotalWithHistoric($request['from'], $request['to'])
-            ,
+            $this->statsDonationService->getDonorsAndDonationsTotalWithHistoric($request['from'], $request['to']),
             Response::HTTP_OK
         );
     }
@@ -52,10 +49,18 @@ class StatisticsController extends Controller
     protected function donorsAll(Request $request)
     {
         return \response()->json(
-            $this->statsDonorService->getDonors($request['from'], $request['to'],$request['monthly'])
-            ,
+            $this->statsDonorService->getDonors($request['from'], $request['to'], $request['monthly']),
             Response::HTTP_OK
         );
     }
+
+    protected function getDonationsAll(Request $request)
+    {
+        return \response()->json(
+            $this->statsDonationService->getDonations($request['from'], $request['to'], $request['monthly']),
+            Response::HTTP_OK
+        );
+    }
+
 
 }

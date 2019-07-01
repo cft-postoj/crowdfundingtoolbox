@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DonationService} from '../../services/donation.service';
 import {DonorStats} from '../../models/donor-stats';
+import {DonorService} from '../../services/donor.service';
+import {Routing} from '../../../../constants/config.constants';
 
 @Component({
     selector: 'app-table-portal-users',
@@ -13,11 +14,11 @@ export class TablePortalUsersComponent implements OnInit {
     @Input() public to;
     @Input() public monthly: boolean;
     @Input() public title;
-
+    public routing = Routing;
 
     public portalUsers: [DonorStats];
 
-    constructor(private donationService: DonationService) {
+    constructor(private donorService: DonorService) {
     }
 
     ngOnInit() {
@@ -26,7 +27,7 @@ export class TablePortalUsersComponent implements OnInit {
 
 
     getUsers() {
-        this.donationService.getDonors(this.from, this.to, this.monthly).subscribe(
+        this.donorService.getDonors(this.from, this.to, this.monthly).subscribe(
             result => {
                 this.portalUsers = result;
             }

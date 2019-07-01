@@ -67,4 +67,9 @@ class StatsDonationService implements StatsDonationServiceInterface
         return $result;
     }
 
+    public function getDonations($from, $to, $monthly)
+    {
+        return $this->statsDonationRepository->getDonations($from, $to, $monthly);
+    }
+
 }

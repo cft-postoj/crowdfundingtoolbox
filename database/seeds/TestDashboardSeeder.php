@@ -51,6 +51,7 @@ class TestDashboardSeeder extends Seeder
                     //sub $j from months of current date to simulate donation before $j months
                     'created_at' => $donationDate->copy()->subMonth($j),
                     'updated_at' => $donationDate->copy()->subMonth($j),
+                    'type'=>'card'
                 ]);
             }
         }
@@ -68,6 +69,7 @@ class TestDashboardSeeder extends Seeder
                     'is_monthly_donation' => false,
                     'created_at' => $donationDate,
                     'updated_at' => $donationDate,
+                     'type'=>'bank_transfer'
                 ]);
         }
     }

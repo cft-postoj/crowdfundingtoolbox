@@ -23,4 +23,14 @@ class Widget extends Model
         return $this->hasMany('\Modules\Campaigns\Entities\CampaignImage');
     }
 
+    public function campaign()
+    {
+        return $this->belongsTo('\Modules\Campaigns\Entities\Campaign');
+    }
+
+    public function widgetType()
+    {
+        return $this->belongsTo('\Modules\Campaigns\Entities\WidgetType');
+    }
+
 }

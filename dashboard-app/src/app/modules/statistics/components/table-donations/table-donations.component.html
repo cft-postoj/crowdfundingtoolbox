@@ -26,33 +26,34 @@
 <table class="list-items list-items--orderable">
     <thead>
     <tr>
+
         <th> User name</th>
-        <th> Last donation value</th>
-        <th> Last donation date</th>
+        <th> Donation value</th>
+        <th> date</th>
         <th> Donation type</th>
-        <th> First donation</th>
-        <th> Total donations</th>
+        <th> Widget type</th>
+        <th> Campaign</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let portalUser of portalUsers" class="list-items--item">
-        <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.id]">
-            {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
+    <tr *ngFor="let donation of donations" class="list-items--item">
+        <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.id]">
+            {{donation.portal_user.user?.user_detail.first_name}} {{donation.portal_user?.user.user_detail.last_name}}
         </td>
         <td>
-            {{portalUser.last_donation_value | currency: 'EUR': 'symbol': '1.0-2'}} {{portalUser.last_donation_monthly | monthly}}
+            {{donation.donation | currency: 'EUR': 'symbol': '1.0-2'}} {{donation.is_monthly_donation | monthly}}
         </td>
         <td>
-            {{portalUser.last_donation_at}}
+            {{donation.created_at}}
         </td>
         <td>
-            {{portalUser.last_donation_type}}
+            {{donation.type}}
         </td>
         <td>
-            {{portalUser.first_donation_at}}
+            {{donation.widget.widget_type.name}}
         </td>
-        <td>
-            {{portalUser.donations_sum}}
+        <td class="pointer" [routerLink]="[routing.CAMPAIGNS_FULL_PATH, donation.widget.campaign.id]">
+            {{donation.widget.campaign.name}}
         </td>
     </tr>
     </tbody>
