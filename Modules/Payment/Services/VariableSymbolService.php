@@ -15,7 +15,7 @@ class VariableSymbolService
     public function __construct(VariableSymbolRepository $variableSymbolRepository)
     {
         $this->variableSymbolRepository = $variableSymbolRepository;
-        $this->initialVariableSymbol = 5000;
+        $this->initialVariableSymbol = 100000; // Initial variable symbol for portal users
     }
 
     public function all()
