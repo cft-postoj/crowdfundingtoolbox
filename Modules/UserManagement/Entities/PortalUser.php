@@ -77,4 +77,9 @@ class PortalUser extends Model
             ->where('is_monthly_donation', '=', true)
             ->where('created_at', '>=', $today->subDays($subDays)->toDateTimeString());
     }
+
+    public function excludeFromCampaign()
+    {
+        return $this->hasOne('Modules\UserManagement\Entities\ExcludeUserFromCampaign', 'portal_user_id', 'id');
+    }
 }

@@ -51,6 +51,7 @@ class UserRepository implements UserRepositoryInterface
             ->with('userDetail')
             ->with('portalUser')
             ->with('portalUser.isMonthlyDonor')
+            ->with('portalUser.excludeFromCampaign')
             ->get();
     }
 
@@ -63,6 +64,7 @@ class UserRepository implements UserRepositoryInterface
             ->with('portalUser.donations')
             ->with('portalUser.variableSymbol')
             ->with('portalUser.isMonthlyDonor')
+            ->with('portalUser.excludeFromCampaign')
             ->first();
     }
 

@@ -103,17 +103,12 @@ Route::group([
         Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
     });
 
-    Route::group([
-        'middleware' => ['multiauth:backOfficeUser']
-    ], function () {
-//        Route::get('tokenExpired', 'BackOfficeAPI\UsersController@tokenExpired');
-//        Route::get('all', 'BackOfficeAPI\UsersController@getAll');
-//        Route::get('user-info', 'BackOfficeAPI\UsersController@show');
-
-    });
 
     Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
     Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');
+    Route::put('edit-portal-user/{id}', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePortalUserFromBackoffice');
+    Route::post('edit-portal-user/{portalUserId}/exclude-from-campaigns-targeting', '\Modules\UserManagement\Http\Controllers\PortalUsersController@excludeFromCampaignsTargeting');
+
 
 });
 

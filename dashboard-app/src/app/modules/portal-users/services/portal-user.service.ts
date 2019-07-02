@@ -20,4 +20,12 @@ export class PortalUserService {
         return this.http.get<PortalUser>(`${environment.backOfficeUrl}${environment.portalUsersUrl}/${id}`);
     }
 
+    public excludeFromTargeting(exclude: boolean, portalUserId: number): Observable<any> {
+        let url = environment.backOfficeUrl + environment.editPortalUser + '/' + portalUserId;
+            url += environment.excludeFromTargeting;
+        return this.http.post(`${url}`, {
+            exclude: exclude
+        });
+    }
+
 }

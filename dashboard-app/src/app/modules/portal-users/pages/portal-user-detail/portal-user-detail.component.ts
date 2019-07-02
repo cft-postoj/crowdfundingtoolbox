@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {PortalUser} from '../../models/portal-user';
 import {PortalUserService} from '../../services/portal-user.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -14,7 +14,11 @@ export class PortalUserDetailComponent implements OnInit {
     user: PortalUser;
     id: number;
     loading: boolean = true;
-    isUserMonthlyDonor: boolean = false;
+
+    alertOpen: boolean = false;
+    alertType: string = 'success';
+    alertMessage: string;
+
 
     constructor(private portalUserService: PortalUserService, private router: Router, private route: ActivatedRoute) {
     }
@@ -43,5 +47,16 @@ export class PortalUserDetailComponent implements OnInit {
         });
     }
 
+    public updatedExcluded($event) {
+        if ($event) {
+            this.alertMessage = 'Successfully excluded <b>' + this.user.user_detail.first_name + ' ' +
+                this.user.user_detail.last_name + '</b> from campaigns targeting.'
+        } else {
+            this.alertMessage = 'Successfully remove <b>' + this.user.user_detail.first_name + ' ' +
+                this.user.user_detail.last_name + '</b> from excluding users from campaigns targeting.'
+        }
+
+        this.alertOpen = true;
+    }
 
 }

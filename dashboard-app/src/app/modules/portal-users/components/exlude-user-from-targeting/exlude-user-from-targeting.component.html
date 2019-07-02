@@ -1,0 +1,10 @@
+<label class="excludeFromTargeting" for="excludeFromCampaigns">
+    <input
+            type="checkbox"
+            id="excludeFromCampaigns"
+            [checked]="excluded"
+            (change)="changeExcluded()"
+    >
+    <span class="checkmark"></span>
+    Exclude user from all campaigns targeting
+</label>
