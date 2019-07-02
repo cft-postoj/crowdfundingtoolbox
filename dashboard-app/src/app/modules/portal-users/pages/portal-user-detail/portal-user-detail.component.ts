@@ -14,6 +14,7 @@ export class PortalUserDetailComponent implements OnInit {
     user: PortalUser;
     id: number;
     loading: boolean = true;
+    modalOpened: boolean = false;
 
     alertOpen: boolean = false;
     alertType: string = 'success';
@@ -57,6 +58,10 @@ export class PortalUserDetailComponent implements OnInit {
         }
 
         this.alertOpen = true;
+    }
+
+    public showEditModal() {
+        this.modalOpened = true;
     }
 
 }

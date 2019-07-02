@@ -5,7 +5,7 @@
         <div class="col-12">
             <h4>
                 Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:
-                <button type="button" class="user-detail--edit" title="Edit portal user">
+                <button type="button" class="user-detail--edit" title="Edit portal user" (click)="showEditModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g id="edit_24px" transform="translate(-1816 -136)">
                             <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
@@ -128,3 +128,6 @@
 </div>
 
 <app-loading [isLoading]="loading"></app-loading>
+<app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">
+    <app-edit-portal-user [userData]="user"></app-edit-portal-user>
+</app-modal-full-size>

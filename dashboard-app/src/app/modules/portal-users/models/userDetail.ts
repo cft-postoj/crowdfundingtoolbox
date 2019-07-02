@@ -6,5 +6,6 @@ export class UserDetail {
     city: string;
     country: string;
     zip: string;
+    telephone_prefix: string;
     telephone: string;
 }
