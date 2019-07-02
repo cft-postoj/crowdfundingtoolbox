@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {DonorsAndDonations} from '../models/donors-and-donations';
+import {Donation} from '../models/donation';
 
 
 @Injectable({
@@ -60,8 +61,8 @@ export class DonationService {
     }
 
     public getDonations(from: { year: number; month: number; day: number },
-                     to: { year: number; month: number; day: number },
-                     monthly) {
+                        to: { year: number; month: number; day: number },
+                        monthly) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
             .append('from', this.writeDateAsString(from))
@@ -69,7 +70,7 @@ export class DonationService {
         if (monthly !== undefined) {
             params = params.append('monthly', monthly);
         }
-        return this.http.get<[any]>(
+        return this.http.get<[Donation]>(
             `${environment.backOfficeUrl}${environment.donationUrl}${environment.all}`,
             {
                 headers: headers,

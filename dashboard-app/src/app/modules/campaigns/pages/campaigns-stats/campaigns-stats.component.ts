@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CampaignStats} from '../../models/campaign-stats';
+import {TableModel} from '../../../core/models/table-model';
 
 @Component({
     selector: 'app-campaigns-stats',
@@ -17,13 +18,14 @@ export class CampaignsStatsComponent implements OnInit {
         placeholder: 'Choose columns to show'
     };
 
-    public model: any;
+    public model: TableModel;
     public sortedCampaignsStats;
 
     constructor() {
     }
 
     ngOnInit() {
+        // set up default showed columns
         let dummyCampaignStats = {
             campaign_name: {title: 'Campaign name', value: 5, type: 'string'},
             users_show: {title: 'Users saw', value: 5, type: 'number'},
@@ -33,11 +35,12 @@ export class CampaignsStatsComponent implements OnInit {
             users_new_one_time: {title: 'New one time users', value: 5, type: 'number'},
         };
 
+        // create dropdown option for every entry
         for (let index of Object.keys(dummyCampaignStats)) {
             this.dropdownOptions.push({
                 value_name: index,
                 description: dummyCampaignStats[index].title,
-                type:  dummyCampaignStats[index].type,
+                type: dummyCampaignStats[index].type,
                 filter: {
                     min: Number.MIN_SAFE_INTEGER,
                     max: Number.MAX_SAFE_INTEGER,
@@ -46,21 +49,21 @@ export class CampaignsStatsComponent implements OnInit {
             });
         }
 
-        this.model = this.dropdownOptions.slice(0);
+        this.model.columns = this.dropdownOptions.slice(0);
 
         let dummyCampaignStatsNotSelected = {
-            donation_collected_all: {title: "Donations", value: 5, type: 'number'},
-            donation_collected_monthly: {title: "Monthly donations", value: 5, type: 'number'},
-            donation_collected_one_time: {title: "One time donations", value: 5, type: 'number'},
-            donation_average: {title: "Avg donation", value: 5, type: 'number'},
-            donation_median: {title: "Median donation", value: 5, type: 'number'}
+            donation_collected_all: {title: 'Donations', value: 5, type: 'number'},
+            donation_collected_monthly: {title: 'Monthly donations', value: 5, type: 'number'},
+            donation_collected_one_time: {title: 'One time donations', value: 5, type: 'number'},
+            donation_average: {title: 'Avg donation', value: 5, type: 'number'},
+            donation_median: {title: 'Median donation', value: 5, type: 'number'}
         }
 
         for (let index of Object.keys(dummyCampaignStatsNotSelected)) {
             this.dropdownOptions.push({
                 value_name: index,
                 description: dummyCampaignStatsNotSelected[index].title,
-                type:  dummyCampaignStatsNotSelected[index].type,
+                type: dummyCampaignStatsNotSelected[index].type,
                 filter: {
                     min: Number.MIN_SAFE_INTEGER,
                     max: Number.MAX_SAFE_INTEGER,
@@ -144,11 +147,11 @@ export class CampaignsStatsComponent implements OnInit {
             for (let modelEntry of model) {
                 if (!!modelEntry.filter.min && modelEntry.filter.min > campaignStat[modelEntry.value_name] ||
                     !!modelEntry.filter.max && modelEntry.filter.max < campaignStat[modelEntry.value_name] ||
-                    !!modelEntry.filter.text && campaignStat[modelEntry.value_name].indexOf(modelEntry.filter.text) === -1 ) {
-                    return false
+                    !!modelEntry.filter.text && campaignStat[modelEntry.value_name].indexOf(modelEntry.filter.text) === -1) {
+                    return false;
                 }
             }
             return true;
-        })
+        });
     }
 }

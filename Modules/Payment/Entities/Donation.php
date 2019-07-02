@@ -11,6 +11,9 @@ class Donation extends Model
         'donation',
         'is_monthly_donation'
     ];
+    protected $casts = [
+        'donation' => 'float',
+    ];
 
     public function portalUser()
     {
