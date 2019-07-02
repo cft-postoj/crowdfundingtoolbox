@@ -147,8 +147,6 @@ Route::group([
 
     Route::post('donation/initialize', '\Modules\Payment\Http\Controllers\DonationController@initialize');
 
-    Route::get('is-monthly-donor', '\Modules\UserManagement\Http\Controllers\PortalUsersController@isMonthlyDonor');
-
 });
 
 

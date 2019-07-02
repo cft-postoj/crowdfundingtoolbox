@@ -352,39 +352,8 @@ class PortalUserService implements PortalUserServiceInterface
         return $this->portalUserRepository->getDonationsByUser($userId);
     }
 
-    public function isMonthlyDonor()
-    {
-        $user = JWTAuth::parseToken()->authenticate();
-        try {
-            $portalUserId = $this->getPortalUserIdByUserId($user->id);
-            $isMonthlyDonor = false;
-            $chooseDateForLastDonation = $this->calculateDateForLastDonation();
-
-            if ($this->portalUserRepository->isMonthlyDonor($portalUserId, $chooseDateForLastDonation) !== null) {
-                $isMonthlyDonor = true;
-            }
-
-        } catch (\Exception $exception) {
-            return \response()->json([
-                'error' => $exception->getMessage()
-            ], Response::HTTP_BAD_REQUEST);
-        }
-
-        return \response()->json([
-            'is_monthly_donor' => $isMonthlyDonor
-        ], Response::HTTP_OK);
-    }
-
     private function getPortalUserIdByUserId($id)
     {
         return $this->portalUserRepository->get($id)['id'];
-    }
-
-    private function calculateDateForLastDonation()
-    {
-        // SUB DAYS -- count of days from last donation (30 days + 10 days for bank processing)
-        $subDays = 30 + 10;
-        $today = Carbon::today();
-        return $today->subDays($subDays)->toDateTimeString();
     }
 }

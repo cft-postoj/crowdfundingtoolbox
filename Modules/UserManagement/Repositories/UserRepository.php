@@ -62,6 +62,7 @@ class UserRepository implements UserRepositoryInterface
             ->with('donorStatus')
             ->with('portalUser.donations')
             ->with('portalUser.variableSymbol')
+            ->with('portalUser.isMonthlyDonor')
             ->first();
     }
 

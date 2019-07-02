@@ -58,14 +58,4 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->get();
     }
 
-    public function isMonthlyDonor($id, $date)
-    {
-        return $this->model
-            ::where('id', $id)
-            ->has('donations')
-            ->where('donations.is_monthly_donation', '=', true)
-            ->where('donations.created_at', '<=', $date)
-            ->first();
-    }
-
 }

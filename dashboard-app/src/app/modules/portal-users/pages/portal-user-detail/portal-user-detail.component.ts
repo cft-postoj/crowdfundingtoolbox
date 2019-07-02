@@ -23,7 +23,6 @@ export class PortalUserDetailComponent implements OnInit {
         this.route.params.subscribe(
             params => {
                 this.id = params['id'];
-                this.isMonthlyDonor();
                 this.showDetail();
             }
         );
@@ -45,12 +44,5 @@ export class PortalUserDetailComponent implements OnInit {
         });
     }
 
-    private isMonthlyDonor() {
-        this.portalUserService.isMonthlyDonor().subscribe((data) => {
-            if (data.is_monthly_donor) {
-                this.isUserMonthlyDonor = true;
-            }
-        });
-    }
 
 }
