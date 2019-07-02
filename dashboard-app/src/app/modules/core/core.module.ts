@@ -25,6 +25,7 @@ import {WidgetSettingsComponent} from './components';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { TableHeaderComponent } from './parts/atoms/table-header/table-header.component';
 import { InputTextComponent } from './parts/atoms/input-text/input-text.component';
+import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-size.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { InputTextComponent } from './parts/atoms/input-text/input-text.componen
         GoogleFontSettingsComponent,
         WidgetSettingsComponent,
         PreviewMonetizationComponent,
+        ModalFullSizeComponent,
 
         SafePipe,
         SlovakNumberFormatter,
