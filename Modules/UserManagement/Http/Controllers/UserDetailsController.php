@@ -23,7 +23,12 @@ class UserDetailsController extends Controller
 
     protected function update(Request $request)
     {
-        return $this->userDetailService->update($request);
+        return $this->userDetailService->update($request, null);
+    }
+
+    protected function updatePortalUserFromBackoffice(Request $request, $id)
+    {
+        return $this->userDetailService->update($request, $id);
     }
 
     protected function getBase()

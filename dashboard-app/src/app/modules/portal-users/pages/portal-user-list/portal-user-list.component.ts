@@ -41,7 +41,6 @@ export class PortalUserListComponent implements OnInit {
     }
 
     redirectUserDetail(id: number) {
-        console.log(Routing.PORTAL_USERS + '/' + id);
         this.router.navigateByUrl( Routing.PORTAL_USERS_FULL_PATH + '/' + id);
     }
 

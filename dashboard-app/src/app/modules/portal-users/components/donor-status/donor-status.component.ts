@@ -10,6 +10,9 @@ export class DonorStatusComponent implements OnInit {
     @Input()
     donorStatuses: any;
 
+    @Input()
+    isMonthlyDonor: boolean;
+
     constructor() {
     }
 
@@ -17,8 +20,9 @@ export class DonorStatusComponent implements OnInit {
     }
 
     getDonorStatus() {
-        if (this.donorStatuses.length === 0) {
-            return 'inactive';
+        if (this.isMonthlyDonor) {
+            return 'active';
         }
+        return 'inactive';
     }
 }

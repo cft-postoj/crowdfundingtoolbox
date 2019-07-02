@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\UserManagement\Entities\PortalUser;
 use Modules\UserManagement\Entities\User;
+use Modules\UserManagement\Services\ExcludeFromTargetingService;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\UserService;
 
@@ -14,11 +15,13 @@ class PortalUsersController extends Controller
 {
     private $userService;
     private $portalUserService;
+    private $excludeFromTargetingService;
 
-    public function __construct(PortalUserService $portalUserService, UserService $userService)
+    public function __construct(PortalUserService $portalUserService, UserService $userService, ExcludeFromTargetingService $excludeFromTargetingService)
     {
         $this->userService = $userService;
         $this->portalUserService = $portalUserService;
+        $this->excludeFromTargetingService = $excludeFromTargetingService;
     }
 
     public function all()
@@ -47,11 +50,6 @@ class PortalUsersController extends Controller
         return $this->portalUserService->checkToken();
     }
 
-    public function getDetailsByToken()
-    {
-        return $this->portalUserService->getUserByToken();
-    }
-
     public function logout()
     {
         return $this->portalUserService->logout();
@@ -69,6 +67,14 @@ class PortalUsersController extends Controller
 
     protected function hasUserGeneratedToken(Request $request)
     {
+        /* TODO - add method */
         return $this->portalUserService->hasUserGeneratedToken($request);
     }
+
+    protected function excludeFromCampaignsTargeting(Request $request, $portalUserId)
+    {
+        return $this->excludeFromTargetingService->exclude($request, $portalUserId);
+    }
+
+
 }

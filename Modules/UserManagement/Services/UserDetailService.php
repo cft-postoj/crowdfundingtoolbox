@@ -48,10 +48,16 @@ class UserDetailService implements UserDetailServiceInterface
         ], Response::HTTP_BAD_REQUEST);
     }
 
-    public function update($request)
+    public function update($request, $userId)
     {
         try {
-            $this->tokenFn();
+            if ($userId === null) {
+                $this->tokenFn();
+
+                $userId = $this->user->id;
+                $portalUserId = $this->portalUserRepository->get($userId)['id'];
+            }
+
 
             // UPDATE USER DETAILS
             $customRequest = array();
@@ -72,7 +78,7 @@ class UserDetailService implements UserDetailServiceInterface
                 'delivery_address_is_same' => $request['cft-deliveryAddressSame']
             ));
 
-            $this->userDetailRepository->update(array_merge(...$customRequest), $this->user->id);
+            $this->userDetailRepository->update(array_merge(...$customRequest), $userId);
 
 
             // UPDATE USER GDPR
@@ -81,7 +87,7 @@ class UserDetailService implements UserDetailServiceInterface
                 'agreeMailing' => $request['cft-mailing'],
                 'agreePersonalData' => $request['cft-agree']
             ));
-            $this->userGdprRepository->update(array_merge(...$gdprRequest), $this->portalUserId);
+            $this->userGdprRepository->update(array_merge(...$gdprRequest), $portalUserId);
 
             // UPDATE USERS TABLE
             $userRequest = array();
@@ -93,7 +99,7 @@ class UserDetailService implements UserDetailServiceInterface
                 array_push($userRequest, array('email' => $request['cft-email']));
             }
             if (sizeof($userRequest) !== 0)
-                $this->userRepository->update(array_merge(...$userRequest), $this->user->id);
+                $this->userRepository->update(array_merge(...$userRequest), $userId);
 
         } catch (\Exception $exception) {
             return \response()->json([

@@ -8,6 +8,10 @@ use Modules\UserManagement\Entities\PortalUser;
 
 class TestDashboardSeeder extends Seeder
 {
+    protected $variableSymbolService;
+    protected $userGdprRepository;
+
+
     /**
      * Run the database seeds.
      *

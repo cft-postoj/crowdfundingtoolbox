@@ -8,4 +8,7 @@
   &.inactive {
     background: $red;
   }
+  &.active {
+    background: $green;
+  }
 }

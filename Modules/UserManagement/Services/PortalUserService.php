@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
+use Modules\Payment\Services\VariableSymbolService;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
 use Modules\UserManagement\Jobs\RemoveGeneratedToken;
@@ -36,13 +37,16 @@ class PortalUserService implements PortalUserServiceInterface
     private $generatedUserTokenService;
     private $userGdprRepository;
     private $userDetailRepository;
+    private $variableSymbolService;
 
     public function __construct(PortalUserRepository $portalUserRepository,
                                 UserRepository $userRepository,
                                 GeneratedUserTokenRepository $generatedUserTokenRepository,
                                 RemoveGeneratedToken $generatedTokenJob,
                                 UserGdprRepository $userGdprRepository,
-                                UserDetailRepository $userDetailRepository)
+                                UserDetailRepository $userDetailRepository,
+                                GeneratedUserTokenService $generatedUserTokenService,
+                                VariableSymbolService $variableSymbolService)
     {
         $this->portalUserRepository = $portalUserRepository;
         $this->userRepository = $userRepository;
@@ -51,6 +55,8 @@ class PortalUserService implements PortalUserServiceInterface
         $this->userGdprRepository = $userGdprRepository;
         $this->userDetailRepository = $userDetailRepository;
         $this->usernameUsedCounter = 0;
+        $this->generatedUserTokenService = $generatedUserTokenService;
+        $this->variableSymbolService = $variableSymbolService;
     }
 
     public function getAll()
@@ -64,7 +70,8 @@ class PortalUserService implements PortalUserServiceInterface
         }
     }
 
-    public function getAllWithDonations() {
+    public function getAllWithDonations()
+    {
         try {
             return \response()->json($this->portalUserRepository->getAllWithDonations(),
                 Response::HTTP_OK);
@@ -109,7 +116,6 @@ class PortalUserService implements PortalUserServiceInterface
             $existInUserTable = ($user !== null) ? true : false;
             $existInPortalUserTable = ($user === null) ? false :
                 (($this->portalUserRepository->get($user->id) !== null) ? true : false);
-            $this->generatedUserTokenService = new GeneratedUserTokenService();
             if ($existInUserTable && $existInPortalUserTable) {
                 return \response()->json([
                     'error' => array(
@@ -123,12 +129,14 @@ class PortalUserService implements PortalUserServiceInterface
                  * the same email address
                  */
                 $this->portalUserRepository->create($user->id);
-                $this->userGdprRepository->create($request, $this->portalUserRepository->get($user->id)['id']);
+                $portalUserId = $this->portalUserRepository->get($user->id)['id'];
+                $this->userGdprRepository->create($request, $portalUserId);
 
                 // update user password
                 $this->userRepository->updatePassword($user->id, $request['password']);
 
                 $generatedToken = $this->generatedUserTokenService->create($user->id);
+                $this->variableSymbolService->create($portalUserId);
                 Mail::to($user->email)->send(new RegisterEmail($generatedToken));
 
                 if ($this->userDetailRepository->get($user->id) === null) {
@@ -147,10 +155,12 @@ class PortalUserService implements PortalUserServiceInterface
             $username = explode('@', $request['email'])[0];
             $newUserId = $this->userRepository->create($request['email'], $request['password'], $this->checkUniqueUsername($username));
             $portalUser = $this->portalUserRepository->create($newUserId);
-            $this->userGdprRepository->create($request, $this->portalUserRepository->get($newUserId)['id']);
+            $portalUserId = $this->portalUserRepository->get($newUserId)['id'];
+            $this->userGdprRepository->create($request, $portalUserId);
 
             $userData = $this->userRepository->get($newUserId);
             $generatedToken = $this->generatedUserTokenService->create($newUserId);
+            $this->variableSymbolService->create($portalUserId);
             Mail::to($userData->email)->send(new RegisterEmail($generatedToken));
             if ($this->userDetailRepository->get($newUserId) === null) {
                 $this->userDetailRepository->create($newUserId);
@@ -340,5 +350,10 @@ class PortalUserService implements PortalUserServiceInterface
     public function getDonationsByUser($userId)
     {
         return $this->portalUserRepository->getDonationsByUser($userId);
+    }
+
+    private function getPortalUserIdByUserId($id)
+    {
+        return $this->portalUserRepository->get($id)['id'];
     }
 }
