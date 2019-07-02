@@ -14,6 +14,7 @@ export class PortalUserDetailComponent implements OnInit {
     user: PortalUser;
     id: number;
     loading: boolean = true;
+    isUserMonthlyDonor: boolean = false;
 
     constructor(private portalUserService: PortalUserService, private router: Router, private route: ActivatedRoute) {
     }
@@ -22,6 +23,7 @@ export class PortalUserDetailComponent implements OnInit {
         this.route.params.subscribe(
             params => {
                 this.id = params['id'];
+                this.isMonthlyDonor();
                 this.showDetail();
             }
         );
@@ -40,6 +42,14 @@ export class PortalUserDetailComponent implements OnInit {
             console.log(error);
             // if error - redirect to portal users list
             this.router.navigateByUrl(`${Routing.PORTAL_USERS_FULL_PATH}`);
+        });
+    }
+
+    private isMonthlyDonor() {
+        this.portalUserService.isMonthlyDonor().subscribe((data) => {
+            if (data.is_monthly_donor) {
+                this.isUserMonthlyDonor = true;
+            }
         });
     }
 

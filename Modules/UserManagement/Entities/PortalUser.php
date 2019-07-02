@@ -2,6 +2,7 @@
 
 namespace Modules\UserManagement\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -65,5 +66,15 @@ class PortalUser extends Model
     public function variableSymbol()
     {
         return $this->hasOne('Modules\Payment\Entities\VariableSymbol', 'portal_user_id', 'id');
+    }
+
+    public function isMonthlyDonor()
+    {
+        // SUB DAYS -- count of days from last donation (30 days + 10 days for bank processing)
+        $subDays = 30 + 10;
+        $today = Carbon::today();
+        return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->where('is_monthly_donation', '=', true)
+            ->where('created_at', '>=', $today->subDays($subDays)->toDateTimeString());
     }
 }

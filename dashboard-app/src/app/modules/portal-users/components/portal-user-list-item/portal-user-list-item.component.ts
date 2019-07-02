@@ -10,6 +10,8 @@ import {Router} from '@angular/router';
 })
 export class PortalUserListItemComponent implements OnInit {
 
+    public isMonthlyDonor: boolean = false;
+
     @Input()
     users: PortalUser[];
 
@@ -21,6 +23,7 @@ export class PortalUserListItemComponent implements OnInit {
 
     ngOnInit() {
     }
+
 
     getDonorStatus(statuses) {
         if (statuses.length === 0) {

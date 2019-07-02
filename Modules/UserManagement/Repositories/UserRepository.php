@@ -49,7 +49,8 @@ class UserRepository implements UserRepositoryInterface
             ::has('portalUser')
             ->has('userDetail')
             ->with('userDetail')
-            ->with('donorStatus')
+            ->with('portalUser')
+            ->with('portalUser.isMonthlyDonor')
             ->get();
     }
 

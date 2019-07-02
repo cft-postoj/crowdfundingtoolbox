@@ -29,6 +29,7 @@ export class PortalUserListComponent implements OnInit {
     getUsers() {
         this.portalUserService.getAll().subscribe((data: PortalUser[]) => {
             this.users = data;
+            console.log(this.users)
             this.loading = false;
             if (data.length === 0) {
                 this.noUsers = true;

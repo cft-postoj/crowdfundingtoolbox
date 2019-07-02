@@ -59,7 +59,7 @@
           <tr>
             <td class="titleTd">MONTHLY DONOR:</td>
             <td>
-              <app-donor-status [donorStatuses]="user.donor_status"></app-donor-status>
+              <app-donor-status [donorStatuses]="user.donor_status" [isMonthlyDonor]="user.portal_user.is_monthly_donor !== null"></app-donor-status>
             </td>
           </tr>
           <tr>

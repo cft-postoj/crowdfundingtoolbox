@@ -19,4 +19,8 @@ export class PortalUserService {
     public getById(id): Observable<PortalUser> {
         return this.http.get<PortalUser>(`${environment.backOfficeUrl}${environment.portalUsersUrl}/${id}`);
     }
+
+    public isMonthlyDonor(): Observable<any> {
+        return this.http.get(`${environment.backOfficeUrl}${environment.isMonthlyDonor}`);
+    }
 }

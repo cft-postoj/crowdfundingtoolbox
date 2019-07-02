@@ -47,11 +47,6 @@ class PortalUsersController extends Controller
         return $this->portalUserService->checkToken();
     }
 
-    public function getDetailsByToken()
-    {
-        return $this->portalUserService->getUserByToken();
-    }
-
     public function logout()
     {
         return $this->portalUserService->logout();
@@ -69,6 +64,12 @@ class PortalUsersController extends Controller
 
     protected function hasUserGeneratedToken(Request $request)
     {
+        /* TODO - add method */
         return $this->portalUserService->hasUserGeneratedToken($request);
+    }
+
+    protected function isMonthlyDonor()
+    {
+        return $this->portalUserService->isMonthlyDonor();
     }
 }

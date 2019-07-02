@@ -15,6 +15,14 @@ class PortalUserRepository implements PortalUserRepositoryInterface
         $this->model = PortalUser::class;
     }
 
+    public function all()
+    {
+        return $this->model
+            ::with('donations')
+            ->with('isMonthlyDonor')
+            ->get();
+    }
+
     public function get($userId)
     {
         return $this->model
@@ -39,7 +47,8 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->first();
     }
 
-    public function getAllWithDonations() {
+    public function getAllWithDonations()
+    {
         return $this->model
             ::has('donations')
             ->with('donations')
@@ -47,6 +56,16 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->with('user.userDetail')
             ->with('visit')
             ->get();
+    }
+
+    public function isMonthlyDonor($id, $date)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->has('donations')
+            ->where('donations.is_monthly_donation', '=', true)
+            ->where('donations.created_at', '<=', $date)
+            ->first();
     }
 
 }

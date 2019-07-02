@@ -52,6 +52,8 @@ export const environment = {
 
     userDetail: '/user-detail',
 
-    checkGeneratedResetToken: '/check-generated-reset-token'
+    checkGeneratedResetToken: '/check-generated-reset-token',
+
+    isMonthlyDonor: '/is-monthly-donor'
 
 };
