@@ -92,6 +92,7 @@ import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-si
         WidgetSettingsComponent,
         PreviewMonetizationComponent,
         TableHeaderComponent,
+        ModalFullSizeComponent,
 
         // pipes
         SafePipe,
