@@ -64,13 +64,14 @@
                                     <app-total-current-and-previous
                                         [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_sum'"
                                         [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_sum'"
-                                        [currency]="'€'">
+                                        [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    total donations
+                                    <span
+                                        (click)="openModal('Donations',undefined,'tableDonations')">total donations</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -78,7 +79,7 @@
                                     <app-total-current-and-previous
                                         [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_sum':true"
                                         [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_sum':true"
-                                        [currency]="'€'">
+                                        [currency]="true">
                                     </app-total-current-and-previous>
 
                                 </div>
@@ -86,16 +87,18 @@
                                     <app-total-current-and-previous
                                         [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_sum':false"
                                         [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_sum':false"
-                                        [currency]="'€'">
+                                        [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    monthly donations
+                                    <span
+                                        (click)="openModal('Donations',true,'tableDonations')">monthly donations</span>
                                 </div>
                                 <div class="col-6">
-                                    one time donations
+                                    <span
+                                        (click)="openModal('Donations',false,'tableDonations')">one time donations</span>
                                 </div>
                             </div>
 
@@ -104,14 +107,14 @@
                                     <app-total-current-and-previous
                                         [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_avg':true"
                                         [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_avg':true"
-                                        [currency]="'€'">
+                                        [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
                                 <div class="col-6">
                                     <app-total-current-and-previous
                                         [current]="donorsAndDonations | donorsAndDonationsPipe: 'current':'donations_avg':false"
                                         [previous]="donorsAndDonations | donorsAndDonationsPipe: 'diff':'donations_avg':false"
-                                        [currency]="'€'">
+                                        [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
                             </div>
@@ -146,7 +149,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <span (click)="openModal('Donors')">total donors</span>
+                                    <span (click)="openModal('Donors',undefined,'tableDonors')">total donors</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -165,10 +168,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <span (click)="openModal('Monthly donors' ,true)"> monthly donors </span>
+                                    <span
+                                        (click)="openModal('Monthly donors' ,true,'tableDonors')"> monthly donors </span>
                                 </div>
                                 <div class="col-6">
-                                    <span (click)="openModal('Monthly donors' ,true)"> one time donors </span>
+                                    <span
+                                        (click)="openModal('Monthly donors' ,false,'tableDonors')"> one time donors </span>
                                 </div>
                             </div>
                         </div>
@@ -180,5 +185,8 @@
 </div>
 
 <app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">
-    <app-table-portal-users [from]="from" [to]="to" [monthly]="monthly" [title]="tableTitle"></app-table-portal-users>
+    <app-table-portal-users *ngIf="tables.tableDonors" [from]="from" [to]="to" [monthly]="monthly"
+                            [title]="tableTitle"></app-table-portal-users>
+    <app-table-donations *ngIf="tables.tableDonations" [from]="from" [to]="to" [monthly]="monthly"
+                         [title]="tableTitle"></app-table-donations>
 </app-modal-full-size>

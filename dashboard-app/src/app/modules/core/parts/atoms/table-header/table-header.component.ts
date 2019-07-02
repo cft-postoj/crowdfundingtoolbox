@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TableModel} from '../../../models/table-model';
+import {Column} from '../../../models/column';
 
 @Component({
     selector: '[app-table-header]',
@@ -8,14 +10,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class TableHeaderComponent implements OnInit {
 
     // column, that handle current tableHeaderComponent
-    @Input() column;
+    @Input() column: Column;
 
     // model with all columns and with filters data
-    @Input() model;
+    @Input() model: TableModel;
 
     @Output() modelChange = new EventEmitter();
 
-    @Input() hide: string[];
+    @Input() hide: string[] = [];
 
     public asc;
     public min;
@@ -29,6 +31,7 @@ export class TableHeaderComponent implements OnInit {
     ngOnInit() {
     }
 
+    // toogle ordering based on actual sort by value
     toogleOrdering() {
         if (this.model.sortBy !== this.column || this.model.asc) {
             this.asc = false;
@@ -40,10 +43,11 @@ export class TableHeaderComponent implements OnInit {
         this.modelChange.emit(this.model);
     }
 
+    // update filters
     setFilter(type, input) {
-        this.model.forEach(singleStat => {
-            if (singleStat.description === this.column.description) {
-                singleStat.filter[type] = input;
+        this.model.columns.forEach(column => {
+            if (column.description === this.column.description) {
+                column.filter[type] = input;
             }
         });
         this.modelChange.emit(this.model);

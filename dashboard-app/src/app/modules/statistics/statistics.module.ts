@@ -14,9 +14,11 @@ import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-si
 import {InlineSVGModule} from 'ng-inline-svg';
 import { TablePortalUsersComponent } from './components/table-portal-users/table-portal-users.component';
 import { MonthlyPipe } from './pipes/monthly.pipe';
+import { TableDonationsComponent } from './components/table-donations/table-donations.component';
 
 @NgModule({
-    declarations: [OverallComponent, DonorsAndDonationsPipe, ForceSignPipe, TotalCurrentAndPreviousComponent, ModalFullSizeComponent, TablePortalUsersComponent, MonthlyPipe],
+    declarations: [OverallComponent, DonorsAndDonationsPipe, ForceSignPipe, TotalCurrentAndPreviousComponent,
+        ModalFullSizeComponent, TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent],
     imports: [
         CommonModule,
         FormsModule,

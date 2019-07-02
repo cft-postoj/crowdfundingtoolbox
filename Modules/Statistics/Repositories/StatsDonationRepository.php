@@ -48,5 +48,18 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
             ->get();
     }
 
+    public function getDonations($from, $to, $monthly)
+    {
+        $query = Donation::query()
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->with(['portalUser.user.userDetail', 'widget.campaign', 'widget.widgetType']);
+
+        //if monthly is set, filter lastDonationAt
+        if ($monthly !== null) {
+            $lastDonationAt = $query->where('is_monthly_donation', $monthly);
+        }
+        return $query->get();
+    }
 
 }

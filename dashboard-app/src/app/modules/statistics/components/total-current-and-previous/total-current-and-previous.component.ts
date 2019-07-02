@@ -9,7 +9,7 @@ export class TotalCurrentAndPreviousComponent implements OnInit {
 
     @Input() current;
     @Input() previous;
-    @Input() currency;
+    @Input() currency: boolean = false;
 
     constructor() {
     }

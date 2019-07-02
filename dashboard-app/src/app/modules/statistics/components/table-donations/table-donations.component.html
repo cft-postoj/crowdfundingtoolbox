@@ -31,28 +31,28 @@
             (modelChange)="sortTable()"></th>
     </tr>
     </thead>
-    <tbody>
-    <tr *ngFor="let portalUser of sortedPortalUsers" class="list-items--item">
-        <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.id]">
-            {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
+    <tbody *ngIf="!loading">
+    <tr *ngFor="let donation of sortedDonations" class="list-items--item">
+        <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.id]">
+            {{donation.portal_user.user?.user_detail.first_name}} {{donation.portal_user?.user.user_detail.last_name}}
         </td>
         <td>
-            {{portalUser.last_donation_value | currency: 'EUR': 'symbol': '1.0-2'}}
+            {{donation.donation | currency: 'EUR': 'symbol': '1.0-2'}}
         </td>
         <td>
-            {{portalUser.last_donation_monthly | monthly}}
+            {{donation.is_monthly_donation | monthly}}
         </td>
         <td>
-            {{portalUser.last_donation_at}}
+            {{donation.created_at}}
         </td>
         <td>
-            {{portalUser.last_donation_payment_method}}
+            {{donation.payment_method}}
         </td>
         <td>
-            {{portalUser.first_donation_at}}
+            {{donation.widget.widget_type.name}}
         </td>
-        <td>
-            {{portalUser.donations_sum | currency: 'EUR': 'symbol': '1.0-2'}}
+        <td class="pointer" [routerLink]="[routing.CAMPAIGNS_FULL_PATH, donation.widget.campaign.id]">
+            {{donation.widget.campaign.name}}
         </td>
     </tr>
     </tbody>

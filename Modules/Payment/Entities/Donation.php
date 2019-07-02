@@ -9,7 +9,11 @@ class Donation extends Model
     protected $table = 'donations';
     protected $fillable = [
         'donation',
-        'is_monthly_donation'
+        'is_monthly_donation',
+        'payment_method'
+    ];
+    protected $casts = [
+        'donation' => 'float',
     ];
 
     public function portalUser()
@@ -19,7 +23,7 @@ class Donation extends Model
 
     public function widget()
     {
-        return $this->belongsTo('\Modules\Campaigns\Entities\Widget', 'id', 'widget_id');
+        return $this->belongsTo('\Modules\Campaigns\Entities\Widget');
     }
 
     public function widgetReferral()

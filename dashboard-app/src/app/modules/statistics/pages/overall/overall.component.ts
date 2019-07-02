@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DonationService} from '../../services/donation.service';
 import {DonorsAndDonations} from '../../models/donors-and-donations';
 import {DropdownItem, RadioButton} from '../../../core/models';
+import {DonorService} from '../../services/donor.service';
 
 @Component({
     selector: 'app-overall',
@@ -26,7 +27,17 @@ export class OverallComponent implements OnInit {
     private monthly: boolean;
     private tableTitle: string;
 
-    constructor(private donationService: DonationService) {
+    // all tables used ina app-modal-full-size component in this componetn
+    public tables: {
+        tableDonors: boolean;
+        tableDonations: boolean;
+    } = {
+        tableDonors: false,
+        tableDonations: false
+    };
+
+    constructor(private donationService: DonationService ,
+                private donorService: DonorService) {
     }
 
     public ngOnInit(): void {
@@ -63,7 +74,7 @@ export class OverallComponent implements OnInit {
             );
         }
         if (this.type === 'donors') {
-            this.donationService.getDonorsGroup(this.from, this.to, this.interval).subscribe(response => {
+            this.donorService.getDonorsGroup(this.from, this.to, this.interval).subscribe(response => {
                     this.graphLoading = false;
                     this.data = this.handleRequest(response.donors);
                     this.options = {
@@ -116,9 +127,14 @@ export class OverallComponent implements OnInit {
         );
     }
 
-    public openModal(title: string, pericodicity: boolean) {
+    // tableToOpen -> name of table from this.tables that will be open after called
+    public openModal(title: string, monthly: boolean, tableToOpen: string) {
         this.tableTitle = title;
-        this.monthly = pericodicity;
+        this.monthly = monthly;
         this.modalOpened = true;
+        for (const tableKey of Object.keys(this.tables)) {
+            this.tables[tableKey] = false;
+        }
+        this.tables[tableToOpen] = true;
     }
 }
