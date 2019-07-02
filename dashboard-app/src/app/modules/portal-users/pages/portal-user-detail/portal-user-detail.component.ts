@@ -31,7 +31,6 @@ export class PortalUserDetailComponent implements OnInit {
     private showDetail() {
         this.portalUserService.getById(this.id).subscribe((data) => {
             this.user = data;
-            console.log(this.user)
             // if current user is not exist or is not a portal user - redirect to portal users list
             if (this.user.portal_user === null) {
                 this.router.navigateByUrl(`${Routing.PORTAL_USER_LIST_FULL_PATH}`);
