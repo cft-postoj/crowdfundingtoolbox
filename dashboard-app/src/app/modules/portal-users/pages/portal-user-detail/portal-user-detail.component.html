@@ -3,7 +3,20 @@
 <div class="user-detail d-flex flex-column" *ngIf="!loading">
     <div class="row">
         <div class="col-12">
-            <h4>Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:</h4>
+            <h4>
+                Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:
+                <button type="button" class="user-detail--edit" title="Edit portal user">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g id="edit_24px" transform="translate(-1816 -136)">
+                            <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon" transform="translate(246 20)">
+                                <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#0074E9"/>
+                            </g>
+                        </g>
+                    </svg>
+
+                </button>
+            </h4>
         </div>
     </div>
     <div class="row mt-3">
@@ -19,31 +32,35 @@
         <div class="col-5">
             <div class="user-detail--description" *ngIf="user">
                 <table cellpadding="0" cellspacing="0" class="table table-responsive borderless" border="0">
-                    <tr>
+                    <tr class="borderTr">
                         <td class="titleTd">NAME:</td>
                         <td><b>{{user.user_detail.first_name + ' ' + user.user_detail.last_name}}</b></td>
                     </tr>
                     <tr>
                         <td class="titleTd">ADDRESS:</td>
                         <td>
-                            {{user.user_detail.address}}
+                            {{user.user_detail.street}} {{user.user_detail.house_number}}
                         </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>{{user.user_detail.zip}} {{user.user_detail.city}}</td>
                     </tr>
-                    <tr>
+                    <tr class="borderTr">
                         <td></td>
                         <td>{{user.user_detail.country}}</td>
                     </tr>
-                    <tr>
+                    <tr class="borderTr">
                         <td class="titleTd">TELEPHONE:</td>
                         <td>{{user.user_detail.telephone}}</td>
                     </tr>
-                    <tr>
+                    <tr class="borderTr">
                         <td class="titleTd">EMAIL:</td>
                         <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <td class="titleTd">USERNAME:</td>
+                        <td>{{user.username}}</td>
                     </tr>
                 </table>
             </div>
@@ -51,17 +68,25 @@
         <div class="col-5">
             <div class="user-detail--description" *ngIf="user">
                 <table cellpadding="0" cellspacing="0" class="table table-responsive borderless" border="0">
-                    <tr>
+                    <tr class="borderTr">
                         <td class="titleTd">BANK ACCOUNT:</td>
                         <td><b>SK12 123456789</b></td>
                     </tr>
-                    <tr>
+                    <tr class="borderTr">
+                        <td class="titleTd">CARD NUMBER:</td>
+                        <td><b>**** **** **** 4567</b></td>
+                    </tr>
+                    <tr class="borderTr">
+                        <td class="titleTd">CARD EXPIRATION:</td>
+                        <td><b>12/21</b></td>
+                    </tr>
+                    <tr class="borderTr">
                         <td class="titleTd">VARIABLE SYMBOL:</td>
                         <td>
                             <b>{{user.portal_user.variable_symbol.variable_symbol}}</b>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="borderTr">
                         <td class="titleTd">MONTHLY DONOR:</td>
                         <td>
                             <app-donor-status [donorStatuses]="user.donor_status"
