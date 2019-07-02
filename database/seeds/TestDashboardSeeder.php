@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder;
 use Modules\Payment\Entities\CampaignDonation;
 use Modules\Payment\Entities\Donation;
 use Modules\UserManagement\Database\Seeders\PortalUserSeeder;
@@ -36,7 +35,7 @@ class TestDashboardSeeder extends Seeder
             $referralWidget = $widgets[array_rand($widgets)];
             $userDonation = $this->getRandomDonation();
             //get random time in current date to simulate different times of donations, sub random days to simulate donations during whole month
-            $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59))->subDays(rand(0,30));
+            $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59))->subDays(rand(0, 30));
             //get random months, when user stopped with supporting ($rand is number of months)
             $rand = rand(0, 20) - 15;
             $j = $rand < 0 ? 0 : $rand;
@@ -51,7 +50,7 @@ class TestDashboardSeeder extends Seeder
                     //sub $j from months of current date to simulate donation before $j months
                     'created_at' => $donationDate->copy()->subMonth($j),
                     'updated_at' => $donationDate->copy()->subMonth($j),
-                    'type'=>'card'
+                    'payment_method' => 'card_payment'
                 ]);
             }
         }
@@ -60,17 +59,17 @@ class TestDashboardSeeder extends Seeder
             $currentSupporter = $users[array_rand($users)];
             $referralWidget = $widgets[array_rand($widgets)];
             $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59));
-            $donationDate->subDays(rand(0,365));
+            $donationDate->subDays(rand(0, 365));
             Donation::create([
-                    'portal_user_id' => $currentSupporter['id'],
-                    'widget_id' => $referralWidget['id'],
-                    'referral_widget_id' => $referralWidget['id'],
-                    'donation' => rand(1,50),
-                    'is_monthly_donation' => false,
-                    'created_at' => $donationDate,
-                    'updated_at' => $donationDate,
-                     'type'=>'bank_transfer'
-                ]);
+                'portal_user_id' => $currentSupporter['id'],
+                'widget_id' => $referralWidget['id'],
+                'referral_widget_id' => $referralWidget['id'],
+                'donation' => rand(1, 50),
+                'is_monthly_donation' => false,
+                'created_at' => $donationDate,
+                'updated_at' => $donationDate,
+                'payment_method' => 'bank_transfer'
+            ]);
         }
     }
 

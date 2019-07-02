@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DonationAddDonationType extends Migration
+class DonationAddPaymentMethod extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class DonationAddDonationType extends Migration
     public function up()
     {
         Schema::table('donations', function (Blueprint $table) {
-            $table->enum('type', ['card', 'bank_transfer'])->nullable();
+            $table->enum('payment_method', ['card_payment', 'bank_transfer'])->nullable();
         });
     }
 

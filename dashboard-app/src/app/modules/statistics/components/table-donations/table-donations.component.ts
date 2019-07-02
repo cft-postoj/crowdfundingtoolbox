@@ -63,8 +63,8 @@ export class TableDonationsComponent implements OnInit {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'type',
-            description: 'Donation type',
+            value_name: 'payment_method',
+            description: 'Payment method',
             type: 'text',
             filter: new Filter()
         });

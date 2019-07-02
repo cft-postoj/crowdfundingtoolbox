@@ -11,7 +11,6 @@ export class TableService {
     }
 
     sort(model, objects) {
-        console.log('soooort');
         const filteredCampaignStats = this.filterByValues(model, objects);
         let sortedObjects = filteredCampaignStats;
         if (!!model.sortBy) {

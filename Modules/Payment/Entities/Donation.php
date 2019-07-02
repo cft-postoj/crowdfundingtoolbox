@@ -9,7 +9,8 @@ class Donation extends Model
     protected $table = 'donations';
     protected $fillable = [
         'donation',
-        'is_monthly_donation'
+        'is_monthly_donation',
+        'payment_method'
     ];
     protected $casts = [
         'donation' => 'float',

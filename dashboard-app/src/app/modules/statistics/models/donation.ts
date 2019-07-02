@@ -1,14 +1,17 @@
+import {Widget} from '../../campaigns/models';
+import {PortalUser} from '../../portal-users/models/portal-user';
+
 export class Donation {
     created_at: string;
     deleted_at: null;
     donation: number;
-    id: 1;
+    id: number;
     is_monthly_donation: true;
-    portal_user: any;
-    portal_user_id: 1;
-    referral_widget_id: 40;
-    type: string;
+    portal_user: PortalUser;
+    portal_user_id: number;
+    referral_widget_id: number;
+    payment_method: string;
     updated_at: string;
-    widget: any;
-    widget_id: 40;
+    widget: Widget;
+    widget_id: number;
 }

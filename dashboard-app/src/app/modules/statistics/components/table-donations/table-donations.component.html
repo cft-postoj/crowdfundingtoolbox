@@ -26,26 +26,8 @@
 <table class="list-items list-items--orderable">
     <thead>
     <tr>
-        <th app-table-header
-            [column]="model.columns[0]" [(model)]="model"
-            (modelChange)="sortTable()"></th>
-        <th app-table-header
-            [column]="model.columns[1]" [(model)]="model"
-            (modelChange)="sortTable()"></th>
-        <th app-table-header
-            [column]="model.columns[2]" [(model)]="model"
-            (modelChange)="sortTable()"></th>
-        <th app-table-header
-            [column]="model.columns[3]" [(model)]="model"
-            (modelChange)="sortTable()" [hide]="'filters'"></th>
-        <th app-table-header
-            [column]="model.columns[4]" [(model)]="model"
-            (modelChange)="sortTable()"></th>
-        <th app-table-header
-            [column]="model.columns[5]" [(model)]="model"
-            (modelChange)="sortTable()"></th>
-        <th app-table-header
-            [column]="model.columns[6]" [(model)]="model"
+        <th app-table-header *ngFor="let column of model.columns"
+            [column]="column" [(model)]="model"
             (modelChange)="sortTable()"></th>
     </tr>
     </thead>
@@ -64,7 +46,7 @@
             {{donation.created_at}}
         </td>
         <td>
-            {{donation.type}}
+            {{donation.payment_method}}
         </td>
         <td>
             {{donation.widget.widget_type.name}}

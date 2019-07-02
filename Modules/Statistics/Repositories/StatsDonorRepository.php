@@ -32,7 +32,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
         // last donation detail
         $lastDonation = Donation::query()
             ->select('portal_user_id', 'donation as last_donation_value', 'is_monthly_donation as last_donation_monthly',
-                'type as last_donation_type', 'created_at');
+                'payment_method as last_donation_payment_method', 'created_at');
 
         // donations_sum
         $donationsSum = Donation::query()

@@ -55,8 +55,8 @@ export class TablePortalUsersComponent implements OnInit {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'last_donation_type',
-            description: 'Donation type',
+            value_name: 'last_donation_payment_method',
+            description: 'Last payment method',
             type: 'text',
             filter: new Filter()
         });
@@ -86,7 +86,6 @@ export class TablePortalUsersComponent implements OnInit {
     }
 
     sortTable() {
-        console.log('sort mada');
         this.sortedPortalUsers = this.tableService.sort(this.model, this.portalUsers);
     }
 }
