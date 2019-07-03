@@ -11,4 +11,6 @@ interface StatsDonationRepositoryInterface
 
     public function getDonorsAndDonationsTotal($from, $to);
 
+    public function getDonorsAndDonationsTotalGroupMonthly($from, $to);
+
 }

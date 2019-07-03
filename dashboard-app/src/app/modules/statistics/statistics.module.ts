@@ -7,17 +7,16 @@ import {ChartModule} from 'primeng/chart';
 import {HttpClientModule} from '@angular/common/http';
 import {CoreModule} from '../core/core.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DonorsAndDonationsPipe} from './pipes/donors-and-donations.pipe';
 import {ForceSignPipe} from './pipes/force-sign.pipe';
 import {TotalCurrentAndPreviousComponent} from './components/total-current-and-previous/total-current-and-previous.component';
 import {InlineSVGModule} from 'ng-inline-svg';
-import { TablePortalUsersComponent } from './components/table-portal-users/table-portal-users.component';
-import { MonthlyPipe } from './pipes/monthly.pipe';
-import { TableDonationsComponent } from './components/table-donations/table-donations.component';
+import {TablePortalUsersComponent} from './components/table-portal-users/table-portal-users.component';
+import {MonthlyPipe} from './pipes/monthly.pipe';
+import {TableDonationsComponent} from './components/table-donations/table-donations.component';
 
 @NgModule({
-    declarations: [OverallComponent, DonorsAndDonationsPipe, ForceSignPipe, TotalCurrentAndPreviousComponent,
-         TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent],
+    declarations: [OverallComponent, ForceSignPipe, TotalCurrentAndPreviousComponent,
+        TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent],
     imports: [
         CommonModule,
         FormsModule,

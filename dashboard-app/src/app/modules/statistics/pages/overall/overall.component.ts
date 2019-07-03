@@ -36,7 +36,7 @@ export class OverallComponent implements OnInit {
         tableDonations: false
     };
 
-    constructor(private donationService: DonationService ,
+    constructor(private donationService: DonationService,
                 private donorService: DonorService) {
     }
 

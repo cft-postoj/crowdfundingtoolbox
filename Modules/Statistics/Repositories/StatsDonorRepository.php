@@ -56,5 +56,24 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->get();
     }
 
+    public function countOfNewDonors($from, $to)
+    {
+        // first donation and date for portal user, when he successfully made first donation
+        $firstDonation = Donation::query()
+            ->select('portal_user_id', 'is_monthly_donation',
+                DB::raw('MIN(created_at) as first_donation_at'))
+            ->groupBy('portal_user_id', 'is_monthly_donation');
+
+        //get only those portal users who made first donation at specific time period
+        return PortalUser::query()
+            ->select(DB::raw('count(id)'), 'is_monthly_donation')
+            ->joinSub($firstDonation, 'first_donation', function ($join) use ($from, $to) {
+                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            })
+            ->whereDate('first_donation_at', '>=', $from)
+            ->whereDate('first_donation_at', '<=', $to)
+            ->groupBy('is_monthly_donation')
+            ->get();
+    }
 
 }

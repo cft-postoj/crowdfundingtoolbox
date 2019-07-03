@@ -40,7 +40,17 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
     public function getDonorsAndDonationsTotal($from, $to)
     {
         return $this->model::select(
-            DB::raw('count(portal_user_id) as donors_count'), DB::raw('sum(donation) as donations_sum'),
+            DB::raw('count(DISTINCT portal_user_id) as donors_count'), DB::raw('sum(donation) as donations_sum'),
+            DB::raw('avg(donation) as donations_avg'))
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->first();
+    }
+
+    public function getDonorsAndDonationsTotalGroupMonthly($from, $to)
+    {
+        return $this->model::select(
+            DB::raw('count(DISTINCT portal_user_id) as donors_count'), DB::raw('sum(donation) as donations_sum'),
             DB::raw('avg(donation) as donations_avg'), 'is_monthly_donation')
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
