@@ -49,12 +49,18 @@ export class PortalUserDetailComponent implements OnInit {
     }
 
     public updatedExcluded($event) {
-        if ($event) {
-            this.alertMessage = 'Successfully excluded <b>' + this.user.user_detail.first_name + ' ' +
-                this.user.user_detail.last_name + '</b> from campaigns targeting.'
+        this.alertType = 'success';
+        if ($event !== 'reason') {
+            if ($event) {
+                this.alertMessage = 'Successfully excluded <b>' + this.user.user_detail.first_name + ' ' +
+                    this.user.user_detail.last_name + '</b> from campaigns targeting.';
+            } else {
+                this.alertMessage = 'Successfully remove <b>' + this.user.user_detail.first_name + ' ' +
+                    this.user.user_detail.last_name + '</b> from excluding users from campaigns targeting.';
+            }
         } else {
-            this.alertMessage = 'Successfully remove <b>' + this.user.user_detail.first_name + ' ' +
-                this.user.user_detail.last_name + '</b> from excluding users from campaigns targeting.'
+            this.alertType = 'danger';
+            this.alertMessage = 'Reason of excluding users from campaigns targeting is required!';
         }
 
         this.alertOpen = true;
@@ -62,6 +68,15 @@ export class PortalUserDetailComponent implements OnInit {
 
     public showEditModal() {
         this.modalOpened = true;
+    }
+
+    public updatedUserDetails(val) {
+        if (val) {
+            this.showDetail();
+            this.modalOpened = false;
+            this.alertMessage = 'User details were successfully updated.';
+            this.alertOpen = true;
+        }
     }
 
 }

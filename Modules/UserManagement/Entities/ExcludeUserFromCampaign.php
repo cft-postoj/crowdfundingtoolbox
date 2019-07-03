@@ -9,6 +9,6 @@ use Illuminate\Notifications\Notifiable;
 class ExcludeUserFromCampaign extends Model
 {
     use SoftDeletes, Notifiable;
-    protected $fillable = ['portal_user_id'];
+    protected $fillable = ['portal_user_id', 'reason_notes'];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 }

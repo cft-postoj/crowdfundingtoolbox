@@ -15,11 +15,12 @@ class ExcludeFromTargetingRepository
         $this->model = ExcludeUserFromCampaign::class;
     }
 
-    public function create($portalUserId)
+    public function create($portalUserId, $reason)
     {
         return $this->model
             ::create([
-                'portal_user_id' => $portalUserId
+                'portal_user_id' => $portalUserId,
+                'reason_notes' => $reason
             ]);
     }
 

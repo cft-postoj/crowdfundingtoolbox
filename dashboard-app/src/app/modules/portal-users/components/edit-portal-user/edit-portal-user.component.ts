@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PortalUser} from '../../models/portal-user';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PortalUserService} from '../../services/portal-user.service';
@@ -16,6 +16,11 @@ export class EditPortalUserComponent implements OnInit {
     public userForm: FormGroup;
 
     public submitLoading: boolean = false;
+
+    public errorMessage: string = '';
+
+    @Output()
+    public updatedEmit = new EventEmitter();
 
     constructor(private portalUserService: PortalUserService, public formBuilder: FormBuilder) {
     }
@@ -43,9 +48,20 @@ export class EditPortalUserComponent implements OnInit {
     public storeUserDetail() {
         this.submitLoading = true;
         this.portalUserService.editPortalUser(this.userForm.value, this.userData.id).subscribe((data) => {
-            console.log(data);
-        }, (error) => {
-            console.log('error');
+            this.updatedEmit.emit(true);
+        }, (e) => {
+            this.submitLoading = false;
+            if (e.error !== null) {
+                this.errorMessage = 'There was an unknown error during the updating of portal user details.' +
+                    ' Please, try again later or contact administrator.';
+                console.log(e);
+                if (e.error.error.password !== undefined) {
+                    this.errorMessage = ' ' + e.error.error.password[0];
+                }
+                if (e.error.error.email !== undefined) {
+                    this.errorMessage += ' ' + e.error.error.email[0];
+                }
+            }
         }, () => {
             this.submitLoading = false;
         });

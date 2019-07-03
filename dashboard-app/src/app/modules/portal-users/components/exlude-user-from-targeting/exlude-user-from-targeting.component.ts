@@ -17,17 +17,27 @@ export class ExludeUserFromTargetingComponent implements OnInit {
     @Output()
     public excludedUserEmit = new EventEmitter();
 
+    @Input()
+    public excludingReason: string = '';
+
     constructor(private portalUserService: PortalUserService) {
     }
 
     ngOnInit() {
     }
 
-    public changeExcluded() {
-        this.excluded = !this.excluded;
-        this.portalUserService.excludeFromTargeting(this.excluded, this.portalUserId).subscribe((data) => {
-            console.log(data);
-            this.excludedUserEmit.emit(this.excluded);
-        });
+    public changeExcluded(event) {
+        if (this.excludingReason !== '') {
+            this.excluded = !this.excluded;
+            this.portalUserService.excludeFromTargeting(this.excluded, this.excludingReason, this.portalUserId).subscribe((data) => {
+                console.log(data);
+                this.excludedUserEmit.emit(this.excluded);
+            });
+        } else {
+            this.excludedUserEmit.emit('reason');
+            event.target.checked = false;
+        }
+
     }
+
 }

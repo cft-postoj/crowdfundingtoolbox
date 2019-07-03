@@ -22,9 +22,11 @@ class ExcludeFromTargetingService
         $this->portalUserId = $portalUserId;
 
         $valid = validator($request->only(
-            'exclude'
+            'exclude',
+            'reason'
         ), [
-            'exclude' => 'required|boolean'
+            'exclude' => 'required|boolean',
+            'reason' => 'string'
         ]);
         if ($valid->fails()) {
             $jsonError = response()->json([
@@ -35,26 +37,27 @@ class ExcludeFromTargetingService
 
         try {
             if ($request['exclude'] === true) {
-                $this->create();
+                $this->create($request['reason']);
             } else {
                 $this->delete();
             }
         } catch (\Exception $exception) {
             return response()->json([
-                'error' =>  $exception->getMessage()
+                'error' => $exception->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
         return response()->json([
-            'message' =>  'Success.'
+            'message' => 'Success.'
         ], Response::HTTP_CREATED);
     }
 
-    private function create()
+    private function create($reason)
     {
-       return $this->excludeFromTargetingRepository->create($this->portalUserId);
+        return $this->excludeFromTargetingRepository->create($this->portalUserId, $reason);
     }
 
-    private function delete() {
+    private function delete()
+    {
         return $this->excludeFromTargetingRepository->delete($this->portalUserId);
     }
 }

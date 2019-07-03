@@ -98,16 +98,19 @@
                         <td>{{(user.portal_user.donations !== null) ? user.portal_user.donations[0].created_at : 'N/A'}}</td>
                     </tr>
                 </table>
-                <app-exlude-user-from-targeting
-                        [excluded]="user.portal_user.exclude_from_campaign !== null"
-                        (excludedUserEmit)="updatedExcluded($event)"
-                        [portalUserId]="user.portal_user.id"
-                ></app-exlude-user-from-targeting>
             </div>
         </div>
     </div>
 
-    <br/><br/>
+    <app-exlude-user-from-targeting
+            [excluded]="user.portal_user.exclude_from_campaign !== null"
+            [excludingReason]="(user.portal_user.exclude_from_campaign !== null) ? user.portal_user.exclude_from_campaign.reason_notes : ''"
+            (excludedUserEmit)="updatedExcluded($event)"
+            [portalUserId]="user.portal_user.id"
+    ></app-exlude-user-from-targeting>
+
+
+    <br/>
     <h3>Donations:</h3>
     <p class="text-center" *ngIf="user.portal_user.donations === null">
         No donations from this user.
@@ -129,5 +132,5 @@
 
 <app-loading [isLoading]="loading"></app-loading>
 <app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">
-    <app-edit-portal-user [userData]="user"></app-edit-portal-user>
+    <app-edit-portal-user [userData]="user" (updatedEmit)="updatedUserDetails($event)"></app-edit-portal-user>
 </app-modal-full-size>

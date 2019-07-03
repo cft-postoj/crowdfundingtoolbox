@@ -112,9 +112,10 @@
         <input type="text" formControlName="cft-paymentCardExpirationDate" id="cardExpiration">
       </div>
     </div>
-    <button type="submit">
+    <button type="submit" *ngIf="!submitLoading">
       Save
     </button>
-    <img src="../assets/images/loading.svg">
+    <img src="../assets/images/loading.svg" *ngIf="submitLoading">
+    <span class="editPortalUser--errorMessage" *ngIf="errorMessage !== ''">{{errorMessage}}</span>
   </form>
 </div>

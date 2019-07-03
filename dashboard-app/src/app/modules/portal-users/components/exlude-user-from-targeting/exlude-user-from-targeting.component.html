@@ -1,10 +1,26 @@
-<label class="excludeFromTargeting" for="excludeFromCampaigns">
-    <input
-            type="checkbox"
-            id="excludeFromCampaigns"
-            [checked]="excluded"
-            (change)="changeExcluded()"
-    >
-    <span class="checkmark"></span>
-    Exclude user from all campaigns targeting
-</label>
+<hr>
+<h5>Excluding from camapaigns targeting:</h5>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-6">
+        <b>Reason:</b>
+        <input
+                type="text"
+                placeholder="Please type excluding reason... (max 255 characters)"
+                [value]="excludingReason"
+                [maxLength]="255"
+                (input)="excludingReason = $event.target.value">
+    </div>
+    <div class="col-12 col-sm-12 col-md-6">
+        <label class="excludeFromTargeting" for="excludeFromCampaigns">
+            <input
+                    type="checkbox"
+                    id="excludeFromCampaigns"
+                    [checked]="excluded"
+                    (change)="changeExcluded($event)"
+            >
+            <span class="checkmark"></span>
+            Exclude user from all campaigns targeting
+        </label>
+    </div>
+</div>
+<hr>
