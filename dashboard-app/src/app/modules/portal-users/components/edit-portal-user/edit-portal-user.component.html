@@ -7,19 +7,19 @@
         <label for="firstName">
           First name:
         </label>
-        <input type="text" name="firstName" id="firstName" [value]="userData.user_detail.first_name">
+        <input type="text" formControlName="cft-firstName" id="firstName" [value]="userData.user_detail.first_name">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="lastName">
           Last name:
         </label>
-        <input type="text" name="firstName" id="lastName" [value]="userData.user_detail.last_name">
+        <input type="text" formControlName="cft-lastName" id="lastName" [value]="userData.user_detail.last_name">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="email">
           Email:
         </label>
-        <input type="text" name="email" id="email" [value]="userData.email">
+        <input type="text" formControlName="cft-email" id="email" [value]="userData.email">
       </div>
     </div>
     <div class="row">
@@ -27,13 +27,13 @@
         <label for="username">
           Username:
         </label>
-        <input type="text" name="username" id="username" [value]="userData.username">
+        <input type="text" formControlName="cft-username" id="username" [value]="userData.username">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="password">
           Password:
         </label>
-        <input type="password" formControlName="password" id="password" [value]="'******'">
+        <input type="password" formControlName="cft-password" id="password" [value]="'********'">
       </div>
     </div>
     <div class="row">
@@ -41,13 +41,13 @@
         <label for="telephonePrefix">
           Tel. country prefix:
         </label>
-        <input type="text" name="telephone" id="telephonePrefix" [value]="userData.user_detail.telephone_prefix">
+        <input type="text" formControlName="cft-telephone-prefix" id="telephonePrefix" [value]="userData.user_detail.telephone_prefix">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="telephone">
           Telephone:
         </label>
-        <input type="text" name="telephone" id="telephone" [value]="userData.user_detail.telephone">
+        <input type="text" formControlName="cft-telephone" id="telephone" [value]="userData.user_detail.telephone">
       </div>
     </div>
     <hr>
@@ -61,19 +61,19 @@
         <label for="street">
           Street:
         </label>
-        <input type="text" name="street" id="street" [value]="userData.user_detail.street">
+        <input type="text" formControlName="cft-street" id="street" [value]="userData.user_detail.street">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="houseNumber">
           House number:
         </label>
-        <input type="text" name="houseNumber" id="houseNumber" [value]="userData.user_detail.house_number">
+        <input type="text" formControlName="cft-house-number" id="houseNumber" [value]="userData.user_detail.house_number">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="zip">
           ZIP:
         </label>
-        <input type="text" name="zip" id="zip" [value]="userData.user_detail.zip">
+        <input type="text" formControlName="cft-zip" id="zip" [value]="userData.user_detail.zip">
       </div>
     </div>
     <div class="row">
@@ -81,13 +81,13 @@
         <label for="city">
           City:
         </label>
-        <input type="text" name="city" id="city" [value]="userData.user_detail.city">
+        <input type="text" formControlName="cft-city" id="city" [value]="userData.user_detail.city">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="country">
           Country:
         </label>
-        <input type="text" name="country" id="country" [value]="userData.user_detail.country">
+        <input type="text" formControlName="cft-country" id="country" [value]="userData.user_detail.country">
       </div>
     </div>
     <hr>
@@ -97,19 +97,19 @@
         <label for="bankAccount">
           Bank account:
         </label>
-        <input type="text" name="bankAccount" id="bankAccount">
+        <input type="text" formControlName="cft-bankAccountNumber" id="bankAccount">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="cardNumber">
           Card number:
         </label>
-        <input type="text" name="cardNumber" id="cardNumber">
+        <input type="text" formControlName="cft-paymentCardNumber" id="cardNumber">
       </div>
       <div class="col-12 col-sm-12 col-md-4">
         <label for="cardExpiration">
           Card expiration:
         </label>
-        <input type="text" name="cardExpiration" id="cardExpiration">
+        <input type="text" formControlName="cft-paymentCardExpirationDate" id="cardExpiration">
       </div>
     </div>
     <button type="submit">

@@ -28,8 +28,8 @@ export class PortalUserService {
         });
     }
 
-    public editPortalUser(user: PortalUser, id: number): Observable<any> {
-        return this.http.put(`${environment.backOfficeUrl}${environment.editPortalUser}/${id}`, user);
+    public editPortalUser(userData: any, id: number): Observable<any> {
+        return this.http.put(`${environment.backOfficeUrl}${environment.editPortalUser}/${id}`, userData);
     }
 
 }

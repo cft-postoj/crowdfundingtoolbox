@@ -22,6 +22,7 @@ use Modules\UserManagement\Entities\UserCookieCouple;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Repositories\UserDetailRepository;
 use Modules\UserManagement\Repositories\UserGdprRepository;
+use Modules\UserManagement\Repositories\UserPaymentOptionsRepository;
 use Modules\UserManagement\Repositories\UserRepository;
 use JWTAuth;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class PortalUserService implements PortalUserServiceInterface
     private $userGdprRepository;
     private $userDetailRepository;
     private $variableSymbolService;
+    private $userPaymentOptionsRepository;
+
 
     public function __construct(PortalUserRepository $portalUserRepository,
                                 UserRepository $userRepository,
@@ -45,6 +48,7 @@ class PortalUserService implements PortalUserServiceInterface
                                 RemoveGeneratedToken $generatedTokenJob,
                                 UserGdprRepository $userGdprRepository,
                                 UserDetailRepository $userDetailRepository,
+                                UserPaymentOptionsRepository $userPaymentOptionsRepository,
                                 GeneratedUserTokenService $generatedUserTokenService,
                                 VariableSymbolService $variableSymbolService)
     {
@@ -57,6 +61,7 @@ class PortalUserService implements PortalUserServiceInterface
         $this->usernameUsedCounter = 0;
         $this->generatedUserTokenService = $generatedUserTokenService;
         $this->variableSymbolService = $variableSymbolService;
+        $this->userPaymentOptionsRepository = $userPaymentOptionsRepository;
     }
 
     public function getAll()
@@ -137,6 +142,7 @@ class PortalUserService implements PortalUserServiceInterface
 
                 $generatedToken = $this->generatedUserTokenService->create($user->id);
                 $this->variableSymbolService->create($portalUserId);
+                $this->userPaymentOptionsRepository->create($portalUserId);
                 Mail::to($user->email)->send(new RegisterEmail($generatedToken));
 
                 if ($this->userDetailRepository->get($user->id) === null) {

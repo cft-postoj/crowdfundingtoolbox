@@ -9,6 +9,7 @@ use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Repositories\UserDetailRepository;
 use JWTAuth;
 use Modules\UserManagement\Repositories\UserGdprRepository;
+use Modules\UserManagement\Repositories\UserPaymentOptionsRepository;
 use Modules\UserManagement\Repositories\UserRepository;
 
 class UserDetailService implements UserDetailServiceInterface
@@ -19,16 +20,19 @@ class UserDetailService implements UserDetailServiceInterface
     private $userRepository;
     private $user;
     private $portalUserId;
+    private $userPaymentOptionsRepository;
 
     public function __construct(UserDetailRepository $userDetailRepository,
                                 UserGdprRepository $userGdprRepository,
                                 PortalUserRepository $portalUserRepository,
-                                UserRepository $userRepository)
+                                UserRepository $userRepository,
+                                UserPaymentOptionsRepository $userPaymentOptionsRepository)
     {
         $this->userDetailRepository = $userDetailRepository;
         $this->userGdprRepository = $userGdprRepository;
         $this->portalUserRepository = $portalUserRepository;
         $this->userRepository = $userRepository;
+        $this->userPaymentOptionsRepository = $userPaymentOptionsRepository;
     }
 
     public function getDetailsByToken()
@@ -55,8 +59,9 @@ class UserDetailService implements UserDetailServiceInterface
                 $this->tokenFn();
 
                 $userId = $this->user->id;
-                $portalUserId = $this->portalUserRepository->get($userId)['id'];
             }
+
+            $portalUserId = $this->portalUserRepository->get($userId)['id'];
 
 
             // UPDATE USER DETAILS
@@ -98,8 +103,21 @@ class UserDetailService implements UserDetailServiceInterface
             if ($request['cft-email'] != null) {
                 array_push($userRequest, array('email' => $request['cft-email']));
             }
+            if ($request['cft-username'] != null)
+                array_push($userRequest, array('username' => $request['cft-username']));
             if (sizeof($userRequest) !== 0)
                 $this->userRepository->update(array_merge(...$userRequest), $userId);
+
+            // UPDATE USER PAYMENT OPTIONS TABLE
+            $paymentOptionsRequest = array();
+            if ($request['cft-bankAccountNumber'] != null)
+                array_push($paymentOptionsRequest, array('bankAccountNumber' => $request['cft-bankAccountNumber']));
+            if ($request['cft-paymentCardNumber'] != null)
+                array_push($paymentOptionsRequest, array('paymentCardNumber' => $request['cft-paymentCardNumber']));
+            if ($request['cft-paymentCardExpirationDate'] != null)
+                array_push($paymentOptionsRequest, array('paymentCardExpirationDate' => $request['cft-paymentCardExpirationDate']));
+            if (sizeof($paymentOptionsRequest) !== 0)
+                $this->userPaymentOptionsRepository->update(array_merge(...$paymentOptionsRequest), $portalUserId);
 
         } catch (\Exception $exception) {
             return \response()->json([
@@ -133,9 +151,9 @@ class UserDetailService implements UserDetailServiceInterface
         }
 
         return \response()->json([
-            'username'  =>  $username,
-            'first_name'    =>  $userDetails['first_name'],
-            'last_name' =>  $userDetails['last_name']
+            'username' => $username,
+            'first_name' => $userDetails['first_name'],
+            'last_name' => $userDetails['last_name']
         ], Response::HTTP_OK);
 
 
