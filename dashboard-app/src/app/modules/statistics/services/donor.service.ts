@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {DonorStats} from '../models/donor-stats';
 
 @Injectable({
     providedIn: 'root'
@@ -33,13 +32,17 @@ export class DonorService {
 
     public getDonors(from: { year: number; month: number; day: number },
                      to: { year: number; month: number; day: number },
-                     monthly) {
+                     monthly,
+                     dataType: string) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
             .append('from', this.writeDateAsString(from))
             .append('to', this.writeDateAsString(to));
         if (monthly !== undefined) {
             params = params.append('monthly', monthly);
+        }
+        if (dataType !== undefined) {
+            params = params.append('dataType', dataType);
         }
         return this.http.get<[any]>(
             `${environment.backOfficeUrl}${environment.donorUrl}${environment.all}`,

@@ -23,6 +23,8 @@ import {ConfigurationComponent} from "./modules/core/pages/configuration/configu
 import {TranslationListComponent} from "./modules/translations/components";
 import {TranslationCreateComponent} from "./modules/translations/components/translation-create/translation-create.component";
 import {HttpErrorInterceptor, TokenInterceptor} from "./modules/user-management/interceptor";
+import { registerLocaleData } from '@angular/common';
+import localSk from '@angular/common/locales/sk';
 
 @NgModule({
     imports: [
@@ -84,3 +86,4 @@ import {HttpErrorInterceptor, TokenInterceptor} from "./modules/user-management/
 export class AppModule {
 }
 
+registerLocaleData(localSk, 'sk');

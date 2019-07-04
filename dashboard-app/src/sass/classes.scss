@@ -1,8 +1,12 @@
+@import './variables';
+
 .mb0 {
   margin-bottom: 0;
 }
 
 .clickable {
+  color: $azure;
+  text-decoration: underline;
   &:hover {
     cursor: pointer;
   }

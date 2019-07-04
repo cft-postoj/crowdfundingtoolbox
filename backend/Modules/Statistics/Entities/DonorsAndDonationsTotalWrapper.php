@@ -11,7 +11,7 @@ class DonorsAndDonationsTotalWrapper
     public $total;
 
     /**
-     * DonorsAndDonationsTotal constructor.
+     * DonorsAndDonationsTotalWrapper constructor.
      */
     public function __construct()
     {

@@ -18,7 +18,7 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
     public function getDonationsGroupIsMonthly($from, $to, $interval, $isMonthly)
     {
         return $this->model::select(
-            DB::raw("date_trunc('$interval', created_at) AS date"), DB::raw('sum(donation) as value'))
+            DB::raw("date_trunc('$interval', created_at) AS date"), DB::raw('sum(amount) as value'))
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
             ->where('is_monthly_donation', $isMonthly)
@@ -40,8 +40,8 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
     public function getDonorsAndDonationsTotal($from, $to)
     {
         return $this->model::select(
-            DB::raw('count(DISTINCT portal_user_id) as donors_count'), DB::raw('sum(donation) as donations_sum'),
-            DB::raw('avg(donation) as donations_avg'))
+            DB::raw('count(DISTINCT portal_user_id) as donors_count'), DB::raw('sum(amount) as amount_sum'),
+            DB::raw('avg(amount) as amount_avg'))
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
             ->first();
@@ -50,8 +50,8 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
     public function getDonorsAndDonationsTotalGroupMonthly($from, $to)
     {
         return $this->model::select(
-            DB::raw('count(DISTINCT portal_user_id) as donors_count'), DB::raw('sum(donation) as donations_sum'),
-            DB::raw('avg(donation) as donations_avg'), 'is_monthly_donation')
+            DB::raw('count(DISTINCT portal_user_id) as donors_count'), DB::raw('sum(amount) as amount_sum'),
+            DB::raw('avg(amount) as amount_avg'), 'is_monthly_donation')
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
             ->groupBy(DB::raw('is_monthly_donation'))

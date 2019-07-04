@@ -54,7 +54,8 @@ class TestDashboardSeeder extends Seeder
                     //sub $j from months of current date to simulate donation before $j months
                     'created_at' => $donationDate->copy()->subMonth($j),
                     'updated_at' => $donationDate->copy()->subMonth($j),
-                    'payment_method' => 'card_payment'
+                    'payment_method' => 'card_payment',
+                    'status' => 'processed'
                 ]);
             }
         }
@@ -64,7 +65,7 @@ class TestDashboardSeeder extends Seeder
             $referralWidget = $widgets[array_rand($widgets)];
             $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59));
             $donationDate->subDays(rand(0, 365));
-            Donation::create([
+            $donation = Donation::create([
                 'portal_user_id' => $currentSupporter['id'],
                 'widget_id' => $referralWidget['id'],
                 'referral_widget_id' => $referralWidget['id'],
@@ -72,8 +73,10 @@ class TestDashboardSeeder extends Seeder
                 'is_monthly_donation' => false,
                 'created_at' => $donationDate,
                 'updated_at' => $donationDate,
-                'payment_method' => 'bank_transfer'
+                'payment_method' => 'bank_transfer',
+                'status' => 'processed'
             ]);
+
         }
     }
 

@@ -17,6 +17,8 @@ export class TablePortalUsersComponent implements OnInit {
     @Input() public to;
     @Input() public monthly: boolean;
     @Input() public title;
+    @Input() public dataType;
+
     public routing = Routing;
 
     public loading = true;
@@ -76,7 +78,7 @@ export class TablePortalUsersComponent implements OnInit {
 
 
     getUsers() {
-        this.donorService.getDonors(this.from, this.to, this.monthly).subscribe(
+        this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType).subscribe(
             result => {
                 this.portalUsers = result;
                 this.sortedPortalUsers = Object.assign([], result);

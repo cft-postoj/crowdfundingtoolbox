@@ -62,44 +62,44 @@
                             <div class="row">
                                 <div class="col">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.total.donations_sum | number: '1.0-2'"
-                                        [previous]="donorsAndDonations.current.total.donations_sum - donorsAndDonations.previous.total.donations_sum
-                                         | number : '1.0-2' "
+                                        [current]="donorsAndDonations.current.total.amount_sum | number: '1.0-2':'sk'"
+                                        [previous]="donorsAndDonations.current.total.amount_sum - donorsAndDonations.previous.total.amount_sum
+                                         | number : '1.0-2':'sk'"
                                         [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <span
+                                    <span class="clickable"
                                         (click)="openModal('Donations',undefined,'tableDonations')">total</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.monthly.donations_sum  | number: '1.0-2'"
-                                        [previous]="donorsAndDonations.current.monthly.donations_sum - donorsAndDonations.previous.monthly.donations_sum
-                                         | number : '1.0-2' "
+                                        [current]="donorsAndDonations.current.monthly.amount_sum  | number: '1.0-2':'sk'"
+                                        [previous]="donorsAndDonations.current.monthly.amount_sum - donorsAndDonations.previous.monthly.amount_sum
+                                         | number : '1.0-2':'sk' "
                                         [currency]="true">
                                     </app-total-current-and-previous>
 
                                 </div>
                                 <div class="col-6">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.one_time.donations_sum | number: '1.0-2'"
-                                        [previous]="donorsAndDonations.current.one_time.donations_sum - donorsAndDonations.previous.one_time.donations_sum | number: '1.0-2'"
+                                        [current]="donorsAndDonations.current.one_time.amount_sum | number: '1.0-2':'sk'"
+                                        [previous]="donorsAndDonations.current.one_time.amount_sum - donorsAndDonations.previous.one_time.amount_sum | number: '1.0-2':'sk'"
                                         [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <span
+                                    <span class="clickable"
                                         (click)="openModal('Donations',true,'tableDonations')">monthly </span>
                                 </div>
                                 <div class="col-6">
-                                    <span
+                                    <span class="clickable"
                                         (click)="openModal('Donations',false,'tableDonations')">one time </span>
                                 </div>
                             </div>
@@ -107,16 +107,16 @@
                             <div class="row">
                                 <div class="col-6">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.monthly.donations_avg | number: '1.0-2'"
-                                        [previous]="donorsAndDonations.current.monthly.donations_avg - donorsAndDonations.previous.monthly.donations_avg
-                                         | number: '1.0-2'"
+                                        [current]="donorsAndDonations.current.monthly.amount_avg | number: '1.0-2':'sk'"
+                                        [previous]="donorsAndDonations.current.monthly.amount_avg - donorsAndDonations.previous.monthly.amount_avg
+                                         | number: '1.0-2':'sk'"
                                         [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
                                 <div class="col-6">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.one_time.donations_avg | number: '1.0-2'"
-                                        [previous]="donorsAndDonations.current.one_time.donations_avg - donorsAndDonations.previous.one_time.donations_avg | number: '1.0-2'"
+                                        [current]="donorsAndDonations.current.one_time.amount_avg | number: '1.0-2':'sk'"
+                                        [previous]="donorsAndDonations.current.one_time.amount_avg - donorsAndDonations.previous.one_time.amount_avg | number: '1.0-2':'sk'"
                                         [currency]="true">
                                     </app-total-current-and-previous>
                                 </div>
@@ -145,36 +145,36 @@
                             <div class="row">
                                 <div class="col">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.total.donors_count"
+                                        [current]="donorsAndDonations.current.total.donors_count | number:'1.0-0':'sk'"
                                         [previous]="donorsAndDonations.current.total.donors_count -
-                                        donorsAndDonations.previous.total.donors_count">
+                                        donorsAndDonations.previous.total.donors_count | number:'1.0-0':'sk'">
                                     </app-total-current-and-previous>
                                 </div>
                                 <div class="col">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.monthly.donors_count"
+                                        [current]="donorsAndDonations.current.monthly.donors_count | number:'1.0-0':'sk'"
                                         [previous]="donorsAndDonations.current.monthly.donors_count -
-                                          donorsAndDonations.previous.monthly.donors_count">
+                                          donorsAndDonations.previous.monthly.donors_count | number:'1.0-0':'sk'">
                                     </app-total-current-and-previous>
                                 </div>
                                 <div class="col">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.one_time.donors_count"
+                                        [current]="donorsAndDonations.current.one_time.donors_count | number:'1.0-0':'sk'"
                                         [previous]="donorsAndDonations.current.one_time.donors_count -
-                                         donorsAndDonations.previous.one_time.donors_count">
+                                         donorsAndDonations.previous.one_time.donors_count | number:'1.0-0':'sk'">
                                     </app-total-current-and-previous>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <span (click)="openModal('Donors',undefined,'tableDonors')">total</span>
+                                    <span class="clickable" (click)="openModal('Donors',undefined,'tableDonors')">total</span>
                                 </div>
                                 <div class="col">
-                                    <span
+                                    <span class="clickable"
                                         (click)="openModal('Monthly donors' ,true,'tableDonors')">monthly</span>
                                 </div>
                                 <div class="col">
-                                    <span
+                                    <span class="clickable"
                                         (click)="openModal('Monthly donors' ,false,'tableDonors')">one time</span>
                                 </div>
                             </div>
@@ -189,37 +189,37 @@
                             <div class="row">
                                 <div class="col">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.total.donors_new"
+                                        [current]="donorsAndDonations.current.total.donors_new | number:'1.0-0':'sk'"
                                         [previous]="donorsAndDonations.current.total.donors_new -
-                                         donorsAndDonations.previous.total.donors_new">
+                                         donorsAndDonations.previous.total.donors_new | number:'1.0-0':'sk'">
                                     </app-total-current-and-previous>
                                 </div>
                                 <div class="col">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.monthly.donors_new"
+                                        [current]="donorsAndDonations.current.monthly.donors_new | number:'1.0-0':'sk'"
                                         [previous]="donorsAndDonations.current.monthly.donors_new -
-                                        donorsAndDonations.previous.monthly.donors_new">
+                                        donorsAndDonations.previous.monthly.donors_new | number:'1.0-0':'sk'">
                                     </app-total-current-and-previous>
                                 </div>
                                 <div class="col">
                                     <app-total-current-and-previous
-                                        [current]="donorsAndDonations.current.one_time.donors_new"
+                                        [current]="donorsAndDonations.current.one_time.donors_new | number:'1.0-0':'sk'"
                                         [previous]="donorsAndDonations.current.one_time.donors_new -
-                                        donorsAndDonations.previous.one_time.donors_new " >
+                                        donorsAndDonations.previous.one_time.donors_new | number:'1.0-0':'sk'">
                                     </app-total-current-and-previous>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <span (click)="openModal('Donors',undefined,'tableDonors')">total</span>
+                                    <span class="clickable" (click)="openModal('New donors',undefined,'tableDonors','new')">total</span>
                                 </div>
                                 <div class="col">
-                                    <span
-                                        (click)="openModal('Monthly donors' ,true,'tableDonors')">monthly</span>
+                                    <span class="clickable"
+                                        (click)="openModal('New monthly donors' ,true,'tableDonors','new')">monthly</span>
                                 </div>
                                 <div class="col">
-                                    <span
-                                        (click)="openModal('Monthly donors' ,false,'tableDonors')">one time</span>
+                                    <span class="clickable"
+                                        (click)="openModal('New one time donors' ,false,'tableDonors','new')">one time</span>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +232,7 @@
 
 <app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">
     <app-table-portal-users *ngIf="tables.tableDonors" [from]="from" [to]="to" [monthly]="monthly"
-                            [title]="tableTitle"></app-table-portal-users>
+                            [title]="tableTitle" [dataType]="dataType"></app-table-portal-users>
     <app-table-donations *ngIf="tables.tableDonations" [from]="from" [to]="to" [monthly]="monthly"
-                         [title]="tableTitle"></app-table-donations>
+                         [title]="tableTitle" [dataType]="dataType"></app-table-donations>
 </app-modal-full-size>

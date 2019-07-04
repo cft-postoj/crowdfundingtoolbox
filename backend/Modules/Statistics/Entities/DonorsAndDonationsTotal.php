@@ -13,7 +13,7 @@ class DonorsAndDonationsTotal
     public $donors_new = 0;
 
     /**
-     * Daco constructor.
+     * DonorsAndDonationsTotal constructor.
      */
     public function __construct($monthly)
     {

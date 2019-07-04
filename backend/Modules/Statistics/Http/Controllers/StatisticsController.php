@@ -49,7 +49,7 @@ class StatisticsController extends Controller
     protected function donorsAll(Request $request)
     {
         return \response()->json(
-            $this->statsDonorService->getDonors($request['from'], $request['to'], $request['monthly']),
+            $this->statsDonorService->getDonors($request['from'], $request['to'], $request['monthly'], $request['dataType']),
             Response::HTTP_OK
         );
     }

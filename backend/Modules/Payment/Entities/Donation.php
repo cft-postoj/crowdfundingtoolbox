@@ -8,12 +8,13 @@ class Donation extends Model
 {
     protected $table = 'donations';
     protected $fillable = [
-        'donation',
+        'amount',
         'is_monthly_donation',
-        'payment_method'
+        'payment_method',
+        'status'
     ];
     protected $casts = [
-        'donation' => 'float',
+        'amount' => 'float',
     ];
 
     public function portalUser()
@@ -27,6 +28,11 @@ class Donation extends Model
     }
 
     public function widgetReferral()
+    {
+        return $this->belongsTo('\Modules\Campaigns\Entities\Widget', 'id', 'referral_widget_id');
+    }
+
+    public function payment()
     {
         return $this->belongsTo('\Modules\Campaigns\Entities\Widget', 'id', 'referral_widget_id');
     }

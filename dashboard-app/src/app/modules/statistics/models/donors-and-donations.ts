@@ -5,8 +5,8 @@ export class DonorsAndDonations {
 }
 
 export class DonorsAndDonationsValue {
-    donations_sum: number;
-    donations_avg: number;
+    amount_sum: number;
+    amount_avg: number;
     donors_count: number;
     donors_new: number;
     is_monthly_donation: boolean;

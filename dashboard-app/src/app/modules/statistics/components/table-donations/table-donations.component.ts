@@ -17,6 +17,8 @@ export class TableDonationsComponent implements OnInit {
     @Input() public to;
     @Input() public monthly: boolean;
     @Input() public title;
+    @Input() public dataType;
+
     public routing = Routing;
     public loading = true;
 
@@ -39,27 +41,15 @@ export class TableDonationsComponent implements OnInit {
             }
         );
         this.model.columns.push({
-            value_name: 'portal_user.user.user_detail.last_name',
-            description: 'Donor name',
-            type: 'text',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'donation',
-            description: 'Donation',
-            type: 'number',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'is_monthly_donation',
-            description: 'Frequency',
+            value_name: 'created_at',
+            description: 'Date',
             type: 'none',
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'created_at',
-            description: 'Date',
-            type: 'text',
+            value_name: 'amount',
+            description: 'Amount',
+            type: 'number',
             filter: new Filter()
         });
         this.model.columns.push({
@@ -68,6 +58,19 @@ export class TableDonationsComponent implements OnInit {
             type: 'text',
             filter: new Filter()
         });
+        this.model.columns.push({
+            value_name: 'portal_user.user.user_detail.last_name',
+            description: 'Donor name',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.model.columns.push({
+            value_name: 'is_monthly_donation',
+            description: 'Frequency',
+            type: 'none',
+            filter: new Filter()
+        });
+
         this.model.columns.push({
             value_name: 'widget.widget_type.name',
             description: 'Widget type',

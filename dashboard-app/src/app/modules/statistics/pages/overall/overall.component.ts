@@ -35,6 +35,7 @@ export class OverallComponent implements OnInit {
         tableDonors: false,
         tableDonations: false
     };
+    private dataType: string;
 
     constructor(private donationService: DonationService,
                 private donorService: DonorService) {
@@ -128,7 +129,8 @@ export class OverallComponent implements OnInit {
     }
 
     // tableToOpen -> name of table from this.tables that will be open after called
-    public openModal(title: string, monthly: boolean, tableToOpen: string) {
+    // data -> string representation of data type passed into table
+    public openModal(title: string, monthly: boolean, tableToOpen: string, dataType: string) {
         this.tableTitle = title;
         this.monthly = monthly;
         this.modalOpened = true;
@@ -136,5 +138,6 @@ export class OverallComponent implements OnInit {
             this.tables[tableKey] = false;
         }
         this.tables[tableToOpen] = true;
+        this.dataType = dataType;
     }
 }

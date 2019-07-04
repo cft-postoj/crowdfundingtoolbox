@@ -37,12 +37,12 @@
                 font-size: 12px;
             }
         }
-
     }
 
     &.list-items--orderable {
+        table-layout: fixed;
         th {
-            padding: 4px 30px;
+            padding: 6px 8px;
             min-width: 150px;
             div[order=true]:after {
                 content: "";
@@ -61,6 +61,30 @@
             div[asc=false]:after {
                 transform: rotate(90deg);
             }
+            &.id {
+                width: 20px;
+            }
+        }
+        tbody {
+            td {
+                height: 36px;
+                padding: 6px 8px;
+                background: inherit;
+            }
+            tr {
+                background-color: $white;
+            }
+            tr:nth-of-type(odd) {
+                td {
+                    background-color: $aquaHaze;
+                }
+            }
+            tr:hover {
+                td {
+                    background-color: $geyser;
+                }
+            }
+
         }
         .pointer {
             &:hover {

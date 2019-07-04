@@ -26,24 +26,26 @@
 <table class="list-items list-items--orderable">
     <thead>
     <tr>
+        <th class="id">#</th>
         <th app-table-header *ngFor="let column of model.columns"
             [column]="column" [(model)]="model"
             (modelChange)="sortTable()"></th>
     </tr>
     </thead>
     <tbody *ngIf="!loading">
-    <tr *ngFor="let donation of sortedDonations" class="list-items--item">
+    <tr *ngFor="let donation of sortedDonations; let i = index" class="list-items--item">
+        <td>{{i+1}}</td>
+        <td>
+            {{donation.created_at | date:'dd.MM.yyyy' }}
+        </td>
+        <td>
+            {{donation.amount | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
+        </td>
         <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.id]">
             {{donation.portal_user.user?.user_detail.first_name}} {{donation.portal_user?.user.user_detail.last_name}}
         </td>
         <td>
-            {{donation.donation | currency: 'EUR': 'symbol': '1.0-2'}}
-        </td>
-        <td>
             {{donation.is_monthly_donation | monthly}}
-        </td>
-        <td>
-            {{donation.created_at}}
         </td>
         <td>
             {{donation.payment_method}}
