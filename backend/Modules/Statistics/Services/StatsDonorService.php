@@ -16,14 +16,15 @@ class StatsDonorService implements StatsDonorServiceInterface
         $this->statsDonorRepository = $statsDonorRepository;
     }
 
-    public function sortFunction($a, $b)
-    {
-        return $a['last_donation']['created_at'] - $b['last_donation']['created_at'];
-    }
-
     public function getDonors($from, $to, $monthly)
     {
        return $this->statsDonorRepository->getDonors($from, $to, $monthly);
+    }
+
+
+    public function countOfNewDonors($from, $to)
+    {
+        return  $this->statsDonorRepository->countOfNewDonors($from, $to);
     }
 
 

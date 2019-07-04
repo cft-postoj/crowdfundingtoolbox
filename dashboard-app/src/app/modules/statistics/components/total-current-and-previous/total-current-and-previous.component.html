@@ -1,6 +1,8 @@
 <div>
-    <h4>{{current | currency: 'EUR': 'symbol' : '1.0-2'}} </h4>
+    <h4>
+        <ng-container *ngIf="currency">€</ng-container>{{current }}
+    </h4>
     <i class="pi"
        [ngClass]="previous > 0 ? 'pi-caret-up green' : 'pi-caret-down red'"> </i>
-    {{previous | number:'1.0-2' | forceSign}}
+    <ng-container *ngIf="currency">€</ng-container>{{previous | forceSign}}
 </div>
