@@ -21,9 +21,9 @@ export class TableDonationsComponent implements OnInit {
     public loading = true;
 
     public donations: Donation[];
-    private sortedDonations: Donation[];
+    public sortedDonations: Donation[];
 
-    private model: TableModel = new TableModel();
+    public model: TableModel = new TableModel();
 
 
     constructor(private donationService: DonationService,

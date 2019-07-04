@@ -20,9 +20,9 @@ export class TablePortalUsersComponent implements OnInit {
     public routing = Routing;
 
     public loading = true;
-    private model: TableModel = new TableModel();
+    public model: TableModel = new TableModel();
     public portalUsers: DonorStats[] = [];
-    private sortedPortalUsers: any;
+    public sortedPortalUsers: any;
 
     constructor(private donorService: DonorService,
                 private tableService: TableService) {

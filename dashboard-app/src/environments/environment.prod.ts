@@ -5,8 +5,8 @@ export const environment = {
     production: true,
 
     apiUrl: '/api',
-    backOfficeUrl:  '/api/backoffice',
-    authServerUrl: '/api/backoffice' ,
+    backOfficeUrl:  keys.hostUrl + '/api/backoffice',
+    authServerUrl: keys.hostUrl + '/api/backoffice' ,
 
     fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + keys.googleApiKey,
 
@@ -46,6 +46,13 @@ export const environment = {
 
     campaignTargeting: '/campaign-targeting',
 
-    userDetail: '/user-detail'
-};
+    userDetail: '/user-detail',
 
+    checkGeneratedResetToken: '/check-generated-reset-token',
+
+    isMonthlyDonor: '/is-monthly-donor',
+
+    editPortalUser: '/edit-portal-user',
+
+    excludeFromTargeting: '/exclude-from-campaigns-targeting'
+};

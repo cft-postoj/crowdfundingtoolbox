@@ -1,9 +1,0 @@
-export const apiUrl = 'http://127.0.0.1:8001/api/portal/'; // TEST API
-//export const apiUrl = 'https://test.crowdfundingtoolbox.news/api/portal/';
-export const viewsUrl = 'http://127.0.0.1:8001/portal/';
-//export const viewsUrl = 'https://test.crowdfundingtoolbox.news/portal/';
-export const portalUrl = 'http://www.postoj.local:8000/';
-//export const portalUrl = 'https://www.postoj.ondas.me/';
-export const myAccountUrl = portalUrl + 'moj-ucet';
-export const domain = 'postoj.local';
-//export const domain = 'postoj.ondas.me';
