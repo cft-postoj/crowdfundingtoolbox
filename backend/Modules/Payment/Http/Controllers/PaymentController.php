@@ -8,72 +8,154 @@ use Illuminate\Routing\Controller;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
+    /*
+     * Payment method can be created, updated, deleted. Administrator can turn on/off once payment method
+     * or disable payment method for monthly/onc-time supports.
+     * Available payment methods (depended on enable payment method per monthly/one-time support)
+     * are display in monetization widget.
+     * Get methods are available from portal and backoffice. Other methods only from backoffice.
      */
-    public function index()
+
+    protected function getAllAvailableMethods()
     {
-        return view('payment::index');
+        /* TODO get all available payment methods from toolbox */
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+    // BANK TRASNSFER
+    protected function getBankTransferDetails()
     {
-        return view('payment::create');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
+    protected function createBankTransferDetails(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
+    protected function updateBankTransferDetails(Request $request)
     {
-        return view('payment::show');
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
+    protected function deleteBankTransferDetails(Request $request)
     {
-        return view('payment::edit');
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
+    protected function payViaBankTransfer(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
+    // **************************************************************
+
+    // CARD PAY
+    protected function getCardDetails()
     {
-        //
+
+    }
+
+    protected function createCardDetails(Request $request)
+    {
+
+    }
+
+    protected function updateCardDetails(Request $request)
+    {
+
+    }
+
+    protected function deleteCardDetails(Request $request)
+    {
+
+    }
+
+    protected function payViaCard(Request $request)
+    {
+
+    }
+
+    // **************************************************************
+
+    // PAY BY SQUARE
+    protected function getPayBySquareDetails()
+    {
+
+    }
+
+    protected function createPayBySquareDetails(Request $request)
+    {
+
+    }
+
+    protected function updatePayBySquareDetails(Request $request)
+    {
+
+    }
+
+    protected function deletePayBySquareDetails(Request $request)
+    {
+
+    }
+
+    protected function payViaPayBySquare(Request $request)
+    {
+
+    }
+
+    // **************************************************************
+
+    // GOOGLE PAY
+    protected function getGooglePayDetails()
+    {
+
+    }
+
+    protected function createGooglePayDetails(Request $request)
+    {
+
+    }
+
+    protected function updateGooglePayDetails(Request $request)
+    {
+
+    }
+
+    protected function deleteGooglePayDetails(Request $request)
+    {
+
+    }
+
+    protected function payViaGooglePay(Request $request)
+    {
+
+    }
+
+    // ************************************************************
+
+    // APPLE PAY
+    protected function getApplePayDetails()
+    {
+
+    }
+
+    protected function createApplePayDetails(Request $request)
+    {
+
+    }
+
+    protected function updateApplePayDetails(Request $request)
+    {
+
+    }
+
+    protected function deleteApplePayDetails(Request $request)
+    {
+
+    }
+
+    protected function payViaApplePay(Request $request)
+    {
+
     }
 }

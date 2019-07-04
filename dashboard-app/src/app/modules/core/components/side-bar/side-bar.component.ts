@@ -89,9 +89,6 @@ export class SideBarComponent implements OnInit {
     private makeItemPublic() {
         const slug = this.router.routerState.snapshot.url.split('/dashboard/')[1].split('/')[0];
         let itemName = null;
-        console.log(this.usersItemName);
-        console.log(slug.toUpperCase());
-        console.log(this.usersItemName === slug.toUpperCase());
         switch (slug.toUpperCase()) {
             case this.usersItemName:
                 itemName = this.usersItemName;
@@ -131,8 +128,7 @@ export class SideBarComponent implements OnInit {
             });
             this.isActive = this.activeItem !== this.noActiveItem;
             this.currentSidebarItemType = sidebarType.campaigns;
-        }
-        else if (itemName === this.statisticsItemName) {
+        } else if (itemName === this.statisticsItemName) {
             this.sidebarItems = [];
             this.sidebarItems.push({
                 title: 'Dashboard',
@@ -144,8 +140,7 @@ export class SideBarComponent implements OnInit {
             });
             this.isActive = this.activeItem !== this.noActiveItem;
             this.currentSidebarItemType = sidebarType.stats;
-        }
-        else {
+        } else {
             this.isActive = false;
         }
         this.activeItem = itemName;

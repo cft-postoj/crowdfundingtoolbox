@@ -37,4 +37,7 @@ export class Routing {
     // user settings
     static readonly USER_SETTINGS = 'user-settings';
     static readonly CREATE_USER = 'create-user';
+
+    // payment options
+    static readonly PAYMENT_OPTIONS = 'payment-options';
 }
