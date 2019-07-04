@@ -6,16 +6,19 @@ namespace Modules\Payment\Services;
 
 use Illuminate\Http\Response;
 use Modules\Payment\Repositories\VariableSymbolRepository;
+use Modules\UserManagement\Services\PortalUserService;
 
 class VariableSymbolService
 {
     private $variableSymbolRepository;
     private $initialVariableSymbol;
+    protected $portalUserService;
 
-    public function __construct(VariableSymbolRepository $variableSymbolRepository)
+    public function __construct(VariableSymbolRepository $variableSymbolRepository, PortalUserService $portalUserService)
     {
         $this->variableSymbolRepository = $variableSymbolRepository;
         $this->initialVariableSymbol = 100000; // Initial variable symbol for portal users
+        $this->portalUserService = $portalUserService;
     }
 
     public function all()
@@ -51,5 +54,10 @@ class VariableSymbolService
             $userVariableSymbol = $lastVariableSymbol['variable_symbol'] + 1;
         }
         return $userVariableSymbol;
+    }
+
+    public function getByPortalUser()
+    {
+        return $this->variableSymbolRepository->getByPortalUser($this->portalUserService->getPortalUserIdFromToken());
     }
 }
