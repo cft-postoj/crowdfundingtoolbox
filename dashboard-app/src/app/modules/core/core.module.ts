@@ -26,6 +26,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { TableHeaderComponent } from './parts/atoms/table-header/table-header.component';
 import { InputTextComponent } from './parts/atoms/input-text/input-text.component';
 import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-size.component';
+import { NavbarComponent } from './parts/atoms/navbar/navbar.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-si
         SafePipe,
         SlovakNumberFormatter,
         TableHeaderComponent,
-        InputTextComponent
+        InputTextComponent,
+        NavbarComponent
     ],
     imports: [
         CommonModule,
@@ -108,6 +110,7 @@ import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-si
         AngularEditorModule,
         SelectDropDownModule,
         InputTextComponent,
+        NavbarComponent,
 
     ]
 })

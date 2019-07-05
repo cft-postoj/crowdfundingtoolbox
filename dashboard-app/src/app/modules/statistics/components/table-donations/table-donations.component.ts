@@ -17,6 +17,7 @@ export class TableDonationsComponent implements OnInit {
     @Input() public to;
     @Input() public monthly: boolean;
     @Input() public title;
+    @Input() public disabledDate: boolean = true;
     public routing = Routing;
     public loading = true;
 
@@ -31,13 +32,7 @@ export class TableDonationsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.donationService.getDonations(this.from, this.to, this.monthly).subscribe(
-            result => {
-                this.donations = result;
-                this.sortedDonations = this.donations;
-                this.loading = false;
-            }
-        );
+        this.refreshTable();
         this.model.columns.push({
             value_name: 'portal_user.user.user_detail.last_name',
             description: 'Donor name',
@@ -84,6 +79,17 @@ export class TableDonationsComponent implements OnInit {
 
     sortTable() {
         this.sortedDonations = this.tableService.sort(this.model, this.donations);
+    }
+
+    refreshTable() {
+        this.loading = true;
+        this.donationService.getDonations(this.from, this.to, this.monthly).subscribe(
+            result => {
+                this.donations = result;
+                this.sortedDonations = this.donations;
+                this.loading = false;
+            }
+        );
     }
 
 }

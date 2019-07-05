@@ -79,7 +79,7 @@ export const appRoutes: Routes = [
                 loadChildren: './modules/statistics/statistics.module#StatisticsModule'
             },
             {
-                path: Routing.PAYMENT_OPTIONS,
+                path: Routing.PAYMENT,
                 loadChildren: './modules/payment/payment.module#PaymentModule'
             }
         ]

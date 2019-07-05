@@ -17,7 +17,10 @@ import { TableDonationsComponent } from './components/table-donations/table-dona
 
 @NgModule({
     declarations: [OverallComponent, DonorsAndDonationsPipe, ForceSignPipe, TotalCurrentAndPreviousComponent,
-         TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent],
+        TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent],
+    exports: [
+        TableDonationsComponent
+    ],
     imports: [
         CommonModule,
         FormsModule,
