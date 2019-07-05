@@ -1,6 +1,5 @@
 export class BankTransfer {
     title: string = 'Bank Transfer';
-    imgSrc: string = '';
     oneTimePayment: any = {
         accountNumber: '',
         specificSymbol: '',

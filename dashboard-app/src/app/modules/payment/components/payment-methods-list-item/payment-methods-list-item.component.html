@@ -1,3 +1,9 @@
-<p>
-  payment-methods-list-item works!
-</p>
+<div class="paymentListItem" (click)="showPaymentOptions()">
+  <img src="../assets/images/payment/{{paymentMethod.method_slug}}.png" />
+  <h3>{{paymentMethod.method_name}}</h3>
+  <div [class]="extraClass + ' overlay'">
+    <span class="message" *ngIf="extraClass === 'inactive'">
+      This payment method is not implemented. Please, follow developer guide steps for implementation.
+    </span>
+  </div>
+</div>

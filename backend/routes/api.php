@@ -105,30 +105,32 @@ Route::group([
 
         // *********************************************
         // PAYMENT
-        Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentController@getBankTransferDetails');
-        Route::post('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentController@createBankTransferDetails');
-        Route::put('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentController@updateBankTransferDetails');
-        Route::delete('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentController@deleteBankTransferDetails');
+        Route::get('payment-methods', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getAllMethods');
 
-        Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentController@getCardDetails');
-        Route::post('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentController@createCardDetails');
-        Route::put('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentController@updateCardDetails');
-        Route::delete('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentController@deleteCardDetails');
+        Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getBankTransferDetails');
+        Route::post('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createBankTransferDetails');
+        Route::put('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateBankTransferDetails');
+        Route::delete('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteBankTransferDetails');
 
-        Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentController@getPayBySquareDetails');
-        Route::post('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentController@createPayBySquareDetails');
-        Route::put('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentController@updatePayBySquareDetails');
-        Route::delete('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentController@deletePayBySquareDetails');
+        Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getCardDetails');
+        Route::post('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createCardDetails');
+        Route::put('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateCardDetails');
+        Route::delete('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteCardDetails');
 
-        Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getGooglePayDetails');
-        Route::post('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@createGooglePayDetails');
-        Route::put('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@updateGooglePayDetails');
-        Route::delete('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@deleteGooglePayDetails');
+        Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayBySquareDetails');
+        Route::post('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createPayBySquareDetails');
+        Route::put('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updatePayBySquareDetails');
+        Route::delete('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deletePayBySquareDetails');
 
-        Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getApplePayDetails');
-        Route::post('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@createApplePayDetails');
-        Route::put('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@updateApplePayDetails');
-        Route::delete('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@deleteApplePayDetails');
+        Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getGooglePayDetails');
+        Route::post('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createGooglePayDetails');
+        Route::put('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateGooglePayDetails');
+        Route::delete('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteGooglePayDetails');
+
+        Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getApplePayDetails');
+        Route::post('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createApplePayDetails');
+        Route::put('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateApplePayDetails');
+        Route::delete('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteApplePayDetails');
 
         // *********************************************
 

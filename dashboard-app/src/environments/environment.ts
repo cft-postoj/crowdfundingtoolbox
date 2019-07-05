@@ -58,6 +58,8 @@ export const environment = {
 
     editPortalUser: '/edit-portal-user',
 
-    excludeFromTargeting: '/exclude-from-campaigns-targeting'
+    excludeFromTargeting: '/exclude-from-campaigns-targeting',
+
+    paymentMethods: '/payment-methods'
 
 };
