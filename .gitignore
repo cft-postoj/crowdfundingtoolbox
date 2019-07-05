@@ -15,7 +15,9 @@
 /backendnpm-debug.log
 /backendyarn-error.log
 /backend.phpunit.result.cache
-/backend/storage/*
+/backend/storage/app/*
+/backend/storage/framework/*
+/backend/storage/logs/*
 /backend/.env
 /dashboard-app/src/environments
 /dashboard-app/src/keys.ts

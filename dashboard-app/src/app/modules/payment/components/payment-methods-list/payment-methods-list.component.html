@@ -1,0 +1,8 @@
+<div class="text-center">
+  <img src="../assets/images/loading.svg" *ngIf="loading">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-4" *ngFor="let method of paymentMethods; let i = index">
+      <app-payment-methods-list-item [paymentMethod]="method"></app-payment-methods-list-item>
+    </div>
+  </div>
+</div>

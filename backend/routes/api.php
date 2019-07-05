@@ -102,13 +102,44 @@ Route::group([
         Route::get('statistics/donors/all', '\Modules\Statistics\Http\Controllers\StatisticsController@donorsAll');
 
         Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
+
+        // *********************************************
+        // PAYMENT
+        Route::get('payment-methods', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getAllMethods');
+
+        Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getBankTransferDetails');
+        Route::post('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createBankTransferDetails');
+        Route::put('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateBankTransferDetails');
+        Route::delete('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteBankTransferDetails');
+
+        Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getCardDetails');
+        Route::post('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createCardDetails');
+        Route::put('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateCardDetails');
+        Route::delete('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteCardDetails');
+
+        Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayBySquareDetails');
+        Route::post('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createPayBySquareDetails');
+        Route::put('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updatePayBySquareDetails');
+        Route::delete('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deletePayBySquareDetails');
+
+        Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getGooglePayDetails');
+        Route::post('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createGooglePayDetails');
+        Route::put('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateGooglePayDetails');
+        Route::delete('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteGooglePayDetails');
+
+        Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getApplePayDetails');
+        Route::post('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createApplePayDetails');
+        Route::put('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateApplePayDetails');
+        Route::delete('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteApplePayDetails');
+
+        // *********************************************
+
+        Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
+        Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');
+        Route::put('edit-portal-user/{id}', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePortalUserFromBackoffice');
+        Route::post('edit-portal-user/{portalUserId}/exclude-from-campaigns-targeting', '\Modules\UserManagement\Http\Controllers\PortalUsersController@excludeFromCampaignsTargeting');
+
     });
-
-
-    Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
-    Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');
-    Route::put('edit-portal-user/{id}', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePortalUserFromBackoffice');
-    Route::post('edit-portal-user/{portalUserId}/exclude-from-campaigns-targeting', '\Modules\UserManagement\Http\Controllers\PortalUsersController@excludeFromCampaignsTargeting');
 
 
 });
@@ -133,6 +164,25 @@ Route::group([
       Route::put('update-user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@update');
       Route::get('base-user-data', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getBase');
       Route::get('logout', '\Modules\UserManagement\Http\Controllers\PortalUsersController@logout');
+
+        // *********************************************
+        // PAYMENT
+        Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentController@getBankTransferDetails');
+        Route::post('payment/pay-via-bank-transfer', '\Modules\Payment\Http\Controllers\PaymentController@payViaBankTransfer');
+
+        Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentController@getCardDetails');
+        Route::post('payment/pay-via-card', '\Modules\Payment\Http\Controllers\PaymentController@payViaCard');
+
+        Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentController@getPayBySquareDetails');
+        Route::post('payment/pay-via-pay-by-square', '\Modules\Payment\Http\Controllers\PaymentController@payViaPayBySquare');
+
+        Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getGooglePayDetails');
+        Route::post('payment/pay-via-google-pay', '\Modules\Payment\Http\Controllers\PaymentController@payViaGooglePay');
+
+        Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getApplePayDetails');
+        Route::post('payment/pay-via-apple-pay', '\Modules\Payment\Http\Controllers\PaymentController@payViaApplePay');
+
+        // *********************************************
     });
 
 
@@ -142,6 +192,7 @@ Route::group([
     Route::post('tracking/initialize-donation-invalid', '\Modules\UserManagement\Http\Controllers\TrackingController@initializeDonationInvalid');
 
     Route::post('donation/initialize', '\Modules\Payment\Http\Controllers\DonationController@initialize');
+
 
 });
 

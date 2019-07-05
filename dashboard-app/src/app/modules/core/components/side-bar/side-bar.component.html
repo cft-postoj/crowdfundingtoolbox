@@ -54,7 +54,8 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(paymentsItemName)">
+                    (click)="showItem(paymentsItemName)"
+                    [routerLink]="routing.PAYMENT_OPTIONS">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/payment_default.svg'"
@@ -62,7 +63,7 @@
                         [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === paymentsItemName}"
                 >
                 </div>
-                <p *ngIf="!isActive">Payment gateway</p>
+                <p *ngIf="!isActive">Payment</p>
             </div>
             <div
                     class="item"

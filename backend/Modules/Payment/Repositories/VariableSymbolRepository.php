@@ -36,4 +36,12 @@ class VariableSymbolRepository
             ::orderBy('id', 'DESC')
             ->first();
     }
+
+    public function getByPortalUser($portal_user_id)
+    {
+        return $this->model
+            ::where('portal_user_id', $portal_user_id)
+            ->only('variable_symbol')
+            ->first();
+    }
 }

@@ -98,6 +98,18 @@ class PortalUserService implements PortalUserServiceInterface
         }
     }
 
+    public function getPortalUserIdFromToken() {
+        try {
+            $user = $user = JWTAuth::parseToken()->authenticate();
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' =>  $exception.getMessage()
+            ], Response::HTTP_BAD_REQUREST);
+        }
+
+        return $this->getById($user->id)['id'];
+    }
+
     public function create(Request $request)
     {
         $valid = validator($request->only(

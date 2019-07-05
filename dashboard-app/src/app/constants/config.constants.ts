@@ -37,4 +37,11 @@ export class Routing {
     // user settings
     static readonly USER_SETTINGS = 'user-settings';
     static readonly CREATE_USER = 'create-user';
+
+    // payment options
+    static readonly PAYMENT = 'payment';
+    static readonly PAYMENT_OPTIONS = `${Routing.PAYMENT}/payment-options`;
+    static readonly DONATIONS = `${Routing.PAYMENT}/donations`;
+    static readonly UNPAIRED_PAYMENTS = `${Routing.PAYMENT}/unpaired-payments`;
+    static readonly IMPORT_PAYMENTS = `${Routing.PAYMENT}/import-payments`;
 }

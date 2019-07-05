@@ -8,72 +8,75 @@ use Illuminate\Routing\Controller;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
+    /*
+     * FOR PORTAL USERS
      */
-    public function index()
+
+    protected function getAllAvailableMethods()
     {
-        return view('payment::index');
+        /* TODO get all available payment methods from toolbox */
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+    // BANK TRASNSFER
+    protected function getBankTransferDetails()
     {
-        return view('payment::create');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
+    protected function payViaBankTransfer(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
+    // **************************************************************
+
+    // CARD PAY
+    protected function getCardDetails()
     {
-        return view('payment::show');
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
+    protected function payViaCard(Request $request)
     {
-        return view('payment::edit');
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
+    // **************************************************************
+
+    // PAY BY SQUARE
+    protected function getPayBySquareDetails()
     {
-        //
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
+    protected function payViaPayBySquare(Request $request)
     {
-        //
+
+    }
+
+    // **************************************************************
+
+    // GOOGLE PAY
+    protected function getGooglePayDetails()
+    {
+
+    }
+
+    protected function payViaGooglePay(Request $request)
+    {
+
+    }
+
+    // ************************************************************
+
+    // APPLE PAY
+    protected function getApplePayDetails()
+    {
+
+    }
+
+    protected function payViaApplePay(Request $request)
+    {
+
     }
 }

@@ -77,7 +77,10 @@ export const appRoutes: Routes = [
             {
                 path: Routing.STATS,
                 loadChildren: './modules/statistics/statistics.module#StatisticsModule'
-
+            },
+            {
+                path: Routing.PAYMENT,
+                loadChildren: './modules/payment/payment.module#PaymentModule'
             }
         ]
     },
