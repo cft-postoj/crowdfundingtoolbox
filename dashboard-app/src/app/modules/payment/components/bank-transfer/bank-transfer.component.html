@@ -1,0 +1,95 @@
+<div class="bankTransfer">
+    <h2>Bank Transfer</h2>
+    <hr>
+    <form>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+                <h4>Monthly subscription</h4>
+                <hr>
+                <label for="enabled">
+                    Enabled (+ switcher)
+                </label>
+
+                <label for="accountNumberMonthly">
+                    Bank account number (IBAN form):
+                    <input type="text" name="accountNumberMonthly" id="accountNumberMonthly" required/>
+                </label>
+                <label for="specificSymbolMonthly">
+                    Specific symbol:
+                    <input type="text" name="specificSymbolMonthly" id="specificSymbolMonthly"/>
+                </label>
+                <label for="constantSymbolMonthly">
+                    Constant symbol:
+                    <input type="text" name="constantSymbolMonthly" id="constantSymbolMonthly"/>
+                </label>
+                <label for="swiftMonthly">
+                    SWIFT:
+                    <input type="text" name="swiftMonthly" id="swiftMonthly"/>
+                </label>
+                <label for="bankNameMonthly">
+                    Bank name:
+                    <input type="text" name="bankNameMonthly" id="bankNameMonthly"/>
+                </label>
+                <label for="bankAccountOwnerMonthly">
+                    Bank account owner:
+                    <input type="text" name="bankAccountOwnerMonthly" id="bankAccountOwnerMonthly"/>
+                </label>
+                <label for="paymentNoteMonthly">
+                    Payment notes: *
+                    <textarea name="paymentNoteMonthly" id="paymentNoteMonthly"></textarea>
+                </label>
+                <i>* payment notes is showed in monetization widget and in email with payment details.</i>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 border-left">
+                <h4>One-time payment</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="enabled">
+                            Enabled (+ switcher)
+                        </label>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="copyDetailsFromMonthly">
+                            <input type="checkbox" name="copyDetailsFromMonthly" id="copyDetailsFromMonthly">
+                            Copy details from monthly payment
+                        </label>
+                    </div>
+                </div>
+
+                <label for="accountNumberOneTime">
+                    Bank account number (IBAN form):
+                    <input type="text" name="accountNumberOneTime" id="accountNumberOneTime" required/>
+                </label>
+                <label for="specificSymbolOneTime">
+                    Specific symbol:
+                    <input type="text" name="specificSymbolOneTime" id="specificSymbolOneTime"/>
+                </label>
+                <label for="constantSymbolOneTime">
+                    Constant symbol:
+                    <input type="text" name="constantSymbolOneTime" id="constantSymbolOneTime"/>
+                </label>
+                <label for="swiftOneTime">
+                    SWIFT:
+                    <input type="text" name="swiftOneTime" id="swiftOneTime"/>
+                </label>
+                <label for="bankNameOneTime">
+                    Bank name:
+                    <input type="text" name="bankNameOneTime" id="bankNameOneTime"/>
+                </label>
+                <label for="bankAccountOwnerOneTime">
+                    Bank account owner:
+                    <input type="text" name="bankAccountOwnerOneTime" id="bankAccountOwnerOneTime"/>
+                </label>
+                <label for="paymentNoteOneTime">
+                    Payment notes: *
+                    <textarea name="paymentNoteOneTime" id="paymentNoteOneTime"></textarea>
+                </label>
+                <i>* payment notes is showed in monetization widget and in email with payment details.</i>
+            </div>
+        </div>
+        <button type="submit">
+            Confirm
+        </button>
+    </form>
+</div>

@@ -7,6 +7,8 @@ import {NavbarItem} from '../../../core/models/navbar-item';
     styleUrls: ['./payment-options.component.scss']
 })
 export class PaymentOptionsComponent implements OnInit {
+    modalOpened: boolean = false;
+    modalType: string = '';
 
 
     constructor() {
@@ -15,4 +17,8 @@ export class PaymentOptionsComponent implements OnInit {
     ngOnInit() {
     }
 
+    showModal(type) {
+        this.modalType = type;
+        this.modalOpened = true;
+    }
 }

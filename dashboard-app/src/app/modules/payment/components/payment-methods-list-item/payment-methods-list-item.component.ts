@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PaymentMethod} from '../../models/payment-method';
 
 @Component({
@@ -9,7 +9,10 @@ import {PaymentMethod} from '../../models/payment-method';
 export class PaymentMethodsListItemComponent implements OnInit {
 
     @Input()
-    paymentMethod: PaymentMethod;
+    public paymentMethod: PaymentMethod;
+
+    @Output()
+    public paymentMethodClickedEmit = new EventEmitter();
 
     extraClass: string = '';
 
@@ -25,7 +28,7 @@ export class PaymentMethodsListItemComponent implements OnInit {
 
     showPaymentOptions() {
         if (this.extraClass === 'active') {
-            alert(this.paymentMethod.id)
+            this.paymentMethodClickedEmit.emit(this.paymentMethod.id);
         }
     }
 

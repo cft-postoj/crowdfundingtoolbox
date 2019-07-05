@@ -13,9 +13,10 @@ import { DonationsComponent } from './pages/donations/donations.component';
 import { UnpairedPaymentsComponent } from './pages/unpaired-payments/unpaired-payments.component';
 import { ImportPaymentsComponent } from './pages/import-payments/import-payments.component';
 import {StatisticsModule} from '../statistics/statistics.module';
+import { BankTransferComponent } from './components/bank-transfer/bank-transfer.component';
 
 @NgModule({
-    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent],
+    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent],
     imports: [
         CommonModule,
         FormsModule,
