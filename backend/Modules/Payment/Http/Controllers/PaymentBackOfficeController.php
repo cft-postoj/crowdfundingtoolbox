@@ -5,6 +5,7 @@ namespace Modules\Payment\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Payment\Services\BankTransferService;
 use Modules\Payment\Services\PaymentMethodsSevice;
 
 class PaymentBackOfficeController extends Controller
@@ -18,10 +19,12 @@ class PaymentBackOfficeController extends Controller
     */
 
     private $paymentMethodsService;
+    private $bankTransferService;
 
-    public function __construct(PaymentMethodsSevice $paymentMethodsService)
+    public function __construct(PaymentMethodsSevice $paymentMethodsService, BankTransferService $bankTransferService)
     {
         $this->paymentMethodsService = $paymentMethodsService;
+        $this->bankTransferService = $bankTransferService;
     }
 
     protected function getAllMethods()
@@ -32,12 +35,12 @@ class PaymentBackOfficeController extends Controller
     // BANK TRASNSFER
     protected function getBankTransferDetails()
     {
-
+        return $this->bankTransferService->getBackOfficeDetails();
     }
 
-    protected function createBankTransferDetails(Request $request)
+    protected function setBankTransferDetails(Request $request)
     {
-
+        return $this->bankTransferService->setBackOfficeDetails($request);
     }
 
     protected function updateBankTransferDetails(Request $request)

@@ -13,7 +13,7 @@ export class SwitcherComponent implements OnInit {
     public extraClass: string;
 
     @Input()
-    public checked:boolean;
+    public checked: boolean;
 
     @Output()
     public checkedChange = new EventEmitter<boolean>();

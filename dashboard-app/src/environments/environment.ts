@@ -60,6 +60,8 @@ export const environment = {
 
     excludeFromTargeting: '/exclude-from-campaigns-targeting',
 
-    paymentMethods: '/payment-methods'
+    paymentMethods: '/payment-methods',
+
+    bankTransferMethod: '/payment/bank-transfer-details'
 
 };

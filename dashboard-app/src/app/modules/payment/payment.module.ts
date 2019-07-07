@@ -14,9 +14,10 @@ import { UnpairedPaymentsComponent } from './pages/unpaired-payments/unpaired-pa
 import { ImportPaymentsComponent } from './pages/import-payments/import-payments.component';
 import {StatisticsModule} from '../statistics/statistics.module';
 import { BankTransferComponent } from './components/bank-transfer/bank-transfer.component';
+import { DisableControlDirective } from './disable-control.directive';
 
 @NgModule({
-    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent],
+    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent, DisableControlDirective],
     imports: [
         CommonModule,
         FormsModule,

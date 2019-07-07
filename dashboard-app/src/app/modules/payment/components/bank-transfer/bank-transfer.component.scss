@@ -1,3 +1,53 @@
+@import 'mixins';
+@import 'variables';
 .bankTransfer {
   padding: 30px;
+  height: 90%;
+  form {
+    overflow-y: auto;
+    height: 100%;
+    padding: 0 15px;
+    label {
+      width: 40%;
+      margin-bottom: 15px;
+      text-align: right;
+      padding-right: 10px;
+      &.textarea {
+        width: 100%;
+        text-align: left;
+      }
+      &.checkbox {
+        width: 80%;
+      }
+    }
+    input {
+      width: 60%;
+      padding: 7px 15px;
+      border: 1px solid $bali;
+      margin-bottom: 10px;
+      &[type="checkbox"] {
+        visibility: hidden;
+        width: 0px;
+      }
+    }
+    textarea {
+      width: 100%;
+      padding: 7px 15px;
+      border: 1px solid $bali;
+      margin-bottom: 10px;
+    }
+    button[type="submit"]{
+      margin-top: 15px;
+      background: $azure;
+      color: $white;
+      padding: 10px 30px;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      @include transitionSingle(.3s ease);
+      &:hover {
+        @include boxShadow(0 0 10px rgba(0, 0, 0, .5));
+      }
+    }
+  }
 }

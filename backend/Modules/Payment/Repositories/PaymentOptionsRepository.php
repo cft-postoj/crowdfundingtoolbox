@@ -15,10 +15,26 @@ class PaymentOptionsRepository
         $this->model = PaymentOption::class;
     }
 
-    public function getPaymentMethodDetails($paymentMethodId)
+    public function getPaymentMethodDetails($payment_method_id)
     {
         return $this->model
-            ::where('payment_method', $paymentMethodId)
+            ::where('payment_method', $payment_method_id)
+            ->pluck('payment_settings')
             ->first();
+    }
+
+    public function createPaymentMethodDetails($request)
+    {
+        return $this->model
+            ::create($request);
+    }
+
+    public function updatePaymentMethodDetails($request, $payment_method)
+    {
+        return $this->model
+            ::where('payment_method', $payment_method)
+            ->update(
+                $request
+            );
     }
 }

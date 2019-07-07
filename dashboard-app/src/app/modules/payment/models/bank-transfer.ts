@@ -4,16 +4,20 @@ export class BankTransfer {
         accountNumber: '',
         specificSymbol: '',
         constantSymbol: '',
+        swift: '',
+        bankName: '',
         accountOwner: '',
-        additionalText: '',
+        paymentNote: '',
         available: true
     };
     monthlyPayment: any = {
         accountNumber: '',
         specificSymbol: '',
         constantSymbol: '',
+        swift: '',
+        bankName: '',
         accountOwner: '',
-        additionalText: '',
+        paymentNote: '',
         available: true
     };
 }
