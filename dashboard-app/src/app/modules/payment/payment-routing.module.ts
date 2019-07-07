@@ -4,6 +4,7 @@ import {PaymentOptionsComponent} from './pages/payment-options/payment-options.c
 import {DonationsComponent} from './pages/donations/donations.component';
 import {UnpairedPaymentsComponent} from './pages/unpaired-payments/unpaired-payments.component';
 import {ImportPaymentsComponent} from './pages/import-payments/import-payments.component';
+import {DonationDetailComponent} from './pages/donation-detail/donation-detail.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,10 @@ const routes: Routes = [
     {
         path: 'donations',
         component: DonationsComponent
+    },
+    {
+        path: 'donations/:id',
+        component: DonationDetailComponent
     },
     {
         path: 'unpaired-payments',

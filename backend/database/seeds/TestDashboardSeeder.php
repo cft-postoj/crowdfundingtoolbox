@@ -21,7 +21,7 @@ class TestDashboardSeeder extends Seeder
     {
         //create 5 campaigns
 //        for ($i = 0; $i < 5; $i++) {
-//            $this->call(CreateDummyCampaignSeeder::class);
+//            $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
 //        }
 
         //create 50 users
@@ -49,7 +49,7 @@ class TestDashboardSeeder extends Seeder
                     'portal_user_id' => $currentSupporter['id'],
                     'widget_id' => $referralWidget['id'],
                     'referral_widget_id' => $referralWidget['id'],
-                    'donation' => $userDonation,
+                    'amount' => $userDonation,
                     'is_monthly_donation' => true,
                     //sub $j from months of current date to simulate donation before $j months
                     'created_at' => $donationDate->copy()->subMonth($j),
@@ -69,7 +69,7 @@ class TestDashboardSeeder extends Seeder
                 'portal_user_id' => $currentSupporter['id'],
                 'widget_id' => $referralWidget['id'],
                 'referral_widget_id' => $referralWidget['id'],
-                'donation' => rand(1, 50),
+                'amount' => rand(1, 50),
                 'is_monthly_donation' => false,
                 'created_at' => $donationDate,
                 'updated_at' => $donationDate,

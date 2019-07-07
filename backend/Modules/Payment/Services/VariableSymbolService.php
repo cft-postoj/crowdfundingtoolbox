@@ -14,11 +14,11 @@ class VariableSymbolService
     private $initialVariableSymbol;
     protected $portalUserService;
 
-    public function __construct(VariableSymbolRepository $variableSymbolRepository, PortalUserService $portalUserService)
+    public function __construct(VariableSymbolRepository $variableSymbolRepository)
     {
         $this->variableSymbolRepository = $variableSymbolRepository;
         $this->initialVariableSymbol = 100000; // Initial variable symbol for portal users
-        $this->portalUserService = $portalUserService;
+        //$this->portalUserService = $portalUserService;
     }
 
     public function all()

@@ -118,8 +118,8 @@ Route::group([
         Route::delete('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteCardDetails');
 
         Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayBySquareDetails');
-        Route::post('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createPayBySquareDetails');
-        Route::put('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updatePayBySquareDetails');
+        Route::post('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setPayBySquareDetails');
+        Route::put('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setPayBySquareDetails');
         Route::delete('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deletePayBySquareDetails');
 
         Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getGooglePayDetails');

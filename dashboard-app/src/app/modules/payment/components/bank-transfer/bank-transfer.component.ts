@@ -117,7 +117,7 @@ export class BankTransferComponent implements OnInit {
                 this.alertType = 'success';
                 this.loading = false;
             }, (err) => {
-                this.alertMessage = 'There was an error during the updatig details.';
+                this.alertMessage = 'There was an error during the updating details.';
                 this.alertOpen = true;
                 this.alertType = 'danger';
                 this.loading = false;

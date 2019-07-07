@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Payment\Services\BankTransferService;
-use Modules\Payment\Services\PaymentMethodsSevice;
+use Modules\Payment\Services\PayBySquareService;
+use Modules\Payment\Services\PaymentMethodsService;
 
 class PaymentBackOfficeController extends Controller
 {
@@ -20,11 +21,14 @@ class PaymentBackOfficeController extends Controller
 
     private $paymentMethodsService;
     private $bankTransferService;
+    private $payBySquareService;
 
-    public function __construct(PaymentMethodsSevice $paymentMethodsService, BankTransferService $bankTransferService)
+    public function __construct(PaymentMethodsService $paymentMethodsService, BankTransferService $bankTransferService,
+                                PayBySquareService $payBySquareService)
     {
         $this->paymentMethodsService = $paymentMethodsService;
         $this->bankTransferService = $bankTransferService;
+        $this->payBySquareService = $payBySquareService;
     }
 
     protected function getAllMethods()
@@ -41,11 +45,6 @@ class PaymentBackOfficeController extends Controller
     protected function setBankTransferDetails(Request $request)
     {
         return $this->bankTransferService->setBackOfficeDetails($request);
-    }
-
-    protected function updateBankTransferDetails(Request $request)
-    {
-
     }
 
     protected function deleteBankTransferDetails(Request $request)
@@ -83,18 +82,14 @@ class PaymentBackOfficeController extends Controller
     // PAY BY SQUARE
     protected function getPayBySquareDetails()
     {
-
+        return $this->payBySquareService->getBackOfficeDetails();
     }
 
-    protected function createPayBySquareDetails(Request $request)
+    protected function setPayBySquareDetails(Request $request)
     {
-
+        return $this->payBySquareService->setBackOfficeDetails($request);
     }
 
-    protected function updatePayBySquareDetails(Request $request)
-    {
-
-    }
 
     protected function deletePayBySquareDetails(Request $request)
     {

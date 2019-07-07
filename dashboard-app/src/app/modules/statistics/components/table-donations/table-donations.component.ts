@@ -5,6 +5,7 @@ import {Donation} from '../../models/donation';
 import {TableModel} from '../../../core/models/table-model';
 import {Filter} from '../../../core/models/filter';
 import {TableService} from '../../../core/services/table.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-table-donations',
@@ -29,7 +30,7 @@ export class TableDonationsComponent implements OnInit {
 
 
     constructor(private donationService: DonationService,
-                private tableService: TableService) {
+                private tableService: TableService, private router: Router) {
     }
 
     ngOnInit() {
@@ -92,6 +93,10 @@ export class TableDonationsComponent implements OnInit {
                 this.loading = false;
             }
         );
+    }
+
+    public showDonationDetail(id) {
+        return this.router.navigateByUrl(`${Routing.DASHBOARD}/${Routing.DONATIONS}/${id}`);
     }
 
 }

@@ -6,7 +6,7 @@ namespace Modules\Payment\Services;
 use Illuminate\Http\Response;
 use Modules\Payment\Repositories\PaymentMethodsRepository;
 
-class PaymentMethodsSevice
+class PaymentMethodsService
 {
     protected $paymentMethodsRepository;
 
