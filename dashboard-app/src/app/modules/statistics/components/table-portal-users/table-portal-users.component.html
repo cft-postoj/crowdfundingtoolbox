@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <h2>{{title}} <ng-container *ngIf="enablePortalUsersCount && !loading">({{portalUsersCount}})</ng-container></h2>
+            <h2>{{title}}
+                <ng-container *ngIf="enablePortalUsersCount && !loading">({{portalUsersCount}})</ng-container>
+            </h2>
         </div>
         <ng-container *ngIf="showDates">
             <div class="col-3 d-flex align-items-center">
@@ -31,7 +33,7 @@
         <th class="id">#</th>
         <th app-table-header *ngFor="let column of model.columns"
             [column]="column" [(model)]="model"
-            (modelChange)="sortTable()" [hide]="hide"></th>
+            (modelChange)="sortTable()"></th>
     </tr>
     </thead>
     <tbody *ngIf="!loading">
@@ -61,9 +63,11 @@
     </tr>
     </tbody>
 </table>
+<h4 *ngIf="sortedPortalUsers.length===0 && !loading"
+    class="text-center"> No users found </h4>
 <app-loading [isLoading]="loading"></app-loading>
 
-<div *ngIf="!loading && limit" class="container">
+<div *ngIf="!loading && limit < portalUsersCount" class="container">
     <div class="row">
         <div class="col">
             <span class="clickable" (click)="showMore()">show more</span>

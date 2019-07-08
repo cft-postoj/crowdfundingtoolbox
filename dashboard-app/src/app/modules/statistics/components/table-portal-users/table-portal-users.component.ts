@@ -11,7 +11,7 @@ import {TableService} from '../../../core/services/table.service';
     templateUrl: './table-portal-users.component.html',
     styleUrls: ['./table-portal-users.component.scss']
 })
-export class TablePortalUsersComponent implements OnInit,  OnChanges {
+export class TablePortalUsersComponent implements OnInit, OnChanges {
 
     @Input() public from;
     @Input() public to;
@@ -23,6 +23,7 @@ export class TablePortalUsersComponent implements OnInit,  OnChanges {
     @Input() public enablePortalUsersCount: boolean = false;
 
     @Output() public showMoreClicked = new EventEmitter();
+
     public routing = Routing;
 
     public loading = true;
