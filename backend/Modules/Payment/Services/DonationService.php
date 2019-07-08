@@ -5,17 +5,21 @@ namespace Modules\Payment\Services;
 
 use Carbon\Carbon;
 use Modules\Payment\Entities\DonationInitialize;
+use Modules\Payment\Repositories\DonationRepository;
 use Modules\UserManagement\Entities\TrackingShow;
 use Modules\UserManagement\Services\PortalUserService;
+use Illuminate\Http\Response;
 
 class DonationService
 {
 
     private $portalUserService;
+    private $donationRepository;
 
-    public function __construct(PortalUserService $portalUserService)
+    public function __construct(PortalUserService $portalUserService, DonationRepository $donationRepository)
     {
         $this->portalUserService = $portalUserService;
+        $this->donationRepository = $donationRepository;
     }
 
     public function initialize($data)
@@ -111,24 +115,24 @@ class DonationService
 
     private function isCorrectDonationTarget($biggerThan, $lessThan, $donations, $monthlyDonation)
     {
-       foreach ($donations as $donation) {
-           if ($donation->is_monthly_donation === $monthlyDonation) {
-               if ($biggerThan !== null && $lessThan !== null) {
-                   if ($donation->donation > $biggerThan && $donation->donation < $lessThan) {
-                       return true;
-                   }
-               } else if ($biggerThan !== null && $lessThan === null) {
-                   if ($donation->donation > $biggerThan) {
-                       return true;
-                   }
-               } else {
-                   if ($donation->donation < $lessThan) {
-                       return true;
-                   }
-               }
-           }
-       }
-       return false;
+        foreach ($donations as $donation) {
+            if ($donation->is_monthly_donation === $monthlyDonation) {
+                if ($biggerThan !== null && $lessThan !== null) {
+                    if ($donation->donation > $biggerThan && $donation->donation < $lessThan) {
+                        return true;
+                    }
+                } else if ($biggerThan !== null && $lessThan === null) {
+                    if ($donation->donation > $biggerThan) {
+                        return true;
+                    }
+                } else {
+                    if ($donation->donation < $lessThan) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public function isNotSupporter($donationsData)
@@ -136,5 +140,12 @@ class DonationService
 
     }
 
+    public function getDetail($id)
+    {
+        return response()->json(
+            $this->donationRepository->getDetail($id),
+            Response::HTTP_OK
+        );
+    }
 
 }

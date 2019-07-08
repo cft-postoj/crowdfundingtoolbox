@@ -73,10 +73,11 @@ class TestDashboardSeeder extends Seeder
                 if ($i % 21 === 0) {
                     $portal_user_id = null;
                 }
-                $this->createPayment($portal_user_id, $donation->amount, $donation->created_at);
-                if ($portal_user_id === null) {
+                $payment = $this->createPayment($donation->id, $portal_user_id, $donation->amount, $donation->created_at);
+                if ($portal_user_id !== null) {
                     Donation::where('id', $donation->id)->update(array(
-                        'status' => 'processed'
+                        'status' => 'processed',
+                        'payment_id' => $payment->id
                     ));
                 }
             }
@@ -104,10 +105,11 @@ class TestDashboardSeeder extends Seeder
             if ($i % 19 === 0) {
                 $portal_user_id = null;
             }
-            $this->createPayment($portal_user_id, $donation->amount, $donation->created_at);
-            if ($portal_user_id === null) {
+            $payment = $this->createPayment($donation->id, $portal_user_id, $donation->amount, $donation->created_at);
+            if ($portal_user_id !== null) {
                 Donation::where('id', $donation->id)->update(array(
-                    'status' => 'processed'
+                    'status' => 'processed',
+                    'payment_id' => $payment->id
                 ));
             }
         }
@@ -125,7 +127,7 @@ class TestDashboardSeeder extends Seeder
         return rand(1, 6) * 5;
     }
 
-    private function createPayment($portal_user_id, $amount, $transaction_date)
+    private function createPayment($donation_id, $portal_user_id, $amount, $transaction_date)
     {
         if ($portal_user_id !== null) {
             $variable_symbol = PortalUser::where('id', $portal_user_id)
@@ -145,6 +147,7 @@ class TestDashboardSeeder extends Seeder
             'transaction_date' => $transaction_date
         );
         $payment = $this->paymentService->createPayment($request);
+        return $payment;
     }
 
     private function transactionId($length)

@@ -74,4 +74,5 @@ class PaymentService
             $this->paymentRepository->getUnpairedPayments(),
             Response::HTTP_OK);
     }
+
 }

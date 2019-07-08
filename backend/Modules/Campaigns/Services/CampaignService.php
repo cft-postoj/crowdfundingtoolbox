@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Modules\Campaigns\Entities\Campaign;
+use Modules\Campaigns\Entities\Widget;
 use Modules\Campaigns\Providers\CampaignPromoteService;
 use Modules\Campaigns\Repositories\CampaignRepository;
 use Modules\Campaigns\Transformers\CampaignResourceDetail;
@@ -43,7 +44,7 @@ class CampaignService implements CampaignServiceInterface
 
         $user = Auth::user();
         //id 1 should have user with username admin created during migration
-        $userId =  Auth::user() != null ?$user->id : 1;
+        $userId = Auth::user() != null ? $user->id : 1;
         $campaign->tracking = $this->addTracking($campaign->id, $userId, $this->show($campaign->id));
         return $campaign;
     }
@@ -135,6 +136,12 @@ class CampaignService implements CampaignServiceInterface
     public function delete($id): void
     {
         Campaign::find($id)->delete();
+    }
+
+    public function getByWidgetId($id)
+    {
+        return Campaign::where('id', Widget::where('id', $id)->first()['campaign_id'])
+            ->first();
     }
 
 }
