@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-6">
+        <div class="col">
             <h2>{{title}}
                 <ng-container *ngIf="enablePortalUsersCount && !loading">({{portalUsersCount}})</ng-container>
             </h2>
@@ -25,6 +25,11 @@
                 </app-datepicker>
             </div>
         </ng-container>
+        <div class="col-3">
+            <ngx-select-dropdown [(ngModel)]="model.columns"
+                                 [multiple]="true" [config]="config"
+                                 [options]="availableColumns"></ngx-select-dropdown>
+        </div>
     </div>
 </div>
 <table class="list-items list-items--orderable">
@@ -39,31 +44,48 @@
     <tbody *ngIf="!loading">
     <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item">
         <td>{{i+1}}</td>
-        <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.user.id]">
+        <td *ngIf="activeColumn('todo1')">
+            todo1
+        </td>
+        <td *ngIf="activeColumn('user.email')">
+            {{portalUser.user.email}}
+        </td>
+        <td *ngIf="activeColumn('user.user_detail.last_name')" class="pointer"
+            [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.user.id]">
             {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
         </td>
-        <td>
-            {{portalUser.last_donation_value | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
-        </td>
-        <td>
-            {{portalUser.last_donation_monthly | monthly}}
-        </td>
-        <td>
-            {{portalUser.last_donation_at | date:'dd.MM.yyyy'}}
-        </td>
-        <td>
-            {{portalUser.last_donation_payment_method}}
-        </td>
-        <td>
-            {{portalUser.first_donation_at | date:'dd.MM.yyyy'}}
-        </td>
-        <td>
+        <td *ngIf="activeColumn('amount_sum')">
             {{portalUser.amount_sum | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
         </td>
+        <td *ngIf="activeColumn('todo2')">
+            todo2
+        </td>
+        <td *ngIf="activeColumn('user.user_detail.created_at')">
+            {{portalUser.user.user_detail.created_at | date:'dd.MM.yyyy'}}
+        </td>
+        <td *ngIf="activeColumn('todo3')">
+           todo
+        </td>
+        <td *ngIf="activeColumn('todo4')">
+            todo
+        </td>
+        <td *ngIf="activeColumn('todo5')">
+            todo
+        </td>
+        <td *ngIf="activeColumn('todo6')">
+            todo
+        </td>
+        <td *ngIf="activeColumn('todo7')">
+            todo
+        </td>
+        <td *ngIf="activeColumn('todo8')">
+            todo
+        </td>
+
     </tr>
     </tbody>
 </table>
-<h4 *ngIf="sortedPortalUsers.length===0 && !loading"
+<h4 *ngIf="!loading && sortedPortalUsers.length===0"
     class="text-center"> No users found </h4>
 <app-loading [isLoading]="loading"></app-loading>
 
