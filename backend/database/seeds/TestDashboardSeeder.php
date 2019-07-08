@@ -130,7 +130,7 @@ class TestDashboardSeeder extends Seeder
         if ($portal_user_id !== null) {
             $variable_symbol = PortalUser::where('id', $portal_user_id)
                 ->with('variableSymbol')
-                ->first()['variable_symbol'];
+                ->first()->variableSymbol['variable_symbol'];
         } else {
             $variable_symbol = 2019; // case for bad variable symbol
         }
