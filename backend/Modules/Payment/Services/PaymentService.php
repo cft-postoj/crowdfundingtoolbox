@@ -2,6 +2,7 @@
 
 
 namespace Modules\Payment\Services;
+
 use Illuminate\Http\Response;
 
 use Modules\Payment\Repositories\PaymentRepository;
@@ -36,12 +37,30 @@ class PaymentService
         ]);
 
         if ($valid->fails()) {
-            /* TODO: pridat podmienku pre situaciu, kedy uz pouzivatel existuje, no nie ako portal user alebo backoffice - teda email/username is exist */
             $jsonError = response()->json([
                 'error' => $valid->errors()
             ], 400);
             return $jsonError;
         }
+
+        try {
+            $this->createPayment($request);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json([
+            'message' => 'Successfully created payment.'
+        ], Response::HTTP_CRETED);
+
+    }
+
+    public function createPayment($request)
+    {
+        $payment = $this->paymentRepository->create($request);
+        return $payment;
     }
 
     public function update($request)
