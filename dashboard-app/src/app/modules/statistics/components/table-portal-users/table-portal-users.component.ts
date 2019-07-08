@@ -5,6 +5,7 @@ import {Routing} from '../../../../constants/config.constants';
 import {Filter} from '../../../core/models/filter';
 import {TableModel} from '../../../core/models/table-model';
 import {TableService} from '../../../core/services/table.service';
+import {Column} from '../../../core/models/column';
 
 @Component({
     selector: 'app-table-portal-users',
@@ -32,6 +33,13 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     public sortedPortalUsers: any;
     private portalUsersCount: number;
 
+    config = {
+        height: '500px',
+        search: true,
+        placeholder: 'Choose columns to show'
+    };
+    private availableColumns: Column[];
+
     constructor(private donorService: DonorService,
                 private tableService: TableService) {
     }
@@ -39,45 +47,85 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.getUsers();
         this.model.columns.push({
+            value_name: 'todo1',
+            description: 'Donor status (todo)',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.model.columns.push({
+            value_name: 'user.email',
+            description: 'email',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.model.columns.push({
             value_name: 'user.user_detail.last_name',
             description: 'User name',
             type: 'text',
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'last_donation_value',
-            description: 'Last donation value',
-            type: 'number',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'last_donation_monthly',
-            description: 'Last donation type',
-            type: 'none',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'last_donation_at',
-            description: 'Last donation date',
-            type: 'none',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'last_donation_payment_method',
-            description: 'Last payment method',
-            type: 'none',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'first_donation_at',
-            description: 'First donation',
-            type: 'none',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'donations_sum',
+            value_name: 'amount_sum',
             description: 'Total donations',
             type: 'number',
+            filter: new Filter()
+        });
+        this.model.columns.push({
+            value_name: 'todo2',
+            description: 'Type (todo)',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.model.columns.push({
+            value_name: 'user.user_detail.created_at',
+            description: 'User created at',
+            type: 'none',
+            filter: new Filter()
+        });
+
+        this.model.columns.push({
+            value_name: 'todo3',
+            description: 'Date modified (todo)',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.model.columns.push({
+            value_name: 'todo4',
+            description: 'Campaign name (todo?)',
+            type: 'none',
+            filter: new Filter()
+        });
+
+        this.availableColumns = this.model.columns.slice();
+        this.availableColumns.push({
+            value_name: 'user.id',
+            description: 'user id',
+            type: 'number',
+            filter: new Filter()
+        });
+
+        this.availableColumns.push({
+            value_name: 'todo5',
+            description: 'variable symbol (todo)',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'todo6',
+            description: 'iban (todo)',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'todo7',
+            description: 'frequency (todo)',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'todo8',
+            description: 'registration by (todo)',
+            type: 'none',
             filter: new Filter()
         });
     }
@@ -105,5 +153,16 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
 
     public showMore() {
         this.showMoreClicked.next(false);
+    }
+
+    public activeColumn(searchColumnByValueName: any) {
+        let result = false;
+        this.model.columns.forEach(column => {
+            if (column.value_name === searchColumnByValueName) {
+                result = true;
+                return true;
+            }
+        });
+        return result;
     }
 }
