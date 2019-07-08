@@ -1,6 +1,60 @@
 <app-payment>
-  <div class="paymentOptions">
-    <h2>Donation detail</h2>
-    <p>... donation content will be here...</p>
-  </div>
+    <div class="paymentOptions">
+        <h2>Donation detail</h2>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+                <p>
+                    Transaction ID: <b></b>
+                </p>
+                <p>
+                    Donor name: <b (click)="showDetailDonor()"></b>
+                </p>
+                <p>
+                    Donor ID: <b></b>
+                </p>
+                <p>
+                    IBAN: <b></b>
+                </p>
+                <p>
+                    Variable symbol: <b></b>
+                </p>
+                <p>
+                    Amount: <b></b>
+                </p>
+                <p>
+                    Frequency: <b></b>
+                </p>
+                <p>
+                    Type: <b></b>
+                </p>
+                <p>
+                    Transaction date: <b></b>
+                </p>
+                <p>
+                    Campaign name: <b (click)="showCampaignDetail()"></b>
+                </p>
+                <p>
+                    Created by: <b></b>
+                </p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6">
+                <p>
+                    Donation/donor status: <b>new/repeated/classic</b>
+                </p>
+                <p>
+                    Is paid: <b>yes/processing/no</b>
+                </p>
+                <p>
+                    Change donation assignment: //dropdown box s usermi
+                </p>
+                <p>
+                    <button type="button" type="btn btn-danger">
+                        Delete donation
+                    </button>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
 </app-payment>
