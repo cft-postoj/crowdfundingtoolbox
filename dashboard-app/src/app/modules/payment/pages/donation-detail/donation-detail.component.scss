@@ -1,0 +1,15 @@
+@import 'variables';
+.paymentOptions {
+  padding: 15px;
+  height: calc(100vh - 70px);
+  th.waiting_for_payment {
+    color: $red;
+  }
+  th.processed {
+    color: $green;
+  }
+  th.underline {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

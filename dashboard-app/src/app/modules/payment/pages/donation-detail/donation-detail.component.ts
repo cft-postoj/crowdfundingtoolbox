@@ -1,15 +1,89 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DonationService} from '../../services/donation.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Donation} from '../../models/donation';
+import {PaymentMethod} from '../../models/payment-method';
+import {PaymentMethodsService} from '../../services/payment-methods.service';
+import {CampaignService} from '../../../campaigns/services';
+import {Routing} from '../../../../constants/config.constants';
 
 @Component({
-  selector: 'app-donation-detail',
-  templateUrl: './donation-detail.component.html',
-  styleUrls: ['./donation-detail.component.scss']
+    selector: 'app-donation-detail',
+    templateUrl: './donation-detail.component.html',
+    styleUrls: ['./donation-detail.component.scss']
 })
 export class DonationDetailComponent implements OnInit {
 
-  constructor() { }
+    private id: number;
+    public detail = new Donation();
+    public paymentMethods = new PaymentMethod();
+    public loading: boolean = true;
+    public campaignName: string = '';
+    public campaignId: number = 0;
 
-  ngOnInit() {
-  }
+    constructor(private donationService: DonationService, private router: Router,
+                private route: ActivatedRoute, private campaignService: CampaignService) {
+    }
+
+    ngOnInit() {
+        this.route.params.subscribe(
+            params => {
+                this.id = params['id'];
+                this.getDetail();
+            }
+        );
+    }
+
+    private getDetail() {
+        this.donationService.getDetail(this.id).subscribe((data: Donation) => {
+            this.detail = data;
+            this.loading = false;
+            this.getCampaign();
+            console.log(this.detail);
+        });
+    }
+
+    private getCampaign() {
+        this.campaignService.getCampaignByWidgetId(this.detail.referral_widget_id).subscribe((data) => {
+            this.campaignName = data.name;
+            this.campaignId = data.id;
+        });
+    }
+
+    private getPaymentMethod(id) {
+        let paymentMethod = '';
+        switch (id) {
+            case 1:
+                paymentMethod = 'Bank transfer';
+                break;
+            case 2:
+                paymentMethod = 'Card pay';
+                break;
+            case 3:
+                paymentMethod = 'Pay by square';
+                break;
+            case 4:
+                paymentMethod = 'Google pay';
+                break;
+            case 5:
+                paymentMethod = 'Apple pay';
+                break;
+            default:
+                break;
+        }
+        return paymentMethod;
+    }
+
+    public isNullOrUndefined(variable) {
+        return (variable === null || variable === undefined);
+    }
+
+    public showCampaignDetail(id) {
+        this.router.navigateByUrl(Routing.CAMPAIGNS_FULL_PATH + '/' + id);
+    }
+
+    public showDetailDonor(id) {
+        this.router.navigateByUrl(Routing.PORTAL_USERS_FULL_PATH + '/' + id);
+    }
 
 }

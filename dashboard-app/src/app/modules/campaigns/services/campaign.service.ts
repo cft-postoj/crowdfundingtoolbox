@@ -87,4 +87,8 @@ export class CampaignService {
     getUsersTargetingCount(targeting: Targeting): Observable<any> {
         return this.http.post(`${environment.backOfficeUrl}${environment.campaignTargeting}/users`, targeting);
     }
+
+    public getCampaignByWidgetId(id: number): Observable<any> {
+        return this.http.get(`${environment.backOfficeUrl}${environment.campaignUrl}/widget/${id}`);
+    }
 }

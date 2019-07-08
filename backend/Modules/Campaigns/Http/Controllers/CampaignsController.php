@@ -455,4 +455,8 @@ class CampaignsController extends Controller
         }
     }
 
+    protected function getCampaignByWidgetId($id)
+    {
+        return $this->campaignService->getByWidgetId($id);
+    }
 }

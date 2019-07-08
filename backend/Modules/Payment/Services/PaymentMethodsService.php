@@ -15,10 +15,14 @@ class PaymentMethodsService
         $this->paymentMethodsRepository = $paymentMethodsRepository;
     }
 
+    public function all() {
+        return $this->paymentMethodsRepository->getAllMethods();
+    }
+
     public function getAllMethods()
     {
         return response()->json(
-            $this->paymentMethodsRepository->getAllMethods(),
+            $this->all(),
             Response::HTTP_OK);
     }
 }

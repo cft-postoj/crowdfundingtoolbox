@@ -80,6 +80,7 @@ Route::group([
         Route::delete('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@delete');
         Route::put('campaigns/{id}/result', '\Modules\Campaigns\Http\Controllers\CampaignsController@updateResult');
         Route::get('campaigns/{id}/clone', '\Modules\Campaigns\Http\Controllers\CampaignsController@cloneCampaign');
+        Route::get('campaigns/widget/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignByWidgetId');
 
         // Campaign Targeting
         Route::post('campaign-targeting/users', '\Modules\Targeting\Http\Controllers\CampaignTargetingController@getUsersCount');
@@ -102,6 +103,12 @@ Route::group([
         Route::get('statistics/donors/all', '\Modules\Statistics\Http\Controllers\StatisticsController@donorsAll');
 
         Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
+
+
+        // *********************************************
+        // DONATIONS
+        Route::get('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@getDetail');
+
 
         // *********************************************
         // PAYMENT

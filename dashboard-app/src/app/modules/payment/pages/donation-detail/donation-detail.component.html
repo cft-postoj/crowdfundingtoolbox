@@ -1,6 +1,76 @@
 <app-payment>
-  <div class="paymentOptions">
-    <h2>Donation detail</h2>
-    <p>... donation content will be here...</p>
-  </div>
+    <div class="paymentOptions">
+        <h2>Donation detail</h2>
+        <div class="text-center" *ngIf="loading">
+            <img src="../assets/images/loading.svg" />
+        </div>
+        <div class="row" *ngIf="!loading">
+            <div class="col-12 col-sm-12 col-md-8">
+                <table class="table">
+                    <tr>
+                        <td>Paid status</td>
+                        <th [class]="detail.status">
+                            {{detail.status}}</th>
+                    </tr>
+                    <tr>
+                        <td>Transaction ID</td>
+                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.transaction_id : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Donor name</td>
+                        <th (click)="showDetailDonor(detail.portal_user.user.id)" class="underline">{{(!isNullOrUndefined(detail.portal_user)) ?
+                            detail.portal_user.user.user_detail.first_name + ' ' +  detail.portal_user.user.user_detail.last_name : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Donor ID</td>
+                        <th>{{(!isNullOrUndefined(detail.portal_user)) ? detail.portal_user.id : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>IBAN</td>
+                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.iban : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Variable symbol</td>
+                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.variable_symbol : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <th>{{(!isNullOrUndefined(detail.amount)) ? detail.amount + ' €' : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Frequency</td>
+                        <th>{{(detail.is_monhtly_donation) ? 'monthly' : 'one-time'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <th>{{(!isNullOrUndefined(detail.payments)) ? getPaymentMethod(detail.payments.transfer_type) : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Transaction date</td>
+                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.transaction_date : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Campaign name</td>
+                        <th (click)="showCampaignDetail(campaignId)" class="underline"
+                        title="Show campaign detail">{{campaignName}}</th>
+                    </tr>
+                    <tr>
+                        <td>Created by</td>
+                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.created_by : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Donation/donor status</td>
+                        <th>new</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4">
+                <p>
+                    Change donation assignment: //dropdown box s usermi
+                </p>
+            </div>
+
+        </div>
+
+    </div>
 </app-payment>

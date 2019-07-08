@@ -25,7 +25,12 @@ class DonationController extends Controller
     protected function getAllDonations(Request $request)
     {
 
-        return $this->donationService->getDonationInTimeInterval($request['from'],$request['to'], $request['interval']);
+        return $this->donationService->getDonationInTimeInterval($request['from'], $request['to'], $request['interval']);
+    }
+
+    protected function getDetail($id)
+    {
+        return $this->donationService->getDetail($id);
     }
 
 }
