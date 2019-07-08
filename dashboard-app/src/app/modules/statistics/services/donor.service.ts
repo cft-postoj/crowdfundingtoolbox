@@ -33,7 +33,8 @@ export class DonorService {
     public getDonors(from: { year: number; month: number; day: number },
                      to: { year: number; month: number; day: number },
                      monthly,
-                     dataType: string) {
+                     dataType: string,
+                     limit: string) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
             .append('from', this.writeDateAsString(from))
@@ -44,7 +45,10 @@ export class DonorService {
         if (dataType !== undefined) {
             params = params.append('dataType', dataType);
         }
-        return this.http.get<[any]>(
+        if (limit !== undefined) {
+            params = params.append('limit', limit);
+        }
+        return this.http.get<any>(
             `${environment.backOfficeUrl}${environment.donorUrl}${environment.all}`,
             {
                 headers: headers,

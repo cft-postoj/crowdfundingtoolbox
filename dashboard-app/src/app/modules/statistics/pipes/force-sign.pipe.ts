@@ -6,7 +6,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class ForceSignPipe implements PipeTransform {
 
     transform(value: number): any {
-        return (value < 0 ? '' : '+') + value;
+        return value < 0 ? '' : '+' ;
     }
 
 }

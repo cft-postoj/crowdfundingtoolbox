@@ -1,26 +1,28 @@
 <div class="container">
     <div class="row">
-        <div class="col-6 text-center">
-            <h2>{{title}}</h2>
+        <div class="col-6">
+            <h2>{{title}} <ng-container *ngIf="enablePortalUsersCount && !loading">({{portalUsersCount}})</ng-container></h2>
         </div>
-        <div class="col-3 d-flex align-items-center">
-            from:
-            <app-datepicker
-                [(date)]="from"
-                [maxDate]="to"
-                [type]="'start'"
-                [disabled]="true">
-            </app-datepicker>
-        </div>
-        <div class="col-3 d-flex align-items-center">
-            to:
-            <app-datepicker
-                [(date)]="to"
-                [minDate]="from"
-                [type]="'end'"
-                [disabled]="true">
-            </app-datepicker>
-        </div>
+        <ng-container *ngIf="showDates">
+            <div class="col-3 d-flex align-items-center">
+                from:
+                <app-datepicker
+                    [(date)]="from"
+                    [maxDate]="to"
+                    [type]="'start'"
+                    [disabled]="true">
+                </app-datepicker>
+            </div>
+            <div class="col-3 d-flex align-items-center">
+                to:
+                <app-datepicker
+                    [(date)]="to"
+                    [minDate]="from"
+                    [type]="'end'"
+                    [disabled]="true">
+                </app-datepicker>
+            </div>
+        </ng-container>
     </div>
 </div>
 <table class="list-items list-items--orderable">
@@ -29,13 +31,13 @@
         <th class="id">#</th>
         <th app-table-header *ngFor="let column of model.columns"
             [column]="column" [(model)]="model"
-            (modelChange)="sortTable()"></th>
+            (modelChange)="sortTable()" [hide]="hide"></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="!loading">
     <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item">
         <td>{{i+1}}</td>
-        <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.id]">
+        <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.user.id]">
             {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
         </td>
         <td>
@@ -51,7 +53,7 @@
             {{portalUser.last_donation_payment_method}}
         </td>
         <td>
-            {{portalUser.first_donation_at}}
+            {{portalUser.first_donation_at | date:'dd.MM.yyyy'}}
         </td>
         <td>
             {{portalUser.amount_sum | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
@@ -60,3 +62,11 @@
     </tbody>
 </table>
 <app-loading [isLoading]="loading"></app-loading>
+
+<div *ngIf="!loading && limit" class="container">
+    <div class="row">
+        <div class="col">
+            <span class="clickable" (click)="showMore()">show more</span>
+        </div>
+    </div>
+</div>

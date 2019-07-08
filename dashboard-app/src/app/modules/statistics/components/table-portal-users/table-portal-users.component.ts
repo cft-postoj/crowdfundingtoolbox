@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {DonorStats} from '../../models/donor-stats';
 import {DonorService} from '../../services/donor.service';
 import {Routing} from '../../../../constants/config.constants';
@@ -11,20 +11,25 @@ import {TableService} from '../../../core/services/table.service';
     templateUrl: './table-portal-users.component.html',
     styleUrls: ['./table-portal-users.component.scss']
 })
-export class TablePortalUsersComponent implements OnInit {
+export class TablePortalUsersComponent implements OnInit,  OnChanges {
 
     @Input() public from;
     @Input() public to;
     @Input() public monthly: boolean;
     @Input() public title;
     @Input() public dataType;
+    @Input() public limit;
+    @Input() public showDates: boolean = true;
+    @Input() public enablePortalUsersCount: boolean = false;
 
+    @Output() public showMoreClicked = new EventEmitter();
     public routing = Routing;
 
     public loading = true;
     public model: TableModel = new TableModel();
     public portalUsers: DonorStats[] = [];
     public sortedPortalUsers: any;
+    private portalUsersCount: number;
 
     constructor(private donorService: DonorService,
                 private tableService: TableService) {
@@ -53,19 +58,19 @@ export class TablePortalUsersComponent implements OnInit {
         this.model.columns.push({
             value_name: 'last_donation_at',
             description: 'Last donation date',
-            type: 'text',
+            type: 'none',
             filter: new Filter()
         });
         this.model.columns.push({
             value_name: 'last_donation_payment_method',
             description: 'Last payment method',
-            type: 'text',
+            type: 'none',
             filter: new Filter()
         });
         this.model.columns.push({
             value_name: 'first_donation_at',
             description: 'First donation',
-            type: 'text',
+            type: 'none',
             filter: new Filter()
         });
         this.model.columns.push({
@@ -76,12 +81,18 @@ export class TablePortalUsersComponent implements OnInit {
         });
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        this.getUsers();
+    }
+
 
     getUsers() {
-        this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType).subscribe(
+        this.loading = true;
+        this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType, this.limit).subscribe(
             result => {
-                this.portalUsers = result;
-                this.sortedPortalUsers = Object.assign([], result);
+                this.portalUsers = result.donors;
+                this.portalUsersCount = result.count;
+                this.sortedPortalUsers = Object.assign([], this.portalUsers);
                 this.loading = false;
             }
         );
@@ -89,5 +100,9 @@ export class TablePortalUsersComponent implements OnInit {
 
     sortTable() {
         this.sortedPortalUsers = this.tableService.sort(this.model, this.portalUsers);
+    }
+
+    public showMore() {
+        this.showMoreClicked.next(false);
     }
 }
