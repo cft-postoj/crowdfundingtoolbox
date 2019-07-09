@@ -77,7 +77,8 @@ import localSk from '@angular/common/locales/sk';
         }
     ],
     exports: [
-        TopPanelComponent
+        TopPanelComponent,
+        ModalComponent
     ],
     bootstrap: [AppComponent]
 

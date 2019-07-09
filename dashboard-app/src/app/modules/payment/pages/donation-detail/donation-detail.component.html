@@ -18,12 +18,12 @@
                     </tr>
                     <tr>
                         <td>Donor name</td>
-                        <th (click)="showDetailDonor(detail.portal_user.user.id)" class="underline">{{(!isNullOrUndefined(detail.portal_user)) ?
+                        <th (click)="showDetailDonor()" class="underline">{{(!isNullOrUndefined(detail.portal_user)) ?
                             detail.portal_user.user.user_detail.first_name + ' ' +  detail.portal_user.user.user_detail.last_name : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Donor ID</td>
-                        <th>{{(!isNullOrUndefined(detail.portal_user)) ? detail.portal_user.id : 'N/A'}}</th>
+                        <th>{{(!isNullOrUndefined(detail.portal_user)) ? detail.portal_user.user.id : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>IBAN</td>
@@ -65,9 +65,10 @@
                 </table>
             </div>
             <div class="col-12 col-sm-12 col-md-4">
-                <p>
-                    Change donation assignment: //dropdown box s usermi
-                </p>
+                <app-user-dropdown
+                        [userId]="(detail.portal_user === null) ? null : detail.portal_user.user.id"
+                        [label]="'Change donation assignment:'"
+                        (changeIdEmit)="changeDonationAssignment($event)"></app-user-dropdown>
             </div>
 
         </div>

@@ -15,4 +15,10 @@ export class DonationService {
     public getDetail(id: number): Observable<Donation> {
         return this.http.get<Donation>(`${environment.backOfficeUrl}${environment.donations}/${id}`);
     }
+
+    public updateAssignment(id: number, userId: number): Observable<any> {
+        return this.http.put(`${environment.backOfficeUrl}${environment.donations}/${id}`, {
+            user_id: userId
+        });
+    }
 }

@@ -33,4 +33,9 @@ class DonationController extends Controller
         return $this->donationService->getDetail($id);
     }
 
+    protected function updateAssignemnt(Request $requestt, $id)
+    {
+        return $this->donationService->updateAssignment($requestt, $id);
+    }
+
 }

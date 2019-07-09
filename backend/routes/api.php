@@ -108,6 +108,7 @@ Route::group([
         // *********************************************
         // DONATIONS
         Route::get('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@getDetail');
+        Route::put('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@updateAssignemnt');
 
 
         // *********************************************
