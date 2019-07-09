@@ -15,12 +15,12 @@ class UserPaymentOptionsRepository
         $this->model = UserPaymentOption::class;
     }
 
-    public function create($portal_user_id)
+    public function create($request)
     {
         return $this->model
-            ::create([
-                'portal_user_id' => $portal_user_id
-            ]);
+            ::create(
+                $request
+            );
     }
 
     public function update($request, $portal_user_id)
@@ -28,5 +28,12 @@ class UserPaymentOptionsRepository
         return $this->model
             ::where('portal_user_id', $portal_user_id)
             ->update($request);
+    }
+
+    public function getByPortalUser($portal_user_id)
+    {
+        return $this->model
+            ::where('portal_user_id', $portal_user_id)
+            ->first();
     }
 }

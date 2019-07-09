@@ -4,6 +4,7 @@ namespace Modules\Payment\Services;
 
 
 use Carbon\Carbon;
+use Modules\Payment\Entities\Donation;
 use Modules\Payment\Entities\DonationInitialize;
 use Modules\Payment\Repositories\DonationRepository;
 use Modules\UserManagement\Entities\TrackingShow;
@@ -181,6 +182,23 @@ class DonationService
         ],
             Response::HTTP_CREATED
         );
+    }
+
+    public function updatePaymentIdAndAmount($request, $id)
+    {
+        return Donation::where('id', $id)->update(
+            $request
+        );
+    }
+
+    public function getDonationsByUserId($user_id)
+    {
+        return Donation::where('portal_user_id', $this->portalUserService->getPortalUserIdByUserId($user_id))
+            ->get();
+    }
+
+    public function create($request) {
+        return $this->donationRepository->create($request);
     }
 
 }

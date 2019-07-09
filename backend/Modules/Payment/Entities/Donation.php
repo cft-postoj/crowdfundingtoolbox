@@ -11,6 +11,9 @@ class Donation extends Model
         'amount',
         'is_monthly_donation',
         'payment_method',
+        'portal_user_id',
+        'payment_id',
+        'widget_id',
         'status'
     ];
     protected $casts = [

@@ -1,7 +1,10 @@
 @import 'variables';
 .paymentOptions {
   padding: 15px;
-  height: calc(100vh - 70px);
+  position: absolute;
+  overflow: auto;
+  height: 93%;
+  width: 100%;
   th.waiting_for_payment {
     color: $red;
   }

@@ -1,4 +1,5 @@
 export class Payment {
+    id: number;
     transaction_id: string;
     iban: string;
     variable_symbol: number;

@@ -8,6 +8,6 @@
               (select)="selectAction()"
               [autoActiveOnMouseEnter]="true"
               id="usersList"
-              [placeholder]="'No user selected'" #usersList>
+              [placeholder]="(placeholder) ? placeholder : 'No user selected'" #usersList>
   </ngx-select>
 </div>

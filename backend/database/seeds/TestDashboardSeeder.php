@@ -44,6 +44,7 @@ class TestDashboardSeeder extends Seeder
         $widgets = \Modules\Campaigns\Entities\Widget::get()->toArray();
         $users = PortalUser::with('user')->get()->toArray();
         $monthlySupporters = array_slice($users, 0, 50);
+        $paymentMethods = [1, 2, 3, 4, 5];
         // $i users (30) will be monthly supporters
         for ($i = 0; $i < 30; $i++) {
             $currentSupporter = $monthlySupporters[$i];
@@ -65,7 +66,7 @@ class TestDashboardSeeder extends Seeder
                     //sub $j from months of current date to simulate donation before $j months
                     'created_at' => $donationDate->copy()->subMonth($j),
                     'updated_at' => $donationDate->copy()->subMonth($j),
-                    'payment_method' => 'card_payment',
+                    'payment_method' => $paymentMethods[array_rand($paymentMethods)],
                     'status' => 'waiting_for_payment'
                 ]);
                 // every 21th payment to unpaired
@@ -96,7 +97,7 @@ class TestDashboardSeeder extends Seeder
                 'is_monthly_donation' => false,
                 'created_at' => $donationDate,
                 'updated_at' => $donationDate,
-                'payment_method' => 'bank_transfer',
+                'payment_method' => $paymentMethods[array_rand($paymentMethods)],
                 'status' => 'processed'
             ]);
 

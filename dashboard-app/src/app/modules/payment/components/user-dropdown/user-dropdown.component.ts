@@ -9,12 +9,15 @@ import {PortalUser} from '../../../portal-users/models/portal-user';
 })
 export class UserDropdownComponent implements OnInit {
 
+    @Input()
     public users: any = [];
     public selectedValue: string;
     @Input()
     public userId: number;
     @Input()
     public label: string;
+    @Input()
+    public placeholder: string;
     @Output()
     public changeIdEmit = new EventEmitter();
 
@@ -22,20 +25,9 @@ export class UserDropdownComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getUsers();
     }
 
-    getUsers() {
-        this.portalUserService.getAll().subscribe((data: [PortalUser]) => {
-            data.map((u, key) => {
-                const value = u.user_detail.first_name + ' ' + u.user_detail.last_name + ' - [ID: ' + u.id + ']';
-                this.users.push(value);
-                if (u.id === this.userId) {
-                    this.selectedValue = value;
-                }
-            });
-        });
-    }
+
 
     public selectAction() {
         const id = this.selectedValue.match(/\d+/g).map(Number)[0];

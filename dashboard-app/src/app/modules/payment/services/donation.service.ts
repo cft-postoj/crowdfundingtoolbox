@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {Donation} from '../models/donation';
+import {Payment} from '../models/payment';
 
 @Injectable({
     providedIn: 'root'
@@ -21,4 +22,5 @@ export class DonationService {
             user_id: userId
         });
     }
+
 }

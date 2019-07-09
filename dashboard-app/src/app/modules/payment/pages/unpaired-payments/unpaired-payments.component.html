@@ -1,5 +1,71 @@
 <app-payment>
-  <div class="paymentOptions text-center">
-    <h3>No unpaired payments were found!</h3>
-  </div>
+    <div class="paymentOptions">
+        <div class="text-center" *ngIf="loading">
+            <img src="../assets/images/loading.svg"/>
+        </div>
+        <div *ngIf="!loading">
+            <h3 class="text-center" *ngIf="payments.length === 0">No unpaired payments were found!</h3>
+            <div *ngIf="payments.length > 0">
+                <h2>Unpaired payments</h2>
+                <button type="button" class="pairAllPayments">
+                    Pair all payments via IBAN
+                </button>
+                <table class="list-items list-items--orderable">
+                    <thead>
+                    <tr>
+                        <th class="id">#</th>
+                        <th>Transaction ID</th>
+                        <th>Transaction date</th>
+                        <th>Variable symbol</th>
+                        <th app-table-header [(model)]="model" [column]="model.columns[0]" (modelChange)="sortTable()">
+                        </th>
+                        <th>Amount</th>
+                        <th>Created by</th>
+                        <th>Transfer type</th>
+                        <th colspan="2">Pairing payments</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of items; let i = index" class="list-items--item">
+                        <td>{{i + 1}}</td>
+                        <td>
+                            {{item.transaction_id}}
+                        </td>
+                        <td>
+                            {{item.transaction_date | date:'dd.MM.yyyy' }}
+                        </td>
+                        <td>
+                            {{item.variable_symbol}}
+                        </td>
+                        <td>
+                            {{item.iban}}
+                        </td>
+                        <td>
+                            {{item.amount | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
+                        </td>
+                        <td>
+                            {{item.created_by}}
+                        </td>
+                        <td>
+                            {{item.transfer_type}}
+                        </td>
+                        <td class="pairing" colspan="2">
+                            <button type="button">Pair payment via IBAN</button>
+                            <app-user-dropdown
+                                    [users]="users"
+                                    [userId]="null"
+                                    [label]="null"
+                                    [placeholder]="'Assign payment to user'"
+                                    (changeIdEmit)="changeDonationAssignment($event, item.id)"></app-user-dropdown>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <app-alert
+        [(open)]="alertOpen"
+        [type]="alertType"
+        [message]="alertMessage"></app-alert>
 </app-payment>

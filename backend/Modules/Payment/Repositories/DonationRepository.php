@@ -33,4 +33,12 @@ class DonationRepository
                 'portal_user_id' => $portal_user_id
             ));
     }
+
+    public function create($request)
+    {
+        return $this->model
+            ::create(
+                $request
+            );
+    }
 }

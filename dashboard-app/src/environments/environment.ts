@@ -65,6 +65,7 @@ export const environment = {
     bankTransferMethod: '/payment/bank-transfer-details',
     payBySquareMethod: '/payment/pay-by-square-details',
 
-    donations: '/donations'
+    donations: '/donations',
+    unpairedPayments: '/unpaired-payments'
 
 };
