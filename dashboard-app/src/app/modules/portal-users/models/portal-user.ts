@@ -8,6 +8,7 @@ export class PortalUser {
     username: string = '';
     isMonthlyDonor: boolean = false;
     user: any;
+    user_detail = new PortalUser();
     donor_status = [new DonorStatus()];
     portal_user: any;
     donations: Donation[];
