@@ -25,7 +25,7 @@
                 </app-datepicker>
             </div>
         </ng-container>
-        <div class="col-3">
+        <div class="col-3 d-flex align-items-center">
             <ngx-select-dropdown [(ngModel)]="model.columns"
                                  [multiple]="true" [config]="config"
                                  [options]="availableColumns"></ngx-select-dropdown>
@@ -64,24 +64,26 @@
             {{portalUser.user.user_detail.created_at | date:'dd.MM.yyyy'}}
         </td>
         <td *ngIf="activeColumn('todo3')">
-           todo
+           todo3
         </td>
         <td *ngIf="activeColumn('todo4')">
-            todo
+            todo4
+        </td>
+        <td *ngIf="activeColumn('user.id')">
+            {{portalUser.user.user_detail.id}}
         </td>
         <td *ngIf="activeColumn('todo5')">
-            todo
+            todo5
         </td>
         <td *ngIf="activeColumn('todo6')">
-            todo
+            todo6
         </td>
         <td *ngIf="activeColumn('todo7')">
-            todo
+            todo7
         </td>
         <td *ngIf="activeColumn('todo8')">
-            todo
+            todo8
         </td>
-
     </tr>
     </tbody>
 </table>

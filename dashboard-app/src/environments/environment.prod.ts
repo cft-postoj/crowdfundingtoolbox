@@ -59,5 +59,7 @@ export const environment = {
     paymentMethods: '/payment-methods',
 
     bankTransferMethod: '/payment/bank-transfer-details',
-    payBySquareMethod: '/payment/pay-by-square-details'
+    payBySquareMethod: '/payment/pay-by-square-details',
+
+    donations: '/donations'
 };

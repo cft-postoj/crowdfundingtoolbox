@@ -24,8 +24,8 @@ export class OverallComponent implements OnInit {
     graphLoading: boolean = true;
     donorsAndDonationsLoading: boolean = true;
     modalOpened: boolean = false;
-    private monthly: boolean;
-    private tableTitle: string;
+    public monthly: boolean;
+    public tableTitle: string;
 
     // all tables used ina app-modal-full-size component in this componetn
     public tables: {

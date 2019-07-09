@@ -31,14 +31,14 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     public model: TableModel = new TableModel();
     public portalUsers: DonorStats[] = [];
     public sortedPortalUsers: any;
-    private portalUsersCount: number;
+    public portalUsersCount: number;
 
     config = {
         height: '500px',
         search: true,
         placeholder: 'Choose columns to show'
     };
-    private availableColumns: Column[];
+    public availableColumns: Column[];
 
     constructor(private donorService: DonorService,
                 private tableService: TableService) {
