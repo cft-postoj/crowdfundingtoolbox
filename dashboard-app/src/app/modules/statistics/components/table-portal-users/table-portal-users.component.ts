@@ -186,7 +186,6 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
                 return column;
             }
         });
-        console.log(result, this.model.columns );
         return result;
     }
 }

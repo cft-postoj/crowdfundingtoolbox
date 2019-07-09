@@ -26,6 +26,9 @@ class StatsDonorService implements StatsDonorServiceInterface
         if ($dataType == 'stoppedSupporting') {
             $result = $this->stoppedSupporting($to, $limit);
         }
+        if ($dataType == 'didNotPay') {
+            $result = $this->didNotPay($from, $to, $limit);
+        }
         if ($dataType == null) {
             $result->donors = $this->statsDonorRepository->getDonors($from, $to, $monthly);
         }
@@ -58,6 +61,14 @@ class StatsDonorService implements StatsDonorServiceInterface
     public function countOfNewDonors($from, $to)
     {
         return $this->statsDonorRepository->countOfNewDonors($from, $to);
+    }
+
+    private function didNotPay($from, $to, $limit)
+    {
+        $result = new stdClass;
+        $result->donors = $this->statsDonorRepository->didNotPay($from, $to, $limit);
+        $result->count = $this->statsDonorRepository->didNotPayCount($from, $to);
+        return $result;
     }
 
 }

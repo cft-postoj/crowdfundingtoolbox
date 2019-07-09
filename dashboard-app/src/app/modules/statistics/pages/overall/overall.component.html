@@ -225,13 +225,18 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
             <div class="row">
                 <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to" [monthly]="monthly"
                                         [title]="'Stopped supporting'" [dataType]="'stoppedSupporting'" [limit]="'3'"
                                         [showDates]="false" [enablePortalUsersCount]="true"
-                                        (showMoreClicked)="openModal('Stopped supporting', false, 'tableDonors','stoppedSupporting')">
+                                        (showMoreClicked)="openModal('Stopped supporting', null, 'tableDonors','stoppedSupporting')">
+                </app-table-portal-users>
+            </div>
+            <div class="row">
+                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to" [monthly]="monthly"
+                                        [title]="'Did not pay'" [dataType]="'didNotPay'" [limit]="'3'"
+                                        [showDates]="false" [enablePortalUsersCount]="true"
+                                        (showMoreClicked)="openModal('Did not pay', null, 'tableDonors','didNotPay')">
                 </app-table-portal-users>
             </div>
         </div>
