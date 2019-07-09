@@ -6,6 +6,7 @@ import {Filter} from '../../../core/models/filter';
 import {TableModel} from '../../../core/models/table-model';
 import {TableService} from '../../../core/services/table.service';
 import {Column} from '../../../core/models/column';
+import {PortalUser} from '../../../portal-users/models/portal-user';
 
 @Component({
     selector: 'app-table-portal-users',
@@ -30,7 +31,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     public loading = true;
     public model: TableModel = new TableModel();
     public portalUsers: DonorStats[] = [];
-    public sortedPortalUsers: any;
+    public sortedPortalUsers: PortalUser[];
     public portalUsersCount: number;
 
     config = {
@@ -45,16 +46,21 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.getUsers();
         this.model.columns.push({
-            value_name: 'todo1',
-            description: 'Donor status (todo)',
+            value_name: 'order',
+            description: '#',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.model.columns.push({
+            value_name: 'status',
+            description: 'Donor status',
             type: 'none',
             filter: new Filter()
         });
         this.model.columns.push({
             value_name: 'user.email',
-            description: 'email',
+            description: 'Email',
             type: 'text',
             filter: new Filter()
         });
@@ -71,8 +77,8 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'todo2',
-            description: 'Type (todo)',
+            value_name: 'todo1',
+            description: 'Type',
             type: 'none',
             filter: new Filter()
         });
@@ -82,32 +88,38 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             type: 'none',
             filter: new Filter()
         });
+        this.model.columns.push({
+            value_name: 'last_donation_at',
+            description: 'Last donation ',
+            type: 'none',
+            filter: new Filter()
+        });
 
         this.model.columns.push({
-            value_name: 'todo3',
-            description: 'Date modified (todo)',
+            value_name: 'user.updated_at',
+            description: 'Date modified',
             type: 'none',
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'todo4',
-            description: 'Campaign name (todo?)',
-            type: 'none',
+            value_name: 'first_donation.widget.campaign.name',
+            description: 'Campaign name',
+            type: 'text',
             filter: new Filter()
         });
 
         this.availableColumns = this.model.columns.slice();
         this.availableColumns.push({
             value_name: 'user.id',
-            description: 'user id',
+            description: 'User id',
             type: 'number',
             filter: new Filter()
         });
 
         this.availableColumns.push({
-            value_name: 'todo5',
-            description: 'variable symbol (todo)',
-            type: 'none',
+            value_name: 'variable_symbol.variable_symbol',
+            description: 'Variable symbol',
+            type: 'number',
             filter: new Filter()
         });
         this.availableColumns.push({
@@ -117,8 +129,8 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.availableColumns.push({
-            value_name: 'todo7',
-            description: 'frequency (todo)',
+            value_name: 'is_monthly_donor',
+            description: 'frequency',
             type: 'none',
             filter: new Filter()
         });
@@ -163,6 +175,18 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
                 return true;
             }
         });
+        return result;
+    }
+
+    public getColumnByValueName(searchColumnByValueName: any) {
+        let result = null;
+        this.model.columns.forEach(column => {
+            if (column.value_name === searchColumnByValueName) {
+                result = column;
+                return column;
+            }
+        });
+        console.log(result, this.model.columns );
         return result;
     }
 }

@@ -71,6 +71,9 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             })
             ->orderBy('last_donation_at', 'DESC')
             ->with('user.userDetail')
+            ->with('isMonthlyDonor')
+            ->with('variableSymbol')
+            ->with('firstDonation.widget.campaign')
             ->get();
     }
 
@@ -134,6 +137,10 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('user.userDetail')
             ->whereDate('first_donation_at', '>=', $from)
             ->whereDate('first_donation_at', '<=', $to)
+            ->with('user.userDetail')
+            ->with('isMonthlyDonor')
+            ->with('variableSymbol')
+            ->with('firstDonation.widget.campaign')
             ->get();
     }
 
@@ -165,6 +172,9 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             })
             ->orderBy('last_donation_at', 'DESC')
             ->with('user.userDetail')
+            ->with('isMonthlyDonor')
+            ->with('variableSymbol')
+            ->with('firstDonation.widget.campaign')
             ->whereDate('last_donation_at', '<=', $stopAfterDate);
         if ($limit !== null) {
             $resultQuery = $resultQuery->limit($limit);

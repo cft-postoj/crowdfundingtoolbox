@@ -35,17 +35,49 @@
 <table class="list-items list-items--orderable">
     <thead>
     <tr>
-        <th class="id">#</th>
-        <th app-table-header *ngFor="let column of model.columns"
-            [column]="column" [(model)]="model"
+        <th app-table-header class="id" *ngIf="activeColumn('order')" [column]="getColumnByValueName('order')"
+            [(model)]="model" (modelChange)="sortTable()">#
+        </th>
+        <th app-table-header *ngIf="activeColumn('status')" [column]="getColumnByValueName('status')" [(model)]="model"
             (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('user.email')" [column]="getColumnByValueName('user.email')"
+            [(model)]="model" (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('user.user_detail.last_name')"
+            [column]="getColumnByValueName('user.user_detail.last_name')" [(model)]="model"
+            (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('amount_sum')" [column]="getColumnByValueName('amount_sum')"
+            [(model)]="model" (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('todo1')" [column]="getColumnByValueName('todo1')" [(model)]="model"
+            (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('user.user_detail.created_at')"
+            [column]="getColumnByValueName('user.user_detail.created_at')" [(model)]="model"
+            (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('last_donation_at')"
+            [column]="getColumnByValueName('last_donation_at')" [(model)]="model" (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('user.updated_at')" [column]="getColumnByValueName('user.updated_at')"
+            [(model)]="model" (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('first_donation.widget.campaign.name')"
+            [column]="getColumnByValueName('first_donation.widget.campaign.name')" [(model)]="model"
+            (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('user.id')" [column]="getColumnByValueName('user.id')"
+            [(model)]="model" (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('variable_symbol.variable_symbol')"
+            [column]="getColumnByValueName('variable_symbol.variable_symbol')" [(model)]="model"
+            (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('todo6')" [column]="getColumnByValueName('todo6')" [(model)]="model"
+            (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('is_monthly_donor')"
+            [column]="getColumnByValueName('is_monthly_donor')" [(model)]="model" (modelChange)="sortTable()"></th>
+        <th app-table-header *ngIf="activeColumn('todo8')" [column]="getColumnByValueName('todo8')" [(model)]="model"
+            (modelChange)="sortTable()"></th>
+
     </tr>
     </thead>
     <tbody *ngIf="!loading">
     <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item">
-        <td>{{i+1}}</td>
-        <td *ngIf="activeColumn('todo1')">
-            todo1
+        <td *ngIf="activeColumn('order')">{{i+1}}</td>
+        <td *ngIf="activeColumn('status')">
+            <app-donor-status [isMonthlyDonor]="portalUser.last_donation_at!=null"></app-donor-status>
         </td>
         <td *ngIf="activeColumn('user.email')">
             {{portalUser.user.email}}
@@ -57,29 +89,33 @@
         <td *ngIf="activeColumn('amount_sum')">
             {{portalUser.amount_sum | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
         </td>
-        <td *ngIf="activeColumn('todo2')">
-            todo2
+        <td *ngIf="activeColumn('todo1')">
+            todo
         </td>
-        <td *ngIf="activeColumn('user.user_detail.created_at')">
+        <td [title]="portalUser.user.user_detail.created_at | date:'dd.MM.yyyy HH:mm:ss'"
+            *ngIf="activeColumn('user.user_detail.created_at')">
             {{portalUser.user.user_detail.created_at | date:'dd.MM.yyyy'}}
         </td>
-        <td *ngIf="activeColumn('todo3')">
-           todo3
+        <td [title]="portalUser.last_donation_at | date:'dd.MM.yyyy HH:mm:ss'" *ngIf="activeColumn('last_donation_at')">
+            {{portalUser.last_donation_at | date:'dd.MM.yyyy'}}
         </td>
-        <td *ngIf="activeColumn('todo4')">
-            todo4
+        <td [title]="portalUser.user.updated_at | date:'dd.MM.yyyy HH:mm:ss'" *ngIf="activeColumn('user.updated_at')">
+            {{portalUser.user.updated_at | date:'dd.MM.yyyy'}}
+        </td>
+        <td *ngIf="activeColumn('first_donation.widget.campaign.name')">
+            {{portalUser.first_donation.widget.campaign.name}}
         </td>
         <td *ngIf="activeColumn('user.id')">
             {{portalUser.user.user_detail.id}}
         </td>
-        <td *ngIf="activeColumn('todo5')">
-            todo5
+        <td *ngIf="activeColumn('variable_symbol.variable_symbol')">
+            {{portalUser.variable_symbol.variable_symbol}}
         </td>
         <td *ngIf="activeColumn('todo6')">
             todo6
         </td>
-        <td *ngIf="activeColumn('todo7')">
-            todo7
+        <td *ngIf="activeColumn('is_monthly_donor')">
+            {{portalUser.is_monthly_donor | monthly}}
         </td>
         <td *ngIf="activeColumn('todo8')">
             todo8
