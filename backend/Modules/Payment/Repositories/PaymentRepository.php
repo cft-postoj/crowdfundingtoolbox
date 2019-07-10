@@ -37,4 +37,11 @@ class PaymentRepository
             ->get();
     }
 
+    public function get($id)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->first();
+    }
+
 }

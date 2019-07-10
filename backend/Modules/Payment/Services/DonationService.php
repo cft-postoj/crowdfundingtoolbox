@@ -197,7 +197,9 @@ class DonationService
             ->get();
     }
 
-    public function create($request) {
+    public
+    function create($request)
+    {
         return $this->donationRepository->create($request);
     }
 

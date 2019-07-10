@@ -66,8 +66,55 @@ export class UnpairedPaymentsComponent implements OnInit {
             'paired via IBAN for this specific user. Do you want to continue with this action', id, itemId);
     }
 
+    pairViaIbanModal(itemId) {
+        let title = '';
+        let text = '';
+        const itemIds = [];
+        if (itemId !== null) {
+            // pair all filtered payments
+            title = 'Pair this payment via IBAN';
+            text = 'Are you sure you want to pair this payment via IBAN? If there will be found some user who has same IBAN, ' +
+                'payment will be assign to this user and all next payments for this user will be paired via IBAN.' +
+                ' Do you want to continue with this action';
+            itemIds.push(itemId);
+        } else {
+            title = 'Pair all filtered payments via IBAN';
+            text = 'Are you sure you want to pair all ' + this.items.length + ' payments' +
+                ' via IBAN? If there will be found some user who has same IBAN, ' +
+                'a single payment will be assign to this user and all next payments for this user will be paired via IBAN.' +
+                ' Do you want to continue with this action';
+            this.items.map((i, key) => {
+                itemIds.push(i.id);
+            });
+        }
+        const modalRef = this._modalService.open(ModalComponent);
+        modalRef.componentInstance.title = title;
+        modalRef.componentInstance.text = text;
+        modalRef.componentInstance.loading = false;
+        modalRef.componentInstance.duplicate = 'donation-assignment';
+        modalRef.result.then((data) => {
+            this.loading = true;
+                this.paymentService.pairViaIban(itemIds).subscribe((d) => {
+                    this.alertMessage = d.message;
+                    this.loading = true;
+                    this.getUnpairedPayments();
+                    this.alertType = d.status;
+                    this.alertOpen = true;
+                }, (error) => {
+                    console.log(error);
+                    this.alertMessage = 'Error during pairing payments. Error message: ' + error;
+                    this.alertType = 'success';
+                    this.alertOpen = true;
+                });
+            }, (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+
     private assignToUserModal(title, text, userId, itemId) {
-        const modalRef = this._modalService.open(ModalComponent); // if user is admin
+        const modalRef = this._modalService.open(ModalComponent);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.text = text;
         modalRef.componentInstance.loading = false;

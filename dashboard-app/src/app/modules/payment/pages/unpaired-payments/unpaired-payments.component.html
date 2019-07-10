@@ -7,7 +7,7 @@
             <h3 class="text-center" *ngIf="payments.length === 0">No unpaired payments were found!</h3>
             <div *ngIf="payments.length > 0">
                 <h2>Unpaired payments</h2>
-                <button type="button" class="pairAllPayments">
+                <button type="button" class="pairAllPayments" (click)="pairViaIbanModal(null)">
                     Pair all payments via IBAN
                 </button>
                 <table class="list-items list-items--orderable">
@@ -50,7 +50,7 @@
                             {{item.transfer_type}}
                         </td>
                         <td class="pairing" colspan="2">
-                            <button type="button">Pair payment via IBAN</button>
+                            <button type="button" (click)="pairViaIbanModal(item.id)">Pair payment via IBAN</button>
                             <app-user-dropdown
                                     [users]="users"
                                     [userId]="null"

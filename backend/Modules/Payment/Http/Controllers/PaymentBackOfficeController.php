@@ -44,6 +44,12 @@ class PaymentBackOfficeController extends Controller
         return $this->paymentService->pairPaymentToUser($request);
     }
 
+    protected function pairViaIban(Request $request)
+    {
+        return $this->paymentService->pairPaymentsViaIban($request);
+    }
+
+
     protected function getAllMethods()
     {
         return $this->paymentMethodsService->getAllMethods();

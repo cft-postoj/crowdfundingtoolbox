@@ -22,4 +22,10 @@ export class PaymentService {
             user_id: userId
         });
     }
+
+    public pairViaIban(paymentIds: Number[]): Observable<any> {
+        return this.http.post(`${environment.backOfficeUrl}${environment.unpairedPayments}/pair-via-iban`, {
+            payment_ids: paymentIds
+        });
+    }
 }
