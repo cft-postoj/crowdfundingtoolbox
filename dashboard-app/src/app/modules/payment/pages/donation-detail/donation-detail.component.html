@@ -67,6 +67,8 @@
             <div class="col-12 col-sm-12 col-md-4">
                 <app-user-dropdown
                         [userId]="(detail.portal_user === null) ? null : detail.portal_user.user.id"
+                        [users]="users"
+                        [selectedValue]="selectedUser"
                         [label]="'Change donation assignment:'"
                         (changeIdEmit)="changeDonationAssignment($event)"></app-user-dropdown>
             </div>

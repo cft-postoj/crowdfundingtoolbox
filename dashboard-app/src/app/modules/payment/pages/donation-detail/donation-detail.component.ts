@@ -8,6 +8,8 @@ import {CampaignService} from '../../../campaigns/services';
 import {Routing} from '../../../../constants/config.constants';
 import {ModalComponent} from '../../../core/parts/atoms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {PortalUser} from '../../../portal-users/models/portal-user';
+import {PortalUserService} from '../../../portal-users/services/portal-user.service';
 
 @Component({
     selector: 'app-donation-detail',
@@ -22,8 +24,11 @@ export class DonationDetailComponent implements OnInit {
     public loading: boolean = true;
     public campaignName: string = '';
     public campaignId: number = 0;
+    public users: any = [];
+    public selectedUser: string = '';
 
     constructor(private donationService: DonationService, private router: Router,
+                private portalUserService: PortalUserService,
                 private route: ActivatedRoute, private campaignService: CampaignService,
                 private _modalService: NgbModal) {
     }
@@ -33,6 +38,7 @@ export class DonationDetailComponent implements OnInit {
             params => {
                 this.id = params['id'];
                 this.getDetail();
+                this.getUsers();
             }
         );
     }
@@ -111,5 +117,18 @@ export class DonationDetailComponent implements OnInit {
             }
         );
 
+    }
+
+    public getUsers() {
+        this.portalUserService.getAll().subscribe((data: [PortalUser]) => {
+            data.map((u, key) => {
+                const value = u.user_detail.first_name + ' ' + u.user_detail.last_name + ' - [ID: ' + u.id + ']';
+                console.log(this.detail.portal_user.user.id);
+                if (u.id === this.detail.portal_user.user.id) {
+                    this.selectedUser = value;
+                }
+                this.users.push(value);
+            });
+        });
     }
 }

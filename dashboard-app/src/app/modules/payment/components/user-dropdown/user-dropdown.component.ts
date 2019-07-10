@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {PortalUserService} from '../../../portal-users/services/portal-user.service';
 import {PortalUser} from '../../../portal-users/models/portal-user';
 
@@ -11,7 +11,8 @@ export class UserDropdownComponent implements OnInit {
 
     @Input()
     public users: any = [];
-    public selectedValue: string;
+    @Input()
+    public selectedValue: string = '';
     @Input()
     public userId: number;
     @Input()
@@ -21,13 +22,11 @@ export class UserDropdownComponent implements OnInit {
     @Output()
     public changeIdEmit = new EventEmitter();
 
-    constructor(private portalUserService: PortalUserService) {
+    constructor() {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
     }
-
-
 
     public selectAction() {
         const id = this.selectedValue.match(/\d+/g).map(Number)[0];
