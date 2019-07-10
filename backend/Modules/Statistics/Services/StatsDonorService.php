@@ -30,7 +30,7 @@ class StatsDonorService implements StatsDonorServiceInterface
             });
         }
         if ($dataType == 'stoppedSupporting') {
-            $result = $this->stoppedSupporting($to, $limit);
+            $result = $this->getDonorsStoppedSupporting($to, $limit);
         }
         if ($dataType == 'didNotPay') {
             $result = $this->didNotPay($from, $to, $limit);
@@ -49,7 +49,7 @@ class StatsDonorService implements StatsDonorServiceInterface
         return $result;
     }
 
-    private function getDonorsNew($from, $to, $monthly)
+    public function getDonorsNew($from, $to, $monthly)
     {
         if ($monthly == null) {
             return $this->statsDonorRepository->getDonorsNew($from, $to, true)->merge(
@@ -59,7 +59,7 @@ class StatsDonorService implements StatsDonorServiceInterface
     }
 
 
-    private function stoppedSupporting($to, $limit)
+    public function getDonorsStoppedSupporting($to, $limit)
     {
         // $stopAfterDays -> number of days, used as input for $stopAfterDate
         $stopAfterDays = 60;
@@ -74,7 +74,7 @@ class StatsDonorService implements StatsDonorServiceInterface
             $notModifiedResult['campaign_name'] = $notModifiedResult['firstDonation']['widget']['campaign']['name'];
             return $notModifiedResult;
         });
-        $result->count = $this->statsDonorRepository->getDonorsStoppedSupportingCount($stopAfterDate);
+        $result->count = $this->getDonorsStoppedSupportingCount($stopAfterDate);
         return $result;
     }
 
@@ -83,7 +83,7 @@ class StatsDonorService implements StatsDonorServiceInterface
         return $this->statsDonorRepository->countOfNewDonors($from, $to);
     }
 
-    private function didNotPay($from, $to, $limit)
+    public function didNotPay($from, $to, $limit)
     {
         $result = new stdClass;
 
@@ -93,11 +93,11 @@ class StatsDonorService implements StatsDonorServiceInterface
             $notModifiedResult['campaign_name'] = $notModifiedResult['firstDonation']['widget']['campaign']['name'];
             return $notModifiedResult;
         });
-        $result->count = $this->statsDonorRepository->didNotPayCount($from, $to);
+        $result->count = $this->didNotPayCount($from, $to);
         return $result;
     }
 
-    private function onlyInitializeDonation($from, $to, $limit)
+    public function onlyInitializeDonation($from, $to, $limit = null)
     {
         $result = new stdClass;
         $notModifiedResults = $this->statsDonorRepository->onlyInitializeDonation($from, $to, $limit);
@@ -110,4 +110,13 @@ class StatsDonorService implements StatsDonorServiceInterface
         return $result;
     }
 
+    public function getDonorsStoppedSupportingCount($stopAfterDate)
+    {
+        return $this->statsDonorRepository->getDonorsStoppedSupportingCount($stopAfterDate);
+    }
+
+    public function didNotPayCount($from, $to)
+    {
+       return $this->statsDonorRepository->didNotPayCount($from, $to);
+    }
 }
