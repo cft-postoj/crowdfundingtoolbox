@@ -34,6 +34,7 @@ class PaymentRepository
         return $this->model
             ::with('pairedDonation')
             ->doesnthave('pairedDonation')
+            ->orderby('id', 'DESC')
             ->get();
     }
 

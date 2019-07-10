@@ -22,6 +22,7 @@
                         <th>Amount</th>
                         <th>Created by</th>
                         <th>Transfer type</th>
+                        <th colspan="2">Payment notes</th>
                         <th colspan="2">Pairing payments</th>
                     </tr>
                     </thead>
@@ -47,7 +48,10 @@
                             {{item.created_by}}
                         </td>
                         <td>
-                            {{item.transfer_type}}
+                            {{paymentMethods[item.transfer_type - 1]}}
+                        </td>
+                        <td colspan="2">
+                            {{item.payment_notes}}
                         </td>
                         <td class="pairing" colspan="2">
                             <button type="button" (click)="pairViaIbanModal(item.id)">Pair payment via IBAN</button>

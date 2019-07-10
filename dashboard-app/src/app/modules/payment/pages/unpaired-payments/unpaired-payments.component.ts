@@ -9,6 +9,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PaymentService} from '../../services/payment.service';
 import {PortalUser} from '../../../portal-users/models/portal-user';
 import {PortalUserService} from '../../../portal-users/services/portal-user.service';
+import {PaymentMethodsService} from '../../services/payment-methods.service';
 
 @Component({
     selector: 'app-unpaired-payments',
@@ -22,6 +23,8 @@ export class UnpairedPaymentsComponent implements OnInit {
     private payments: Payment[];
     public textSearch: string;
 
+    public paymentMethods: any = [];
+
     public users: any = [];
 
     public model: TableModel = new TableModel();
@@ -33,10 +36,12 @@ export class UnpairedPaymentsComponent implements OnInit {
     @Output() modelChange = new EventEmitter();
 
     constructor(private paymentService: PaymentService, private portalUserService: PortalUserService,
+                private paymentMethodsService: PaymentMethodsService,
                 private tableService: TableService, private _modalService: NgbModal) {
     }
 
     ngOnInit() {
+        this.getPaymentMethods();
         this.getUnpairedPayments();
         this.getUsers();
         this.model.columns.push({
@@ -52,6 +57,14 @@ export class UnpairedPaymentsComponent implements OnInit {
             this.payments = data;
             this.items = this.payments;
             this.loading = false;
+        });
+    }
+
+    private getPaymentMethods() {
+        this.paymentMethodsService.getAll().subscribe((data) => {
+            data.map((d, key) => {
+                this.paymentMethods.push(d.method_name);
+            });
         });
     }
 
@@ -93,7 +106,7 @@ export class UnpairedPaymentsComponent implements OnInit {
         modalRef.componentInstance.loading = false;
         modalRef.componentInstance.duplicate = 'donation-assignment';
         modalRef.result.then((data) => {
-            this.loading = true;
+                this.loading = true;
                 this.paymentService.pairViaIban(itemIds).subscribe((d) => {
                     this.alertMessage = d.message;
                     this.loading = true;
