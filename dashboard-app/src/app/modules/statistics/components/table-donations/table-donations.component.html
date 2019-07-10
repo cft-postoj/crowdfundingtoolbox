@@ -44,7 +44,7 @@
             {{donation.amount | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
         </td>
         <td>
-            {{(donation.payment_method === null) ? 'N/A' : donation.payment_method}}
+            {{(donation.payment_method === null) ? 'N/A' : paymentMethods[donation.payment_method - 1]}}
         </td>
         <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.id]">
             {{donation.portal_user.user?.user_detail.first_name}} {{donation.portal_user?.user.user_detail.last_name}}

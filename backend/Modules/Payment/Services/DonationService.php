@@ -4,9 +4,11 @@ namespace Modules\Payment\Services;
 
 
 use Carbon\Carbon;
+use Modules\Payment\Entities\Donation;
 use Modules\Payment\Entities\DonationInitialize;
 use Modules\Payment\Repositories\DonationRepository;
 use Modules\UserManagement\Entities\TrackingShow;
+use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Services\PortalUserService;
 use Illuminate\Http\Response;
 
@@ -15,11 +17,14 @@ class DonationService
 
     private $portalUserService;
     private $donationRepository;
+    private $portalUserRepository;
 
-    public function __construct(PortalUserService $portalUserService, DonationRepository $donationRepository)
+    public function __construct(PortalUserService $portalUserService,
+                                DonationRepository $donationRepository, PortalUserRepository $portalUserRepository)
     {
         $this->portalUserService = $portalUserService;
         $this->donationRepository = $donationRepository;
+        $this->portalUserRepository = $portalUserRepository;
     }
 
     public function initialize($data)
@@ -146,6 +151,56 @@ class DonationService
             $this->donationRepository->getDetail($id),
             Response::HTTP_OK
         );
+    }
+
+    public function updateAssignment($request, $id)
+    {
+        $valid = validator($request->only(
+            'user_id'
+        ), [
+            'user_id' => 'required|integer'
+        ]);
+
+        if ($valid->fails()) {
+            $jsonError = response()->json([
+                'error' => $valid->errors()
+            ], 400);
+            return $jsonError;
+        }
+
+        try {
+            $portal_user_id = $this->portalUserService->getPortalUserIdByUserId($request['user_id']);
+            $this->donationRepository->updateAssignment($portal_user_id, $id);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json([
+            'message' => 'Successfully updated donation with id ' . $id . '.'
+        ],
+            Response::HTTP_CREATED
+        );
+    }
+
+    public function updatePaymentIdAndAmount($request, $id)
+    {
+        return Donation::where('id', $id)->update(
+            $request
+        );
+    }
+
+    public function getDonationsByUserId($user_id)
+    {
+        return Donation::where('portal_user_id', $this->portalUserService->getPortalUserIdByUserId($user_id))
+            ->get();
+    }
+
+    public
+    function create($request)
+    {
+        return $this->donationRepository->create($request);
     }
 
 }

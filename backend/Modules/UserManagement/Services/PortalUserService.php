@@ -370,7 +370,7 @@ class PortalUserService implements PortalUserServiceInterface
         return $this->portalUserRepository->getDonationsByUser($userId);
     }
 
-    private function getPortalUserIdByUserId($id)
+    public function getPortalUserIdByUserId($id)
     {
         return $this->portalUserRepository->get($id)['id'];
     }

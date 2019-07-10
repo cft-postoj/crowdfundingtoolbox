@@ -32,8 +32,17 @@ class PaymentRepository
     public function getUnpairedPayments()
     {
         return $this->model
-            ::where('donation_id', null)
+            ::with('pairedDonation')
+            ->doesnthave('pairedDonation')
+            ->orderby('id', 'DESC')
             ->get();
+    }
+
+    public function get($id)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->first();
     }
 
 }

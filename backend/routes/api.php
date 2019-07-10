@@ -108,6 +108,12 @@ Route::group([
         // *********************************************
         // DONATIONS
         Route::get('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@getDetail');
+        Route::put('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@updateAssignemnt');
+
+        Route::get('unpaired-payments', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getUnpairedPayments');
+        Route::post('unpaired-payments/pair-to-user', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@pairPaymentToUser');
+        Route::post('unpaired-payments/pair-via-iban', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@pairViaIban');
+
 
 
         // *********************************************

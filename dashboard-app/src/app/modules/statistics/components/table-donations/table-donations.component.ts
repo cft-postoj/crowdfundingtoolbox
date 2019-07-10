@@ -6,6 +6,7 @@ import {TableModel} from '../../../core/models/table-model';
 import {Filter} from '../../../core/models/filter';
 import {TableService} from '../../../core/services/table.service';
 import {Router} from '@angular/router';
+import {PaymentMethodsService} from '../../../payment/services/payment-methods.service';
 
 @Component({
     selector: 'app-table-donations',
@@ -23,6 +24,8 @@ export class TableDonationsComponent implements OnInit {
     public routing = Routing;
     public loading = true;
 
+    public paymentMethods: any = [];
+
     public donations: Donation[];
     public sortedDonations: Donation[];
 
@@ -30,10 +33,12 @@ export class TableDonationsComponent implements OnInit {
 
 
     constructor(private donationService: DonationService,
+                private paymentMethodsService: PaymentMethodsService,
                 private tableService: TableService, private router: Router) {
     }
 
     ngOnInit() {
+        this.getPaymentMethods();
         this.refreshTable();
         this.model.columns.push({
             value_name: 'created_at',
@@ -82,6 +87,14 @@ export class TableDonationsComponent implements OnInit {
 
     sortTable() {
         this.sortedDonations = this.tableService.sort(this.model, this.donations);
+    }
+
+    private getPaymentMethods() {
+        this.paymentMethodsService.getAll().subscribe((data) => {
+            data.map((d, key) => {
+                this.paymentMethods.push(d.method_name);
+            });
+        });
     }
 
     refreshTable() {

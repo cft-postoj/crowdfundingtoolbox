@@ -1,0 +1,14 @@
+<div class="user-dropdown">
+  <ngx-select [multiple]="false"
+              [items]="users"
+              [disabled]="false"
+              [keepSelectedItems]="true"
+              [(ngModel)]="selectedValues"
+              (open)="openAction()"
+              (select)="selectAction()"
+              [autoActiveOnMouseEnter]="true"
+              (selectionChanges)="emitValues()"
+              id="usersList"
+              [placeholder]="'No user selected'" #usersList>
+  </ngx-select>
+</div>

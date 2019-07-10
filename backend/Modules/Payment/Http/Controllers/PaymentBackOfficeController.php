@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Payment\Services\BankTransferService;
 use Modules\Payment\Services\PayBySquareService;
 use Modules\Payment\Services\PaymentMethodsService;
+use Modules\Payment\Services\PaymentService;
 
 class PaymentBackOfficeController extends Controller
 {
@@ -22,14 +23,32 @@ class PaymentBackOfficeController extends Controller
     private $paymentMethodsService;
     private $bankTransferService;
     private $payBySquareService;
+    private $paymentService;
 
     public function __construct(PaymentMethodsService $paymentMethodsService, BankTransferService $bankTransferService,
-                                PayBySquareService $payBySquareService)
+                                PayBySquareService $payBySquareService, PaymentService $paymentService)
     {
         $this->paymentMethodsService = $paymentMethodsService;
         $this->bankTransferService = $bankTransferService;
         $this->payBySquareService = $payBySquareService;
+        $this->paymentService = $paymentService;
     }
+
+    protected function getUnpairedPayments()
+    {
+        return $this->paymentService->getUnpairedPayments();
+    }
+
+    protected function pairPaymentToUser(Request $request)
+    {
+        return $this->paymentService->pairPaymentToUser($request);
+    }
+
+    protected function pairViaIban(Request $request)
+    {
+        return $this->paymentService->pairPaymentsViaIban($request);
+    }
+
 
     protected function getAllMethods()
     {
