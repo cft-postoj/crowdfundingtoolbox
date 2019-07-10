@@ -14,14 +14,15 @@ import { UserDropdownComponent } from './components/user-dropdown/user-dropdown.
 import { PaymentsPairingComponent } from './components/payments-pairing/payments-pairing.component';
 
 @NgModule({
-    declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent, BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, UserDropdownComponent, PaymentsPairingComponent],
-    exports: [
-        UserDropdownComponent
-    ],
+    declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
+        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, UserDropdownComponent, PaymentsPairingComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,
         CoreModule
-    ]
+    ],
+    exports: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
+        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, UserDropdownComponent]
 })
-export class PortalUsersModule { }
+export class PortalUsersModule {
+}

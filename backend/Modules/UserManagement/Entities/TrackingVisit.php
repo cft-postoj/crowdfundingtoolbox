@@ -13,7 +13,7 @@ class TrackingVisit extends Model
 
     protected $table = 'tracking_visit';
     protected $fillable = [
-        'user_id','user_cookie', 'url', 'article_id', 'title'
+        'portal_user_id','user_cookie', 'url', 'article_id', 'title'
     ];
 
     public function show()

@@ -14,7 +14,8 @@ class Donation extends Model
         'portal_user_id',
         'payment_id',
         'widget_id',
-        'status'
+        'status',
+        'tracking_show_id'
     ];
     protected $casts = [
         'amount' => 'float',
@@ -43,6 +44,11 @@ class Donation extends Model
     public function payments()
     {
         return $this->hasOne('\Modules\Payment\Entities\Payment', 'id', 'payment_id');
+    }
+
+    public function trackingShow()
+        {
+        return $this->belongsTo('\Modules\UserManagement\Entities\TrackingShow','tracking_show_id');
     }
 
 }

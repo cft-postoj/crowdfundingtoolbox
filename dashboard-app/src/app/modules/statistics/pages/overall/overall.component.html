@@ -47,8 +47,8 @@
         </div>
         <app-loading [isLoading]="graphLoading || donorsAndDonationsLoading" [height]="'40vh'"></app-loading>
 
-        <div class="container" *ngIf="!donorsAndDonationsLoading">
-            <div class="row">
+        <div class="container">
+            <div class="row" *ngIf="!donorsAndDonationsLoading">
                 <div class="col-12 col-lg-6 pt-2">
                     <div class="card">
                         <div class="container">
@@ -225,13 +225,23 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
             <div class="row">
                 <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to" [monthly]="monthly"
                                         [title]="'Stopped supporting'" [dataType]="'stoppedSupporting'" [limit]="'3'"
                                         [showDates]="false" [enablePortalUsersCount]="true"
-                                        (showMoreClicked)="openModal('Stopped supporting', false, 'tableDonors','stoppedSupporting')">
+                                        (showMoreClicked)="openModal('Stopped supporting', null, 'tableDonors','stoppedSupporting')">
+                </app-table-portal-users>
+            </div>
+            <div class="row">
+                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to" [monthly]="monthly"
+                                        [title]="'Did not pay'" [dataType]="'didNotPay'" [limit]="'3'"
+                                        [showDates]="false" [enablePortalUsersCount]="true"
+                                        (showMoreClicked)="openModal('Did not pay', null, 'tableDonors','didNotPay')">
+                </app-table-portal-users>
+                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to" [monthly]="monthly"
+                                        [title]="'Only initialize donation'" [dataType]="'onlyInitializeDonation'" [limit]="'3'"
+                                        [showDates]="false" [enablePortalUsersCount]="true"
+                                        (showMoreClicked)="openModal('Only initialize donation', null, 'tableDonors','onlyInitializeDonation')">
                 </app-table-portal-users>
             </div>
         </div>

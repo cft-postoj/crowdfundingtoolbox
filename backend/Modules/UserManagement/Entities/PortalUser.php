@@ -19,6 +19,10 @@ class PortalUser extends Model
         'user_id'
     ];
 
+    protected $casts = [
+        'amount_sum' => 'float',
+        'last_donation_value' => 'float'
+    ];
 
     public function gdpr()
     {
@@ -51,9 +55,15 @@ class PortalUser extends Model
             ->groupBy('donations.portal_user_id');
     }
 
+    public function firstDonation()
+    {
+        return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->orderBy('created_at', 'ASC');
+    }
+
     public function last()
     {
-        $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+       return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
             ->orderBy('created_at', 'DESC');
     }
 

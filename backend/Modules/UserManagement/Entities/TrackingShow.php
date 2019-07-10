@@ -16,7 +16,11 @@ class TrackingShow extends Model
 
     public function visit()
     {
-        return $this->belongsTo('Modules\UserManagement\Entities\TrackingVisit','id');
+        return $this->belongsTo('Modules\UserManagement\Entities\TrackingVisit','tracking_visit_id');
+    }
+    public function widget()
+    {
+        return $this->belongsTo('Modules\Campaigns\Entities\Widget','widget_id');
     }
 
 }

@@ -51,6 +51,9 @@ export class TableService {
     // eval foo['test0.test1.test2'] as foo['test0']['test1']['test2'] based on spliting string using '.' character
     nestedBracketNotation(object, property: string) {
         const dotIndex = property.indexOf('.');
+        if (object == null) {
+            return null;
+        }
         if (dotIndex > -1) {
             return this.nestedBracketNotation(object[property.substr(0, dotIndex)], property.substr(property.indexOf('.') + 1));
         } else {
