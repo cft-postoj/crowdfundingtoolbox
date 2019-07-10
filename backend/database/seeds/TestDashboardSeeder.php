@@ -31,14 +31,14 @@ class TestDashboardSeeder extends Seeder
     public function run()
     {
         //create 5 campaigns
-//        for ($i = 0; $i < 5; $i++) {
-//            $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
-//        }
+        for ($i = 0; $i < 5; $i++) {
+            $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
+        }
 
         //create 50 users
-//        for ($i = 0; $i < 5; $i++) {
-//            $this->call(PortalUserSeeder::class);
-//        }
+        for ($i = 0; $i < 50; $i++) {
+            $this->call(PortalUserSeeder::class);
+        }
 
 
         $widgets = \Modules\Campaigns\Entities\Widget::get()->toArray();
@@ -71,7 +71,7 @@ class TestDashboardSeeder extends Seeder
                 ]);
                 // every 21th payment to unpaired
                 $portal_user_id = $donation->portal_user_id;
-                if ($i % 21 === 0) {
+                if ($i % 21 === 0 || $i % 15 === 0 || $i % 18 === 0 || $i % 6 === 0) {
                     $portal_user_id = null;
                 }
                 $payment = $this->createPayment($donation->id, $portal_user_id, $donation->amount, $donation->created_at);

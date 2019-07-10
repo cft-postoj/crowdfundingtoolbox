@@ -21,18 +21,35 @@ class StatsDonorService implements StatsDonorServiceInterface
     {
         $result = new stdClass;
         if ($dataType == 'new') {
-            $result->donors = $this->getDonorsNew($from, $to, $monthly);
+
+            $notModifiedResults = $this->getDonorsNew($from, $to, $monthly);
+            //map campaign's name from firstDonation into new field 'campaign_name' to achieve same data structure of returned object
+            $result->donors = collect($notModifiedResults)->map(function ($notModifiedResult) {
+                $notModifiedResult['campaign_name'] = $notModifiedResult['firstDonation']['widget']['campaign']['name'];
+                return $notModifiedResult;
+            });
         }
         if ($dataType == 'stoppedSupporting') {
-            $result = $this->stoppedSupporting($to, $limit);
+            $result = $this->getDonorsStoppedSupporting($to, $limit);
+        }
+        if ($dataType == 'didNotPay') {
+            $result = $this->didNotPay($from, $to, $limit);
+        }
+        if ($dataType == 'onlyInitializeDonation') {
+            $result = $this->onlyInitializeDonation($from, $to, $limit);
         }
         if ($dataType == null) {
-            $result->donors = $this->statsDonorRepository->getDonors($from, $to, $monthly);
+            $notModifiedResults = $this->statsDonorRepository->getDonors($from, $to, $monthly);
+            //map campaign's name from firstDonation into new field 'campaign_name' to achieve same data structure of returned object
+            $result->donors = collect($notModifiedResults)->map(function ($notModifiedResult) {
+                $notModifiedResult['campaign_name'] = $notModifiedResult['firstDonation']['widget']['campaign']['name'];
+                return $notModifiedResult;
+            });
         }
         return $result;
     }
 
-    private function getDonorsNew($from, $to, $monthly)
+    public function getDonorsNew($from, $to, $monthly)
     {
         if ($monthly == null) {
             return $this->statsDonorRepository->getDonorsNew($from, $to, true)->merge(
@@ -42,7 +59,7 @@ class StatsDonorService implements StatsDonorServiceInterface
     }
 
 
-    private function stoppedSupporting($to, $limit)
+    public function getDonorsStoppedSupporting($to, $limit)
     {
         // $stopAfterDays -> number of days, used as input for $stopAfterDate
         $stopAfterDays = 60;
@@ -50,8 +67,14 @@ class StatsDonorService implements StatsDonorServiceInterface
         // as user, who stopped to donate and therefore should be returned in method getDonorsStoppedSupporting
         $stopAfterDate = Carbon::createFromDate($to)->subDays($stopAfterDays);
         $result = new stdClass;
-        $result->donors = $this->statsDonorRepository->getDonorsStoppedSupporting($stopAfterDate, $limit);
-        $result->count = $this->statsDonorRepository->getDonorsStoppedSupportingCount($stopAfterDate);
+
+        $notModifiedResults = $this->statsDonorRepository->getDonorsStoppedSupporting($stopAfterDate, $limit);
+        //map campaign's name from firstDonation into new field 'campaign_name' to achieve same data structure of returned object
+        $result->donors = collect($notModifiedResults)->map(function ($notModifiedResult) {
+            $notModifiedResult['campaign_name'] = $notModifiedResult['firstDonation']['widget']['campaign']['name'];
+            return $notModifiedResult;
+        });
+        $result->count = $this->getDonorsStoppedSupportingCount($stopAfterDate);
         return $result;
     }
 
@@ -60,4 +83,40 @@ class StatsDonorService implements StatsDonorServiceInterface
         return $this->statsDonorRepository->countOfNewDonors($from, $to);
     }
 
+    public function didNotPay($from, $to, $limit)
+    {
+        $result = new stdClass;
+
+        $notModifiedResults = $this->statsDonorRepository->didNotPay($from, $to, $limit);
+        //map campaign's name from firstDonation into new field 'campaign_name' to achieve same data structure of returned object
+        $result->donors = collect($notModifiedResults)->map(function ($notModifiedResult) {
+            $notModifiedResult['campaign_name'] = $notModifiedResult['firstDonation']['widget']['campaign']['name'];
+            return $notModifiedResult;
+        });
+        $result->count = $this->didNotPayCount($from, $to);
+        return $result;
+    }
+
+    public function onlyInitializeDonation($from, $to, $limit = null)
+    {
+        $result = new stdClass;
+        $notModifiedResults = $this->statsDonorRepository->onlyInitializeDonation($from, $to, $limit);
+        $result->donors = $notModifiedResults;
+        if ($limit !== null) {
+            $result->count = count($this->statsDonorRepository->onlyInitializeDonation($from, $to));
+        } else {
+            $result->count = count($notModifiedResults);
+        }
+        return $result;
+    }
+
+    public function getDonorsStoppedSupportingCount($stopAfterDate)
+    {
+        return $this->statsDonorRepository->getDonorsStoppedSupportingCount($stopAfterDate);
+    }
+
+    public function didNotPayCount($from, $to)
+    {
+       return $this->statsDonorRepository->didNotPayCount($from, $to);
+    }
 }

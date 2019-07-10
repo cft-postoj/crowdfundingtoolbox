@@ -13,14 +13,15 @@ import { EditPortalUserComponent } from './components/edit-portal-user/edit-port
 import { UserDropdownComponent } from './components/user-dropdown/user-dropdown.component';
 
 @NgModule({
-    declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent, BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, UserDropdownComponent],
-    exports: [
-        UserDropdownComponent
-    ],
+    declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
+        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, UserDropdownComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,
         CoreModule
-    ]
+    ],
+    exports: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
+        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, UserDropdownComponent]
 })
-export class PortalUsersModule { }
+export class PortalUsersModule {
+}

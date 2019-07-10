@@ -12,5 +12,6 @@ export class PortalUser {
     donor_status = [new DonorStatus()];
     portal_user: any;
     donations: Donation[];
+    first_donation: Donation;
     user_detail: UserDetail;
 }

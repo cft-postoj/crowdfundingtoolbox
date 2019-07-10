@@ -10,9 +10,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ForceSignPipe} from './pipes/force-sign.pipe';
 import {TotalCurrentAndPreviousComponent} from './components/total-current-and-previous/total-current-and-previous.component';
 import {InlineSVGModule} from 'ng-inline-svg';
-import { TablePortalUsersComponent } from './components/table-portal-users/table-portal-users.component';
-import { MonthlyPipe } from './pipes/monthly.pipe';
-import { TableDonationsComponent } from './components/table-donations/table-donations.component';
+import {TablePortalUsersComponent} from './components/table-portal-users/table-portal-users.component';
+import {MonthlyPipe} from './pipes/monthly.pipe';
+import {TableDonationsComponent} from './components/table-donations/table-donations.component';
+import {PortalUsersModule} from '../portal-users/portal-users.module';
 
 @NgModule({
     declarations: [OverallComponent, ForceSignPipe, TotalCurrentAndPreviousComponent,
@@ -28,8 +29,9 @@ import { TableDonationsComponent } from './components/table-donations/table-dona
 
         StatisticsRoutingModule,
         CoreModule,
-        ChartModule,
+        PortalUsersModule,
 
+        ChartModule,
         InlineSVGModule.forRoot(),
     ]
 })
