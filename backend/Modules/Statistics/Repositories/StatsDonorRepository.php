@@ -20,12 +20,17 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
     // first donation and date for portal user, when he successfully made first donation
     private $firstDonation;
 
+    private $lastDonationAt;
+
+    private $lastDonation;
+
     function __construct()
     {
         $this->model = PortalUser::class;
         $this->donationsSum = Donation::query()
             ->select('portal_user_id', DB::raw('sum(amount) as amount_sum'),
                 DB::raw('MIN(created_at) as first_donation_at'))
+            ->where('status', 'processed')
             ->groupBy('portal_user_id');
 
         $this->firstDonationMonthly = Donation::query()
@@ -35,9 +40,21 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
 
         // first donation and date for portal user, when he successfully made first donation
         $this->firstDonation = Donation::query()
-            ->select('portal_user_id',
-                DB::raw('MIN(created_at) as first_donation_at'))
+            ->select('portal_user_id', DB::raw('MIN(created_at) as first_donation_at'))
+            ->where('status', 'processed')
             ->groupBy('portal_user_id');
+
+        // get date of last donation
+        $this->lastDonationAt = Donation::query()
+            ->select('portal_user_id', DB::raw('MAX(created_at) as last_donation_at'))
+            ->where('status', 'processed')
+            ->groupBy('portal_user_id');
+
+        // last donation detail
+        $this->lastDonation = Donation::query()
+            ->select('portal_user_id', 'amount as last_donation_value', 'is_monthly_donation as last_donation_monthly',
+                'payment_method as last_donation_payment_method', 'created_at');
+
     }
 
     public function getDonors($from, $to, $monthly)
@@ -219,7 +236,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
         // last donation detail
         $lastDonation = Donation::query()
             ->select('portal_user_id', 'amount as last_donation_value', 'is_monthly_donation as last_donation_monthly',
-                'payment_method as last_donation_payment_method','status', 'created_at');
+                'payment_method as last_donation_payment_method', 'status', 'created_at');
 
         $resultQuery = PortalUser::query()
             ->joinSub($lastDonationAt, 'lastDonationAt', function ($join) {
@@ -239,7 +256,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
             ->with('firstDonation.widget.campaign')
-            ->where('lastDonation.status','waiting_for_payment');
+            ->where('lastDonation.status', 'waiting_for_payment');
         if ($limit !== null) {
             $resultQuery = $resultQuery->limit($limit);
         }
@@ -258,7 +275,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
         // last donation detail
         $lastDonation = Donation::query()
             ->select('portal_user_id', 'amount as last_donation_value', 'is_monthly_donation as last_donation_monthly',
-                'payment_method as last_donation_payment_method','status', 'created_at');
+                'payment_method as last_donation_payment_method', 'status', 'created_at');
 
         $resultQuery = PortalUser::query()
             ->joinSub($lastDonationAt, 'lastDonationAt', function ($join) {
@@ -273,9 +290,46 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->joinSub($this->firstDonation, 'first_donation', function ($join) {
                 $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
             })
-            ->where('lastDonation.status','waiting_for_payment');
+            ->where('lastDonation.status', 'waiting_for_payment');
 
         return $resultQuery->count();
+    }
+
+    public function onlyInitializeDonation($from, $to, $limit = null)
+    {
+        //get only these donations, that have status initialized and are in time interval
+        $onlyInitializeDonation = Donation::query()
+            ->select('donations.portal_user_id as portal_user_id', 'campaigns.name as campaign_name', 'campaigns.id as campaign_id')
+            ->join('widgets', 'widget_id', '=', 'widgets.id')
+            ->join('campaigns', 'campaign_id', '=', 'campaigns.id')
+            ->where('donations.status', 'initialized')
+            ->whereDate('donations.created_at', '>=', $from)
+            ->whereDate('donations.created_at', '<=', $to)
+            ->orderBy('portal_user_id', 'ASC');
+
+        $resultQuery = PortalUser::query()
+            ->joinSub($onlyInitializeDonation, 'onlyInitializeDonation', function ($join) {
+                $join->on('portal_users.id', '=', 'onlyInitializeDonation.portal_user_id');
+            })
+            ->leftJoinSub($this->firstDonation, 'first_donation', function ($join) {
+                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            })
+            ->leftJoinSub($this->lastDonationAt, 'lastDonationAt', function ($join) {
+                $join->on('portal_users.id', '=', 'lastDonationAt.portal_user_id');
+            })
+            ->leftJoinSub($this->lastDonation, 'lastDonation', function ($join) {
+                $join->on('last_donation_at', '=', 'lastDonation.created_at');
+            })
+            ->leftJoinSub($this->donationsSum, 'donations_sum', function ($join) {
+                $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
+            })
+            ->with('user.userDetail')
+            ->with('isMonthlyDonor')
+            ->with('variableSymbol');
+        if ($limit !== null) {
+            $resultQuery = $resultQuery->limit($limit);
+        }
+        return $resultQuery->get();
     }
 
 }

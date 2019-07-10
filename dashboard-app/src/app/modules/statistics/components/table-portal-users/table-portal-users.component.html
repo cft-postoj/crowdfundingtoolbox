@@ -56,8 +56,8 @@
             [column]="getColumnByValueName('last_donation_at')" [(model)]="model" (modelChange)="sortTable()"></th>
         <th app-table-header *ngIf="activeColumn('user.updated_at')" [column]="getColumnByValueName('user.updated_at')"
             [(model)]="model" (modelChange)="sortTable()"></th>
-        <th app-table-header *ngIf="activeColumn('first_donation.widget.campaign.name')"
-            [column]="getColumnByValueName('first_donation.widget.campaign.name')" [(model)]="model"
+        <th app-table-header *ngIf="activeColumn('campaign_name')"
+            [column]="getColumnByValueName('campaign_name')" [(model)]="model"
             (modelChange)="sortTable()"></th>
         <th app-table-header *ngIf="activeColumn('user.id')" [column]="getColumnByValueName('user.id')"
             [(model)]="model" (modelChange)="sortTable()"></th>
@@ -102,8 +102,8 @@
         <td [title]="portalUser.user.updated_at | date:'dd.MM.yyyy HH:mm:ss'" *ngIf="activeColumn('user.updated_at')">
             {{portalUser.user.updated_at | date:'dd.MM.yyyy'}}
         </td>
-        <td *ngIf="activeColumn('first_donation.widget.campaign.name')">
-            {{portalUser.first_donation.widget.campaign.name}}
+        <td *ngIf="activeColumn('campaign_name')">
+            {{portalUser.campaign_name}}
         </td>
         <td *ngIf="activeColumn('user.id')">
             {{portalUser.user.user_detail.id}}

@@ -102,7 +102,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'first_donation.widget.campaign.name',
+            value_name: 'campaign_name',
             description: 'Campaign name',
             type: 'text',
             filter: new Filter()
