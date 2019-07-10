@@ -123,7 +123,6 @@ export class DonationDetailComponent implements OnInit {
         this.portalUserService.getAll().subscribe((data: [PortalUser]) => {
             data.map((u, key) => {
                 const value = u.user_detail.first_name + ' ' + u.user_detail.last_name + ' - [ID: ' + u.id + ']';
-                console.log(this.detail.portal_user.user.id);
                 if (u.id === this.detail.portal_user.user.id) {
                     this.selectedUser = value;
                 }

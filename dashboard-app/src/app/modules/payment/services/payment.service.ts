@@ -13,6 +13,7 @@ export class PaymentService {
     }
 
     public getUnpairedPayments(): Observable<Payment[]> {
+        console.log(`${environment.backOfficeUrl}${environment.unpairedPayments}`)
         return this.http.get<Payment[]>(`${environment.backOfficeUrl}${environment.unpairedPayments}`);
     }
 
