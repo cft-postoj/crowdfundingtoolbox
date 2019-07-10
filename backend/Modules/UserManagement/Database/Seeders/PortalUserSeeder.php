@@ -2,11 +2,12 @@
 
 namespace Modules\UserManagement\Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use Modules\Payment\Services\VariableSymbolService;
 use Modules\UserManagement\Entities\User;
-use Illuminate\Database\Seeder;
 use Modules\UserManagement\Entities\UserDetail;
 use Modules\UserManagement\Repositories\UserGdprRepository;
+use Modules\UserManagement\Repositories\UserPaymentOptionsRepository;
 
 
 class PortalUserSeeder extends Seeder
@@ -14,12 +15,15 @@ class PortalUserSeeder extends Seeder
 
     protected $variableSymbolService;
     protected $userGdprRepository;
+    protected $userPaymentOptionsRepository;
 
     public function __construct(VariableSymbolService $variableSymbolService,
-                                UserGdprRepository $userGdprRepository)
+                                UserGdprRepository $userGdprRepository,
+                                UserPaymentOptionsRepository $userPaymentOptionsRepository)
     {
         $this->variableSymbolService = $variableSymbolService;
         $this->userGdprRepository = $userGdprRepository;
+        $this->userPaymentOptionsRepository = $userPaymentOptionsRepository;
     }
 
     /**
@@ -40,9 +44,15 @@ class PortalUserSeeder extends Seeder
                 'agreePersonalData' => true,
             ), $newUser->id);
 
+            $this->userPaymentOptionsRepository->create(array(
+                'portal_user_id' => $newUser->id,
+                'pairing_type' => 'variable_symbol'
+            ));
+
             $userDetail = factory(UserDetail::class)->make();
             $userDetail['user_id'] = $user->id;
             $userDetail->save();
+
 //            $user->userDetail()->factory(User::class, 10)->create();
 
         });

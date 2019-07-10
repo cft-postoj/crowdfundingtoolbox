@@ -61,7 +61,7 @@ class PortalUserService implements PortalUserServiceInterface
         $this->usernameUsedCounter = 0;
         $this->generatedUserTokenService = $generatedUserTokenService;
         $this->variableSymbolService = $variableSymbolService;
-        $this->userPaymentOptionsRepository = $userPaymentOptionsRepository;
+        $this->userPaymentOptionsRepositoryuserPaymentOptionsRepository = $userPaymentOptionsRepository;
     }
 
     public function getAll()
@@ -154,7 +154,10 @@ class PortalUserService implements PortalUserServiceInterface
 
                 $generatedToken = $this->generatedUserTokenService->create($user->id);
                 $this->variableSymbolService->create($portalUserId);
-                $this->userPaymentOptionsRepository->create($portalUserId);
+                $this->userPaymentOptionsRepository->create(array(
+                    'portal_user_id' => $portalUserId,
+                    'pairing_type' => 'variable_symbol'
+                ));
                 Mail::to($user->email)->send(new RegisterEmail($generatedToken));
 
                 if ($this->userDetailRepository->get($user->id) === null) {
@@ -179,6 +182,10 @@ class PortalUserService implements PortalUserServiceInterface
             $userData = $this->userRepository->get($newUserId);
             $generatedToken = $this->generatedUserTokenService->create($newUserId);
             $this->variableSymbolService->create($portalUserId);
+            $this->userPaymentOptionsRepository->create(array(
+                'portal_user_id' => $portalUserId,
+                'pairing_type' => 'variable_symbol'
+            ));
             Mail::to($userData->email)->send(new RegisterEmail($generatedToken));
             if ($this->userDetailRepository->get($newUserId) === null) {
                 $this->userDetailRepository->create($newUserId);

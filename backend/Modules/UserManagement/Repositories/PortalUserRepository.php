@@ -30,6 +30,13 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->first();
     }
 
+    public function update($request, $portal_user_id)
+    {
+        return $this->model
+            ::where('id', $portal_user_id)
+            ->update($request);
+    }
+
 
     public function create($userId)
     {

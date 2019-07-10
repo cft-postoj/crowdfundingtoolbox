@@ -39,9 +39,10 @@ export class EditPortalUserComponent implements OnInit {
             'cft-city': [this.userData.user_detail.city],
             'cft-country': [this.userData.user_detail.country],
             'cft-password': ['********'],
-            'cft-bankAccountNumber': [''],
-            'cft-paymentCardNumber': [''],
-            'cft-paymentCardExpirationDate': ['']
+            'cft-bankAccountNumber': [this.userData.portal_user.user_payment_options.bank_account_number],
+            'cft-paymentCardNumber': [this.userData.portal_user.user_payment_options.payment_card_number],
+            'cft-paymentCardExpirationDate': [this.userData.portal_user.user_payment_options.payment_card_expiration_date],
+            'user_notes': [this.userData.portal_user.notes]
         });
     }
 

@@ -5,6 +5,9 @@
         <div class="col-12">
             <h4>
                 Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:
+                <span class="user-detail--lastUpdated">
+                    Last updated by backoffice user <b>admin</b> in 07.09.2019 17:15:14
+                </span>
                 <button type="button" class="user-detail--edit" title="Edit portal user" (click)="showEditModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g id="edit_24px" transform="translate(-1816 -136)">
@@ -70,15 +73,15 @@
                 <table cellpadding="0" cellspacing="0" class="table table-responsive borderless" border="0">
                     <tr class="borderTr">
                         <td class="titleTd">BANK ACCOUNT:</td>
-                        <td><b>SK12 123456789</b></td>
+                        <td><b>{{user.portal_user.user_payment_options?.bank_account_number}}</b></td>
                     </tr>
                     <tr class="borderTr">
                         <td class="titleTd">CARD NUMBER:</td>
-                        <td><b>**** **** **** 4567</b></td>
+                        <td><b>{{user.portal_user.user_payment_options?.payment_card_number}}</b></td>
                     </tr>
                     <tr class="borderTr">
                         <td class="titleTd">CARD EXPIRATION:</td>
-                        <td><b>12/21</b></td>
+                        <td><b>{{user.portal_user.user_payment_options?.payment_card_expiration_date}}</b></td>
                     </tr>
                     <tr class="borderTr">
                         <td class="titleTd">VARIABLE SYMBOL:</td>
@@ -95,11 +98,19 @@
                     </tr>
                     <tr>
                         <td class="titleTd">LAST DONATION:</td>
-                        <td>{{(user.portal_user.donations !== null) ? user.portal_user.donations[0].created_at : 'N/A'}}</td>
+                        <td>{{user.portal_user.donations[0]?.created_at | date:'dd.MM.yyyy - HH:mm:ss' }}</td>
                     </tr>
                 </table>
             </div>
         </div>
+    </div>
+    <div class="user-detail--notes">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>NOTES:</th>
+                <td>{{(user.portal_user.notes) ? user.portal_user.notes : 'This user has no notes. If you want to add something, click to edit user.'}}</td>
+            </tr>
+        </table>
     </div>
 
     <app-exlude-user-from-targeting

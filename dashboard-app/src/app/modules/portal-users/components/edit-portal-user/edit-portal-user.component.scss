@@ -3,10 +3,12 @@
 .editPortalUser {
   padding: 30px;
   height: 90%;
-  form {
+  &--form {
     overflow-y: auto;
     height: 100%;
     padding: 0 15px;
+  }
+  form {
     label {
       width: 35%;
       margin-bottom: 15px;
@@ -20,7 +22,7 @@
       margin-bottom: 10px;
     }
     button[type="submit"]{
-      margin-top: 15px;
+      margin-top: 0;
       background: $azure;
       color: $white;
       padding: 10px 30px;
@@ -31,10 +33,18 @@
       &:hover {
         @include boxShadow(0 0 10px rgba(0, 0, 0, .5));
       }
+      float: right;
     }
+  }
+  &--loading {
+    float: right;
+    margin-top: -30px;
   }
   &--errorMessage {
     margin-left: 15px;
     color: $red;
+    float: right;
+    font-size: 14px;
   }
+
 }
