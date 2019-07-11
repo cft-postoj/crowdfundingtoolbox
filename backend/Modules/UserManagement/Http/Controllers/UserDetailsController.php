@@ -43,4 +43,9 @@ class UserDetailsController extends Controller
     {
         return $this->userPaymentOptionService->update(array('pairing_type' => $request['pairing_type']), $id);
     }
+
+    protected function getLastUpdated($portalUserId)
+    {
+        return $this->userDetailService->getLastUpdated($portalUserId);
+    }
 }

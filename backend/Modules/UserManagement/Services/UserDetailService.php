@@ -251,6 +251,14 @@ class UserDetailService implements UserDetailServiceInterface
             'last_name' => $userDetails['last_name']
         ], Response::HTTP_OK);
 
+    }
 
+    public function getLastUpdated($portalUserId)
+    {
+        return response()->json(
+            AccountHistoryPortalUser::where('portal_user_id', $portalUserId)
+                ->with('backofficeUser')
+                ->first(), Response::HTTP_OK
+        );
     }
 }

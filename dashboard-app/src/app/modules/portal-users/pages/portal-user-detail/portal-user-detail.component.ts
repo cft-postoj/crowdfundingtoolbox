@@ -22,6 +22,9 @@ export class PortalUserDetailComponent implements OnInit {
     alertMessage: string;
     paymentsPairingTypes: DropdownItem[];
 
+    updatedBy: string = '';
+    updatedByDate: Date;
+
 
     constructor(private portalUserService: PortalUserService, private router: Router, private route: ActivatedRoute) {
     }
@@ -45,6 +48,21 @@ export class PortalUserDetailComponent implements OnInit {
         ];
     }
 
+    private getLastUpdated() {
+        this.portalUserService.getLastUpdated(this.user.portal_user.id).subscribe((data) => {
+            this.updatedByDate = data.updated_at;
+            if (data.backoffice_user !== null && data.backoffice_user !== undefined) {
+                this.updatedBy = 'Last updated by backoffice user <b>' + data.backoffice_user.username + '</b> in ';
+            } else if (data.updated_at !== undefined) {
+                this.updatedBy = 'Last updated by donor in ';
+            } else {
+                this.updatedBy = 'This account was not updated yet.';
+            }
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
     private showDetail() {
         this.portalUserService.getById(this.id).subscribe((data) => {
             this.user = data;
@@ -52,6 +70,7 @@ export class PortalUserDetailComponent implements OnInit {
             if (this.user.portal_user === null) {
                 this.router.navigateByUrl(`${Routing.PORTAL_USER_LIST_FULL_PATH}`);
             }
+            this.getLastUpdated();
             this.loading = false;
         }, (error) => {
             console.log(error);

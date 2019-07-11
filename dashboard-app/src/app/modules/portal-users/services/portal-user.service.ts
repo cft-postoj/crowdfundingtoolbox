@@ -39,4 +39,9 @@ export class PortalUserService {
         });
     }
 
+    public getLastUpdated(portalUserId: number): Observable<any> {
+        return this.http.get(`${environment.backOfficeUrl}${environment.portalUsersUrl}/${portalUserId}/last-updated`);
+    }
 }
+
+

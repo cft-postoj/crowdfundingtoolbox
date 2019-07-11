@@ -5,8 +5,7 @@
         <div class="col-12">
             <h4>
                 Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:
-                <span class="user-detail--lastUpdated">
-                    Last updated by backoffice user <b>admin</b> in 07.09.2019 17:15:14
+                <span class="user-detail--lastUpdated" [innerHTML]="updatedBy + (updatedByDate | date:'dd.MM.yyyy - HH:mm:ss')">
                 </span>
                 <button type="button" class="user-detail--edit" title="Edit portal user" (click)="showEditModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -126,7 +125,7 @@
                 <div class="col-6 col-md-8">
                     <app-dropdown
                             [title]="'Choose preferred payments pairing'"
-                            [currentValue]="user.portal_user.user_payment_options.pairing_type"
+                            [currentValue]="user.portal_user.user_payment_options?.pairing_type"
                             (currentValueChange)="changePaymentsPairing($event)"
                             [items]="paymentsPairingTypes"></app-dropdown>
                 </div>
