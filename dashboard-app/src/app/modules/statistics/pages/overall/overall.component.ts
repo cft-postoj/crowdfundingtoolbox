@@ -30,10 +30,10 @@ export class OverallComponent implements OnInit {
     // all tables used ina app-modal-full-size component in this componetn
     public tables: {
         tableDonors: boolean;
-        tableDonations: boolean;
+        tablePayments: boolean;
     } = {
         tableDonors: false,
-        tableDonations: false
+        tablePayments: false
     };
     private dataType: string;
 

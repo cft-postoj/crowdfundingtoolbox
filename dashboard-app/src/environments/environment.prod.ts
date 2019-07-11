@@ -21,6 +21,7 @@ export const environment = {
     clone: '/clone',
     group: '/group',
     total: '/total',
+    list: '/list',
     all: '/all',
 
     // domain specific paths
@@ -56,6 +57,8 @@ export const environment = {
 
     excludeFromTargeting: '/exclude-from-campaigns-targeting',
 
+
+    payment: '/payment',
     paymentMethods: '/payment-methods',
 
     bankTransferMethod: '/payment/bank-transfer-details',

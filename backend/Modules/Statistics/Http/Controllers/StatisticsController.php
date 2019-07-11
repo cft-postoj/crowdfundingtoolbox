@@ -63,5 +63,13 @@ class StatisticsController extends Controller
         );
     }
 
+    protected function getDonorsTotal(Request $request)
+    {
+        return \response()->json(
+            $this->statsDonorService->getDonorsTotal($request['from'], $request['to']),
+            Response::HTTP_OK
+        );
+    }
+
 
 }

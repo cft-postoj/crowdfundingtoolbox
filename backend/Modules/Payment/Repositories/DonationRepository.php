@@ -19,7 +19,7 @@ class DonationRepository
     {
         return $this->model
             ::where('id', $id)
-            ->with('payments')
+            ->with('payment')
             ->with('portalUser')
             ->with('portalUser.user.userDetail')
             ->first();

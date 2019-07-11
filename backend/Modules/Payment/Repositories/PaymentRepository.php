@@ -32,8 +32,8 @@ class PaymentRepository
     public function getUnpairedPayments()
     {
         return $this->model
-            ::with('pairedDonation')
-            ->doesnthave('pairedDonation')
+            ::with('donation')
+            ->doesnthave('donation')
             ->orderby('id', 'DESC')
             ->get();
     }
@@ -43,6 +43,26 @@ class PaymentRepository
         return $this->model
             ::where('id', $id)
             ->first();
+    }
+
+    public function getPayments($from, $to, $monthly)
+    {
+
+        $query = Payment::query()
+            ->whereDate('transaction_date', '>=', $from)
+            ->whereDate('transaction_date', '<=', $to)
+            ->with(['donation.portalUser.user.userDetail',
+                'donation.widget.campaign',
+                'donation.widget.widgetType'])
+            ->orderBy('transaction_date', 'DESC');
+
+        if ($monthly === 'true') {
+            $query = $query->has('donationMonthlyTrue');
+        }
+        if ($monthly === 'false') {
+            $query = $query->has('donationMonthlyFalse');
+        }
+        return $query->get();
     }
 
 }

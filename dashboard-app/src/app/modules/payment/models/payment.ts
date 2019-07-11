@@ -1,6 +1,9 @@
+import {Donation} from './donation';
+
 export class Payment {
     id: number;
     transaction_id: string;
+    donation: Donation;
     iban: string;
     variable_symbol: number;
     amount: number;

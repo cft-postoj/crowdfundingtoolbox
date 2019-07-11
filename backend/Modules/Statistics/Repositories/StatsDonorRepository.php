@@ -4,6 +4,7 @@ namespace Modules\Statistics\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Payment\Entities\Donation;
+use Modules\Payment\Entities\Payment;
 use Modules\UserManagement\Entities\PortalUser;
 
 class StatsDonorRepository implements StatsDonorRepositoryInterface
@@ -59,29 +60,36 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
 
     public function getDonors($from, $to, $monthly)
     {
+        $payment = Payment::query()
+            ->select('id', 'transaction_date')
+            ->whereDate('transaction_date', '>=', $from)
+            ->whereDate('transaction_date', '<=', $to);
+
         // get date of last donation
         $lastDonationAt = Donation::query()
             ->select('portal_user_id', DB::raw('MAX(created_at) as last_donation_at'))
-            ->whereDate('created_at', '>=', $from)
-            ->whereDate('created_at', '<=', $to)
+            ->whereNotNull('payment_id')
             ->groupBy('portal_user_id');
 
         //if monthly is set, filter lastDonationAt
         if ($monthly !== null) {
             $lastDonationAt = $lastDonationAt->where('is_monthly_donation', $monthly);
         }
+
         // last donation detail
         $lastDonation = Donation::query()
             ->select('portal_user_id', 'amount as last_donation_value', 'is_monthly_donation as last_donation_monthly',
-                'payment_method as last_donation_payment_method', 'created_at');
-
+                'payment_method as last_donation_payment_method', 'created_at', 'payment_id');
 
         return PortalUser::query()
-            ->joinSub($lastDonationAt, 'latest_donation_group', function ($join) {
-                $join->on('portal_users.id', '=', 'latest_donation_group.portal_user_id');
+            ->joinSub($lastDonationAt, 'last_donation_at', function ($join) {
+                $join->on('portal_users.id', '=', 'last_donation_at.portal_user_id');
             })
-            ->joinSub($lastDonation, 'latest_donation', function ($join) {
-                $join->on('last_donation_at', '=', 'latest_donation.created_at');
+            ->joinSub($lastDonation, 'last_donation', function ($join) {
+                $join->on('last_donation_at', '=', 'last_donation.created_at');
+            })
+            ->joinSub($payment, 'payment', function ($join) {
+                $join->on('last_donation.payment_id', '=', 'payment.id');
             })
             ->joinSub($this->donationsSum, 'donations_sum', function ($join) {
                 $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
@@ -96,64 +104,87 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
 
     public function countOfNewDonors($from, $to)
     {
+        $firstPayment = Payment::query()
+            ->select(DB::raw('MIN(payments.transaction_date) as first_payment_date'),
+                'donations.portal_user_id as first_portal_user_id')
+            ->join('donations', 'payments.id', '=', 'donations.payment_id')
+            ->orderBy('first_portal_user_id')
+            ->groupBy('first_portal_user_id');
+
+        $payment = Payment::query()
+            ->select('payments.transaction_date as current_payment_date',
+                'donations.portal_user_id as portal_user_id',
+                'donations.is_monthly_donation as is_monthly_donation')
+            ->whereDate('transaction_date', '>=', $from)
+            ->whereDate('transaction_date', '<=', $to)
+            ->join('donations', 'payments.id', '=', 'donations.payment_id')
+            ->groupBy('payments.id', 'portal_user_id', 'is_monthly_donation');
+
         //get only those portal users who made first donation at specific time period
         return PortalUser::query()
-            ->select(DB::raw('count(id)'), 'is_monthly_donation')
-            ->joinSub($this->firstDonationMonthly, 'first_donation', function ($join) {
-                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            ->select(DB::raw('count(portal_users.id)'), 'is_monthly_donation')
+            ->joinSub($firstPayment, 'first_payment', function ($join) {
+                $join->on('portal_users.id', '=', 'first_payment.first_portal_user_id');
             })
-            ->whereDate('first_donation_at', '>=', $from)
-            ->whereDate('first_donation_at', '<=', $to)
+            ->joinSub($payment, 'payment', function ($join) {
+                $join->on('portal_users.id', '=', 'payment.portal_user_id');
+            })
+            ->whereRaw('current_payment_date = first_payment_date')
             ->groupBy('is_monthly_donation')
             ->get();
     }
 
     public function getDonorsNew($from, $to, $monthly)
     {
+
+        $firstPayment = Payment::query()
+            ->select(DB::raw('MIN(payments.transaction_date) as first_payment_date'),
+                'donations.portal_user_id as first_portal_user_id')
+            ->join('donations', 'payments.id', '=', 'donations.payment_id')
+            ->orderBy('first_portal_user_id')
+            ->groupBy('first_portal_user_id');
+
+        $payment = Payment::query()
+            ->select('payments.transaction_date as current_payment_date',
+                'donations.portal_user_id as portal_user_id',
+                'donations.is_monthly_donation as is_monthly_donation')
+            ->whereDate('transaction_date', '>=', $from)
+            ->whereDate('transaction_date', '<=', $to)
+            ->join('donations', 'payments.id', '=', 'donations.payment_id')
+            ->groupBy('payments.id', 'portal_user_id', 'is_monthly_donation');
+
         // get date of last donation
         $lastDonationAt = Donation::query()
             ->select('portal_user_id', DB::raw('MAX(created_at) as last_donation_at'))
-            ->groupBy('portal_user_id');
-
-        // last donation detail
-        $lastDonation = Donation::query()
-            ->select('portal_user_id', 'amount as last_donation_value', 'is_monthly_donation as last_donation_monthly',
-                'payment_method as last_donation_payment_method', 'created_at');
-
-        // donations_sum
-        $donationsSum = Donation::query()
-            ->select('portal_user_id',
-                DB::raw('sum(amount) as amount_sum'))
-            ->groupBy('portal_user_id');
-
-        // first donation and date for portal user, when he successfully made first donation
-        $firstDonation = Donation::query()
-            ->select('portal_user_id',
-                DB::raw('MIN(created_at) as first_donation_at'))
+            ->whereNotNull('payment_id')
             ->groupBy('portal_user_id');
 
         //if monthly is set, filter lastDonationAt
         if ($monthly !== null) {
-            $firstDonation = $firstDonation->where('is_monthly_donation', $monthly);
+            $lastDonationAt = $lastDonationAt->where('is_monthly_donation', $monthly);
         }
 
+        // last donation detail
+        $lastDonation = Donation::query()
+            ->select('portal_user_id', 'amount as last_donation_value', 'is_monthly_donation as last_donation_monthly',
+                'payment_method as last_donation_payment_method', 'created_at', 'payment_id');
+
+        //get only those portal users who made first donation at specific time period
         return PortalUser::query()
-            ->joinSub($lastDonationAt, 'latest_donation_group', function ($join) {
-                $join->on('portal_users.id', '=', 'latest_donation_group.portal_user_id');
+            ->joinSub($lastDonationAt, 'last_donation_at', function ($join) {
+                $join->on('portal_users.id', '=', 'last_donation_at.portal_user_id');
             })
-            ->joinSub($lastDonation, 'latest_donation', function ($join) {
-                $join->on('last_donation_at', '=', 'latest_donation.created_at');
+            ->joinSub($lastDonation, 'last_donation', function ($join) {
+                $join->on('last_donation_at', '=', 'last_donation.created_at');
             })
-            ->joinSub($donationsSum, 'donations_sum', function ($join) {
-                $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
+            ->joinSub($firstPayment, 'first_payment', function ($join) {
+                $join->on('portal_users.id', '=', 'first_payment.first_portal_user_id');
             })
-            ->joinSub($firstDonation, 'first_donation', function ($join) {
-                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            ->joinSub($payment, 'payment', function ($join) {
+                $join->on('portal_users.id', '=', 'payment.portal_user_id');
             })
+            ->whereRaw('current_payment_date = first_payment_date')
             ->orderBy('last_donation_at', 'DESC')
-            ->with('user.userDetail')
-            ->whereDate('first_donation_at', '>=', $from)
-            ->whereDate('first_donation_at', '<=', $to)
             ->with('user.userDetail')
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
