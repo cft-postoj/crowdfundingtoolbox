@@ -11,9 +11,12 @@
                 <button type="button" class="user-detail--edit" title="Edit portal user" (click)="showEditModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g id="edit_24px" transform="translate(-1816 -136)">
-                            <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                            <rect id="safe_area" data-name="safe area" width="24" height="24"
+                                  transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
                             <g id="icon" transform="translate(246 20)">
-                                <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#0074E9"/>
+                                <path id="Path_30" data-name="Path 30"
+                                      d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z"
+                                      transform="translate(1574 120.001)" fill="#0074E9"/>
                             </g>
                         </g>
                     </svg>
@@ -104,18 +107,34 @@
             </div>
         </div>
     </div>
-    <div class="user-detail--notes">
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th>NOTES:</th>
-                <td>{{(user.portal_user.notes) ? user.portal_user.notes : 'This user has no notes. If you want to add something, click to edit user.'}}</td>
-            </tr>
-        </table>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 user-detail--notes">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>NOTES:</th>
+                    <td>{{(user.portal_user.notes) ? user.portal_user.notes : 'This user has no notes. If you want to add something, click to edit user.'}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 user-detail--changePaymentPairing">
+            <div class="row">
+                <div class="col-6 col-md-4">
+                    <b>
+                        Preferred payments pairing:
+                    </b>
+                </div>
+                <div class="col-6 col-md-8">
+                    <app-dropdown
+                            [title]="'Choose preferred payments pairing'"
+                            [currentValue]="user.portal_user.user_payment_options.pairing_type"
+                            (currentValueChange)="changePaymentsPairing($event)"
+                            [items]="paymentsPairingTypes"></app-dropdown>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <app-payments-pairing>
-
-    </app-payments-pairing>
 
     <app-exlude-user-from-targeting
             [excluded]="user.portal_user.exclude_from_campaign !== null"

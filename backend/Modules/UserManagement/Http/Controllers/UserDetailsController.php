@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\UserManagement\Services\UserDetailService;
+use Modules\UserManagement\Services\UserPaymentOptionService;
 
 class UserDetailsController extends Controller
 {
     private $userDetailService;
+    private $userPaymentOptionService;
 
-    public function __construct(UserDetailService $userDetailService)
+    public function __construct(UserDetailService $userDetailService, UserPaymentOptionService $userPaymentOptionService)
     {
         $this->userDetailService = $userDetailService;
+        $this->userPaymentOptionService = $userPaymentOptionService;
     }
 
     protected function get()
@@ -34,5 +37,10 @@ class UserDetailsController extends Controller
     protected function getBase()
     {
         return $this->userDetailService->getBase();
+    }
+
+    protected function updatePreferredPaymentsPairing(Request $request, $id)
+    {
+        return $this->userPaymentOptionService->update(array('pairing_type' => $request['pairing_type']), $id);
     }
 }

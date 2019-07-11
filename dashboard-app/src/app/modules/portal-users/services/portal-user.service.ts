@@ -22,7 +22,7 @@ export class PortalUserService {
 
     public excludeFromTargeting(exclude: boolean, reason: string, portalUserId: number): Observable<any> {
         let url = environment.backOfficeUrl + environment.editPortalUser + '/' + portalUserId;
-            url += environment.excludeFromTargeting;
+        url += environment.excludeFromTargeting;
         return this.http.post(`${url}`, {
             exclude: exclude,
             reason: reason
@@ -31,6 +31,12 @@ export class PortalUserService {
 
     public editPortalUser(userData: any, id: number): Observable<any> {
         return this.http.put(`${environment.backOfficeUrl}${environment.editPortalUser}/${id}`, userData);
+    }
+
+    public changePaymentsPairing(portalUserId: number, type: string): Observable<any> {
+        return this.http.put(`${environment.backOfficeUrl}${environment.editPortalUser}/${portalUserId}/preferred-payments-pairing`, {
+            pairing_type: type
+        });
     }
 
 }

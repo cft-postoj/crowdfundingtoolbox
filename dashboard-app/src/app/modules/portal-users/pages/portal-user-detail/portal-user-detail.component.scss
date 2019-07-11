@@ -35,4 +35,14 @@
       padding-left: 15px;
     }
   }
+  &--changePaymentPairing {
+    padding: 15px;
+    b {
+      margin-top: 12px;
+      display: block;
+    }
+    ::ng-deep select {
+      border: 1px solid $azure !important;
+    }
+  }
 }

@@ -10,11 +10,10 @@ import { BackToListComponent } from './components/back-to-list/back-to-list.comp
 import { DonorStatusComponent } from './components/donor-status/donor-status.component';
 import { ExludeUserFromTargetingComponent } from './components/exlude-user-from-targeting/exlude-user-from-targeting.component';
 import { EditPortalUserComponent } from './components/edit-portal-user/edit-portal-user.component';
-import { PaymentsPairingComponent } from './components/payments-pairing/payments-pairing.component';
 
 @NgModule({
     declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
-        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, PaymentsPairingComponent],
+        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,

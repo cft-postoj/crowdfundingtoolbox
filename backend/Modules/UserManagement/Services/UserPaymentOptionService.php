@@ -31,7 +31,7 @@ class UserPaymentOptionService
         } catch (\Exception $exception) {
             return response()->json([
                 'error' => $exception->getMessage()
-            ], Rsponse::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
         return response()->json([
             'message' => 'Successfully updated payment option for user.'

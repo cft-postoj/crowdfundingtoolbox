@@ -3,6 +3,7 @@ import {PortalUser} from '../../models/portal-user';
 import {PortalUserService} from '../../services/portal-user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Routing} from '../../../../constants/config.constants';
+import {DropdownItem} from '../../../core/models';
 
 @Component({
     selector: 'app-donor-detail',
@@ -19,6 +20,7 @@ export class PortalUserDetailComponent implements OnInit {
     alertOpen: boolean = false;
     alertType: string = 'success';
     alertMessage: string;
+    paymentsPairingTypes: DropdownItem[];
 
 
     constructor(private portalUserService: PortalUserService, private router: Router, private route: ActivatedRoute) {
@@ -31,6 +33,16 @@ export class PortalUserDetailComponent implements OnInit {
                 this.showDetail();
             }
         );
+        this.paymentsPairingTypes = [
+            {
+                value: 'variable_symbol',
+                title: 'Variable symbol'
+            },
+            {
+                value: 'iban',
+                title: 'IBAN'
+            }
+        ];
     }
 
     private showDetail() {
@@ -77,6 +89,19 @@ export class PortalUserDetailComponent implements OnInit {
             this.alertMessage = 'User details were successfully updated.';
             this.alertOpen = true;
         }
+    }
+
+    public changePaymentsPairing(val) {
+        this.portalUserService.changePaymentsPairing(this.user.portal_user.id, val).subscribe((data) => {
+            this.modalOpened = false;
+            this.alertMessage = 'User\'s preferred payments pairing was successfully changed.';
+            this.alertType = 'success';
+            this.alertOpen = true;
+        }, (error) => {
+            this.alertMessage = 'During update there was an error: ' + error;
+            this.alertType = 'danger';
+            this.alertOpen = true;
+        });
     }
 
 }
