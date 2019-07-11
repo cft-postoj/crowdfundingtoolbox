@@ -7,10 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     protected $table = 'payments';
-    protected $fillable = [];
+    protected $fillable = ['transaction_date'];
 
-    public function pairedDonation()
+    public function donation()
     {
         return $this->belongsTo('\Modules\Payment\Entities\Donation', 'id', 'payment_id');
+    }
+
+    public function donationMonthlyTrue()
+    {
+        return $this->belongsTo('\Modules\Payment\Entities\Donation', 'id', 'payment_id')
+            ->where('is_monthly_donation', true);
+    }
+
+    public function donationMonthlyFalse()
+    {
+        return $this->belongsTo('\Modules\Payment\Entities\Donation', 'id', 'payment_id')
+            ->where('is_monthly_donation', false);
+
+
     }
 }

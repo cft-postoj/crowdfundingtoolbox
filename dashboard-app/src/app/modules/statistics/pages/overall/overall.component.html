@@ -37,7 +37,7 @@
 
     </app-breadcrumbs>
     <div id="crowd-content">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <p-chart *ngIf="!graphLoading" type="line" [data]="data" [options]="options"
@@ -47,7 +47,7 @@
         </div>
         <app-loading [isLoading]="graphLoading || donorsAndDonationsLoading" [height]="'40vh'"></app-loading>
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row" *ngIf="!donorsAndDonationsLoading">
                 <div class="col-12 col-lg-6 pt-2">
                     <div class="card">
@@ -55,7 +55,7 @@
                             <div class="row">
                                 <div class="card-header">
                                     <div class="col">
-                                        <h4>Donations</h4>
+                                        <h4>Payments</h4>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                             <div class="row">
                                 <div class="col">
                                     <span class="clickable"
-                                          (click)="openModal('Donations',undefined,'tableDonations')">total</span>
+                                          (click)="openModal('Payments',undefined,'tablePayments')">total</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -94,11 +94,11 @@
                             <div class="row">
                                 <div class="col-6">
                                     <span class="clickable"
-                                          (click)="openModal('Donations',true,'tableDonations')">monthly </span>
+                                          (click)="openModal('Payments',true,'tablePayments')">monthly </span>
                                 </div>
                                 <div class="col-6">
                                     <span class="clickable"
-                                          (click)="openModal('Donations',false,'tableDonations')">one time </span>
+                                          (click)="openModal('Payments',false,'tablePayments')">one time </span>
                                 </div>
                             </div>
 
@@ -253,4 +253,6 @@
                             [title]="tableTitle" [dataType]="dataType"></app-table-portal-users>
     <app-table-donations *ngIf="tables.tableDonations" [from]="from" [to]="to" [monthly]="monthly"
                          [title]="tableTitle" [dataType]="dataType"></app-table-donations>
+    <app-table-payments *ngIf="tables.tablePayments" [from]="from" [to]="to" [monthly]="monthly"
+                         [title]="tableTitle" [dataType]="dataType"></app-table-payments>
 </app-modal-full-size>

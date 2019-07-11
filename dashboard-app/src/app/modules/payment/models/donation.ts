@@ -6,7 +6,7 @@ export class Donation {
     id: number;
     referral_widget_id: number;
     is_monhtly_donation: boolean;
-    payments: Payment;
+    payment: Payment;
     payment_method: string;
     portal_user: PortalUser;
     status: string;

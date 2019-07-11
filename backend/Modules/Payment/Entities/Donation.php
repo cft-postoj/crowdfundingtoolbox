@@ -38,11 +38,6 @@ class Donation extends Model
 
     public function payment()
     {
-        return $this->belongsTo('\Modules\Campaigns\Entities\Widget', 'id', 'referral_widget_id');
-    }
-
-    public function payments()
-    {
         return $this->hasOne('\Modules\Payment\Entities\Payment', 'id', 'payment_id');
     }
 

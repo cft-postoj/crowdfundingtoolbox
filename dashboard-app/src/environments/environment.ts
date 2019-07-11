@@ -25,6 +25,7 @@ export const environment = {
     clone: '/clone',
     group: '/group',
     total: '/total',
+    list: '/list',
     all: '/all',
 
     // domain specific paths
@@ -59,6 +60,8 @@ export const environment = {
     editPortalUser: '/edit-portal-user',
 
     excludeFromTargeting: '/exclude-from-campaigns-targeting',
+
+    payment: '/payment',
 
     paymentMethods: '/payment-methods',
 

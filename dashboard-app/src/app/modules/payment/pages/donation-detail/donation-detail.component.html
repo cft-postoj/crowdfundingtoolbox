@@ -14,7 +14,7 @@
                     </tr>
                     <tr>
                         <td>Transaction ID</td>
-                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.transaction_id : 'N/A'}}</th>
+                        <th>{{(!isNullOrUndefined(detail.payment)) ? detail.payment.transaction_id : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Donor name</td>
@@ -27,11 +27,11 @@
                     </tr>
                     <tr>
                         <td>IBAN</td>
-                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.iban : 'N/A'}}</th>
+                        <th>{{(!isNullOrUndefined(detail.payment)) ? detail.payment.iban : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Variable symbol</td>
-                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.variable_symbol : 'N/A'}}</th>
+                        <th>{{(!isNullOrUndefined(detail.payment)) ? detail.payment.variable_symbol : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Amount</td>
@@ -43,11 +43,11 @@
                     </tr>
                     <tr>
                         <td>Type</td>
-                        <th>{{(!isNullOrUndefined(detail.payments)) ? getPaymentMethod(detail.payments.transfer_type) : 'N/A'}}</th>
+                        <th>{{(!isNullOrUndefined(detail.payment)) ? getPaymentMethod(detail.payment.transfer_type) : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Transaction date</td>
-                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.transaction_date : 'N/A'}}</th>
+                        <th>{{(!isNullOrUndefined(detail.payment)) ? detail.payment.transaction_date : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Campaign name</td>
@@ -56,7 +56,7 @@
                     </tr>
                     <tr>
                         <td>Created by</td>
-                        <th>{{(!isNullOrUndefined(detail.payments)) ? detail.payments.created_by : 'N/A'}}</th>
+                        <th>{{(!isNullOrUndefined(detail.payment)) ? detail.payment.created_by : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Donation/donor status</td>

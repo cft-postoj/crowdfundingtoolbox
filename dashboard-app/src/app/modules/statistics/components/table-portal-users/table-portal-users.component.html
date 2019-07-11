@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col">
             <h2>{{title}}
@@ -36,49 +36,49 @@
             <table class="list-items list-items--orderable">
                 <thead>
                 <tr>
-                    <th app-table-header class="id" *ngIf="activeColumn('order')"
-                        [column]="getColumnByValueName('order')"
+                    <th app-table-header class="id" *ngIf="tableService.activeColumn(model,'order')"
+                        [column]="tableService.getColumnByValueName(model,'order')"
                         [(model)]="model" (modelChange)="sortTable()">#
                     </th>
-                    <th app-table-header *ngIf="activeColumn('status')" [column]="getColumnByValueName('status')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'status')" [column]="tableService.getColumnByValueName(model,'status')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('user.email')"
-                        [column]="getColumnByValueName('user.email')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.email')"
+                        [column]="tableService.getColumnByValueName(model,'user.email')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('user.user_detail.last_name')"
-                        [column]="getColumnByValueName('user.user_detail.last_name')" [(model)]="model"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.last_name')"
+                        [column]="tableService.getColumnByValueName(model,'user.user_detail.last_name')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('amount_sum')"
-                        [column]="getColumnByValueName('amount_sum')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'amount_sum')"
+                        [column]="tableService.getColumnByValueName(model,'amount_sum')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('todo1')" [column]="getColumnByValueName('todo1')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo1')" [column]="tableService.getColumnByValueName(model,'todo1')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('user.user_detail.created_at')"
-                        [column]="getColumnByValueName('user.user_detail.created_at')" [(model)]="model"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')"
+                        [column]="tableService.getColumnByValueName(model,'user.user_detail.created_at')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('last_donation_at')"
-                        [column]="getColumnByValueName('last_donation_at')" [(model)]="model"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'last_donation_at')"
+                        [column]="tableService.getColumnByValueName(model,'last_donation_at')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('user.updated_at')"
-                        [column]="getColumnByValueName('user.updated_at')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.updated_at')"
+                        [column]="tableService.getColumnByValueName(model,'user.updated_at')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('campaign_name')"
-                        [column]="getColumnByValueName('campaign_name')" [(model)]="model"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'campaign_name')"
+                        [column]="tableService.getColumnByValueName(model,'campaign_name')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('user.id')" [column]="getColumnByValueName('user.id')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.id')" [column]="tableService.getColumnByValueName(model,'user.id')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('variable_symbol.variable_symbol')"
-                        [column]="getColumnByValueName('variable_symbol.variable_symbol')" [(model)]="model"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'variable_symbol.variable_symbol')"
+                        [column]="tableService.getColumnByValueName(model,'variable_symbol.variable_symbol')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('todo6')" [column]="getColumnByValueName('todo6')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo6')" [column]="tableService.getColumnByValueName(model,'todo6')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('is_monthly_donor')"
-                        [column]="getColumnByValueName('is_monthly_donor')" [(model)]="model"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'is_monthly_donor')"
+                        [column]="tableService.getColumnByValueName(model,'is_monthly_donor')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="activeColumn('todo8')" [column]="getColumnByValueName('todo8')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo8')" [column]="tableService.getColumnByValueName(model,'todo8')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
 
@@ -86,51 +86,51 @@
                 </thead>
                 <tbody *ngIf="!loading">
                 <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item">
-                    <td *ngIf="activeColumn('order')">{{i+1}}</td>
-                    <td *ngIf="activeColumn('status')">
+                    <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'status')">
                         <app-donor-status [isMonthlyDonor]="portalUser.last_donation_at!=null"></app-donor-status>
                     </td>
-                    <td *ngIf="activeColumn('user.email')">
+                    <td *ngIf="tableService.activeColumn(model,'user.email')">
                         {{portalUser.user.email}}
                     </td>
-                    <td *ngIf="activeColumn('user.user_detail.last_name')" class="pointer"
+                    <td *ngIf="tableService.activeColumn(model,'user.user_detail.last_name')" class="pointer"
                         [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.user.id]">
                         {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
                     </td>
-                    <td *ngIf="activeColumn('amount_sum')">
+                    <td *ngIf="tableService.activeColumn(model,'amount_sum')">
                         {{portalUser.amount_sum | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
                     </td>
-                    <td *ngIf="activeColumn('todo1')">
+                    <td *ngIf="tableService.activeColumn(model,'todo1')">
                         todo
                     </td>
                     <td [title]="portalUser.user.user_detail.created_at | date:'dd.MM.yyyy HH:mm:ss'"
-                        *ngIf="activeColumn('user.user_detail.created_at')">
+                        *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')">
                         {{portalUser.user.user_detail.created_at | date:'dd.MM.yyyy'}}
                     </td>
                     <td [title]="portalUser.last_donation_at | date:'dd.MM.yyyy HH:mm:ss'"
-                        *ngIf="activeColumn('last_donation_at')">
+                        *ngIf="tableService.activeColumn(model,'last_donation_at')">
                         {{portalUser.last_donation_at | date:'dd.MM.yyyy'}}
                     </td>
                     <td [title]="portalUser.user.updated_at | date:'dd.MM.yyyy HH:mm:ss'"
-                        *ngIf="activeColumn('user.updated_at')">
+                        *ngIf="tableService.activeColumn(model,'user.updated_at')">
                         {{portalUser.user.updated_at | date:'dd.MM.yyyy'}}
                     </td>
-                    <td *ngIf="activeColumn('campaign_name')">
+                    <td *ngIf="tableService.activeColumn(model,'campaign_name')">
                         {{portalUser.campaign_name}}
                     </td>
-                    <td *ngIf="activeColumn('user.id')">
+                    <td *ngIf="tableService.activeColumn(model,'user.id')">
                         {{portalUser.user.user_detail.id}}
                     </td>
-                    <td *ngIf="activeColumn('variable_symbol.variable_symbol')">
+                    <td *ngIf="tableService.activeColumn(model,'variable_symbol.variable_symbol')">
                         {{portalUser.variable_symbol.variable_symbol}}
                     </td>
-                    <td *ngIf="activeColumn('todo6')">
+                    <td *ngIf="tableService.activeColumn(model,'todo6')">
                         todo6
                     </td>
-                    <td *ngIf="activeColumn('is_monthly_donor')">
+                    <td *ngIf="tableService.activeColumn(model,'is_monthly_donor')">
                         {{portalUser.is_monthly_donor | monthly}}
                     </td>
-                    <td *ngIf="activeColumn('todo8')">
+                    <td *ngIf="tableService.activeColumn(model,'todo8')">
                         todo8
                     </td>
                 </tr>

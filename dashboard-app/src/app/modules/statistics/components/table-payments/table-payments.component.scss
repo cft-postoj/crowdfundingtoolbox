@@ -1,0 +1,9 @@
+:host {
+    position: absolute;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+}
+tr.list-items--item {
+    cursor: pointer;
+}

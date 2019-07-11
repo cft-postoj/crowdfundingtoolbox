@@ -167,25 +167,5 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
         this.showMoreClicked.next(false);
     }
 
-    public activeColumn(searchColumnByValueName: any) {
-        let result = false;
-        this.model.columns.forEach(column => {
-            if (column.value_name === searchColumnByValueName) {
-                result = true;
-                return true;
-            }
-        });
-        return result;
-    }
 
-    public getColumnByValueName(searchColumnByValueName: any) {
-        let result = null;
-        this.model.columns.forEach(column => {
-            if (column.value_name === searchColumnByValueName) {
-                result = column;
-                return column;
-            }
-        });
-        return result;
-    }
 }

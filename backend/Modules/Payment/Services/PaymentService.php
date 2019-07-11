@@ -324,4 +324,14 @@ class PaymentService
 
     }
 
+    public function getPayments($from, $to, $monthly)
+    {
+        return $this->paymentRepository->getPayments($from, $to, $monthly);
+    }
+
+    public function getPaymentTotalGroupMonthly($from, $to)
+    {
+        return $this->paymentRepository->getPaymentTotalGroupMonthly($from, $to);
+    }
+
 }

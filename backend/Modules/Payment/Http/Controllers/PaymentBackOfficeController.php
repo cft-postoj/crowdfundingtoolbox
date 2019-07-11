@@ -49,6 +49,14 @@ class PaymentBackOfficeController extends Controller
         return $this->paymentService->pairPaymentsViaIban($request);
     }
 
+    protected function getPayments(Request $request)
+    {
+        return \response()->json(
+            $this->paymentService->getPayments($request['from'], $request['to'], $request['monthly']),
+            Response::HTTP_OK
+        );
+    }
+
 
     protected function getAllMethods()
     {

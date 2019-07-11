@@ -61,5 +61,19 @@ export class TableService {
         }
     }
 
+    public activeColumn(model, searchColumnByValueName: any) {
+        return this.getColumnByValueName(model, searchColumnByValueName) != null;
+    }
+
+    public getColumnByValueName(model, searchColumnByValueName: any) {
+        let result = null;
+        model.columns.forEach(column => {
+            if (column.value_name === searchColumnByValueName) {
+                result = column;
+            }
+        });
+        return result;
+    }
+
 
 }

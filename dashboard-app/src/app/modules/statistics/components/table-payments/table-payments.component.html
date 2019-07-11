@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6 text-center">
+        <div class="col">
             <h2>{{title}}</h2>
         </div>
         <div class="col-3 d-flex align-items-center">
@@ -36,29 +36,31 @@
                 </tr>
                 </thead>
                 <tbody *ngIf="!loading">
-                <tr *ngFor="let donation of sortedDonations; let i = index" class="list-items--item"
-                    (click)="showDonationDetail(donation.id)">
+                <tr *ngFor="let payment of sortedPayments; let i = index" class="list-items--item"
+                    (click)="showDonationDetail(payment.id)" >
                     <td>{{i+1}}</td>
                     <td>
-                        {{donation.created_at | date:'dd.MM.yyyy' }}
+                        {{payment.transaction_date | date:'dd.MM.yyyy' }}
                     </td>
                     <td>
-                        {{donation.amount | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
+                        {{payment.amount | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
                     </td>
                     <td>
-                        {{(donation.payment_method === null) ? 'N/A' : paymentMethods[donation.payment_method - 1]}}
+                        {{(payment.payment_method === null) ? 'N/A' : paymentMethods[payment.payment_method - 1]}}
                     </td>
-                    <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.user.id]">
-                        {{donation.portal_user.user?.user_detail.first_name}} {{donation.portal_user?.user.user_detail.last_name}}
+                    <!--<td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.id]">-->
+                        <!--{{donation.portal_user.user?.user_detail.first_name}}-->
+                        <!--{{donation.portal_user?.user.user_detail.last_name}}-->
+                    <!--</td>-->
+                    <td>
+                        {{payment.iban}}
                     </td>
                     <td>
-                        {{donation.is_monthly_donation | monthly}}
+                        {{payment.variable_symbol}}
                     </td>
-                    <td>
-                        {{donation.widget.widget_type.name}}
-                    </td>
-                    <td class="pointer" [routerLink]="[routing.CAMPAIGNS_FULL_PATH, donation.widget.campaign.id]">
-                        {{donation.widget.campaign.name}}
+
+                    <td class="pointer">
+                        {{payment.donation?.widget.campaign.name != null ? payment.donation.widget.campaign.name : '---'}}
                     </td>
                 </tr>
                 </tbody>

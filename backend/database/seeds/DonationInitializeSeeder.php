@@ -41,6 +41,7 @@ class DonationInitializeSeeder extends Seeder
                 'portal_user_id' => $user['id'],
                 'created_at' => $randomDate,
                 'status' => 'initialized',
+                'payment_method' => rand(1, 5),
                 'is_monthly_donation' => rand(0, 1) == 1,
                 'amount' => rand(1, 5) * 5
             ]);
