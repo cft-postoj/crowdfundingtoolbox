@@ -96,10 +96,12 @@ class PaymentService
     {
         $valid = validator($request->only(
             'user_id',
-            'payment_id'
+            'payment_id',
+            'iban'
         ), [
             'user_id' => 'required|integer',
-            'payment_id' => 'required|integer'
+            'payment_id' => 'required|integer',
+            'iban' => 'required|string'
         ]);
 
         if ($valid->fails()) {
@@ -110,71 +112,75 @@ class PaymentService
         }
 
         try {
+            $unpairedPayments = $this->paymentRepository->getUnpairedPayments();
             $donations = $this->donationService->getDonationsByUserId($request['user_id']);
-            $actualPayment = $this->getPayment($request['payment_id']);
             $portal_user_id = $this->portalUserService->getPortalUserIdByUserId($request['user_id']);
-            if ($donations == null) {
-                $donationRequest = array(
-                    'amount' => $actualPayment->amount,
-                    'is_monthly_donation' => false,
-                    'portal_user_id' => $portal_user_id,
-                    'widget_id' => 1,
-                    'payment_method' => $actualPayment->transfer_type,
-                    'status' => 'processed',
-                    'payment_id' => $actualPayment->id
-                );
-                $this->donationService->create($donationRequest);
-            } else {
-                $paired = false;
-                $isPaymentIdNull = false;
-                foreach ($donations as $donation) {
-                    // find first donation with same amount
-                    if ($donation->payment_id == null) {
-                        $isPaymentIdNull = true;
-                    }
-                    if (($donation->amount == $actualPayment->amount) && $isPaymentIdNull) {
-                        $paired = true;
-                        $this->donationService->updatePaymentIdAndAmount(array(
-                            'payment_id' => $request['payment_id'],
-                            'amount' => $actualPayment->amount
-                        ), $donation->id);
-                    }
-                }
-                if (!$paired) {
-                    // pair to last donation with correct amount
-                    if ($isPaymentIdNull) {
+            foreach ($unpairedPayments as $unPay) {
+                if ($unPay->iban === $request['iban']) {
+                    if ($donations == null) {
+                        $donationRequest = array(
+                            'amount' => $unPay->amount,
+                            'is_monthly_donation' => false,
+                            'portal_user_id' => $portal_user_id,
+                            'widget_id' => 1,
+                            'payment_method' => $unPay->transfer_type,
+                            'status' => 'processed',
+                            'payment_id' => $unPay->id
+                        );
+                        $this->donationService->create($donationRequest);
+                    } else {
+                        $paired = false;
+                        $isPaymentIdNull = false;
                         foreach ($donations as $donation) {
                             // find first donation with same amount
                             if ($donation->payment_id == null) {
                                 $isPaymentIdNull = true;
                             }
-                            if ($isPaymentIdNull) {
+                            if (($donation->amount == $unPay->amount) && $isPaymentIdNull) {
+                                $paired = true;
                                 $this->donationService->updatePaymentIdAndAmount(array(
                                     'payment_id' => $request['payment_id'],
-                                    'amount' => $actualPayment->amount
+                                    'amount' => $unPay->amount
                                 ), $donation->id);
                             }
                         }
-                    } else {
-                        $donationRequest = array(
-                            'amount' => $actualPayment->amount,
-                            'is_monthly_donation' => false,
-                            'portal_user_id' => $portal_user_id,
-                            'widget_id' => 1,
-                            'payment_method' => $actualPayment->transfer_type,
-                            'status' => 'processed',
-                            'payment_id' => $actualPayment->id
-                        );
-                        $this->donationService->create($donationRequest);
+                        if (!$paired) {
+                            // pair to last donation with correct amount
+                            if ($isPaymentIdNull) {
+                                foreach ($donations as $donation) {
+                                    // find first donation with same amount
+                                    if ($donation->payment_id == null) {
+                                        $isPaymentIdNull = true;
+                                    }
+                                    if ($isPaymentIdNull) {
+                                        $this->donationService->updatePaymentIdAndAmount(array(
+                                            'payment_id' => $request['payment_id'],
+                                            'amount' => $unPay->amount
+                                        ), $donation->id);
+                                    }
+                                }
+                            } else {
+                                $donationRequest = array(
+                                    'amount' => $unPay->amount,
+                                    'is_monthly_donation' => false,
+                                    'portal_user_id' => $portal_user_id,
+                                    'widget_id' => 1,
+                                    'payment_method' => $unPay->transfer_type,
+                                    'status' => 'processed',
+                                    'payment_id' => $unPay->id
+                                );
+                                $this->donationService->create($donationRequest);
+                            }
+                        }
                     }
+                    // ADD NEW IBAN TO PORTAL USER
+                    $req = array(
+                        'bank_account_number' => 'testik',
+                        'pairing_type' => 'iban'
+                    );
+                    $this->userPaymentOptionService->update($req, $portal_user_id);
                 }
             }
-            // ADD NEW IBAN TO PORTAL USER
-            $request = array(
-                'bank_account_number' => $actualPayment->iban,
-                'pairing_type' => 'iban'
-            );
-            $this->userPaymentOptionService->update($request, $portal_user_id);
         } catch (\Exception $exception) {
             return response()->json([
                 'error' => $exception->getMessage()

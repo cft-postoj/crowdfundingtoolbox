@@ -31,14 +31,14 @@ class TestDashboardSeeder extends Seeder
     public function run()
     {
         //create 5 campaigns
-        for ($i = 0; $i < 5; $i++) {
-            $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
-        }
+//        for ($i = 0; $i < 5; $i++) {
+//            $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
+//        }
 
         //create 50 users
-        for ($i = 0; $i < 50; $i++) {
-            $this->call(PortalUserSeeder::class);
-        }
+//        for ($i = 0; $i < 50; $i++) {
+//            $this->call(PortalUserSeeder::class);
+//        }
 
 
         $widgets = \Modules\Campaigns\Entities\Widget::get()->toArray();

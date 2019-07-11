@@ -34,7 +34,7 @@ class UserPaymentOptionService
             ], Rsponse::HTTP_BAD_REQUEST);
         }
         return response()->json([
-            'message' => 'Successfully update payment option for user.'
+            'message' => 'Successfully updated payment option for user.'
         ], Response::HTTP_CREATED);
 
     }

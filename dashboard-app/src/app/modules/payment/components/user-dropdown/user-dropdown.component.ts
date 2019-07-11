@@ -19,6 +19,8 @@ export class UserDropdownComponent implements OnInit {
     public label: string;
     @Input()
     public placeholder: string;
+    @Input()
+    public extraClass: string;
     @Output()
     public changeIdEmit = new EventEmitter();
 
@@ -29,7 +31,7 @@ export class UserDropdownComponent implements OnInit {
     }
 
     public selectAction() {
-        const id = this.selectedValue.match(/\d+/g).map(Number)[0];
+        const id = parseInt(this.selectedValue.match(/\d+]$/)[0].split(']')[0], 10);
         this.changeIdEmit.emit(id);
     }
 

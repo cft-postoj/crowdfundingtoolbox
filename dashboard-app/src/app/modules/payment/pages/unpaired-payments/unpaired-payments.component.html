@@ -54,13 +54,14 @@
                             {{item.payment_notes}}
                         </td>
                         <td class="pairing" colspan="2">
-                            <button type="button" (click)="pairViaIbanModal(item.id)">Pair payment via IBAN</button>
+<!--                            <button type="button" (click)="pairViaIbanModal(item.id)">Pair payment via IBAN</button>-->
                             <app-user-dropdown
                                     [users]="users"
                                     [userId]="null"
                                     [label]="null"
+                                    [extraClass]="'top15'"
                                     [placeholder]="'Assign payment to user'"
-                                    (changeIdEmit)="changeDonationAssignment($event, item.id)"></app-user-dropdown>
+                                    (changeIdEmit)="changeDonationAssignment($event, item.id, item.iban)"></app-user-dropdown>
                         </td>
                     </tr>
                     </tbody>

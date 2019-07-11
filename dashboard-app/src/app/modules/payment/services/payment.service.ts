@@ -17,10 +17,11 @@ export class PaymentService {
         return this.http.get<Payment[]>(`${environment.backOfficeUrl}${environment.unpairedPayments}`);
     }
 
-    public pairPaymentToUser(paymentId: number, userId: number): Observable<any> {
+    public pairPaymentToUser(paymentId: number, userId: number, iban: string): Observable<any> {
         return this.http.post(`${environment.backOfficeUrl}${environment.unpairedPayments}/pair-to-user`, {
             payment_id: paymentId,
-            user_id: userId
+            user_id: userId,
+            iban: iban
         });
     }
 

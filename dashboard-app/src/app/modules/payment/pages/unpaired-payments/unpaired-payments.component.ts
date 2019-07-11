@@ -23,6 +23,8 @@ export class UnpairedPaymentsComponent implements OnInit {
     private payments: Payment[];
     public textSearch: string;
 
+    private allUsers: PortalUser[];
+
     public paymentMethods: any = [];
 
     public users: any = [];
@@ -72,11 +74,24 @@ export class UnpairedPaymentsComponent implements OnInit {
         this.items = this.tableService.sort(this.model, this.payments);
     }
 
-    changeDonationAssignment(id, itemId) {
-        this.assignToUserModal('Assign payment to user with id ' + id,
-            'Are you sure you want to assign this payment to user? ' +
-            'If yes, user will have assigned new IBAN from this payment and all feature payments will be ' +
-            'paired via IBAN for this specific user. Do you want to continue with this action', id, itemId);
+    changeDonationAssignment(id, itemId, iban) {
+        const countSameIban = this.getCountOfPaymentsWithSameIban(iban);
+        let stringCount = '';
+        if (countSameIban === 1) {
+            stringCount = '<b>1</b> payment';
+        } else {
+            stringCount = '<b>' + countSameIban + '</b> payments';
+        }
+        this.allUsers.map((u, key) => {
+            if (u.id === id) {
+                this.assignToUserModal('Assign payment to user with email ' + u.email + '.',
+                    'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
+                    '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + u.email + '</b>.</span><br><br>' +
+                    'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
+                    'paired via IBAN for this specific user.</div> <span>Do you want to continue with this action</span>', id, u.email, itemId, iban);
+            }
+        });
+
     }
 
     pairViaIbanModal(itemId) {
@@ -125,20 +140,30 @@ export class UnpairedPaymentsComponent implements OnInit {
         );
     }
 
+    private getCountOfPaymentsWithSameIban(iban) {
+        let count = 0;
+        this.items.map((i, key) => {
+            if (i.iban === iban) {
+                count++;
+            }
+        });
+        return count;
+    }
 
-    private assignToUserModal(title, text, userId, itemId) {
+    private assignToUserModal(title, text, textPrimary, userId, userEmail, itemId, iban) {
         const modalRef = this._modalService.open(ModalComponent);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.text = text;
+        modalRef.componentInstance.textPrimary = textPrimary;
         modalRef.componentInstance.loading = false;
         modalRef.componentInstance.duplicate = 'donation-assignment';
 
         modalRef.result.then((data) => {
                 // change id for donation
-                this.paymentService.pairPaymentToUser(itemId, userId).subscribe((d) => {
+                this.paymentService.pairPaymentToUser(itemId, userId, iban).subscribe((d) => {
                     this.loading = true;
                     this.getUnpairedPayments();
-                    this.alertMessage = 'Successfully paired payment to user with id ' + userId + '.';
+                    this.alertMessage = 'Successfully paired payment to user with email ' + userEmail + '.';
                     this.alertType = 'success';
                     this.alertOpen = true;
                 }, (error) => {
@@ -153,8 +178,9 @@ export class UnpairedPaymentsComponent implements OnInit {
 
     getUsers() {
         this.portalUserService.getAll().subscribe((data: [PortalUser]) => {
+            this.allUsers = data;
             data.map((u, key) => {
-                const value = u.user_detail.first_name + ' ' + u.user_detail.last_name + ' - [ID: ' + u.id + ']';
+                const value = u.user_detail.first_name + ' ' + u.user_detail.last_name + ' [email: ' + u.email + ', ID: ' + u.id + ']';
                 this.users.push(value);
             });
         });

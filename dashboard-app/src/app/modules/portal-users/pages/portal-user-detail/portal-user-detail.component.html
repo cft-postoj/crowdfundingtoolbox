@@ -72,7 +72,7 @@
             <div class="user-detail--description" *ngIf="user">
                 <table cellpadding="0" cellspacing="0" class="table table-responsive borderless" border="0">
                     <tr class="borderTr">
-                        <td class="titleTd">BANK ACCOUNT:</td>
+                        <td class="titleTd">IBAN:</td>
                         <td><b>{{user.portal_user.user_payment_options?.bank_account_number}}</b></td>
                     </tr>
                     <tr class="borderTr">
@@ -112,6 +112,10 @@
             </tr>
         </table>
     </div>
+
+    <app-payments-pairing>
+
+    </app-payments-pairing>
 
     <app-exlude-user-from-targeting
             [excluded]="user.portal_user.exclude_from_campaign !== null"

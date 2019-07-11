@@ -5,7 +5,7 @@
   </button>
 </div>
 <div class="modal-body" *ngIf="!loading">
-  <p><strong>{{text}} <span class="text-primary">{{textPrimary}}</span><span *ngIf="text !== null">?</span></strong></p>
+  <p><strong>{{text}} <span class="text-primary" [innerHTML]="textPrimary"></span><span *ngIf="text !== null">?</span></strong></p>
   <p *ngIf="duplicate == null  && text !== null">All information associated to this campaign will be permanently deleted.
     <span class="text-danger">This operation can not be undone.</span>
   </p>
