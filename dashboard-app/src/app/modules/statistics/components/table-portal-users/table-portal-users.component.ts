@@ -42,7 +42,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     public availableColumns: Column[];
 
     constructor(private donorService: DonorService,
-                private tableService: TableService) {
+                public tableService: TableService) {
     }
 
     ngOnInit() {
