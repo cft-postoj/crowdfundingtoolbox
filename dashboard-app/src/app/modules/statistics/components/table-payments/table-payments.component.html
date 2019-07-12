@@ -3,25 +3,32 @@
         <div class="col">
             <h2>{{title}}</h2>
         </div>
+        <ng-container *ngIf="showDates">
+            <div class="col-3 d-flex align-items-center">
+                from:
+                <app-datepicker
+                    [(date)]="from"
+                    [maxDate]="to"
+                    [type]="'start'"
+                    (dateChange)="refreshTable()"
+                    [disabled]="disabledDate">
+                </app-datepicker>
+            </div>
+            <div class="col-3 d-flex align-items-center">
+                to:
+                <app-datepicker
+                    [(date)]="to"
+                    [minDate]="from"
+                    [type]="'end'"
+                    (dateChange)="refreshTable()"
+                    [disabled]="disabledDate">
+                </app-datepicker>
+            </div>
+        </ng-container>
         <div class="col-3 d-flex align-items-center">
-            from:
-            <app-datepicker
-                [(date)]="from"
-                [maxDate]="to"
-                [type]="'start'"
-                (dateChange)="refreshTable()"
-                [disabled]="disabledDate">
-            </app-datepicker>
-        </div>
-        <div class="col-3 d-flex align-items-center">
-            to:
-            <app-datepicker
-                [(date)]="to"
-                [minDate]="from"
-                [type]="'end'"
-                (dateChange)="refreshTable()"
-                [disabled]="disabledDate">
-            </app-datepicker>
+            <ngx-select-dropdown [(ngModel)]="model.columns"
+                                 [multiple]="true" [config]="config"
+                                 [options]="availableColumns"></ngx-select-dropdown>
         </div>
     </div>
     <div class="row">
@@ -29,39 +36,77 @@
             <table class="list-items list-items--orderable">
                 <thead>
                 <tr>
-                    <th class="id">#</th>
-                    <th app-table-header *ngFor="let column of model.columns"
-                        [column]="column" [(model)]="model"
+                    <th app-table-header class="id" *ngIf="tableService.activeColumn(model,'order')"
+                        [column]="tableService.getColumnByValueName(model,'order')"
+                        [(model)]="model" (modelChange)="sortTable()">#
+                    </th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation')" [column]="tableService.getColumnByValueName(model,'donation')"
+                        [(model)]="model"
                         (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'transaction_id')" [column]="tableService.getColumnByValueName(model,'transaction_id')"
+                        [(model)]="model"
+                        (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.last_name')"
+                        [column]="tableService.getColumnByValueName(model,'donation.portal_user.user.user_detail.last_name')"
+                        [(model)]="model" (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.user.email')"
+                        [column]="tableService.getColumnByValueName(model,'donation.portal_user.user.email')" [(model)]="model"
+                        (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.id')"
+                        [column]="tableService.getColumnByValueName(model,'donation.portal_user.id')"
+                        [(model)]="model" (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'iban')"
+                        [column]="tableService.getColumnByValueName(model,'iban')"
+                        [(model)]="model"
+                        (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'variable_symbol')"
+                        [column]="tableService.getColumnByValueName(model,'variable_symbol')" [(model)]="model"
+                        (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'amount')"
+                        [column]="tableService.getColumnByValueName(model,'amount')" [(model)]="model"
+                        (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.is_monthly_donation')"
+                        [column]="tableService.getColumnByValueName(model,'donation.is_monthly_donation')"
+                        [(model)]="model" (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'transaction_date')"
+                        [column]="tableService.getColumnByValueName(model,'transaction_date')"
+                        [(model)]="model" (modelChange)="sortTable()"></th>
+
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'payment_method')"
+                        [column]="tableService.getColumnByValueName(model,'payment_method')"
+                        [(model)]="model" (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.widget.campaign.name')"
+                        [column]="tableService.getColumnByValueName(model,'donation.widget.campaign.name')" [(model)]="model"
+                        (modelChange)="sortTable()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'created_by')"
+                        [column]="tableService.getColumnByValueName(model,'created_by')"
+                        [(model)]="model" (modelChange)="sortTable()"></th>
+
                 </tr>
                 </thead>
                 <tbody *ngIf="!loading">
                 <tr *ngFor="let payment of sortedPayments; let i = index" class="list-items--item"
-                    (click)="showDonationDetail(payment.id)" >
-                    <td>{{i+1}}</td>
-                    <td>
-                        {{payment.transaction_date | date:'dd.MM.yyyy' }}
+                    (click)="showDonationDetail(payment.id)">
+                    <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'donation')">
+                        <app-donor-status [isMonthlyDonor]="payment.donation"></app-donor-status>
                     </td>
-                    <td>
-                        {{payment.amount | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
+                    <td *ngIf="tableService.activeColumn(model,'transaction_id')">{{payment.transaction_id}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.last_name')" class="pointer"
+                        [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, payment.donation?.portal_user.id]">
+                        {{payment.donation?.portal_user.user.user_detail.first_name || '---'}} {{payment.donation?.portal_user.user.user_detail.last_name}}
                     </td>
-                    <td>
-                        {{(payment.payment_method === null) ? 'N/A' : paymentMethods[payment.payment_method - 1]}}
-                    </td>
-                    <!--<td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.id]">-->
-                        <!--{{donation.portal_user.user?.user_detail.first_name}}-->
-                        <!--{{donation.portal_user?.user.user_detail.last_name}}-->
-                    <!--</td>-->
-                    <td>
-                        {{payment.iban}}
-                    </td>
-                    <td>
-                        {{payment.variable_symbol}}
-                    </td>
-
-                    <td class="pointer">
-                        {{payment.donation?.widget.campaign.name != null ? payment.donation.widget.campaign.name : '---'}}
-                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.email')">{{payment.donation?.portal_user.user.email || '---'}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.id')"> {{payment.donation?.portal_user.id || '--'}} </td>
+                    <td *ngIf="tableService.activeColumn(model,'iban')">{{payment.iban}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'variable_symbol')">{{payment.variable_symbol}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'amount')">{{payment.amount | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.is_monthly_donation')">{{payment.donation?.is_monthly_donation | monthly}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'transaction_date')"
+                        [title]="payment.transaction_date | date:'dd.MM.yyyy HH:mm:ss'">{{payment.transaction_date | date:'dd.MM.yyyy'}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'payment_method')">{{payment.payment_method}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.widget.campaign.name')">{{payment.donation?.widget.campaign.name || '---'}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'created_by')">{{payment.created_by}}</td>
                 </tr>
                 </tbody>
             </table>

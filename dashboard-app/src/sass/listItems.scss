@@ -44,22 +44,25 @@
         th {
             padding: 6px 8px;
             min-width: 150px;
-            div[order=true]:after {
-                content: "";
-                position: absolute;
-                background: url(/assets/images/icons/breadcrumb.svg) no-repeat;
-                width: 18px;
-                height: 18px;
-                right: 12px;
-                top: 0;
-                bottom: 0;
-                margin: auto;
-                transition: 0.2s all;
-                transform: rotate(-90deg);
-
+            div[order=true] {
+                .description:after {
+                    content: "";
+                    position: absolute;
+                    background: url(/assets/images/icons/breadcrumb.svg) no-repeat;
+                    width: 18px;
+                    height: 18px;
+                    right: 12px;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto;
+                    transition: 0.2s all;
+                    transform: rotate(-90deg);
+                }
             }
-            div[asc=false]:after {
-                transform: rotate(90deg);
+            div[asc=false] {
+                .description:after {
+                    transform: rotate(90deg);
+                }
             }
             &.id {
                 width: 36px;
@@ -70,6 +73,8 @@
                 height: 36px;
                 padding: 6px 8px;
                 background: inherit;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
             tr {
                 background-color: $white;

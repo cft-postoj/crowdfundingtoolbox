@@ -9,9 +9,18 @@ class Payment extends Model
     protected $table = 'payments';
     protected $fillable = ['transaction_date'];
 
+    protected $casts = [
+        'amount' => 'float',
+    ];
+
     public function donation()
     {
         return $this->belongsTo('\Modules\Payment\Entities\Donation', 'id', 'payment_id');
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo('\Modules\Payment\Entities\PaymentMethod', 'transfer_type');
     }
 
     public function donationMonthlyTrue()

@@ -3,7 +3,7 @@
      [attr.order]="model.sortBy==column && hide.indexOf('title') === -1"
      [attr.asc]="model.asc">
   <ng-container *ngIf="(hide.indexOf('title') === -1)">
-    {{column.description}}
+    <div class="header--description">{{column.description}} </div>
   </ng-container>
   <div class="d-flex" (click)="$event.stopPropagation()" *ngIf="column.type=='number' && hide.indexOf('filters') === -1">
     <app-inputNumber class="crowdfunding-number crowdfunding-number--little" [placeholder]="'min'" [(value)]="min"

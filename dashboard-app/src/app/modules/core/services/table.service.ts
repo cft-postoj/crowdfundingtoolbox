@@ -11,10 +11,10 @@ export class TableService {
     }
 
     sort(model, objects) {
-        const filteredCampaignStats = this.filterByValues(model, objects);
-        let sortedObjects = filteredCampaignStats;
+        const filteredObjects = this.filterByValues(model, objects);
+        let sortedObjects = filteredObjects;
         if (!!model.sortBy) {
-            sortedObjects = filteredCampaignStats.sort((a, b) => {
+            sortedObjects = filteredObjects.sort((a, b) => {
                 return this.compare(this.nestedBracketNotation(a, model.sortBy.value_name),
                     this.nestedBracketNotation(b, model.sortBy.value_name), model.asc);
             });
@@ -22,7 +22,7 @@ export class TableService {
         return sortedObjects;
     }
 
-    compare(a: number | string, b: number | string, isAsc: boolean) {
+    compare(a: number | string | boolean, b: number | string | boolean, isAsc: boolean) {
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 
@@ -30,7 +30,7 @@ export class TableService {
         return objects.filter(object => {
                 for (const column of model.columns) {
                     if (column.type === 'text') {
-                        const safeValueInColumn = this.nestedBracketNotation(object, column.value_name) != null ?
+                        const safeValueInColumn = typeof this.nestedBracketNotation(object, column.value_name) === 'string' ?
                             this.nestedBracketNotation(object, column.value_name) : '';
                         if (safeValueInColumn.indexOf(column.filter.text) === -1) {
                             return false;
@@ -57,6 +57,9 @@ export class TableService {
         if (dotIndex > -1) {
             return this.nestedBracketNotation(object[property.substr(0, dotIndex)], property.substr(property.indexOf('.') + 1));
         } else {
+            if (typeof object[property] === 'object') {
+                return (!!object[property]);
+            }
             return object[property];
         }
     }
