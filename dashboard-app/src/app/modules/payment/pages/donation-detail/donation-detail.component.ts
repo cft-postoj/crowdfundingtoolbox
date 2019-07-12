@@ -130,4 +130,35 @@ export class DonationDetailComponent implements OnInit {
             });
         });
     }
+
+    public cancelDonationAssignment(action) {
+        const modalRef = this._modalService.open(ModalComponent); // if user is admin
+        modalRef.componentInstance.title = (action === 'delete') ? 'Delete donation' : 'Cancel donation assignment';
+        modalRef.componentInstance.text = (action === 'delete') ? 'Are you sure you want to delete donation? ' +
+            'After successfully done this action, you will be redirected to donations list. Do you want to continue with this action' :
+            'Are you sure you want to cancel donation assignment and move this donation to unpaired payments? ' +
+            'After successfully done this action, you will be redirected to list of unpaired payments. ' +
+            'Do you want to continue with this action';
+        modalRef.componentInstance.loading = false;
+        modalRef.componentInstance.duplicate = 'donation-assignment';
+
+        modalRef.result.then((data) => {
+                // change id for donation
+                this.donationService.cancelAssignment(this.id).subscribe((d) => {
+                    this.loading = true;
+                    if (action === 'delete') {
+                        this.router.navigateByUrl(Routing.DASHBOARD + '/' + Routing.DONATIONS);
+                    } else {
+                        this.router.navigateByUrl(Routing.DASHBOARD + '/' + Routing.UNPAIRED_PAYMENTS);
+                    }
+
+                }, (error) => {
+                    console.log(error);
+                    alert('There was an error during updating assignment, please try again later.');
+                });
+            }, (error) => {
+                console.log(error);
+            }
+        );
+    }
 }

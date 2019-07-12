@@ -41,4 +41,11 @@ class DonationRepository
                 $request
             );
     }
+
+    public function delete($id)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->delete();
+    }
 }

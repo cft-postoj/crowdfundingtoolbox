@@ -23,4 +23,8 @@ export class DonationService {
         });
     }
 
+    public cancelAssignment(id: number): Observable<any> {
+        return this.http.get(`${environment.backOfficeUrl}${environment.donations}/${id}/cancel-assignment`);
+    }
+
 }

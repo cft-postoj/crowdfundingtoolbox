@@ -71,6 +71,12 @@
                         [selectedValue]="selectedUser"
                         [label]="'Change donation assignment:'"
                         (changeIdEmit)="changeDonationAssignment($event)"></app-user-dropdown>
+                <button type="button" class="cancelPayment" (click)="cancelDonationAssignment('cancel')" *ngIf="detail.status === 'processed'">
+                    Cancel payment assignment of any user
+                </button>
+                <button type="button" class="deleteDonation" (click)="cancelDonationAssignment('delete')" *ngIf="detail.status !== 'processed'">
+                    Delete this donation
+                </button>
             </div>
 
         </div>

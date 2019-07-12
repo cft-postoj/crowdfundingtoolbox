@@ -197,10 +197,24 @@ class DonationService
             ->get();
     }
 
-    public
-    function create($request)
+    public function create($request)
     {
         return $this->donationRepository->create($request);
+    }
+
+    public function cancelAssignment($id)
+    {
+        try {
+            $this->donationRepository->delete($id);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json([
+            'message' => 'Successfully cancel assignment of donation with id ' . $id
+        ], Response::HTTP_OK);
     }
 
 }
