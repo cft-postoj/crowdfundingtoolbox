@@ -72,8 +72,8 @@
                         [column]="tableService.getColumnByValueName(model,'transaction_date')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
 
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'payment_method')"
-                        [column]="tableService.getColumnByValueName(model,'payment_method')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'payment_method.method_name')"
+                        [column]="tableService.getColumnByValueName(model,'payment_method.method_name')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'donation.widget.campaign.name')"
                         [column]="tableService.getColumnByValueName(model,'donation.widget.campaign.name')" [(model)]="model"
@@ -91,22 +91,24 @@
                     <td *ngIf="tableService.activeColumn(model,'donation')">
                         <app-donor-status [isMonthlyDonor]="payment.donation"></app-donor-status>
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'transaction_id')">{{payment.transaction_id}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'transaction_id')" [title]="payment.transaction_id">{{payment.transaction_id}}</td>
                     <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.last_name')" class="pointer"
-                        [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, payment.donation?.portal_user.id]">
+                        [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, payment.donation?.portal_user.id]"
+                        [title]="(payment.donation?.portal_user.user.user_detail.first_name || '---') +' '+ (payment.donation?.portal_user.user.user_detail.last_name || '')">
                         {{payment.donation?.portal_user.user.user_detail.first_name || '---'}} {{payment.donation?.portal_user.user.user_detail.last_name}}
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.email')">{{payment.donation?.portal_user.user.email || '---'}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.email')" [title]="payment.donation?.portal_user.user.email">{{payment.donation?.portal_user.user.email || '---'}}</td>
                     <td *ngIf="tableService.activeColumn(model,'donation.portal_user.id')"> {{payment.donation?.portal_user.id || '--'}} </td>
-                    <td *ngIf="tableService.activeColumn(model,'iban')">{{payment.iban}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'iban')" [title]="payment.iban">{{payment.iban}}</td>
                     <td *ngIf="tableService.activeColumn(model,'variable_symbol')">{{payment.variable_symbol}}</td>
                     <td *ngIf="tableService.activeColumn(model,'amount')">{{payment.amount | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}</td>
                     <td *ngIf="tableService.activeColumn(model,'donation.is_monthly_donation')">{{payment.donation?.is_monthly_donation | monthly}}</td>
                     <td *ngIf="tableService.activeColumn(model,'transaction_date')"
                         [title]="payment.transaction_date | date:'dd.MM.yyyy HH:mm:ss'">{{payment.transaction_date | date:'dd.MM.yyyy'}}</td>
-                    <td *ngIf="tableService.activeColumn(model,'payment_method')">{{payment.payment_method}}</td>
-                    <td *ngIf="tableService.activeColumn(model,'donation.widget.campaign.name')">{{payment.donation?.widget.campaign.name || '---'}}</td>
-                    <td *ngIf="tableService.activeColumn(model,'created_by')">{{payment.created_by}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'payment_method.method_name')">{{payment.payment_method.method_name}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.widget.campaign.name')"
+                        [title]="payment.donation?.widget.campaign.name || '---'">{{payment.donation?.widget.campaign.name || '---'}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'created_by')" [title]="payment.created_by">{{payment.created_by}}</td>
                 </tr>
                 </tbody>
             </table>
