@@ -1,0 +1,10 @@
+<form>
+  <input
+          type="file"
+          class="upload"
+          accept=".csv"
+          (change)="changeUploadListener($event.target.files[0])" #fileUploading />
+  <button type="button" (click)="fileUploading.click()">
+    Choose your .csv file to import
+  </button>
+</form>

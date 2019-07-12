@@ -334,4 +334,14 @@ class PaymentService
         return $this->paymentRepository->getPaymentTotalGroupMonthly($from, $to);
     }
 
+    public function checkUplodedFileType($request)
+    {
+
+    }
+
+    public function importPayments($request)
+    {
+
+    }
+
 }

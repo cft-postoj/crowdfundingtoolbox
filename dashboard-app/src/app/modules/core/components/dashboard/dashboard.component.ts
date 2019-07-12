@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
         this.expirationService.expiration();
         this.subscribtion = this.expirationService.expirationEmitter.subscribe(data => {
             this.expiration = data;
-        })
+        });
     }
 
     ngOnDestroy() {

@@ -28,9 +28,18 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
+        $backOfficeUser = BackOfficeUser::where('user_id', $this->id)->first();
+        if ($backOfficeUser !== null) {
+            $userDetail = UserDetail::where('user_id', $this->id)->first();
+            return [
+                'email' =>  $this->email,
+                'firstName' => ($userDetail !== null) ? $userDetail->first_name : 'BackOffice',
+                'lastName' => ($userDetail !== null) ? $userDetail->last_name : 'User',
+                'role' => BackOfficeRole::where('id', BackOfficeRole::where('id', $backOfficeUser['role_id'])->first()['id'])->first()['slug']
+            ];
+        }
         return [
-            'email' =>  $this->email,
-            'csrf-token' => str_random(32)
+            'email' =>  $this->email
         ];
     }
 

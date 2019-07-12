@@ -96,11 +96,13 @@ class UserServiceController extends Controller
 
         if (strpos($prefix, 'backoffice') !== false) {
             if (BackOfficeUser::where('user_id', $user->id)->first()) {
+                $userDetail = UserDetail::where('user_id', $user->id)->first();
+                $role = BackOfficeRole::where('id', BackOfficeUser::where('user_id', $user->id)->first()['role_id'])->first()['slug'];
                 $token = JWTAuth::fromUser($user);
                 return \response()->json([
                     'user' => $user,
-                    'user_detail'   =>  UserDetail::where('user_id', $user->id)->first(),
-                    'user_role' => BackOfficeRole::where('id', BackOfficeUser::where('user_id', $user->id)->first()['role_id'])->first()['slug'],
+                    'user_detail' => $userDetail,
+                    'user_role' => $role,
                     'token' => $token
                 ], Response::HTTP_OK);
             }
@@ -354,19 +356,19 @@ class UserServiceController extends Controller
             $user = User::where('generate_password_token', $request['token'])->first();
             if ($user != null) {
                 User::where('generate_password_token', $request['token'])->update([
-                    'password'   =>  bcrypt($request['password']),
-                    'generate_password_token'    =>  null
+                    'password' => bcrypt($request['password']),
+                    'generate_password_token' => null
                 ]);
                 $token = JWTAuth::fromUser($user);
                 return \response()->json([
-                    'token' =>  $token
+                    'token' => $token
                 ], Response::HTTP_OK);
             }
 
             return \response()->json([
-                'message'   =>  'User is not exist.'
+                'message' => 'User is not exist.'
             ], Response::HTTP_BAD_REQUEST);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e,
                 'message' => 'Unexpected error'
@@ -379,14 +381,14 @@ class UserServiceController extends Controller
         try {
             $refreshed = JWTAuth::refresh(JWTAuth::getToken());
             JWTAuth::setToken($refreshed)->toUser();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return \response()->json([
-                'error' =>  $e
+                'error' => $e
             ], Response::HTTP_BAD_REQUEST);
         }
         return response()->json([
-            'message'   =>  'Successfully refreshed token',
-            'token' =>  $refreshed
+            'message' => 'Successfully refreshed token',
+            'token' => $refreshed
         ], Response::HTTP_OK);
 
     }

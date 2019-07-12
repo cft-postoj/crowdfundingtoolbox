@@ -1,7 +1,12 @@
 <app-payment>
-  <div class="paymentOptions">
-    <p>
-      Here you can manually import payments. File must be in .csv format.
-    </p>
-  </div>
+    <div class="paymentOptions">
+        <div class="importPayments">
+            <p>
+                Here you can manually import payments. File must be in .csv format.
+            </p>
+            <app-upload-csv
+                    (changeFileEmitter)="processFile($event)"></app-upload-csv>
+        </div>
+        <app-alert></app-alert>
+    </div>
 </app-payment>
