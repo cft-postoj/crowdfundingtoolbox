@@ -89,7 +89,7 @@
                     (click)="showUserDetail(portalUser.user.id)" title="Show detail of donor">
                     <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
                     <td *ngIf="tableService.activeColumn(model,'status')">
-                        <app-donor-status [isMonthlyDonor]="portalUser.last_donation_at!=null"></app-donor-status>
+                        <app-status [active]="portalUser.last_donation_at!=null"></app-status>
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'user.email')">
                         {{portalUser.user.email}}

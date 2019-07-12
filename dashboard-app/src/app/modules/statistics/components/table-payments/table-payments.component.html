@@ -89,7 +89,7 @@
                     (click)="showDonationDetail(payment.id)">
                     <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
                     <td *ngIf="tableService.activeColumn(model,'donation')">
-                        <app-donor-status [isMonthlyDonor]="payment.donation"></app-donor-status>
+                        <app-status [active]="payment.donation"></app-status>
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'transaction_id')" [title]="payment.transaction_id">{{payment.transaction_id}}</td>
                     <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.last_name')" class="pointer"
@@ -112,6 +112,7 @@
                 </tr>
                 </tbody>
             </table>
+            <h4 *ngIf="!loading && sortedPayments.length===0" class="text-center"> No payments found </h4>
             <app-loading [isLoading]="loading"></app-loading>
         </div>
     </div>

@@ -5,7 +5,8 @@
         <div class="col-12">
             <h4>
                 Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:
-                <span class="user-detail--lastUpdated" [innerHTML]="updatedBy + (updatedByDate | date:'dd.MM.yyyy - HH:mm:ss')">
+                <span class="user-detail--lastUpdated"
+                      [innerHTML]="updatedBy + (updatedByDate | date:'dd.MM.yyyy - HH:mm:ss')">
                 </span>
                 <button type="button" class="user-detail--edit" title="Edit portal user" (click)="showEditModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -26,7 +27,7 @@
     </div>
     <div class="row mt-3">
         <div class="col-2">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1"
+            <svg xmlns="http://www.w3.org/2000/svg"  version="1.1" id="Capa_1"
                  x="0px" y="0px" viewBox="0 0 53 53" style="enable-background:new 0 0 53 53;" xml:space="preserve"
                  width="180px" height="180px" class=""><g><path style="fill:#E7ECED;" d="M18.613,41.552l-7.907,4.313c-0.464,0.253-0.881,0.564-1.269,0.903C14.047,50.655,19.998,53,26.5,53  c6.454,0,12.367-2.31,16.964-6.144c-0.424-0.358-0.884-0.68-1.394-0.934l-8.467-4.233c-1.094-0.547-1.785-1.665-1.785-2.888v-3.322  c0.238-0.271,0.51-0.619,0.801-1.03c1.154-1.63,2.027-3.423,2.632-5.304c1.086-0.335,1.886-1.338,1.886-2.53v-3.546  c0-0.78-0.347-1.477-0.886-1.965v-5.126c0,0,1.053-7.977-9.75-7.977s-9.75,7.977-9.75,7.977v5.126  c-0.54,0.488-0.886,1.185-0.886,1.965v3.546c0,0.934,0.491,1.756,1.226,2.231c0.886,3.857,3.206,6.633,3.206,6.633v3.24  C20.296,39.899,19.65,40.986,18.613,41.552z" data-original="#E7ECED" class=""/><g>
 	<path style="fill:#0074E9"
@@ -94,8 +95,7 @@
                     <tr class="borderTr">
                         <td class="titleTd">MONTHLY DONOR:</td>
                         <td>
-                            <app-donor-status [donorStatuses]="user.donor_status"
-                                              [isMonthlyDonor]="user.portal_user.is_monthly_donor !== null"></app-donor-status>
+                            <app-status [active]="user.portal_user.is_monthly_donor !== null"></app-status>
                         </td>
                     </tr>
                     <tr>
@@ -106,12 +106,15 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12 col-sm-12 col-md-6 user-detail--notes">
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th>NOTES:</th>
-                    <td>{{(user.portal_user.notes) ? user.portal_user.notes : 'This user has no notes. If you want to add something, click to edit user.'}}</td>
+                    <td>{{(user.portal_user.notes) ? user.portal_user.notes : 'This user has no notes. If you want to
+                        add something, click to edit user.'}}
+                    </td>
                 </tr>
             </table>
         </div>
@@ -124,10 +127,10 @@
                 </div>
                 <div class="col-6 col-md-8">
                     <app-dropdown
-                            [title]="'Choose preferred payments pairing'"
-                            [currentValue]="user.portal_user.user_payment_options?.pairing_type"
-                            (currentValueChange)="changePaymentsPairing($event)"
-                            [items]="paymentsPairingTypes"></app-dropdown>
+                        [title]="'Choose preferred payments pairing'"
+                        [currentValue]="user.portal_user.user_payment_options?.pairing_type"
+                        (currentValueChange)="changePaymentsPairing($event)"
+                        [items]="paymentsPairingTypes"></app-dropdown>
                 </div>
             </div>
 
@@ -136,31 +139,20 @@
 
 
     <app-exlude-user-from-targeting
-            [excluded]="user.portal_user.exclude_from_campaign !== null"
-            [excludingReason]="(user.portal_user.exclude_from_campaign !== null) ? user.portal_user.exclude_from_campaign.reason_notes : ''"
-            (excludedUserEmit)="updatedExcluded($event)"
-            [portalUserId]="user.portal_user.id"
+        [excluded]="user.portal_user.exclude_from_campaign !== null"
+        [excludingReason]="(user.portal_user.exclude_from_campaign !== null) ? user.portal_user.exclude_from_campaign.reason_notes : ''"
+        (excludedUserEmit)="updatedExcluded($event)"
+        [portalUserId]="user.portal_user.id"
     ></app-exlude-user-from-targeting>
 
 
     <br/>
-    <h3>Donations:</h3>
-    <p class="text-center" *ngIf="user.portal_user.donations === null">
-        No donations from this user.
-    </p>
-    <table *ngIf="user.portal_user.donations !== null" class="table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Monthly donation</th>
-            <th>Donation</th>
-            <th>Date</th>
-            <th>Payment via widget</th>
-            <th>Payment type</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="row pt-2">
+        <app-table-donations class="position-relative" [title]="'Donations'" [showDates]="false" [donationsFromParent]="true"
+                             [donations]="user.portal_user.donations" >
+        </app-table-donations>
+    </div>
+
 </div>
 
 <app-loading [isLoading]="loading"></app-loading>

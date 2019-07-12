@@ -27,6 +27,7 @@ import { TableHeaderComponent } from './parts/atoms/table-header/table-header.co
 import { InputTextComponent } from './parts/atoms/input-text/input-text.component';
 import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-size.component';
 import { NavbarComponent } from './parts/atoms/navbar/navbar.component';
+import {StatusComponent} from './parts/atoms/status/status.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { NavbarComponent } from './parts/atoms/navbar/navbar.component';
         WidgetSettingsComponent,
         PreviewMonetizationComponent,
         ModalFullSizeComponent,
+        StatusComponent,
 
         SafePipe,
         SlovakNumberFormatter,
@@ -95,6 +97,7 @@ import { NavbarComponent } from './parts/atoms/navbar/navbar.component';
         PreviewMonetizationComponent,
         TableHeaderComponent,
         ModalFullSizeComponent,
+        StatusComponent,
 
         // pipes
         SafePipe,

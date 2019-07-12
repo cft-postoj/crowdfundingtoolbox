@@ -4,7 +4,7 @@
   <td>{{user.user_detail.first_name}}</td>
   <td>{{user.user_detail.last_name}}</td>
   <td>
-    <app-donor-status [donorStatuses]="user.donor_status" [isMonthlyDonor]="user.portal_user.is_monthly_donor !== null"></app-donor-status>
+    <app-status [active]="user.portal_user.is_monthly_donor !== null"></app-status>
   </td>
   <td>
     <span title="Show detail" class="action" (click)="showDetail(user.id)">

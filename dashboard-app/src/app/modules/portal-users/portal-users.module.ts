@@ -7,20 +7,21 @@ import {CoreModule} from '../core/core.module';
 import { PortalUserFilterComponent } from './components/portal-user-filter/portal-user-filter.component';
 import { PortalUserListItemComponent } from './components/portal-user-list-item/portal-user-list-item.component';
 import { BackToListComponent } from './components/back-to-list/back-to-list.component';
-import { DonorStatusComponent } from './components/donor-status/donor-status.component';
 import { ExludeUserFromTargetingComponent } from './components/exlude-user-from-targeting/exlude-user-from-targeting.component';
 import { EditPortalUserComponent } from './components/edit-portal-user/edit-portal-user.component';
+import {StatisticsModule} from '../statistics/statistics.module';
 
 @NgModule({
     declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
-        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent],
+        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,
-        CoreModule
+        CoreModule,
+        StatisticsModule
     ],
     exports: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
-        BackToListComponent, DonorStatusComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent]
+        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent]
 })
 export class PortalUsersModule {
 }

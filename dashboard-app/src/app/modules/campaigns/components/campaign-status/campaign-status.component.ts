@@ -4,7 +4,7 @@ import {Campaign, Widget} from "../../models";
 import {Routing} from "../../../../constants/config.constants";
 
 @Component({
-    selector: 'app-status',
+    selector: 'app-campaign-status',
     templateUrl: './campaign-status.component.html',
     styleUrls: ['./campaign-status.component.scss']
 })

@@ -1,28 +1,30 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6 text-center">
+        <div class="col">
             <h2>{{title}}</h2>
         </div>
-        <div class="col-3 d-flex align-items-center">
-            from:
-            <app-datepicker
-                [(date)]="from"
-                [maxDate]="to"
-                [type]="'start'"
-                (dateChange)="refreshTable()"
-                [disabled]="disabledDate">
-            </app-datepicker>
-        </div>
-        <div class="col-3 d-flex align-items-center">
-            to:
-            <app-datepicker
-                [(date)]="to"
-                [minDate]="from"
-                [type]="'end'"
-                (dateChange)="refreshTable()"
-                [disabled]="disabledDate">
-            </app-datepicker>
-        </div>
+        <ng-container *ngIf="showDates">
+            <div class="col-3 d-flex align-items-center">
+                from:
+                <app-datepicker
+                    [(date)]="from"
+                    [maxDate]="to"
+                    [type]="'start'"
+                    (dateChange)="refreshTable()"
+                    [disabled]="disabledDate">
+                </app-datepicker>
+            </div>
+            <div class="col-3 d-flex align-items-center">
+                to:
+                <app-datepicker
+                    [(date)]="to"
+                    [minDate]="from"
+                    [type]="'end'"
+                    (dateChange)="refreshTable()"
+                    [disabled]="disabledDate">
+                </app-datepicker>
+            </div>
+        </ng-container>
     </div>
     <div class="row">
         <div class="col">
@@ -50,7 +52,8 @@
                         {{(donation.payment_method === null) ? 'N/A' : paymentMethods[donation.payment_method - 1]}}
                     </td>
                     <td class="pointer">
-                        {{donation.portal_user.user?.user_detail.first_name}} {{donation.portal_user?.user.user_detail.last_name}}
+                        {{donation.portal_user.user?.user_detail.first_name}}
+                        {{donation.portal_user?.user.user_detail.last_name}}
                     </td>
                     <td>
                         {{donation.is_monthly_donation | monthly}}
@@ -64,6 +67,7 @@
                 </tr>
                 </tbody>
             </table>
+            <h4 *ngIf="!loading && sortedDonations.length===0" class="text-center"> No donations found </h4>
             <app-loading [isLoading]="loading"></app-loading>
         </div>
     </div>

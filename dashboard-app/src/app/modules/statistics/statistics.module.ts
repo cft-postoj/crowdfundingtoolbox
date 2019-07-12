@@ -30,7 +30,6 @@ import { TablePaymentsComponent } from './components/table-payments/table-paymen
 
         StatisticsRoutingModule,
         CoreModule,
-        PortalUsersModule,
 
         ChartModule,
         InlineSVGModule.forRoot(),
