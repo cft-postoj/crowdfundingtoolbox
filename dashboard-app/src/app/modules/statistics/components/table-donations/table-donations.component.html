@@ -37,6 +37,7 @@
                 </thead>
                 <tbody *ngIf="!loading">
                 <tr *ngFor="let donation of sortedDonations; let i = index" class="list-items--item"
+                    title="Show detail of donation"
                     (click)="showDonationDetail(donation.id)">
                     <td>{{i+1}}</td>
                     <td>
@@ -48,7 +49,7 @@
                     <td>
                         {{(donation.payment_method === null) ? 'N/A' : paymentMethods[donation.payment_method - 1]}}
                     </td>
-                    <td class="pointer" [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.portal_user.user.id]">
+                    <td class="pointer">
                         {{donation.portal_user.user?.user_detail.first_name}} {{donation.portal_user?.user.user_detail.last_name}}
                     </td>
                     <td>

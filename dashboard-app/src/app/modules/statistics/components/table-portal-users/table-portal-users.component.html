@@ -85,7 +85,8 @@
                 </tr>
                 </thead>
                 <tbody *ngIf="!loading">
-                <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item">
+                <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item"
+                    (click)="showUserDetail(portalUser.user.id)" title="Show detail of donor">
                     <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
                     <td *ngIf="tableService.activeColumn(model,'status')">
                         <app-donor-status [isMonthlyDonor]="portalUser.last_donation_at!=null"></app-donor-status>

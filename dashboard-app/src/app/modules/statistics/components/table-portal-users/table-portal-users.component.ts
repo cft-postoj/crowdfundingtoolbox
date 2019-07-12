@@ -7,6 +7,7 @@ import {TableModel} from '../../../core/models/table-model';
 import {TableService} from '../../../core/services/table.service';
 import {Column} from '../../../core/models/column';
 import {PortalUser} from '../../../portal-users/models/portal-user';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-table-portal-users',
@@ -42,6 +43,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     public availableColumns: Column[];
 
     constructor(private donorService: DonorService,
+                private router: Router,
                 public tableService: TableService) {
     }
 
@@ -167,5 +169,8 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
         this.showMoreClicked.next(false);
     }
 
+    public showUserDetail(id) {
+        return this.router.navigateByUrl(`${Routing.PORTAL_USERS_FULL_PATH}/${id}`);
+    }
 
 }
