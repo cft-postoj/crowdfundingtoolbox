@@ -95,7 +95,7 @@
                         {{portalUser.user.email}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'user.user_detail.last_name')" class="pointer"
-                        [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.user.id]">
+                        [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.id]">
                         {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'amount_sum')">

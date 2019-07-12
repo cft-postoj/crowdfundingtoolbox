@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {Filter} from '../../../core/models/filter';
 import {PaymentService} from '../../../payment/services/payment.service';
 import {Payment} from '../../../payment/models/payment';
+import {Column} from '../../../core/models/column';
 
 @Component({
     selector: 'app-table-payments',
@@ -21,6 +22,7 @@ export class TablePaymentsComponent implements OnInit {
     @Input() public title;
     @Input() public dataType;
     @Input() public disabledDate: boolean = true;
+    @Input() public showDates: boolean = true;
     public routing = Routing;
     public loading = true;
 
@@ -30,7 +32,13 @@ export class TablePaymentsComponent implements OnInit {
     public sortedPayments: Payment[];
 
     public model: TableModel = new TableModel();
+    public availableColumns: Column[];
 
+    config = {
+        height: '500px',
+        search: true,
+        placeholder: 'Choose columns to show'
+    };
 
     constructor(private paymentService: PaymentService,
                 private paymentMethodsService: PaymentMethodsService,
@@ -42,6 +50,12 @@ export class TablePaymentsComponent implements OnInit {
         this.getPaymentMethods();
         this.refreshTable();
         this.model.columns.push({
+            value_name: 'order',
+            description: '#',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.model.columns.push({
             value_name: 'transaction_date',
             description: 'Date',
             type: 'none',
@@ -51,12 +65,6 @@ export class TablePaymentsComponent implements OnInit {
             value_name: 'amount',
             description: 'Amount',
             type: 'number',
-            filter: new Filter()
-        });
-        this.model.columns.push({
-            value_name: 'payment_method',
-            description: 'Payment method',
-            type: 'none',
             filter: new Filter()
         });
         this.model.columns.push({
@@ -73,9 +81,60 @@ export class TablePaymentsComponent implements OnInit {
         });
 
         this.model.columns.push({
-            value_name: 'paired_donation.widget.campaign.name',
+            value_name: 'donation.widget.campaign.name',
             description: 'campaign name',
             type: 'text',
+            filter: new Filter()
+        });
+
+        this.availableColumns = this.model.columns.slice();
+        this.availableColumns.push({
+            value_name: 'transaction_id',
+            description: 'Transaction id',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'donation.portal_user.user.user_detail.last_name',
+            description: 'Donor name',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'donation.portal_user.user.email',
+            description: 'User email',
+            type: 'number',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'donation.portal_user.id',
+            description: 'Donor id',
+            type: 'number',
+            filter: new Filter()
+        });
+
+        this.availableColumns.push({
+            value_name: 'payment_method.method_name',
+            description: 'Payment method',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'created_by',
+            description: 'Created by',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'donation.is_monthly_donation',
+            description: 'Frequency',
+            type: 'none',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'donation',
+            description: 'Paired',
+            type: 'none',
             filter: new Filter()
         });
     }
@@ -98,7 +157,6 @@ export class TablePaymentsComponent implements OnInit {
             result => {
                 this.payments = result;
                 this.sortedPayments = this.payments;
-                console.log(this.sortedPayments);
                 this.loading = false;
             }
         );
