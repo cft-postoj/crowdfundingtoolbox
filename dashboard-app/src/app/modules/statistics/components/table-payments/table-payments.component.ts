@@ -42,7 +42,7 @@ export class TablePaymentsComponent implements OnInit {
 
     constructor(private paymentService: PaymentService,
                 private paymentMethodsService: PaymentMethodsService,
-                private tableService: TableService,
+                public tableService: TableService,
                 private router: Router) {
     }
 
