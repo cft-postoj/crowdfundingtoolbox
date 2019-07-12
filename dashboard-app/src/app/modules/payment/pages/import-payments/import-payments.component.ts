@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalComponent} from '../../../core/parts/atoms';
 import {PaymentService} from '../../services/payment.service';
@@ -10,24 +10,32 @@ import {PaymentService} from '../../services/payment.service';
 })
 export class ImportPaymentsComponent implements OnInit {
 
+    public loading: boolean = false;
+    public alertOpen: boolean = false;
+    public alertMessage: string = '';
+    public alertType: string = '';
+
     constructor(private _modalService: NgbModal, private paymentService: PaymentService) {
     }
 
     ngOnInit() {
+
     }
 
     public processFile(file) {
-        this.paymentService.checkUploadedFileType(file).subscribe((data) => {
-            console.log(data);
-        });
-        this.showModal(file.name);
+        if (file !== null) {
+            this.paymentService.checkUploadedFileType(file).subscribe((data) => {
+                console.log(data);
+            }).unsubscribe();
+            this.showModal(file.name, file);
+        }
     }
 
     /*
     TODO: double check (if payment with same data is more times) and if is in payment table
      */
 
-    private showModal(documentName) {
+    private showModal(documentName, file) {
         const modalRef = this._modalService.open(ModalComponent); // if user is admin
         modalRef.componentInstance.title = 'Import payments from document <b>' + documentName + '</b>';
         modalRef.componentInstance.text = 'Are you sure you want to import all payments from this document? ' +
@@ -37,16 +45,21 @@ export class ImportPaymentsComponent implements OnInit {
         modalRef.componentInstance.duplicate = 'donation-assignment';
 
         modalRef.result.then((data) => {
-                // change id for donation
-                //         this.donationService.updateAssignment(this.id, id).subscribe((d) => {
-                //             this.loading = true;
-                //             this.getDetail();
-                //         }, (error) => {
-                //             console.log(error);
-                //             alert('There was an error during updating assignment, please try again later.');
-                //         });
-                //     }, (error) => {
-                //         console.log(error);
+                this.loading = true;
+                this.paymentService.importPayments(file).subscribe((d) => {
+                    this.loading = false;
+                    this.alertMessage = d.message;
+                    this.alertType = 'success';
+                    this.alertOpen = true;
+                }, (error) => {
+                    this.loading = false;
+                    this.alertMessage = 'During the payments import there was an unknown error. ' +
+                        'Please, try it later or contact administrator.';
+                    this.alertType = 'danger';
+                    this.alertOpen = true;
+                });
+            }, (error) => {
+                console.log(error);
             }
         );
     }

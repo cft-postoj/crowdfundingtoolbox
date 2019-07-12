@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     protected $table = 'payments';
-    protected $fillable = ['transaction_date'];
+    protected $fillable = ['transaction_id', 'iban', 'amount', 'created_by', 'transfer_type', 'variable_symbol',
+        'transaction_date', 'payment_notes', 'payer_reference'];
 
     public function donation()
     {

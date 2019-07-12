@@ -57,14 +57,14 @@ export class PaymentService {
     }
 
     public checkUploadedFileType(file: File): Observable<any> {
-        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/check-file-type`, {
-            file: file
-        });
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/check-file-type`, formData);
     }
 
     public importPayments(file: File): Observable<any> {
-        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/import-payments`, {
-            file: file
-        });
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/import-payments`, formData);
     }
 }

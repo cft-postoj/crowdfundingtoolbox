@@ -1,10 +1,15 @@
 <form>
-  <input
-          type="file"
-          class="upload"
-          accept=".csv"
-          (change)="changeUploadListener($event.target.files[0])" #fileUploading />
-  <button type="button" (click)="fileUploading.click()">
-    Choose your .csv file to import
-  </button>
+    <input
+            type="file"
+            class="upload"
+            accept=".csv"
+            (change)="changeUploadListener($event.target.files)" #fileUploading/>
+    <button type="button" (click)="showFileUpload()" *ngIf="!loading">
+        Choose your .csv file to import
+    </button>
+    <div class="text-center" *ngIf="loading">
+        <img src="../assets/images/loading.svg"/><br />
+        Please wait, importing may take several minutes...
+    </div>
+
 </form>

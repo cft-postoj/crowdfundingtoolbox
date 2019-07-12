@@ -174,12 +174,12 @@ class PaymentBackOfficeController extends Controller
     // *************************************************************
     protected function checkFileType(Request $request)
     {
-        return $this->paymentService->checkUplodedFileType($request);
+        return $this->paymentService->checkUplodedFileType();
     }
 
     protected function importPayments(Request $request)
     {
-        return $this->paymentService->importPayments($request);
+        return $this->paymentService->importPayments();
     }
 
 

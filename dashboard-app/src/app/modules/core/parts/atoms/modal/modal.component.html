@@ -14,6 +14,6 @@
   </p>
 </div>
 <div class="modal-footer" *ngIf="text !== null">
-  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel')">Cancel</button>
   <button type="button" [class]="(duplicate === true) ? 'btn btn-primary' : 'btn btn-danger'" (click)="modal.close('Ok click')">Ok</button>
 </div>

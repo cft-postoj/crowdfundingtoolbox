@@ -11,6 +11,7 @@ use Modules\Payment\Repositories\PaymentRepository;
 use Modules\UserManagement\Entities\UserPaymentOption;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\UserPaymentOptionService;
+use Carbon\Carbon;
 
 class PaymentService
 {
@@ -18,6 +19,14 @@ class PaymentService
     protected $donationService;
     protected $portalUserService;
     protected $userPaymentOptionService;
+
+    private $transactionDateIndex;
+    private $amountIndex;
+    private $ibanIndex;
+    private $variableSymbolIndex;
+    private $payerReferenceIndex;
+    private $paymentNoteIndex;
+    private $transactionIdIndex;
 
     public function __construct(PaymentRepository $paymentRepository, UserPaymentOptionService $userPaymentOptionService,
                                 DonationService $donationService, PortalUserService $portalUserService)
@@ -334,14 +343,119 @@ class PaymentService
         return $this->paymentRepository->getPaymentTotalGroupMonthly($from, $to);
     }
 
-    public function checkUplodedFileType($request)
+    public function checkUplodedFileType()
     {
-
+        $allowed = array('csv');
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $tmpname = $_FILES['file']['tmp_name'];
+        $filename = $_FILES['file']['name'];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if (!in_array($ext, $allowed) || finfo_file($finfo, $tmpname) !== 'text/plain') {
+            return response()->json([
+                'error' => 'Type of choosed file is not allowed. Only .csv files are allowed.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        return response()->json([
+            'message' => 'Correct file type.'
+        ], Response::HTTP_OK);
     }
 
-    public function importPayments($request)
+    public function importPayments()
     {
+        try {
+            ini_set('memory_limit', '2048M');
+            ini_set('max_execution_time', 2000);
+            $tmpName = $_FILES['file']['tmp_name'];
+            $csvAsArray = array_map('str_getcsv', file($tmpName));
 
+            // bank transfer, card pay, pay by square, google pay, apple pay
+            $transferTypes = [1, 2, 3, 4, 5];
+            $cardPayIdentificator = 'CP ';
+
+
+            // STATICALY DEFINED SHAPE OF IMPORT PAYMENTS - uses index from zero. Default table (Slovak standard bank export) looks like this:
+            // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            // | Processing date | Settlement date | Sum | Currency | Type (credit/debet) | Prefix | Account number | Bank code | IBAN | Variable symbol | Specific symbol | Constant symbol | Payer reference | Information | Description |
+            // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            $this->transactionDateIndex = 1; // Settlement date
+            $this->amountIndex = 2; // Sum
+            $this->ibanIndex = 8; // Iban
+            $this->variableSymbolIndex = 9; // Variable symbol
+            $this->payerReferenceIndex = 12; // Payer reference
+            $this->paymentNoteIndex = 13; // Information
+            $this->transactionIdIndex = 14; // Description (for example card pay information)
+
+            $createdBy = 'import';
+
+
+            $counter = 0;
+            $countOfSuccessfullyCreatedRecords = 0;
+            foreach ($csvAsArray as $csv) {
+                if ($counter > 0) { // skip first row (header)
+                    for ($i = 0; $i < $this->countOfNewRecords($csv, $this->checkSameRecords($csv, $csvAsArray)); $i++) {
+                        // create record in payments table
+                        $csvRequest = array(
+                            'transaction_id' => $csv[$this->transactionIdIndex],
+                            'iban' => $csv[$this->ibanIndex],
+                            'amount' => (float)number_format((float)$csv[$this->amountIndex], 2, '.', ''),
+                            'created_by' => $createdBy,
+                            'transfer_type' => (substr($csv[$this->transactionIdIndex], 0, 3) === $cardPayIdentificator) ?
+                                $transferTypes[1] : ((strpos(strtolower($csv[$this->paymentNoteIndex]), 'pay-by-square') !== false) ?
+                                    $transferTypes[2] : $transferTypes[0]), //pay-by-square identificatior is in payment description
+                            'variable_symbol' => (int)$csv[$this->variableSymbolIndex],
+                            'transaction_date' => date('Y-m-d H:i:s', strtotime($csv[$this->transactionDateIndex])),
+                            'payment_notes' => $csv[$this->paymentNoteIndex],
+                            'payer_reference' => $csv[$this->payerReferenceIndex]
+                        );
+                        $this->paymentRepository->create($csvRequest);
+                        // TODO: pair payment with donation
+                        $countOfSuccessfullyCreatedRecords++;
+                    }
+                }
+                $counter++;
+            }
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json([
+            'message' => 'Successfully imported ' . $countOfSuccessfullyCreatedRecords . ' payments.'
+        ], Response::HTTP_CREATED);
+    }
+
+    // function which check all records in csv and find matches with row (for example, if some donor made donation more time per one day)
+    private function checkSameRecords($row, $csvAsArray)
+    {
+        $counter = 0;
+        foreach ($csvAsArray as $csv) {
+            if ($csv === $row) {
+                $counter++;
+            }
+        }
+        return $counter;
+    }
+
+    // function which check, if payments table consists of some rows from csv
+    private function countOfNewRecords($row, $timesOccurrence)
+    {
+        // TODO payments filter via IBAN!!!
+        $occurances = 0;
+        $payments = $this->paymentRepository->all();
+        foreach ($payments as $p) {
+            if ($p->iban === $row[$this->ibanIndex]
+                && $p->variable_symbol === $row[$this->variableSymbolIndex]
+                && $p->payment_notes === $row[$this->paymentNoteIndex]
+                && abs(Carbon::createFromFormat('Y-m-d H:i:s', $p->transaction_date)->diffInSeconds() -
+                    Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($row[$this->transactionDateIndex])))->diffInSeconds()) < 86400) { // is is lower than one day
+                $occurances++;
+            }
+        }
+        $countOfNewRecords = $timesOccurrence - $occurances;
+
+        return $countOfNewRecords;
     }
 
 }

@@ -65,4 +65,10 @@ class PaymentRepository
         return $query->get();
     }
 
+    public function all()
+    {
+        return $this->model
+            ::all();
+    }
+
 }
