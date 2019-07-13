@@ -28,6 +28,7 @@ import { InputTextComponent } from './parts/atoms/input-text/input-text.componen
 import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-size.component';
 import { NavbarComponent } from './parts/atoms/navbar/navbar.component';
 import {StatusComponent} from './parts/atoms/status/status.component';
+import { ExportCsvComponent } from './components/export-csv/export-csv.component';
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import {StatusComponent} from './parts/atoms/status/status.component';
         SlovakNumberFormatter,
         TableHeaderComponent,
         InputTextComponent,
-        NavbarComponent
+        NavbarComponent,
+        ExportCsvComponent
     ],
     imports: [
         CommonModule,
