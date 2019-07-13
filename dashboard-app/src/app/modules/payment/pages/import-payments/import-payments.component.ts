@@ -47,13 +47,18 @@ export class ImportPaymentsComponent implements OnInit {
         modalRef.result.then((data) => {
                 this.loading = true;
                 this.paymentService.importPayments(file).subscribe((d) => {
+                    console.log(d)
+                    if (d.type === 1 && d.loaded && d.total){
+                        console.log("gaju");
+                        console.log(d.total)
+                    }
                     this.loading = false;
                     this.alertMessage = d.message;
                     this.alertType = 'success';
                     this.alertOpen = true;
                 }, (error) => {
                     this.loading = false;
-                    this.alertMessage = 'During the payments import there was an unknown error. ' +
+                    this.alertMessage = (error.error !== null) ? error.error.error : 'During the payments import there was an unknown error. ' +
                         'Please, try it later or contact administrator.';
                     this.alertType = 'danger';
                     this.alertOpen = true;

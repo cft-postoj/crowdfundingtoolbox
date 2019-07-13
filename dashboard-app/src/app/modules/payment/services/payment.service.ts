@@ -63,8 +63,13 @@ export class PaymentService {
     }
 
     public importPayments(file: File): Observable<any> {
+        const params = new HttpParams();
+        const options = {
+            params: params,
+            reportProgress: true,
+        };
         const formData: FormData = new FormData();
         formData.append('file', file);
-        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/import-payments`, formData);
+        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/import-payments`, formData, options);
     }
 }

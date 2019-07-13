@@ -71,4 +71,11 @@ class PaymentRepository
             ::all();
     }
 
+    public function getPaymentsFromIban($iban)
+    {
+        return $this->model
+            ::where('iban', $iban)
+            ->get();
+    }
+
 }

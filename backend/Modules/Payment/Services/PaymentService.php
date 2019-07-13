@@ -19,6 +19,7 @@ class PaymentService
     protected $donationService;
     protected $portalUserService;
     protected $userPaymentOptionService;
+    protected $variableSymbolService;
 
     private $transactionDateIndex;
     private $amountIndex;
@@ -29,12 +30,13 @@ class PaymentService
     private $transactionIdIndex;
 
     public function __construct(PaymentRepository $paymentRepository, UserPaymentOptionService $userPaymentOptionService,
-                                DonationService $donationService, PortalUserService $portalUserService)
+                                VariableSymbolService $variableSymbolService, DonationService $donationService, PortalUserService $portalUserService)
     {
         $this->paymentRepository = $paymentRepository;
         $this->donationService = $donationService;
         $this->portalUserService = $portalUserService;
         $this->userPaymentOptionService = $userPaymentOptionService;
+        $this->variableSymbolService = $variableSymbolService;
     }
 
     public function create($request)
@@ -91,6 +93,8 @@ class PaymentService
 
     public function getUnpairedPayments()
     {
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 2000);
         return response()->json(
             $this->paymentRepository->getUnpairedPayments(),
             Response::HTTP_OK);
@@ -330,7 +334,100 @@ class PaymentService
             'status' => $status
         ], Response::HTTP_CREATED);
 
+    }
 
+    private function getUserWithVariableSymbolOrIban($variable_symbol, $iban)
+    {
+        $portal_user_id = null;
+        if ($variable_symbol != null) {
+            $portal_user_id = $this->variableSymbolService->getPortalUserByVariableSymbol($variable_symbol);
+        }
+        $paymentOption = $this->userPaymentOptionService->getByIban($iban);
+        if ($paymentOption !== null) {
+            if ($paymentOption->pairing_type === 'iban') {
+                $portal_user_id = $paymentOption->portal_user_id;
+            }
+        }
+        return $portal_user_id;
+    }
+
+    private function pairImportedPaymentWithUser($portal_user_id, $payment)
+    {
+        try {
+            $donations = $this->donationService->getDonationsByPortalUserId($portal_user_id);
+            if ($donations == null) {
+                $donationRequest = array(
+                    'amount' => $payment->amount,
+                    'is_monthly_donation' => false,
+                    'portal_user_id' => $portal_user_id,
+                    'widget_id' => 1,
+                    'payment_method' => $payment->transfer_type,
+                    'status' => 'processed',
+                    'payment_id' => $payment->id
+                );
+                $this->donationService->create($donationRequest);
+            } else {
+                $paired = false;
+                $isPaymentIdNull = false;
+                foreach ($donations as $donation) {
+                    // find first donation with same amount
+                    if ($donation->payment_id == null) {
+                        $isPaymentIdNull = true;
+                    }
+                    if (($donation->amount == $payment->amount) && $isPaymentIdNull) {
+                        $paired = true;
+                        $this->donationService->updatePaymentIdAndAmount(array(
+                            'payment_id' => $payment->id,
+                            'amount' => $payment->amount
+                        ), $donation->id);
+                    }
+                }
+                if (!$paired) {
+                    // pair to last donation with correct amount
+                    if ($isPaymentIdNull) {
+                        foreach ($donations as $donation) {
+                            // find first donation with same amount
+                            if ($donation->payment_id == null) {
+                                $isPaymentIdNull = true;
+                            }
+                            if ($isPaymentIdNull) {
+                                $this->donationService->updatePaymentIdAndAmount(array(
+                                    'payment_id' => $payment->id,
+                                    'amount' => $payment->amount
+                                ), $donation->id);
+                            }
+                        }
+                    } else {
+                        $donationRequest = array(
+                            'amount' => $payment->amount,
+                            'is_monthly_donation' => false,
+                            'portal_user_id' => $portal_user_id,
+                            'widget_id' => 1,
+                            'payment_method' => $payment->transfer_type,
+                            'status' => 'processed',
+                            'payment_id' => $payment->id
+                        );
+                        $this->donationService->create($donationRequest);
+                    }
+                }
+            }
+            // ADD NEW IBAN TO PORTAL USER
+            if ($payment->iban !== null) {
+                $req = array(
+                    'bank_account_number' => $payment->iban,
+                    'pairing_type' => 'iban'
+                );
+                $this->userPaymentOptionService->update($req, $portal_user_id);
+            }
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json([
+            'message' => 'Successfully paired payment to user.'
+        ], Response::HTTP_OK);
     }
 
     public function getPayments($from, $to, $monthly)
@@ -388,12 +485,20 @@ class PaymentService
 
             $createdBy = 'import';
 
+            if (!$this->isCorrectCsvFormat($csvAsArray)) {
+                return response()->json([
+                    'error' => 'CSV file has not correct format. Please, check your file with our documentation.'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
 
             $counter = 0;
             $countOfSuccessfullyCreatedRecords = 0;
+            $countOfPairedPayments = 0;
             foreach ($csvAsArray as $csv) {
                 if ($counter > 0) { // skip first row (header)
-                    for ($i = 0; $i < $this->countOfNewRecords($csv, $this->checkSameRecords($csv, $csvAsArray)); $i++) {
+                    $length = $this->countOfNewRecords($csv, $this->checkSameRecords($csv, $csvAsArray));
+                    for ($i = 0; $i < $length; $i++) {
                         // create record in payments table
                         $csvRequest = array(
                             'transaction_id' => $csv[$this->transactionIdIndex],
@@ -408,9 +513,14 @@ class PaymentService
                             'payment_notes' => $csv[$this->paymentNoteIndex],
                             'payer_reference' => $csv[$this->payerReferenceIndex]
                         );
-                        $this->paymentRepository->create($csvRequest);
-                        // TODO: pair payment with donation
+                        $currentPaymentRecord = $this->paymentRepository->create($csvRequest);
                         $countOfSuccessfullyCreatedRecords++;
+
+                        $portal_user_id = $this->getUserWithVariableSymbolOrIban($csv[$this->variableSymbolIndex], $csv[$this->ibanIndex]);
+                        if ($portal_user_id !== null) {
+                            $this->pairImportedPaymentWithUser($portal_user_id, $currentPaymentRecord);
+                            $countOfPairedPayments++;
+                        }
                     }
                 }
                 $counter++;
@@ -421,9 +531,37 @@ class PaymentService
             ], Response::HTTP_BAD_REQUEST);
         }
 
+        $message = '<b>CSV import was successfully done.</b><br><u>STATUS:</u><br>';
+        $message .= 'Import records: <b>' . $counter . '</b><br>';
+        $message .= 'Imported payments: <b>' . $countOfSuccessfullyCreatedRecords . '</b><br>';
+        $message .= ($counter - $countOfSuccessfullyCreatedRecords) . ' records already exist in database.<br><br><u>Pairing status:</u><br>';
+        $message .= $countOfPairedPayments . ' paired payments and ' . ($countOfSuccessfullyCreatedRecords - $countOfPairedPayments) . ' unpaired payments.';
+
         return response()->json([
-            'message' => 'Successfully imported ' . $countOfSuccessfullyCreatedRecords . ' payments.'
+            'message' => $message
         ], Response::HTTP_CREATED);
+    }
+
+    // check if csv consists of correct count of columns and check if some of required value is not null (before importing)
+    private function isCorrectCsvFormat($csv)
+    {
+        if (sizeof($csv[0]) !== 15) { //default count of csv cols
+            return false;
+        }
+        // variable symbol can be null
+        $count = 0;
+        foreach ($csv as $c) {
+            if ($count > 0):
+                if ($c[$this->transactionIdIndex] === null ||
+                    $c[$this->ibanIndex] === null ||
+                    $c[$this->transactionDateIndex] === null ||
+                    (float)number_format((float)$c[$this->amountIndex], 2, '.', '') === 0) {
+                    return false;
+                }
+            endif;
+            $count++;
+        }
+        return true;
     }
 
     // function which check all records in csv and find matches with row (for example, if some donor made donation more time per one day)
@@ -441,19 +579,21 @@ class PaymentService
     // function which check, if payments table consists of some rows from csv
     private function countOfNewRecords($row, $timesOccurrence)
     {
-        // TODO payments filter via IBAN!!!
-        $occurances = 0;
-        $payments = $this->paymentRepository->all();
+        $occurrences = 0;
+        $payments = $this->paymentRepository->getPaymentsFromIban($row[$this->ibanIndex]);
         foreach ($payments as $p) {
             if ($p->iban === $row[$this->ibanIndex]
-                && $p->variable_symbol === $row[$this->variableSymbolIndex]
+                && $p->variable_symbol === (int)$row[$this->variableSymbolIndex]
                 && $p->payment_notes === $row[$this->paymentNoteIndex]
                 && abs(Carbon::createFromFormat('Y-m-d H:i:s', $p->transaction_date)->diffInSeconds() -
                     Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($row[$this->transactionDateIndex])))->diffInSeconds()) < 86400) { // is is lower than one day
-                $occurances++;
+                $occurrences++;
             }
         }
-        $countOfNewRecords = $timesOccurrence - $occurances;
+        $countOfNewRecords = $timesOccurrence - $occurrences;
+        if ($countOfNewRecords < 0) {
+            $countOfNewRecords = 0;
+        }
 
         return $countOfNewRecords;
     }
