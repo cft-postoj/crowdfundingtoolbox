@@ -44,4 +44,12 @@ class VariableSymbolRepository
             ->only('variable_symbol')
             ->first();
     }
+
+    public function getPortalUserByVariableSymbol($variable_symbol)
+    {
+        return $this->model
+            ::where('variable_symbol', $variable_symbol)
+            ->pluck('portal_user_id')
+            ->first();
+    }
 }

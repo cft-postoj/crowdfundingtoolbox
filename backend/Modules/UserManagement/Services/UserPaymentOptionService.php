@@ -2,6 +2,7 @@
 
 
 namespace Modules\UserManagement\Services;
+
 use Illuminate\Http\Response;
 
 use Modules\UserManagement\Repositories\UserPaymentOptionsRepository;
@@ -37,5 +38,10 @@ class UserPaymentOptionService
             'message' => 'Successfully updated payment option for user.'
         ], Response::HTTP_CREATED);
 
+    }
+
+    public function getByIban($iban)
+    {
+        return $this->userPaymentOptionRepository->getByIban($iban);
     }
 }

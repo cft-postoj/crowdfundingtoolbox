@@ -197,6 +197,11 @@ class DonationService
             ->get();
     }
 
+    public function getDonationsByPortalUserId($portal_user_id)
+    {
+        return Donation::where('portal_user_id', $portal_user_id)->get();
+    }
+
     public function create($request)
     {
         return $this->donationRepository->create($request);

@@ -36,4 +36,11 @@ class UserPaymentOptionsRepository
             ::where('portal_user_id', $portal_user_id)
             ->first();
     }
+
+    public function getByIban($iban)
+    {
+        return $this->model
+            ::where('bank_account_number', $iban)
+            ->first();
+    }
 }

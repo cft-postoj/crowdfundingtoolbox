@@ -43,119 +43,124 @@ Route::group([
     //Route::get('test', 'BackOfficeAPI\WidgetsController@getGeneralSettings');
 
     Route::group(['middleware' => ['jwt.verify']], function () {
-        // Create new user - only admin role can do this
-        Route::get('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@get');
-        Route::put('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@update');
-        Route::post('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@create');
+        //if (\Modules\UserManagement\Entities\BackOfficeUser::where('user_id', Auth::user()->id)->first() !== null) {
+            // Create new user - only admin role can do this
+            Route::get('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@get');
+            Route::put('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@update');
+            Route::post('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@create');
 
-        // Sign out backoffice user
-        Route::get('logout', '\Modules\UserManagement\Http\Controllers\UserServiceController@logout');
-        // Stay logged in
-        Route::get('refresh-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@refresh');
-        // Delete user - only for admin role
-        Route::delete('remove-user', '\Modules\UserManagement\Http\Controllers\UserServiceController@delete');
-        // Get all users
-        Route::get('users', '\Modules\UserManagement\Http\Controllers\UserServiceController@getAll');
+            // Sign out backoffice user
+            Route::get('logout', '\Modules\UserManagement\Http\Controllers\UserServiceController@logout');
+            // Stay logged in
+            Route::get('refresh-token', '\Modules\UserManagement\Http\Controllers\UserServiceController@refresh');
+            // Delete user - only for admin role
+            Route::delete('remove-user', '\Modules\UserManagement\Http\Controllers\UserServiceController@delete');
+            // Get all users
+            Route::get('users', '\Modules\UserManagement\Http\Controllers\UserServiceController@getAll');
 
-        // General Crowdfunding settings
-        //Route::put('crowdfunding-settings', 'BackOfficeAPI\CrowdfundingSettingsController@index');
-        Route::get('crowdfunding-settings/all', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@get');
-        Route::get('crowdfunding-settings/colors', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getColors');
-        Route::get('crowdfunding-settings/fonts', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getFonts');
-        Route::get('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getGeneralPageSettings');
-        Route::get('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getCtaSettings');
-        Route::get('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getWidgetSettings');
+            // General Crowdfunding settings
+            //Route::put('crowdfunding-settings', 'BackOfficeAPI\CrowdfundingSettingsController@index');
+            Route::get('crowdfunding-settings/all', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@get');
+            Route::get('crowdfunding-settings/colors', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getColors');
+            Route::get('crowdfunding-settings/fonts', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getFonts');
+            Route::get('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getGeneralPageSettings');
+            Route::get('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getCtaSettings');
+            Route::get('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@getWidgetSettings');
 
-        Route::put('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateGeneralPageSettings');
-        Route::put('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateCallToActionSettings');
-        Route::put('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateWidgetSettings');
-
-
-        // Campaigns
-        Route::post('campaigns', '\Modules\Campaigns\Http\Controllers\CampaignsController@create');
-        Route::put('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@update');
-        Route::put('campaigns/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\CampaignsController@smartCampaignUpdate');
-        Route::get('campaigns/all', '\Modules\Campaigns\Http\Controllers\CampaignsController@all');
-        Route::get('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@show');
-        Route::delete('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@delete');
-        Route::put('campaigns/{id}/result', '\Modules\Campaigns\Http\Controllers\CampaignsController@updateResult');
-        Route::get('campaigns/{id}/clone', '\Modules\Campaigns\Http\Controllers\CampaignsController@cloneCampaign');
-        Route::get('campaigns/widget/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignByWidgetId');
-
-        // Campaign Targeting
-        Route::post('campaign-targeting/users', '\Modules\Targeting\Http\Controllers\CampaignTargetingController@getUsersCount');
-
-        // Widgets
-        Route::get('campaigns/{campaignId}/widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgetsByCampaignId');
-        Route::get('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@show');
-        Route::put('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@update');
-        Route::put('widgets/{id}/result', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateResult');
-        Route::put('widgets/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\WidgetsController@smartWidgetUpdate');
+            Route::put('crowdfunding-settings/general-page-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateGeneralPageSettings');
+            Route::put('crowdfunding-settings/cta-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateCallToActionSettings');
+            Route::put('crowdfunding-settings/widgets-settings', '\Modules\Campaigns\Http\Controllers\CampaignsConfigurationController@updateWidgetSettings');
 
 
-        // Upload image
-        Route::post('upload', '\Modules\Campaigns\Http\Controllers\ImagesController@upload');
+            // Campaigns
+            Route::post('campaigns', '\Modules\Campaigns\Http\Controllers\CampaignsController@create');
+            Route::put('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@update');
+            Route::put('campaigns/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\CampaignsController@smartCampaignUpdate');
+            Route::get('campaigns/all', '\Modules\Campaigns\Http\Controllers\CampaignsController@all');
+            Route::get('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@show');
+            Route::delete('campaigns/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@delete');
+            Route::put('campaigns/{id}/result', '\Modules\Campaigns\Http\Controllers\CampaignsController@updateResult');
+            Route::get('campaigns/{id}/clone', '\Modules\Campaigns\Http\Controllers\CampaignsController@cloneCampaign');
+            Route::get('campaigns/widget/{id}', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignByWidgetId');
 
-        // Statistics
-        Route::get('statistics/donations/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonationsGroup');
-        Route::get('statistics/donations/all', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonationsAll');
-        Route::get('statistics/donors/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsGroup');
-        Route::get('statistics/donors/all', '\Modules\Statistics\Http\Controllers\StatisticsController@donorsAll');
+            // Campaign Targeting
+            Route::post('campaign-targeting/users', '\Modules\Targeting\Http\Controllers\CampaignTargetingController@getUsersCount');
 
-        Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
-
-
-        // *********************************************
-        // DONATIONS
-        Route::get('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@getDetail');
-        Route::put('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@updateAssignemnt');
-        Route::get('donations/{id}/cancel-assignment', '\Modules\Payment\Http\Controllers\DonationController@cancelAssignment');
-
-        Route::get('unpaired-payments', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getUnpairedPayments');
-        Route::post('unpaired-payments/pair-to-user', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@pairPaymentToUser');
-        Route::post('unpaired-payments/pair-via-iban', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@pairViaIban');
-
+            // Widgets
+            Route::get('campaigns/{campaignId}/widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgetsByCampaignId');
+            Route::get('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@show');
+            Route::put('widgets/{id}', '\Modules\Campaigns\Http\Controllers\WidgetsController@update');
+            Route::put('widgets/{id}/result', '\Modules\Campaigns\Http\Controllers\WidgetsController@updateResult');
+            Route::put('widgets/{id}/smart-settings', '\Modules\Campaigns\Http\Controllers\WidgetsController@smartWidgetUpdate');
 
 
-        // *********************************************
-        // PAYMENT
-        Route::get('payment-methods', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getAllMethods');
+            // Upload image
+            Route::post('upload', '\Modules\Campaigns\Http\Controllers\ImagesController@upload');
 
-        Route::get('payment/list', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayments');
-        Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getBankTransferDetails');
-        Route::post('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setBankTransferDetails');
-        Route::put('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setBankTransferDetails');
-        Route::delete('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteBankTransferDetails');
+            // Statistics
+            Route::get('statistics/donations/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonationsGroup');
+            Route::get('statistics/donations/all', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonationsAll');
+            Route::get('statistics/donors/group', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsGroup');
+            Route::get('statistics/donors/all', '\Modules\Statistics\Http\Controllers\StatisticsController@donorsAll');
 
-        Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getCardDetails');
-        Route::post('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createCardDetails');
-        Route::put('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateCardDetails');
-        Route::delete('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteCardDetails');
+            Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
 
-        Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayBySquareDetails');
-        Route::post('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setPayBySquareDetails');
-        Route::put('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setPayBySquareDetails');
-        Route::delete('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deletePayBySquareDetails');
 
-        Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getGooglePayDetails');
-        Route::post('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createGooglePayDetails');
-        Route::put('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateGooglePayDetails');
-        Route::delete('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteGooglePayDetails');
+            // *********************************************
+            // DONATIONS
+            Route::get('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@getDetail');
+            Route::put('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@updateAssignemnt');
+            Route::get('donations/{id}/cancel-assignment', '\Modules\Payment\Http\Controllers\DonationController@cancelAssignment');
 
-        Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getApplePayDetails');
-        Route::post('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createApplePayDetails');
-        Route::put('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateApplePayDetails');
-        Route::delete('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteApplePayDetails');
+            Route::get('unpaired-payments', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getUnpairedPayments');
+            Route::post('unpaired-payments/pair-to-user', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@pairPaymentToUser');
+            Route::post('unpaired-payments/pair-via-iban', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@pairViaIban');
 
-        // *********************************************
 
-        Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
-        Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');
-        Route::put('edit-portal-user/{id}', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePortalUserFromBackoffice');
-        Route::put('edit-portal-user/{id}/preferred-payments-pairing', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePreferredPaymentsPairing');
-        Route::post('edit-portal-user/{portalUserId}/exclude-from-campaigns-targeting', '\Modules\UserManagement\Http\Controllers\PortalUsersController@excludeFromCampaignsTargeting');
-        Route::get('portal-users/{id}/last-updated', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getLastUpdated');
+            // *********************************************
+            // PAYMENT
+            Route::get('payment-methods', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getAllMethods');
 
+            Route::get('payment/list', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayments');
+            Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getBankTransferDetails');
+            Route::post('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setBankTransferDetails');
+            Route::put('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setBankTransferDetails');
+            Route::delete('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteBankTransferDetails');
+
+            Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getCardDetails');
+            Route::post('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createCardDetails');
+            Route::put('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateCardDetails');
+            Route::delete('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteCardDetails');
+
+            Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayBySquareDetails');
+            Route::post('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setPayBySquareDetails');
+            Route::put('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setPayBySquareDetails');
+            Route::delete('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deletePayBySquareDetails');
+
+            Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getGooglePayDetails');
+            Route::post('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createGooglePayDetails');
+            Route::put('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateGooglePayDetails');
+            Route::delete('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteGooglePayDetails');
+
+            Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getApplePayDetails');
+            Route::post('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@createApplePayDetails');
+            Route::put('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateApplePayDetails');
+            Route::delete('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteApplePayDetails');
+
+
+            // Import payments
+            Route::post('payment/import/check-file-type', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@checkFileType');
+            Route::post('payment/import/import-payments', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@importPayments');
+
+            // *********************************************
+
+            Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
+            Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');
+            Route::put('edit-portal-user/{id}', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePortalUserFromBackoffice');
+            Route::put('edit-portal-user/{id}/preferred-payments-pairing', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePreferredPaymentsPairing');
+            Route::post('edit-portal-user/{portalUserId}/exclude-from-campaigns-targeting', '\Modules\UserManagement\Http\Controllers\PortalUsersController@excludeFromCampaignsTargeting');
+            Route::get('portal-users/{id}/last-updated', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getLastUpdated');
+       // }
     });
 
 

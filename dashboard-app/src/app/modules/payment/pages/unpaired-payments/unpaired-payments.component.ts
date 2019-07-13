@@ -19,7 +19,7 @@ import {PaymentMethodsService} from '../../services/payment-methods.service';
 export class UnpairedPaymentsComponent implements OnInit {
 
     public loading: boolean = true;
-    public items: Payment[];
+    public items: any = [];
     private payments: Payment[];
     public textSearch: string;
 
@@ -57,7 +57,12 @@ export class UnpairedPaymentsComponent implements OnInit {
     private getUnpairedPayments() {
         this.paymentService.getUnpairedPayments().subscribe((data: Payment[]) => {
             this.payments = data;
-            this.items = this.payments;
+            this.payments.map((item, key) => {
+                if (key < 200) {
+                    this.items.push(item);
+                }
+            });
+            // TODO LOAD MORE (LAZY LOADING)
             this.loading = false;
         });
     }
@@ -88,7 +93,8 @@ export class UnpairedPaymentsComponent implements OnInit {
                     'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
                     '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + u.email + '</b>.</span><br><br>' +
                     'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
-                    'paired via IBAN for this specific user.</div> <span>Do you want to continue with this action</span>', id, u.email, itemId, iban);
+                    'paired via IBAN for this specific user.</div> <span>' +
+                    'Do you want to continue with this action</span>', id, u.email, itemId, iban);
             }
         });
 

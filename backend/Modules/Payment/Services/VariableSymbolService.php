@@ -60,4 +60,9 @@ class VariableSymbolService
     {
         return $this->variableSymbolRepository->getByPortalUser($this->portalUserService->getPortalUserIdFromToken());
     }
+
+    public function getPortalUserByVariableSymbol($variable_symbol)
+    {
+        return $this->variableSymbolRepository->getPortalUserByVariableSymbol($variable_symbol);
+    }
 }

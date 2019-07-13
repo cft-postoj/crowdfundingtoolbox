@@ -1,4 +1,11 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
@@ -26,7 +33,17 @@ export class TokenInterceptor implements HttpInterceptor {
         Authorization: `Bearer ${this.authService.getToken()}`
       }
     });
-    return next.handle(request);
+    return next.handle(request).do((event: HttpEvent<any>) => {
+      if (event instanceof HttpResponse) {
+        this.sendRequestWithToken(next, request);
+      }
+    }, (err: any) => {
+      if (err instanceof HttpErrorResponse) {
+        if (err.status === 401) {
+          this.router.navigate(['login']);
+        }
+      }
+    });
   }
 
 }

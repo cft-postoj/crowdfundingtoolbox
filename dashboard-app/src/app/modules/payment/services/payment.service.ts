@@ -56,5 +56,20 @@ export class PaymentService {
         return `${date.year}-${date.month}-${date.day}`;
     }
 
+    public checkUploadedFileType(file: File): Observable<any> {
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/check-file-type`, formData);
+    }
 
+    public importPayments(file: File): Observable<any> {
+        const params = new HttpParams();
+        const options = {
+            params: params,
+            reportProgress: true,
+        };
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/import-payments`, formData, options);
+    }
 }
