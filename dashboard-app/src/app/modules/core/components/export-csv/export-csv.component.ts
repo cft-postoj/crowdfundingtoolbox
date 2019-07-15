@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ExportCsvService} from '../../services/export-csv.service';
+import { saveAs } from 'file-saver/dist/FileSaver';
 
 @Component({
     selector: 'app-export-csv',
@@ -14,8 +15,14 @@ export class ExportCsvComponent implements OnInit {
     public data: any = [];
     @Input()
     public columnNames: any = {};
+    @Input()
+    public floatButton: string = '';
+    @Input()
+    public exportType: string = '';
     @Output()
     public resultEmitter = new EventEmitter();
+    @Output()
+    public loadingEmitter = new EventEmitter();
 
     constructor(private exportCsvService: ExportCsvService) {
     }
@@ -24,6 +31,7 @@ export class ExportCsvComponent implements OnInit {
     }
 
     public export() {
+        this.loadingEmitter.emit(true);
         let emitData = {};
         if (this.data[0].length !== this.columnNames.length) {
             emitData = {
@@ -33,8 +41,9 @@ export class ExportCsvComponent implements OnInit {
             };
             return this.resultEmitter.emit(emitData);
         } else {
-            this.exportCsvService.makeExport(this.title, this.data, this.columnNames).subscribe((d) => {
-                console.log(d);
+            this.exportCsvService.makeExport(this.title, this.data, this.columnNames, this.exportType).subscribe((d) => {
+                // this.fileSaver.msSaveOrOpenBlob(d, 'donors-export.csv');
+                saveAs(d, 'donors-export.csv');
                 emitData = {
                     alertType: 'success',
                     alertMessage: 'Export was successfully created.',

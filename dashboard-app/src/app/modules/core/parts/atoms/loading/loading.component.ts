@@ -9,6 +9,7 @@ import {environment} from 'environments/environment';
 export class LoadingComponent {
     @Input() isLoading: boolean;
     @Input() height;
+    @Input() extraText: string;
     @Output()
     openChange = new EventEmitter<boolean>();
     public environment = environment;

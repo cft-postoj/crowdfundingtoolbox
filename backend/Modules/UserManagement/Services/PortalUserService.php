@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Payment\Services\VariableSymbolService;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
+use Modules\UserManagement\Entities\DonorStatus;
 use Modules\UserManagement\Jobs\RemoveGeneratedToken;
 use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use Modules\UserManagement\Entities\PortalUser;
@@ -164,6 +165,11 @@ class PortalUserService implements PortalUserServiceInterface
                     $this->userDetailRepository->create($user->id);
                 }
 
+                DonorStatus::create(array(
+                    'portal_user_id' => $portalUserId,
+                    'monthly_donor' => false
+                ));
+
                 return \response()->json([
                     'token' => $generatedToken,
                     'message' => 'Account was successfully created.'
@@ -190,6 +196,11 @@ class PortalUserService implements PortalUserServiceInterface
             if ($this->userDetailRepository->get($newUserId) === null) {
                 $this->userDetailRepository->create($newUserId);
             }
+
+            DonorStatus::create(array(
+                'portal_user_id' => $portalUserId,
+                'monthly_donor' => false
+            ));
 
             // TODO check this
             $this->userRepository->coupleUserWithCookie($portalUser->id, intval($request['user_cookie']));

@@ -10,11 +10,14 @@ export class ExportCsvService {
     constructor(private http: HttpClient) {
     }
 
-    public makeExport(title: string, data: any, columnNames: any) {
+    public makeExport(title: string, data: any, columnNames: any, exportType: string) {
         return this.http.post(`${environment.backOfficeUrl}${environment.exportCsv}`, {
             title: title,
             data: data,
+            type: exportType,
             columnNames: columnNames
+        }, {
+            responseType: 'blob'
         });
     }
 }

@@ -152,6 +152,9 @@ Route::group([
             Route::post('payment/import/check-file-type', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@checkFileType');
             Route::post('payment/import/import-payments', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@importPayments');
 
+            // Export csv
+            Route::post('export-csv', '\Modules\UserManagement\Http\Controllers\PortalUsersController@exportCsv');
+
             // *********************************************
 
             Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');

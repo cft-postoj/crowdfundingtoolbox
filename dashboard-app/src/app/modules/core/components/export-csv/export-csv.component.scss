@@ -1,0 +1,29 @@
+@import 'variables';
+@import 'mixins';
+button {
+  background: rgba($azure, .7);
+  color: $white;
+  padding: 7px 15px 7px 50px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  position: relative;
+  @include transitionSingle(.3s ease);
+  &:hover {
+    background: $azure;
+  }
+  &.left {
+    float: left;
+  }
+  &.right {
+    float: right;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    background: url(/assets/images/icons/download.svg);
+    width: 25px;
+    height: 25px;
+    left: 15px;
+  }
+}

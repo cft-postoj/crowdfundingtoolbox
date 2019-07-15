@@ -116,6 +116,7 @@ import { ExportCsvComponent } from './components/export-csv/export-csv.component
         SelectDropDownModule,
         InputTextComponent,
         NavbarComponent,
+        ExportCsvComponent,
 
     ]
 })

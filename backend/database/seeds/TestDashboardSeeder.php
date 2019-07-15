@@ -6,6 +6,7 @@ use Modules\Payment\Entities\Donation;
 use Modules\Payment\Services\PaymentMethodsService;
 use Modules\Payment\Services\PaymentService;
 use Modules\UserManagement\Database\Seeders\PortalUserSeeder;
+use Modules\UserManagement\Entities\DonorStatus;
 use Modules\UserManagement\Entities\PortalUser;
 
 class TestDashboardSeeder extends Seeder
@@ -79,6 +80,10 @@ class TestDashboardSeeder extends Seeder
                     Donation::where('id', $donation->id)->update(array(
                         'status' => 'processed',
                         'payment_id' => $payment->id
+                    ));
+                    // monthly donation is true
+                    DonorStatus::where('portal_user_id', Donation::where('id', $donation->id)->first()['portal_user_id'])->update(array(
+                        'monthly_donor' => true
                     ));
                 }
             }

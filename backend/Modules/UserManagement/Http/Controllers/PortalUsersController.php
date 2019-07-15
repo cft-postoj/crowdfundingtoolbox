@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\UserManagement\Entities\PortalUser;
 use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Services\ExcludeFromTargetingService;
+use Modules\UserManagement\Services\Export2CsvService;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\UserService;
 
@@ -16,12 +17,17 @@ class PortalUsersController extends Controller
     private $userService;
     private $portalUserService;
     private $excludeFromTargetingService;
+    private $export2CsvService;
 
-    public function __construct(PortalUserService $portalUserService, UserService $userService, ExcludeFromTargetingService $excludeFromTargetingService)
+    public function __construct(PortalUserService $portalUserService,
+                                Export2CsvService $export2CsvService,
+                                UserService $userService,
+                                ExcludeFromTargetingService $excludeFromTargetingService)
     {
         $this->userService = $userService;
         $this->portalUserService = $portalUserService;
         $this->excludeFromTargetingService = $excludeFromTargetingService;
+        $this->export2CsvService = $export2CsvService;
     }
 
     public function all()
@@ -74,6 +80,10 @@ class PortalUsersController extends Controller
     protected function excludeFromCampaignsTargeting(Request $request, $portalUserId)
     {
         return $this->excludeFromTargetingService->exclude($request, $portalUserId);
+    }
+
+    protected function exportCsv(Request $request) {
+        return $this->export2CsvService->export($request);
     }
 
 
