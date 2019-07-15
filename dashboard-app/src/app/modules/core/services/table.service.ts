@@ -23,6 +23,8 @@ export class TableService {
     }
 
     compare(a: number | string | boolean, b: number | string | boolean, isAsc: boolean) {
+        a = a == null ? '' : a;
+        b = b == null ? '' : b;
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 

@@ -85,7 +85,7 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
             ->has('portalUser')
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
-            ->with(['portalUser.user.userDetail', 'widget.campaign', 'widget.widgetType']);
+            ->with(['portalUser.user.userDetail', 'widget.campaign', 'widget.widgetType','payment.paymentMethod']);
 
         //if monthly is set, filter lastDonationAt
         if ($monthly !== null) {

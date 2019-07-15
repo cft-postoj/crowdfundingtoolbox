@@ -65,6 +65,7 @@ class UserRepository implements UserRepositoryInterface
             ->with('portalUser.donations.widget.campaign')
             ->with('portalUser.donations.widget.widgetType')
             ->with('portalUser.donations.portalUser.user.userDetail')
+            ->with('portalUser.donations.payment.paymentMethod')
             ->with('portalUser.variableSymbol')
             ->with('portalUser.isMonthlyDonor')
             ->with('portalUser.excludeFromCampaign')
