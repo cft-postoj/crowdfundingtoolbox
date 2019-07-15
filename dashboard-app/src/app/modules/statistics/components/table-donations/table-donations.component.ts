@@ -7,6 +7,7 @@ import {Filter} from '../../../core/models/filter';
 import {TableService} from '../../../core/services/table.service';
 import {Router} from '@angular/router';
 import {PaymentMethodsService} from '../../../payment/services/payment-methods.service';
+import {Column} from '../../../core/models/column';
 
 @Component({
     selector: 'app-table-donations',
@@ -32,6 +33,13 @@ export class TableDonationsComponent implements OnInit {
     public sortedDonations: Donation[];
 
     public model: TableModel = new TableModel();
+    private availableColumns: Column[] = [];
+
+    config = {
+        height: '500px',
+        search: true,
+        placeholder: 'Choose columns to show'
+    };
 
 
     constructor(private donationService: DonationService,
@@ -47,8 +55,22 @@ export class TableDonationsComponent implements OnInit {
         this.getPaymentMethods();
         this.refreshTable();
         this.model.columns.push({
+            value_name: 'order',
+            description: '#',
+            type: 'none',
+            filter: new Filter()
+        });
+
+        this.model.columns.push({
             value_name: 'created_at',
-            description: 'Date',
+            description: 'Donation created at',
+            type: 'none',
+            filter: new Filter()
+        });
+
+        this.model.columns.push({
+            value_name: 'payment.transaction_date',
+            description: 'Payment date',
             type: 'none',
             filter: new Filter()
         });
@@ -59,33 +81,78 @@ export class TableDonationsComponent implements OnInit {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'payment_method',
-            description: 'Payment method',
+            value_name: 'payment.iban',
+            description: 'IBAN',
             type: 'text',
             filter: new Filter()
         });
         this.model.columns.push({
+            value_name: 'payment.variable_symbol',
+            description: 'Variable symbol',
+            type: 'number',
+            filter: new Filter()
+        });
+
+        this.model.columns.push({
+            value_name: 'donation.widget.campaign.name',
+            description: 'campaign name',
+            type: 'text',
+            filter: new Filter()
+        });
+
+        this.availableColumns = this.model.columns.slice();
+        this.availableColumns.push({
+            value_name: 'payment.transaction_id',
+            description: 'Transaction id',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
             value_name: 'portal_user.user.user_detail.last_name',
             description: 'Donor name',
             type: 'text',
             filter: new Filter()
         });
-        this.model.columns.push({
+        this.availableColumns.push({
+            value_name: 'portal_user.user.email',
+            description: 'User email',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'portal_user.user.id',
+            description: 'Donor id',
+            type: 'number',
+            filter: new Filter()
+        });
+
+        this.availableColumns.push({
+            value_name: 'payment.payment_method.method_name',
+            description: 'Payment method',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
+            value_name: 'payment.created_by',
+            description: 'Created by',
+            type: 'text',
+            filter: new Filter()
+        });
+        this.availableColumns.push({
             value_name: 'is_monthly_donation',
             description: 'Frequency',
             type: 'none',
             filter: new Filter()
         });
-
-        this.model.columns.push({
-            value_name: 'widget.widget_type.name',
-            description: 'Widget type',
-            type: 'text',
+        this.availableColumns.push({
+            value_name: 'payment',
+            description: 'Paired',
+            type: 'none',
             filter: new Filter()
         });
-        this.model.columns.push({
-            value_name: 'widget.campaign.name',
-            description: 'Campaign',
+        this.availableColumns.push({
+            value_name: 'status',
+            description: 'Status',
             type: 'text',
             filter: new Filter()
         });

@@ -52,8 +52,8 @@
                     <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.user.email')"
                         [column]="tableService.getColumnByValueName(model,'donation.portal_user.user.email')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.id')"
-                        [column]="tableService.getColumnByValueName(model,'donation.portal_user.id')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.user.id')"
+                        [column]="tableService.getColumnByValueName(model,'donation.portal_user.user.id')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'iban')"
                         [column]="tableService.getColumnByValueName(model,'iban')"
@@ -98,7 +98,7 @@
                         {{payment.donation?.portal_user.user.user_detail.first_name || '---'}} {{payment.donation?.portal_user.user.user_detail.last_name}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.email')" [title]="payment.donation?.portal_user.user.email">{{payment.donation?.portal_user.user.email || '---'}}</td>
-                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.id')"> {{payment.donation?.portal_user.id || '--'}} </td>
+                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.id')"> {{payment.donation?.portal_user.user.id || '--'}} </td>
                     <td *ngIf="tableService.activeColumn(model,'iban')" [title]="payment.iban">{{payment.iban}}</td>
                     <td *ngIf="tableService.activeColumn(model,'variable_symbol')">{{payment.variable_symbol}}</td>
                     <td *ngIf="tableService.activeColumn(model,'amount')">{{payment.amount | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}</td>
