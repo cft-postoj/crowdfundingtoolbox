@@ -63,7 +63,7 @@ class PortalUser extends Model
 
     public function last()
     {
-       return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+        return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
             ->orderBy('created_at', 'DESC');
     }
 
@@ -85,6 +85,7 @@ class PortalUser extends Model
         $today = Carbon::today();
         return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
             ->where('is_monthly_donation', '=', true)
+            ->where('status', 'processed')
             ->where('created_at', '>=', $today->subDays($subDays)->toDateTimeString());
     }
 
@@ -93,7 +94,9 @@ class PortalUser extends Model
         return $this->hasOne('Modules\UserManagement\Entities\ExcludeUserFromCampaign', 'portal_user_id', 'id');
     }
 
-    public function userPaymentOptions() {
+    public function userPaymentOptions()
+    {
         return $this->hasOne('Modules\UserManagement\Entities\UserPaymentOption', 'portal_user_id', 'id');
     }
+
 }

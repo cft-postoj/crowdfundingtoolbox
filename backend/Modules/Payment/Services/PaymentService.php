@@ -358,9 +358,10 @@ class PaymentService
             if ($donations == null) {
                 $donationRequest = array(
                     'amount' => $payment->amount,
+                    'amount_initialized' => null,
                     'is_monthly_donation' => false,
                     'portal_user_id' => $portal_user_id,
-                    'widget_id' => 1,
+                    'widget_id' => null,
                     'payment_method' => $payment->transfer_type,
                     'status' => 'processed',
                     'payment_id' => $payment->id
@@ -400,9 +401,10 @@ class PaymentService
                     } else {
                         $donationRequest = array(
                             'amount' => $payment->amount,
+                            'amount_initialized' => null,
                             'is_monthly_donation' => false,
                             'portal_user_id' => $portal_user_id,
-                            'widget_id' => 1,
+                            'widget_id' => null,
                             'payment_method' => $payment->transfer_type,
                             'status' => 'processed',
                             'payment_id' => $payment->id

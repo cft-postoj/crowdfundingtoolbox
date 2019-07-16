@@ -71,6 +71,8 @@ export const environment = {
     payBySquareMethod: '/payment/pay-by-square-details',
 
     donations: '/donations',
-    unpairedPayments: '/unpaired-payments'
+    unpairedPayments: '/unpaired-payments',
+
+    exportCsv: '/export-csv'
 
 };

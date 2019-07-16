@@ -18,6 +18,7 @@ export class PortalUserListComponent implements OnInit {
     noUsers: boolean = false;
     users: PortalUser[];
     filterActive: boolean = false;
+    exportCsvLoading: boolean = false;
 
     constructor(private portalUserService: PortalUserService, private router: Router) {
     }
@@ -41,7 +42,18 @@ export class PortalUserListComponent implements OnInit {
     }
 
     redirectUserDetail(id: number) {
-        this.router.navigateByUrl( Routing.PORTAL_USERS_FULL_PATH + '/' + id);
+        this.router.navigateByUrl(Routing.PORTAL_USERS_FULL_PATH + '/' + id);
+    }
+
+    export2Csv(event) {
+        this.alertOpen = event.alertOpen;
+        this.alertMessage = event.alertMessage;
+        this.alertType = event.alertType;
+    }
+
+    exportLoading(event) {
+        this.loading = event;
+        this.exportCsvLoading = event;
     }
 
 }

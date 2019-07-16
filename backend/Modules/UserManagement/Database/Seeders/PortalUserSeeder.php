@@ -4,6 +4,7 @@ namespace Modules\UserManagement\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Modules\Payment\Services\VariableSymbolService;
+use Modules\UserManagement\Entities\DonorStatus;
 use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Entities\UserDetail;
 use Modules\UserManagement\Repositories\UserGdprRepository;
@@ -47,6 +48,11 @@ class PortalUserSeeder extends Seeder
             $this->userPaymentOptionsRepository->create(array(
                 'portal_user_id' => $newUser->id,
                 'pairing_type' => 'variable_symbol'
+            ));
+
+            DonorStatus::create(array(
+                'portal_user_id' => $newUser->id,
+                'monthly_donor' => false
             ));
 
             $userDetail = factory(UserDetail::class)->make();

@@ -5,23 +5,35 @@
                 <ng-container *ngIf="enablePortalUsersCount && !loading">({{portalUsersCount}})</ng-container>
             </h2>
         </div>
+        <div class="col mx-auto" *ngIf="export">
+            <div class="text-center">
+                <app-export-csv
+                        [title]="exportTitle"
+                        [exportFrom]="from"
+                        [exportTo]="to"
+                        [exportType]="exportType"
+                        [fileName]="exportFileName"
+                        (loadingEmitter)="exportLoading($event)"
+                        (resultEmitter)="export2Csv($event)"></app-export-csv>
+            </div>
+        </div>
         <ng-container *ngIf="showDates">
             <div class="col-3 d-flex align-items-center">
                 from:
                 <app-datepicker
-                    [(date)]="from"
-                    [maxDate]="to"
-                    [type]="'start'"
-                    [disabled]="true">
+                        [(date)]="from"
+                        [maxDate]="to"
+                        [type]="'start'"
+                        [disabled]="true">
                 </app-datepicker>
             </div>
             <div class="col-3 d-flex align-items-center">
                 to:
                 <app-datepicker
-                    [(date)]="to"
-                    [minDate]="from"
-                    [type]="'end'"
-                    [disabled]="true">
+                        [(date)]="to"
+                        [minDate]="from"
+                        [type]="'end'"
+                        [disabled]="true">
                 </app-datepicker>
             </div>
         </ng-container>
@@ -31,6 +43,10 @@
                                  [options]="availableColumns"></ngx-select-dropdown>
         </div>
     </div>
+    <app-alert
+            [(open)]="alertOpen"
+            [message]="alertMessage"
+            [type]="alertType"></app-alert>
     <div class="row">
         <div class="col">
             <table class="list-items list-items--orderable">
@@ -40,23 +56,27 @@
                         [column]="tableService.getColumnByValueName(model,'order')"
                         [(model)]="model" (modelChange)="sortTable()">#
                     </th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'status')" [column]="tableService.getColumnByValueName(model,'status')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'status')"
+                        [column]="tableService.getColumnByValueName(model,'status')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'user.email')"
                         [column]="tableService.getColumnByValueName(model,'user.email')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.last_name')"
-                        [column]="tableService.getColumnByValueName(model,'user.user_detail.last_name')" [(model)]="model"
+                        [column]="tableService.getColumnByValueName(model,'user.user_detail.last_name')"
+                        [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'amount_sum')"
                         [column]="tableService.getColumnByValueName(model,'amount_sum')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo1')" [column]="tableService.getColumnByValueName(model,'todo1')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo1')"
+                        [column]="tableService.getColumnByValueName(model,'todo1')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')"
-                        [column]="tableService.getColumnByValueName(model,'user.user_detail.created_at')" [(model)]="model"
+                        [column]="tableService.getColumnByValueName(model,'user.user_detail.created_at')"
+                        [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'last_donation_at')"
                         [column]="tableService.getColumnByValueName(model,'last_donation_at')" [(model)]="model"
@@ -67,18 +87,22 @@
                     <th app-table-header *ngIf="tableService.activeColumn(model,'campaign_name')"
                         [column]="tableService.getColumnByValueName(model,'campaign_name')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.id')" [column]="tableService.getColumnByValueName(model,'user.id')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.id')"
+                        [column]="tableService.getColumnByValueName(model,'user.id')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'variable_symbol.variable_symbol')"
-                        [column]="tableService.getColumnByValueName(model,'variable_symbol.variable_symbol')" [(model)]="model"
+                        [column]="tableService.getColumnByValueName(model,'variable_symbol.variable_symbol')"
+                        [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo6')" [column]="tableService.getColumnByValueName(model,'todo6')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo6')"
+                        [column]="tableService.getColumnByValueName(model,'todo6')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'is_monthly_donor')"
                         [column]="tableService.getColumnByValueName(model,'is_monthly_donor')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo8')" [column]="tableService.getColumnByValueName(model,'todo8')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo8')"
+                        [column]="tableService.getColumnByValueName(model,'todo8')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
 
@@ -87,7 +111,7 @@
                 <tbody *ngIf="!loading">
                 <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item"
                     (click)="showUserDetail(portalUser.user.id)" title="Show detail of donor">
-                    <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'order')">{{i + 1}}</td>
                     <td *ngIf="tableService.activeColumn(model,'status')">
                         <app-status [active]="portalUser.last_donation_at!=null"></app-status>
                     </td>
@@ -140,7 +164,10 @@
 
             <h4 *ngIf="!loading && sortedPortalUsers.length===0"
                 class="text-center"> No users found </h4>
-            <app-loading [isLoading]="loading"></app-loading>
+            <app-loading [isLoading]="loading"
+                         [extraText]="(exportCsvLoading) ? 'Please wait, generating csv file with type <b>' + exportType + '</b>...<br /> ' +
+   'Take a <b>coffee break</b>, it may take few minutes.<br />Once the process is done, you\'ll get message about it.' : ''"
+            ></app-loading>
 
             <div *ngIf="!loading && limit < portalUsersCount" class="container">
                 <div class="row">

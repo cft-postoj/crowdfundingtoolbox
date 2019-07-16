@@ -59,6 +59,7 @@ export const environment = {
 
 
     payment: '/payment',
+    importPayments: '/payment/import',
     paymentMethods: '/payment-methods',
 
     bankTransferMethod: '/payment/bank-transfer-details',

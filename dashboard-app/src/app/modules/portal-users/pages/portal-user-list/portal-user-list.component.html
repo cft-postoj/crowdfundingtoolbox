@@ -1,6 +1,15 @@
 <div class="donors-list d-flex flex-column">
   <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
-  <app-button [label]="(filterActive) ? 'Reset filter' : 'Filter'" [type]="'button'" [class]="'classic float-right'" (onClick)="showFilter()"></app-button>
+<!--  <app-button [label]="(filterActive) ? 'Reset filter' : 'Filter'" [type]="'button'" [class]="'classic float-right'" (onClick)="showFilter()"></app-button>-->
+  <app-export-csv
+    [title]="'Export all donors to csv'"
+    [data]="users"
+    [columnNames]=""
+    [floatButton]="'left'"
+    [exportType]="'donors'"
+    [fileName]="'export-donors'"
+    (loadingEmitter)="exportLoading($event)"
+    (resultEmitter)="export2Csv($event)"></app-export-csv>
   <div id="crowd-content">
 
     <table class="list-items">
@@ -21,6 +30,7 @@
     </table>
   </div>
 
-  <app-loading [isLoading]="loading"></app-loading>
+  <app-loading [isLoading]="loading" [extraText]="(exportCsvLoading) ? 'Please wait, generating csv file...<br /> ' +
+   'Take a <b>coffee break</b>, it may take few minutes.<br />Once the process is done, you\'ll get message about it.' : ''"></app-loading>
   <h4 *ngIf="noUsers" class="text-center"> Currently, no users found... </h4>
 </div>
