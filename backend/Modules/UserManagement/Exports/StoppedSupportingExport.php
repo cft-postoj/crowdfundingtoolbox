@@ -36,16 +36,17 @@ class StoppedSupportingExport implements FromCollection
     public function collection()
     {
         $result = array();
-        $users = $this->statsDonorService->getDonors('2019-05-06', '2019-06-06', null,
+        $users = $this->statsDonorService->getDonors($this->from, $this->to, null,
             'stoppedSupporting', null);
         $header = array(
             'Email', 'First name', 'Last name', 'Street', 'City', 'ZIP', 'Donor type', 'IBAN', 'Variable symbol',
-            'Transfer type', 'Declared amount', 'Sum of all donations'
+            'Transfer type', 'Declared amount', 'Last donation amount', 'Sum of all donations'
         );
         array_push($result, $header);
-        foreach ($users as $user) {
+        foreach ($users->donors as $user) {
             $paymentMethod = '';
-            switch ($user[0]->last_donation_payment_method) {
+            $methodId = $user->last_donation_payment_method;
+            switch ($methodId) {
                 case 1:
                     $paymentMethod = 'Bank transfer';
                     break;
@@ -60,21 +61,22 @@ class StoppedSupportingExport implements FromCollection
                     break;
                 case 5:
                     $paymentMethod = 'Apple Pay';
+                    break;
             }
-            $iban = UserPaymentOption::where('portal_user_id', $user[0]->id)->first()['bank_account_number'];
-
+            $iban = UserPaymentOption::where('portal_user_id', $user->id)->first()['bank_account_number'];
             $row = array(
                 $user->user->email,
-                $user->userDetail->first_name,
-                $user->userDetail->last_name,
-                $user->userDetail->street . ' ' . $user->userDetail->house_number,
-                $user->userDetail->city,
-                $user->userDetail->zip,
+                $user->user->userDetail->first_name,
+                $user->user->userDetail->last_name,
+                $user->user->userDetail->street . ' ' . $user->user->userDetail->house_number,
+                $user->user->userDetail->city,
+                $user->user->userDetail->zip,
                 $iban,
                 $user->variableSymbol->variable_symbol,
                 $paymentMethod,
-                $user[0]->last_donation_value,
-                $user[0]->amount_sum
+                $user->firstDonation->amount_intitialized,
+                $user->last_donation_value,
+                $user->amount_sum
             );
             array_push($result, $row);
         }

@@ -42,7 +42,7 @@ class DonorsExport implements FromCollection
                 $query->select('portal_user_id', 'monthly_donor');
             }))
             ->with(array('donations' => function ($query) {
-                $query->select('portal_user_id', 'is_monthly_donation', 'amount', 'status', 'payment_method', 'payment_id', 'created_at')
+                $query->select('portal_user_id', 'is_monthly_donation', 'amount', 'amount_initialized', 'status', 'payment_method', 'payment_id', 'created_at')
                     ->where('status', 'processed');
             }))
             ->with('user.userDetail')
@@ -94,7 +94,7 @@ class DonorsExport implements FromCollection
                         // store last donation information
                         $createdBy = $donation->payment['created_by'];
                         $lastDonationDate = $donation->created_at;
-                        $declaredAmount = $donation->amount;
+                        $declaredAmount = $donation->amount_initialized;
                         switch ($donation->transfer_type) {
                             case 1:
                                 $transferType = 'Bank transfer';

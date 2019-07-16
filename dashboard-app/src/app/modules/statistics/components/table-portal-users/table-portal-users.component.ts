@@ -190,6 +190,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     }
 
     exportLoading(event) {
+        console.log(event)
         this.loading = event;
         this.exportCsvLoading = event;
     }

@@ -358,7 +358,7 @@ class PaymentService
             if ($donations == null) {
                 $donationRequest = array(
                     'amount' => $payment->amount,
-                    'amount_initialize' => null,
+                    'amount_initialized' => null,
                     'is_monthly_donation' => false,
                     'portal_user_id' => $portal_user_id,
                     'widget_id' => null,
@@ -401,7 +401,7 @@ class PaymentService
                     } else {
                         $donationRequest = array(
                             'amount' => $payment->amount,
-                            'amount_initialize' => null,
+                            'amount_initialized' => null,
                             'is_monthly_donation' => false,
                             'portal_user_id' => $portal_user_id,
                             'widget_id' => null,

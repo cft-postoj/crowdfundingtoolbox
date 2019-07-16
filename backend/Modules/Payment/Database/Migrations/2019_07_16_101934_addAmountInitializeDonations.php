@@ -14,7 +14,7 @@ class AddAmountInitializeDonations extends Migration
     public function up()
     {
         Schema::table('donations', function (Blueprint $table) {
-            $table->decimal('amount_initialize')->nullable();
+            $table->decimal('amount_initialized')->nullable();
         });
     }
 
