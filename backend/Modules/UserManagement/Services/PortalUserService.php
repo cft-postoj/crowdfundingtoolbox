@@ -4,13 +4,11 @@
 namespace Modules\UserManagement\Services;
 
 
-use Carbon\Carbon;
-use const http\Client\Curl\Features\HTTP2;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use JWTAuth;
 use Modules\Payment\Services\VariableSymbolService;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
@@ -25,8 +23,7 @@ use Modules\UserManagement\Repositories\UserDetailRepository;
 use Modules\UserManagement\Repositories\UserGdprRepository;
 use Modules\UserManagement\Repositories\UserPaymentOptionsRepository;
 use Modules\UserManagement\Repositories\UserRepository;
-use JWTAuth;
-use Illuminate\Support\Facades\Auth;
+use const http\Client\Curl\Features\HTTP2;
 
 class PortalUserService implements PortalUserServiceInterface
 {
@@ -99,7 +96,8 @@ class PortalUserService implements PortalUserServiceInterface
         }
     }
 
-    public function getPortalUserIdFromToken() {
+    public function getPortalUserIdFromToken()
+    {
         try {
             $user = $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $exception) {
@@ -391,5 +389,15 @@ class PortalUserService implements PortalUserServiceInterface
     public function getPortalUserIdByUserId($id)
     {
         return $this->portalUserRepository->get($id)['id'];
+    }
+
+    public function getDonationsByUserPortalAndDate($portalUserId, $from, $to)
+    {
+        return $this->portalUserRepository->getDonationsByUserPortalAndDate($portalUserId, $from, $to);
+    }
+
+    public function getDonationsDetailInfo($id)
+    {
+        return $this->portalUserRepository->getDonationsDetailInfo($id);
     }
 }

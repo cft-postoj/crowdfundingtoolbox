@@ -4,6 +4,7 @@
 namespace Modules\UserManagement\Repositories;
 
 
+use Modules\Payment\Entities\Donation;
 use Modules\UserManagement\Entities\PortalUser;
 
 class PortalUserRepository implements PortalUserRepositoryInterface
@@ -46,12 +47,19 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ]);
     }
 
-    public function getDonationsByUser($id)
+    public function getDonationsByUserPortalAndDate($id, $from, $to)
     {
-        return $this->model
-            ::where('id', $id)
-            ->with('donations')
-            ->first();
+        return Donation::query()
+            ->whereHas('portalUser', function ($join) use ($id) {
+                $join->where('user_id', $id);
+            })
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->with('widget.campaign')
+            ->with('widget.widgetType')
+            ->with('portalUser.user.userDetail')
+            ->with('payment.paymentMethod')
+            ->get();
     }
 
     public function getAllWithDonations()
@@ -63,6 +71,14 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->with('user.userDetail')
             ->with('visit')
             ->get();
+    }
+
+    public function getDonationsDetailInfo($id)
+    {
+        return $this->model
+            ::where('user_id', $id)
+            ->with(['firstDonation', 'last', 'isMonthlyDonor', 'donationsSum'])
+            ->first();
     }
 
 }

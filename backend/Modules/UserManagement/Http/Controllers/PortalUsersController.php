@@ -86,6 +86,15 @@ class PortalUsersController extends Controller
         return $this->export2CsvService->export($request);
     }
 
+    protected function getDonationsDetailInfo($id)
+    {
+        return $this->portalUserService->getDonationsDetailInfo($id);
+    }
+
+    protected function getDonationsByUserPortalAndDate(Request $request, $id)
+    {
+        return $this->portalUserService->getDonationsByUserPortalAndDate($id, $request['from'], $request['to']);
+    }
 
 
 }

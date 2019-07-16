@@ -3,7 +3,7 @@
   <button type="button"
           *ngFor="let item of navItems; let i = index"
           [class]="(item.active) ? 'active' : ''"
-          (click)="showPage(i)">
+          (click)="showPage(i); setActive(item)">
     {{item.title}}
   </button>
 </nav>

@@ -21,8 +21,8 @@ export class TableDonationsComponent implements OnInit {
     @Input() public monthly: boolean;
     @Input() public title;
     @Input() public dataType;
+    @Input() public id;
     @Input() public disabledDate: boolean = true;
-    @Input() donationsFromParent = false;
     @Input() public donations: Donation[] = [];
     @Input() public showDates = true;
     public routing = Routing;
@@ -48,10 +48,6 @@ export class TableDonationsComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.donationsFromParent) {
-            this.loading = false;
-            this.sortedDonations = this.donations;
-        }
         this.getPaymentMethods();
         this.refreshTable();
         this.model.columns.push({
@@ -171,9 +167,17 @@ export class TableDonationsComponent implements OnInit {
     }
 
     refreshTable() {
-        if (!this.donationsFromParent) {
-            this.loading = true;
+        this.loading = true;
+        if (this.dataType == null) {
             this.donationService.getDonations(this.from, this.to, this.monthly).subscribe(
+                result => {
+                    this.donations = result;
+                    this.sortedDonations = this.donations;
+                    this.loading = false;
+                }
+            );
+        } else if (this.dataType === 'portalUser') {
+            this.donationService.getDonationsByUserId(this.id, this.from, this.to).subscribe(
                 result => {
                     this.donations = result;
                     this.sortedDonations = this.donations;

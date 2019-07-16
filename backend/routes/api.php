@@ -163,7 +163,10 @@ Route::group([
             Route::put('edit-portal-user/{id}/preferred-payments-pairing', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePreferredPaymentsPairing');
             Route::post('edit-portal-user/{portalUserId}/exclude-from-campaigns-targeting', '\Modules\UserManagement\Http\Controllers\PortalUsersController@excludeFromCampaignsTargeting');
             Route::get('portal-users/{id}/last-updated', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getLastUpdated');
-       // }
+            Route::get('portal-users/{id}/donations', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDonationsByUserPortalAndDate');
+            Route::get('portal-users/{id}/donations-detail', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDonationsDetailInfo');
+
+        // }
     });
 
 

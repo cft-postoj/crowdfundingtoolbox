@@ -1,0 +1,24 @@
+.card {
+    height: 100%;
+    .card-header--white {
+        background-color: white;
+    }
+    .card-body {
+        .row {
+            .col-4 {
+                padding-bottom: 8px;
+            }
+        }
+    }
+    //small padding
+    &--small {
+        .card-header {
+            width: 100%;
+            padding: 0.75rem 0;
+        }
+        .card-body {
+            padding: 0.75rem;
+        }
+    }
+
+}

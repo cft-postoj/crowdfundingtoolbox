@@ -51,19 +51,24 @@ class PortalUser extends Model
     public function donationsSum()
     {
         return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
-            ->selectRaw('donations.portal_user_id, sum(donations.donation) as donations_sum')
+            ->selectRaw('donations.portal_user_id, sum(donations.amount) as donations_sum, count(donations.id) as donations_count')
+            ->whereNotNull('payment_id')
             ->groupBy('donations.portal_user_id');
     }
 
     public function firstDonation()
     {
         return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->whereNotNull('payment_id')
+            ->with('payment')
             ->orderBy('created_at', 'ASC');
     }
 
     public function last()
     {
         return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->whereNotNull('payment_id')
+            ->with('payment')
             ->orderBy('created_at', 'DESC');
     }
 
