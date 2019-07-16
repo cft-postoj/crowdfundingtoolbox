@@ -1,0 +1,6 @@
+.paymentOptions {
+  ::ng-deep .container-fluid {
+    overflow-y: auto;
+    height: calc(100vh - 130px);
+  }
+}
