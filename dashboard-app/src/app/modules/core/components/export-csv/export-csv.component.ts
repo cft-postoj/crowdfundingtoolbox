@@ -24,6 +24,8 @@ export class ExportCsvComponent implements OnInit {
     @Input()
     public exportTo;
     @Input()
+    public helperText;
+    @Input()
     public fileName: string = '';
     @Output()
     public resultEmitter = new EventEmitter();

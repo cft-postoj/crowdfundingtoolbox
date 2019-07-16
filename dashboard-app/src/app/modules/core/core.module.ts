@@ -29,6 +29,7 @@ import {ModalFullSizeComponent} from './components/modal-full-size/modal-full-si
 import { NavbarComponent } from './parts/atoms/navbar/navbar.component';
 import {StatusComponent} from './parts/atoms/status/status.component';
 import { ExportCsvComponent } from './components/export-csv/export-csv.component';
+import { HelpComponent } from './components/help/help.component';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import { ExportCsvComponent } from './components/export-csv/export-csv.component
         TableHeaderComponent,
         InputTextComponent,
         NavbarComponent,
-        ExportCsvComponent
+        ExportCsvComponent,
+        HelpComponent
     ],
     imports: [
         CommonModule,
@@ -117,6 +119,7 @@ import { ExportCsvComponent } from './components/export-csv/export-csv.component
         InputTextComponent,
         NavbarComponent,
         ExportCsvComponent,
+        HelpComponent,
 
     ]
 })

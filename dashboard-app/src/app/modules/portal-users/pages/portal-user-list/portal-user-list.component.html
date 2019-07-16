@@ -4,12 +4,13 @@
   <app-export-csv
     [title]="'Export all donors to csv'"
     [data]="users"
-    [columnNames]=""
+    [helperText]="'You can export all users from CFT system with all of donation and payment records.'"
     [floatButton]="'left'"
     [exportType]="'donors'"
     [fileName]="'export-donors'"
     (loadingEmitter)="exportLoading($event)"
     (resultEmitter)="export2Csv($event)"></app-export-csv>
+
   <div id="crowd-content">
 
     <table class="list-items">
