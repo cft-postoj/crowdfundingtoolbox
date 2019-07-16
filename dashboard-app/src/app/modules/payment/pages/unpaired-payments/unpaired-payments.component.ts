@@ -79,24 +79,24 @@ export class UnpairedPaymentsComponent implements OnInit {
         this.items = this.tableService.sort(this.model, this.payments);
     }
 
-    changeDonationAssignment(id, itemId, iban) {
-        const countSameIban = this.getCountOfPaymentsWithSameIban(iban);
-        let stringCount = '';
-        if (countSameIban === 1) {
-            stringCount = '<b>1</b> payment';
-        } else {
-            stringCount = '<b>' + countSameIban + '</b> payments';
-        }
-        this.allUsers.map((u, key) => {
-            if (u.id === id) {
-                this.assignToUserModal('Assign payment to user with email ' + u.email + '.',
-                    'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
-                    '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + u.email + '</b>.</span><br><br>' +
-                    'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
-                    'paired via IBAN for this specific user.</div> <span>' +
-                    'Do you want to continue with this action</span>', id, u.email, itemId, iban);
-            }
-        });
+    changeDonationAssignment(id) {
+        //const countSameIban = this.getCountOfPaymentsWithSameIban(iban);
+        // let stringCount = '';
+        // if (countSameIban === 1) {
+        //     stringCount = '<b>1</b> payment';
+        // } else {
+        //     stringCount = '<b>' + countSameIban + '</b> payments';
+        // }
+        // this.allUsers.map((u, key) => {
+        //     if (u.id === id) {
+        //         this.assignToUserModal('Assign payment to user with email ' + u.email + '.',
+        //             'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
+        //             '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + u.email + '</b>.</span><br><br>' +
+        //             'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
+        //             'paired via IBAN for this specific user.</div> <span>' +
+        //             'Do you want to continue with this action</span>', id, u.email, itemId, iban);
+        //     }
+        // });
 
     }
 

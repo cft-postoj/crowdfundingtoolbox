@@ -15,6 +15,12 @@ class DidNotPayUsersExport implements FromCollection
         ini_set('max_execution_time', 2000);
     }
 
+    public function getData($from, $to) {
+        $this->from = $from;
+        $this->to = $to;
+        return $this->collection();
+    }
+
     /**
      * @return array
      */

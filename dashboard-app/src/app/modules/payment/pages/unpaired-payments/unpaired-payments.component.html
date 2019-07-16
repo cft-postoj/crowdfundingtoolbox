@@ -7,9 +7,23 @@
             <h3 class="text-center" *ngIf="payments.length === 0">No unpaired payments were found!</h3>
             <div *ngIf="payments.length > 0">
                 <h2>Unpaired payments</h2>
-                <button type="button" class="pairAllPayments" (click)="pairViaIbanModal(null)">
-                    Pair all payments via IBAN
-                </button>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="pairAllPayments" (click)="pairViaIbanModal(null)">
+                            Pair all payments via IBAN
+                        </button>
+                    </div>
+                    <div class="col">
+                        <app-user-dropdown
+                                [users]="users"
+                                [userId]="null"
+                                [label]="null"
+                                [extraClass]="'top15'"
+                                [placeholder]="'Assign payments to user'"
+                                (changeIdEmit)="changeDonationAssignment($event)"></app-user-dropdown>
+                    </div>
+                </div>
+
                 <table class="list-items list-items--orderable">
                     <thead>
                     <tr>
@@ -23,7 +37,6 @@
                         <th>Created by</th>
                         <th>Transfer type</th>
                         <th colspan="2">Payment notes</th>
-                        <th colspan="2">Pairing payments</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,16 +65,6 @@
                         </td>
                         <td colspan="2">
                             {{item.payment_notes}}
-                        </td>
-                        <td class="pairing" colspan="2">
-<!--                            <button type="button" (click)="pairViaIbanModal(item.id)">Pair payment via IBAN</button>-->
-                            <app-user-dropdown
-                                    [users]="users"
-                                    [userId]="null"
-                                    [label]="null"
-                                    [extraClass]="'top15'"
-                                    [placeholder]="'Assign payment to user'"
-                                    (changeIdEmit)="changeDonationAssignment($event, item.id, item.iban)"></app-user-dropdown>
                         </td>
                     </tr>
                     </tbody>
