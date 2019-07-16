@@ -46,7 +46,9 @@ export class PortalUserListComponent implements OnInit {
     }
 
     export2Csv(event) {
-
+        this.alertOpen = event.alertOpen;
+        this.alertMessage = event.alertMessage;
+        this.alertType = event.alertType;
     }
 
     exportLoading(event) {

@@ -19,6 +19,12 @@ export class ExportCsvComponent implements OnInit {
     public floatButton: string = '';
     @Input()
     public exportType: string = '';
+    @Input()
+    public exportFrom;
+    @Input()
+    public exportTo;
+    @Input()
+    public fileName: string = '';
     @Output()
     public resultEmitter = new EventEmitter();
     @Output()
@@ -33,17 +39,17 @@ export class ExportCsvComponent implements OnInit {
     public export() {
         this.loadingEmitter.emit(true);
         let emitData = {};
-        if (this.data[0].length !== this.columnNames.length) {
-            emitData = {
-                alertType: 'danger',
-                alertMessage: 'Incorrectly defined inputs. Count of titles is not same with count of data items.',
-                alertOpen: true
-            };
-            return this.resultEmitter.emit(emitData);
-        } else {
-            this.exportCsvService.makeExport(this.title, this.data, this.columnNames, this.exportType).subscribe((d) => {
-                // this.fileSaver.msSaveOrOpenBlob(d, 'donors-export.csv');
-                saveAs(d, 'donors-export.csv');
+        // if (this.data[0].length !== this.columnNames.length) {
+        //     emitData = {
+        //         alertType: 'danger',
+        //         alertMessage: 'Incorrectly defined inputs. Count of titles is not same with count of data items.',
+        //         alertOpen: true
+        //     };
+        //     this.loadingEmitter.emit(false);
+        //     return this.resultEmitter.emit(emitData);
+        // } else {
+            this.exportCsvService.makeExport(this.title, this.exportType, this.exportFrom, this.exportTo).subscribe((d) => {
+                saveAs(d, this.fileName + '.csv');
                 emitData = {
                     alertType: 'success',
                     alertMessage: 'Export was successfully created.',
@@ -57,9 +63,10 @@ export class ExportCsvComponent implements OnInit {
                     alertOpen: true
                 };
             }, () => {
+                this.loadingEmitter.emit(false);
                 return this.resultEmitter.emit(emitData);
             });
         }
-    }
+    // }
 
 }

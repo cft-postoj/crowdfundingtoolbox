@@ -7,6 +7,7 @@
     [columnNames]=""
     [floatButton]="'left'"
     [exportType]="'donors'"
+    [fileName]="'export-donors'"
     (loadingEmitter)="exportLoading($event)"
     (resultEmitter)="export2Csv($event)"></app-export-csv>
   <div id="crowd-content">
@@ -29,6 +30,7 @@
     </table>
   </div>
 
-  <app-loading [isLoading]="loading" [extraText]="(exportCsvLoading) ? 'Please wait, generating csv file...' : ''"></app-loading>
+  <app-loading [isLoading]="loading" [extraText]="(exportCsvLoading) ? 'Please wait, generating csv file...<br /> ' +
+   'Take a <b>coffee break</b>, it may take few minutes.<br />Once the process is done, you\'ll get message about it.' : ''"></app-loading>
   <h4 *ngIf="noUsers" class="text-center"> Currently, no users found... </h4>
 </div>

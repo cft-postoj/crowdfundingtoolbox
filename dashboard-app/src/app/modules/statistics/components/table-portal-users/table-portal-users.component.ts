@@ -24,6 +24,16 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     @Input() public limit;
     @Input() public showDates: boolean = true;
     @Input() public enablePortalUsersCount: boolean = false;
+    @Input() public export: boolean = false;
+    @Input() public exportTitle: string = '';
+    @Input() public exportType: string = '';
+    @Input() public exportFileName: string = '';
+
+    exportCsvLoading: boolean = false;
+
+    alertOpen: boolean = false;
+    alertMessage: string = '';
+    alertType: string = '';
 
     @Output() public showMoreClicked = new EventEmitter();
 
@@ -171,6 +181,17 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
 
     public showUserDetail(id) {
         return this.router.navigateByUrl(`${Routing.PORTAL_USERS_FULL_PATH}/${id}`);
+    }
+
+    export2Csv(event) {
+        this.alertOpen = event.alertOpen;
+        this.alertMessage = event.alertMessage;
+        this.alertType = event.alertType;
+    }
+
+    exportLoading(event) {
+        this.loading = event;
+        this.exportCsvLoading = event;
     }
 
 }
