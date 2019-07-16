@@ -33,4 +33,11 @@ export class NavbarComponent implements OnInit {
         });
     }
 
+    private setActive(setActiveItem) {
+        this.navItems.forEach((item, key) => {
+            item.active = false;
+        });
+        setActiveItem.active = true;
+    }
+
 }

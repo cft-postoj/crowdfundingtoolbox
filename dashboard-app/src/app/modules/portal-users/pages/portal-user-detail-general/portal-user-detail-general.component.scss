@@ -1,0 +1,48 @@
+@import 'variables';
+.user-detail {
+    padding: 15px 30px;
+    height: calc(100vh - 170px);
+    overflow-y: auto;
+    table {
+        &.borderless td, &.borderless th {
+            border: none;
+        }
+        .titleTd {
+            text-align: right;
+        }
+        tr.borderTr {
+            border-bottom: 1px solid #ccc;
+        }
+    }
+    &--lastUpdated {
+        font-size: 13px;
+        margin-left: calc(100% - 750px);
+        b {
+            cursor: pointer;
+        }
+    }
+    &--edit {
+        float: right;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+    &--notes {
+        background: $white;
+        padding: 15px;
+        td {
+            padding-left: 15px;
+        }
+    }
+    &--changePaymentPairing {
+        padding: 15px;
+        b {
+            margin-top: 12px;
+            display: block;
+        }
+        ::ng-deep select {
+            border: 1px solid $azure !important;
+        }
+    }
+}

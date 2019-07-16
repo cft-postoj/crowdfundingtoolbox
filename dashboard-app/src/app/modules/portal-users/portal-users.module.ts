@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PortalUserDetailComponent } from './pages/portal-user-detail/portal-user-detail.component';
 import { PortalUserListComponent } from './pages/portal-user-list/portal-user-list.component';
 import {PotralUsersRoutingModule} from './potral-users-routing.module';
 import {CoreModule} from '../core/core.module';
@@ -10,10 +9,14 @@ import { BackToListComponent } from './components/back-to-list/back-to-list.comp
 import { ExludeUserFromTargetingComponent } from './components/exlude-user-from-targeting/exlude-user-from-targeting.component';
 import { EditPortalUserComponent } from './components/edit-portal-user/edit-portal-user.component';
 import {StatisticsModule} from '../statistics/statistics.module';
+import { PortalUserDetailDonationsComponent } from './pages/portal-user-detail-donations/portal-user-detail-donations.component';
+import { PortalUserDetailGeneralComponent } from './pages/portal-user-detail-general/portal-user-detail-general.component';
+import {PortalUserDetailComponent} from './components/portal-user-detail/portal-user-detail.component';
 
 @NgModule({
     declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
-        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent],
+        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, PortalUserDetailDonationsComponent,
+        PortalUserDetailGeneralComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,

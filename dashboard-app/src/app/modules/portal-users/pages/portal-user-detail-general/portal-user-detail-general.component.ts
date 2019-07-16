@@ -1,16 +1,17 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {PortalUser} from '../../models/portal-user';
+import {DropdownItem} from '../../../core/models';
 import {PortalUserService} from '../../services/portal-user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Routing} from '../../../../constants/config.constants';
-import {DropdownItem} from '../../../core/models';
 
 @Component({
-    selector: 'app-donor-detail',
-    templateUrl: './portal-user-detail.component.html',
-    styleUrls: ['./portal-user-detail.component.scss']
+  selector: 'app-portal-user-detail-general',
+  templateUrl: './portal-user-detail-general.component.html',
+  styleUrls: ['./portal-user-detail-general.component.scss']
 })
-export class PortalUserDetailComponent implements OnInit {
+export class PortalUserDetailGeneralComponent implements OnInit {
+
 
     user: PortalUser;
     id: number;
@@ -30,7 +31,7 @@ export class PortalUserDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(
+        this.route.parent.params.subscribe(
             params => {
                 this.id = params['id'];
                 this.showDetail();

@@ -70,7 +70,7 @@ export class DonationService {
         if (monthly !== undefined) {
             params = params.append('monthly', monthly);
         }
-        return this.http.get<[Donation]>(
+        return this.http.get<Donation[]>(
             `${environment.backOfficeUrl}${environment.donationUrl}${environment.all}`,
             {
                 headers: headers,
@@ -81,5 +81,18 @@ export class DonationService {
     // TODO: DRY (duplicate in campaing.service)
     public writeDateAsString(date: any): string {
         return `${date.year}-${date.month}-${date.day}`;
+    }
+
+    public getDonationsByUserId(userId, from: any, to: any) {
+        const headers = new HttpHeaders().append('Content-Type', 'application/json');
+        const params = new HttpParams()
+            .append('from', this.writeDateAsString(from))
+            .append('to', this.writeDateAsString(to));
+        return this.http.get<Donation[]>(
+            `${environment.backOfficeUrl}${environment.portalUsersUrl}/${userId}${environment.donations}`,
+            {
+                headers: headers,
+                params: params
+            });
     }
 }

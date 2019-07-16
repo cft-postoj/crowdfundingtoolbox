@@ -5,8 +5,6 @@ namespace Modules\UserManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\UserManagement\Entities\PortalUser;
-use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Services\ExcludeFromTargetingService;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\UserService;
@@ -76,6 +74,10 @@ class PortalUsersController extends Controller
         return $this->excludeFromTargetingService->exclude($request, $portalUserId);
     }
 
+    protected function getDonationsByUserPortalAndDate(Request $request, $id)
+    {
+        return $this->portalUserService->getDonationsByUserPortalAndDate($id, $request['from'], $request['to']);
+    }
 
 
 }
