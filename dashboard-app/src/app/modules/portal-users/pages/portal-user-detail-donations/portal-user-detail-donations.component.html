@@ -12,18 +12,22 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
-                                new donor:  <app-status [active]="isNewDonor()" [titles]="['new donor','old donor']" ></app-status>
+                                new donor:
+                                <app-status [active]="isNewDonor()" [titles]="['new donor','old donor']"></app-status>
                             </div>
                             <div class="col-6">
-                                monthly donor: <app-status [active]="donationsDetail.is_monthly_donor" [titles]="['monthly','one time']"></app-status>
+                                monthly donor:
+                                <app-status [active]="donationsDetail.is_monthly_donor"
+                                            [titles]="['monthly','one time']"></app-status>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row pt-3">
                             <div class="col-6">
                                 donations count: {{donationsDetail.donations_sum?.donations_count || '0'}}
                             </div>
                             <div class="col-6">
-                                donations amount: {{(donationsDetail.donations_sum?.donations_sum || 0) | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
+                                donations amount: {{(donationsDetail.donations_sum?.donations_sum || 0) | currency:
+                                'EUR': 'symbol': '1.0-2' :'sk'}}
                             </div>
                         </div>
                     </div>
@@ -40,11 +44,19 @@
                         <div class="row">
                             <div class="col-6"
                                  [title]="(donationsDetail.first_donation?.payment.transaction_date | date:'dd.MM.yyyy HH:mm:ss') || 'user did not supported yet'">
-                                date: {{(donationsDetail.first_donation?.payment.transaction_date | date:'dd.MM.yyyy') || '---'}}
+                                date: {{(donationsDetail.first_donation?.payment.transaction_date | date:'dd.MM.yyyy')
+                                || '---'}}
                             </div>
                             <div class="col-6">
-                                amount: {{(donationsDetail.first_donation?.payment.amount || 0) | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
+                                amount: {{(donationsDetail.first_donation?.payment.amount || 0) | currency: 'EUR':
+                                'symbol': '1.0-2' :'sk'}}
                             </div>
+                            <div class="col-12">
+                                <span class="clickable"
+                                    (click)="showMoreFirst = !showMoreFirst">{{showMoreFirst ? 'less':'show more'}}</span>
+                            </div>
+                            <app-donation-detail-simplified class="col-12" *ngIf="showMoreFirst"
+                                                            [donation]="donationsDetail.first_donation"></app-donation-detail-simplified>
                         </div>
                     </div>
                     <hr>
@@ -60,8 +72,15 @@
                                 date: {{(donationsDetail.last?.payment.transaction_date | date:'dd.MM.yyyy') || '---'}}
                             </div>
                             <div class="col-6">
-                                amount: {{(donationsDetail.last?.payment.amount || 0) | currency: 'EUR': 'symbol': '1.0-2' :'sk' }}
+                                amount: {{(donationsDetail.last?.payment.amount || 0) | currency: 'EUR': 'symbol':
+                                '1.0-2' :'sk' }}
                             </div>
+                            <div class="col-12">
+                                <span class="clickable"
+                                    (click)="showMoreLast = !showMoreLast">{{showMoreLast ? 'less':'show more'}}</span>
+                            </div>
+                            <app-donation-detail-simplified class="col-12" *ngIf="showMoreLast"
+                                                            [donation]="donationsDetail.last"></app-donation-detail-simplified>
                         </div>
                     </div>
                 </div>

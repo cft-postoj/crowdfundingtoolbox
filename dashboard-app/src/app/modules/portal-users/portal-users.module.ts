@@ -12,11 +12,13 @@ import {StatisticsModule} from '../statistics/statistics.module';
 import { PortalUserDetailDonationsComponent } from './pages/portal-user-detail-donations/portal-user-detail-donations.component';
 import { PortalUserDetailGeneralComponent } from './pages/portal-user-detail-general/portal-user-detail-general.component';
 import {PortalUserDetailComponent} from './components/portal-user-detail/portal-user-detail.component';
+import {DonationDetailSimplifiedComponent} from './components/donation-detail-simplified/donation-detail-simplified.component';
+import { TransferTypeConvertToStringPipe } from './pipes/transfer-type-convert-to-string.pipe';
 
 @NgModule({
     declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
         BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, PortalUserDetailDonationsComponent,
-        PortalUserDetailGeneralComponent],
+        PortalUserDetailGeneralComponent, DonationDetailSimplifiedComponent, TransferTypeConvertToStringPipe],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,
@@ -24,7 +26,7 @@ import {PortalUserDetailComponent} from './components/portal-user-detail/portal-
         StatisticsModule
     ],
     exports: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
-        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent]
+        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, DonationDetailSimplifiedComponent]
 })
 export class PortalUsersModule {
 }

@@ -15,6 +15,8 @@ export class PortalUserDetailDonationsComponent implements OnInit {
     public donationsDetail;
     private loading: boolean = true;
     private nowDate = new Date();
+    showMoreFirst: boolean;
+    showMoreLast: boolean;
 
     constructor(private portalUserService: PortalUserService, private router: Router, private route: ActivatedRoute) {
     }
