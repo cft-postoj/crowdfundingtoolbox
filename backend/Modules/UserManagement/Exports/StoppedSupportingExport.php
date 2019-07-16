@@ -40,7 +40,7 @@ class StoppedSupportingExport implements FromCollection
             'stoppedSupporting', null);
         $header = array(
             'Email', 'First name', 'Last name', 'Street', 'City', 'ZIP', 'Donor type', 'IBAN', 'Variable symbol',
-            'Transfer type', 'Declared amount', 'Last donation amount', 'Sum of all donations'
+            'Transfer type', 'Declared amount', 'Last donation amount', 'Sum of all donations', 'Date of last donation'
         );
         array_push($result, $header);
         foreach ($users->donors as $user) {
@@ -77,7 +77,8 @@ class StoppedSupportingExport implements FromCollection
                 $paymentMethod,
                 $user->firstDonation->amount_intitialized,
                 $user->last_donation_value,
-                $user->amount_sum
+                $user->amount_sum,
+                $user->last_donation_at
             );
             array_push($result, $row);
         }
