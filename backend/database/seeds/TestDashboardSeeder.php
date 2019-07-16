@@ -58,11 +58,16 @@ class TestDashboardSeeder extends Seeder
             $j = $rand < 0 ? 0 : $rand;
             for (; $j < rand($j, 20); $j++) {
                 $userDonation = $this->changeMonthlySupport($userDonation, 0.1);
+                $amountInitialized = $userDonation;
+                if ($j % 7 === 0) {
+                    $amountInitialized = abs($userDonation - rand(1.5, 10.4));
+                }
                 $donation = Donation::create([
                     'portal_user_id' => $currentSupporter['id'],
                     'widget_id' => $referralWidget['id'],
                     'referral_widget_id' => $referralWidget['id'],
                     'amount' => $userDonation,
+                    'amount_initialized' => $amountInitialized,
                     'is_monthly_donation' => true,
                     //sub $j from months of current date to simulate donation before $j months
                     'created_at' => $donationDate->copy()->subMonth($j),
@@ -94,11 +99,16 @@ class TestDashboardSeeder extends Seeder
             $referralWidget = $widgets[array_rand($widgets)];
             $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59));
             $donationDate->subDays(rand(0, 365));
+            $amountInitialized = $userDonation;
+            if ($j % 7 === 0) {
+                $amountInitialized = abs($userDonation - rand(1.5, 10.4));
+            }
             $donation = Donation::create([
                 'portal_user_id' => $currentSupporter['id'],
                 'widget_id' => $referralWidget['id'],
                 'referral_widget_id' => $referralWidget['id'],
                 'amount' => rand(1, 50),
+                'amount_initialized' => $amountInitialized,
                 'is_monthly_donation' => false,
                 'created_at' => $donationDate,
                 'updated_at' => $donationDate,
