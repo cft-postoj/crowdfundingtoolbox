@@ -79,24 +79,52 @@ export class UnpairedPaymentsComponent implements OnInit {
         this.items = this.tableService.sort(this.model, this.payments);
     }
 
-    changeDonationAssignment(id) {
-        //const countSameIban = this.getCountOfPaymentsWithSameIban(iban);
-        // let stringCount = '';
-        // if (countSameIban === 1) {
-        //     stringCount = '<b>1</b> payment';
-        // } else {
-        //     stringCount = '<b>' + countSameIban + '</b> payments';
-        // }
-        // this.allUsers.map((u, key) => {
-        //     if (u.id === id) {
-        //         this.assignToUserModal('Assign payment to user with email ' + u.email + '.',
-        //             'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
-        //             '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + u.email + '</b>.</span><br><br>' +
-        //             'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
-        //             'paired via IBAN for this specific user.</div> <span>' +
-        //             'Do you want to continue with this action</span>', id, u.email, itemId, iban);
-        //     }
-        // });
+    changeDonationAssignment(userId) {
+        // check if all filtered records have same IBAN
+        let userIban = '';
+        let error = null;
+        this.items.map((payment, key) => {
+            if (key === 0) {
+                userIban = payment.iban;
+            }
+            if (payment.iban !== userIban) {
+                error = 'bad-iban';
+            }
+        });
+
+        if (error !== null) {
+            if (error === 'bad-iban') {
+                this.alertMessage = 'You must filter payments via IBAN (use search input under the IBAN column name). ' +
+                    'All records which you can map with donor must have same IBAN!';
+            } else {
+                this.alertMessage = 'During the maping payments to user there was an error. ' +
+                    'Please, try again later or contact administrator.';
+            }
+            this.alertType = 'danger';
+            this.alertOpen = true;
+        } else {
+            const countSameIban = this.items.length;
+            let stringCount = '';
+            if (countSameIban === 1) {
+                stringCount = '<b>1</b> payment';
+            } else {
+                stringCount = '<b>' + countSameIban + '</b> payments';
+            }
+
+            const iban = this.items[0].iban;
+
+            this.allUsers.map((u, key) => {
+                if (u.id === userId) {
+                    this.assignToUserModal('Assign payment to user with email ' + u.email + '.',
+                        'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
+                        '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + u.email + '</b>.</span><br><br>' +
+                        'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
+                        'paired via IBAN for this specific user.</div> <span>' +
+                        'Do you want to continue with this action</span>', userId, u.email, iban);
+                }
+            });
+        }
+
 
     }
 
@@ -156,7 +184,7 @@ export class UnpairedPaymentsComponent implements OnInit {
         return count;
     }
 
-    private assignToUserModal(title, text, textPrimary, userId, userEmail, itemId, iban) {
+    private assignToUserModal(title, text, textPrimary, userId, userEmail, iban) {
         const modalRef = this._modalService.open(ModalComponent);
         modalRef.componentInstance.title = title;
         modalRef.componentInstance.text = text;
@@ -166,7 +194,7 @@ export class UnpairedPaymentsComponent implements OnInit {
 
         modalRef.result.then((data) => {
                 // change id for donation
-                this.paymentService.pairPaymentToUser(itemId, userId, iban).subscribe((d) => {
+                this.paymentService.pairPaymentToUser(userId, iban).subscribe((d) => {
                     this.loading = true;
                     this.getUnpairedPayments();
                     this.alertMessage = 'Successfully paired payment to user with email ' + userEmail + '.';

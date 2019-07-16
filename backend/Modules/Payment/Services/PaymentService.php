@@ -109,11 +109,9 @@ class PaymentService
     {
         $valid = validator($request->only(
             'user_id',
-            'payment_id',
             'iban'
         ), [
             'user_id' => 'required|integer',
-            'payment_id' => 'required|integer',
             'iban' => 'required|string'
         ]);
 
