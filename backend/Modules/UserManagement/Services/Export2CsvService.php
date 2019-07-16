@@ -61,7 +61,7 @@ class Export2CsvService
                     fputcsv($handle, $row);
                 }
                 break;
-            case 'didnt-pay-users':
+            case 'didnt-pay':
                 foreach ($this->didNotPayUsersExport->getData($from, $to) as $row) {
                     fputcsv($handle, $row);
                 }

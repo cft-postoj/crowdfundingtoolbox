@@ -71,6 +71,7 @@ class StoppedSupportingExport implements FromCollection
                 $user->user->userDetail->street . ' ' . $user->user->userDetail->house_number,
                 $user->user->userDetail->city,
                 $user->user->userDetail->zip,
+                ($user->isMonthlyDonor) ? 'monthly donor' : 'one-time supporter',
                 $iban,
                 $user->variableSymbol->variable_symbol,
                 $paymentMethod,
