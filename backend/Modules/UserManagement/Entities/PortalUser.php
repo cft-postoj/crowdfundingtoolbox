@@ -99,8 +99,4 @@ class PortalUser extends Model
         return $this->hasOne('Modules\UserManagement\Entities\UserPaymentOption', 'portal_user_id', 'id');
     }
 
-    public function donorStatus()
-    {
-        return $this->hasOne('Modules\UserManagement\Entities\DonorStatus', 'portal_user_id', 'id');
-    }
 }

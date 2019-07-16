@@ -61,7 +61,6 @@ class UserRepository implements UserRepositoryInterface
         return $this->model
             ::where('id', $id)
             ->with('userDetail')
-            ->with('donorStatus')
             ->with('portalUser.donations.widget.campaign')
             ->with('portalUser.donations.widget.widgetType')
             ->with('portalUser.donations.portalUser.user.userDetail')
