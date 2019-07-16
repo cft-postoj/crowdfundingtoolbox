@@ -73,4 +73,12 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->get();
     }
 
+    public function getDonationsDetailInfo($id)
+    {
+        return $this->model
+            ::where('user_id', $id)
+            ->with(['firstDonation', 'last', 'isMonthlyDonor', 'donationsSum'])
+            ->first();
+    }
+
 }

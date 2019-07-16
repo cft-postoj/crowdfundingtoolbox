@@ -74,6 +74,11 @@ class PortalUsersController extends Controller
         return $this->excludeFromTargetingService->exclude($request, $portalUserId);
     }
 
+    protected function getDonationsDetailInfo($id)
+    {
+        return $this->portalUserService->getDonationsDetailInfo($id);
+    }
+
     protected function getDonationsByUserPortalAndDate(Request $request, $id)
     {
         return $this->portalUserService->getDonationsByUserPortalAndDate($id, $request['from'], $request['to']);

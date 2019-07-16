@@ -384,4 +384,9 @@ class PortalUserService implements PortalUserServiceInterface
     {
         return $this->portalUserRepository->getDonationsByUserPortalAndDate($portalUserId, $from, $to);
     }
+
+    public function getDonationsDetailInfo($id)
+    {
+        return $this->portalUserRepository->getDonationsDetailInfo($id);
+    }
 }
