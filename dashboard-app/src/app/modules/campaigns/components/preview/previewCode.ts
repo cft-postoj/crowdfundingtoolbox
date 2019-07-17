@@ -12,6 +12,9 @@ export const iframeCode = `
 export const globalStyles = `
     <style>
     body {height: 100%; background: #FFFFFF;}
+    div {
+    box-sizing: border-box;
+    }
     .content {width: 100%;}
     
     .cft--monatization--membership-checkbox {

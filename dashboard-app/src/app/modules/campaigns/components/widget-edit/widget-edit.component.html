@@ -37,7 +37,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-6 editInput">
-                                    Width: <input type="text" readonly disabled
+                                    Width: <input type="text"
                                                   [(ngModel)]="widget.settings[deviceType].additional_settings.width">
                                 </div>
                                 <div class="col-6 editInput">
@@ -116,7 +116,7 @@
                                     Offsets
                                 </div>
                                 <div class="col-10">
-                                    <app-input-group [buttons]="paddingMonetization"
+                                    <app-input-group [buttons]="backgroundPadding"
                                                      (buttonChange)="widget.settings[deviceType].additional_settings.padding[$event.name] = $event.value">
                                     </app-input-group>
                                 </div>

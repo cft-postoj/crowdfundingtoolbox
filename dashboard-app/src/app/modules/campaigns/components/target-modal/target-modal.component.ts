@@ -44,12 +44,13 @@ export class TargetModalComponent implements OnInit, OnChanges {
     private targetingOnText() {
         let targetingSubtext = '';
         this.targetingText = targetingModalStrings.currentlyTargetingCampaign;
-
-        targetingSubtext += (this.targeting.signed_status.signed.active) ? ' <b>' + targetingModalStrings.signedUsers + '</b>' : '';
-        targetingSubtext += (this.targeting.signed_status.not_signed.active) ?
-            ((targetingSubtext !== '') ? targetingModalStrings.and + ' <b>'
-                + targetingModalStrings.notSignedUsers + '<b/>' : '<b>' + targetingModalStrings.notSignedUsers + '</b>.') :
-            ((targetingSubtext !== '') ? '.' : '');
+        if (this.targeting.signed_status !== undefined) {
+            targetingSubtext += (this.targeting.signed_status.signed.active) ? ' <b>' + targetingModalStrings.signedUsers + '</b>' : '';
+            targetingSubtext += (this.targeting.signed_status.not_signed.active) ?
+                ((targetingSubtext !== '') ? targetingModalStrings.and + ' <b>'
+                    + targetingModalStrings.notSignedUsers + '<b/>' : '<b>' + targetingModalStrings.notSignedUsers + '</b>.') :
+                ((targetingSubtext !== '') ? '.' : '');
+        }
 
         // One-time supporter
         const oneTimeSupport = this.targeting.support.one_time;

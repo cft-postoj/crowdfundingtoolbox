@@ -75,7 +75,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     ngOnInit() {
-        let assetsUrl = (environment.production) ? 'public/app/assets/' : '../../../../assets/';
+        let assetsUrl = (environment.production) ? 'assets/' : '../../../../assets/';
         this.backgroundTypesButtons.push(new RadioButton(backgroundTypes.color.name, backgroundTypes.color.value))
         this.backgroundTypesButtons.push(new RadioButton(backgroundTypes.image.name, backgroundTypes.image.value))
         this.backgroundTypesButtons.push(new RadioButton(backgroundTypes.imageOverlay.name, backgroundTypes.imageOverlay.value))
@@ -219,6 +219,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     updateWidget() {
+        console.log(this.widget);
         this.saving = true;
         this.creatingHTMLs = true
         this.widgetService.updateWidget(this.widget).subscribe(result => {
@@ -227,7 +228,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     recreateRadioButtons() {
-        let assetsUrl = (environment.production) ? 'public/app/assets/' : '../../../../assets/';
+        let assetsUrl = (environment.production) ? 'assets/' : '../../../../assets/';
 
         this.paddingButtons = [];
         this.paddingButtons.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.top, assetsUrl + "images/icons/padding_top.svg"))

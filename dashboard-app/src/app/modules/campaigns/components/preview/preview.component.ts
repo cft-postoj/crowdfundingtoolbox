@@ -11,13 +11,13 @@ import {
     ViewChild
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
-import {of, Subscription} from "rxjs";
-import {iframeCode, globalStyles} from "../preview/previewCode"
+import {of, Subscription} from 'rxjs';
+import {iframeCode, globalStyles} from '../preview/previewCode';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Widget} from "../../models";
-import {devices, widgetTypes, backgroundTypes, RadioButton} from "../../../core/models";
-import {PreviewService, WidgetService} from "../../services";
-import {ConvertHexService} from "../../../core/services";
+import {Widget} from '../../models';
+import {devices, widgetTypes, backgroundTypes, RadioButton} from '../../../core/models';
+import {PreviewService, WidgetService} from '../../services';
+import {ConvertHexService} from '../../../core/services';
 
 @Component({
     selector: 'app-preview',
@@ -69,7 +69,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public deviceTypeButtons: RadioButton[] = [];
     public deviceTypes = devices;
 
-    public scale: number = 50;
+    public scale: number = 100;
+    public deviceWidth: number = 1366;
+    public deviceHeight: number = 768;
 
     public iframeCode = iframeCode;
     public globalStyles = globalStyles;
@@ -82,9 +84,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.deviceTypeButtons.push(new RadioButton(devices.desktop.name, devices.desktop.name, "/assets/images/icons/desktop_default.svg"))
-        this.deviceTypeButtons.push(new RadioButton(devices.tablet.name, devices.tablet.name, "/assets/images/icons/tablet_default.svg"))
-        this.deviceTypeButtons.push(new RadioButton(devices.mobile.name, devices.mobile.name, "/assets/images/icons/mobile_default.svg"))
+        this.deviceTypeButtons.push(new RadioButton(devices.desktop.name, devices.desktop.name, '/assets/images/icons/desktop_default.svg'))
+        this.deviceTypeButtons.push(new RadioButton(devices.tablet.name, devices.tablet.name, '/assets/images/icons/tablet_default.svg'))
+        this.deviceTypeButtons.push(new RadioButton(devices.mobile.name, devices.mobile.name, '/assets/images/icons/mobile_default.svg'))
         //get widgets by widgetId only when campaign id is defined and widgets aren't defined using Input()
         if (this.campaignId && !(this.widgets && this.widgets.length > 0)) {
             this.loading = true;
@@ -120,12 +122,12 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     recreateStyles() {
         const parent = document.getElementById('styles');
 
-        for (let style of  parent.getElementsByClassName("globalStyles") as any) {
-             style.remove()
+        for (let style of  parent.getElementsByClassName('globalStyles') as any) {
+            style.remove()
         }
 
         let style = document.createElement('style');
-        style.setAttribute("class", "globalStyles");
+        style.setAttribute('class', 'globalStyles');
         style.type = 'text/css';
         const css = globalStyles;
         style.appendChild(document.createTextNode(css));
@@ -154,7 +156,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                     this.ref.detectChanges();
                     this.deviceType = this.deviceTypes[type].name;
                     this.recreateStyles();
-                    htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML + "";
+                    htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML + '""';
                 }
             }
         });
@@ -177,39 +179,54 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         this.previewService.toggle(false);
     }
 
+    getBackgroundLivePreviewStyle() {
+        const styles = this.getBackgroundStyle();
+        styles.position = 'relative';
+        return styles;
+    }
+
     getBackgroundStyle() {
-        let backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
-        let defaultStyle = {
-            position: backgroundStyles.position,
-            height: backgroundStyles.height,
-            width: backgroundStyles.width,
-            maxWidth: backgroundStyles.maxWidth,
+        const backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
+        const paddingBackground = backgroundStyles.padding;
+        if (paddingBackground === undefined) {
+            backgroundStyles.padding = {
+                top: '0px',
+                right: '0px',
+                bottom: '0px',
+                left: '0px'
+            };
+        }
+        const defaultStyle = {
+            position: (backgroundStyles.position !== undefined) ? backgroundStyles.position : 'relative',
+            height: (backgroundStyles.height !== undefined) ? backgroundStyles.height : 0,
+            width: (backgroundStyles.width !== undefined) ? backgroundStyles.width : 0,
+            maxWidth: (backgroundStyles.maxWidth !== undefined) ? backgroundStyles.maxWidth : '100%',
             top: 0,
             left: 0,
             margin: 'auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: this.addPx(backgroundStyles.padding.top) + ' ' +
-                this.addPx(backgroundStyles.padding.right) + ' ' +
-                this.addPx(backgroundStyles.padding.bottom) + ' ' +
-                this.addPx(backgroundStyles.padding.left),
+            padding: this.addPx(paddingBackground.top) + ' ' +
+                this.addPx(paddingBackground.right) + ' ' +
+                this.addPx(paddingBackground.bottom) + ' ' +
+                this.addPx(paddingBackground.left)
         };
 
-        let fixedStyles = (this.widget.widget_type.method == widgetTypes.fixed.name) ? {
-            bottom: (backgroundStyles.fixedSettings.top == 'auto') ? 0 : 'auto',
+        const fixedStyles = (this.widget.widget_type.method === widgetTypes.fixed.name) ? {
+            bottom: (backgroundStyles.fixedSettings.top === 'auto') ? 0 : 'auto',
             zIndex: backgroundStyles.fixedSettings.zIndex,
             textAlign: backgroundStyles.fixedSettings.textAlign,
             padding: '5px'
         } : {};
 
         let dynamicStyle = {};
-        if (this.widget.settings[this.deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value ||
-            this.widget.settings[this.deviceType].widget_settings.general.background.type == backgroundTypes.image.value) {
+        if (this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.imageOverlay.value ||
+            this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.image.value) {
             dynamicStyle = {
                 'background-image': 'url(' + this.widget.settings[this.deviceType].widget_settings.general.background.image.url + ')'
-            }
+            };
         }
-        let result = {...defaultStyle, ...dynamicStyle, ...fixedStyles};
+        const result = {...defaultStyle, ...dynamicStyle, ...fixedStyles};
         return result;
     }
 
@@ -220,22 +237,23 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getOverlayStyle() {
-        let defaultStyle = {
-            position: "absolute",
+        const defaultStyle = {
+            position: 'absolute',
             top: 0,
             left: 0,
-            width: "100%",
-            height: "100%",
+            width: '100%',
+            height: '100%',
 
         };
         let dynamicStyle = {};
-        if (this.widget.settings[this.deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value ||
-            this.widget.settings[this.deviceType].widget_settings.general.background.type == backgroundTypes.color.value)
+        if (this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.imageOverlay.value ||
+            this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.color.value) {
             dynamicStyle = {
                 'background-color': this.widget.settings[this.deviceType].widget_settings.general.background.color,
                 opacity: this.widget.settings[this.deviceType].widget_settings.general.background.opacity / 100
-            }
-        let result = {...defaultStyle, ...dynamicStyle};
+            };
+        }
+        const result = {...defaultStyle, ...dynamicStyle};
         return result;
     }
 
@@ -247,44 +265,42 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
 
     getBodyStyle() {
-        let defaultStyle = {
-            position: this.widget.settings[this.deviceType].additional_settings.bodyContainer.position,
-            // top: this.widget.settings[this.deviceType].additional_settings.textContainer.top,
-            // left: this.widget.settings[this.deviceType].additional_settings.textContainer.left,
-            width: this.widget.settings[this.deviceType].additional_settings.bodyContainer.width,
-            margin: this.widget.settings[this.deviceType].additional_settings.bodyContainer.margin,
-            //set color from headline to bodyStyle to enable inheritation for all childs components
-            color: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color,
-            //height: this.widget.settings[this.deviceType].additional_settings.textContainer.height
-        }
-        let dynamicStyle = {
+        const bodyContainer = this.widget.settings[this.deviceType].additional_settings.bodyContainer;
+        const defaultStyle = {
+            position: (bodyContainer) ? bodyContainer.position : 'relative',
+            width: (bodyContainer) ? bodyContainer.width : '100%',
+            margin: (bodyContainer) ? bodyContainer.margin : 0,
+            // set color from headline to bodyStyle to enable inheritation for all childs components
+            color: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color
+        };
+        const dynamicStyle = {
             'background-color': this.widget.settings[this.deviceType].widget_settings.general.background.color,
             backgroundColor: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.backgroundColor,
 
         }
 
-        let result = {...defaultStyle, ...dynamicStyle};
+        const result = {...defaultStyle, ...dynamicStyle};
         return result;
     }
 
     getHeadlineTextStyle() {
         const headlineText = this.widget.settings[this.deviceType].widget_settings.general;
         this.usedFontFamily(headlineText.fontSettings.fontFamily);
-        let dynamicStyle = {};
-        dynamicStyle = {
+        const dynamicStyle = {
             'text-align': headlineText.fontSettings.alignment,
             'font-size': headlineText.fontSettings.fontSize + 'px',
             'color': headlineText.fontSettings.color,
             fontFamily: headlineText.fontSettings.fontFamily,
-            width: this.widget.settings[this.deviceType].additional_settings.textContainer.text.width,
-            display: headlineText.text_display,
+            width: (this.widget.settings[this.deviceType].additional_settings.textContainer !== undefined) ?
+                this.widget.settings[this.deviceType].additional_settings.textContainer.text.width : '100%',
+            display: (headlineText.text_display !== undefined) ? headlineText.text_display : 'block',
 
             margin: this.addPx(headlineText.text_margin.top) + ' ' +
                 this.addPx(headlineText.text_margin.right) + ' ' +
                 this.addPx(headlineText.text_margin.bottom) + ' ' +
                 this.addPx(headlineText.text_margin.left)
-        }
-        let result = {...dynamicStyle};
+        };
+        const result = {...dynamicStyle};
         return result;
     }
 
@@ -294,35 +310,36 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         if (!additionalText) {
             return;
         }
-        let dynamicStyle = {
+        const dynamicStyle = {
             'text-align': additionalText.fontSettings.alignment,
             'font-size': additionalText.fontSettings.fontSize + 'px',
             'color': additionalText.fontSettings.color,
             fontFamily: additionalText.fontSettings.fontFamily,
-            width: this.widget.settings[this.deviceType].additional_settings.textContainer.text.width,
-            display: additionalText.text_display,
-            padding: this.widget.settings[this.deviceType].additional_settings.bodyContainer.padding,
+            width: (this.widget.settings[this.deviceType].additional_settings.textContainer !== undefined) ?
+                this.widget.settings[this.deviceType].additional_settings.textContainer.text.width : '100%',
+            display: (additionalText.text_display !== undefined) ? additionalText.text_display : 'block',
+            padding: (this.widget.settings[this.deviceType].additional_settings.bodyContainer !== undefined) ?
+                this.widget.settings[this.deviceType].additional_settings.bodyContainer.padding : 0,
 
             margin: this.addPx(additionalText.text_margin.top) + ' ' +
                 this.addPx(additionalText.text_margin.right) + ' ' +
                 this.addPx(additionalText.text_margin.bottom) + ' ' +
                 this.addPx(additionalText.text_margin.left)
         }
-        let result = {...dynamicStyle};
+        const result = {...dynamicStyle};
         return result;
     }
 
     getButtonStyles() {
-        let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
+        const ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
         this.usedFontFamily(ctaStyles.default.fontSettings.fontFamily);
-        let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer.button;
-        let boxShadow = ctaStyles.default.design.shadow.x + 'px ' +
+        const boxShadow = ctaStyles.default.design.shadow.x + 'px ' +
             ctaStyles.default.design.shadow.y + 'px ' +
             ctaStyles.default.design.shadow.b + 'px ' + '0px ' +
-            this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color);
+            this.convertHex.convert((ctaStyles.default.design.shadow.color === undefined) ? '#000' : ctaStyles.default.design.shadow.color);
 
 
-        let defaultStyles = {
+        const defaultStyles = {
             padding: this.addPx(ctaStyles.default.padding.top) + ' ' +
                 this.addPx(ctaStyles.default.padding.right) + ' ' +
                 this.addPx(ctaStyles.default.padding.bottom) + ' ' +
@@ -332,7 +349,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             textAlign: ctaStyles.default.fontSettings.alignment,
             color: ctaStyles.default.fontSettings.color,
             fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
-            display: this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display,
+            display: (this.widget.settings[this.deviceType].additional_settings.buttonContainer !== undefined) ?
+                this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display : 'block',
             'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)
                 : 'transparent',
             border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.border.size + 'px solid ' +
@@ -357,11 +375,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             textDecoration: 'none'
         };
 
-        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
+        if (this.widget.widget_type.method === widgetTypes.fixed.name) {
             defaultStyles['display'] = 'inline-block';
         }
 
-        let result = {...defaultStyles};
+        const result = {...defaultStyles};
         return result;
     }
 
@@ -374,23 +392,23 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getHoverButtonStyles() {
-        let hoverDesignSettings = this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design;
-        let hoverSettings = this.widget.settings[this.deviceType].widget_settings.call_to_action.hover;
+        const hoverDesignSettings = this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design;
+        const hoverSettings = this.widget.settings[this.deviceType].widget_settings.call_to_action.hover;
         let hoverStyles: string = '';
         hoverStyles += `
             color:${hoverSettings.fontSettings.color}!important;
             font-weight:${hoverSettings.fontSettings.fontWeight}!important;
-           `
+           `;
         if (hoverDesignSettings.fill.active) {
             hoverStyles += `
             background-color:${hoverDesignSettings.fill.color}!important;
             opacity:${hoverDesignSettings.fill.opacity / 100}!important;
-            `
+            `;
         }
         if (hoverDesignSettings.border.active) {
             hoverStyles += `
             border: solid ${hoverDesignSettings.border.color} ${hoverDesignSettings.border.size}px !important;
-            `
+            `;
         }
         if (hoverDesignSettings.shadow.active) {
             hoverStyles += ` box-shadow: ${hoverDesignSettings.shadow.x}px ${hoverDesignSettings.shadow.y}px ${hoverDesignSettings.shadow.b}px ${hoverDesignSettings.shadow.color}!important;`
@@ -416,18 +434,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    // replaceContent() {
-    //     var previewElement = document.getElementById('cr0wdWidgetContent-'+this.widget.widget_type.method).cloneNode(true);
-    //     var pagePreviewElement = this.pagePreview.nativeElement.contentWindow.document.getElementById('cr0wdWidgetContent-'+this.widget.widget_type.method);
-    //     console.log(previewElement);
-    //     console.log(pagePreviewElement);
-    //     console.log(this.pagePreview.nativeElement.contentWindow.document)
-    //     pagePreviewElement.replaceWith(previewElement);
-    // }
-
     getTextContainerStyle() {
-        let dynamicStyle = {};
-        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
+        const dynamicStyle = {};
+        if (this.widget.widget_type.method === widgetTypes.fixed.name) {
             dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
             dynamicStyle['float'] = 'left';
         }
@@ -435,15 +444,16 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private usedFontFamily(fontFamily) {
-        let tempArray = this.fontFamilyPreview.split('|');
+        const tempArray = this.fontFamilyPreview.split('|');
         if (tempArray.indexOf(fontFamily) === -1) {
-            if (fontFamily != undefined)
+            if (fontFamily !== undefined) {
                 tempArray.push(fontFamily);
+            }
         }
         this.fontFamilyPreview = '';
         tempArray.forEach(font => {
             this.fontFamilyPreview +=
-                (this.fontFamilyPreview != '') ?
+                (this.fontFamilyPreview !== '') ?
                     '|' + font : font;
         });
     }
@@ -453,16 +463,12 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getButtonContainerStyles() {
-        let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer;
-        let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
-        let containerStyles = {
+        const additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer;
+        const ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
+        const containerStyles = {
             display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
-            width: additionalSettings.width,
-            position: additionalSettings.position,
-            //top: additionalSettings.top,
-            //right: additionalSettings.right,
-            //bottom: additionalSettings.bottom,
-            //left: additionalSettings.left,
+            width: (additionalSettings !== undefined) ? additionalSettings.width : '100%',
+            position: (additionalSettings !== undefined) ? additionalSettings.position : 'relative',
             textAlign: ctaStyles.default.fontSettings.alignment,
             margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
                 this.addPx(ctaStyles.default.margin.right) + ' ' +
@@ -470,7 +476,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(ctaStyles.default.margin.left),
         };
 
-        if (this.widget.widget_type.method == widgetTypes.fixed.name) {
+        if (this.widget.widget_type.method === widgetTypes.fixed.name) {
             containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
             containerStyles['float'] = 'left';
         }

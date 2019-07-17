@@ -1,5 +1,5 @@
-@import '../../../../../sass/variables';
-@import '../../../../../sass/mixins';
+@import 'variables';
+@import 'mixins';
 
 .preview {
     display: none;
@@ -78,8 +78,6 @@
     }
     iframe {
         &.desktop {
-            width: 1366px;
-            height: 768px;
             transform: scale(.55);
             transform-origin: 0 0;
         }
@@ -109,6 +107,18 @@
             left: 0;
         }
 
+    }
+    .header {
+        background: rgba($bali, .5);
+        padding: 15px;
+        color: $azure;
+        label {
+            color: $outer-space;
+        }
+    }
+    div.position-relative {
+        overflow-x: auto;
+        overflow-y: auto;
     }
 }
 

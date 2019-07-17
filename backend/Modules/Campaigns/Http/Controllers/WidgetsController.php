@@ -228,7 +228,7 @@ class WidgetsController extends Controller
                 $request['user_cookie'], $request['user_id'], $_SERVER['REMOTE_ADDR']);
         } catch (\Exception $e) {
             return \response()->json([
-                'error' => $e
+                'error' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
         return $onlyThreeWidgets;

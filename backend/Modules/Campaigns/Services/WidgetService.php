@@ -697,7 +697,40 @@ class WidgetService implements WidgetServiceInterface
                 );
                 break;
             case 4: // popup
-                $outputJson = array();
+                $outputJson = array(
+                    'width' => '800px',
+                    'maxWidth' => '100%',
+                    'height' => '500px',
+                    'position' => 'absolute',
+                    'zIndex' => 9999999,
+                    'fixedSettings' => array(),
+                    'display' => 'block',
+                    'padding' => array(
+                        'top' => '50px',
+                        'right' => '15px',
+                        'bottom' => '50px',
+                        'left' => '15px'
+                    ),
+                    'buttonContainer' => array(
+                        'width' => '300px',
+                        'position' => 'relative',
+                        'top' => 'auto',
+                        'right' => 'auto',
+                        'bottom' => 'auto',
+                        'left' => 'auto',
+                        'button' => array(
+                            'width' => '300px',
+                            'maxWidth' => '100%',
+                            'padding' => array(
+                                'top' => '12',
+                                'right' => '30',
+                                'bottom' => '15',
+                                'left' => '30'
+                            )
+                        )
+                    )
+
+                );
                 break;
             case 5: // fixed widget
                 $outputJson = array(
@@ -817,8 +850,8 @@ class WidgetService implements WidgetServiceInterface
             ->with('campaignImage')
             ->orderBy('updated_at', 'desc')
             ->get()
-            ->where('campaign_id', $campaignId)
-            ->whereIn('widget_type_id', [1, 2, 3, 5]);
+            ->where('campaign_id', $campaignId);
+           // ->whereIn('widget_type_id', [1, 2, 3, 5]);
     }
 
     /**
@@ -916,7 +949,8 @@ class WidgetService implements WidgetServiceInterface
      */
     public function getWidgetsByCampaginReduced($campaign)
     {
-        return Widget::all()->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]);
+        return Widget::all()
+            ->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]);
     }
 
     /**
@@ -943,8 +977,14 @@ class WidgetService implements WidgetServiceInterface
         if ($newCookie!=null) {
             $userCookie = $newCookie->id;
         }
-        //TODO: use env
-        $articleId = explode("/",explode("http://www.postoj.local:8000/",$url)[1])[0];
+        // get domain name from $url (third character /)
+        $articleId = '';
+        if ($url !== null) {
+            $articleId = explode('/',explode(explode('/', $url)[2],$url)[1])[0];
+        } else {
+            $url = '127.0.0.1:8001';
+        }
+
         $trackingVisit =  $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
