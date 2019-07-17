@@ -151,12 +151,12 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             this.widget = wid;
             htmlsWrapper.widgets.push({});
             htmlsWrapper.widgets[index].id = this.widget.id;
-            for (let type in this.deviceTypes) {
+            for (const type in this.deviceTypes) {
                 if (this.deviceTypes.hasOwnProperty(type)) {
                     this.ref.detectChanges();
                     this.deviceType = this.deviceTypes[type].name;
                     this.recreateStyles();
-                    htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML + '""';
+                    htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML;
                 }
             }
         });
@@ -169,6 +169,18 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         if (this.show) {
             this.previewService.toggle(true);
 
+        }
+
+        // set device width/height
+        if (this.deviceType === 'tablet') {
+            this.deviceWidth = 768;
+            this.deviceHeight = 1366;
+        } else if (this.deviceType === 'mobile') {
+            this.deviceWidth = 380;
+            this.deviceHeight = 600;
+        } else {
+            this.deviceWidth = 1366;
+            this.deviceHeight = 768;
         }
     }
 
@@ -203,7 +215,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             maxWidth: (backgroundStyles.maxWidth !== undefined) ? backgroundStyles.maxWidth : '100%',
             top: 0,
             left: 0,
-            margin: 'auto',
+            margin: 0,
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
             padding: this.addPx(paddingBackground.top) + ' ' +

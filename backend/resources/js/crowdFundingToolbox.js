@@ -37,6 +37,8 @@ function getWidgets(apiUrl) {
                             scriptElement.appendChild(inlineScript);
                             if (sidebarPlaceholder != null) {
                                 sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                console.log(cr0wdGetDeviceType());
+                                console.log(el.response[cr0wdGetDeviceType()]);
                                 sidebarPlaceholder.dataset.show_id = el.show_id;
                                 sidebarPlaceholder.appendChild(scriptElement);
                             }

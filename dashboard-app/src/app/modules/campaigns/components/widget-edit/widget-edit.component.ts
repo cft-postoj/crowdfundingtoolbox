@@ -1,12 +1,12 @@
 import {Component, DoCheck, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {Widget} from "../../models";
-import {Routing} from "../../../../constants/config.constants";
-import {backgroundTypes, devices, DropdownItem, paymentTypes, RadioButton, widgetTypes} from "../../../core/models";
-import {PreviewService, WidgetService} from "../../services";
-import {ComponentCommunicationService, GeneralSettingsService} from "../../../core/services";
-import {environment} from "../../../../../environments/environment";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {Widget} from '../../models';
+import {Routing} from '../../../../constants/config.constants';
+import {backgroundTypes, devices, DropdownItem, paymentTypes, RadioButton, widgetTypes} from '../../../core/models';
+import {PreviewService, WidgetService} from '../../services';
+import {ComponentCommunicationService, GeneralSettingsService} from '../../../core/services';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-widget-edit',
@@ -37,7 +37,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     public shadowButtons: RadioButton[] = [];
     public fontWeight: DropdownItem[] = [];
     public positionSettings: DropdownItem[] = [];
-    public ctaSettings: string = "Default";
+    public ctaSettings: string = 'Default';
     creatingHTMLs = false;
     widgetTypes = widgetTypes;
     public allRadiusesButton: RadioButton[] = [];
@@ -47,7 +47,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
     @ViewChild('previewGenerateHTML') previewGenerateHTML;
     public subcriptions: Subscription;
-    cta: string = "Default";
+    cta: string = 'Default';
     private pricesOptionsMonthly: DropdownItem[];
     private pricesOptionsOneTime: DropdownItem[];
     public colors = ['#9E0B0F', '#114B7D', '#FF7C12', '#598527', '#754C24', '#000',
@@ -58,7 +58,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     public paddingMonetization: RadioButton[] = [];
     public marginMonetization: RadioButton[] = [];
     public monetizationTypes: DropdownItem[] = [];
-    private backgroundPadding:  RadioButton[] = [];
+    private backgroundPadding: RadioButton[] = [];
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -84,22 +84,22 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value))
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value))
 
-        this.id = this.route.snapshot.paramMap.get("widgetId");
+        this.id = this.route.snapshot.paramMap.get('widgetId');
 
         this.widgetService.getById(this.id).subscribe((response: any) => {
 //            TODO: change backend to support additional_text and then remove this mock (uncomment next line)
             this.widget = response.data;
             this.loading = false;
 
-            this.fontWeight.push({title: "Bold", value: "bold"});
-            this.fontWeight.push({title: "Light", value: 100});
-            this.fontWeight.push({title: "Medium", value: 400});
+            this.fontWeight.push({title: 'Bold', value: 'bold'});
+            this.fontWeight.push({title: 'Light', value: 100});
+            this.fontWeight.push({title: 'Medium', value: 400});
 
             this.positionSettings.push({title: 'Top', value: '0'}); // top: 0
             this.positionSettings.push({title: 'Bottom', value: 'auto'}); // top: auto
 
-            this.monetizationTypes.push({title:'Classic', value:'classic'});
-            this.monetizationTypes.push({title:'Lite', value: 'lite'});
+            this.monetizationTypes.push({title: 'Classic', value: 'classic'});
+            this.monetizationTypes.push({title: 'Lite', value: 'lite'});
 
             this.recreateRadioButtons();
 
@@ -113,13 +113,13 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         });
 
         this.subcriptions = this.previewService.htmls.subscribe(htmlsWrapper => {
-            let subs = this.widgetService.updateWidgetsHTML(this.widget.id, htmlsWrapper).subscribe(
+            const subs = this.widgetService.updateWidgetsHTML(this.widget.id, htmlsWrapper).subscribe(
                 result => {
-                    this.componentComService.setAlertMessage("Widget " + this.widget.widget_type.name + " successfully updated.");
+                    this.componentComService.setAlertMessage('Widget ' + this.widget.widget_type.name + ' successfully updated.');
                     this.router.navigateByUrl(this.router.url.split(Routing.RIGHT_OUTLET)[0]);
                     subs.unsubscribe();
                 }
-            )
+            );
         })
         this.preview = true;
     }
@@ -221,89 +221,96 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     updateWidget() {
         console.log(this.widget);
         this.saving = true;
-        this.creatingHTMLs = true
+        this.creatingHTMLs = true;
         this.widgetService.updateWidget(this.widget).subscribe(result => {
             this.previewGenerateHTML.generateHTMLFromWidgets();
-        })
+        });
+
     }
 
     recreateRadioButtons() {
         let assetsUrl = (environment.production) ? 'assets/' : '../../../../assets/';
 
         this.paddingButtons = [];
-        this.paddingButtons.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.top, assetsUrl + "images/icons/padding_top.svg"))
-        this.paddingButtons.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.right, assetsUrl + "images/icons/padding_right.svg"))
-        this.paddingButtons.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.bottom, assetsUrl + "images/icons/padding_bottom.svg"))
-        this.paddingButtons.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.left, assetsUrl + "images/icons/padding_left.svg"))
+        this.paddingButtons.push(new RadioButton('top', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.top, assetsUrl + 'images/icons/padding_top.svg'))
+        this.paddingButtons.push(new RadioButton('right', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.right, assetsUrl + 'images/icons/padding_right.svg'))
+        this.paddingButtons.push(new RadioButton('bottom', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'))
+        this.paddingButtons.push(new RadioButton('left', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.left, assetsUrl + 'images/icons/padding_left.svg'))
 
+        if (this.widget.settings[this.deviceType].widget_settings.general.text_margin.top === undefined) {
+            this.widget.settings[this.deviceType].widget_settings.general.text_margin = {
+                top: 'auto',
+                right: 'auto',
+                bottom: 'auto',
+                left: 'auto'
+            }
+        }
 
         this.marginText = [];
-        this.marginText.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.general.text_margin.top, assetsUrl + "images/icons/margin_top.svg"))
-        this.marginText.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.general.text_margin.right, assetsUrl + "images/icons/margin_right.svg"))
-        this.marginText.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.general.text_margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
-        this.marginText.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.general.text_margin.left, assetsUrl + "images/icons/margin_left.svg"))
+        this.marginText.push(new RadioButton('top', this.widget.settings[this.deviceType].widget_settings.general.text_margin.top, assetsUrl + 'images/icons/margin_top.svg'))
+        this.marginText.push(new RadioButton('right', this.widget.settings[this.deviceType].widget_settings.general.text_margin.right, assetsUrl + 'images/icons/margin_right.svg'))
+        this.marginText.push(new RadioButton('bottom', this.widget.settings[this.deviceType].widget_settings.general.text_margin.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
+        this.marginText.push(new RadioButton('left', this.widget.settings[this.deviceType].widget_settings.general.text_margin.left, assetsUrl + 'images/icons/margin_left.svg'))
 
 
-
-        let backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
-
+        const backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
         this.backgroundPadding = [];
-        this.backgroundPadding.push(new RadioButton("top", backgroundStyles.top, assetsUrl + "images/icons/padding_top.svg"));
-        this.backgroundPadding.push(new RadioButton("right", backgroundStyles.right, assetsUrl + "images/icons/padding_right.svg"));
-        this.backgroundPadding.push(new RadioButton("bottom", backgroundStyles.bottom, assetsUrl + "images/icons/padding_bot.svg"));
-        this.backgroundPadding.push(new RadioButton("left", backgroundStyles.left, assetsUrl + "images/icons/padding_left.svg"));
+        this.backgroundPadding.push(new RadioButton('top', backgroundStyles.padding.top, assetsUrl + 'images/icons/padding_top.svg'));
+        this.backgroundPadding.push(new RadioButton('right', backgroundStyles.padding.right, assetsUrl + 'images/icons/padding_right.svg'));
+        this.backgroundPadding.push(new RadioButton('bottom', backgroundStyles.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'));
+        this.backgroundPadding.push(new RadioButton('left', backgroundStyles.padding.left, assetsUrl + 'images/icons/padding_left.svg'));
 
 
         this.marginAdditionalText = [];
-        this.marginAdditionalText.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.top, assetsUrl + "images/icons/margin_top.svg"))
-        this.marginAdditionalText.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.right, assetsUrl + "images/icons/margin_right.svg"))
-        this.marginAdditionalText.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
-        this.marginAdditionalText.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.left, assetsUrl + "images/icons/margin_left.svg"))
+        this.marginAdditionalText.push(new RadioButton('top', this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.top, assetsUrl + 'images/icons/margin_top.svg'))
+        this.marginAdditionalText.push(new RadioButton('right', this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.right, assetsUrl + 'images/icons/margin_right.svg'))
+        this.marginAdditionalText.push(new RadioButton('bottom', this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
+        this.marginAdditionalText.push(new RadioButton('left', this.widget.settings[this.deviceType].widget_settings.additional_text.text_margin.left, assetsUrl + 'images/icons/margin_left.svg'))
 
         this.marginButtons = [];
 
-        this.marginButtons.push(new RadioButton("top", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.top, assetsUrl + "images/icons/margin_top.svg"))
-        this.marginButtons.push(new RadioButton("right", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.right, assetsUrl + "images/icons/margin_right.svg"))
-        this.marginButtons.push(new RadioButton("bottom", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
-        this.marginButtons.push(new RadioButton("left", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.left, assetsUrl + "images/icons/margin_left.svg"))
+        this.marginButtons.push(new RadioButton('top', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.top, assetsUrl + 'images/icons/margin_top.svg'))
+        this.marginButtons.push(new RadioButton('right', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.right, assetsUrl + 'images/icons/margin_right.svg'))
+        this.marginButtons.push(new RadioButton('bottom', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
+        this.marginButtons.push(new RadioButton('left', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.left, assetsUrl + 'images/icons/margin_left.svg'))
 
 
         this.shadowButtons = [];
-        this.shadowButtons.push(new RadioButton("x", this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.x, '', "X:"))
-        this.shadowButtons.push(new RadioButton("y", this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.y, '', "Y:"))
-        this.shadowButtons.push(new RadioButton("b", this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.b, '', "B:"))
+        this.shadowButtons.push(new RadioButton('x', this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.x, '', 'X:'))
+        this.shadowButtons.push(new RadioButton('y', this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.y, '', 'Y:'))
+        this.shadowButtons.push(new RadioButton('b', this.widget.settings[this.deviceType].widget_settings.call_to_action.hover.design.shadow.b, '', 'B:'))
 
         this.radioButtons = [];
-        this.radioButtons.push(new RadioButton("left", "left", "/assets/images/icons/left.svg"))
-        this.radioButtons.push(new RadioButton("center", "center", "/assets/images/icons/center.svg"))
-        this.radioButtons.push(new RadioButton("right", "right", "/assets/images/icons/right.svg"))
+        this.radioButtons.push(new RadioButton('left', 'left', '/assets/images/icons/left.svg'))
+        this.radioButtons.push(new RadioButton('center', 'center', '/assets/images/icons/center.svg'))
+        this.radioButtons.push(new RadioButton('right', 'right', '/assets/images/icons/right.svg'))
 
         this.allRadiusesButton = [];
-        this.allRadiusesButton.push(new RadioButton("all", 0, "/assets/images/icons/radius_AllTogether.svg"))
+        this.allRadiusesButton.push(new RadioButton('all', 0, '/assets/images/icons/radius_AllTogether.svg'))
 
         this.radiusButtons = [];
-        this.radiusButtons.push(new RadioButton("active", false, "/assets/images/icons/radius_disable.svg"));
-        this.radiusButtons.push(new RadioButton("disabled", true, "/assets/images/icons/radius_enable.svg"));
+        this.radiusButtons.push(new RadioButton('active', false, '/assets/images/icons/radius_disable.svg'));
+        this.radiusButtons.push(new RadioButton('disabled', true, '/assets/images/icons/radius_enable.svg'));
 
         this.specificRadiusButtons = [];
-        this.specificRadiusButtons.push(new RadioButton("tl", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.tl, "/assets/images/icons/radius_LeftTop.svg"))
-        this.specificRadiusButtons.push(new RadioButton("tr", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.tr, "/assets/images/icons/radius_RightTop.svg"))
-        this.specificRadiusButtons.push(new RadioButton("br", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.br, "/assets/images/icons/radius_LeftBottom.svg"))
-        this.specificRadiusButtons.push(new RadioButton("bl", this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.bl, "/assets/images/icons/radius_LeftBottom.svg"))
+        this.specificRadiusButtons.push(new RadioButton('tl', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.tl, '/assets/images/icons/radius_LeftTop.svg'))
+        this.specificRadiusButtons.push(new RadioButton('tr', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.tr, '/assets/images/icons/radius_RightTop.svg'))
+        this.specificRadiusButtons.push(new RadioButton('br', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.br, '/assets/images/icons/radius_LeftBottom.svg'))
+        this.specificRadiusButtons.push(new RadioButton('bl', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.design.radius.bl, '/assets/images/icons/radius_LeftBottom.svg'))
 
 
         this.paddingMonetization = [];
-        this.paddingMonetization.push(new RadioButton("top", this.widget.settings[this.deviceType].payment_settings.design.padding.top, assetsUrl + "images/icons/padding_top.svg"))
-        this.paddingMonetization.push(new RadioButton("right", this.widget.settings[this.deviceType].payment_settings.design.padding.right, assetsUrl + "images/icons/padding_right.svg"))
-        this.paddingMonetization.push(new RadioButton("bottom", this.widget.settings[this.deviceType].payment_settings.design.padding.bottom, assetsUrl + "images/icons/padding_bottom.svg"))
-        this.paddingMonetization.push(new RadioButton("left", this.widget.settings[this.deviceType].payment_settings.design.padding.left, assetsUrl + "images/icons/padding_left.svg"))
+        this.paddingMonetization.push(new RadioButton('top', this.widget.settings[this.deviceType].payment_settings.design.padding.top, assetsUrl + 'images/icons/padding_top.svg'))
+        this.paddingMonetization.push(new RadioButton('right', this.widget.settings[this.deviceType].payment_settings.design.padding.right, assetsUrl + 'images/icons/padding_right.svg'))
+        this.paddingMonetization.push(new RadioButton('bottom', this.widget.settings[this.deviceType].payment_settings.design.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'))
+        this.paddingMonetization.push(new RadioButton('left', this.widget.settings[this.deviceType].payment_settings.design.padding.left, assetsUrl + 'images/icons/padding_left.svg'))
 
 
         this.marginMonetization = [];
-        this.marginMonetization.push(new RadioButton("top", this.widget.settings[this.deviceType].payment_settings.design.margin.top, assetsUrl + "images/icons/margin_top.svg"))
-        this.marginMonetization.push(new RadioButton("right", this.widget.settings[this.deviceType].payment_settings.design.margin.right, assetsUrl + "images/icons/margin_right.svg"))
-        this.marginMonetization.push(new RadioButton("bottom", this.widget.settings[this.deviceType].payment_settings.design.margin.bottom, assetsUrl + "images/icons/margin_bot.svg"))
-        this.marginMonetization.push(new RadioButton("left", this.widget.settings[this.deviceType].payment_settings.design.margin.left, assetsUrl + "images/icons/margin_left.svg"))
+        this.marginMonetization.push(new RadioButton('top', this.widget.settings[this.deviceType].payment_settings.design.margin.top, assetsUrl + 'images/icons/margin_top.svg'))
+        this.marginMonetization.push(new RadioButton('right', this.widget.settings[this.deviceType].payment_settings.design.margin.right, assetsUrl + 'images/icons/margin_right.svg'))
+        this.marginMonetization.push(new RadioButton('bottom', this.widget.settings[this.deviceType].payment_settings.design.margin.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
+        this.marginMonetization.push(new RadioButton('left', this.widget.settings[this.deviceType].payment_settings.design.margin.left, assetsUrl + 'images/icons/margin_left.svg'))
 
 
         this.fontFamilyDropdownButtons = [];

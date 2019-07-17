@@ -7,38 +7,38 @@
   ></span>
     <div class="header container">
         <div class="row preview--topPanel">
-            <div class="col-1 vertical-align">
+            <div class="col vertical-align">
                 PREVIEW MODE
             </div>
-            <div class="col-2 vertical-align">
+            <div class="col vertical-align">
                 <ng-container *ngIf="campaignId">
                     <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType"
                                             [clazz]="'radio-button-group--little radio-button-group--white'">
                     </app-radio-button-group>
                 </ng-container>
             </div>
-            <div class="col-1 flex-center">
-                <label for="width">Device width</label>
+            <div class="col flex-center">
+                <label for="width">Device width [px]</label>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <app-inputNumber id="width"
                                  [(value)]="deviceWidth"
                                  [class]="'float-right'">
                 </app-inputNumber>
             </div>
-            <div class="col-1 flex-center">
-                <label for="height">Device height</label>
+            <div class="col flex-center">
+                <label for="height">Device height [px]</label>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <app-inputNumber id="height"
                                  [(value)]="deviceHeight"
                                  [class]="'float-right'">
                 </app-inputNumber>
             </div>
-            <div class="col-1 flex-center">
+            <div class="col flex-center">
                 <label for="scale">Scale [%]</label>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <app-inputNumber id="scale"
                                  [(value)]="scale"
                                  [class]="'float-right'">

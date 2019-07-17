@@ -46,7 +46,7 @@ export class ActionsComponent implements OnInit {
     }
 
     public showPreview() {
-        this.preview.emit()
+        this.preview.emit();
     }
 
     public discardChanges() {
@@ -54,12 +54,15 @@ export class ActionsComponent implements OnInit {
     }
 
     public submitChanges() {
-        this.submit.emit();
+        // on submit, change device type to desktop (for correctly saving html output)
+        this.deviceType = 'desktop';
+        this.handleDeviceTypeChange('desktop');
 
+        this.submit.emit();
     }
 
     handleDeviceTypeChange(event) {
-        this.deviceTypeChange.emit(event)
+        this.deviceTypeChange.emit(event);
     }
 
 }

@@ -77,27 +77,30 @@
         color: $azure;
     }
     iframe {
+        @include borderRadius(5px);
+        border: 4px solid $black;
+        background: rgba($black, .5);
+        margin: 5px;
         &.desktop {
-            transform: scale(.55);
-            transform-origin: 0 0;
+            //transform-origin: 0 0;
         }
-        &.tablet {
-            width: 768px;
-            margin-top: -186px;
-            height: 800px;
-            @include borderRadius(30px);
-            border: 4px solid #000000;
-            transform: scale(.55);
-        }
-        &.mobile {
-            width: 410px;
-            margin: -150px auto 0 22%;
-            height: 700px;
-            @include borderRadius(30px);
-            border: 4px solid #000000;
-            transform: scale(.55);
-
-        }
+        //&.tablet {
+        //    width: 768px;
+        //    margin-top: -186px;
+        //    height: 800px;
+        //    @include borderRadius(30px);
+        //    border: 4px solid #000000;
+        //    transform: scale(.55);
+        //}
+        //&.mobile {
+        //    width: 410px;
+        //    margin: -150px auto 0 22%;
+        //    height: 700px;
+        //    @include borderRadius(30px);
+        //    border: 4px solid #000000;
+        //    transform: scale(.55);
+        //
+        //}
     }
     &.fullscreen {
         width: calc(100% - 14px);
