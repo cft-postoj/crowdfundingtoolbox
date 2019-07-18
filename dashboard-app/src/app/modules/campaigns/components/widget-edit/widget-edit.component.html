@@ -245,7 +245,9 @@
                                     </div>
                                     <div class="col-3">
                                         <app-inputNumber
-                                                [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
+                                                [(value)]="(widget.settings[deviceType].additional_settings.textContainer.text.fontSize === undefined)
+                                                ? widget.settings[deviceType].widget_settings.general.fontSettings.fontSize
+                                                : widget.settings[deviceType].additional_settings.textContainer.text.fontSize"
                                                 [class]="'float-right'">
                                         </app-inputNumber>
                                     </div>
@@ -442,7 +444,7 @@
                                     <div class="col-12 col-xxl-6">
                                         Inside
                                         <app-input-group [buttons]="paddingButtons"
-                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer[$event.name] = $event.value">
+                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer.button.padding[$event.name] = $event.value">
 
                                         </app-input-group>
                                     </div>
@@ -519,7 +521,9 @@
                                         </div>
                                         <div class="col">
                                             <app-inputNumber
-                                                    [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize"
+                                                    [(value)]="(widget.settings[deviceType].additional_settings.buttonContainer.button.fontSize === undefined)
+                                                    ? widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize
+                                                    : widget.settings[deviceType].additional_settings.buttonContainer.button.fontSize"
                                                     [class]="'float-right'">
                                             </app-inputNumber>
                                         </div>
@@ -1056,7 +1060,8 @@
                                                   [(checked)]="widget.settings[deviceType].payment_settings.default_price.monthly_active">
                                     </app-checkbox>
                                 </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active" class="row pt-2">
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active"
+                                     class="row pt-2">
                                     <app-dropdown class="classic col"
                                                   [class]="'classic mr15'"
                                                   [items]="createActivePriceOptionsMonthly()"
@@ -1071,7 +1076,8 @@
                                                   [(checked)]="widget.settings[deviceType].payment_settings.default_price.one_time_active">
                                     </app-checkbox>
                                 </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active" class="row pt-2">
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active"
+                                     class="row pt-2">
                                     <app-dropdown class="classic col"
                                                   [class]="'classic mr15'"
                                                   [items]="createActivePriceOptionsOneTime()"

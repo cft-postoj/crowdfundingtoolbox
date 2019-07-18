@@ -215,8 +215,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             maxWidth: (backgroundStyles.maxWidth !== undefined) ? backgroundStyles.maxWidth : '100%',
             top: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.top : 0,
             bottom: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.bottom : 'auto',
-            left: 0,
-            margin: 0,
+            left: (this.widget.widget_type.method === 'popup' && (this.deviceType !== 'mobile'))
+                ? 'calc(50% - ' + parseInt(backgroundStyles.width, 10) / 2 + 'px)' : 0, // center popup
+            margin: '0 auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
             padding: this.addPx(paddingBackground.top) + ' ' +
@@ -225,12 +226,17 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(paddingBackground.left)
         };
 
+
         const fixedStyles = (this.widget.widget_type.method === widgetTypes.fixed.name) ? {
             bottom: (backgroundStyles.fixedSettings.top === 'auto') ? 0 : 'auto',
             zIndex: backgroundStyles.fixedSettings.zIndex,
             textAlign: backgroundStyles.fixedSettings.textAlign,
             padding: '5px'
         } : {};
+
+        if (this.widget.widget_type.method === widgetTypes.popup.name) {
+            fixedStyles.zIndex = 99999;
+        }
 
         let dynamicStyle = {};
         if (this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.imageOverlay.value ||
@@ -302,7 +308,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         this.usedFontFamily(headlineText.fontSettings.fontFamily);
         const dynamicStyle = {
             'text-align': additionalSettings.text.textAlign,
-            'font-size': headlineText.fontSettings.fontSize + 'px',
+            'font-size': (additionalSettings.text.fontSize === undefined) ? headlineText.fontSettings.fontSize + 'px'
+                : additionalSettings.text.fontSize + 'px',
             'color': headlineText.fontSettings.color,
             fontFamily: headlineText.fontSettings.fontFamily,
             width: (additionalSettings !== undefined) ?
@@ -324,7 +331,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         if (!additionalText) {
             return;
         }
-        console.log(this.widget.settings[this.deviceType].additional_settings.textContainer)
         const dynamicStyle = {
             'text-align': additionalText.fontSettings.alignment,
             'font-size': additionalText.fontSettings.fontSize + 'px',
@@ -364,7 +370,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             fontWeight: ctaStyles.default.fontSettings.fontWeight,
             textAlign: ctaStyles.default.fontSettings.alignment,
             color: ctaStyles.default.fontSettings.color,
-            fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
+            fontSize: (additionalSettings.fontSize === undefined) ? ctaStyles.default.fontSettings.fontSize + 'px'
+                : additionalSettings.fontSize + 'px',
             display: (this.widget.settings[this.deviceType].additional_settings.buttonContainer !== undefined) ?
                 this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display : 'block',
             'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)
@@ -497,6 +504,40 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             containerStyles['float'] = 'left';
         }
         return containerStyles;
+    }
+
+    getCloseWidgetStyles() {
+        const styles = {
+            position: 'absolute',
+            right: '15px',
+            top: (this.widget.widget_type.method === 'fixed') ? 'calc(50% - 10px)' : '15px',
+            width: '20px',
+            height: '20px',
+            cursor: 'pointer',
+            display: (this.widget.widget_type.method === 'fixed' || this.widget.widget_type.method === 'popup')
+                ? 'block' : 'none'
+        };
+        return styles;
+    }
+
+    getCloseButtonStyles() {
+        const styles = {
+            fill: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color
+        };
+        return styles;
+    }
+
+    getPopupOverlay() {
+        const styles = {
+            display: (this.widget.widget_type.method === 'popup') ? 'block' : 'none',
+            width: '100%',
+            height: '100%',
+            top: '-140px',
+            position: 'absolute',
+            zIndex: 9999,
+            background: 'rgba(0, 0, 0, .7)'
+        };
+        return styles;
     }
 
 }

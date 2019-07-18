@@ -18,6 +18,7 @@ use Modules\Campaigns\Http\Controllers\WidgetTypesController;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Campaigns\Transformers\WidgetResultResource;
 use Modules\Campaigns\WidgetTypesResources\FixedWidget;
+use Modules\Campaigns\WidgetTypesResources\PopupWidget;
 use Modules\Campaigns\WidgetTypesResources\SidebarWidget;
 use Modules\UserManagement\Services\TrackingService;
 use Modules\UserManagement\Services\UserService;
@@ -32,6 +33,7 @@ class WidgetService implements WidgetServiceInterface
     private $userService;
     private $sidebarWidget;
     private $fixedWidget;
+    private $popupWidget;
 
     public function __construct()
     {
@@ -39,6 +41,7 @@ class WidgetService implements WidgetServiceInterface
         $this->userService = new UserService();
         $this->sidebarWidget = new SidebarWidget();
         $this->fixedWidget = new FixedWidget();
+        $this->popupWidget = new PopupWidget();
     }
 
     public function createWidgetsForCampaign($campaignId)
@@ -641,40 +644,10 @@ class WidgetService implements WidgetServiceInterface
                 );
                 break;
             case 4: // popup
-                $outputJson = array(
-                    'width' => '800px',
-                    'maxWidth' => '100%',
-                    'height' => '500px',
-                    'position' => 'absolute',
-                    'zIndex' => 9999999,
-                    'fixedSettings' => array(),
-                    'display' => 'block',
-                    'padding' => array(
-                        'top' => '50px',
-                        'right' => '15px',
-                        'bottom' => '50px',
-                        'left' => '15px'
-                    ),
-                    'buttonContainer' => array(
-                        'width' => '300px',
-                        'position' => 'relative',
-                        'top' => 'auto',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'button' => array(
-                            'width' => '300px',
-                            'maxWidth' => '100%',
-                            'padding' => array(
-                                'top' => '12',
-                                'right' => '30',
-                                'bottom' => '15',
-                                'left' => '30'
-                            )
-                        )
-                    )
-
-                );
+                $outputJson = ($deviceType === 'desktop')
+                    ? $this->popupWidget->initDesktop() :
+                    (($deviceType === 'tablet') ? $this->popupWidget->initTablet()
+                        : $this->popupWidget->initMobile());
                 break;
             case 5: // fixed widget
                 $outputJson = ($deviceType === 'desktop')
@@ -733,7 +706,7 @@ class WidgetService implements WidgetServiceInterface
             ->orderBy('updated_at', 'desc')
             ->get()
             ->where('campaign_id', $campaignId);
-           // ->whereIn('widget_type_id', [1, 2, 3, 5]);
+        // ->whereIn('widget_type_id', [1, 2, 3, 5]);
     }
 
     /**
@@ -850,24 +823,24 @@ class WidgetService implements WidgetServiceInterface
                 ->get()
                 ->where('active', true)
                 ->whereIn('campaign_id', $campaignIds)
-                ->whereIn('widget_type_id', [2, 3, 5]);
+                ->whereIn('widget_type_id', [2, 3, 4, 5]);
         $onlyThreeWidgets = array();
         $usedWidgetIds = array();
         $user = Auth::user();
         $userId = $user != null ? $user->id : null;
         $newCookie = $this->userService->createCookieIfNew($userCookie, $userId, $ip);
-        if ($newCookie!=null) {
+        if ($newCookie != null) {
             $userCookie = $newCookie->id;
         }
         // get domain name from $url (third character /)
         $articleId = '';
         if ($url !== null) {
-            $articleId = explode('/',explode(explode('/', $url)[2],$url)[1])[0];
+            $articleId = explode('/', explode(explode('/', $url)[2], $url)[1])[0];
         } else {
             $url = '127.0.0.1:8001';
         }
 
-        $trackingVisit =  $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
+        $trackingVisit = $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
                 $trackingShow = $this->trackingService->show($trackingVisit->id, $rand['widget_type_id']);

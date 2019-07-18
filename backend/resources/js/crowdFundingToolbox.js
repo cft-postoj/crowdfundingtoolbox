@@ -4,9 +4,10 @@ import {
 import {apiUrl} from './constants/url';
 
 function getWidgets(apiUrl) {
-    let sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
-    let fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
-    let leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
+    const sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
+    const fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
+    const leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
+    const popupPlaceholder = document.getElementById('cr0wdFundingToolbox-popup');
 
     //get widgets for users and track, that user has been on specific page
     let data = JSON.stringify(
@@ -50,6 +51,16 @@ function getWidgets(apiUrl) {
                         case 'fixed':
                             (fixedPlaceholder != null) &&
                             (fixedPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                fixedPlaceholder.style.display = 'none';
+                            });
+                            break;
+                        case 'popup':
+                            (popupPlaceholder != null) &&
+                            (popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                popupPlaceholder.style.display = 'none';
+                            });
                             break;
                         default:
                             break;
