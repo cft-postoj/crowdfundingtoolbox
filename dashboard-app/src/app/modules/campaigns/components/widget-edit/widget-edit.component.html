@@ -37,7 +37,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-6 editInput">
-                                    Width: <input type="text" readonly disabled
+                                    Width: <input type="text"
                                                   [(ngModel)]="widget.settings[deviceType].additional_settings.width">
                                 </div>
                                 <div class="col-6 editInput">
@@ -116,7 +116,7 @@
                                     Offsets
                                 </div>
                                 <div class="col-10">
-                                    <app-input-group [buttons]="paddingMonetization"
+                                    <app-input-group [buttons]="backgroundPadding"
                                                      (buttonChange)="widget.settings[deviceType].additional_settings.padding[$event.name] = $event.value">
                                     </app-input-group>
                                 </div>
@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="col-8 col-xxl-2 vertical-align">
                                     <app-radio-button-group [class]="'full-width'"
-                                                            [(currentValue)]="widget.settings[deviceType].widget_settings.general.fontSettings.alignment"
+                                                            [(currentValue)]="widget.settings[deviceType].additional_settings.textContainer.text.textAlign"
                                                             [radioButtons]="radioButtons">
                                     </app-radio-button-group>
                                 </div>
@@ -245,7 +245,9 @@
                                     </div>
                                     <div class="col-3">
                                         <app-inputNumber
-                                                [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
+                                                [(value)]="(widget.settings[deviceType].additional_settings.textContainer.text.fontSize === undefined)
+                                                ? widget.settings[deviceType].widget_settings.general.fontSettings.fontSize
+                                                : widget.settings[deviceType].additional_settings.textContainer.text.fontSize"
                                                 [class]="'float-right'">
                                         </app-inputNumber>
                                     </div>
@@ -442,14 +444,14 @@
                                     <div class="col-12 col-xxl-6">
                                         Inside
                                         <app-input-group [buttons]="paddingButtons"
-                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.padding[$event.name] = $event.value">
+                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer.button.padding[$event.name] = $event.value">
 
                                         </app-input-group>
                                     </div>
                                     <div class="col-12 col-xxl-6 pt-3 pt-xxl-0">
                                         Outside
                                         <app-input-group [buttons]="marginButtons"
-                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.margin[$event.name] = $event.value">
+                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer[$event.name] = $event.value">
                                         </app-input-group>
                                     </div>
                                 </div>
@@ -464,7 +466,7 @@
                                     <div class="row">
                                         <div class="col-6 vertical-align">
                                             <app-radio-button-group [class]="'full-width'"
-                                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
+                                                                    [(currentValue)]="widget.settings[deviceType].additional_settings.buttonContainer.button.alignment"
                                                                     [radioButtons]="radioButtons"
                                             >
                                             </app-radio-button-group>
@@ -519,7 +521,9 @@
                                         </div>
                                         <div class="col">
                                             <app-inputNumber
-                                                    [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize"
+                                                    [(value)]="(widget.settings[deviceType].additional_settings.buttonContainer.button.fontSize === undefined)
+                                                    ? widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize
+                                                    : widget.settings[deviceType].additional_settings.buttonContainer.button.fontSize"
                                                     [class]="'float-right'">
                                             </app-inputNumber>
                                         </div>
@@ -1056,7 +1060,8 @@
                                                   [(checked)]="widget.settings[deviceType].payment_settings.default_price.monthly_active">
                                     </app-checkbox>
                                 </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active" class="row pt-2">
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active"
+                                     class="row pt-2">
                                     <app-dropdown class="classic col"
                                                   [class]="'classic mr15'"
                                                   [items]="createActivePriceOptionsMonthly()"
@@ -1071,7 +1076,8 @@
                                                   [(checked)]="widget.settings[deviceType].payment_settings.default_price.one_time_active">
                                     </app-checkbox>
                                 </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active" class="row pt-2">
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active"
+                                     class="row pt-2">
                                     <app-dropdown class="classic col"
                                                   [class]="'classic mr15'"
                                                   [items]="createActivePriceOptionsOneTime()"
@@ -1147,6 +1153,6 @@
                  [submitting]="saving" (deviceTypeChange)="recreateRadioButtons()"></app-actions>
 </div>
 
-<app-preview #previewGenerateHTML *ngIf="preview" [loading]="loading" [widget]="widget"
+<app-preview #previewGenerateHTML *ngIf="preview" [loading]="loading || saving" [widget]="widget"
              [deviceType]="deviceType" [(show)]="preview">
 </app-preview>

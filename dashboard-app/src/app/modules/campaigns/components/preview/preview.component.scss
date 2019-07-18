@@ -1,5 +1,5 @@
-@import '../../../../../sass/variables';
-@import '../../../../../sass/mixins';
+@import 'variables';
+@import 'mixins';
 
 .preview {
     display: none;
@@ -77,29 +77,30 @@
         color: $azure;
     }
     iframe {
+        @include borderRadius(5px);
+        border: 4px solid $black;
+        background: rgba($black, .5);
+        margin: 5px;
         &.desktop {
-            width: 1366px;
-            height: 768px;
-            transform: scale(.55);
-            transform-origin: 0 0;
+            //transform-origin: 0 0;
         }
-        &.tablet {
-            width: 768px;
-            margin-top: -186px;
-            height: 800px;
-            @include borderRadius(30px);
-            border: 4px solid #000000;
-            transform: scale(.55);
-        }
-        &.mobile {
-            width: 410px;
-            margin: -150px auto 0 22%;
-            height: 700px;
-            @include borderRadius(30px);
-            border: 4px solid #000000;
-            transform: scale(.55);
-
-        }
+        //&.tablet {
+        //    width: 768px;
+        //    margin-top: -186px;
+        //    height: 800px;
+        //    @include borderRadius(30px);
+        //    border: 4px solid #000000;
+        //    transform: scale(.55);
+        //}
+        //&.mobile {
+        //    width: 410px;
+        //    margin: -150px auto 0 22%;
+        //    height: 700px;
+        //    @include borderRadius(30px);
+        //    border: 4px solid #000000;
+        //    transform: scale(.55);
+        //
+        //}
     }
     &.fullscreen {
         width: calc(100% - 14px);
@@ -109,6 +110,18 @@
             left: 0;
         }
 
+    }
+    .header {
+        background: rgba($bali, .5);
+        padding: 15px;
+        color: $azure;
+        label {
+            color: $outer-space;
+        }
+    }
+    div.position-relative {
+        overflow-x: auto;
+        overflow-y: auto;
     }
 }
 

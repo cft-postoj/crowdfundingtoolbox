@@ -6,27 +6,46 @@
         [inlineSVG]="'assets/images/icons/preview_close.svg'"
   ></span>
     <div class="header container">
-        <div class="row">
-            <div class="col-3 vertical-align">
+        <div class="row preview--topPanel">
+            <div class="col vertical-align">
                 PREVIEW MODE
             </div>
-            <div class="col-2 offset-2 vertical-align">
+            <div class="col vertical-align">
                 <ng-container *ngIf="campaignId">
                     <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType"
                                             [clazz]="'radio-button-group--little radio-button-group--white'">
                     </app-radio-button-group>
                 </ng-container>
             </div>
-            <div class="col-1 offset-2 flex-center">
+            <div class="col flex-center">
+                <label for="width">Device width [px]</label>
+            </div>
+            <div class="col">
+                <app-inputNumber id="width"
+                                 [(value)]="deviceWidth"
+                                 [class]="'float-right'">
+                </app-inputNumber>
+            </div>
+            <div class="col flex-center">
+                <label for="height">Device height [px]</label>
+            </div>
+            <div class="col">
+                <app-inputNumber id="height"
+                                 [(value)]="deviceHeight"
+                                 [class]="'float-right'">
+                </app-inputNumber>
+            </div>
+            <div class="col flex-center">
                 <label for="scale">Scale [%]</label>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <app-inputNumber id="scale"
                                  [(value)]="scale"
                                  [class]="'float-right'">
                 </app-inputNumber>
             </div>
         </div>
+
     </div>
 
     <div *ngIf="campaignId" class="tabs">
@@ -43,37 +62,59 @@
     <!--</iframe>-->
 
     <!-- iframe encapsulated TODO -->
-    <iframe id="crowdWidgetContent-preview" [ngStyle]="{'transform': 'scale('+scale/100+')'}" [hidden]="loading" #iframe frameborder="0" width="100%" height="100%" class="{{deviceType}}"></iframe>
-    <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
-        <link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
-        <div class="cft--background" [ngStyle]="getBackgroundStyle()" [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
-            <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
-            <div class="cft--body" [ngStyle]="getBodyStyle()">
-                <div class="cft--text-container"  [ngStyle]="getTextContainerStyle()">
-                    <div class="cft--headline-text" [ngStyle]="getHeadlineTextStyle()" [innerHTML]="widget.settings[deviceType].headline_text">
+    <div class="position-relative">
+        <iframe id="crowdWidgetContent-preview" [width]="deviceWidth" [height]="deviceHeight"
+                [ngStyle]="{'transform': 'scale('+scale/100+')'}" [hidden]="loading"
+                #iframe frameborder="0" width="100%" height="100%" class="{{deviceType}}"></iframe>
+        <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
+            <link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
+            <div [ngStyle]="getPopupOverlay()"></div>
+            <div class="cft--background" [ngStyle]="getBackgroundStyle()"
+                 [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
+                <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
+                <div class="cft--body" [ngStyle]="getBodyStyle()">
+                    <div class="cft--text-container" [ngStyle]="getTextContainerStyle()">
+                        <div class="cft--headline-text" [ngStyle]="getHeadlineTextStyle()"
+                             [innerHTML]="widget.settings[deviceType].headline_text">
+                        </div>
+                        <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()"
+                             [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
+                        </div>
                     </div>
-                    <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()" [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
+                    <app-preview-monetization
+                            *ngIf="widget.settings[deviceType].payment_settings.type === 'classic'"
+                            [widget]="widget" [deviceType]="deviceType"
+                            style="display: flex"></app-preview-monetization>
+                    <app-preview-monetization-lite
+                            *ngIf="widget.settings[deviceType].payment_settings.type === 'lite'"
+                            [widget]="widget" [deviceType]="deviceType"
+                            style="display: flex"></app-preview-monetization-lite>
+                    <!-- CTA -->
+                    <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="!ctaReplaced()">
+                        <a class=""
+                           [ngStyle]="getButtonStyles()"
+                           href="{{widget.settings[deviceType].cta.url}}">
+                            {{widget.settings[deviceType].cta.text}}
+                        </a>
                     </div>
                 </div>
-                <app-preview-monetization
-                        *ngIf="widget.settings[deviceType].payment_settings.type === 'classic'"
-                        [widget]="widget" [deviceType]="deviceType" style="display: flex"></app-preview-monetization>
-                <app-preview-monetization-lite
-                        *ngIf="widget.settings[deviceType].payment_settings.type === 'lite'"
-                        [widget]="widget" [deviceType]="deviceType" style="display: flex"></app-preview-monetization-lite>
-                <!-- CTA -->
-                <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="!ctaReplaced()">
-                    <a class="cft--button"
-                       [ngStyle]="getButtonStyles()"
-                       href="{{widget.settings[deviceType].cta.url}}">
-                        {{widget.settings[deviceType].cta.text}}
-                    </a>
-                </div>
+                <span [ngStyle]="getCloseWidgetStyles()" class="cr0wdWidgetContent--closeWidget">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="close" transform="translate(-1850 -23)">
+    <rect id="safearea" width="24" height="24" transform="translate(1850 23)" fill="transparent" opacity="0"/>
+    <g id="icon" transform="translate(5 5)">
+      <path [ngStyle]="getCloseButtonStyles()" id="Path_31" data-name="Path 31"
+            d="M13.747,12.712,8.03,6.95,13.747,1.1a.653.653,0,0,0,0-.945.653.653,0,0,0-.945,0L7.085,5.96,1.1.2A.591.591,0,0,0,.153.2a.685.685,0,0,0,0,.9L6.095,6.9.153,12.712a.653.653,0,0,0,0,.945.677.677,0,0,0,.5.18.677.677,0,0,0,.5-.18L7.085,7.85,12.8,13.657a.677.677,0,0,0,.5.18.522.522,0,0,0,.45-.18A.652.652,0,0,0,13.747,12.712Z"
+            transform="translate(1850.05 23.05)"/>
+    </g>
+  </g>
+</svg>
+                </span>
             </div>
-        </div>
-        <div id="styles">
-        </div>
+            <div id="styles">
+            </div>
             <div id="scripts">
             </div>
+        </div>
     </div>
 </div>

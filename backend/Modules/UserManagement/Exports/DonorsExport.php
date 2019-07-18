@@ -38,9 +38,6 @@ class DonorsExport implements FromCollection
             ->with(array('userPaymentOptions' => function ($query) {
                 $query->select('portal_user_id', 'bank_account_number');
             }))
-            ->with(array('donorStatus' => function ($query) {
-                $query->select('portal_user_id', 'monthly_donor');
-            }))
             ->with(array('donations' => function ($query) {
                 $query->select('portal_user_id', 'is_monthly_donation', 'amount', 'amount_initialized', 'status', 'payment_method', 'payment_id', 'created_at')
                     ->where('status', 'processed');

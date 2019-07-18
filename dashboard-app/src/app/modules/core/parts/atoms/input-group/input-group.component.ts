@@ -15,7 +15,7 @@ export class InputGroupComponent implements OnInit {
     public buttonChange: EventEmitter<RadioButton> = new EventEmitter();
 
     @Input()
-    public fill:boolean;
+    public fill: boolean;
 
     @Input()
     public class;

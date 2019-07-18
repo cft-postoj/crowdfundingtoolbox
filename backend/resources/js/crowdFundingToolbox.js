@@ -4,9 +4,10 @@ import {
 import {apiUrl} from './constants/url';
 
 function getWidgets(apiUrl) {
-    let sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
-    let fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
-    let leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
+    const sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
+    const fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
+    const leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
+    const popupPlaceholder = document.getElementById('cr0wdFundingToolbox-popup');
 
     //get widgets for users and track, that user has been on specific page
     let data = JSON.stringify(
@@ -37,6 +38,8 @@ function getWidgets(apiUrl) {
                             scriptElement.appendChild(inlineScript);
                             if (sidebarPlaceholder != null) {
                                 sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                console.log(cr0wdGetDeviceType());
+                                console.log(el.response[cr0wdGetDeviceType()]);
                                 sidebarPlaceholder.dataset.show_id = el.show_id;
                                 sidebarPlaceholder.appendChild(scriptElement);
                             }
@@ -48,6 +51,19 @@ function getWidgets(apiUrl) {
                         case 'fixed':
                             (fixedPlaceholder != null) &&
                             (fixedPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                fixedPlaceholder.style.display = 'none';
+                            });
+                            break;
+                        case 'popup':
+                            if (isPopupEnableToVisit()) {
+                                (popupPlaceholder != null) &&
+                                (popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                                document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                    popupPlaceholder.style.display = 'none';
+                                });
+                                setVisitingPopupTime();
+                            }
                             break;
                         default:
                             break;
@@ -59,6 +75,23 @@ function getWidgets(apiUrl) {
     xhttp.open('POST', apiUrl + 'widgets');
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.send(data);
+}
+
+function setVisitingPopupTime() {
+    const time = new Date().getTime() / 1000;
+    return window.localStorage.setItem('cft-popup-time', time);
+}
+
+function isPopupEnableToVisit() {
+    const actualTime = new Date().getTime() / 1000;
+    const thirtyMinutes = 1800; // 30 min === 1800 sec
+    const storedTime = window.localStorage.getItem('cft-popup-time');
+    if (storedTime != null) {
+        if (actualTime - (parseInt(storedTime, 10) + thirtyMinutes) <= 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function registerClick(apiUrl) {

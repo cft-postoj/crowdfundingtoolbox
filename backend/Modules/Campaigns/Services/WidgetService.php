@@ -17,6 +17,9 @@ use Modules\Campaigns\Entities\WidgetVersion;
 use Modules\Campaigns\Http\Controllers\WidgetTypesController;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Campaigns\Transformers\WidgetResultResource;
+use Modules\Campaigns\WidgetTypesResources\FixedWidget;
+use Modules\Campaigns\WidgetTypesResources\PopupWidget;
+use Modules\Campaigns\WidgetTypesResources\SidebarWidget;
 use Modules\UserManagement\Services\TrackingService;
 use Modules\UserManagement\Services\UserService;
 
@@ -28,11 +31,17 @@ class WidgetService implements WidgetServiceInterface
     private $paymentSettings;
     private $trackingService;
     private $userService;
+    private $sidebarWidget;
+    private $fixedWidget;
+    private $popupWidget;
 
     public function __construct()
     {
         $this->trackingService = new TrackingService();
         $this->userService = new UserService();
+        $this->sidebarWidget = new SidebarWidget();
+        $this->fixedWidget = new FixedWidget();
+        $this->popupWidget = new PopupWidget();
     }
 
     public function createWidgetsForCampaign($campaignId)
@@ -42,7 +51,9 @@ class WidgetService implements WidgetServiceInterface
             $widgetIds = WidgetTypesController::getWidgetTypeIds();
 
             foreach ($widgetIds as $id) {
-                $widgetSettings = $this->initialWidgetSettings($campaignId, $id);
+                $widgetSettingsDesktop = $this->initialWidgetSettings($campaignId, $id, 'desktop');
+                $widgetSettingsTablet = $this->initialWidgetSettings($campaignId, $id, 'tablet');
+                $widgetSettingsMobile = $this->initialWidgetSettings($campaignId, $id, 'mobile');
                 $paymentType = ($id == 1) ? true : false;
 
                 $widget = Widget::create([
@@ -54,9 +65,9 @@ class WidgetService implements WidgetServiceInterface
 
                 $widget->settings = WidgetSettings::create([
                     'widget_id' => $widget->id,
-                    'desktop' => $this->overrideMonetization(DeviceType::find(1), $widgetSettings, $id),
-                    'tablet' => $this->overrideMonetization(DeviceType::find(2), $widgetSettings, $id),
-                    'mobile' => $this->overrideMonetization(DeviceType::find(3), $widgetSettings, $id)
+                    'desktop' => $this->overrideMonetization(DeviceType::find(1), $widgetSettingsDesktop, $id),
+                    'tablet' => $this->overrideMonetization(DeviceType::find(2), $widgetSettingsTablet, $id),
+                    'mobile' => $this->overrideMonetization(DeviceType::find(3), $widgetSettingsMobile, $id)
                 ]);
                 // create Widget results
                 $widget->result = WidgetResult::create([
@@ -144,12 +155,12 @@ class WidgetService implements WidgetServiceInterface
     }
 
 
-    public function initialWidgetSettings($id, $widgetTypeId)
+    public function initialWidgetSettings($id, $widgetTypeId, $deviceType)
     {
-        return $this->createSettingsJson($widgetTypeId);
+        return $this->createSettingsJson($widgetTypeId, $deviceType);
     }
 
-    public function createSettingsJson($widgetType)
+    public function createSettingsJson($widgetType, $deviceType)
     {
         $this->widgetSettings = $this->widgetSettingsStructure();
         $this->paymentSettings = $this->paymentSettingsStructure($widgetType);
@@ -212,7 +223,7 @@ class WidgetService implements WidgetServiceInterface
                 'url' => $generalWidgetSettings['cta']['url']
             ),
             'additional_settings' =>
-                $this->getAdditionalWidgetSettings($widgetType, $generalSettings)
+                $this->getAdditionalWidgetSettings($widgetType, $generalSettings, $deviceType)
 
         );
 
@@ -498,7 +509,7 @@ class WidgetService implements WidgetServiceInterface
         return $structure;
     }
 
-    public function getAdditionalWidgetSettings($widgetType, $generalSettings)
+    public function getAdditionalWidgetSettings($widgetType, $generalSettings, $deviceType)
     {
         $outputJson = array();
         switch ($widgetType) {
@@ -565,207 +576,88 @@ class WidgetService implements WidgetServiceInterface
                 );
                 break;
             case 2: // sidebar widget
-                $outputJson = array(
-                    'width' => '300px',
-                    'maxWidth' => '100%',
-                    'height' => '600px',
-                    'position' => 'relative',
-                    'fixedSettings' => array(),
-                    'display' => 'block',
-                    'padding' => array(
-                        'top' => '0',
-                        'right' => '0',
-                        'bottom' => '0',
-                        'left' => '0'
-                    ),
-                    'bodyContainer' => array(
-                        'width' => '100%',
-                        'height' => '100%',
-                        'margin' => '0 auto',
-                        'position' => 'relative',
-                        'top' => 'auto',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'text' => array(
-                            'width' => '100%',
-                            'top' => '30px'
-                        )
-                    ),
-                    'textContainer' => array(
-                        'width' => '100%',
-                        'height' => '100%',
-                        'margin' => '0 auto',
-                        'position' => 'relative',
-                        'top' => 'auto',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'text' => array(
-                            'width' => '100%',
-                            'top' => '30px',
-                            'textAlign' => 'left'
-                        )
-                    ),
-                    'buttonContainer' => array(
-                        'width' => '100%',
-                        'position' => 'relative',
-                        'top' => 'auto',
-                        'right' => 'auto',
-                        'bottom' => '50px',
-                        'left' => 'auto',
-                        'display' => 'block',
-                        'textAlign' => 'center',
-                        'margin' => array(
-                            'top' => '420',
-                            'right' => 'auto',
-                            'bottom' => '0',
-                            'left' => 'auto'
-                        ),
-                        'button' => array(
-                            'width' => '100%',
-                            'padding' => array(
-                                'top' => '15',
-                                'right' => '70',
-                                'bottom' => '20',
-                                'left' => '70'
-                            )
-                        )
-                    )
-                );
+                $outputJson = ($deviceType === 'desktop')
+                    ? $this->sidebarWidget->initDesktop() :
+                    (($deviceType === 'tablet') ? $this->sidebarWidget->initTablet()
+                        : $this->sidebarWidget->initMobile());
                 break;
             case 3: // leaderboard
-                $outputJson = array(
-                    'width' => '100%',
-                    'height' => '350px',
-                    'position' => 'relative',
-                    'fixedSettings' => array(),
-                    'display' => 'block',
-                    'padding' => array(
-                        'top' => '0',
-                        'right' => '0',
-                        'bottom' => '0',
-                        'left' => '0'
-                    ),
-                    'bodyContainer' => array(
-                        'width' => '100%',
-                        'margin' => array(
-                            'top' => '0',
-                            'right' => 'auto',
-                            'bottom' => '0',
-                            'left' => 'auto'
-                        ),
-                        'position' => 'absolute',
-                        'top' => '80px',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'text' => array(
-                            'width' => '100%'
-                        )
-                    ),
-                    'textContainer' => array(
-                        'width' => '100%',
-                        'margin' => array(
-                            'top' => '0',
-                            'right' => 'auto',
-                            'bottom' => '0',
-                            'left' => 'auto'
-                        ),
-                        'position' => 'absolute',
-                        'top' => '80px',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'text' => array(
-                            'width' => '100%'
-                        )
-                    ),
-                    'buttonContainer' => array(
-                        'width' => '100%',
-                        'position' => 'absolute',
-                        'top' => '50px',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'textAlign' => 'center',
-                        'button' => array(
-                            'width' => '35%',
-                            'display' => 'inline-block',
-                        )
-                    )
-                );
+                $outputJson = ($deviceType === 'desktop')
+                    ? $this->sidebarWidget->initDesktop() :
+                    (($deviceType === 'tablet') ? $this->sidebarWidget->initTablet()
+                        : $this->sidebarWidget->initMobile());
+//                $outputJson = array(
+//                    'width' => '100%',
+//                    'height' => '350px',
+//                    'position' => 'relative',
+//                    'fixedSettings' => array(),
+//                    'display' => 'block',
+//                    'padding' => array(
+//                        'top' => '0',
+//                        'right' => '0',
+//                        'bottom' => '0',
+//                        'left' => '0'
+//                    ),
+//                    'bodyContainer' => array(
+//                        'width' => '100%',
+//                        'margin' => array(
+//                            'top' => '0',
+//                            'right' => 'auto',
+//                            'bottom' => '0',
+//                            'left' => 'auto'
+//                        ),
+//                        'position' => 'absolute',
+//                        'top' => '80px',
+//                        'right' => 'auto',
+//                        'bottom' => 'auto',
+//                        'left' => 'auto',
+//                        'text' => array(
+//                            'width' => '100%'
+//                        )
+//                    ),
+//                    'textContainer' => array(
+//                        'width' => '100%',
+//                        'margin' => array(
+//                            'top' => '0',
+//                            'right' => 'auto',
+//                            'bottom' => '0',
+//                            'left' => 'auto'
+//                        ),
+//                        'position' => 'absolute',
+//                        'top' => '80px',
+//                        'right' => 'auto',
+//                        'bottom' => 'auto',
+//                        'left' => 'auto',
+//                        'text' => array(
+//                            'width' => '100%'
+//                        )
+//                    ),
+//                    'buttonContainer' => array(
+//                        'width' => '100%',
+//                        'position' => 'absolute',
+//                        'top' => '50px',
+//                        'right' => 'auto',
+//                        'bottom' => 'auto',
+//                        'left' => 'auto',
+//                        'textAlign' => 'center',
+//                        'button' => array(
+//                            'width' => '35%',
+//                            'display' => 'inline-block',
+//                        )
+//                    )
+//                );
                 break;
             case 4: // popup
-                $outputJson = array();
+                $outputJson = ($deviceType === 'desktop')
+                    ? $this->popupWidget->initDesktop() :
+                    (($deviceType === 'tablet') ? $this->popupWidget->initTablet()
+                        : $this->popupWidget->initMobile());
                 break;
             case 5: // fixed widget
-                $outputJson = array(
-                    'width' => '100%',
-                    'maxWidth' => '100%',
-                    'height' => '80px',
-                    'position' => 'fixed',
-                    'padding' => array(
-                        'top' => '0',
-                        'right' => '0',
-                        'bottom' => '0',
-                        'left' => '0'
-                    ),
-                    'fixedSettings' => array(
-                        'top' => 'auto',
-                        'bottom' => '0',
-                        'zIndex' => 999999,
-                        'textAlign' => 'center'
-                    ),
-                    'bodyContainer' => array(
-                        'width' => '100%',
-                        'margin' => array(
-                            'top' => '0',
-                            'right' => 'auto',
-                            'bottom' => '0',
-                            'left' => 'auto'
-                        ),
-                        'position' => 'absolute',
-                        'top' => 'auto',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'text' => array(
-                            'width' => '100%',
-                            'maxWidth' => '100%'
-                        )),
-                    'display' => 'inline-block',
-                    'textContainer' => array(
-                        'width' => 70,
-                        'margin' => array(
-                            'top' => '0',
-                            'right' => 'auto',
-                            'bottom' => '0',
-                            'left' => 'auto'
-                        ),
-                        'position' => 'absolute',
-                        'top' => 'auto',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'text' => array(
-                            'width' => '100%',
-                            'maxWidth' => '100%'
-                        )
-                    ),
-                    'buttonContainer' => array(
-                        'width' => 30,
-                        'position' => 'relative',
-                        'top' => 'auto',
-                        'right' => 'auto',
-                        'bottom' => 'auto',
-                        'left' => 'auto',
-                        'button' => array(
-                            'width' => '300px',
-                            'maxWidth' => '100%'
-                        )
-                    )
-                );
+                $outputJson = ($deviceType === 'desktop')
+                    ? $this->fixedWidget->initDesktop() :
+                    (($deviceType === 'tablet') ? $this->fixedWidget->initTablet()
+                        : $this->fixedWidget->initMobile());
                 break;
             case 6: // locked article
                 $outputJson = array();
@@ -817,8 +709,8 @@ class WidgetService implements WidgetServiceInterface
             ->with('campaignImage')
             ->orderBy('updated_at', 'desc')
             ->get()
-            ->where('campaign_id', $campaignId)
-            ->whereIn('widget_type_id', [1, 2, 3, 5]);
+            ->where('campaign_id', $campaignId);
+        // ->whereIn('widget_type_id', [1, 2, 3, 5]);
     }
 
     /**
@@ -916,7 +808,8 @@ class WidgetService implements WidgetServiceInterface
      */
     public function getWidgetsByCampaginReduced($campaign)
     {
-        return Widget::all()->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]);
+        return Widget::all()
+            ->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]);
     }
 
     /**
@@ -934,18 +827,24 @@ class WidgetService implements WidgetServiceInterface
                 ->get()
                 ->where('active', true)
                 ->whereIn('campaign_id', $campaignIds)
-                ->whereIn('widget_type_id', [2, 3, 5]);
+                ->whereIn('widget_type_id', [2, 3, 4, 5]);
         $onlyThreeWidgets = array();
         $usedWidgetIds = array();
         $user = Auth::user();
         $userId = $user != null ? $user->id : null;
         $newCookie = $this->userService->createCookieIfNew($userCookie, $userId, $ip);
-        if ($newCookie!=null) {
+        if ($newCookie != null) {
             $userCookie = $newCookie->id;
         }
-        //TODO: use env
-        $articleId = explode("/",explode("http://www.postoj.local:8000/",$url)[1])[0];
-        $trackingVisit =  $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
+        // get domain name from $url (third character /)
+        $articleId = '';
+        if ($url !== null) {
+            $articleId = explode('/', explode(explode('/', $url)[2], $url)[1])[0];
+        } else {
+            $url = '127.0.0.1:8001';
+        }
+
+        $trackingVisit = $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
                 $trackingShow = $this->trackingService->show($trackingVisit->id, $rand['widget_type_id']);
