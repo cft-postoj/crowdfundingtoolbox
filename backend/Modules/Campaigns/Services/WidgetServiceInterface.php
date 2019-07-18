@@ -13,9 +13,8 @@ interface WidgetServiceInterface
     public function update($rawWidgetData);
 
 
-    public function initialWidgetSettings($id, $widgetTypeId);
-    public function createSettingsJson($widgetType);
-
+    public function initialWidgetSettings($id, $widgetTypeId, $deviceType);
+    public function createSettingsJson($widgetType, $deviceType);
     public function getGeneralSettings();
     public function overrideMonetization($deviceType, $settings, $widgetTypeId);
 
@@ -26,7 +25,7 @@ interface WidgetServiceInterface
     public function overrideGeneralSettings($type, $settings, $widgetType);
     public function paymentSettingsStructure($widgetTypeId);
 
-    public function getAdditionalWidgetSettings($widgetType, $generalSettings);
+    public function getAdditionalWidgetSettings($widgetType, $generalSettings, $deviceType);
 
     public function addTracking($widgetId, $userId, $data);
     public function get($id);

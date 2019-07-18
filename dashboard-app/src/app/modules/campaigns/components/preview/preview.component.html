@@ -67,7 +67,7 @@
                 #iframe frameborder="0" width="100%" height="100%" class="{{deviceType}}"></iframe>
         <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
             <link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
-            <div class="cft--background" [ngStyle]="getBackgroundLivePreviewStyle()"
+            <div class="cft--background" [ngStyle]="getBackgroundStyle()"
                  [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
                 <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
                 <div class="cft--body" [ngStyle]="getBodyStyle()">

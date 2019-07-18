@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="col-8 col-xxl-2 vertical-align">
                                     <app-radio-button-group [class]="'full-width'"
-                                                            [(currentValue)]="widget.settings[deviceType].widget_settings.general.fontSettings.alignment"
+                                                            [(currentValue)]="widget.settings[deviceType].additional_settings.textContainer.text.textAlign"
                                                             [radioButtons]="radioButtons">
                                     </app-radio-button-group>
                                 </div>
@@ -442,14 +442,14 @@
                                     <div class="col-12 col-xxl-6">
                                         Inside
                                         <app-input-group [buttons]="paddingButtons"
-                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.padding[$event.name] = $event.value">
+                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer[$event.name] = $event.value">
 
                                         </app-input-group>
                                     </div>
                                     <div class="col-12 col-xxl-6 pt-3 pt-xxl-0">
                                         Outside
                                         <app-input-group [buttons]="marginButtons"
-                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.margin[$event.name] = $event.value">
+                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer[$event.name] = $event.value">
                                         </app-input-group>
                                     </div>
                                 </div>
@@ -464,7 +464,7 @@
                                     <div class="row">
                                         <div class="col-6 vertical-align">
                                             <app-radio-button-group [class]="'full-width'"
-                                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
+                                                                    [(currentValue)]="widget.settings[deviceType].additional_settings.buttonContainer.button.alignment"
                                                                     [radioButtons]="radioButtons"
                                             >
                                             </app-radio-button-group>

@@ -71,7 +71,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     public scale: number = 100;
     public deviceWidth: number = 1366;
-    public deviceHeight: number = 768;
+    public deviceHeight: number = 600;
 
     public iframeCode = iframeCode;
     public globalStyles = globalStyles;
@@ -174,13 +174,13 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         // set device width/height
         if (this.deviceType === 'tablet') {
             this.deviceWidth = 768;
-            this.deviceHeight = 1366;
+            this.deviceHeight = 600;
         } else if (this.deviceType === 'mobile') {
             this.deviceWidth = 380;
             this.deviceHeight = 600;
         } else {
             this.deviceWidth = 1366;
-            this.deviceHeight = 768;
+            this.deviceHeight = 600;
         }
     }
 
@@ -213,7 +213,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             height: (backgroundStyles.height !== undefined) ? backgroundStyles.height : 0,
             width: (backgroundStyles.width !== undefined) ? backgroundStyles.width : 0,
             maxWidth: (backgroundStyles.maxWidth !== undefined) ? backgroundStyles.maxWidth : '100%',
-            top: 0,
+            top: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.top : 0,
+            bottom: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.bottom : 'auto',
             left: 0,
             margin: 0,
             'background-repeat': 'no-repeat',
@@ -297,14 +298,15 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getHeadlineTextStyle() {
         const headlineText = this.widget.settings[this.deviceType].widget_settings.general;
+        const additionalSettings = this.widget.settings[this.deviceType].additional_settings.textContainer;
         this.usedFontFamily(headlineText.fontSettings.fontFamily);
         const dynamicStyle = {
-            'text-align': headlineText.fontSettings.alignment,
+            'text-align': additionalSettings.text.textAlign,
             'font-size': headlineText.fontSettings.fontSize + 'px',
             'color': headlineText.fontSettings.color,
             fontFamily: headlineText.fontSettings.fontFamily,
-            width: (this.widget.settings[this.deviceType].additional_settings.textContainer !== undefined) ?
-                this.widget.settings[this.deviceType].additional_settings.textContainer.text.width : '100%',
+            width: (additionalSettings !== undefined) ?
+                additionalSettings.text.width : '100%',
             display: (headlineText.text_display !== undefined) ? headlineText.text_display : 'block',
 
             margin: this.addPx(headlineText.text_margin.top) + ' ' +
@@ -322,6 +324,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         if (!additionalText) {
             return;
         }
+        console.log(this.widget.settings[this.deviceType].additional_settings.textContainer)
         const dynamicStyle = {
             'text-align': additionalText.fontSettings.alignment,
             'font-size': additionalText.fontSettings.fontSize + 'px',
@@ -344,6 +347,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getButtonStyles() {
         const ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
+        const additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer.button;
         this.usedFontFamily(ctaStyles.default.fontSettings.fontFamily);
         const boxShadow = ctaStyles.default.design.shadow.x + 'px ' +
             ctaStyles.default.design.shadow.y + 'px ' +
@@ -352,10 +356,10 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
 
         const defaultStyles = {
-            padding: this.addPx(ctaStyles.default.padding.top) + ' ' +
-                this.addPx(ctaStyles.default.padding.right) + ' ' +
-                this.addPx(ctaStyles.default.padding.bottom) + ' ' +
-                this.addPx(ctaStyles.default.padding.left),
+            padding: this.addPx(additionalSettings.padding.top) + ' ' +
+                this.addPx(additionalSettings.padding.right) + ' ' +
+                this.addPx(additionalSettings.padding.bottom) + ' ' +
+                this.addPx(additionalSettings.padding.left),
             fontFamily: ctaStyles.default.fontSettings.fontFamily,
             fontWeight: ctaStyles.default.fontSettings.fontWeight,
             textAlign: ctaStyles.default.fontSettings.alignment,
@@ -481,11 +485,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
             width: (additionalSettings !== undefined) ? additionalSettings.width : '100%',
             position: (additionalSettings !== undefined) ? additionalSettings.position : 'relative',
-            textAlign: ctaStyles.default.fontSettings.alignment,
-            margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
-                this.addPx(ctaStyles.default.margin.right) + ' ' +
-                this.addPx(ctaStyles.default.margin.bottom) + ' ' +
-                this.addPx(ctaStyles.default.margin.left),
+            textAlign: additionalSettings.button.alignment,
+            margin: this.addPx(additionalSettings.top) + ' ' +
+                this.addPx(additionalSettings.right) + ' ' +
+                this.addPx(additionalSettings.bottom) + ' ' +
+                this.addPx(additionalSettings.left),
         };
 
         if (this.widget.widget_type.method === widgetTypes.fixed.name) {
