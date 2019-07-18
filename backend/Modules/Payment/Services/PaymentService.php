@@ -25,6 +25,8 @@ class PaymentService
     private $amountIndex;
     private $ibanIndex;
     private $variableSymbolIndex;
+    private $specificSymbolIndex;
+    private $constantSymbolIndex;
     private $payerReferenceIndex;
     private $paymentNoteIndex;
     private $transactionIdIndex;
@@ -479,6 +481,8 @@ class PaymentService
             $this->amountIndex = 2; // Sum
             $this->ibanIndex = 8; // Iban
             $this->variableSymbolIndex = 9; // Variable symbol
+            $this->specificSymbolIndex = 10; // Specific symbol
+            $this->constantSymbolIndex = 11; // Constant symbol
             $this->payerReferenceIndex = 12; // Payer reference
             $this->paymentNoteIndex = 13; // Information
             $this->transactionIdIndex = 14; // Description (for example card pay information)
@@ -511,7 +515,9 @@ class PaymentService
                             'variable_symbol' => (int)$csv[$this->variableSymbolIndex],
                             'transaction_date' => date('Y-m-d H:i:s', strtotime($csv[$this->transactionDateIndex])),
                             'payment_notes' => $csv[$this->paymentNoteIndex],
-                            'payer_reference' => $csv[$this->payerReferenceIndex]
+                            'payer_reference' => $csv[$this->payerReferenceIndex],
+                            'specific_symbol' => $csv[$this->specificSymbolIndex],
+                            'constant_symbol' => $csv[$this->constantSymbolIndex]
                         );
                         $currentPaymentRecord = $this->paymentRepository->create($csvRequest);
                         $countOfSuccessfullyCreatedRecords++;
