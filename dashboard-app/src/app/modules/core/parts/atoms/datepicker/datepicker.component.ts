@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgbDateParserFormatter, NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {DateParserFormatter} from "./ngb-datepicker-formatter";
 import {environment} from 'environments/environment';
+import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 
 @Component({
     selector: 'app-datepicker',
@@ -41,6 +42,10 @@ export class DatepickerComponent implements OnInit {
 
     public changeEvent() {
         this.dateChange.emit(this.date);
+    }
+
+    choosedDate($event) {
+
     }
 
 }

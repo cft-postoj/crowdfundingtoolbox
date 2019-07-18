@@ -30,6 +30,7 @@ import { NavbarComponent } from './parts/atoms/navbar/navbar.component';
 import {StatusComponent} from './parts/atoms/status/status.component';
 import { ExportCsvComponent } from './components/export-csv/export-csv.component';
 import { HelpComponent } from './components/help/help.component';
+import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 
 @NgModule({
     declarations: [
@@ -72,6 +73,7 @@ import { HelpComponent } from './components/help/help.component';
         AngularEditorModule,
         FormsModule,
         SelectDropDownModule,
+        NgxDaterangepickerMd.forRoot(),
         NgCircleProgressModule.forRoot({
             space: -5
         }),
