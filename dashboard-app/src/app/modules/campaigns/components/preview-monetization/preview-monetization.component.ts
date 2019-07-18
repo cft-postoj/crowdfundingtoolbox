@@ -104,10 +104,10 @@ export class PreviewMonetizationComponent implements OnInit {
         script.charset = 'utf-8';
         script.setAttribute("class", "previewScripts");
 
-        const scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('let target;',
+        const scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',
             'let target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';
 
-        const scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('let target;',
+        const scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('var target;',
             'let target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
 
         script.appendChild(document.createTextNode(scriptActiveButtonMonthly + '\n'));

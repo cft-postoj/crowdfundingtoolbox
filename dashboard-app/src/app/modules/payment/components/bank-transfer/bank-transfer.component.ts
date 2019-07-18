@@ -1,8 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {init} from 'protractor/built/launcher';
 import {BankTransfer} from '../../models/bank-transfer';
 import {PaymentMethodsService} from '../../services/payment-methods.service';
+import {BankButtonService} from '../../services/bank-button.service';
+import {forkJoin} from 'rxjs';
+import {BankButton} from '../../models/bank-button';
+import {Image} from '../../../core/models/image';
+
 
 @Component({
     selector: 'app-bank-transfer',
@@ -21,11 +25,14 @@ export class BankTransferComponent implements OnInit {
     public alertMessage: string = '';
 
     public bankTransferData = new BankTransfer();
+    bankButtons: BankButton[] = [];
 
-    constructor(private paymentMethodsService: PaymentMethodsService, public formBuilder: FormBuilder) {
+    constructor(private paymentMethodsService: PaymentMethodsService,
+                private bankButtonService: BankButtonService, public formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
+        this.getBanksButtons();
         this.getBankTransferData();
         this.initForm();
     }
@@ -101,17 +108,27 @@ export class BankTransferComponent implements OnInit {
             paymentNote: this.paymentForm.get('paymentNoteOneTime').value,
             available: this.checkedOneTime
         };
-        if (this.bankTransferData.monthlyPayment.available && this.bankTransferData.monthlyPayment.accountNumber.length < 5) {
+        if (this.bankTransferData.monthlyPayment.available &&
+            this.bankTransferData.monthlyPayment.accountNumber &&
+            this.bankTransferData.monthlyPayment.accountNumber.length < 5) {
             this.alertMessage = 'Bank account number in monthly subscription is required in correct shape.';
             this.alertOpen = true;
             this.alertType = 'danger';
-        } else if (this.bankTransferData.oneTimePayment.available && this.bankTransferData.oneTimePayment.accountNumber.length < 5) {
+        } else if (this.bankTransferData.oneTimePayment.available &&
+            this.bankTransferData.oneTimePayment.accountNumber &&
+            this.bankTransferData.oneTimePayment.accountNumber.length < 5) {
             this.alertMessage = 'Bank account number in one-time payment is required in correct shape.';
             this.alertOpen = true;
             this.alertType = 'danger';
         } else {
             this.loading = true;
-            this.paymentMethodsService.setBankTransferData(this.bankTransferData).subscribe((data) => {
+            const values = forkJoin(
+                this.paymentMethodsService.setBankTransferData(this.bankTransferData),
+                this.bankButtonService.updateBankButtons(this.bankButtons)
+            );
+            values.subscribe(data => {
+                // handle bank result data from bankButtonService.updateBankButtons
+                this.updateBanksButtonsByResult(data[1]);
                 this.alertMessage = 'Successfully updated bank transfer details.';
                 this.alertOpen = true;
                 this.alertType = 'success';
@@ -127,7 +144,7 @@ export class BankTransferComponent implements OnInit {
 
     private getBankTransferData() {
         this.paymentMethodsService.getBankTransferData().subscribe((data: BankTransfer) => {
-            if (data !== null && data !== undefined) {
+            if (data != null && Object.keys(data).length !== 0) {
                 this.bankTransferData = data;
             }
             this.initForm();
@@ -135,4 +152,31 @@ export class BankTransferComponent implements OnInit {
         });
     }
 
+
+    public addNewBankButton() {
+        this.bankButtons.push({id: 0, order: 0, redirect_link: '', image: new Image()});
+    }
+
+    private getBanksButtons() {
+        this.bankButtonService.getBankButtons().subscribe((result) => {
+            this.updateBanksButtonsByResult(result);
+        });
+    }
+
+    public deleteBankButton(bankButton) {
+        this.bankButtons = this.bankButtons.filter(singleItem => {
+                return bankButton !== singleItem;
+            }
+        );
+    }
+
+    private updateBanksButtonsByResult(result: BankButton[]) {
+        this.bankButtons = result.map(single => {
+            let result = single;
+            if (result.image == null) {
+                result.image = new Image();
+            }
+            return result;
+        });
+    }
 }

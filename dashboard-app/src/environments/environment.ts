@@ -70,6 +70,8 @@ export const environment = {
     bankTransferMethod: '/payment/bank-transfer-details',
     payBySquareMethod: '/payment/pay-by-square-details',
 
+    bankButton: '/payment/bank-button',
+
     donations: '/donations',
     unpairedPayments: '/unpaired-payments',
 

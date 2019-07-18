@@ -45,9 +45,9 @@ export function trackEmailOnChange(el) {
 }
 
 export function setActiveButtonMonthly(chosenButton, focusInput: false, track: boolean = true) {
-    const apiPublicUrl = getEnvs().apiPublicUrl + '/portal/'; // TEST API
-    let target;
-    let landingDocument = document;
+    var apiPublicUrl = getEnvs().apiPublicUrl + '/portal/'; // TEST API
+    var target;
+    var landingDocument = document;
     // to work inside iframe
     if (document.getElementById('crowdWidgetContent-preview')) {
         const iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
@@ -69,6 +69,8 @@ export function setActiveButtonMonthly(chosenButton, focusInput: false, track: b
             inputs[0].focus();
         }
     }
+    console.log(landingDocument, landingDocument.getElementById('cft--monatization--membership-checkbox--monthly')
+        , chosenButton.getElementsByTagName('input')[0].value, target)
     let checkbox = landingDocument.getElementById('cft--monatization--membership-checkbox--monthly');
     if (chosenButton.getElementsByTagName('input')[0].value >= target) {
         checkbox.className += ' active';
@@ -85,7 +87,7 @@ export function setActiveButtonMonthly(chosenButton, focusInput: false, track: b
 export function setActiveButtonOneTime(chosenButton, focusInput: false, track: boolean = true) {
     const apiPublicUrl = environment.apiUrl + '/portal/'; // TEST API
 
-    let target;
+    var target;
     let landingDocument = document;
     if (document.getElementById('crowdWidgetContent-preview')) {
         const iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement

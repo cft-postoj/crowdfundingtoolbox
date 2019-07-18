@@ -14,10 +14,13 @@ export class DragAndDropComponent {
     public loading: boolean = false;
 
     @Input()
-    fileUrl:string;
+    fileUrl: string;
 
     @Input()
-    fileData:any;
+    fileData: any;
+
+    @Input()
+    clazz: string;
 
     @Output()
     fileUrlChange = new EventEmitter<string>();
@@ -30,8 +33,7 @@ export class DragAndDropComponent {
     }
 
 
-
-    ngOnInit(){
+    ngOnInit() {
 
     }
 
@@ -40,8 +42,11 @@ export class DragAndDropComponent {
         this.loading = true;
         this.uploadImage(this.file);
     }
+
     onDropImage() {
-        setTimeout(() => {this.dragOver = false}, 500)
+        setTimeout(() => {
+            this.dragOver = false
+        }, 500)
     }
 
     private uploadImage(file) {
@@ -70,7 +75,7 @@ export class DragAndDropComponent {
         )
     }
 
-    getUrl(){
+    getUrl() {
         return this.fileUrl;
     }
 }
