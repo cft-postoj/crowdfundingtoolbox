@@ -78,12 +78,12 @@ function getWidgets(apiUrl) {
 }
 
 function setVisitingPopupTime() {
-    const time = new Date().getSeconds();
+    const time = new Date().getTime() / 1000;
     return window.localStorage.setItem('cft-popup-time', time);
 }
 
 function isPopupEnableToVisit() {
-    const actualTime = new Date().getSeconds();
+    const actualTime = new Date().getTime() / 1000;
     const thirtyMinutes = 1800; // 30 min === 1800 sec
     const storedTime = window.localStorage.getItem('cft-popup-time');
     if (storedTime != null) {
