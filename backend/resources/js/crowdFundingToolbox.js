@@ -56,11 +56,14 @@ function getWidgets(apiUrl) {
                             });
                             break;
                         case 'popup':
-                            (popupPlaceholder != null) &&
-                            (popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
-                            document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
-                                popupPlaceholder.style.display = 'none';
-                            });
+                            if (isPopupEnableToVisit()) {
+                                (popupPlaceholder != null) &&
+                                (popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                                document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                    popupPlaceholder.style.display = 'none';
+                                });
+                                setVisitingPopupTime();
+                            }
                             break;
                         default:
                             break;
@@ -72,6 +75,23 @@ function getWidgets(apiUrl) {
     xhttp.open('POST', apiUrl + 'widgets');
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.send(data);
+}
+
+function setVisitingPopupTime() {
+    const time = new Date().getSeconds();
+    return window.localStorage.setItem('cft-popup-time', time);
+}
+
+function isPopupEnableToVisit() {
+    const actualTime = new Date().getSeconds();
+    const thirtyMinutes = 1800; // 30 min === 1800 sec
+    const storedTime = window.localStorage.getItem('cft-popup-time');
+    if (storedTime != null) {
+        if (actualTime - (parseInt(storedTime, 10) + thirtyMinutes) <= 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function registerClick(apiUrl) {
