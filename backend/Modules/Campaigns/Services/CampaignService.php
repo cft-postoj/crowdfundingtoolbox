@@ -112,7 +112,7 @@ class CampaignService implements CampaignServiceInterface
     public function smartUpdate($data, $id, $value): Campaign
     {
         $campaign = $this->get($id);
-        if ($value === 'end_date_value' || $value === 'start_date_value') {
+        if ($value === 'dates_value') {
             $campaign['promote'] = $this->promoteService->smart($data, $id, $value);
         } else {
             $campaign->update([

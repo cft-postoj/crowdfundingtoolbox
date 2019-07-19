@@ -12,10 +12,10 @@
                       [extraClass]="'mr30'"
         ></app-switcher>
         <app-datepicker
-                [startDate]="campaign.promote_settings.start_date_value"
+                [selected]="campaignDateSelected"
                 [endDate]="campaign.promote_settings.end_date_value"
                 [(date)]="campaign.promote_settings.start_date_json"
-                (dateChange)="updateDate(campaign,'start_date_value','Start date')"
+                (dateChange)="momentDateChange(campaign, $event)"
                 [maxDate]="campaign.promote_settings.end_date_json"
                 [type]="'start'">
         </app-datepicker>

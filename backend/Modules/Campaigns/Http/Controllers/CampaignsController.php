@@ -216,14 +216,10 @@ class CampaignsController extends Controller
             $valid = validator($request->only('active'), [
                 'active' => 'required|boolean'
             ]);
-        } else if ($request->has('start_date_value')) {
-            $value = 'start_date_value';
-            $valid = validator($request->only('start_date_value'), [
-                'start_date_value' => 'required|string'
-            ]);
-        } else if ($request->has('end_date_value')) {
-            $value = 'end_date_value';
-            $valid = validator($request->only('end_date_value'), [
+        } else if ($request->has('start_date_value') && $request->has('end_date_value')) {
+            $value = 'dates_value';
+            $valid = validator($request->only('start_date_value', 'end_date_value'), [
+                'start_date_value' => 'required|string',
                 'end_date_value' => 'required|string'
             ]);
         }

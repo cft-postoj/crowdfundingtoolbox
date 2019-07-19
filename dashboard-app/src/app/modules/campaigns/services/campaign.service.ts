@@ -46,10 +46,10 @@ export class CampaignService {
         return this.smart(campaignId, smartObject);
     }
 
-    smartDate(campaign, variable) {
-        const campaignToSend = this.writeDatesAsStrings(campaign)
+    smartDate(campaign) {
         const smartObject = {};
-        smartObject[variable] = campaignToSend.promote_settings[variable];
+        smartObject['start_date_value'] = campaign.promote_settings.start_date_value;
+        smartObject['end_date_value'] = campaign.promote_settings.end_date_value;
         return this.smart(campaign.id, smartObject);
     }
 

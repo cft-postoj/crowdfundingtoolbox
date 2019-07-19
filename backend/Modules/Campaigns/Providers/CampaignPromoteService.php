@@ -46,10 +46,18 @@ class CampaignPromoteService
     public function smart($data, $id, $value)
     {
         try {
-            $campaignPromote = CampaignPromote::where('campaign_id', $id);
-            $campaignPromote->update([
-                $value => $data[$value]
-            ]);
+            if ($value === 'dates_value') {
+                $campaignPromote = CampaignPromote::where('campaign_id', $id);
+                $campaignPromote->update([
+                    'start_date_value' => $data['start_date_value'],
+                    'end_date_value' => $data['end_date_value']
+                ]);
+            } else {
+                $campaignPromote = CampaignPromote::where('campaign_id', $id);
+                $campaignPromote->update([
+                    $value => $data[$value]
+                ]);
+            }
             return $campaignPromote;
         } catch (\Exception $exception) {
             return \response()->json([

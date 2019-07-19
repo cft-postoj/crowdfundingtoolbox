@@ -11,6 +11,7 @@ import {Routing} from "../../../../constants/config.constants";
 import {ModalComponent} from "../../../core/parts/atoms";
 import {CampaignListComponent} from "../campaign-list/campaign-list.component";
 import {UserService} from '../../../user-management/services';
+import moment from 'moment/src/moment';
 
 @Component({
     templateUrl: './campaign-detail.component.html',
@@ -38,6 +39,10 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     previewOpen;
     deviceType = devices.desktop.name;
     widgetForPreview: Widget;
+    public campaignDateSelected: any = {
+        start: moment(),
+        end: moment()
+    };
     public environment = environment;
 
     constructor(private router: Router, private route: ActivatedRoute, private campaignService: CampaignService,
@@ -55,8 +60,8 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
                 this.getData();
             }
         )
-        this.changeSubscription = this.componentComService.alert.subscribe(message=>{
-            if (!!message){
+        this.changeSubscription = this.componentComService.alert.subscribe(message => {
+            if (!!message) {
                 this.alertOpen = true;
                 this.alertMessage = message;
                 this.componentComService.setAlertMessage("");
@@ -67,12 +72,12 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         })
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.changeSubscription.unsubscribe();
     }
 
     getData() {
-        this.loading  = true;
+        this.loading = true;
         this.widgetsLoading = true;
         this.campaignService.getCampaignById(this.id).subscribe(
             campaign => {
@@ -80,6 +85,12 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
                 this.campaignService.writeDatesAsJson(this.campaign);
                 // this.campaignService.writeDateAsString(this.campaign);
                 this.pageTitle = this.campaign.name;
+                setTimeout(() => {
+                    this.campaignDateSelected = {
+                        start: moment(this.campaign.promote_settings.start_date_value),
+                        end: moment(this.campaign.promote_settings.end_date_value)
+                    };
+                }, 500);
                 this.loading = false;
             }
         );
@@ -92,7 +103,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
 
     public edit() {
-         this.router.navigateByUrl(Routing.CAMPAIGNS_FULL_PATH+"/"+this.campaign.id+"/("+Routing.RIGHT_OUTLET+":"+Routing.EDIT +")");
+        this.router.navigateByUrl(Routing.CAMPAIGNS_FULL_PATH + "/" + this.campaign.id + "/(" + Routing.RIGHT_OUTLET + ":" + Routing.EDIT + ")");
     }
 
     public delete() {
@@ -127,22 +138,23 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
 
     public toggleActive(campaign: Campaign) {
-        this.campaignService.smartActive(campaign.id, "active", campaign.active).subscribe( result =>{
+        this.campaignService.smartActive(campaign.id, "active", campaign.active).subscribe(result => {
             this.alertOpen = true;
-            this.alertMessage = `Campaign status changed to  ${campaign.active?'active': 'disabled'}`;
-            this.alertType= "success";
+            this.alertMessage = `Campaign status changed to  ${campaign.active ? 'active' : 'disabled'}`;
+            this.alertType = "success";
         });
     }
 
-    updateDate(campaign: Campaign, dateType: string, dateTypeInMessage: string) {
-        this.campaignService.smartDate(campaign, dateType).subscribe(result =>{
+    updateDate(campaign: Campaign) {
+        console.log(campaign);
+        this.campaignService.smartDate(campaign).subscribe(result => {
             this.alertOpen = true;
-            this.alertMessage = `${dateTypeInMessage} of campaign was successfully updated.`;
-            this.alertType= "success";
+            this.alertMessage = `Campaign duration was successfully updated.`;
+            this.alertType = 'success';
         });
     }
 
-    openPreview(widget:Widget){
+    openPreview(widget: Widget) {
         this.widgetForPreview = widget;
         this.previewOpen = true;
     }
@@ -151,8 +163,18 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
         this.widgetService.smartActive(widget.id, !widget.active).subscribe(result => {
             widget.active = !widget.active;
             this.alertOpen = true;
-            this.alertMessage = `Widget status changed to ${widget.active? 'active': 'disabled'}`;
-            this.alertType= "success";
+            this.alertMessage = `Widget status changed to ${widget.active ? 'active' : 'disabled'}`;
+            this.alertType = 'success';
         });
+    }
+
+    public momentDateChange(campaign, event) {
+        campaign.promote_settings.start_date_value = event.start;
+        campaign.promote_settings.end_date_value = event.end;
+        this.campaignDateSelected = {
+            start: moment(event.start),
+            end: moment(event.end)
+        };
+        this.updateDate(campaign);
     }
 }
