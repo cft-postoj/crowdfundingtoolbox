@@ -370,8 +370,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             fontWeight: ctaStyles.default.fontSettings.fontWeight,
             textAlign: ctaStyles.default.fontSettings.alignment,
             color: ctaStyles.default.fontSettings.color,
-            fontSize: (additionalSettings.fontSize === undefined) ? ctaStyles.default.fontSettings.fontSize + 'px'
-                : additionalSettings.fontSize + 'px',
+            fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
             display: (this.widget.settings[this.deviceType].additional_settings.buttonContainer !== undefined) ?
                 this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display : 'block',
             'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)

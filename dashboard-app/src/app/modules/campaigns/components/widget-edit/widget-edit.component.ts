@@ -100,6 +100,11 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
             this.monetizationTypes.push({title: 'Classic', value: 'classic'});
             this.monetizationTypes.push({title: 'Lite', value: 'lite'});
+            if (this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize !== undefined) {
+                console.log('not undefined')
+                this.widget.settings[this.deviceType].widget_settings.call_to_action.default.fontSettings.fontSize =
+                    this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize;
+            }
 
             this.recreateRadioButtons();
 

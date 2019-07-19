@@ -104,8 +104,10 @@ export class CampaignSettingsComponent implements OnInit {
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value));
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value));
 
-        this.startDate = moment(this.campaign.promote_settings.start_date_value);
-        this.endDate = moment(this.campaign.promote_settings.end_date_value);
+        this.startDate = (this.campaign.promote_settings.start_date_value === '') ?
+            moment() : moment(this.campaign.promote_settings.start_date_value);
+        this.endDate = (this.campaign.promote_settings.end_date_value === '') ?
+            moment() : moment(this.campaign.promote_settings.end_date_value);
         // console.log(this.endDate)
         setTimeout(() => {
             this.startDateFormat = {

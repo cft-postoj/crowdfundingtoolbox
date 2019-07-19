@@ -18,6 +18,7 @@ use Modules\Campaigns\Http\Controllers\WidgetTypesController;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Campaigns\Transformers\WidgetResultResource;
 use Modules\Campaigns\WidgetTypesResources\FixedWidget;
+use Modules\Campaigns\WidgetTypesResources\LeaderboardWidget;
 use Modules\Campaigns\WidgetTypesResources\PopupWidget;
 use Modules\Campaigns\WidgetTypesResources\SidebarWidget;
 use Modules\UserManagement\Services\TrackingService;
@@ -34,6 +35,7 @@ class WidgetService implements WidgetServiceInterface
     private $sidebarWidget;
     private $fixedWidget;
     private $popupWidget;
+    private $leaderboardWidget;
 
     public function __construct()
     {
@@ -42,6 +44,7 @@ class WidgetService implements WidgetServiceInterface
         $this->sidebarWidget = new SidebarWidget();
         $this->fixedWidget = new FixedWidget();
         $this->popupWidget = new PopupWidget();
+        $this->leaderboardWidget = new LeaderboardWidget();
     }
 
     public function createWidgetsForCampaign($campaignId)
@@ -583,69 +586,9 @@ class WidgetService implements WidgetServiceInterface
                 break;
             case 3: // leaderboard
                 $outputJson = ($deviceType === 'desktop')
-                    ? $this->sidebarWidget->initDesktop() :
-                    (($deviceType === 'tablet') ? $this->sidebarWidget->initTablet()
-                        : $this->sidebarWidget->initMobile());
-//                $outputJson = array(
-//                    'width' => '100%',
-//                    'height' => '350px',
-//                    'position' => 'relative',
-//                    'fixedSettings' => array(),
-//                    'display' => 'block',
-//                    'padding' => array(
-//                        'top' => '0',
-//                        'right' => '0',
-//                        'bottom' => '0',
-//                        'left' => '0'
-//                    ),
-//                    'bodyContainer' => array(
-//                        'width' => '100%',
-//                        'margin' => array(
-//                            'top' => '0',
-//                            'right' => 'auto',
-//                            'bottom' => '0',
-//                            'left' => 'auto'
-//                        ),
-//                        'position' => 'absolute',
-//                        'top' => '80px',
-//                        'right' => 'auto',
-//                        'bottom' => 'auto',
-//                        'left' => 'auto',
-//                        'text' => array(
-//                            'width' => '100%'
-//                        )
-//                    ),
-//                    'textContainer' => array(
-//                        'width' => '100%',
-//                        'margin' => array(
-//                            'top' => '0',
-//                            'right' => 'auto',
-//                            'bottom' => '0',
-//                            'left' => 'auto'
-//                        ),
-//                        'position' => 'absolute',
-//                        'top' => '80px',
-//                        'right' => 'auto',
-//                        'bottom' => 'auto',
-//                        'left' => 'auto',
-//                        'text' => array(
-//                            'width' => '100%'
-//                        )
-//                    ),
-//                    'buttonContainer' => array(
-//                        'width' => '100%',
-//                        'position' => 'absolute',
-//                        'top' => '50px',
-//                        'right' => 'auto',
-//                        'bottom' => 'auto',
-//                        'left' => 'auto',
-//                        'textAlign' => 'center',
-//                        'button' => array(
-//                            'width' => '35%',
-//                            'display' => 'inline-block',
-//                        )
-//                    )
-//                );
+                    ? $this->leaderboardWidget->initDesktop() :
+                    (($deviceType === 'tablet') ? $this->leaderboardWidget->initTablet()
+                        : $this->leaderboardWidget->initMobile());
                 break;
             case 4: // popup
                 $outputJson = ($deviceType === 'desktop')
@@ -663,9 +606,11 @@ class WidgetService implements WidgetServiceInterface
                 $outputJson = array();
                 break;
             case 7: // article widget
+                // widget with rich text only (you can set raw text with hyperlinks / colors TODO
                 $outputJson = array();
                 break;
             case 8: // article link
+                // TODO DELETE IT
                 $outputJson = array();
                 break;
             case 9: // custom html + css

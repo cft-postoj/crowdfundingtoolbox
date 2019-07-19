@@ -116,6 +116,7 @@ export class CampaignEditComponent  implements OnInit {
         this.submitted = true;
         if (this.validInput()) {
             this.saving = true;
+            this.loading = true;
             if (this.newCampaign) {
                 this.campaignService.createCampaign(this.campaign).subscribe(
                     campaignResult => {
