@@ -3,30 +3,38 @@
             [inlineSVG]="'/assets/images/icons/date_' + type + '.svg'"
             (click)="d.toggle()"
     ></span>
-<!--    <input-->
-<!--            ngxDaterangepickerMd-->
-<!--            readonly-->
-<!--            class="datepicker&#45;&#45;input"-->
-<!--            placeholder="DD.MM.YYYY"-->
-<!--            name="dp"-->
-<!--            [minDate]="minDate"-->
-<!--            [maxDate]="maxDate"-->
-<!--            [displayMonths]="displayMonths"-->
-<!--            [navigation]="navigation"-->
-<!--            [outsideDays]="outsideDays"-->
-<!--            [showWeekNumbers]="showWeekNumbers"-->
-<!--            ngbDatepicker #d="ngbDatepicker"-->
-<!--            [(ngModel)]="date"-->
-<!--            (ngModelChange)="changeEvent()"-->
-<!--            (click)="d.toggle()"-->
-<!--            [disabled]="disabled"-->
-<!--    />-->
+    <!--    <input-->
+    <!--            ngxDaterangepickerMd-->
+    <!--            readonly-->
+    <!--            class="datepicker&#45;&#45;input"-->
+    <!--            placeholder="DD.MM.YYYY"-->
+    <!--            name="dp"-->
+    <!--            [minDate]="minDate"-->
+    <!--            [maxDate]="maxDate"-->
+    <!--            [displayMonths]="displayMonths"-->
+    <!--            [navigation]="navigation"-->
+    <!--            [outsideDays]="outsideDays"-->
+    <!--            [showWeekNumbers]="showWeekNumbers"-->
+    <!--            ngbDatepicker #d="ngbDatepicker"-->
+    <!--            [(ngModel)]="date"-->
+    <!--            (ngModelChange)="changeEvent()"-->
+    <!--            (click)="d.toggle()"-->
+    <!--            [disabled]="disabled"-->
+    <!--    />-->
     <input type="text" matInput
-            ngxDaterangepickerMd
-            [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
-            startKey="start"
-            endKey="end"
-            [(ngModel)]="selected"
-            name="daterange"/>
+           ngxDaterangepickerMd
+           [locale]="{applyLabel: 'ok', format: 'DD.MM.YYYY', weekLabel: 'W', firstDay: 1}"
+           [singleDatePicker]="singleDatePicker"
+           [autoApply]="singleDatePicker"
+           [class]="(singleDatePicker) ? 'single' : 'range'"
+           startKey="start"
+           endKey="end"
+           [minDate]="minMomentDate"
+           [maxDate]="maxMomentDate"
+           [value]="endDate"
+           (datesUpdated)="changeEvent()"
+           (click)="datepickerOpened = true"
+           [(ngModel)]="selected"
+           name="daterange"/>
 
 </div>

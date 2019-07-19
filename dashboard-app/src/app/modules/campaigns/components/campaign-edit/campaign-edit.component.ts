@@ -190,6 +190,14 @@ export class CampaignEditComponent  implements OnInit {
         this.targetedUsers = data.users;
     }
 
+    campaignEmit($event) {
+        this.campaign = $event;
+        console.log(this.campaign);
+    }
+
+    tt() {
+        console.log(this.campaign)
+    }
 
 }
 

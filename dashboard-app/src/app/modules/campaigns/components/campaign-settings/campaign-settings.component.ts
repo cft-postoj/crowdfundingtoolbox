@@ -15,6 +15,9 @@ import {DropdownItem, RadioButton, paymentTypes} from "../../../core/models";
 import {CampaignService} from "../../services";
 import {take} from 'rxjs/operators';
 import {Observable, Subscription} from 'rxjs';
+import moment from 'moment/src/moment';
+import {Moment} from 'moment';
+import {start} from 'repl';
 
 @Component({
     selector: 'app-campaign-settings',
@@ -27,9 +30,15 @@ export class CampaignSettingsComponent implements OnInit {
 
     @Input()
     public campaign: Campaign;
+    @Output()
+    public campaignEmit = new EventEmitter();
 
     public dateFrom: { day: number, year: number, month: number };
     public dateTo: { day: number, year: number, month: number };
+    public startDate: Moment;
+    public endDate: Moment;
+    public startDateString: string;
+    public endDateString: string;
     public campaignNameLength: number = 0;
 
     public opened: number[] = [1, 2, 3];
@@ -42,6 +51,15 @@ export class CampaignSettingsComponent implements OnInit {
     public paymentTypes = paymentTypes;
 
     public newUrl: string;
+
+    public startDateFormat: any = {
+        start: moment(),
+        end: moment()
+    };
+    public endDateFormat: any = {
+        start: moment(),
+        end: moment()
+    };
 
     private changeUsersCountSubscribtion: Subscription;
 
@@ -86,6 +104,22 @@ export class CampaignSettingsComponent implements OnInit {
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value));
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value));
 
+        this.startDate = moment(this.campaign.promote_settings.start_date_value);
+        this.endDate = moment(this.campaign.promote_settings.end_date_value);
+        // console.log(this.endDate)
+        setTimeout(() => {
+            this.startDateFormat = {
+                start: this.startDate,
+                end: this.startDate
+            };
+            this.endDateFormat = {
+                start: this.endDate,
+                end: this.endDate
+            };
+        }, 500);
+
+        console.log(moment(this.campaign.promote_settings.start_date_value));
+        console.log(this.startDateFormat)
         this.changeUsersCount();
 
     }
@@ -183,5 +217,20 @@ export class CampaignSettingsComponent implements OnInit {
             this.targetingDataEmit.emit(this.campaign.targeting);
             this.targetingUsersLoadingEmit.emit(false);
         });
+    }
+
+    public changeStartDate(startDate) {
+        console.log(startDate);
+        this.campaign.promote_settings.start_date_value = startDate;
+        this.startDate = moment(startDate);
+        this.endDate = moment(startDate).add(1, 'days');
+        console.log(this.campaign)
+    }
+
+    public changeEndDate(endDate) {
+        this.endDate = endDate;
+        this.campaign.promote_settings.end_date_value = endDate;
+        console.log(this.campaign)
+        this.campaignEmit.emit(this.campaign);
     }
 }

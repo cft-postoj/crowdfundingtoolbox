@@ -62,8 +62,9 @@
                         <div class="col-6">
                             <div class="bold"> Start</div>
                             <app-datepicker
-                                    [(date)]="campaign.promote_settings.start_date_json"
-                                    [maxDate]="campaign.promote_settings.is_end_date ? campaign.promote_settings.end_date_json : null"
+                                    [selected]="startDateFormat"
+                                    (dateChange)="changeStartDate($event.start)"
+                                    [singleDatePicker]="true"
                                     [type]="'start'">
                             </app-datepicker>
                         </div>
@@ -93,8 +94,10 @@
                         <div class="row pt-2">
                             <div class="col-12">
                                 <app-datepicker
-                                        [(date)]="campaign.promote_settings.end_date_json"
-                                        [minDate]="campaign.promote_settings.start_date_json"
+                                        [selected]="endDateFormat"
+                                        [minMomentDate]="startDate"
+                                        (dateChange)="changeEndDate($event.end)"
+                                        [singleDatePicker]="true"
                                         [type]="'end'">
                                 </app-datepicker>
                             </div>

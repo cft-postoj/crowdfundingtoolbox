@@ -12,16 +12,12 @@
                       [extraClass]="'mr30'"
         ></app-switcher>
         <app-datepicker
+                [startDate]="campaign.promote_settings.start_date_value"
+                [endDate]="campaign.promote_settings.end_date_value"
                 [(date)]="campaign.promote_settings.start_date_json"
                 (dateChange)="updateDate(campaign,'start_date_value','Start date')"
                 [maxDate]="campaign.promote_settings.end_date_json"
                 [type]="'start'">
-        </app-datepicker>
-        <app-datepicker
-                [(date)]="campaign.promote_settings.end_date_json"
-                (dateChange)="updateDate(campaign,'end_date_value','End date')"
-                [minDate]="campaign.promote_settings.start_date_json"
-                [type]="'end'">
         </app-datepicker>
         <span
                 class="actionIcon mr15 ml70"

@@ -3,6 +3,8 @@ import {NgbDateParserFormatter, NgbDateStruct} from "@ng-bootstrap/ng-bootstrap"
 import {DateParserFormatter} from "./ngb-datepicker-formatter";
 import {environment} from 'environments/environment';
 import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
+import {Moment} from 'moment';
+import moment from 'moment/src/moment';
 
 @Component({
     selector: 'app-datepicker',
@@ -35,17 +37,47 @@ export class DatepickerComponent implements OnInit {
     public outsideDays = 'visible';
     public environment = environment;
 
+    public datepickerOpened: boolean = false;
+
+    @Input()
+    public startDate: string;
+    @Input()
+    public endDate: string;
+    @Input()
+    public singleDatePicker: boolean = false;
+
+    @Input()
+    public selected: any = {
+        start: moment(),
+        end: moment().add(1, 'days')
+    };
+
+    @Input()
+    minMomentDate: Moment;
+    @Input()
+    maxMomentDate: Moment;
+
+    public selectedRange: any = {
+        start: moment(),
+        end: moment()
+    };
+
 
     ngOnInit(): void {
-        // console.log(this.date);
+        this.selected.start = moment(this.startDate);
+        this.selected.end = moment(this.endDate);
+
+        console.log(this.endDate)
     }
 
     public changeEvent() {
-        this.dateChange.emit(this.date);
-    }
-
-    choosedDate($event) {
-
+        // variable datepickerOpened is necessary for this logic. otherwise date would be update every time when is datepicker input showed
+        if (this.selected !== undefined && this.datepickerOpened) {
+            this.selectedRange.start = moment(this.selected.start).format('YYYY-MM-DD');
+            this.selectedRange.end = moment(this.selected.end).format('YYYY-MM-DD');
+            this.dateChange.emit(this.selectedRange);
+            this.datepickerOpened = false;
+        }
     }
 
 }

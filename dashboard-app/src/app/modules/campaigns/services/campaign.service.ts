@@ -24,8 +24,7 @@ export class CampaignService {
     }
 
     updateCampaign(campaign: Campaign): Observable<any> {
-        const campaignToSend = this.writeDatesAsStrings(campaign);
-        return this.http.put(environment.backOfficeUrl + environment.campaignUrl + '/' + campaign.id, campaignToSend);
+        return this.http.put(environment.backOfficeUrl + environment.campaignUrl + '/' + campaign.id, campaign);
     }
 
     deleteCampaign(campaignId) {

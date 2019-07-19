@@ -35,6 +35,7 @@
                     class="d-flex settings--body"
                     style="overflow: hidden"
                     [campaign]="campaign"
+                    (campaignEmit)="campaignEmit($event)"
                     (targetingUsersCountEmit)="setTargetUsers($event)"
                     (targetingUsersLoadingEmit)="targetingLoading = $event"
                     (targetingDataEmit)="targetingData = $event"></app-campaign-settings>
@@ -58,6 +59,8 @@
             [targetedUsers]="targetedUsers"></app-signed-users-list>
     </ng-container>
 </div>
+
+
 
 <app-preview *ngIf="previewOpen" [(show)]="previewOpen" [campaignId]="campaign.id" [deviceType]="deviceType"></app-preview>
 <app-preview  #previewGenerate *ngIf="creatingHTMLs" [class]="'hide'" [generateHTML]="'true'" [show]="'false'" [createdCampaign]="createdCampaign" [deviceType]="deviceType"></app-preview>
