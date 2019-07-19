@@ -16,6 +16,114 @@
     <ng-container *ngIf="!loading">
         <div class="settings--body">
             <div class="settings--body--content">
+                <div class="collapse-container" *ngIf="widget.widget_type.method === widgetTypes.locked.name" [ngClass]="{'flex-open':isOpened(9)}">
+                    <div class="collapsible--header row" (click)="openTab(9)">
+                        <div class="col-11">
+                            BUTTON CONTINUE READING
+                        </div>
+                        <div class="col-1">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(1)" aria-controls="general-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(9)">
+                        <div class="settings--card">
+                            <div class="row">
+                                <span class="col-12 font-weight-bold">
+                                    Width & Height
+                                </span>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 editInput">
+                                    Width: <input type="text"
+                                                  [(ngModel)]="widget.settings[deviceType].additional_settings.width">
+                                </div>
+                                <div class="col-6 editInput">
+                                    Height: <input type="text"
+                                                   [(ngModel)]="widget.settings[deviceType].additional_settings.height">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card" *ngIf="widget.widget_type.method === 'fixed'">
+                            <div class="row">
+                                <span class="col font-weight-bold">
+                                    Position
+                                </span>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <app-dropdown [items]="positionSettings"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'Choose position property'"
+                                                  [(currentValue)]="widget.settings[deviceType].additional_settings.fixedSettings.top">
+                                    </app-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings--card">
+                            <div class="settings--card--header">
+                                <div class="row">
+                                    <span class="col-12">
+                                        Background
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="settings--card--body">
+                                <div class="row mt-2">
+                                    <app-radio-button class="col-12"
+                                                      [name]="'backgroundType'"
+                                                      [radioButtons]="backgroundTypesButtons"
+                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.general.background.type"
+                                                      [colClass]="'col'"></app-radio-button>
+                                </div>
+                                <div class="row"
+                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
+                                      widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                    <app-dragAndDrop class="col-12"
+                                                     [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image">
+                                    </app-dragAndDrop>
+                                </div>
+                                <div class="row"
+                                     *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.color.value ||
+                                       widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
+                                    <div class="col-2 vertical-align">
+                                        Color
+                                    </div>
+                                    <div class="col-6 color-picker--simple">
+                                        <input [value]="widget.settings[deviceType].widget_settings.general.background.color"
+                                               class="btn color-picker--custom"
+                                               [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="colors"
+                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
+                                    </div>
+                                    <div class="col-5 col-xxl-2 vertical-align">
+                                        Opacity (%)
+                                    </div>
+                                    <div class="col-3 col-xxl-2 pt-2 pt-xxl-0">
+                                        <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-2 vertical-align">
+                                    Offsets
+                                </div>
+                                <div class="col-10">
+                                    <app-input-group [buttons]="backgroundPadding"
+                                                     (buttonChange)="widget.settings[deviceType].additional_settings.padding[$event.name] = $event.value">
+                                    </app-input-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}">
                     <div class="collapsible--header row" (click)="openTab(1)">
                         <div class="col-11">
@@ -46,7 +154,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="settings--card" *ngIf="widget.widget_type.method=='fixed'">
+                        <div class="settings--card" *ngIf="widget.widget_type.method === 'fixed'">
                             <div class="row">
                                 <span class="col font-weight-bold">
                                     Position
@@ -125,7 +233,7 @@
                     </div>
                 </div>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}"
-                     *ngIf="widget.widget_type.method==widgetTypes.fixed.name">
+                     *ngIf="widget.widget_type.method === widgetTypes.fixed.name || widget.widget_type.method === widgetTypes.locked.name">
                     <div class="row collapsible--header" (click)="openTab(6)">
                         <div class="col-11">
                             WIDTHS

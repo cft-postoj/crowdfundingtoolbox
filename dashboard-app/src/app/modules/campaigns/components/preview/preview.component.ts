@@ -397,7 +397,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             textDecoration: 'none'
         };
 
-        if (this.widget.widget_type.method === widgetTypes.fixed.name) {
+        if (this.widget.widget_type.method === widgetTypes.fixed.name ||
+            this.widget.widget_type.method === widgetTypes.locked.name) {
             defaultStyles['display'] = 'inline-block';
         }
 
@@ -458,7 +459,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getTextContainerStyle() {
         const dynamicStyle = {};
-        if (this.widget.widget_type.method === widgetTypes.fixed.name) {
+        if (this.widget.widget_type.method === widgetTypes.fixed.name
+            || this.widget.widget_type.method === widgetTypes.locked.name) {
             dynamicStyle['width'] = this.widget.settings[this.deviceType].additional_settings.textContainer.width + '%';
             dynamicStyle['float'] = 'left';
         }
@@ -498,7 +500,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
                 this.addPx(additionalSettings.left),
         };
 
-        if (this.widget.widget_type.method === widgetTypes.fixed.name) {
+        if (this.widget.widget_type.method === widgetTypes.fixed.name
+            || this.widget.widget_type.method === widgetTypes.locked.name) {
             containerStyles['width'] = this.widget.settings[this.deviceType].additional_settings.buttonContainer.width + '%';
             containerStyles['float'] = 'left';
         }
