@@ -3,6 +3,8 @@ import {DonationService} from '../../services/donation.service';
 import {DonorsAndDonations} from '../../models/donors-and-donations';
 import {DropdownItem, RadioButton} from '../../../core/models';
 import {DonorService} from '../../services/donor.service';
+import moment from 'moment/src/moment';
+import {Moment} from 'moment';
 
 @Component({
     selector: 'app-overall',
@@ -13,8 +15,6 @@ export class OverallComponent implements OnInit {
 
     data: any;
     options: any;
-    from = {year: new Date().getFullYear(), month: new Date().getMonth(), day: new Date().getDate()};
-    to = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
 
     intervalRadioButtons: RadioButton[];
     typeDropdownButtons: DropdownItem[];
@@ -37,13 +37,20 @@ export class OverallComponent implements OnInit {
     };
     private dataType: string;
 
+    public statsDateSelected: any = {
+        start: moment().subtract(1, 'months'),
+        end: moment()
+    };
+
+    public from: string;
+    public to: string;
+    public nowMoment: Moment = moment();
+
     constructor(private donationService: DonationService,
                 private donorService: DonorService) {
     }
 
     public ngOnInit(): void {
-        this.getDataForGraph();
-        this.getOverallData();
         this.intervalRadioButtons = [];
         this.intervalRadioButtons.push(new RadioButton('Hour', 'hour', '', 'hour'));
         this.intervalRadioButtons.push(new RadioButton('Day', 'day', '', 'day'));
@@ -53,6 +60,17 @@ export class OverallComponent implements OnInit {
         this.typeDropdownButtons.push(new DropdownItem('payments', 'payments'));
         this.typeDropdownButtons.push(new DropdownItem('donors', 'donors'));
 
+        setTimeout(() => {
+            this.statsDateSelected = {
+                start: moment().subtract(1, 'months'),
+                end: moment()
+            };
+            this.nowMoment = moment();
+            this.from = this.statsDateSelected.start.format('YYYY-MM-DD');
+            this.to = this.statsDateSelected.end.format('YYYY-MM-DD');
+            this.getDataForGraph();
+            this.getOverallData();
+        }, 200);
     }
 
     getDataForGraph() {
@@ -139,5 +157,12 @@ export class OverallComponent implements OnInit {
         }
         this.tables[tableToOpen] = true;
         this.dataType = dataType;
+    }
+
+    public momentDateChange(event) {
+        this.from = event.start;
+        this.to = event.end;
+        this.getDataForGraph();
+        this.getOverallData();
     }
 }

@@ -4,24 +4,13 @@
             <h2>{{title}}</h2>
         </div>
         <ng-container *ngIf="showDates">
-            <div class="col-3 d-flex align-items-center">
-                from:
+            <div class="col-6 d-flex align-items-center">
+                dates range:
                 <app-datepicker
-                    [(date)]="from"
-                    [maxDate]="to"
-                    [type]="'start'"
-                    (dateChange)="refreshTable()"
-                    [disabled]="disabledDate">
-                </app-datepicker>
-            </div>
-            <div class="col-3 d-flex align-items-center">
-                to:
-                <app-datepicker
-                    [(date)]="to"
-                    [minDate]="from"
-                    [type]="'end'"
-                    (dateChange)="refreshTable()"
-                    [disabled]="disabledDate">
+                        [selected]="statsDateSelected"
+                        (dateChange)="momentDateChange($event)"
+                        [disabled]="disabledDate"
+                        [type]="'start'">
                 </app-datepicker>
             </div>
         </ng-container>

@@ -2,22 +2,13 @@
     <app-breadcrumbs
         [pageTitle]="'Overall'">
         <div class="row">
-            <div class="col-6">
-                from:
+            <div class="col-12">
+                choose dates range:
                 <app-datepicker
-                    [(date)]="from"
-                    (dateChange)="getDataForGraph();getOverallData()"
-                    [maxDate]="to"
-                    [type]="'start'">
-                </app-datepicker>
-            </div>
-            <div class="col-6">
-                to:
-                <app-datepicker
-                    [(date)]="to"
-                    (dateChange)="getDataForGraph();getOverallData()"
-                    [minDate]="from"
-                    [type]="'end'">
+                        [selected]="statsDateSelected"
+                        (dateChange)="momentDateChange($event)"
+                        [maxMomentDate]="nowMoment"
+                        [type]="'start'">
                 </app-datepicker>
             </div>
             <div class="col-6 pt-2">
@@ -258,10 +249,10 @@
 </div>
 
 <app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">
-    <app-table-portal-users *ngIf="tables.tableDonors" [from]="from" [to]="to" [monthly]="monthly"
+    <app-table-portal-users *ngIf="tables.tableDonors" [statsDateSelected]="statsDateSelected" [from]="from" [to]="to" [monthly]="monthly"
                             [title]="tableTitle" [dataType]="dataType"></app-table-portal-users>
     <app-table-donations *ngIf="tables.tableDonations" [from]="from" [to]="to" [monthly]="monthly"
                          [title]="tableTitle" [dataType]="dataType"></app-table-donations>
-    <app-table-payments *ngIf="tables.tablePayments" [from]="from" [to]="to" [monthly]="monthly"
+    <app-table-payments *ngIf="tables.tablePayments" [statsDateSelected]="statsDateSelected" [from]="from" [to]="to" [monthly]="monthly"
                          [title]="tableTitle" [dataType]="dataType"></app-table-payments>
 </app-modal-full-size>

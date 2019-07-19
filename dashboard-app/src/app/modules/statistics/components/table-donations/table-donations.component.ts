@@ -8,6 +8,8 @@ import {TableService} from '../../../core/services/table.service';
 import {Router} from '@angular/router';
 import {PaymentMethodsService} from '../../../payment/services/payment-methods.service';
 import {Column} from '../../../core/models/column';
+import moment from 'moment/src/moment';
+import {Moment} from 'moment';
 
 @Component({
     selector: 'app-table-donations',
@@ -28,9 +30,13 @@ export class TableDonationsComponent implements OnInit {
     public routing = Routing;
     public loading = true;
 
+    public nowMoment: Moment;
+
     public paymentMethods: any = [];
 
     public sortedDonations: Donation[];
+
+    public statsDateSelected: any;
 
     public model: TableModel = new TableModel();
     private availableColumns: Column[] = [];
@@ -48,8 +54,6 @@ export class TableDonationsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getPaymentMethods();
-        this.refreshTable();
         this.model.columns.push({
             value_name: 'order',
             description: '#',
@@ -152,6 +156,17 @@ export class TableDonationsComponent implements OnInit {
             type: 'text',
             filter: new Filter()
         });
+        setTimeout(() => {
+            this.statsDateSelected = {
+                start: moment().subtract(1, 'months'),
+                end: moment()
+            };
+            this.nowMoment = moment();
+            this.from = this.statsDateSelected.start.format('YYYY-MM-DD');
+            this.to = this.statsDateSelected.end.format('YYYY-MM-DD');
+            this.getPaymentMethods();
+            this.refreshTable();
+        }, 500);
     }
 
     sortTable() {
@@ -189,6 +204,13 @@ export class TableDonationsComponent implements OnInit {
 
     public showDonationDetail(id) {
         return this.router.navigateByUrl(`${Routing.DASHBOARD}/${Routing.DONATIONS}/${id}`);
+    }
+
+    public momentDateChange(event) {
+        this.from = event.start;
+        this.to = event.end;
+        this.getPaymentMethods();
+        this.refreshTable();
     }
 
 }

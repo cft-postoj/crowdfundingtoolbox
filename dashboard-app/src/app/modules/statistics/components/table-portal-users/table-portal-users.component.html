@@ -18,22 +18,12 @@
             </div>
         </div>
         <ng-container *ngIf="showDates">
-            <div class="col-3 d-flex align-items-center">
-                from:
+            <div class="col-6 d-flex align-items-center">
+                dates range:
                 <app-datepicker
-                        [(date)]="from"
-                        [maxDate]="to"
-                        [type]="'start'"
-                        [disabled]="true">
-                </app-datepicker>
-            </div>
-            <div class="col-3 d-flex align-items-center">
-                to:
-                <app-datepicker
-                        [(date)]="to"
-                        [minDate]="from"
-                        [type]="'end'"
-                        [disabled]="true">
+                        [selected]="statsDateSelected"
+                        (dateChange)="momentDateChange($event)"
+                        [type]="'start'">
                 </app-datepicker>
             </div>
         </ng-container>

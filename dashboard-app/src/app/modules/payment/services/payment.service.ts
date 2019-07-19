@@ -31,13 +31,12 @@ export class PaymentService {
         });
     }
 
-    public getPayments(from: { year: number; month: number; day: number },
-                       to: { year: number; month: number; day: number },
+    public getPayments(from: string, to: string,
                        monthly) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to));
+            .append('from', from)
+            .append('to', to);
         if (monthly !== undefined) {
             params = params.append('monthly', monthly);
         }

@@ -13,13 +13,12 @@ export class DonationService {
     constructor(private http: HttpClient) {
     }
 
-    public getDonationsGroup(from: { year: number; month: number; day: number },
-                             to: { year: number; month: number; day: number },
+    public getDonationsGroup(from: string, to: string,
                              interval: 'hour' | 'day' | 'week' | 'month') {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         const params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to))
+            .append('from', from)
+            .append('to', to)
             .append('interval', interval);
 
         return this.http.get<{ donations: { date, value } }>(
@@ -30,12 +29,11 @@ export class DonationService {
             });
     }
 
-    public getDonationsTotal(from: { year: number; month: number; day: number },
-                             to: { year: number; month: number; day: number }) {
+    public getDonationsTotal(from: string, to: string) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         const params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to));
+            .append('from', from)
+            .append('to', to);
 
         return this.http.get<{ donations: { date, value } }>(
             `${environment.backOfficeUrl}${environment.donationUrl}${environment.total}`,
@@ -45,12 +43,11 @@ export class DonationService {
             });
     }
 
-    public getDonorsAndDonationsTotal(from: { year: number; month: number; day: number },
-                                      to: { year: number; month: number; day: number }) {
+    public getDonorsAndDonationsTotal(from, to) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         const params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to));
+            .append('from', from)
+            .append('to', to);
 
         return this.http.get<DonorsAndDonations>(
             `${environment.backOfficeUrl}${environment.statisticsUrl}`,
@@ -60,13 +57,12 @@ export class DonationService {
             });
     }
 
-    public getDonations(from: { year: number; month: number; day: number },
-                        to: { year: number; month: number; day: number },
+    public getDonations(from: string, to: string,
                         monthly) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to));
+            .append('from', from)
+            .append('to', to);
         if (monthly !== undefined) {
             params = params.append('monthly', monthly);
         }
@@ -83,11 +79,11 @@ export class DonationService {
         return `${date.year}-${date.month}-${date.day}`;
     }
 
-    public getDonationsByUserId(userId, from: any, to: any) {
+    public getDonationsByUserId(userId, from: string, to: string) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         const params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to));
+            .append('from', from)
+            .append('to', to);
         return this.http.get<Donation[]>(
             `${environment.backOfficeUrl}${environment.portalUsersUrl}/${userId}${environment.donations}`,
             {

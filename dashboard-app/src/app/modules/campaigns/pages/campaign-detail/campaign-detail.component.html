@@ -13,10 +13,7 @@
         ></app-switcher>
         <app-datepicker
                 [selected]="campaignDateSelected"
-                [endDate]="campaign.promote_settings.end_date_value"
-                [(date)]="campaign.promote_settings.start_date_json"
                 (dateChange)="momentDateChange(campaign, $event)"
-                [maxDate]="campaign.promote_settings.end_date_json"
                 [type]="'start'">
         </app-datepicker>
         <span

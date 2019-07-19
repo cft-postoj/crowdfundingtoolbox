@@ -8,6 +8,7 @@ import {Filter} from '../../../core/models/filter';
 import {PaymentService} from '../../../payment/services/payment.service';
 import {Payment} from '../../../payment/models/payment';
 import {Column} from '../../../core/models/column';
+import moment from 'moment/src/moment';
 
 @Component({
     selector: 'app-table-payments',
@@ -16,6 +17,8 @@ import {Column} from '../../../core/models/column';
 })
 export class TablePaymentsComponent implements OnInit {
 
+    @Input()
+    public statsDateSelected;
     @Input() public from;
     @Input() public to;
     @Input() public monthly: boolean;
@@ -49,6 +52,7 @@ export class TablePaymentsComponent implements OnInit {
     ngOnInit() {
         this.getPaymentMethods();
         this.refreshTable();
+
         this.model.columns.push({
             value_name: 'order',
             description: '#',
@@ -137,6 +141,14 @@ export class TablePaymentsComponent implements OnInit {
             type: 'none',
             filter: new Filter()
         });
+
+        setTimeout(() => {
+            this.statsDateSelected = {
+                start: moment(this.from),
+                end: moment(this.to)
+            };
+        }, 500);
+
     }
 
     sortTable() {
@@ -164,6 +176,12 @@ export class TablePaymentsComponent implements OnInit {
 
     public showDonationDetail(id) {
         return this.router.navigateByUrl(`${Routing.DASHBOARD}/${Routing.PAYMENT}/${id}`);
+    }
+
+    momentDateChange(event) {
+        this.from = event.start;
+        this.to = event.end;
+        this.refreshTable();
     }
 
 }

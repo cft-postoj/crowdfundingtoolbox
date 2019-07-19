@@ -12,14 +12,13 @@ export class DonorService {
     }
 
 
-    public getDonorsGroup(from: { year: number; month: number; day: number },
-                          to: { year: number; month: number; day: number },
+    public getDonorsGroup(from, to,
                           interval: 'hour' | 'day' | 'week' | 'month') {
 
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         const params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to))
+            .append('from', from)
+            .append('to', to)
             .append('interval', interval);
 
         return this.http.get<{ donors: { date, value } }>(
@@ -31,15 +30,14 @@ export class DonorService {
     }
 
 
-    public getDonors(from: { year: number; month: number; day: number },
-                     to: { year: number; month: number; day: number },
+    public getDonors(from: string, to: string,
                      monthly,
                      dataType: string,
                      limit: string) {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
-            .append('from', this.writeDateAsString(from))
-            .append('to', this.writeDateAsString(to));
+            .append('from', from)
+            .append('to', to);
         if (monthly !== undefined) {
             params = params.append('monthly', monthly);
         }

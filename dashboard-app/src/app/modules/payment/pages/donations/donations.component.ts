@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import moment from 'moment/src/moment';
 
 @Component({
   selector: 'app-donations',
@@ -7,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DonationsComponent implements OnInit {
 
-  public from = {year: new Date().getFullYear() - 100, month: new Date().getMonth(), day: new Date().getDate()};
-  public to = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
+  public from: string;
+  public to: string;
 
   constructor() { }
 
   ngOnInit() {
+    this.from = moment().format('YYYY-MM-DD');
+    this.to = moment().format('YYYY-MM-DD');
   }
 
 }

@@ -8,6 +8,7 @@ import {TableService} from '../../../core/services/table.service';
 import {Column} from '../../../core/models/column';
 import {PortalUser} from '../../../portal-users/models/portal-user';
 import {Router} from '@angular/router';
+import moment from 'moment/src/moment';
 
 @Component({
     selector: 'app-table-portal-users',
@@ -16,6 +17,7 @@ import {Router} from '@angular/router';
 })
 export class TablePortalUsersComponent implements OnInit, OnChanges {
 
+    @Input() public statsDateSelected;
     @Input() public from;
     @Input() public to;
     @Input() public monthly: boolean;
@@ -152,6 +154,12 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             type: 'none',
             filter: new Filter()
         });
+        setTimeout(() => {
+            this.statsDateSelected = {
+                start: moment(this.from),
+                end: moment(this.to)
+            };
+        }, 500);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -160,15 +168,17 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
 
 
     getUsers() {
-        this.loading = true;
-        this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType, this.limit).subscribe(
-            result => {
-                this.portalUsers = result.donors;
-                this.portalUsersCount = result.count;
-                this.sortedPortalUsers = Object.assign([], this.portalUsers);
-                this.loading = false;
-            }
-        );
+        if (this.from !== undefined && this.to !== undefined) {
+            this.loading = true;
+            this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType, this.limit).subscribe(
+                result => {
+                    this.portalUsers = result.donors;
+                    this.portalUsersCount = result.count;
+                    this.sortedPortalUsers = Object.assign([], this.portalUsers);
+                    this.loading = false;
+                }
+            );
+        }
     }
 
     sortTable() {
@@ -193,6 +203,12 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
         console.log(event)
         this.loading = event;
         this.exportCsvLoading = event;
+    }
+
+    public momentDateChange(event) {
+        this.from = event.start;
+        this.to = event.end;
+        this.getUsers();
     }
 
 }
