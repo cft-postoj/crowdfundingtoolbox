@@ -22,7 +22,8 @@ class LockedArticleWidget extends WidgetTypeResource
                 'left' => 'auto'
             ), 'relative', 'auto', 'auto', 'auto', 'auto', array(
                 'width' => '300px',
-                'maxWidth' => '100%'
+                'maxWidth' => '100%',
+                'fontSize' => 25
             )),
             $this->textContainer('50', array(
                 'top' => '0',
@@ -31,19 +32,19 @@ class LockedArticleWidget extends WidgetTypeResource
                 'left' => 'auto'
             ), 'relative', 'auto', 'auto', 'auto', 'auto', array(
                 'width' => '100%',
-                'top' => '20px',
+                'top' => '0px',
                 'textAlign' => 'center'
             )),
-            $this->buttonContainer('50', 'relative', '60', 'auto',
+            $this->buttonContainer('50', 'relative', '15', 'auto',
                 '0', 'auto', 'center', array(
                     'width' => '100%',
                     'alignment' => 'center',
                     'fontSize' => 26,
                     'padding' => array(
-                        'top' => '20',
-                        'right' => '70',
-                        'bottom' => '25',
-                        'left' => '70'
+                        'top' => '15',
+                        'right' => '15',
+                        'bottom' => '15',
+                        'left' => '15'
                     )
                 )),
             $this->continueReadingButtonContainer('100%', 'relative', array(
@@ -57,27 +58,27 @@ class LockedArticleWidget extends WidgetTypeResource
                 'width' => '300px',
                 'maxWidth' => '100%',
                 'padding' => array(
-                    'top' => '8',
+                    'top' => '9',
                     'right' => '15',
-                    'bottom' => '8',
+                    'bottom' => '10',
                     'left' => '15'
                 ),
                 'fontSettings' => array(
-                    'fontWeight' => 'medium',
-                    'color' => '#FFFFFF',
+                    'fontWeight' => 'Bold',
+                    'color' => '#0087ed',
                     'fontFamily' => 'Roboto Slab',
                     'fontSize' => 15
                 ),
                 'design' => array(
                     'fill' => array(
                         'active' => true,
-                        'color' => 'rgba(0, 0, 0, .3)',
+                        'color' => 'transparent',
                         'opacity' => 20
                     ),
                     'border' => array(
                         'active' => true,
-                        'color' => '#FFFFFF',
-                        'size' => 1,
+                        'color' => '#0087ed',
+                        'size' => 2,
                         'opacity' => 100
                     ),
                     'shadow' => array(
@@ -98,21 +99,21 @@ class LockedArticleWidget extends WidgetTypeResource
                 'hover' => array(
                     'type' => 'fade',
                     'fontSettings' => array(
-                        'fontWeight' => 'medium',
-                        'color' => '#FFFFFF',
+                        'fontWeight' => 'Bold',
+                        'color' => '#0087ed',
                         'fontFamily' => 'Roboto Slab',
                         'fontSize' => 15
                     ),
                     'design' => array(
                         'fill' => array(
                             'active' => true,
-                            'color' => 'rgba(0, 0, 0, .3)',
+                            'color' => 'transparent',
                             'opacity' => 20
                         ),
                         'border' => array(
                             'active' => true,
-                            'color' => '#FFFFFF',
-                            'size' => 1,
+                            'color' => '#0087ed',
+                            'size' => 2,
                             'opacity' => 100
                         ),
                         'shadow' => array(
@@ -191,21 +192,21 @@ class LockedArticleWidget extends WidgetTypeResource
                     'left' => '15'
                 ),
                 'fontSettings' => array(
-                    'fontWeight' => 'medium',
-                    'color' => '#FFFFFF',
+                    'fontWeight' => 'Bold',
+                    'color' => '#0087ed',
                     'fontFamily' => 'Roboto Slab',
                     'fontSize' => 15
                 ),
                 'design' => array(
                     'fill' => array(
                         'active' => true,
-                        'color' => 'rgba(0, 0, 0, .3)',
+                        'color' => 'transparent',
                         'opacity' => 20
                     ),
                     'border' => array(
                         'active' => true,
-                        'color' => '#FFFFFF',
-                        'size' => 1,
+                        'color' => '#0087ed',
+                        'size' => 2,
                         'opacity' => 100
                     ),
                     'shadow' => array(
@@ -226,21 +227,21 @@ class LockedArticleWidget extends WidgetTypeResource
                 'hover' => array(
                     'type' => 'fade',
                     'fontSettings' => array(
-                        'fontWeight' => 'medium',
-                        'color' => '#FFFFFF',
+                        'fontWeight' => 'Bold',
+                        'color' => '#0087ed',
                         'fontFamily' => 'Roboto Slab',
                         'fontSize' => 15
                     ),
                     'design' => array(
                         'fill' => array(
                             'active' => true,
-                            'color' => 'rgba(0, 0, 0, .3)',
+                            'color' => 'transparent',
                             'opacity' => 20
                         ),
                         'border' => array(
                             'active' => true,
-                            'color' => '#FFFFFF',
-                            'size' => 1,
+                            'color' => '#0087ed',
+                            'size' => 2,
                             'opacity' => 100
                         ),
                         'shadow' => array(
@@ -281,7 +282,7 @@ class LockedArticleWidget extends WidgetTypeResource
                 'width' => '300px',
                 'maxWidth' => '100%'
             )),
-            $this->textContainer('100%', array(
+            $this->textContainer('100', array(
                 'top' => '0',
                 'right' => 'auto',
                 'bottom' => '0',
@@ -291,7 +292,7 @@ class LockedArticleWidget extends WidgetTypeResource
                 'top' => '0px',
                 'textAlign' => 'center'
             )),
-            $this->buttonContainer('100%', 'relative', '50', 'auto',
+            $this->buttonContainer('100', 'relative', '50', 'auto',
                 '0', 'auto', 'center', array(
                     'width' => '100%',
                     'alignment' => 'center',
@@ -319,21 +320,21 @@ class LockedArticleWidget extends WidgetTypeResource
                     'left' => '15'
                 ),
                 'fontSettings' => array(
-                    'fontWeight' => 'medium',
-                    'color' => '#FFFFFF',
+                    'fontWeight' => 'Bold',
+                    'color' => '#0087ed',
                     'fontFamily' => 'Roboto Slab',
                     'fontSize' => 15
                 ),
                 'design' => array(
                     'fill' => array(
                         'active' => true,
-                        'color' => 'rgba(0, 0, 0, .3)',
+                        'color' => 'transparent',
                         'opacity' => 20
                     ),
                     'border' => array(
                         'active' => true,
-                        'color' => '#FFFFFF',
-                        'size' => 1,
+                        'color' => '#0087ed',
+                        'size' => 2,
                         'opacity' => 100
                     ),
                     'shadow' => array(
@@ -354,21 +355,21 @@ class LockedArticleWidget extends WidgetTypeResource
                 'hover' => array(
                     'type' => 'fade',
                     'fontSettings' => array(
-                        'fontWeight' => 'medium',
-                        'color' => '#FFFFFF',
+                        'fontWeight' => 'Bold',
+                        'color' => '#0087ed',
                         'fontFamily' => 'Roboto Slab',
                         'fontSize' => 15
                     ),
                     'design' => array(
                         'fill' => array(
                             'active' => true,
-                            'color' => 'rgba(0, 0, 0, .3)',
+                            'color' => 'transparent',
                             'opacity' => 20
                         ),
                         'border' => array(
                             'active' => true,
-                            'color' => '#FFFFFF',
-                            'size' => 1,
+                            'color' => '#0087ed',
+                            'size' => 2,
                             'opacity' => 100
                         ),
                         'shadow' => array(

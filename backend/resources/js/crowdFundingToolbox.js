@@ -3,11 +3,13 @@ import {
 } from "./helpers";
 import {apiUrl} from './constants/url';
 
+const sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
+const fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
+const leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
+const popupPlaceholder = document.getElementById('cr0wdFundingToolbox-popup');
+const lockedPlaceholder = document.getElementById('cr0wdfundingToolbox-locked');
+
 function getWidgets(apiUrl) {
-    const sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
-    const fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
-    const leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
-    const popupPlaceholder = document.getElementById('cr0wdFundingToolbox-popup');
 
     //get widgets for users and track, that user has been on specific page
     let data = JSON.stringify(
@@ -65,6 +67,10 @@ function getWidgets(apiUrl) {
                                 setVisitingPopupTime();
                             }
                             break;
+                        case 'locked':
+                            (lockedPlaceholder != null) &&
+                            (setLockedContentArticle(el.response[cr0wdGetDeviceType()]));
+                            break;
                         default:
                             break;
                     }
@@ -75,6 +81,47 @@ function getWidgets(apiUrl) {
     xhttp.open('POST', apiUrl + 'widgets');
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.send(data);
+}
+
+
+function setLockedContentArticle(widgetContent) {
+    let countOfParagraphs = 0;
+    lockedPlaceholder.parentNode.childNodes.forEach((item, key) => {
+        if (item.nodeName === 'P') {
+            countOfParagraphs++;
+        }
+    });
+    if (countOfParagraphs > 1) {
+        let countP = 0;
+        let isDisabledContent = false;
+        lockedPlaceholder.parentNode.childNodes.forEach((item, key) => {
+            if (item.childNodes.length > 0) {
+                countP++;
+                if (countP >= Math.round(countOfParagraphs / 2)) { // hide content second half part of article content
+                    item.classList.add('cr0wdfunding--locked--hideContent');
+                } else if (countP + 1 === Math.round(countOfParagraphs / 2)) {
+                    if (!isDisabledContent) {
+                        item.style.position = 'relative';
+                        const appendedChild = '<span id="cr0wdfunding--locked--gradient" style="position: absolute;width: 100%;height: 100%;top: 0;left: 0;background-image: linear-gradient(transparent, white);"></span>';
+                        item.insertAdjacentHTML('beforeend', appendedChild);
+                        isDisabledContent = true;
+                    }
+                }
+            }
+        });
+        lockedPlaceholder.innerHTML = widgetContent;
+        document.getElementById('btn-cr0wdfunding--continueReading').addEventListener('click', function () {
+            lockedPlaceholder.parentNode.childNodes.forEach((item, key) => {
+                if (item.classList !== undefined) {
+                    if (item.classList.contains('cr0wdfunding--locked--hideContent')) { // hide content second half part of article content
+                        item.classList.remove('cr0wdfunding--locked--hideContent');
+                    }
+                }
+            });
+            document.getElementById('cr0wdfunding--locked--gradient').style.display = 'none';
+            lockedPlaceholder.style.display = 'none';
+        });
+    }
 }
 
 function setVisitingPopupTime() {

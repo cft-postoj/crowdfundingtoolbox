@@ -778,7 +778,7 @@ class WidgetService implements WidgetServiceInterface
                 ->get()
                 ->where('active', true)
                 ->whereIn('campaign_id', $campaignIds)
-                ->whereIn('widget_type_id', [2, 3, 4, 5]);
+                ->whereIn('widget_type_id', [2, 3, 4, 5, 6]);
         $onlyThreeWidgets = array();
         $usedWidgetIds = array();
         $user = Auth::user();
