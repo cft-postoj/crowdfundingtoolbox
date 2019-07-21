@@ -49,7 +49,8 @@ class FixedWidget extends WidgetTypeResource
                         'bottom' => '15',
                         'left' => '15'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -96,7 +97,8 @@ class FixedWidget extends WidgetTypeResource
                         'bottom' => '10',
                         'left' => '15'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -143,7 +145,8 @@ class FixedWidget extends WidgetTypeResource
                         'bottom' => '10',
                         'left' => '15'
                     )
-                ))
+                )),
+            null
         );
     }
 }

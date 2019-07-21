@@ -45,7 +45,8 @@ class LeaderboardWidget extends WidgetTypeResource
                         'bottom' => '25',
                         'left' => '70'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -87,7 +88,8 @@ class LeaderboardWidget extends WidgetTypeResource
                         'bottom' => '20',
                         'left' => '70'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -129,7 +131,8 @@ class LeaderboardWidget extends WidgetTypeResource
                         'bottom' => '20',
                         'left' => '50'
                     )
-                ))
+                )),
+            null
         );
     }
 }

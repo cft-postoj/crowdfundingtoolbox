@@ -308,6 +308,95 @@ export class Widget {
                             left: ''
                         }
                     }
+                },
+                continueReadingButtonContainer: {
+                    width: '100%',
+                    position: 'relative',
+                    margin: {
+                        top: '',
+                        right: '',
+                        bottom: '',
+                        left: ''
+                    },
+                    button: {
+                        text: '',
+                        alignment: '',
+                        width: '300px',
+                        maxWidth: '100%',
+                        padding: {
+                            top: '',
+                            right: '',
+                            bottom: '',
+                            left: ''
+                        },
+                        fontSettings: {
+                            fontWeight: 'bold',
+                            color: '#FFFFFF',
+                            fontFamily: '',
+                            fontSize: 15
+                        },
+                        design: {
+                            fill: {
+                                active: true,
+                                color: '#B71100',
+                                opacity: 100
+                            },
+                            border: {
+                                active: false,
+                                color: '#B71100',
+                                size: 2,
+                                opacity: 0
+                            },
+                            shadow: {
+                                active: false,
+                                x: 2,
+                                y: 2,
+                                b: 2,
+                                opacity: 15
+                            },
+                            radius: {
+                                active: true,
+                                tl: 3,
+                                tr: 4,
+                                br: 2,
+                                bl: 1
+                            }
+                        },
+                        hover: {
+                            type: 'fade',
+                            fontSettings: {
+                                fontWeight: 'bold',
+                                color: '#FFFFFF'
+                            },
+                            design: {
+                                fill: {
+                                    active: true,
+                                    color: '#B71100',
+                                    opacity: 100
+                                },
+                                border: {
+                                    active: false,
+                                    color: '#B71100',
+                                    size: 2,
+                                    opacity: 0
+                                },
+                                shadow: {
+                                    active: false,
+                                    x: 2,
+                                    y: 2,
+                                    b: 2,
+                                    opacity: 15
+                                },
+                                radius: {
+                                    active: true,
+                                    tl: 3,
+                                    tr: 4,
+                                    br: 2,
+                                    bl: 1
+                                }
+                            },
+                        }
+                    }
                 }
             }
         },
@@ -581,6 +670,96 @@ export class Widget {
                         width: '300px',
                         maxWidth: '100%'
                     }
+                },
+                continueReadingButtonContainer: {
+                    width: '100%',
+                    position: 'relative',
+                    margin: {
+                        top: '',
+                        right: '',
+                        bottom: '',
+                        left: ''
+                    },
+                    button: {
+                        text: '',
+                        alignment: '',
+                        width: '300px',
+                        maxWidth: '100%',
+                        padding: {
+                            top: '',
+                            right: '',
+                            bottom: '',
+                            left: ''
+                        },
+                        fontSettings: {
+                            fontWeight: 'bold',
+                            color: '#FFFFFF',
+                            fontFamily: '',
+                            fontSize: 15
+                        },
+                        design: {
+                            fill: {
+                                active: true,
+                                color: '#B71100',
+                                opacity: 100
+                            },
+                            border: {
+                                active: false,
+                                color: '#B71100',
+                                size: 2,
+                                opacity: 0
+                            },
+                            shadow: {
+                                active: false,
+                                x: 2,
+                                y: 2,
+                                b: 2,
+                                color: '',
+                                opacity: 15
+                            },
+                            radius: {
+                                active: true,
+                                tl: 3,
+                                tr: 4,
+                                br: 2,
+                                bl: 1
+                            }
+                        },
+                        hover: {
+                            type: 'fade',
+                            fontSettings: {
+                                fontWeight: 'bold',
+                                color: '#FFFFFF'
+                            },
+                            design: {
+                                fill: {
+                                    active: true,
+                                    color: '#B71100',
+                                    opacity: 100
+                                },
+                                border: {
+                                    active: false,
+                                    color: '#B71100',
+                                    size: 2,
+                                    opacity: 0
+                                },
+                                shadow: {
+                                    active: false,
+                                    x: 2,
+                                    y: 2,
+                                    b: 2,
+                                    opacity: 15
+                                },
+                                radius: {
+                                    active: true,
+                                    tl: 3,
+                                    tr: 4,
+                                    br: 2,
+                                    bl: 1
+                                }
+                            },
+                        }
+                    }
                 }
             }
         },
@@ -685,6 +864,7 @@ export class Widget {
                                 x: 2,
                                 y: 2,
                                 b: 2,
+                                color: '',
                                 opacity: 15
                             },
                             radius: {
@@ -858,9 +1038,98 @@ export class Widget {
                         width: '300px',
                         maxWidth: '100%'
                     }
+                },
+                continueReadingButtonContainer: {
+                    width: '100%',
+                    position: 'relative',
+                    margin: {
+                        top: '',
+                        right: '',
+                        bottom: '',
+                        left: ''
+                    },
+                    button: {
+                        text: '',
+                        alignment: '',
+                        width: '300px',
+                        maxWidth: '100%',
+                        padding: {
+                            top: '',
+                            right: '',
+                            bottom: '',
+                            left: ''
+                        },
+                        fontSettings: {
+                            fontWeight: 'bold',
+                            color: '#FFFFFF',
+                            fontFamily: '',
+                            fontSize: 15
+                        },
+                        design: {
+                            fill: {
+                                active: true,
+                                color: '#B71100',
+                                opacity: 100
+                            },
+                            border: {
+                                active: false,
+                                color: '#B71100',
+                                size: 2,
+                                opacity: 0
+                            },
+                            shadow: {
+                                active: false,
+                                x: 2,
+                                y: 2,
+                                b: 2,
+                                color: '',
+                                opacity: 15
+                            },
+                            radius: {
+                                active: true,
+                                tl: 3,
+                                tr: 4,
+                                br: 2,
+                                bl: 1
+                            }
+                        },
+                        hover: {
+                            type: 'fade',
+                            fontSettings: {
+                                fontWeight: 'bold',
+                                color: '#FFFFFF'
+                            },
+                            design: {
+                                fill: {
+                                    active: true,
+                                    color: '#B71100',
+                                    opacity: 100
+                                },
+                                border: {
+                                    active: false,
+                                    color: '#B71100',
+                                    size: 2,
+                                    opacity: 0
+                                },
+                                shadow: {
+                                    active: false,
+                                    x: 2,
+                                    y: 2,
+                                    b: 2,
+                                    opacity: 15
+                                },
+                                radius: {
+                                    active: true,
+                                    tl: 3,
+                                    tr: 4,
+                                    br: 2,
+                                    bl: 1
+                                }
+                            },
+                        }
+                    }
                 }
             }
         },
-    }
-
+    };
 }

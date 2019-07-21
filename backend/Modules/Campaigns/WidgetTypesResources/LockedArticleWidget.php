@@ -45,7 +45,93 @@ class LockedArticleWidget extends WidgetTypeResource
                         'bottom' => '25',
                         'left' => '70'
                     )
-                ))
+                )),
+            $this->continueReadingButtonContainer('100%', 'relative', array(
+                'top' => '15',
+                'right' => 'auto',
+                'bottom' => '15',
+                'left' => 'auto'
+            ), array(
+                'text' => 'Continue without donating',
+                'alignment' => 'center',
+                'width' => '300px',
+                'maxWidth' => '100%',
+                'padding' => array(
+                    'top' => '8',
+                    'right' => '15',
+                    'bottom' => '8',
+                    'left' => '15'
+                ),
+                'fontSettings' => array(
+                    'fontWeight' => 'medium',
+                    'color' => '#FFFFFF',
+                    'fontFamily' => 'Roboto Slab',
+                    'fontSize' => 15
+                ),
+                'design' => array(
+                    'fill' => array(
+                        'active' => true,
+                        'color' => 'rgba(0, 0, 0, .3)',
+                        'opacity' => 20
+                    ),
+                    'border' => array(
+                        'active' => true,
+                        'color' => '#FFFFFF',
+                        'size' => 1,
+                        'opacity' => 100
+                    ),
+                    'shadow' => array(
+                        'active' => false,
+                        'x' => 2,
+                        'y' => 2,
+                        'b' => 2,
+                        'opacity' => 15
+                    ),
+                    'radius' => array(
+                        'active' => false,
+                        'tl' => 3,
+                        'tr' => 4,
+                        'br' => 2,
+                        'bl' => 1
+                    )
+                ),
+                'hover' => array(
+                    'type' => 'fade',
+                    'fontSettings' => array(
+                        'fontWeight' => 'medium',
+                        'color' => '#FFFFFF',
+                        'fontFamily' => 'Roboto Slab',
+                        'fontSize' => 15
+                    ),
+                    'design' => array(
+                        'fill' => array(
+                            'active' => true,
+                            'color' => 'rgba(0, 0, 0, .3)',
+                            'opacity' => 20
+                        ),
+                        'border' => array(
+                            'active' => true,
+                            'color' => '#FFFFFF',
+                            'size' => 1,
+                            'opacity' => 100
+                        ),
+                        'shadow' => array(
+                            'active' => false,
+                            'x' => 2,
+                            'y' => 2,
+                            'b' => 2,
+                            'opacity' => 15
+                        ),
+                        'radius' => array(
+                            'active' => false,
+                            'tl' => 3,
+                            'tr' => 4,
+                            'br' => 2,
+                            'bl' => 1
+                        )
+                    )
+                )
+            ))
         );
     }
 
@@ -87,7 +173,93 @@ class LockedArticleWidget extends WidgetTypeResource
                         'bottom' => '20',
                         'left' => '70'
                     )
-                ))
+                )),
+            $this->continueReadingButtonContainer('100%', 'relative', array(
+                'top' => '15',
+                'right' => 'auto',
+                'bottom' => '15',
+                'left' => 'auto'
+            ), array(
+                'text' => 'Continue without donating',
+                'alignment' => 'center',
+                'width' => '300px',
+                'maxWidth' => '100%',
+                'padding' => array(
+                    'top' => '8',
+                    'right' => '15',
+                    'bottom' => '8',
+                    'left' => '15'
+                ),
+                'fontSettings' => array(
+                    'fontWeight' => 'medium',
+                    'color' => '#FFFFFF',
+                    'fontFamily' => 'Roboto Slab',
+                    'fontSize' => 15
+                ),
+                'design' => array(
+                    'fill' => array(
+                        'active' => true,
+                        'color' => 'rgba(0, 0, 0, .3)',
+                        'opacity' => 20
+                    ),
+                    'border' => array(
+                        'active' => true,
+                        'color' => '#FFFFFF',
+                        'size' => 1,
+                        'opacity' => 100
+                    ),
+                    'shadow' => array(
+                        'active' => false,
+                        'x' => 2,
+                        'y' => 2,
+                        'b' => 2,
+                        'opacity' => 15
+                    ),
+                    'radius' => array(
+                        'active' => false,
+                        'tl' => 3,
+                        'tr' => 4,
+                        'br' => 2,
+                        'bl' => 1
+                    )
+                ),
+                'hover' => array(
+                    'type' => 'fade',
+                    'fontSettings' => array(
+                        'fontWeight' => 'medium',
+                        'color' => '#FFFFFF',
+                        'fontFamily' => 'Roboto Slab',
+                        'fontSize' => 15
+                    ),
+                    'design' => array(
+                        'fill' => array(
+                            'active' => true,
+                            'color' => 'rgba(0, 0, 0, .3)',
+                            'opacity' => 20
+                        ),
+                        'border' => array(
+                            'active' => true,
+                            'color' => '#FFFFFF',
+                            'size' => 1,
+                            'opacity' => 100
+                        ),
+                        'shadow' => array(
+                            'active' => false,
+                            'x' => 2,
+                            'y' => 2,
+                            'b' => 2,
+                            'opacity' => 15
+                        ),
+                        'radius' => array(
+                            'active' => false,
+                            'tl' => 3,
+                            'tr' => 4,
+                            'br' => 2,
+                            'bl' => 1
+                        )
+                    )
+                )
+            ))
         );
     }
 
@@ -129,7 +301,93 @@ class LockedArticleWidget extends WidgetTypeResource
                         'bottom' => '20',
                         'left' => '50'
                     )
-                ))
+                )),
+            $this->continueReadingButtonContainer('100%', 'relative', array(
+                'top' => '15',
+                'right' => 'auto',
+                'bottom' => '15',
+                'left' => 'auto'
+            ), array(
+                'text' => 'Continue without donating',
+                'alignment' => 'center',
+                'width' => '300px',
+                'maxWidth' => '100%',
+                'padding' => array(
+                    'top' => '8',
+                    'right' => '15',
+                    'bottom' => '8',
+                    'left' => '15'
+                ),
+                'fontSettings' => array(
+                    'fontWeight' => 'medium',
+                    'color' => '#FFFFFF',
+                    'fontFamily' => 'Roboto Slab',
+                    'fontSize' => 15
+                ),
+                'design' => array(
+                    'fill' => array(
+                        'active' => true,
+                        'color' => 'rgba(0, 0, 0, .3)',
+                        'opacity' => 20
+                    ),
+                    'border' => array(
+                        'active' => true,
+                        'color' => '#FFFFFF',
+                        'size' => 1,
+                        'opacity' => 100
+                    ),
+                    'shadow' => array(
+                        'active' => false,
+                        'x' => 2,
+                        'y' => 2,
+                        'b' => 2,
+                        'opacity' => 15
+                    ),
+                    'radius' => array(
+                        'active' => false,
+                        'tl' => 3,
+                        'tr' => 4,
+                        'br' => 2,
+                        'bl' => 1
+                    )
+                ),
+                'hover' => array(
+                    'type' => 'fade',
+                    'fontSettings' => array(
+                        'fontWeight' => 'medium',
+                        'color' => '#FFFFFF',
+                        'fontFamily' => 'Roboto Slab',
+                        'fontSize' => 15
+                    ),
+                    'design' => array(
+                        'fill' => array(
+                            'active' => true,
+                            'color' => 'rgba(0, 0, 0, .3)',
+                            'opacity' => 20
+                        ),
+                        'border' => array(
+                            'active' => true,
+                            'color' => '#FFFFFF',
+                            'size' => 1,
+                            'opacity' => 100
+                        ),
+                        'shadow' => array(
+                            'active' => false,
+                            'x' => 2,
+                            'y' => 2,
+                            'b' => 2,
+                            'opacity' => 15
+                        ),
+                        'radius' => array(
+                            'active' => false,
+                            'tl' => 3,
+                            'tr' => 4,
+                            'br' => 2,
+                            'bl' => 1
+                        )
+                    )
+                )
+            ))
         );
     }
 }

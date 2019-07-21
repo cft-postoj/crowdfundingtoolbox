@@ -33,7 +33,8 @@ class ArticleLinkWidget extends WidgetTypeResource
                 'left' => 0
             ), 'relative', '', '', '', '', array(
                 'width' => 0
-            ))
+            )),
+            null
         );
     }
 
@@ -64,7 +65,8 @@ class ArticleLinkWidget extends WidgetTypeResource
                 'left' => 0
             ), 'relative', '', '', '', '', array(
                 'width' => 0
-            ))
+            )),
+            null
         );
     }
 
@@ -95,16 +97,8 @@ class ArticleLinkWidget extends WidgetTypeResource
                 'left' => 0
             ), 'relative', '', '', '', '', array(
                 'width' => 0
-            ))
-        );
-    }
-
-    public function result()
-    {
-        return array(
-            'desktop' => $this->initDesktop(),
-            'tablet' => $this->initTablet(),
-            'mobile' => $this->initMobile()
+            )),
+            null
         );
     }
 

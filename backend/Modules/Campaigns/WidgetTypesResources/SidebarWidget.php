@@ -44,7 +44,8 @@ class SidebarWidget extends WidgetTypeResource
                         'bottom' => '20',
                         'left' => '30'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -86,7 +87,8 @@ class SidebarWidget extends WidgetTypeResource
                         'bottom' => '20',
                         'left' => '70'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -128,7 +130,8 @@ class SidebarWidget extends WidgetTypeResource
                         'bottom' => '20',
                         'left' => '50'
                     )
-                ))
+                )),
+            null
         );
     }
 }

@@ -542,4 +542,46 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         return styles;
     }
 
+    getContinueReadingButtonContainer() {
+        const styles = {
+            display: (this.widget.widget_type.method === 'locked') ? 'block' : 'none',
+            width: this.widget.settings[this.deviceType].additional_settings.continueReadingButtonContainer.width,
+            position: this.widget.settings[this.deviceType].additional_settings.continueReadingButtonContainer.position,
+            textAlign: this.widget.settings[this.deviceType].additional_settings.continueReadingButtonContainer.button.alignment
+        };
+        return styles;
+    }
+
+    getContinueReadingButton() {
+        const buttonStyles = this.widget.settings[this.deviceType].additional_settings.continueReadingButtonContainer.button;
+        const buttonContainerStyles = this.widget.settings[this.deviceType].additional_settings.continueReadingButtonContainer;
+        const styles = {
+            width: buttonStyles.width,
+            cursor: 'pointer',
+            maxWidth: buttonStyles.maxWidth,
+            margin: this.addPx(buttonContainerStyles.margin.top) + ' ' +
+                this.addPx(buttonContainerStyles.margin.right) + ' ' +
+                this.addPx(buttonContainerStyles.margin.bottom) + ' ' +
+                this.addPx(buttonContainerStyles.margin.left),
+            padding: this.addPx(buttonStyles.padding.top) + ' ' +
+                this.addPx(buttonStyles.padding.right) + ' ' +
+                this.addPx(buttonStyles.padding.bottom) + ' ' +
+                this.addPx(buttonStyles.padding.left),
+            fontWeight: buttonStyles.fontSettings.fontWeight,
+            color: buttonStyles.fontSettings.color,
+            fontFamily: buttonStyles.fontSettings.fontFamily,
+            fontSize: buttonStyles.fontSettings.fontSize + 'px',
+            backgroundColor: (buttonStyles.design.fill.active) ? buttonStyles.design.fill.color : '',
+            border: (buttonStyles.design.border.active) ? buttonStyles.design.border.size + 'px solid ' +
+                this.convertHex.convert(buttonStyles.design.border.color) : 'none',
+            boxShadow: (buttonStyles.design.shadow.active) ? buttonStyles.design.shadow.x + 'px ' +
+                buttonStyles.design.shadow.y + 'px ' + buttonStyles.design.shadow.b + 'px ' + 'rgba(' +
+                buttonStyles.design.shadow.color + ', ' + parseInt(buttonStyles.design.shadow.opacity, 10) / 100 + ')' : 'none',
+            borderRadius: (buttonStyles.design.radius.active) ? buttonStyles.design.radius.tl + 'px ' +
+                buttonStyles.design.radius.tr + 'px ' + buttonStyles.design.radius.bl + 'px ' +
+                buttonStyles.design.radius.br + 'px' : 0
+        };
+        return styles;
+    }
+
 }

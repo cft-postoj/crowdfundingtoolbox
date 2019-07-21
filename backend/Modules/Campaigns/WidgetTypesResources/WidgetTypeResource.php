@@ -63,8 +63,27 @@ class WidgetTypeResource implements WidgetTypeInterface
         );
     }
 
-    public function init($generalStyles, $bodyContainer, $textContainer, $buttonContainer)
+    public function continueReadingButtonContainer($width, $position, $margin, $button)
     {
+        // Only for locked article widget
+        return array(
+          'width' => $width,
+          'position' => $position,
+          'margin' => $margin,
+          'button' => $button
+        );
+    }
+
+    public function init($generalStyles, $bodyContainer, $textContainer, $buttonContainer, $continueReadingButtonContainer)
+    {
+        if ($continueReadingButtonContainer !== null) {
+            return array_merge($generalStyles, array(
+                'bodyContainer' => $bodyContainer,
+                'textContainer' => $textContainer,
+                'buttonContainer' => $buttonContainer,
+                'continueReadingButtonContainer' => $continueReadingButtonContainer
+            ));
+        }
         return array_merge($generalStyles, array(
             'bodyContainer' => $bodyContainer,
             'textContainer' => $textContainer,
@@ -78,7 +97,8 @@ class WidgetTypeResource implements WidgetTypeInterface
             $this->generalStyles('', '', '', '', '', ''),
             $this->bodyContainer('', '', '', '', '', '', '', ''),
             $this->textContainer('', '', '', '', '', '', '', ''),
-            $this->buttonContainer('', '', '', '','', '', '', '')
+            $this->buttonContainer('', '', '', '', '', '', '', ''),
+            null
         );
     }
 
@@ -88,7 +108,8 @@ class WidgetTypeResource implements WidgetTypeInterface
             $this->generalStyles('', '', '', '', '', ''),
             $this->bodyContainer('', '', '', '', '', '', '', ''),
             $this->textContainer('', '', '', '', '', '', '', ''),
-            $this->buttonContainer('', '', '', '','', '', '', '')
+            $this->buttonContainer('', '', '', '', '', '', '', ''),
+            null
         );
     }
 
@@ -98,7 +119,8 @@ class WidgetTypeResource implements WidgetTypeInterface
             $this->generalStyles('', '', '', '', '', ''),
             $this->bodyContainer('', '', '', '', '', '', '', ''),
             $this->textContainer('', '', '', '', '', '', '', ''),
-            $this->buttonContainer('', '', '', '','', '', '', '')
+            $this->buttonContainer('', '', '', '', '', '', '', ''),
+            null
         );
     }
 }

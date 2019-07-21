@@ -52,7 +52,8 @@ class PopupWidget extends WidgetTypeResource
                         'bottom' => '15',
                         'left' => '45'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -100,7 +101,8 @@ class PopupWidget extends WidgetTypeResource
                         'bottom' => '15',
                         'left' => '30'
                     )
-                ))
+                )),
+            null
         );
     }
 
@@ -148,7 +150,8 @@ class PopupWidget extends WidgetTypeResource
                         'bottom' => '15',
                         'left' => '30'
                     )
-                ))
+                )),
+            null
         );
     }
 }

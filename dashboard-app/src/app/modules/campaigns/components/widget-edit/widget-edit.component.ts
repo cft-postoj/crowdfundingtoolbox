@@ -31,7 +31,9 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     public preview;
     public saving: boolean = false;
     public paddingButtons: RadioButton[] = [];
+    public paddingContinueReadingButton: RadioButton[] = [];
     public marginButtons: RadioButton[] = [];
+    public marginContinueReadingButton: RadioButton[] = [];
     public marginText: RadioButton[] = [];
     private marginAdditionalText: RadioButton[] = [];
     public shadowButtons: RadioButton[] = [];
@@ -101,10 +103,11 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
             this.monetizationTypes.push({title: 'Classic', value: 'classic'});
             this.monetizationTypes.push({title: 'Lite', value: 'lite'});
             if (this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize !== undefined) {
-                console.log('not undefined')
                 this.widget.settings[this.deviceType].widget_settings.call_to_action.default.fontSettings.fontSize =
                     this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize;
             }
+
+            console.log(this.widget)
 
             this.recreateRadioButtons();
 
@@ -237,10 +240,33 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         let assetsUrl = (environment.production) ? 'assets/' : '../../../../assets/';
 
         this.paddingButtons = [];
-        this.paddingButtons.push(new RadioButton('top', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.top, assetsUrl + 'images/icons/padding_top.svg'))
-        this.paddingButtons.push(new RadioButton('right', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.right, assetsUrl + 'images/icons/padding_right.svg'))
-        this.paddingButtons.push(new RadioButton('bottom', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'))
-        this.paddingButtons.push(new RadioButton('left', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.left, assetsUrl + 'images/icons/padding_left.svg'))
+        this.paddingButtons.push(new RadioButton('top', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.top, assetsUrl + 'images/icons/padding_top.svg'));
+        this.paddingButtons.push(new RadioButton('right', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.right, assetsUrl + 'images/icons/padding_right.svg'));
+        this.paddingButtons.push(new RadioButton('bottom', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'));
+        this.paddingButtons.push(new RadioButton('left', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.padding.left, assetsUrl + 'images/icons/padding_left.svg'));
+
+        this.paddingContinueReadingButton = [];
+        this.marginContinueReadingButton = [];
+        if (this.widget.settings[this.deviceType].additional_settings.continueReadingButtonContainer !== undefined) {
+            const buttonStyles = this.widget.settings[this.deviceType].additional_settings.continueReadingButtonContainer;
+            this.paddingContinueReadingButton.push(new RadioButton('top',
+                buttonStyles.button.padding.top, assetsUrl + 'images/icons/padding_top.svg'));
+            this.paddingContinueReadingButton.push(new RadioButton('right',
+                buttonStyles.button.padding.right, assetsUrl + 'images/icons/padding_right.svg'));
+            this.paddingContinueReadingButton.push(new RadioButton('bottom',
+                buttonStyles.button.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'));
+            this.paddingContinueReadingButton.push(new RadioButton('left',
+                buttonStyles.button.padding.left, assetsUrl + 'images/icons/padding_left.svg'));
+
+            this.marginContinueReadingButton.push(new RadioButton('top',
+                buttonStyles.margin.top, assetsUrl + 'images/icons/margin_top.svg'));
+            this.marginContinueReadingButton.push(new RadioButton('right',
+                buttonStyles.margin.right, assetsUrl + 'images/icons/margin_right.svg'));
+            this.marginContinueReadingButton.push(new RadioButton('bottom',
+                buttonStyles.margin.bottom, assetsUrl + 'images/icons/margin_bottom.svg'));
+            this.marginContinueReadingButton.push(new RadioButton('left',
+                buttonStyles.margin.left, assetsUrl + 'images/icons/margin_left.svg'));
+        }
 
         if (this.widget.settings[this.deviceType].widget_settings.general.text_margin.top === undefined) {
             this.widget.settings[this.deviceType].widget_settings.general.text_margin = {

@@ -69,6 +69,11 @@
         <div #preview [ngModel]="changePreview(preview)" style="display:none" name="preview" ngDefaultControl>
             <link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
             <div [ngStyle]="getPopupOverlay()"></div>
+            <div *ngIf="widget.widget_type.method === 'locked'" [ngStyle]="getContinueReadingButtonContainer()">
+                <button type="button" id="btn-cr0wdfunding--continueReading" [ngStyle]="getContinueReadingButton()">
+                    {{widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.text}}
+                </button>
+            </div>
             <div class="cft--background" [ngStyle]="getBackgroundStyle()"
                  [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
                 <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
