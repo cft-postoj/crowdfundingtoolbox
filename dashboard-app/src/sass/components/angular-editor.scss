@@ -6,3 +6,13 @@
         }
     }
 }
+.angular-editor--classic {
+    #editor {
+        min-height: 200px !important;
+    }
+    .angular-editor-toolbar {
+        div:nth-child(7) {
+            display: none !important;
+        }
+    }
+}

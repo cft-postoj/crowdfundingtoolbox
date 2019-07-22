@@ -16,7 +16,7 @@
     <ng-container *ngIf="!loading">
         <div class="settings--body">
             <div class="settings--body--content">
-                <div class="row">
+                <div class="row" *ngIf="widget.widget_type.method === widgetTypes.locked.name">
                     <div class="col">
                         This kind of crowdfunding toolbox widgets is situating in the middle of article and it hide
                         second half of article. It hides 50% of
@@ -535,7 +535,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(2)}">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(2)}"
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(2)">
                         <div class="col-11">
                             HEADLINE
@@ -642,7 +643,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(3)}">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(3)}"
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(3)">
                         <div class="col-11">
                             ADDITIONAL TEXT
@@ -745,7 +747,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(4)}">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(4)}"
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(4)">
                         <div class="col-11">
                             CALL TO ACTION BUTTON
@@ -1127,7 +1130,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(5)}">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(5)}"
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(5)">
                         <div class="col-11">
                             MONETIZATION
@@ -1516,6 +1520,29 @@
                                 </ng-container>
                             </div>
                         </ng-container>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="'flex-open'"
+                     *ngIf="widget.widget_type.method === widgetTypes.article.name">
+                    <div class="row collapsible--header" (click)="openTab(10)">
+                        <div class="col-11">
+                            WIDGET TEXT
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(10)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(10)">
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <p>Font family and font styles will be overrided with fonts used in your articles.</p>
+                                <angular-editor class="angular-editor--classic"
+                                                [(ngModel)]="widget.settings[deviceType].additional_settings.articleWidgetText"></angular-editor>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

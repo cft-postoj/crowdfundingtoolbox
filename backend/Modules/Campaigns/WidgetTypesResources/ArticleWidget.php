@@ -4,7 +4,7 @@
 namespace Modules\Campaigns\WidgetTypesResources;
 
 
-class ArticleLinkWidget extends WidgetTypeResource
+class ArticleWidget extends WidgetTypeResource
 {
     public function initDesktop()
     {
@@ -34,7 +34,8 @@ class ArticleLinkWidget extends WidgetTypeResource
             ), 'relative', '', '', '', '', array(
                 'width' => 0
             )),
-            null
+            null,
+            '<p>This is <span style="color:red">article</span> widget...</p>'
         );
     }
 
@@ -66,7 +67,8 @@ class ArticleLinkWidget extends WidgetTypeResource
             ), 'relative', '', '', '', '', array(
                 'width' => 0
             )),
-            null
+            null,
+            '<p>This is <span style="color:red">article</span> widget...</p>'
         );
     }
 
@@ -98,7 +100,8 @@ class ArticleLinkWidget extends WidgetTypeResource
             ), 'relative', '', '', '', '', array(
                 'width' => 0
             )),
-            null
+            null,
+            '<p>This is <span style="color:red">article</span> widget...</p>'
         );
     }
 

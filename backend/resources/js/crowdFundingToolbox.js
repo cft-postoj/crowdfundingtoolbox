@@ -8,6 +8,8 @@ const fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
 const leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
 const popupPlaceholder = document.getElementById('cr0wdFundingToolbox-popup');
 const lockedPlaceholder = document.getElementById('cr0wdfundingToolbox-locked');
+const articlePlaceholder = document.getElementById('cr0wdfundingToolbox-article');
+const customPlaceholder = document.getElementById('cr0wdfundingToolbox-custom');
 
 function getWidgets(apiUrl) {
 
@@ -70,6 +72,14 @@ function getWidgets(apiUrl) {
                         case 'locked':
                             (lockedPlaceholder != null) &&
                             (setLockedContentArticle(el.response[cr0wdGetDeviceType()]));
+                            break;
+                        case 'article':
+                            (articlePlaceholder != null) &&
+                            (articlePlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            break;
+                        case 'custom':
+                            (customPlaceholder != null) &&
+                            (customPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
                             break;
                         default:
                             break;

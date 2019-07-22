@@ -132,7 +132,8 @@ class LockedArticleWidget extends WidgetTypeResource
                         )
                     )
                 )
-            ))
+            )),
+            null
         );
     }
 
@@ -260,7 +261,8 @@ class LockedArticleWidget extends WidgetTypeResource
                         )
                     )
                 )
-            ))
+            )),
+            null
         );
     }
 
@@ -388,7 +390,8 @@ class LockedArticleWidget extends WidgetTypeResource
                         )
                     )
                 )
-            ))
+            )),
+            null
         );
     }
 }

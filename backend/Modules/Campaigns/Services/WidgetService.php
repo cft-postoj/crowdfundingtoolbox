@@ -17,6 +17,7 @@ use Modules\Campaigns\Entities\WidgetVersion;
 use Modules\Campaigns\Http\Controllers\WidgetTypesController;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Campaigns\Transformers\WidgetResultResource;
+use Modules\Campaigns\WidgetTypesResources\ArticleWidget;
 use Modules\Campaigns\WidgetTypesResources\FixedWidget;
 use Modules\Campaigns\WidgetTypesResources\LeaderboardWidget;
 use Modules\Campaigns\WidgetTypesResources\LockedArticleWidget;
@@ -38,6 +39,7 @@ class WidgetService implements WidgetServiceInterface
     private $popupWidget;
     private $leaderboardWidget;
     private $lockedArticleWidget;
+    private $articleWidget;
 
     public function __construct()
     {
@@ -48,6 +50,7 @@ class WidgetService implements WidgetServiceInterface
         $this->popupWidget = new PopupWidget();
         $this->leaderboardWidget = new LeaderboardWidget();
         $this->lockedArticleWidget = new LockedArticleWidget();
+        $this->articleWidget = new ArticleWidget();
     }
 
     public function createWidgetsForCampaign($campaignId)
@@ -612,12 +615,11 @@ class WidgetService implements WidgetServiceInterface
                         : $this->lockedArticleWidget->initMobile());
                 break;
             case 7: // article widget
-                // widget with rich text only (you can set raw text with hyperlinks / colors TODO
-                $outputJson = array();
-                break;
-            case 8: // article link
-                // TODO DELETE IT
-                $outputJson = array();
+                // widget with rich text only (you can set raw text with hyperlinks / colors
+                $outputJson = ($deviceType === 'desktop')
+                    ? $this->articleWidget->initDesktop() :
+                    (($deviceType === 'tablet') ? $this->articleWidget->initTablet()
+                        : $this->articleWidget->initMobile());
                 break;
             case 9: // custom html + css
                 $outputJson = array();

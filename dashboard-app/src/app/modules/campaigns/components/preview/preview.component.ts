@@ -584,4 +584,12 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         return styles;
     }
 
+    getArticleWidgetTextStyles() {
+        const styles = {
+            position: 'relative'
+        };
+
+        return styles;
+    }
+
 }

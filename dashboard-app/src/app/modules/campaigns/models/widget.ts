@@ -397,7 +397,8 @@ export class Widget {
                             },
                         }
                     }
-                }
+                },
+                articleWidgetText: ''
             }
         },
         tablet: {
@@ -760,7 +761,8 @@ export class Widget {
                             },
                         }
                     }
-                }
+                },
+                articleWidgetText: ''
             }
         },
         mobile: {
@@ -1128,7 +1130,8 @@ export class Widget {
                             },
                         }
                     }
-                }
+                },
+                articleWidgetText: ''
             }
         },
     };

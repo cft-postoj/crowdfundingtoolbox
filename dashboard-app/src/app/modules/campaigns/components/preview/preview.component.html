@@ -77,7 +77,10 @@
             <div class="cft--background" [ngStyle]="getBackgroundStyle()"
                  [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
                 <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
-                <div class="cft--body" [ngStyle]="getBodyStyle()">
+                <div [ngStyle]="getArticleWidgetTextStyles()" *ngIf="widget.widget_type.method === 'article'"
+                     [innerHTML]="widget.settings[deviceType].additional_settings.articleWidgetText">
+                </div>
+                <div *ngIf="widget.widget_type.method !== 'article'" class="cft--body" [ngStyle]="getBodyStyle()">
                     <div class="cft--text-container" [ngStyle]="getTextContainerStyle()">
                         <div class="cft--headline-text" [ngStyle]="getHeadlineTextStyle()"
                              [innerHTML]="widget.settings[deviceType].headline_text">
