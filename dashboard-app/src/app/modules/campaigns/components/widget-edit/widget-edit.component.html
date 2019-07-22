@@ -389,7 +389,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}"
+                *ngIf="widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="collapsible--header row" (click)="openTab(1)">
                         <div class="col-11">
                             BACKGROUND
@@ -1541,6 +1542,29 @@
                                 <p>Font family and font styles will be overrided with fonts used in your articles.</p>
                                 <angular-editor class="angular-editor--classic"
                                                 [(ngModel)]="widget.settings[deviceType].additional_settings.articleWidgetText"></angular-editor>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="'flex-open'"
+                     *ngIf="widget.widget_type.method === widgetTypes.custom.name">
+                    <div class="row collapsible--header" (click)="openTab(11)">
+                        <div class="col-11">
+                            HTML CONTENT
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="!isOpened(11)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper show" [ngbCollapse]="isOpened(11)">
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <p>Here you can write your own html widget with inline styles. You can type plain text or <b>click on html button under this text</b> and start write your own html code.</p>
+                                <angular-editor class="angular-editor--html"
+                                                [(ngModel)]="widget.settings[deviceType].additional_settings.customHtmlWidget"></angular-editor>
                             </div>
                         </div>
                     </div>

@@ -622,7 +622,9 @@ class WidgetService implements WidgetServiceInterface
                         : $this->articleWidget->initMobile());
                 break;
             case 9: // custom html + css
-                $outputJson = array();
+                $outputJson = array(
+                    'customHtmlWidget' => '<div style="display: block; padding: 15px; background: #ccc; color: #000000;">This is your html widget</div>'
+                );
                 break;
             default:
                 break;

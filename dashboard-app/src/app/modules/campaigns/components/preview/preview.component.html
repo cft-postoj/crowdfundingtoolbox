@@ -75,6 +75,7 @@
                 </button>
             </div>
             <div class="cft--background" [ngStyle]="getBackgroundStyle()"
+                 *ngIf="widget.widget_type.method !== 'custom'"
                  [id]="'cr0wdWidgetContent-'+widget.widget_type.method">
                 <div class="cft--overlay" [ngStyle]="getOverlayStyle()"></div>
                 <div [ngStyle]="getArticleWidgetTextStyles()" *ngIf="widget.widget_type.method === 'article'"
@@ -119,6 +120,7 @@
 </svg>
                 </span>
             </div>
+            <div [ngStyle]="getCustomHtmlWidgetStyles()" [innerHTML]="widget.settings[deviceType].additional_settings.customHtmlWidget"></div>
             <div id="styles">
             </div>
             <div id="scripts">

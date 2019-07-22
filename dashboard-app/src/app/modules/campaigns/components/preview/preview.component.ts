@@ -586,9 +586,17 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getArticleWidgetTextStyles() {
         const styles = {
-            position: 'relative'
+            position: 'relative',
+            display: (this.widget.widget_type.method !== 'article') ? 'none' : 'block'
         };
 
+        return styles;
+    }
+
+    getCustomHtmlWidgetStyles() {
+        const styles = {
+            display: (this.widget.widget_type.method !== 'custom') ? 'none' : 'block'
+        }
         return styles;
     }
 
