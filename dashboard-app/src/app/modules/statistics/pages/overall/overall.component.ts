@@ -5,6 +5,8 @@ import {DropdownItem, RadioButton} from '../../../core/models';
 import {DonorService} from '../../services/donor.service';
 import moment from 'moment/src/moment';
 import {Moment} from 'moment';
+import {NavbarItem} from '../../../core/models/navbar-item';
+import {Routing} from '../../../../constants/config.constants';
 
 @Component({
     selector: 'app-overall',
@@ -15,6 +17,7 @@ export class OverallComponent implements OnInit {
 
     data: any;
     options: any;
+    navItems: NavbarItem[];
 
     intervalRadioButtons: RadioButton[];
     typeDropdownButtons: DropdownItem[];
@@ -51,6 +54,24 @@ export class OverallComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.navItems = [
+            {
+                title: 'Dashboard',
+                url: Routing.STATS_FULL_PATH,
+                active: true
+            },
+            {
+                title: 'Articles',
+                url: Routing.DASHBOARD + '/' + Routing.PAYMENT,
+                active: false
+            },
+            {
+                title: 'Campaigns',
+                url: Routing.DASHBOARD + '/' + Routing.UNPAIRED_PAYMENTS,
+                active: false
+            }
+        ];
+
         this.intervalRadioButtons = [];
         this.intervalRadioButtons.push(new RadioButton('Hour', 'hour', '', 'hour'));
         this.intervalRadioButtons.push(new RadioButton('Day', 'day', '', 'day'));

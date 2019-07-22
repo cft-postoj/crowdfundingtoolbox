@@ -132,18 +132,6 @@ export class SideBarComponent implements OnInit {
             });
             this.isActive = this.activeItem !== this.noActiveItem;
             this.currentSidebarItemType = sidebarType.campaigns;
-        } else if (itemName === this.statisticsItemName) {
-            this.sidebarItems = [];
-            this.sidebarItems.push({
-                title: 'Dashboard',
-                value: '/' + Routing.DASHBOARD + '/' +  Routing.STATS
-            });
-            this.sidebarItems.push({
-                title: 'Campaigns stats',
-                value: '/' + Routing.CAMPAIGNS_FULL_PATH + '/' + Routing.STATS
-            });
-            this.isActive = this.activeItem !== this.noActiveItem;
-            this.currentSidebarItemType = sidebarType.stats;
         } else {
             this.isActive = false;
         }
