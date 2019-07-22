@@ -62,7 +62,7 @@ import localSk from '@angular/common/locales/sk';
         SettingsComponent,
         NotificationComponent,
 
-        CtaSettingsComponent,
+        CtaSettingsComponent
     ],
     providers: [
         {

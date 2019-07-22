@@ -68,12 +68,13 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(translationsItemName)">
+                    (click)="showItem(settingsItemName)"
+                    [routerLink]="'/' + routing.CONFIGURATION_FULL_PATH">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/settings.svg'"
                         [removeSVGAttributes]="['fill']"
-                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === translationsItemName}"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === settingsItemName}"
                 >
                 </div>
                 <p *ngIf="!isActive">Settings</p>

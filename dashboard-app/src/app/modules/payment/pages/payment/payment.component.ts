@@ -18,13 +18,13 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
     this.navItems = [
       {
-        title: 'Payment portal options',
-        url: Routing.DASHBOARD + '/' + Routing.PAYMENT_OPTIONS,
+        title: 'All donations',
+        url: Routing.DASHBOARD + '/' + Routing.DONATIONS,
         active: true
       },
       {
-        title: 'All donations',
-        url: Routing.DASHBOARD + '/' + Routing.DONATIONS,
+        title: 'All payments',
+        url: Routing.DASHBOARD + '/' + Routing.PAYMENT,
         active: false
       },
       {

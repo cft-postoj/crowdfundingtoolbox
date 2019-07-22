@@ -2,10 +2,11 @@
 @import "../../../../../sass/mixins";
 .configurationPage {
   background: $white;
-  height: 100vh;
+  height: calc(100vh - 80px);
   color: $outer-space;
   text-align: center;
   padding: 39px 0;
+  overflow-y: auto;
   @media screen and (min-height: 750px) and (max-height: 800px) {
     //height: 600px;
     margin-top: 30px;
@@ -41,9 +42,10 @@
   &--item {
     background: $aquaHaze;
     color: $outer-space;
-    height: 100%;
+    height: calc(100% - 30px);
     padding: 39px 19px;
     cursor: pointer;
+    margin-bottom: 15px;
     @include transitionSingle(.3s ease);
     b {
       margin-bottom: 10px;
@@ -87,6 +89,12 @@
           transform: translate3d(50px, -35px, 15px);
         }
         g path.widgets_settings {
+          fill: $azure;
+        }
+        g path.payment_settings {
+          fill: $azure;
+        }
+        g path.backoffice_user_settings {
           fill: $azure;
         }
       }

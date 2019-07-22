@@ -31,6 +31,7 @@ import {StatusComponent} from './parts/atoms/status/status.component';
 import { ExportCsvComponent } from './components/export-csv/export-csv.component';
 import { HelpComponent } from './components/help/help.component';
 import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
+import { PreviousPageComponent } from './components/previous-page/previous-page.component';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
         InputTextComponent,
         NavbarComponent,
         ExportCsvComponent,
-        HelpComponent
+        HelpComponent,
+        PreviousPageComponent,
     ],
     imports: [
         CommonModule,
