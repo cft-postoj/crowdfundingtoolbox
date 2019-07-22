@@ -84,11 +84,11 @@ export const appRoutes: Routes = [
             }
         ]
     },
-    {
-        path: '**',
-        redirectTo: '/dashboard/campaigns/all',
-        canActivate: [LoginGuard],
-    }
+    // {
+    //     path: '**',
+    //     redirectTo: Routing.STATS_FULL_PATH,
+    //     canActivate: [LoginGuard],
+    // }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes, {

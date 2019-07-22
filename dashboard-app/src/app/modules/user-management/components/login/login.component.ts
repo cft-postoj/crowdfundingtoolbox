@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
             this.alertType = 'success';
             this.alertOpen = true;
             setTimeout(() => {
-                this.router.navigate([this.routing.CAMPAIGNS_ALL_FULL_PATH]);
+                this.router.navigateByUrl(this.routing.STATS_FULL_PATH);
                 this.loadingStop();
             }, 1000);
 

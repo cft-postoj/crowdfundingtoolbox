@@ -103,7 +103,7 @@ export class CampaignListComponent implements OnInit, OnDestroy {
     }
 
     redirectCampaignDetail(id: any) {
-        this.router.navigateByUrl(Routing.CAMPAIGNS_FULL_PATH+"/"+id);
+        this.router.navigateByUrl(Routing.CAMPAIGNS_FULL_PATH + '/' + id);
 
     }
 }

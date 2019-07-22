@@ -15,6 +15,8 @@ export class Routing {
     static readonly ID = 'id';
     static readonly STATS = 'stats';
 
+    static readonly STATS_FULL_PATH = `/${Routing.DASHBOARD}/${Routing.STATS}/${Routing.ALL}`;
+
 
     // specific paths for components
     static readonly CAMPAIGNS = 'campaigns';
@@ -45,4 +47,6 @@ export class Routing {
     static readonly DONATIONS_FULL_PATH = `/${Routing.DASHBOARD}/${Routing.DONATIONS}`;
     static readonly UNPAIRED_PAYMENTS = `${Routing.PAYMENT}/unpaired-payments`;
     static readonly IMPORT_PAYMENTS = `${Routing.PAYMENT}/import-payments`;
+
+    static readonly DONORS = 'donors';
 }

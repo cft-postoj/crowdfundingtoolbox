@@ -4,6 +4,7 @@
         <div class="main-items" [ngClass]="{ 'main-items--sub-active': isActive }">
             <div
                     class="item"
+                    [routerLink]="routing.STATS_FULL_PATH"
                     (click)="showItem(statisticsItemName)">
                 <div
                         class="item--icon"

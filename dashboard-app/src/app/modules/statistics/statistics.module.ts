@@ -15,10 +15,11 @@ import {MonthlyPipe} from './pipes/monthly.pipe';
 import {TableDonationsComponent} from './components/table-donations/table-donations.component';
 import {PortalUsersModule} from '../portal-users/portal-users.module';
 import { TablePaymentsComponent } from './components/table-payments/table-payments.component';
+import { PopupStatisticsComponent } from './components/popup-statistics/popup-statistics.component';
 
 @NgModule({
     declarations: [OverallComponent, ForceSignPipe, TotalCurrentAndPreviousComponent,
-        TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent, TablePaymentsComponent],
+        TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent, TablePaymentsComponent, PopupStatisticsComponent],
     exports: [
         TableDonationsComponent
     ],
