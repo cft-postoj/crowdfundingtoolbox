@@ -124,6 +124,7 @@ import { PreviousPageComponent } from './components/previous-page/previous-page.
         NavbarComponent,
         ExportCsvComponent,
         HelpComponent,
+        PreviousPageComponent,
 
     ]
 })

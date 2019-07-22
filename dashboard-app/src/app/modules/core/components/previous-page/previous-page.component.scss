@@ -1,0 +1,19 @@
+@import 'variables';
+@import 'mixins';
+.previousPage {
+  position: fixed;
+  cursor: pointer;
+  width: 50px;
+  height: 53px;
+  background: rgba($azure, .7);
+  color: $white;
+  left: 270px;
+  z-index: 99;
+  @include transitionSingle(.3s ease);
+  svg {
+    transform: rotate(-180deg);
+  }
+  &:hover {
+    background: $azure;
+  }
+}

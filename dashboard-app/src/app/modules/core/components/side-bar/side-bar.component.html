@@ -1,4 +1,5 @@
 <div [ngClass]="{'sub-inactive': !isActive, 'preview' : previewOpen}" id="sidebar">
+    <app-previous-page></app-previous-page>
     <div>
         <div class="main-items" [ngClass]="{ 'main-items--sub-active': isActive }">
             <div
@@ -56,7 +57,7 @@
             <div
                     class="item"
                     (click)="showItem(paymentsItemName)"
-                    [routerLink]="routing.PAYMENT_OPTIONS">
+                    [routerLink]="routing.DONATIONS_FULL_PATH">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/payment_default.svg'"
