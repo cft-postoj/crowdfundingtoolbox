@@ -15,18 +15,6 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(connectionsItemName)">
-                <div
-                        class="item--icon"
-                        [inlineSVG]="'/assets/images/icons/connections_default.svg'"
-                        [removeSVGAttributes]="['fill']"
-                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === connectionsItemName}"
-                >
-                </div>
-                <p *ngIf="!isActive">Portal connections</p>
-            </div>
-            <div
-                    class="item"
                     (click)="showItem(campaignsItemName)"
                     [routerLink]="routing.CAMPAIGNS_ALL_FULL_PATH"
             >
@@ -54,6 +42,19 @@
             </div>
             <div
                     class="item"
+                    (click)="showItem(usersItemName)"
+                    [routerLink]="routing.PORTAL_USER_LIST">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/donors-supporters.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === usersItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">Supporters / Donors</p>
+            </div>
+            <div
+                    class="item"
                     (click)="showItem(paymentsItemName)"
                     [routerLink]="routing.PAYMENT_OPTIONS">
                 <div
@@ -63,19 +64,19 @@
                         [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === paymentsItemName}"
                 >
                 </div>
-                <p *ngIf="!isActive">Payment</p>
+                <p *ngIf="!isActive">Payments</p>
             </div>
             <div
                     class="item"
                     (click)="showItem(translationsItemName)">
                 <div
                         class="item--icon"
-                        [inlineSVG]="'/assets/images/icons/translation_default.svg'"
+                        [inlineSVG]="'/assets/images/icons/settings.svg'"
                         [removeSVGAttributes]="['fill']"
                         [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === translationsItemName}"
                 >
                 </div>
-                <p *ngIf="!isActive">Translations</p>
+                <p *ngIf="!isActive">Settings</p>
             </div>
         </div>
         <div class="item-content" [ngClass]="{'item-content--active': isActive}">

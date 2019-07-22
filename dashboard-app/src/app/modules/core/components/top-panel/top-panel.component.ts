@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener, ElementRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {environment} from "../../../../../environments/environment";
 import {AuthenticationService} from "../../../user-management/services";
@@ -14,10 +14,11 @@ export class TopPanelComponent implements OnInit {
     public lastName: string;
     public signature: string;
     public role: string;
+    public adminPanelActive: boolean = false;
 
     public isUserSettingsPage: boolean;
 
-    constructor(private router: Router, private authService: AuthenticationService) {
+    constructor(private router: Router, private authService: AuthenticationService, private eRef: ElementRef) {
         router.events.subscribe((val) => {
             this.isUserSettingsPage = false;
             if (this.router.url.indexOf('/dashboard/user-settings') > -1) {
@@ -38,13 +39,31 @@ export class TopPanelComponent implements OnInit {
         }
     }
 
+    @HostListener('document:click', ['$event'])
+    clickOut(event) {
+        if (!this.eRef.nativeElement.contains(event.target)) {
+            this.adminPanelActive = false;
+        }
+    }
+
     public logout(): void {
+        this.adminPanelActive = false;
         this.authService.logout(() =>
             this.router.navigate([this.router.navigateByUrl(environment.login)])
         );
     }
 
     public userSettings() {
+        this.adminPanelActive = false;
         this.router.navigateByUrl(Routing.DASHBOARD + '/' + Routing.USER_SETTINGS);
+    }
+
+    public showHome() {
+        this.adminPanelActive = false;
+        this.router.navigateByUrl(Routing.DASHBOARD + '/' + Routing.STATS);
+    }
+
+    public showAdminPanel() {
+        this.adminPanelActive = !this.adminPanelActive;
     }
 }

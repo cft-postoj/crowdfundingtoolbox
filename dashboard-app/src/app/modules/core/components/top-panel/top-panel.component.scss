@@ -1,5 +1,5 @@
-@import "../../../../../sass/variables";
-@import "../../../../../sass/mixins";
+@import 'variables';
+@import 'mixins';
 
 .topPanel {
   background: $outer-space;
@@ -11,21 +11,26 @@
   display: flex;
   align-items: center;
   vertical-align: middle;
+
   &__title {
     min-width: 320px;
     float: left;
     height: 100%;
+
     h1 {
       font-size: 18px;
       color: $white;
       padding-left: 45px;
       margin: 0;
+      cursor: pointer;
     }
   }
+
   &__admin {
     justify-content: flex-end;
     width: 100%;
     display: flex;
+
     &__photo {
       @include borderRadius(50px);
       width: 42px;
@@ -34,17 +39,74 @@
       color: $white;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
     }
+
+    &__notifications {
+      cursor: pointer;
+
+      svg {
+        opacity: .33;
+
+        circle {
+          display: none;
+        }
+      }
+
+      &.hasNotifications {
+        svg {
+          opacity: 1;
+
+          circle {
+            display: block;
+          }
+        }
+
+      }
+    }
+  }
+
+  &__admin__absolute {
+    padding: 30px 15px;
+    @include boxShadow(0 0 30px rgba($azure, .5));
+    background: $white;
+    min-width: 300px;
+    position: absolute;
+    top: 65px;
+    right: 15px;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    @include transitionSingle(.3s ease);
+    &__container {
+      border-bottom: 1px solid rgba($outer-space, .7);
+    }
+    &__photo {
+      @include borderRadius(50px);
+      width: 42px;
+      height: 42px;
+      background: $azure;
+      color: $white;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
     &__user {
       margin-left: 15px;
-      color: $white;
+      color: $azure;
+      padding-bottom: 20px;
+
       & > div {
         vertical-align: middle;
       }
+
       h5 {
         margin-bottom: 0;
         font-size: 16px;
+        font-weight: 600;
       }
+
       &__position {
         font-size: 14px;
         font-weight: 400;
@@ -52,50 +114,46 @@
         margin-bottom: 0;
       }
     }
+
     &__settings {
-      margin-left: 40px;
       cursor: pointer;
+      margin-top: 15px;
+
       svg {
         @include transitionSingle(.3s ease);
         opacity: .33;
+        margin-top: -3px;
       }
+
       &:hover, &.active {
+        -webkit-text-stroke: 1px $outer-space;
         svg {
           opacity: 1;
         }
 
       }
     }
+
     &__logout {
       cursor: pointer;
+
       svg {
         @include transitionSingle(.3s ease);
         opacity: .33;
+        margin-top: -3px;
       }
+
       &:hover {
+        -webkit-text-stroke: 1px $outer-space;
         svg {
           opacity: 1;
         }
 
       }
     }
-    &__notifications {
-      cursor: pointer;
-      svg {
-        opacity: .33;
-        circle {
-          display: none;
-        }
-      }
-      &.hasNotifications {
-        svg {
-          opacity: 1;
-          circle {
-            display: block;
-          }
-        }
-
-      }
+    &.active {
+      visibility: visible;
+      opacity: 1;
     }
   }
 }
