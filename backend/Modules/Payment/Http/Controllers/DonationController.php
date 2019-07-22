@@ -18,8 +18,7 @@ class DonationController extends Controller
 
     protected function initialize(Request $request)
     {
-        //pripojit sa na service a zavolat endpoint
-        return $this->donationService->initialize($request);
+        return $this->donationService->initializeBackend($request, request()->headers->get('referer'));
     }
 
     protected function getAllDonations(Request $request)

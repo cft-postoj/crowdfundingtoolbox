@@ -249,12 +249,15 @@
             </div>
         </div>
         <div class="row pt-4">
-            <h4>Bank buttons</h4> <app-help class="position-relative" [text]="'Used in donation widgets to redirect user into his bank'"></app-help>
+            <h4>Bank buttons</h4>
+            <app-help class="position-relative"
+                      [text]="'Used in donation widgets to redirect user into his bank'"></app-help>
             <div class="col-12">
                 <p-table [value]="bankButtons">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width:2.5em"></th>
+                            <th>Title</th>
                             <th>Image</th>
                             <th>Link</th>
                             <th style="width:100px">Actions</th>
@@ -263,14 +266,21 @@
                     <ng-template pTemplate="body" let-bankButton let-index="rowIndex">
                         <tr [pReorderableRow]="index">
                             <td style="width:2.5em"><i class="fa fa-bars" pReorderableRowHandle></i></td>
-                            <td><app-dragAndDrop [clazz]="'dragAndDrop--small'" [(fileData)]="bankButton.image"></app-dragAndDrop>
+                            <td>
+                                <input type="text" class="full-width" [ngModelOptions]="{standalone: true}"
+                                       [(ngModel)]="bankButton.title"/>
                             </td>
                             <td>
-                                <input type="text" [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="bankButton.redirect_link"/>
+                                <app-dragAndDrop [clazz]="'dragAndDrop--small'"
+                                                 [(fileData)]="bankButton.image"></app-dragAndDrop>
                             </td>
                             <td>
-                                <span class="add-button vertical-align hoverable hoverable--danger" title="Delete bank button"
+                                <input type="text" class="full-width" [ngModelOptions]="{standalone: true}"
+                                       [(ngModel)]="bankButton.redirect_link"/>
+                            </td>
+                            <td>
+                                <span class="add-button vertical-align hoverable hoverable--danger"
+                                      title="Delete bank button"
                                       [inlineSVG]="'/assets/images/icons/delete.svg'"
                                       [removeSVGAttributes]="['fill']" (click)="deleteBankButton(bankButton)">
                                     </span>

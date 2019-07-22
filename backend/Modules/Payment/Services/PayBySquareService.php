@@ -3,6 +3,10 @@
 
 namespace Modules\Payment\Services;
 
+use com\peterbodnar\bsqr\BySquare;
+use com\peterbodnar\bsqr\model\BankAccount;
+use com\peterbodnar\bsqr\model\Pay;
+use com\peterbodnar\bsqr\model\Payment;
 use Illuminate\Http\Response;
 use Modules\Payment\Repositories\PaymentOptionsRepository;
 
@@ -62,6 +66,36 @@ class PayBySquareService
         return response()->json([
             'message' => 'Successfully updated pay by square details.'
         ], Response::HTTP_OK);
+    }
+
+    //$frequency: one-time or monthly
+    public function getQRCodeFromData($variableSymbol, $amount, $frequency)
+    {
+
+        //http://www.sbaonline.sk/files/subory/projekty/qr-kod/bysquare-payspecifications-1.1.0.pdf
+        //https://github.com/prog/php-bsqr
+
+        $document = new Pay();
+        $document->payments[] = call_user_func(function() use ($variableSymbol, $amount) {
+            $payment = new Payment();
+            $payment->amount  = round($amount, 2, PHP_ROUND_HALF_UP);
+
+            $payment->currencyCode = "EUR";
+            $payment->variableSymbol = $variableSymbol;
+            // $payment->constantSymbol = $invoice->constant_symbol;
+            $payment->bankAccounts[] = call_user_func(function() {
+                $bankAccount = new BankAccount();
+                $bankAccount->iban = 'SK52 1100 0000 0029 4346 0300';
+                return $bankAccount;
+            });
+            return $payment;
+        });
+
+        $bysquare = new BySquare();
+        $svg = (string) $bysquare->render($document);
+
+        return $svg;
+
     }
 
     public function getQRCode($request)

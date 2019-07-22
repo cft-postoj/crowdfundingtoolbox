@@ -3,10 +3,10 @@
     <div class="settings--head">
         <b>EDIT <span class="title">{{widget?.widget_type?.name | uppercase }}</span></b>
         <span
-                [inlineSVG]="'/assets/images/icons/close.svg'"
-                (click)="closeEditWindow()"
-                title="Close"
-                class="settings--close">
+            [inlineSVG]="'/assets/images/icons/close.svg'"
+            (click)="closeEditWindow()"
+            title="Close"
+            class="settings--close">
                </span>
     </div>
     <ng-container *ngIf="loading">
@@ -92,20 +92,21 @@
                                         Color
                                     </div>
                                     <div class="col-6 color-picker--simple">
-                                        <input [value]="widget.settings[deviceType].widget_settings.general.background.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
-                                               [cpPosition]="'bottom'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.general.background.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.general.background.color"
+                                            [cpPosition]="'bottom'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.general.background.color"/>
                                     </div>
                                     <div class="col-5 col-xxl-2 vertical-align">
                                         Opacity (%)
                                     </div>
                                     <div class="col-3 col-xxl-2 pt-2 pt-xxl-0">
                                         <app-inputNumber
-                                                [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
-                                                [class]="'float-right'">
+                                            [(value)]="widget.settings[deviceType].widget_settings.general.background.opacity"
+                                            [class]="'float-right'">
                                         </app-inputNumber>
 
                                     </div>
@@ -233,32 +234,34 @@
                                         Text color
                                     </div>
                                     <div class="col-3 color-picker--simple color-picker--fixed ">
-                                        <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
-                                               [cpPosition]="'bottom'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.color"
+                                            [cpPosition]="'bottom'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.color"/>
                                     </div>
                                     <div class="col-3 vertical-align ">
                                         Size (px)
                                     </div>
                                     <div class="col-3">
                                         <app-inputNumber
-                                                [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
-                                                [class]="'float-right'">
+                                            [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
+                                            [class]="'float-right'">
                                         </app-inputNumber>
                                     </div>
                                     <div class="col-3 vertical-align">
                                         Background color
                                     </div>
                                     <div class="col-3 color-picker--simple color-picker--fixed">
-                                        <input [value]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.general.fontSettings.backgroundColor"/>
                                     </div>
                                 </div>
                             </div>
@@ -336,32 +339,34 @@
                                         Text color
                                     </div>
                                     <div class="col-3 color-picker--simple color-picker--fixed">
-                                        <input [value]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
-                                               [cpPosition]="'bottom'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
+                                            [cpPosition]="'bottom'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"/>
                                     </div>
                                     <div class="col-3 vertical-align ">
                                         Size (px)
                                     </div>
                                     <div class="col-3">
                                         <app-inputNumber
-                                                [(value)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontSize"
-                                                [class]="'float-right'">
+                                            [(value)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontSize"
+                                            [class]="'float-right'">
                                         </app-inputNumber>
                                     </div>
                                     <div class="col-3 vertical-align">
                                         Background color
                                     </div>
                                     <div class="col-3 color-picker--simple color-picker--fixed">
-                                        <input [value]="widget.settings[deviceType].widget_settings.additional_text.text_background"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.additional_text.text_background"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.text_background"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.additional_text.text_background"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.additional_text.text_background"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.text_background"/>
                                     </div>
                                 </div>
                             </div>
@@ -507,20 +512,21 @@
                                             Color
                                         </div>
                                         <div class="col">
-                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.color"/>
                                         </div>
                                         <div class="col vertical-align">
                                             Size (px)
                                         </div>
                                         <div class="col">
                                             <app-inputNumber
-                                                    [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize"
-                                                    [class]="'float-right'">
+                                                [(value)]="widget.settings[deviceType].widget_settings.call_to_action.default.fontSettings.fontSize"
+                                                [class]="'float-right'">
                                             </app-inputNumber>
                                         </div>
                                     </div>
@@ -540,12 +546,13 @@
                                     </div>
                                     <div class="col-4"
                                          *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.active">
-                                        <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.fill.color"/>
                                     </div>
                                 </div>
                                 <div class="row pt-1 pb-1">
@@ -555,14 +562,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.active">
+                                        *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.border.color"/>
                                         </div>
                                         <div class="col-2 offset-1 vertical-align">
                                             Size (px)
@@ -581,14 +589,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.active">
+                                        *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.shadow.color"/>
                                         </div>
                                         <div class="col-5 vertical-align">
                                             <app-input-group [buttons]="shadowButtons"
@@ -611,12 +620,12 @@
                                     <div class="row">
                                         <div class="col-3 vertical-align">
                                             <app-radio-button-group
-                                                    [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active"
-                                                    [radioButtons]="radiusButtons">
+                                                [(currentValue)]="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active"
+                                                [radioButtons]="radiusButtons">
                                             </app-radio-button-group>
                                         </div>
                                         <ng-container
-                                                *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active">
+                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.default.design.radius.active">
                                             <div class="col-3 vertical-align">
                                                 <app-input-group [buttons]="allRadiusesButton"
                                                                  (buttonChange)="writeRadiusValue($event.value)"
@@ -665,12 +674,13 @@
                                         Color
                                     </div>
                                     <div class="col-4 color-picker--simple">
-                                        <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.fontSettings.color"/>
                                     </div>
                                 </div>
                             </div>
@@ -688,12 +698,13 @@
                                     </div>
                                     <div class="col-4"
                                          *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.active">
-                                        <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.fill.color"/>
                                     </div>
                                 </div>
                                 <div class="row pt-1 pb-1">
@@ -703,14 +714,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.active">
+                                        *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.border.color"/>
                                         </div>
                                         <div class="col-2 offset-1 vertical-align">
                                             Size (px)
@@ -729,14 +741,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.active">
+                                        *ngIf="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].widget_settings.call_to_action.hover.design.shadow.color"/>
                                         </div>
                                         <div class="col-5 vertical-align">
                                             <app-input-group [buttons]="shadowButtons"
@@ -790,12 +803,13 @@
                                     Title color:
                                 </div>
                                 <div class="col-3 color-picker--simple">
-                                    <input [value]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
-                                           class="btn color-picker--custom"
-                                           [style.background]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
-                                           [cpPosition]="'bottom'"
-                                           [cpPresetColors]="colors"
-                                           [(colorPicker)]="widget.settings[deviceType].payment_settings.monetization_title.textColor"/>
+                                    <input
+                                        [value]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
+                                        class="btn color-picker--custom"
+                                        [style.background]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
+                                        [cpPosition]="'bottom'"
+                                        [cpPresetColors]="colors"
+                                        [(colorPicker)]="widget.settings[deviceType].payment_settings.monetization_title.textColor"/>
                                 </div>
                                 <div class="col-3 vertical-align">
                                     Alignment:
@@ -852,23 +866,25 @@
                                             Background color
                                         </div>
                                         <div class="col-3 color-picker--simple">
-                                            <input [value]="widget.settings[deviceType].payment_settings.design.background_color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].payment_settings.design.background_color"
-                                                   [cpPosition]="'bottom'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.design.background_color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].payment_settings.design.background_color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].payment_settings.design.background_color"
+                                                [cpPosition]="'bottom'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].payment_settings.design.background_color"/>
                                         </div>
                                         <div class="col-3 vertical-align">
                                             Text color
                                         </div>
                                         <div class="col-3 color-picker--simple col-3 color-picker--fixed">
-                                            <input [value]="widget.settings[deviceType].payment_settings.design.text_color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].payment_settings.design.text_color"
-                                                   [cpPosition]="'bottom'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.design.text_color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].payment_settings.design.text_color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].payment_settings.design.text_color"
+                                                [cpPosition]="'bottom'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].payment_settings.design.text_color"/>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -902,10 +918,10 @@
                                 <div class="row">
                                     <div class="col-12 mt-3">
                                         <app-radio-button
-                                                [name]="'paymentType'"
-                                                [radioButtons]="paymentTypeRadioButtons"
-                                                [(currentValue)]="widget.settings[deviceType].payment_settings.payment_type"
-                                                [colClass]="'col'"></app-radio-button>
+                                            [name]="'paymentType'"
+                                            [radioButtons]="paymentTypeRadioButtons"
+                                            [(currentValue)]="widget.settings[deviceType].payment_settings.payment_type"
+                                            [colClass]="'col'"></app-radio-button>
                                     </div>
                                 </div>
                             </div>
@@ -924,19 +940,19 @@
                                             </div>
                                             <div class="col-3">
                                                 <app-inputNumber
-                                                        [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
-                                                        (valueChange)="updateNumberOfMonthlyPrices($event)">
+                                                    [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
+                                                    (valueChange)="updateNumberOfMonthlyPrices($event)">
                                                 </app-inputNumber>
                                             </div>
                                             <div class="col-4 offset-2 pull-right">
                                                 <app-checkbox
-                                                        [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
-                                                        [name]="'Custom price option'"></app-checkbox>
+                                                    [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
+                                                    [name]="'Custom price option'"></app-checkbox>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <ng-container
-                                                    *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
+                                                *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
                                                 <div class="col-6 pt-3 col-xxl-4">
                                                     <div class="row">
                                                         <div class="col-6 vertical-align">
@@ -966,8 +982,8 @@
                                             </div>
                                             <div class="col-6">
                                                 <app-inputNumber
-                                                        [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
-                                                        [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-inputNumber>
+                                                    [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
+                                                    [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-inputNumber>
                                             </div>
                                         </div>
                                     </div>
@@ -985,8 +1001,9 @@
                                     </div>
                                     <div class="settings--card--body">
                                         <div class="row">
-                                            <div *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value"
-                                                 class="col pt-2">
+                                            <div
+                                                *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value"
+                                                class="col pt-2">
                                                 <app-checkbox [name]="'Copy prices from monthly prices'"
                                                               [(checked)]="copyPrices">
                                                 </app-checkbox>
@@ -999,14 +1016,14 @@
                                                 </div>
                                                 <div class="col-3">
                                                     <app-inputNumber
-                                                            [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
-                                                            (valueChange)="updateNumberOfSinglePayments($event)">
+                                                        [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
+                                                        (valueChange)="updateNumberOfSinglePayments($event)">
                                                     </app-inputNumber>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <ng-container
-                                                        *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options; let i = index">
+                                                    *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options; let i = index">
                                                     <div class="col-6 pt-3 col-xxl-4">
                                                         <div class="row">
                                                             <div class="col-6 vertical-align">
@@ -1036,8 +1053,8 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <app-inputNumber
-                                                            [(value)]="widget.settings[deviceType].payment_settings.once_prices.benefit.value"
-                                                            [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-inputNumber>
+                                                        [(value)]="widget.settings[deviceType].payment_settings.once_prices.benefit.value"
+                                                        [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-inputNumber>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -1056,7 +1073,8 @@
                                                   [(checked)]="widget.settings[deviceType].payment_settings.default_price.monthly_active">
                                     </app-checkbox>
                                 </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active" class="row pt-2">
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active"
+                                     class="row pt-2">
                                     <app-dropdown class="classic col"
                                                   [class]="'classic mr15'"
                                                   [items]="createActivePriceOptionsMonthly()"
@@ -1071,7 +1089,8 @@
                                                   [(checked)]="widget.settings[deviceType].payment_settings.default_price.one_time_active">
                                     </app-checkbox>
                                 </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active" class="row pt-2">
+                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active"
+                                     class="row pt-2">
                                     <app-dropdown class="classic col"
                                                   [class]="'classic mr15'"
                                                   [items]="createActivePriceOptionsOneTime()"
@@ -1091,23 +1110,25 @@
                                             Background
                                         </div>
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].payment_settings.default_price.styles.background"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].payment_settings.default_price.styles.background"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.default_price.styles.background"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].payment_settings.default_price.styles.background"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].payment_settings.default_price.styles.background"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].payment_settings.default_price.styles.background"/>
                                         </div>
                                         <div class="col-2 vertical-align">
                                             Font
                                         </div>
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].payment_settings.default_price.styles.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].payment_settings.default_price.styles.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].payment_settings.default_price.styles.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].payment_settings.default_price.styles.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].payment_settings.default_price.styles.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].payment_settings.default_price.styles.color"/>
                                         </div>
                                     </div>
                                     <!--  <div class="row mt-3 bold">
@@ -1136,7 +1157,65 @@
                                     <!--</div>-->
                                 </ng-container>
                             </div>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col bold">
+                                        Terms and conditions
+                                    </div>
+                                    <div class="col-12">
+                                        <angular-editor [(ngModel)]="widget.settings[deviceType].payment_settings.terms.text"></angular-editor>
+                                    </div>
+                                </div>
+                            </div>
                         </ng-container>
+                    </div>
+                </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}">
+                    <div class="row collapsible--header" (click)="openTab(6)">
+                        <div class="col-11">
+                            MONETIZATION STEP 2
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(6)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(6)">
+
+                        <div class="settings--card">
+                            <div class="row">
+                                <div class="col-12 bold">
+                                    <div class="settings--card--header">
+                                        Step 2 title
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.title.text"></angular-editor>
+                                </div>
+                                <div class="col-12 bold">
+                                    <div class="settings--card--header">
+                                        CTA - transfer
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text"></angular-editor>
+                                </div>
+                                <div class="col-12 bold">
+                                    <div class="settings--card--header">
+                                        CTA - payBySquare
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text"></angular-editor>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

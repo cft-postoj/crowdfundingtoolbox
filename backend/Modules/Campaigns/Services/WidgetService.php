@@ -493,6 +493,22 @@ class WidgetService implements WidgetServiceInterface
                     'background' => "#0087ed",
                     'color' => "#ffffff"
                 ),
+            ),
+            'second_step' => array(
+                'title' => array(
+                    'text' => 'title'
+                ),
+                'cta' => array(
+                    'transfer' => array(
+                        'text' => 'Go to your bank'
+                    ),
+                    'payBySquare' => array(
+                        'text' => 'Go to your bank'
+                    )
+                ),
+            ),
+            'terms' => array(
+                'text' => 'I agree to processing of personal data and receiving newsletters'
             )
         );
         return $structure;
@@ -940,12 +956,12 @@ class WidgetService implements WidgetServiceInterface
         $user = Auth::user();
         $userId = $user != null ? $user->id : null;
         $newCookie = $this->userService->createCookieIfNew($userCookie, $userId, $ip);
-        if ($newCookie!=null) {
+        if ($newCookie != null) {
             $userCookie = $newCookie->id;
         }
         //TODO: use env
-        $articleId = explode("/",explode("http://www.postoj.local:8000/",$url)[1])[0];
-        $trackingVisit =  $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
+        $articleId = 1;
+        $trackingVisit = $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
                 $trackingShow = $this->trackingService->show($trackingVisit->id, $rand['widget_type_id']);

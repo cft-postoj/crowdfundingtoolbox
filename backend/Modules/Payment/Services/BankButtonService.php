@@ -24,21 +24,27 @@ class BankButtonService
     public function updateBankButtons($newBankButtons)
     {
         $oldBankButtons = $this->getBankButtons();
+
         // delete missing bankButtons
         foreach ($oldBankButtons as $oldButton) {
             $oldButtonIsRemoved = true;
             foreach ($newBankButtons as $newBankButton) {
                 if ($newBankButton['id'] == $oldButton['id'] && $newBankButton['id'] != 0) {
                     $oldButtonIsRemoved = false;
+
                     //update previuosly created bank buttons
-                    $newBankButtonInstance = new BankButton(
-                        ['order' => $newBankButton['order'],
-                            'redirect_link' => $newBankButton['redirect_link']]);
-                    $newBankButtonInstance['id'] = $newBankButton['id'];
-                    if ($newBankButton['image']) {
-                        $newBankButtonInstance['image_id'] = $newBankButton['image']['id'];
+                    if ($newBankButton !==$oldButton) {
+                        $newBankButtonInstance = new BankButton([
+                            'title' => $newBankButton['title'],
+                            'order' => $newBankButton['order'],
+                            'redirect_link' => $newBankButton['redirect_link']
+                        ]);
+                        $newBankButtonInstance['id'] = $newBankButton['id'];
+                        if ($newBankButton['image']) {
+                            $newBankButtonInstance['image_id'] = $newBankButton['image']['id'];
+                        }
+                        $this->updateBankButton($newBankButtonInstance);
                     }
-                    $this->updateBankButton($newBankButtonInstance);
                 }
             }
             if ($oldButtonIsRemoved) {
@@ -46,11 +52,13 @@ class BankButtonService
             }
         }
 
+        //create new bank buttons
         foreach ($newBankButtons as $newBankButton) {
             if ($newBankButton['id'] == 0) {
-                $newBankButtonInstance = new BankButton(
-                    ['order' => $newBankButton['order'],
-                        'redirect_link' => $newBankButton['redirect_link']]);
+                $newBankButtonInstance = new BankButton([
+                    'title' => $newBankButton['title'],
+                    'order' => $newBankButton['order'],
+                    'redirect_link' => $newBankButton['redirect_link']]);
                 if ($newBankButton['image']) {
                     $newBankButtonInstance['image_id'] = $newBankButton['image']['id'];
                 }

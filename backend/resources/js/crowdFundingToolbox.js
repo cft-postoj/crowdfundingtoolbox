@@ -13,7 +13,8 @@ function getWidgets(apiUrl) {
         {
             'article_title': document.querySelector('title').innerText,
             'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie"),
-            'user_id': localStorage.getItem('cft_usertoken')
+            'user_id': localStorage.getItem('cft_usertoken'),
+            'url': window.location.href
         }
     );
 
@@ -29,21 +30,26 @@ function getWidgets(apiUrl) {
                 for (let i = 0; i < xhttp.response['widgets'].length; i++) {
                     let el = xhttp.response['widgets'][i];
                     console.log(el);
+                    // TODO fix this -- error when not script included (not monetization widget)
+                    let scriptElement = document.createElement('script');
+                    let inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
                     switch (el.widget_type.method) {
                         case 'sidebar':
-                            // TODO fix this -- error when not script included (not monetization widget)
-                            let scriptElement = document.createElement('script');
-                            let inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
                             scriptElement.appendChild(inlineScript);
                             if (sidebarPlaceholder != null) {
                                 sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
-                                sidebarPlaceholder.dataset.show_id = el.show_id;
+                                sidebarPlaceholder.dataset.showId = el.show_id;
                                 sidebarPlaceholder.appendChild(scriptElement);
                             }
                             break;
                         case 'leaderboard':
-                            (leaderboardPlaceholder != null) &&
-                            (leaderboardPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            // TODO fix this -- error when not script included (not monetization widget)
+                            leaderboardPlaceholder.appendChild(inlineScript);
+                            if (leaderboardPlaceholder != null) {
+                                leaderboardPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                leaderboardPlaceholder.dataset.showId = el.show_id;
+                                leaderboardPlaceholder.appendChild(scriptElement);
+                            }
                             break;
                         case 'fixed':
                             (fixedPlaceholder != null) &&

@@ -12,7 +12,7 @@ class BankButton extends Model
     use SoftDeletes;
 
     protected $table = 'bank_button';
-    protected $fillable = ['order', 'image', 'redirect_link'];
+    protected $fillable = ['title', 'order', 'image', 'redirect_link'];
 
 
     public function image()

@@ -1,5 +1,3 @@
-import {environment} from '../../../../../environments/environment';
-
 export function getEnvs() {
     return {
         apiPublicUrl: 'apiPublicUrlValue'
@@ -13,7 +11,7 @@ export function trackInsertValue(chosenButton, frequency, apiUrl: string) {
         {
             'value': chosenButton.getElementsByTagName('input')[0].value,
             'frequency': frequency,
-            'show_id': chosenButton.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
+            'show_id': chosenButton.closest('[id^=cr0wdFundingToolbox]').dataset.showId
         }
     );
     xhttp.open('POST', apiUrl + 'tracking/insertValue', true);
@@ -31,7 +29,7 @@ export function trackEmailOnChange(el) {
         let xhttp = new XMLHttpRequest();
         const data = JSON.stringify(
             {
-                'show_id': el.closest('[id^=cr0wdFundingToolbox]').dataset.show_id,
+                'show_id': el.closest('[id^=cr0wdFundingToolbox]').dataset.showId,
                 'email': el.value,
                 'email_valid': el.checkValidity()
             }
@@ -85,7 +83,7 @@ export function setActiveButtonMonthly(chosenButton, focusInput: false, track: b
 }
 
 export function setActiveButtonOneTime(chosenButton, focusInput: false, track: boolean = true) {
-    const apiPublicUrl = environment.apiUrl + '/portal/'; // TEST API
+    const apiPublicUrl = getEnvs().apiPublicUrl + '/portal/'; // TEST API
 
     var target;
     let landingDocument = document;
@@ -136,7 +134,7 @@ export function validateForm(el) {
 
 export function handleSubmit(el, event) {
     event.preventDefault();
-    const apiPublicUrl = environment.apiUrl + '/portal/';
+    const apiPublicUrl = getEnvs().apiPublicUrl + '/portal/';
     let monetizationEl = el.closest('.cft--monetization--container');
     // get not hidden wrapper (to determine what is selected - monthly or one time payment
     let currentActiveWrapper;
@@ -156,16 +154,16 @@ export function handleSubmit(el, event) {
     }
     let selectedValue;
     if (frequency === 'monthly') {
-        selectedValue = monetizationEl.querySelector('.cft--monatization--donation-button--monthly.active input').value
+        selectedValue = monetizationEl.querySelector('.cft--monatization--donation-button--monthly.active input').value;
     }
     if (frequency === 'one-time') {
-        selectedValue = monetizationEl.querySelector('.cft--monatization--donation-button--one-time.active input').value
+        selectedValue = monetizationEl.querySelector('.cft--monatization--donation-button--one-time.active input').value;
     }
     if (validateForm(el)) {
         let formData = new FormData(el);
         let data = JSON.stringify(
             {
-                'show_id': el.closest('[id^=cr0wdFundingToolbox]').dataset.show_id,
+                'show_id': el.closest('[id^=cr0wdFundingToolbox]').dataset.showId,
                 'email': el.querySelector('#cft--monatization--form--donate--email').value,
                 'email_valid': el.querySelector('#cft--monatization--form--donate--email').checkValidity(),
                 'terms': el.querySelector('#cft--monatization--form--donate--terms').checked,
@@ -173,7 +171,15 @@ export function handleSubmit(el, event) {
                 'donation_value': selectedValue
             }
         );
+
         let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                showSecondStep(monetizationEl, xhr.response.variable_symbol, xhr.response.bank_account, xhr.response.bankButtons,
+                    selectedValue, frequency, xhr.response.qrCode);
+
+            }
+        }
         xhr.open('POST', apiPublicUrl + 'donation/initialize', true);
         xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
         xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -183,7 +189,7 @@ export function handleSubmit(el, event) {
         var formData = new FormData(el);
         const data = JSON.stringify(
             {
-                'show_id': el.closest('[id^=cr0wdFundingToolbox]').dataset.show_id,
+                'show_id': el.closest('[id^=cr0wdFundingToolbox]').dataset.showId,
                 'email': el.querySelector('#cft--monatization--form--donate--email').value,
                 'email_valid': el.querySelector('#cft--monatization--form--donate--email').checkValidity(),
                 'terms': el.querySelector('#cft--monatization--form--donate--terms').checked,
@@ -258,3 +264,126 @@ export function monthlyPayment() {
         oneTimeButton.className = oneTimeButton.className.replace(/ active/g, '');
     }
 }
+
+export function showSecondStep(monetizationEl, variableSymbol, bankAccount, bankButtons, value, frequency, payBySquareBlob) {
+
+    monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-iban').innerHTML = bankAccount;
+    monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-vs').innerHTML = variableSymbol;
+    monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-amount').innerHTML = value + ' € ' + frequency;
+    var paymentOptions = monetizationEl.querySelector('.payment-options')
+    if (frequency === 'one-time') {
+        paymentOptions.className = paymentOptions.className.replace(/ cft--monatization--hidden/g, '');
+    } else {
+        paymentOptions.className += ' cft--monatization--hidden';
+    }
+
+    createBankButtons(monetizationEl, bankButtons);
+    step(monetizationEl, true);
+
+
+    //handle qr code
+    var payBySquareWrapper = monetizationEl.querySelector('.qr__wrapper .pay-by-square__wrapper');
+    payBySquareWrapper.innerHTML = payBySquareBlob;
+
+}
+
+export function setBankButton(element) {
+    let bankButtonWrapper = element.closest('.bank-button__wrapper');
+    let bankButtons = bankButtonWrapper.getElementsByClassName('bank-button') as any;
+    for (let bankButton of bankButtons) {
+        bankButton.className = bankButton.className.replace(/ active/g, '');
+    }
+    element.className += ' active';
+
+    //change href of anchor.
+    var anchor = element.closest('.cft--monetization--container-step-2').querySelector('.cft--button--redirect');
+    anchor.href = element.dataset.bankLink != null ? element.dataset.bankLink : element.querySelector(':checked').dataset.bankLink;
+}
+
+//create DOM's of ban buttons using data from backend
+export function createBankButtons(monetizationEl, bankButtonsData) {
+    var bankButtonsWrapper = monetizationEl.querySelector('.bank-button__wrapper');
+    bankButtonsWrapper.innerHTML = '';
+    //max 5 buttons and then wrap them into select element as options
+    for (var i = 0; i <= 4 && i < bankButtonsData.length; i++) {
+        bankButtonsWrapper.insertAdjacentHTML('beforeEnd',
+            `<div class="bank-button__container"> 
+                        <div class="bank-button" data-bank-link="${bankButtonsData[i].redirect_link}" onclick="parent.setBankButton(this)">
+                            <img src="${bankButtonsData[i].image.url}" alt="${bankButtonsData[i].title}">
+                        </div> 
+                  </div>`);
+    }
+    //create from 6th and later bank button select's option
+    if (bankButtonsData.length > 5) {
+        var options =
+            `<div class="bank-button__container">
+                <div class="bank-button bank-button__select" onclick="parent.setBankButton(this)">
+                    <select name="bank">
+                        <option disabled="" selected="">Other bank</option>`;
+
+        for (var i = 5; i < bankButtonsData.length; i++) {
+            options += `<option data-bank-link="${bankButtonsData[i].redirect_link}">${bankButtonsData[i].title}</option>`
+        }
+        options += `
+                    </select>
+                </div>
+            </div>`;
+        bankButtonsWrapper.insertAdjacentHTML('beforeEnd', options);
+    }
+}
+
+export function donationInProgress(element) {
+    const data = JSON.stringify(
+        {
+            'show_id': element.closest('[id^=cr0wdFundingToolbox]').dataset.showId,
+        }
+    );
+}
+
+export function changePaymentOptions(element) {
+
+    var monetizationStep = element.closest('.cft--monetization--container-step-2');
+    var paymentOptionArray = monetizationStep.getElementsByClassName('payment-option');
+    var selectedId = monetizationStep.querySelector('input[name="payment-option"]:checked').value;
+    for (var i = 0; i < paymentOptionArray.length; i++) {
+        if (paymentOptionArray[i].dataset.id != selectedId) {
+            paymentOptionArray[i].className += ' cft--monatization--hidden';
+        } else {
+            paymentOptionArray[i].className = paymentOptionArray[i].className.replace(/ cft--monatization--hidden/g, '');
+        }
+    }
+}
+
+export function step(element, increase) {
+    var monetizationCont = element.closest('.cft--monetization--container');
+
+    var firstStep = monetizationCont.querySelector('.cft--monetization--container-step-1');
+    var secondStep = monetizationCont.querySelector('.cft--monetization--container-step-2');
+
+    var headTitle = monetizationCont.querySelector('.head .title');
+    var stepBack = monetizationCont.querySelector('.step-back');
+
+    // move from step 1 to step 2
+    if (firstStep.className.indexOf('cft--monatization--hidden') === -1 && increase) {
+        // hide first step
+        firstStep.className = firstStep.className + ' cft--monatization--hidden';
+        secondStep.className = secondStep.className.replace(/ cft--monatization--hidden/g, '');
+        // update header
+        monetizationCont.querySelector('.head .title').innerHTML = 'Step 2 of 3';
+        stepBack.className = 'step-back';
+
+    }
+
+    // move from step 2 back to step 1
+    // when moving from first step to second, show back arrow and chancge label
+    if (secondStep.className.indexOf('cft--monatization--hidden') === -1 && !increase) {
+        // hide second step
+        firstStep.className = firstStep.className.replace(/ cft--monatization--hidden/g, '');
+        secondStep.className = secondStep.className + ' cft--monatization--hidden';
+
+        monetizationCont.querySelector('.head .title').innerHTML = 'Step 1 of 3';
+        stepBack.className = 'step-back cft--monatization--hidden';
+    }
+
+}
+

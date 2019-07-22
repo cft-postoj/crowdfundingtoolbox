@@ -154,7 +154,7 @@ export class BankTransferComponent implements OnInit {
 
 
     public addNewBankButton() {
-        this.bankButtons.push({id: 0, order: 0, redirect_link: '', image: new Image()});
+        this.bankButtons.push({id: 0, title:'', order: 0, redirect_link: '', image: new Image()});
     }
 
     private getBanksButtons() {

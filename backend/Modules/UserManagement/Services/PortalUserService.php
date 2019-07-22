@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 use Modules\Payment\Services\VariableSymbolService;
+use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
 use Modules\UserManagement\Entities\DonorStatus;
@@ -352,7 +353,7 @@ class PortalUserService implements PortalUserServiceInterface
         if ($userByMail) {
             return $userByMail;
         }
-        $generatedPassword = $this->generatePasswordToken();
+        $generatedPassword = $this->generatedUserTokenService->generatePasswordToken();
 
         $username = explode('@', $email)[0];
         $user = User::create([
@@ -370,7 +371,7 @@ class PortalUserService implements PortalUserServiceInterface
 
         Mail::to($email)->send(new AutoRegistrationEmail($username, $generatedPassword));
 
-        return $user;
+        return $user->portalUser;
     }
 
     public function coupleUserIdAndUserCookie($userId, $cookieId): UserCookieCouple

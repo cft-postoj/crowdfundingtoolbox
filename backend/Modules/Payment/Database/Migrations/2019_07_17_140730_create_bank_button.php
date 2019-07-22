@@ -16,6 +16,7 @@ class CreateBankButton extends Migration
         Schema::create('bank_button', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order');
+            $table->string('title')->nullable();
             $table->integer('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('images');
             $table->string('redirect_link')->nullable();
