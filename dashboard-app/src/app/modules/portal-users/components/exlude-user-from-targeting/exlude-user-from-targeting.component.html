@@ -1,7 +1,7 @@
 <hr>
 <h5>Excluding from camapaigns targeting:</h5>
 <div class="row">
-    <div class="col-12 col-sm-12 col-md-6">
+    <div class="col-12 col-sm-12 col-md-8">
         <b>Reason:</b>
         <input
                 type="text"
@@ -10,17 +10,11 @@
                 [maxLength]="255"
                 (input)="excludingReason = $event.target.value">
     </div>
-    <div class="col-12 col-sm-12 col-md-6">
-        <label class="excludeFromTargeting" for="excludeFromCampaigns">
-            <input
-                    type="checkbox"
-                    id="excludeFromCampaigns"
-                    [checked]="excluded"
-                    (change)="changeExcluded($event)"
-            >
-            <span class="checkmark"></span>
-            Exclude user from all campaigns targeting
-        </label>
+    <div class="col-12 col-sm-12 col-md-4 mt-2">
+
+        <span class="overlay" (click)="changeExcluded($event)" *ngIf="excludingReason === ''"></span>
+        <app-switcher [(checked)]="excluded" (checkedChange)="changeExcluded($event)"></app-switcher>
+        <span>Exclude user from all campaigns targeting</span>
     </div>
 </div>
 <hr>

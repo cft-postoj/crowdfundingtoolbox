@@ -28,14 +28,13 @@ export class ExludeUserFromTargetingComponent implements OnInit {
 
     public changeExcluded(event) {
         if (this.excludingReason !== '') {
-            this.excluded = !this.excluded;
+            this.excluded = event;
             this.portalUserService.excludeFromTargeting(this.excluded, this.excludingReason, this.portalUserId).subscribe((data) => {
                 console.log(data);
                 this.excludedUserEmit.emit(this.excluded);
             });
         } else {
             this.excludedUserEmit.emit('reason');
-            event.target.checked = false;
         }
 
     }
