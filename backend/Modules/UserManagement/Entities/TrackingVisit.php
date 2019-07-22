@@ -21,7 +21,7 @@ class TrackingVisit extends Model
         return $this->hasMany('Modules\UserManagement\Entities\TrackingShow');
     }
 
-    public function user()
+    public function portalUser()
     {
         return $this->belongsTo('Modules\UserManagement\Entities\PortalUser','id');
     }

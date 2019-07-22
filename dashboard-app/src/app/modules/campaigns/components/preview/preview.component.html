@@ -91,16 +91,18 @@
                         </div>
                     </div>
                     <app-preview-monetization
+                        class="preview-monetization"
                             *ngIf="widget.settings[deviceType].payment_settings.type === 'classic'"
                             [widget]="widget" [deviceType]="deviceType"
                             style="display: flex"></app-preview-monetization>
                     <app-preview-monetization-lite
+                        class="preview-monetization"
                             *ngIf="widget.settings[deviceType].payment_settings.type === 'lite'"
                             [widget]="widget" [deviceType]="deviceType"
                             style="display: flex"></app-preview-monetization-lite>
                     <!-- CTA -->
                     <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="!ctaReplaced()">
-                        <a class=""
+                        <a class="cft--button"
                            [ngStyle]="getButtonStyles()"
                            href="{{widget.settings[deviceType].cta.url}}">
                             {{widget.settings[deviceType].cta.text}}

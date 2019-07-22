@@ -21,4 +21,11 @@ class PaymentMethodsRepository
             ::with('paymentOption')
             ->get();
     }
+
+    public function getMethodById($id)
+    {
+        return $this->model
+            ::with('paymentOption')
+            ->find($id);
+    }
 }

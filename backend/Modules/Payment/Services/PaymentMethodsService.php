@@ -15,7 +15,8 @@ class PaymentMethodsService
         $this->paymentMethodsRepository = $paymentMethodsRepository;
     }
 
-    public function all() {
+    public function all()
+    {
         return $this->paymentMethodsRepository->getAllMethods();
     }
 
@@ -25,4 +26,15 @@ class PaymentMethodsService
             $this->all(),
             Response::HTTP_OK);
     }
+
+    public function getBankOption($frequency)
+    {
+        $bankOption = $this->paymentMethodsRepository->getMethodById(1);
+        if ($frequency == 'monthly') {
+            return json_decode($bankOption->paymentOption->payment_settings)->monthlyPayment;
+        } else {
+            return json_decode($bankOption->paymentOption->payment_settings)->oneTimePayment;
+        }
+    }
+
 }

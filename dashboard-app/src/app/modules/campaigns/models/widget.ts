@@ -225,6 +225,20 @@ export class Widget {
                         color: '#ffffff'
                     }
                 },
+                second_step: {
+                    title: {text: 'title'},
+                    cta: {
+                        transfer: {
+                            text: 'Go to your bank'
+                        },
+                        payBySquare: {
+                            text: 'Done'
+                        }
+                    }
+                },
+                terms: {
+                    text: 'I agree to processing of  personal data and receiving newsletters'
+                }
             },
             email_settings: {
                 active: false,
@@ -616,6 +630,20 @@ export class Widget {
                         color: '#ffffff'
                     }
                 },
+                second_step: {
+                    title: {text: 'title'},
+                    cta: {
+                        transfer: {
+                            text: 'Go to your bank'
+                        },
+                        payBySquare: {
+                            text: 'Done'
+                        }
+                    }
+                },
+                terms: {
+                    text: 'I agree to processing of  personal data and receiving newsletters'
+                }
 
             },
 
@@ -988,6 +1016,20 @@ export class Widget {
                         color: '#ffffff'
                     }
                 },
+                second_step: {
+                    title: {text: 'title'},
+                    cta: {
+                        transfer: {
+                            text: 'Go to your bank'
+                        },
+                        payBySquare: {
+                            text: 'Done'
+                        }
+                    }
+                },
+                terms: {
+                    text: 'I agree to processing of  personal data and receiving newsletters'
+                }
             },
             email_settings: {
                 active: false,

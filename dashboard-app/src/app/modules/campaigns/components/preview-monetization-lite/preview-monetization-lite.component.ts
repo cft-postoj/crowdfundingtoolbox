@@ -1,16 +1,16 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {Widget} from "../../models";
-import {Subscription} from "rxjs";
-import {paymentTypes, widgetTypes} from "../../../core/models";
-import {PreviewService} from "../../services";
-import {ConvertHexService} from "../../../core/services";
+import {Widget} from '../../models';
+import {Subscription} from 'rxjs';
+import {paymentTypes, widgetTypes} from '../../../core/models';
+import {PreviewService} from '../../services';
+import {ConvertHexService} from '../../../core/services';
 import {
     monthlyPayment,
     oneTimePayment,
     setActiveButtonMonthly,
     setActiveButtonOneTime,
     validateForm
-} from "../preview/landing";
+} from '../preview/landing';
 
 @Component({
     selector: 'app-preview-monetization-lite',
@@ -91,7 +91,7 @@ export class PreviewMonetizationLiteComponent implements OnInit {
 
         const parentScript = document.getElementById('scripts');
         for (let script of parentScript.getElementsByClassName("previewScripts") as any) {
-            script.remove()
+            script.remove();
         }
 
         let script = document.createElement('script');
@@ -101,10 +101,10 @@ export class PreviewMonetizationLiteComponent implements OnInit {
         script.setAttribute('script', 'text/javascript');
 
         let scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',
-            'var target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';
+            'let target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';
 
         let scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('var target;',
-            'var target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
+            'let target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
 
         script.appendChild(document.createTextNode(scriptActiveButtonMonthly + "\n"));
         script.appendChild(document.createTextNode(scriptActiveButtonOneTime + "\n"));

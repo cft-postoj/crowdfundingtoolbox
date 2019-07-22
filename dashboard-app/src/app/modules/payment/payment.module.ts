@@ -19,6 +19,8 @@ import { PayBySquareComponent } from './components/pay-by-square/pay-by-square.c
 import { DonationDetailComponent } from './pages/donation-detail/donation-detail.component';
 import { UserDropdownComponent } from './components/user-dropdown/user-dropdown.component';
 import { UploadCsvComponent } from './components/upload-csv/upload-csv.component';
+import {TableModule} from 'primeng/table';
+import {InlineSVGModule} from 'ng-inline-svg';
 
 @NgModule({
     declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent, DisableControlDirective, PayBySquareComponent, DonationDetailComponent, UserDropdownComponent, UploadCsvComponent],
@@ -27,10 +29,12 @@ import { UploadCsvComponent } from './components/upload-csv/upload-csv.component
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        TableModule,
 
         CoreModule,
         PaymentRoutingModule,
-        StatisticsModule
+        StatisticsModule,
+        InlineSVGModule.forRoot()
     ]
 })
 export class PaymentModule {

@@ -1,20 +1,26 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {
+    changePaymentOptions,
+    createBankButtons,
+    donationInProgress,
+    getEnvs,
+    handleSubmit,
     monthlyPayment,
     oneTimePayment,
     setActiveButtonMonthly,
     setActiveButtonOneTime,
-    validateForm,
-    trackInsertValue,
+    setBankButton,
+    showSecondStep,
     trackEmailOnChange,
-    handleSubmit,
-    getEnvs
+    trackInsertValue,
+    validateForm,
+    step
 } from '../preview/landing';
 import {Widget} from '../../models';
 import {PreviewService} from '../../services';
 import {ConvertHexService} from '../../../core/services';
-import {widgetTypes, paymentTypes} from '../../../core/models';
+import {paymentTypes, widgetTypes} from '../../../core/models';
 import {environment} from '../../../../../environments/environment';
 
 @Component({
@@ -104,10 +110,10 @@ export class PreviewMonetizationComponent implements OnInit {
         script.charset = 'utf-8';
         script.setAttribute("class", "previewScripts");
 
-        const scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('let target;',
+        const scriptActiveButtonMonthly = setActiveButtonMonthly.toString().replace('var target;',
             'let target = ' + this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value) + ';';
 
-        const scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('let target;',
+        const scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('var target;',
             'let target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
 
         script.appendChild(document.createTextNode(scriptActiveButtonMonthly + '\n'));
@@ -120,16 +126,22 @@ export class PreviewMonetizationComponent implements OnInit {
         script.appendChild(document.createTextNode(trackInsertValue.toString() + '\n'));
         script.appendChild(document.createTextNode(trackEmailOnChange.toString() + '\n'));
         script.appendChild(document.createTextNode(handleSubmit.toString() + '\n'));
+        script.appendChild(document.createTextNode(showSecondStep.toString() + '\n'));
+        script.appendChild(document.createTextNode(setBankButton.toString() + '\n'));
+        script.appendChild(document.createTextNode(createBankButtons.toString() + '\n'));
+        script.appendChild(document.createTextNode(donationInProgress.toString() + '\n'));
+        script.appendChild(document.createTextNode(changePaymentOptions.toString() + '\n'));
+        script.appendChild(document.createTextNode(step.toString() + '\n'));
 
         // change path in getEnvs and add domain if there is relative path in envs
         const isAbsolute = new RegExp('^([a-z]+://|//)', 'i');
         let absolutePath;
-        if (isAbsolute.test( this.environment.apiUrl)) {
+        if (isAbsolute.test(this.environment.apiUrl)) {
             absolutePath = this.environment.apiUrl;
         } else {
-            absolutePath = window.location.origin + this.environment.apiUrl ;
+            absolutePath = window.location.origin + this.environment.apiUrl;
         }
-        const scriptGetEnvs = getEnvs.toString().replace( 'apiPublicUrlValue',  absolutePath);
+        const scriptGetEnvs = getEnvs.toString().replace('apiPublicUrlValue', absolutePath);
 
         script.appendChild(document.createTextNode(scriptGetEnvs + '\n'));
 
@@ -265,11 +277,28 @@ export class PreviewMonetizationComponent implements OnInit {
                 this.addPx(paymentDesign.margin.right) + ' ' +
                 this.addPx(paymentDesign.margin.bottom) + ' ' +
                 this.addPx(paymentDesign.margin.left),
+        }
+    }
+    getMonetizationContainerBodyStyle() {
+        let paymentDesign = this.widget.settings[this.deviceType].payment_settings.design;
+        return {
             padding: this.addPx(paymentDesign.padding.top) + ' ' +
                 this.addPx(paymentDesign.padding.right) + ' ' +
                 this.addPx(paymentDesign.padding.bottom) + ' ' +
                 this.addPx(paymentDesign.padding.left),
         }
+    }
+
+    getMonetizationHeaderStyle() {
+        let paymentDesign = this.widget.settings[this.deviceType].payment_settings.design;
+        return {
+            color: paymentDesign.text_color,
+            'width': '100%',
+            'text-align': 'center',
+            position: 'relative',
+            'height': paymentDesign.height,
+        }
+
     }
 
     ctaReplaced() {
@@ -380,7 +409,7 @@ export class PreviewMonetizationComponent implements OnInit {
 
     monthlyBenefitReached() {
         return this.widget.settings[this.deviceType].payment_settings.monthly_prices.benefit.value <=
-        this.widget.settings[this.deviceType].payment_settings.default_price.monthly_value;
+            this.widget.settings[this.deviceType].payment_settings.default_price.monthly_value;
     }
 
     oneTimeBenefitReached() {

@@ -147,8 +147,11 @@ Route::group([
             Route::put('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@updateApplePayDetails');
             Route::delete('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@deleteApplePayDetails');
 
+            Route::get('payment/bank-button', '\Modules\Payment\Http\Controllers\BankButtonController@getBankButtons');
+            Route::put('payment/bank-button', '\Modules\Payment\Http\Controllers\BankButtonController@updateBankButtons');
 
-            // Import payments
+
+        // Import payments
             Route::post('payment/import/check-file-type', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@checkFileType');
             Route::post('payment/import/import-payments', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@importPayments');
 

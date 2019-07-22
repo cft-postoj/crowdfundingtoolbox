@@ -75,6 +75,22 @@ export class Campaign {
             }
         },
 
+        second_step: {
+            title: {
+                text: 'title'
+            },
+            cta: {
+                transfer: {
+                    text: 'Go to your bank'
+                },
+                payBySquare: {
+                    text: 'Done'
+                }
+            }
+        },
+        terms: {
+          text: 'I agree to processing of  personal data and receiving newsletters'
+        }
     };
 
     widget_settings = {
