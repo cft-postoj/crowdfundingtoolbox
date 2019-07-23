@@ -42,6 +42,7 @@ class PaymentRepository
     {
         return $this->model
             ::where('id', $id)
+            ->with('donation')
             ->first();
     }
 

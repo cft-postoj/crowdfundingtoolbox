@@ -102,9 +102,9 @@ class PaymentService
             Response::HTTP_OK);
     }
 
-    private function getPayment($id)
+    public function getPayment($id)
     {
-        return Payment::where('id', $id)->first();
+        return $this->paymentRepository->get($id);
     }
 
     public function pairPaymentToUser($request)
@@ -436,6 +436,7 @@ class PaymentService
     {
         return $this->paymentRepository->getPayments($from, $to, $monthly);
     }
+
 
     public function getPaymentTotalGroupMonthly($from, $to)
     {

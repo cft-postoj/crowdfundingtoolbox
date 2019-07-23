@@ -1,3 +1,67 @@
-<p>
-  payment-detail works!
-</p>
+<app-payment>
+    <div class="paymentOptions">
+        <h2>Detail of payment with id {{id}}</h2>
+        <div class="text-center" *ngIf="loading">
+            <img src="../assets/images/loading.svg"/>
+        </div>
+        <div class="row" *ngIf="!loading">
+            <div class="col-12 col-sm-12 col-md-8">
+                <table class="table">
+                    <tr>
+                        <td>Transaction ID</td>
+                        <th>{{detail.transaction_id}}</th>
+                    </tr>
+                    <tr>
+                        <td>Transaction date</td>
+                        <th>{{detail.transaction_date}}</th>
+                    </tr>
+                    <tr>
+                        <td>Associated donation</td>
+                        <th class="associated" (click)="showDonation(detail.donation?.id)" [innerHTML]="(!isNullOrUndefined(detail.donation))
+                            ? '<span>Donation ' + detail.donation.id + '</span>'
+                            : 'This payment is not associated to any donation. Please, <span>pair it now.</span>'">
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>IBAN</td>
+                        <th>{{(!isNullOrUndefined(detail.iban)) ? detail.iban : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <th>{{detail.amount + ' €'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Created By</td>
+                        <th>{{detail.created_by}}</th>
+                    </tr>
+                    <tr>
+                        <td>Variable symbol</td>
+                        <th>{{(!isNullOrUndefined(detail.variable_symbol)) ? detail.variable_symbol : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Specific symbol</td>
+                        <th>{{(!isNullOrUndefined(detail.specific_symbol)) ? detail.specific_symbol : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Constant symbol</td>
+                        <th>{{(!isNullOrUndefined(detail.constant_symbol)) ? detail.constant_symbol : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Payer reference</td>
+                        <th>{{(!isNullOrUndefined(detail.payer_reference)) ? detail.payer_reference : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Transfer type</td>
+                        <th>{{(!isNullOrUndefined(detail.transfer_type)) ? getPaymentMethod(detail.transfer_type) : 'N/A'}}</th>
+                    </tr>
+                    <tr>
+                        <td>Payment notes</td>
+                        <th>{{(!isNullOrUndefined(detail.payment_notes)) ? detail.payment_notes : 'N/A'}}</th>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</app-payment>

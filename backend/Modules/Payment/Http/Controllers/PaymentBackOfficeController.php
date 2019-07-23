@@ -57,6 +57,14 @@ class PaymentBackOfficeController extends Controller
         );
     }
 
+    protected function getPayment($id)
+    {
+        return \response()->json(
+            $this->paymentService->getPayment($id),
+            Response::HTTP_OK
+        );
+    }
+
 
     protected function getAllMethods()
     {

@@ -175,7 +175,7 @@ export class TablePaymentsComponent implements OnInit {
     }
 
     public showDonationDetail(id) {
-        return this.router.navigateByUrl(`${Routing.DASHBOARD}/${Routing.PAYMENT}/${id}`);
+        return this.router.navigateByUrl(`${Routing.DASHBOARD}/${Routing.PAYMENTS}/${id}`);
     }
 
     momentDateChange(event) {

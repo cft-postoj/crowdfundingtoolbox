@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Payment} from '../models/payment';
 import {environment} from '../../../../environments/environment';
 import {Donation} from '../../statistics/models/donation';
+import {Routing} from '../../../constants/config.constants';
 
 @Injectable({
     providedIn: 'root'
@@ -46,7 +47,10 @@ export class PaymentService {
                 headers: headers,
                 params: params
             });
+    }
 
+    public getPaymentById(id: number) {
+        return this.http.get(`${environment.backOfficeUrl}${environment.payment}/${id}`);
     }
 
     // TODO: DRY (duplicate in campaing.service)

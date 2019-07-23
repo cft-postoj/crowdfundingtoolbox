@@ -10,6 +10,7 @@ import {ModalComponent} from '../../../core/parts/atoms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PortalUser} from '../../../portal-users/models/portal-user';
 import {PortalUserService} from '../../../portal-users/services/portal-user.service';
+import {HelpersService} from '../../../core/services/helpers.service';
 
 @Component({
     selector: 'app-donation-detail',
@@ -29,6 +30,7 @@ export class DonationDetailComponent implements OnInit {
 
     constructor(private donationService: DonationService, private router: Router,
                 private portalUserService: PortalUserService,
+                private helperService: HelpersService,
                 private route: ActivatedRoute, private campaignService: CampaignService,
                 private _modalService: NgbModal) {
     }
@@ -60,27 +62,7 @@ export class DonationDetailComponent implements OnInit {
     }
 
     private getPaymentMethod(id) {
-        let paymentMethod = '';
-        switch (id) {
-            case 1:
-                paymentMethod = 'Bank transfer';
-                break;
-            case 2:
-                paymentMethod = 'Card pay';
-                break;
-            case 3:
-                paymentMethod = 'Pay by square';
-                break;
-            case 4:
-                paymentMethod = 'Google pay';
-                break;
-            case 5:
-                paymentMethod = 'Apple pay';
-                break;
-            default:
-                break;
-        }
-        return paymentMethod;
+        return this.helperService.getPaymentType(id);
     }
 
     public isNullOrUndefined(variable) {
