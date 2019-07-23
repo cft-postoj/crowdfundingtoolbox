@@ -22,7 +22,8 @@ import { PopupStatisticsComponent } from './components/popup-statistics/popup-st
         TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent, TablePaymentsComponent, PopupStatisticsComponent],
     exports: [
         TableDonationsComponent,
-        TablePortalUsersComponent
+        TablePortalUsersComponent,
+        TablePaymentsComponent
     ],
     imports: [
         CommonModule,

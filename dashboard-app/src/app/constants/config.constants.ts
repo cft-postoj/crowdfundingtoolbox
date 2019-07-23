@@ -42,6 +42,7 @@ export class Routing {
 
     // payment options
     static readonly PAYMENT = 'payment';
+    static readonly PAYMENTS = `${Routing.PAYMENT}/payments`;
     static readonly PAYMENT_OPTIONS = `${Routing.PAYMENT}/payment-options`;
     static readonly DONATIONS = `${Routing.PAYMENT}/donations`;
     static readonly DONATIONS_FULL_PATH = `/${Routing.DASHBOARD}/${Routing.DONATIONS}`;

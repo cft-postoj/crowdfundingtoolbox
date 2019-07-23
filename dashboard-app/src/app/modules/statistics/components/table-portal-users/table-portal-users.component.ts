@@ -137,8 +137,8 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.availableColumns.push({
-            value_name: 'todo6',
-            description: 'iban (todo)',
+            value_name: 'iban',
+            description: 'IBAN',
             type: 'none',
             filter: new Filter()
         });
@@ -149,8 +149,8 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.availableColumns.push({
-            value_name: 'todo8',
-            description: 'registration by (todo)',
+            value_name: 'created_by',
+            description: 'Registration by',
             type: 'none',
             filter: new Filter()
         });
@@ -175,6 +175,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
                     this.portalUsers = result.donors;
                     this.portalUsersCount = result.count;
                     this.sortedPortalUsers = Object.assign([], this.portalUsers);
+                    console.log(result)
                     this.loading = false;
                 }
             );

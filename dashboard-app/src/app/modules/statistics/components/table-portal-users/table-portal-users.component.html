@@ -84,15 +84,15 @@
                         [column]="tableService.getColumnByValueName(model,'variable_symbol.variable_symbol')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo6')"
-                        [column]="tableService.getColumnByValueName(model,'todo6')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'iban')"
+                        [column]="tableService.getColumnByValueName(model,'iban')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'is_monthly_donor')"
                         [column]="tableService.getColumnByValueName(model,'is_monthly_donor')" [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo8')"
-                        [column]="tableService.getColumnByValueName(model,'todo8')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'created_by')"
+                        [column]="tableService.getColumnByValueName(model,'created_by')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
 
@@ -131,7 +131,7 @@
                         {{portalUser.user.updated_at | date:'dd.MM.yyyy'}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'campaign_name')">
-                        {{portalUser.campaign_name}}
+                        {{portalUser.first_donation?.widget.campaign.name}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'user.id')">
                         {{portalUser.user.user_detail.id}}
@@ -139,14 +139,14 @@
                     <td *ngIf="tableService.activeColumn(model,'variable_symbol.variable_symbol')">
                         {{portalUser.variable_symbol.variable_symbol}}
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'todo6')">
-                        todo6
+                    <td *ngIf="tableService.activeColumn(model,'iban')">
+                        {{portalUser.user_payment_options?.bank_account_number}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'is_monthly_donor')">
                         {{portalUser.is_monthly_donor | monthly}}
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'todo8')">
-                        todo8
+                    <td *ngIf="tableService.activeColumn(model,'created_by')">
+                        {{portalUser.register_by}}
                     </td>
                 </tr>
                 </tbody>

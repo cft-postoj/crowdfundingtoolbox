@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import moment from 'moment/src/moment';
 
 @Component({
-  selector: 'app-donations',
-  templateUrl: './donations.component.html',
-  styleUrls: ['./donations.component.scss']
+  selector: 'app-payment-list',
+  templateUrl: './payment-list.component.html',
+  styleUrls: ['./payment-list.component.scss']
 })
-export class DonationsComponent implements OnInit {
+export class PaymentListComponent implements OnInit {
 
   public from: string;
   public to: string;

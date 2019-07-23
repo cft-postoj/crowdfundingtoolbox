@@ -24,7 +24,7 @@ export class PaymentComponent implements OnInit {
       },
       {
         title: 'All payments',
-        url: Routing.DASHBOARD + '/' + Routing.PAYMENT,
+        url: Routing.DASHBOARD + '/' + Routing.PAYMENTS,
         active: false
       },
       {

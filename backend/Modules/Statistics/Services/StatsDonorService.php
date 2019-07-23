@@ -46,7 +46,15 @@ class StatsDonorService implements StatsDonorServiceInterface
                 return $notModifiedResult;
             });
         }
+        if ($dataType == 'allPortalUsers') {
+            $result->donors = $this->getAllPortalUsers($from, $to);
+        }
         return $result;
+    }
+
+    private function getAllPortalUsers($from, $to)
+    {
+        return $this->statsDonorRepository->getAllPortalUsers($from, $to);
     }
 
     public function getDonorsNew($from, $to, $monthly)
@@ -117,6 +125,6 @@ class StatsDonorService implements StatsDonorServiceInterface
 
     public function didNotPayCount($from, $to)
     {
-       return $this->statsDonorRepository->didNotPayCount($from, $to);
+        return $this->statsDonorRepository->didNotPayCount($from, $to);
     }
 }

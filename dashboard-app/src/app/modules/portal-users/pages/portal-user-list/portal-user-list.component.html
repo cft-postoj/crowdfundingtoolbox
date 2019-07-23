@@ -2,7 +2,7 @@
   <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
 <!--  <app-button [label]="(filterActive) ? 'Reset filter' : 'Filter'" [type]="'button'" [class]="'classic float-right'" (onClick)="showFilter()"></app-button>-->
   <app-export-csv
-    [title]="'Export all donors to csv'"
+    [title]="'Export all users to csv'"
     [data]="users"
     [helperText]="'You can export all users from CFT system with all of donation and payment records.'"
     [floatButton]="'left'"
@@ -13,22 +13,31 @@
 
   <div id="crowd-content">
 
-    <table class="list-items">
-      <thead>
-      <tr>
-        <th>#</th>
-        <th>Email</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Monthly donor</th>
-        <th></th>
-      </tr>
-      <tr app-portal-user-filter *ngIf="filterActive" [active]="filterActive"></tr>
-      </thead>
-      <ng-container *ngIf="!loading">
-        <tbody app-portal-user-item [users]="users" (userDetailEmitter)="redirectUserDetail($event)"></tbody>
-      </ng-container>
-    </table>
+<!--    <table class="list-items">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>#</th>-->
+<!--        <th>Email</th>-->
+<!--        <th>First name</th>-->
+<!--        <th>Last name</th>-->
+<!--        <th>Monthly donor</th>-->
+<!--        <th></th>-->
+<!--      </tr>-->
+<!--      <tr app-portal-user-filter *ngIf="filterActive" [active]="filterActive"></tr>-->
+<!--      </thead>-->
+<!--      <ng-container *ngIf="!loading">-->
+<!--        <tbody app-portal-user-item [users]="users" (userDetailEmitter)="redirectUserDetail($event)"></tbody>-->
+<!--      </ng-container>-->
+<!--    </table>-->
+    <app-table-portal-users
+            [dataType]="'allPortalUsers'"
+            [from]="from"
+            [to]="to"
+            [statsDateSelected]="statsDateSelected"
+            [monthly]="undefined"
+            [title]="tableTitle"
+            [showDates]="false"
+    ></app-table-portal-users>
   </div>
 
   <app-loading [isLoading]="loading" [extraText]="(exportCsvLoading) ? 'Please wait, generating csv file...<br /> ' +

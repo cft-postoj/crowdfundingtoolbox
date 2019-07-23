@@ -19,9 +19,11 @@ import { PayBySquareComponent } from './components/pay-by-square/pay-by-square.c
 import { DonationDetailComponent } from './pages/donation-detail/donation-detail.component';
 import { UserDropdownComponent } from './components/user-dropdown/user-dropdown.component';
 import { UploadCsvComponent } from './components/upload-csv/upload-csv.component';
+import { PaymentListComponent } from './pages/payment-list/payment-list.component';
+import { PaymentDetailComponent } from './pages/payment-detail/payment-detail.component';
 
 @NgModule({
-    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent, DisableControlDirective, PayBySquareComponent, DonationDetailComponent, UserDropdownComponent, UploadCsvComponent],
+    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent, DisableControlDirective, PayBySquareComponent, DonationDetailComponent, UserDropdownComponent, UploadCsvComponent, PaymentListComponent, PaymentDetailComponent],
     imports: [
         CommonModule,
         FormsModule,

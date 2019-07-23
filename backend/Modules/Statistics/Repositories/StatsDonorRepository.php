@@ -82,23 +82,27 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
                 'payment_method as last_donation_payment_method', 'created_at', 'payment_id');
 
         return PortalUser::query()
+            ->leftJoinSub($this->firstDonation, 'first_donation', function ($join) {
+                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            })
             ->joinSub($lastDonationAt, 'last_donation_at', function ($join) {
                 $join->on('portal_users.id', '=', 'last_donation_at.portal_user_id');
             })
             ->joinSub($lastDonation, 'last_donation', function ($join) {
                 $join->on('last_donation_at', '=', 'last_donation.created_at');
             })
-            ->joinSub($payment, 'payment', function ($join) {
-                $join->on('last_donation.payment_id', '=', 'payment.id');
-            })
+//            ->joinSub($payment, 'payment', function ($join) {
+//                $join->on('last_donation.payment_id', '=', 'payment.id');
+//            })
             ->joinSub($this->donationsSum, 'donations_sum', function ($join) {
                 $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
             })
-            ->orderBy('last_donation_at', 'DESC')
             ->with('user.userDetail')
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
+            ->with('userPaymentOptions')
             ->with('firstDonation.widget.campaign')
+            ->orderBy('last_donation_at', 'DESC')
             ->get();
     }
 
@@ -129,6 +133,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->joinSub($payment, 'payment', function ($join) {
                 $join->on('portal_users.id', '=', 'payment.portal_user_id');
             })
+            ->with('userPaymentOptions')
             ->whereRaw('current_payment_date = first_payment_date')
             ->groupBy('is_monthly_donation')
             ->get();
@@ -183,11 +188,16 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->joinSub($payment, 'payment', function ($join) {
                 $join->on('portal_users.id', '=', 'payment.portal_user_id');
             })
+            ->leftJoinSub($this->firstDonation, 'first_donation', function ($join) {
+                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            })
             ->whereRaw('current_payment_date = first_payment_date')
             ->orderBy('last_donation_at', 'DESC')
             ->with('user.userDetail')
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
+            ->with('firstDonation.widget.campaign')
+            ->with('userPaymentOptions')
             ->with('firstDonation.widget.campaign')
             ->get();
     }
@@ -223,6 +233,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
             ->with('firstDonation.widget.campaign')
+            ->with('userPaymentOptions')
             ->whereDate('last_donation_at', '<=', $stopAfterDate);
         if ($limit !== null) {
             $resultQuery = $resultQuery->limit($limit);
@@ -252,6 +263,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
                 $join->on('last_donation_at', '=', 'latest_donation.created_at');
             })
             ->with('user')
+            ->with('userPaymentOptions')
             ->whereDate('last_donation_at', '<=', $stopAfterDate)->count();
     }
 
@@ -286,6 +298,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('user.userDetail')
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
+            ->with('userPaymentOptions')
             ->with('firstDonation.widget.campaign')
             ->where('lastDonation.status', 'waiting_for_payment');
         if ($limit !== null) {
@@ -321,6 +334,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->joinSub($this->firstDonation, 'first_donation', function ($join) {
                 $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
             })
+            ->with('userPaymentOptions')
             ->where('lastDonation.status', 'waiting_for_payment');
 
         return $resultQuery->count();
@@ -356,11 +370,34 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             })
             ->with('user.userDetail')
             ->with('isMonthlyDonor')
+            ->with('userPaymentOptions')
             ->with('variableSymbol');
         if ($limit !== null) {
             $resultQuery = $resultQuery->limit($limit);
         }
         return $resultQuery->get();
+    }
+
+    public function getAllPortalUsers($from, $to)
+    {
+        return PortalUser
+            ::whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->leftJoinSub($this->donationsSum, 'donations_sum', function ($join) {
+                $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
+            })
+            ->leftJoinSub($this->lastDonationAt, 'lastDonationAt', function ($join) {
+                $join->on('portal_users.id', '=', 'lastDonationAt.portal_user_id');
+            })
+            ->leftJoinSub($this->firstDonation, 'first_donation', function ($join) {
+                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            })
+            ->with('userPaymentOptions')
+            ->with('user.userDetail')
+            ->with('isMonthlyDonor')
+            ->with('variableSymbol')
+            ->with('firstDonation.widget.campaign')
+            ->get();
     }
 
 }

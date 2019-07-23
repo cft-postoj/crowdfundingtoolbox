@@ -3,6 +3,7 @@ import {PortalUserService} from "../../services/portal-user.service";
 import {PortalUser} from "../../models/portal-user";
 import {Router} from '@angular/router';
 import {Routing} from '../../../../constants/config.constants';
+import moment from 'moment/src/moment';
 
 @Component({
     selector: 'app-donor-list',
@@ -20,11 +21,24 @@ export class PortalUserListComponent implements OnInit {
     filterActive: boolean = false;
     exportCsvLoading: boolean = false;
 
+    public from: string;
+    public to: string;
+    public tableTitle: string;
+    public tables = {
+        tablePayments: false,
+        tableDonors: true
+    };
+    public statsDateSelected: any;
+
     constructor(private portalUserService: PortalUserService, private router: Router) {
     }
 
     ngOnInit() {
-        this.getUsers();
+        this.loading = false;
+        this.from = '2015-01-01'; // statically defined list of donors from this date
+        this.to = moment().format('YYYY-MM-DD');
+        this.tableTitle = 'All users';
+        //this.getUsers();
     }
 
     getUsers() {
