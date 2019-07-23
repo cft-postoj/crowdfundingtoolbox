@@ -13,13 +13,16 @@ import {InlineSVGModule} from 'ng-inline-svg';
 import {TablePortalUsersComponent} from './components/table-portal-users/table-portal-users.component';
 import {MonthlyPipe} from './pipes/monthly.pipe';
 import {TableDonationsComponent} from './components/table-donations/table-donations.component';
-import {PortalUsersModule} from '../portal-users/portal-users.module';
 import { TablePaymentsComponent } from './components/table-payments/table-payments.component';
 import { PopupStatisticsComponent } from './components/popup-statistics/popup-statistics.component';
+import { ArticlesComponent } from './pages/articles/articles.component';
+import { CampaignsComponent } from './pages/campaigns/campaigns.component';
+import { NavbarStatsComponent } from './components/navbar-stats/navbar-stats.component';
+import { TableStatsComponent } from './components/table-stats/table-stats.component';
 
 @NgModule({
     declarations: [OverallComponent, ForceSignPipe, TotalCurrentAndPreviousComponent,
-        TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent, TablePaymentsComponent, PopupStatisticsComponent],
+        TablePortalUsersComponent, MonthlyPipe, TableDonationsComponent, TablePaymentsComponent, PopupStatisticsComponent, ArticlesComponent, CampaignsComponent, NavbarStatsComponent, TableStatsComponent],
     exports: [
         TableDonationsComponent,
         TablePortalUsersComponent,

@@ -1,7 +1,7 @@
 :host {
     position: absolute;
     overflow: auto;
-    height: 100%;
+    height: calc(100% - 120px);
     width: 100%;
 }
 tr.list-items--item {

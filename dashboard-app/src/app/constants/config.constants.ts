@@ -16,6 +16,8 @@ export class Routing {
     static readonly STATS = 'stats';
 
     static readonly STATS_FULL_PATH = `/${Routing.DASHBOARD}/${Routing.STATS}/${Routing.ALL}`;
+    static readonly ARTICLES_STATS_FULL_PATH = `/${Routing.DASHBOARD}/${Routing.STATS}/articles`;
+    static readonly CAMPAIGNS_STATS_FULL_PATH = `/${Routing.DASHBOARD}/${Routing.STATS}/campaigns`;
 
 
     // specific paths for components

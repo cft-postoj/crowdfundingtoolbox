@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\UserManagement\Entities;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,11 +17,17 @@ class TrackingShow extends Model
 
     public function visit()
     {
-        return $this->belongsTo('Modules\UserManagement\Entities\TrackingVisit','tracking_visit_id');
+        return $this->belongsTo('Modules\UserManagement\Entities\TrackingVisit', 'tracking_visit_id');
     }
+
     public function widget()
     {
-        return $this->belongsTo('Modules\Campaigns\Entities\Widget','widget_id');
+        return $this->belongsTo('Modules\Campaigns\Entities\Widget', 'widget_id');
+    }
+
+    public function donation()
+    {
+        return $this->hasOne('Modules\Payment\Entities\Donation', 'tracking_show_id', 'id');
     }
 
 }

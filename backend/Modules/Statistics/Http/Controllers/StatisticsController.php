@@ -5,6 +5,7 @@ namespace Modules\Statistics\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Statistics\Services\GeneralStatsService;
 use Modules\Statistics\Services\StatsDonationService;
 use Modules\Statistics\Services\StatsDonorService;
 
@@ -13,11 +14,13 @@ class StatisticsController extends Controller
 
     private $statsDonationService;
     private $statsDonorService;
+    private $generalStatsService;
 
-    public function __construct(StatsDonationService $statsDonationService, StatsDonorService $statsDonorService)
+    public function __construct(StatsDonationService $statsDonationService, StatsDonorService $statsDonorService, GeneralStatsService $generalStatsService)
     {
         $this->statsDonationService = $statsDonationService;
         $this->statsDonorService = $statsDonorService;
+        $this->generalStatsService = $generalStatsService;
     }
 
     protected function getDonationsGroup(Request $request)
@@ -67,6 +70,22 @@ class StatisticsController extends Controller
     {
         return \response()->json(
             $this->statsDonorService->getDonorsTotal($request['from'], $request['to']),
+            Response::HTTP_OK
+        );
+    }
+
+    protected function articles(Request $request)
+    {
+        return \response()->json(
+            $this->generalStatsService->articlesStatistics($request),
+            Response::HTTP_OK
+        );
+    }
+
+    protected function campaigns(Request $request)
+    {
+        return \response()->json(
+            $this->generalStatsService->campaignsStatistics($request),
             Response::HTTP_OK
         );
     }

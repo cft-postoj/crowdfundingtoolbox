@@ -105,6 +105,9 @@ Route::group([
 
             Route::get('statistics/donation-and-donor-total', '\Modules\Statistics\Http\Controllers\StatisticsController@getDonorsAndDonationTotal');
 
+            Route::post('statistics/articles', '\Modules\Statistics\Http\Controllers\StatisticsController@articles');
+            Route::post('statistics/campaigns', '\Modules\Statistics\Http\Controllers\StatisticsController@campaigns');
+
 
             // *********************************************
             // DONATIONS

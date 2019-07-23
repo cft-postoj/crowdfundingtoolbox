@@ -3,6 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {OverallComponent} from './pages/overall/overall.component';
 import {Routing} from '../../constants/config.constants';
 import {PopupStatisticsComponent} from './components/popup-statistics/popup-statistics.component';
+import {ArticlesComponent} from './pages/articles/articles.component';
+import {CampaignsComponent} from './pages/campaigns/campaigns.component';
 
 const routes: Routes = [
     {
@@ -16,6 +18,14 @@ const routes: Routes = [
                 outlet: 'popup'
             }
         ]
+    },
+    {
+        path: 'articles',
+        component: ArticlesComponent
+    },
+    {
+        path: 'campaigns',
+        component: CampaignsComponent
     }
 ];
 

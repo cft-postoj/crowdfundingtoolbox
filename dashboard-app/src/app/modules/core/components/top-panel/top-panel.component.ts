@@ -60,7 +60,7 @@ export class TopPanelComponent implements OnInit {
 
     public showHome() {
         this.adminPanelActive = false;
-        this.router.navigateByUrl(Routing.DASHBOARD + '/' + Routing.STATS);
+        this.router.navigateByUrl(Routing.STATS_FULL_PATH);
     }
 
     public showAdminPanel() {
