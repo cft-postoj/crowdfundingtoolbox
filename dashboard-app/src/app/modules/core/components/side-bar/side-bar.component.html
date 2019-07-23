@@ -44,13 +44,13 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(usersItemName)"
-                    [routerLink]="routing.PORTAL_USER_LIST">
+                    (click)="showItem(donorsItemName)"
+                    [routerLink]="routing.PORTAL_USERS + '/' + routing.DONORS + '/' + routing.ALL">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/donors-supporters.svg'"
                         [removeSVGAttributes]="['fill']"
-                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === usersItemName}"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === donorsItemName}"
                 >
                 </div>
                 <p *ngIf="!isActive">Supporters / Donors</p>

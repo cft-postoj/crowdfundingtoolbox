@@ -5,11 +5,21 @@ import {Routing} from '../../constants/config.constants';
 import {PortalUserDetailGeneralComponent} from './pages/portal-user-detail-general/portal-user-detail-general.component';
 import {PortalUserDetailDonationsComponent} from './pages/portal-user-detail-donations/portal-user-detail-donations.component';
 import {PortalUserDetailComponent} from './components/portal-user-detail/portal-user-detail.component';
+import {DonorsComponent} from './pages/donors/donors.component';
+import {DonorsNewComponent} from './pages/donors-new/donors-new.component';
 
 const routes: Routes = [
     {
         path: 'all',
         component: PortalUserListComponent
+    },
+    {
+      path: 'donors/all',
+      component: DonorsComponent
+    },
+    {
+      path: 'donors/new',
+      component: DonorsNewComponent
     },
     {
         path: ':' + Routing.ID,

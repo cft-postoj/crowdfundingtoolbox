@@ -25,6 +25,7 @@ export class SideBarComponent implements OnInit {
     public readonly paymentsItemName = 'PAYMENTS';
     public readonly translationsItemName = 'TRANSLATIONS';
     public readonly settingsItemName = 'SETTINGS';
+    public readonly donorsItemName = 'DONORS';
     public isActive: boolean;
     public activeItem = this.noActiveItem;
 
@@ -108,6 +109,9 @@ export class SideBarComponent implements OnInit {
                 break;
             case this.settingsItemName:
                 itemName = this.settingsItemName;
+                break;
+            case this.donorsItemName:
+                itemName = this.donorsItemName;
                 break;
         }
         return this.showItem(itemName);

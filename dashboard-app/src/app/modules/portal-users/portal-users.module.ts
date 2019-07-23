@@ -14,11 +14,13 @@ import { PortalUserDetailGeneralComponent } from './pages/portal-user-detail-gen
 import {PortalUserDetailComponent} from './components/portal-user-detail/portal-user-detail.component';
 import {DonationDetailSimplifiedComponent} from './components/donation-detail-simplified/donation-detail-simplified.component';
 import { TransferTypeConvertToStringPipe } from './pipes/transfer-type-convert-to-string.pipe';
+import { DonorsComponent } from './pages/donors/donors.component';
+import { DonorsNewComponent } from './pages/donors-new/donors-new.component';
 
 @NgModule({
     declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
         BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, PortalUserDetailDonationsComponent,
-        PortalUserDetailGeneralComponent, DonationDetailSimplifiedComponent, TransferTypeConvertToStringPipe],
+        PortalUserDetailGeneralComponent, DonationDetailSimplifiedComponent, TransferTypeConvertToStringPipe, DonorsComponent, DonorsNewComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,
