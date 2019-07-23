@@ -1,0 +1,215 @@
+<div class="container-fluid">
+  <div class="row">
+    <ng-container>
+      <div class="col-6 d-flex align-items-center">
+        dates range:
+        <app-datepicker
+                [selected]="statsDateSelected"
+                (dateChange)="momentDateChange($event)"
+                [type]="'start'">
+        </app-datepicker>
+      </div>
+    </ng-container>
+    <div class="col-3 offset-3 d-flex align-items-center">
+      <ngx-select-dropdown [(ngModel)]="model.columns"
+                           [multiple]="true" [config]="config"
+                           [options]="availableColumns"></ngx-select-dropdown>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="list-items list-items--orderable" *ngIf="dataType === 'articles'">
+        <thead>
+        <tr>
+          <th app-table-header class="id" *ngIf="tableService.activeColumn(model,'order')"
+              [column]="tableService.getColumnByValueName(model,'order')"
+              [(model)]="model" (modelChange)="sortTable()">#
+          </th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'title')"
+              [column]="tableService.getColumnByValueName(model,'title')"
+              [(model)]="model" (modelChange)="sortTable()">
+          </th>
+          <th class="status" app-table-header *ngIf="tableService.activeColumn(model,'url')"
+              [column]="tableService.getColumnByValueName(model,'url')"
+              [(model)]="model"
+              (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'visits')"
+              [column]="tableService.getColumnByValueName(model,'visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'amount_sum')"
+              [column]="tableService.getColumnByValueName(model,'amount_sum')"
+              [(model)]="model"
+              (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'new_users')"
+              [column]="tableService.getColumnByValueName(model,'new_users')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+
+        </tr>
+        </thead>
+        <tbody *ngIf="!loading">
+        <tr *ngFor="let statistic of sortedStats; let i = index" class="list-items--item">
+          <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
+          <td *ngIf="tableService.activeColumn(model, 'title')">
+            {{statistic.title}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'url')">
+            {{statistic.url}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'visits')">
+            {{statistic.visits}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'amount_sum')">
+            {{statistic.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'new_users')">
+            {{statistic.users}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <table class="list-items list-items--orderable" *ngIf="dataType !== 'articles'">
+        <thead>
+        <tr>
+          <th app-table-header class="id" *ngIf="tableService.activeColumn(model,'order')"
+              [column]="tableService.getColumnByValueName(model,'order')"
+              [(model)]="model" (modelChange)="sortTable()">#
+          </th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'title')"
+              [column]="tableService.getColumnByValueName(model,'title')"
+              [(model)]="model" (modelChange)="sortTable()">
+          </th>
+          <th class="status" app-table-header *ngIf="tableService.activeColumn(model,'duration')"
+              [column]="tableService.getColumnByValueName(model,'duration')"
+              [(model)]="model"
+              (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'visits_sum')"
+              [column]="tableService.getColumnByValueName(model,'visits_sum')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'amount_sum')"
+              [column]="tableService.getColumnByValueName(model,'amount_sum')"
+              [(model)]="model"
+              (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'landing_page_visits')"
+              [column]="tableService.getColumnByValueName(model,'landing_page_visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'landing_page_amount')"
+              [column]="tableService.getColumnByValueName(model,'landing_page_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'leaderboard_visits')"
+              [column]="tableService.getColumnByValueName(model,'leaderboard_visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'leaderboard_amount')"
+              [column]="tableService.getColumnByValueName(model,'leaderboard_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'sidebar_visits')"
+              [column]="tableService.getColumnByValueName(model,'sidebar_visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'sidebar_amount')"
+              [column]="tableService.getColumnByValueName(model,'sidebar_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'article_widget_visits')"
+              [column]="tableService.getColumnByValueName(model,'article_widget_visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'article_widget_amount')"
+              [column]="tableService.getColumnByValueName(model,'article_widget_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'locked_article_visits')"
+              [column]="tableService.getColumnByValueName(model,'locked_article_visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'locked_article_amount')"
+              [column]="tableService.getColumnByValueName(model,'locked_article_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'popup_visits')"
+              [column]="tableService.getColumnByValueName(model,'popup_visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'popup_amount')"
+              [column]="tableService.getColumnByValueName(model,'popup_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'fixed_visits')"
+               [column]="tableService.getColumnByValueName(model,'fixed_visits')"
+               [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'fixed_amount')"
+              [column]="tableService.getColumnByValueName(model,'fixed_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'custom_visits')"
+              [column]="tableService.getColumnByValueName(model,'custom_visits')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+          <th app-table-header *ngIf="tableService.activeColumn(model,'custom_amount')"
+              [column]="tableService.getColumnByValueName(model,'custom_amount')"
+              [(model)]="model" (modelChange)="sortTable()"></th>
+
+        </tr>
+        </thead>
+        <tbody *ngIf="!loading">
+        <tr *ngFor="let statistic of sortedStats; let i = index"
+            class="list-items--item" (click)="showCampaignDetail(statistic.id)">
+          <td *ngIf="tableService.activeColumn(model,'order')">{{i+1}}</td>
+          <td *ngIf="tableService.activeColumn(model, 'title')">
+            {{statistic.title}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'duration')">
+            {{statistic.created_at}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'visits')">
+            {{statistic.visits}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'amount_sum')">
+            {{statistic.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'landing_page_visits')">
+            {{statistic.landing_page.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'landing_page_amount')">
+            {{statistic.landing_page.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'leaderboard_visits')">
+            {{statistic.leaderboard.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'leaderboard_amount')">
+            {{statistic.leaderboard.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'sidebar_visits')">
+            {{statistic.sidebar.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'sidebar_amount')">
+            {{statistic.sidebar.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'article_widget_visits')">
+            {{statistic.article_widget.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'article_widget_amount')">
+            {{statistic.article_widget.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'locked_article_visits')">
+            {{statistic.locked_article.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'locked_article_amount')">
+            {{statistic.locked_article.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'popup_visits')">
+            {{statistic.popup.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'popup_amount')">
+            {{statistic.popup.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'fixed_visits')">
+            {{statistic.fixed.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'fixed_amount')">
+            {{statistic.fixed.amount}} €
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'custom_visits')">
+            {{statistic.custom.visit}}
+          </td>
+          <td *ngIf="tableService.activeColumn(model, 'custom_amount')">
+            {{statistic.custom.amount}} €
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <h4 *ngIf="!loading && sortedStats.length===0" class="text-center"> No statistics found </h4>
+      <app-loading [isLoading]="loading"></app-loading>
+    </div>
+  </div>
+</div>

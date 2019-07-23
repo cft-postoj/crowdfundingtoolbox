@@ -1,0 +1,12 @@
+@import 'mixins';
+@import 'variables';
+:host {
+  position: absolute;
+  overflow: auto;
+  height: calc(100% - 120px);
+  width: 100%;
+}
+
+tr.list-items--item {
+  cursor: pointer;
+}
