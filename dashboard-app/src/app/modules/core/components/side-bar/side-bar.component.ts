@@ -26,6 +26,7 @@ export class SideBarComponent implements OnInit {
     public readonly translationsItemName = 'TRANSLATIONS';
     public readonly settingsItemName = 'SETTINGS';
     public readonly donorsItemName = 'DONORS';
+    public readonly faqItemName = 'FAQ';
     public isActive: boolean;
     public activeItem = this.noActiveItem;
 
@@ -113,6 +114,9 @@ export class SideBarComponent implements OnInit {
             case this.donorsItemName:
                 itemName = this.donorsItemName;
                 break;
+            case this.faqItemName:
+                itemName = this.faqItemName;
+                break;
         }
         return this.showItem(itemName);
     }
@@ -136,6 +140,8 @@ export class SideBarComponent implements OnInit {
             });
             this.isActive = this.activeItem !== this.noActiveItem;
             this.currentSidebarItemType = sidebarType.campaigns;
+        } else if (itemName === this.faqItemName) {
+           window.open('https://docs.crowdfundingtoolbox.news/user-guide.pdf', '_blank');
         } else {
             this.isActive = false;
         }

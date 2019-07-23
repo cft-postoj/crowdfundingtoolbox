@@ -80,12 +80,21 @@
                 </div>
                 <p *ngIf="!isActive">Settings</p>
             </div>
+            <div
+                    class="item"
+                    (click)="showItem(faqItemName)">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/faq.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === faqItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">FAQ</p>
+            </div>
         </div>
         <div class="item-content" [ngClass]="{'item-content--active': isActive}">
             <app-sidebar-item *ngIf="isActive" [currentType]="currentSidebarItemType"  [items]="sidebarItems" ></app-sidebar-item>
         </div>
-    </div>
-    <div class="sidebar-footer">
-        <app-sidebar-footer></app-sidebar-footer>
     </div>
 </div>
