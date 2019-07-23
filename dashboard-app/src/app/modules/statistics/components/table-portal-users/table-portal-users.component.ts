@@ -9,6 +9,9 @@ import {Column} from '../../../core/models/column';
 import {PortalUser} from '../../../portal-users/models/portal-user';
 import {Router} from '@angular/router';
 import moment from 'moment/src/moment';
+import {ModalComponent} from '../../../core/parts/atoms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {HelpersService} from '../../../core/services/helpers.service';
 
 @Component({
     selector: 'app-table-portal-users',
@@ -30,6 +33,8 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     @Input() public exportTitle: string = '';
     @Input() public exportType: string = '';
     @Input() public exportFileName: string = '';
+
+    public showDelete: boolean = false;
 
     exportCsvLoading: boolean = false;
 
@@ -56,10 +61,15 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
 
     constructor(private donorService: DonorService,
                 private router: Router,
+                private _modalService: NgbModal,
+                private helperService: HelpersService,
                 public tableService: TableService) {
     }
 
     ngOnInit() {
+        if (this.dataType === 'allPortalUsers') {
+            this.showDelete = true;
+        }
         this.model.columns.push({
             value_name: 'order',
             description: '#',
@@ -68,7 +78,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
         });
         this.model.columns.push({
             value_name: 'status',
-            description: 'Donor status',
+            description: 'Status',
             type: 'none',
             filter: new Filter()
         });
@@ -91,7 +101,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'todo1',
+            value_name: 'payment_type',
             description: 'Type',
             type: 'none',
             filter: new Filter()
@@ -210,6 +220,33 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
         this.from = event.start;
         this.to = event.end;
         this.getUsers();
+    }
+
+    public deleteUser(e, id) {
+        e.preventDefault();
+        e.stopPropagation();
+        const modalRef = this._modalService.open(ModalComponent);
+        modalRef.componentInstance.title = 'Delete user with id ' + id;
+        modalRef.componentInstance.text = 'Are you sure you want to delete user with id ' + id;
+        modalRef.componentInstance.loading = false;
+        modalRef.componentInstance.duplicate = 'donation-assignment';
+
+        modalRef.result.then((data) => {
+            // change id for donation
+            this.donorService.deleteUser(id).subscribe((data) => {
+                this.alertMessage = 'Successfully remove portal user with id ' + id + '.';
+                this.alertType = 'success';
+                this.alertOpen = true;
+                this.router.navigateByUrl(`${Routing.PORTAL_USER_LIST_FULL_PATH}`);
+            });
+        });
+
+    }
+
+    public paymentMehotd(data) {
+        if (data !== null) {
+           return this.helperService.getPaymentType(data);
+        }
     }
 
 }

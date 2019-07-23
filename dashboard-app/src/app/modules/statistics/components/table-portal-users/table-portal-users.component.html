@@ -46,7 +46,7 @@
                         [column]="tableService.getColumnByValueName(model,'order')"
                         [(model)]="model" (modelChange)="sortTable()">#
                     </th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'status')"
+                    <th class="status" app-table-header *ngIf="tableService.activeColumn(model,'status')"
                         [column]="tableService.getColumnByValueName(model,'status')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
@@ -60,8 +60,8 @@
                     <th app-table-header *ngIf="tableService.activeColumn(model,'amount_sum')"
                         [column]="tableService.getColumnByValueName(model,'amount_sum')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'todo1')"
-                        [column]="tableService.getColumnByValueName(model,'todo1')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'payment_type')"
+                        [column]="tableService.getColumnByValueName(model,'payment_type')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')"
@@ -95,6 +95,7 @@
                         [column]="tableService.getColumnByValueName(model,'created_by')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
+                    <th *ngIf="showDelete" class="actionTd"></th>
 
                 </tr>
                 </thead>
@@ -102,7 +103,7 @@
                 <tr *ngFor="let portalUser of sortedPortalUsers; let i = index" class="list-items--item"
                     (click)="showUserDetail(portalUser.user.id)" title="Show detail of donor">
                     <td *ngIf="tableService.activeColumn(model,'order')">{{i + 1}}</td>
-                    <td *ngIf="tableService.activeColumn(model,'status')">
+                    <td class="status" *ngIf="tableService.activeColumn(model,'status')">
                         <app-status [active]="portalUser.last_donation_at!=null"></app-status>
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'user.email')">
@@ -115,8 +116,8 @@
                     <td *ngIf="tableService.activeColumn(model,'amount_sum')">
                         {{portalUser.amount_sum | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'todo1')">
-                        todo
+                    <td *ngIf="tableService.activeColumn(model,'payment_type')">
+                        {{paymentMehotd(portalUser.first_donation?.payment_method)}}
                     </td>
                     <td [title]="portalUser.user.user_detail.created_at | date:'dd.MM.yyyy HH:mm:ss'"
                         *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')">
@@ -147,6 +148,12 @@
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'created_by')">
                         {{portalUser.register_by}}
+                    </td>
+                    <td *ngIf="showDelete" align="right" class="actionTd">
+                        <img class="editUser" src="../assets/images/icons/edit.svg" />
+                        <img class="deleteUser" src="../assets/images/icons/delete.svg"
+                             (click)="deleteUser($event, portalUser.id);"
+                            title="Delete user"/>
                     </td>
                 </tr>
                 </tbody>

@@ -102,7 +102,7 @@ class PortalUserService implements PortalUserServiceInterface
             $user = $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $exception) {
             return response()->json([
-                'error' =>  $exception.getMessage()
+                'error' => $exception . getMessage()
             ], Response::HTTP_BAD_REQUREST);
         }
 
@@ -399,5 +399,10 @@ class PortalUserService implements PortalUserServiceInterface
     public function getDonationsDetailInfo($id)
     {
         return $this->portalUserRepository->getDonationsDetailInfo($id);
+    }
+
+    public function removeById($id)
+    {
+        return $this->portalUserRepository->removeById($id);
     }
 }

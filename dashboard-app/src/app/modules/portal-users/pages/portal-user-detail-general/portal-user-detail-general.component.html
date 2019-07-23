@@ -176,14 +176,26 @@
 
 
     <app-exlude-user-from-targeting
-        [excluded]="user.portal_user.exclude_from_campaign !== null"
-        [excludingReason]="(user.portal_user.exclude_from_campaign !== null) ? user.portal_user.exclude_from_campaign.reason_notes : ''"
-        (excludedUserEmit)="updatedExcluded($event)"
-        [portalUserId]="user.portal_user.id"
+            [excluded]="user.portal_user.exclude_from_campaign !== null"
+            [excludingReason]="(user.portal_user.exclude_from_campaign !== null) ? user.portal_user.exclude_from_campaign.reason_notes : ''"
+            (excludedUserEmit)="updatedExcluded($event)"
+            [portalUserId]="user.portal_user.id"
     ></app-exlude-user-from-targeting>
 
 
     <br/>
+
+    <div class="row userNotes">
+        <div class="col">
+            <b>User notes:</b> <img src="../assets/images/icons/edit.svg"
+                                    [title]="(user.portal_user.notes == null) ? 'Add notes' : 'Edit notes'"
+                                    (click)="showEditModal()"><br/>
+            <p [innerHTML]="(user.portal_user.notes == null)
+            ? '<i>This user cannot have any notes yet.</i>'
+            : '<span>' + user.portal_user.notes + '</span>'"></p>
+        </div>
+    </div>
+
 </div>
 
 <app-loading [isLoading]="loading"></app-loading>

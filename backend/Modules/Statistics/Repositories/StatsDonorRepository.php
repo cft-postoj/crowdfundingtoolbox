@@ -61,7 +61,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
     public function getDonors($from, $to, $monthly)
     {
         $payment = Payment::query()
-            ->select('id', 'transaction_date')
+            ->select('id as payment_id', 'transaction_date')
             ->whereDate('transaction_date', '>=', $from)
             ->whereDate('transaction_date', '<=', $to);
 
@@ -82,27 +82,24 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
                 'payment_method as last_donation_payment_method', 'created_at', 'payment_id');
 
         return PortalUser::query()
-            ->leftJoinSub($this->firstDonation, 'first_donation', function ($join) {
-                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
-            })
             ->joinSub($lastDonationAt, 'last_donation_at', function ($join) {
                 $join->on('portal_users.id', '=', 'last_donation_at.portal_user_id');
             })
             ->joinSub($lastDonation, 'last_donation', function ($join) {
                 $join->on('last_donation_at', '=', 'last_donation.created_at');
             })
-//            ->joinSub($payment, 'payment', function ($join) {
-//                $join->on('last_donation.payment_id', '=', 'payment.id');
-//            })
+            ->joinSub($payment, 'payment', function ($join) {
+                $join->on('last_donation.payment_id', '=', 'payment.payment_id');
+            })
             ->joinSub($this->donationsSum, 'donations_sum', function ($join) {
                 $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
             })
+            ->orderBy('last_donation_at', 'DESC')
             ->with('user.userDetail')
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
             ->with('userPaymentOptions')
             ->with('firstDonation.widget.campaign')
-            ->orderBy('last_donation_at', 'DESC')
             ->get();
     }
 
@@ -198,7 +195,6 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('variableSymbol')
             ->with('firstDonation.widget.campaign')
             ->with('userPaymentOptions')
-            ->with('firstDonation.widget.campaign')
             ->get();
     }
 

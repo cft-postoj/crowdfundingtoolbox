@@ -81,4 +81,11 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->first();
     }
 
+    public function removeById($id)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->delete();
+    }
+
 }

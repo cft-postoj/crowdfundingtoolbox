@@ -55,6 +55,10 @@ export class DonorService {
             });
     }
 
+    public deleteUser(id: number) {
+        return this.http.get(`${environment.backOfficeUrl}${environment.portalUsersUrl}/${id}/delete`);
+    }
+
     // TODO: DRY (duplicate in campaing.service)
     public writeDateAsString(date: any): string {
         return `${date.year}-${date.month}-${date.day}`;

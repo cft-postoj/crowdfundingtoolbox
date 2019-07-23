@@ -46,6 +46,14 @@ class PortalUsersController extends Controller
         );
     }
 
+    protected function removeById($id)
+    {
+        return \response()->json(
+            $this->portalUserService->removeById($id),
+            Response::HTTP_OK
+        );
+    }
+
     public function create(Request $request)
     {
         return $this->portalUserService->create($request);
@@ -82,7 +90,8 @@ class PortalUsersController extends Controller
         return $this->excludeFromTargetingService->exclude($request, $portalUserId);
     }
 
-    protected function exportCsv(Request $request) {
+    protected function exportCsv(Request $request)
+    {
         return $this->export2CsvService->export($request);
     }
 
@@ -95,6 +104,5 @@ class PortalUsersController extends Controller
     {
         return $this->portalUserService->getDonationsByUserPortalAndDate($id, $request['from'], $request['to']);
     }
-
 
 }

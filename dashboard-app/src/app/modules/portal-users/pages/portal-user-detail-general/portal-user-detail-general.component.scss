@@ -3,6 +3,17 @@
     padding: 15px 30px;
     height: calc(100vh - 170px);
     overflow-y: auto;
+    .userNotes {
+        img {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+        ::ng-deep p {
+            span {
+                color: $azure;
+            }
+        }
+    }
     table {
         &.borderless td, &.borderless th {
             border: none;

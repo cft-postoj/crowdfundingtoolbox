@@ -159,6 +159,7 @@ Route::group([
 
             Route::get('portal-users/all', '\Modules\UserManagement\Http\Controllers\PortalUsersController@all');
             Route::get('portal-users/{id}', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getById');
+            Route::get('portal-users/{id}/delete', '\Modules\UserManagement\Http\Controllers\PortalUsersController@removeById');
             Route::put('edit-portal-user/{id}', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePortalUserFromBackoffice');
             Route::put('edit-portal-user/{id}/preferred-payments-pairing', '\Modules\UserManagement\Http\Controllers\UserDetailsController@updatePreferredPaymentsPairing');
             Route::post('edit-portal-user/{portalUserId}/exclude-from-campaigns-targeting', '\Modules\UserManagement\Http\Controllers\PortalUsersController@excludeFromCampaignsTargeting');

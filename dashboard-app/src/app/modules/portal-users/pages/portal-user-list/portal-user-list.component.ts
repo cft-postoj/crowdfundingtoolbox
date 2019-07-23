@@ -60,6 +60,8 @@ export class PortalUserListComponent implements OnInit {
     }
 
     export2Csv(event) {
+        console.log('result ' + event);
+        this.loading = false;
         this.alertOpen = event.alertOpen;
         this.alertMessage = event.alertMessage;
         this.alertType = event.alertType;
