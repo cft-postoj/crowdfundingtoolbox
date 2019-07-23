@@ -7,6 +7,7 @@ import moment from 'moment/src/moment';
 import {Moment} from 'moment';
 import {NavbarItem} from '../../../core/models/navbar-item';
 import {Routing} from '../../../../constants/config.constants';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-overall',
@@ -50,6 +51,7 @@ export class OverallComponent implements OnInit {
     public nowMoment: Moment = moment();
 
     constructor(private donationService: DonationService,
+                private router: Router,
                 private donorService: DonorService) {
     }
 
@@ -170,14 +172,8 @@ export class OverallComponent implements OnInit {
     // tableToOpen -> name of table from this.tables that will be open after called
     // data -> string representation of data type passed into table
     public openModal(title: string, monthly: boolean, tableToOpen: string, dataType: string) {
-        this.tableTitle = title;
-        this.monthly = monthly;
-        this.modalOpened = true;
-        for (const tableKey of Object.keys(this.tables)) {
-            this.tables[tableKey] = false;
-        }
-        this.tables[tableToOpen] = true;
-        this.dataType = dataType;
+        this.router.navigate([`${Routing.STATS_FULL_PATH}`, { outlets: { 'popup': [ 'donors', true,
+        true, false, this.from, this.to, undefined, title, dataType ] }}]);
     }
 
     public momentDateChange(event) {
