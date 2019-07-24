@@ -30,7 +30,7 @@ class RegisterEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Registrácia na www.postoj.sk')
+        return $this->subject('Registration on www.postoj.sk')
             ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
             ->view('emails.register');
     }

@@ -13,7 +13,13 @@ use Modules\Campaigns\Transformers\CampaignResource;
 use Modules\Campaigns\Transformers\CampaignResourceDetail;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Targeting\Providers\TargetingService;
+use Modules\UserManagement\Emails\AutoRegistrationEmail;
+use Modules\UserManagement\Emails\BackOfficeRegisterEmail;
+use Modules\UserManagement\Emails\ForgottenPasswordEmail;
+use Modules\UserManagement\Emails\RegisterEmail;
+use Modules\UserManagement\Emails\SuccessfulDonationEmail;
 use Modules\UserManagement\Http\Controllers\UserServiceController;
+use Illuminate\Support\Facades\Mail;
 
 class CampaignsController extends Controller
 {

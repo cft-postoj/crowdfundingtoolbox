@@ -12,6 +12,7 @@ use JWTAuth;
 use Modules\Payment\Services\VariableSymbolService;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
+use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Entities\DonorStatus;
 use Modules\UserManagement\Jobs\RemoveGeneratedToken;
 use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;

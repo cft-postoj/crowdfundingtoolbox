@@ -5,7 +5,9 @@ namespace Modules\UserManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Services\BackOfficeUserService;
+use Illuminate\Support\Facades\Mail;
 
 class BackOfficeUsersController extends Controller
 {
