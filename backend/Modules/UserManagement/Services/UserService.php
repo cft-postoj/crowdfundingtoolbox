@@ -6,12 +6,12 @@ namespace Modules\UserManagement\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Jenssegers\Agent\Agent;
 use Modules\UserManagement\Entities\BackOfficeUser;
 use Modules\UserManagement\Entities\PortalUser;
 use Modules\UserManagement\Entities\User;
-use Modules\UserManagement\Repositories\UserRepository;
-use Jenssegers\Agent\Agent;
 use Modules\UserManagement\Entities\UserCookie;
+use Modules\UserManagement\Repositories\UserRepository;
 
 class UserService implements UserServiceInterface
 {
@@ -20,7 +20,7 @@ class UserService implements UserServiceInterface
 
     public function __construct()
     {
-       $this->userRepository = new UserRepository();
+        $this->userRepository = new UserRepository();
     }
 
     public function getById($id)
@@ -55,7 +55,8 @@ class UserService implements UserServiceInterface
         }
     }
 
-    public function create($request) {
+    public function create($request)
+    {
         $prefix = $request->route()->getPrefix();
 
         $valid = validator($request->only(
@@ -125,5 +126,10 @@ class UserService implements UserServiceInterface
         }
         $this->usernameUsedCounter++;
         return $this->checkUniqueUsername($username . $this->usernameUsedCounter);
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        return $this->userRepository->getUserByEmail($email);
     }
 }

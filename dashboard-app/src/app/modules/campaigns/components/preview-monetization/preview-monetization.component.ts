@@ -15,7 +15,8 @@ import {
     trackEmailOnChange,
     trackInsertValue,
     validateForm,
-    step
+    step,
+    showThirdPage
 } from '../preview/landing';
 import {Widget} from '../../models';
 import {PreviewService} from '../../services';
@@ -132,6 +133,7 @@ export class PreviewMonetizationComponent implements OnInit {
         script.appendChild(document.createTextNode(donationInProgress.toString() + '\n'));
         script.appendChild(document.createTextNode(changePaymentOptions.toString() + '\n'));
         script.appendChild(document.createTextNode(step.toString() + '\n'));
+        script.appendChild(document.createTextNode(showThirdPage.toString() + '\n'));
 
         // change path in getEnvs and add domain if there is relative path in envs
         const isAbsolute = new RegExp('^([a-z]+://|//)', 'i');

@@ -4,9 +4,8 @@
 namespace Modules\UserManagement\Repositories;
 
 
-use http\Env\Response;
-use Modules\UserManagement\Entities\UserCookieCouple;
 use Modules\UserManagement\Entities\User;
+use Modules\UserManagement\Entities\UserCookieCouple;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -96,11 +95,11 @@ class UserRepository implements UserRepositoryInterface
             ]);
     }
 
-    public function coupleUserWithCookie($newUserId, $user_cookie)
+    public function coupleUserWithCookie($newPortalUserId, $user_cookie)
     {
         return UserCookieCouple::create([
             'user_cookie_id' => $user_cookie,
-            'portal_user_id' => $newUserId
+            'portal_user_id' => $newPortalUserId
         ]);
     }
 
@@ -117,5 +116,21 @@ class UserRepository implements UserRepositoryInterface
             ::where('id', $user_id)
             ->userDetail()
             ->create();
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        return User
+            ::where('email', $email)
+            ->with('portalUser.variableSymbol')
+            ->get();
+    }
+
+    public function getWithVariableSymbol($userId)
+    {
+        return $this->model
+            ::where('id', $userId)
+            ->with('portalUser.variableSymbol')
+            ->first();
     }
 }

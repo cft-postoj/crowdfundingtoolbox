@@ -223,6 +223,8 @@ Route::group([
     Route::post('tracking/initialize-donation-invalid', '\Modules\UserManagement\Http\Controllers\TrackingController@initializeDonationInvalid');
 
     Route::post('donation/initialize', '\Modules\Payment\Http\Controllers\DonationController@initialize');
+    Route::post('donation/waiting-for-payment', '\Modules\Payment\Http\Controllers\DonationController@waitingForPayment');
+
 
 
 });

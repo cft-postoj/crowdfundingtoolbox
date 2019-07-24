@@ -4,6 +4,8 @@
 namespace Modules\UserManagement\Services;
 
 
+use Modules\UserManagement\Entities\User;
+
 interface PortalUserServiceInterface
 {
     public function getAll();
@@ -18,5 +20,5 @@ interface PortalUserServiceInterface
 
     public function logout();
 
-    public function registerDuringDonation(String $email, int $cookie);
+    public function registerDuringDonation($showId, string $email, int $cookie, bool $terms): User;
 }

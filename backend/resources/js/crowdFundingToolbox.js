@@ -3,13 +3,14 @@ import {
 } from "./helpers";
 import {apiUrl} from './constants/url';
 
-const sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
-const fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
-const leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
-const popupPlaceholder = document.getElementById('cr0wdFundingToolbox-popup');
+const sidebarPlaceholder = document.getElementById('cr0wdfundingToolbox-sidebar');
+const fixedPlaceholder = document.getElementById('cr0wdfundingToolbox-fixed');
+const leaderboardPlaceholder = document.getElementById('cr0wdfundingToolbox-leaderboard');
+const popupPlaceholder = document.getElementById('cr0wdfundingToolbox-popup');
 const lockedPlaceholder = document.getElementById('cr0wdfundingToolbox-locked');
 const articlePlaceholder = document.getElementById('cr0wdfundingToolbox-article');
 const customPlaceholder = document.getElementById('cr0wdfundingToolbox-custom');
+const landingPlaceholder = document.getElementById('cr0wdfundingToolbox-landing');
 
 function getWidgets(apiUrl) {
 
@@ -17,7 +18,7 @@ function getWidgets(apiUrl) {
     let data = JSON.stringify(
         {
             'article_title': document.querySelector('title').innerText,
-            'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie"),
+            'user_cookie': getCookie("cr0wdfundingToolbox-user_cookie"),
             'user_id': localStorage.getItem('cft_usertoken'),
             'url': window.location.href
         }
@@ -28,9 +29,9 @@ function getWidgets(apiUrl) {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.response != null) {
-                if (!getCookie("cr0wdFundingToolbox-user_cookie")) {
+                if (!getCookie("cr0wdfundingToolbox-user_cookie")) {
                     console.log(xhttp.response)
-                    setCookie('cr0wdFundingToolbox-user_cookie', xhttp.response.user_cookie);
+                    setCookie('cr0wdfundingToolbox-user_cookie', xhttp.response.user_cookie);
                 }
                 for (let i = 0; i < xhttp.response['widgets'].length; i++) {
                     let el = xhttp.response['widgets'][i];
@@ -56,6 +57,14 @@ function getWidgets(apiUrl) {
                                 leaderboardPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
                                 leaderboardPlaceholder.dataset.showId = el.show_id;
                                 leaderboardPlaceholder.appendChild(scriptElement);
+                            }
+                            break;
+                        case 'landing':
+                            scriptElement.appendChild(inlineScript);
+                            if (landingPlaceholder != null) {
+                                landingPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                landingPlaceholder.dataset.showId = el.show_id;
+                                landingPlaceholder.appendChild(scriptElement);
                             }
                             break;
                         case 'fixed':
@@ -158,7 +167,7 @@ function isPopupEnableToVisit() {
 }
 
 function registerClick(apiUrl) {
-    let cftPlaceholders = document.querySelectorAll('[id^=cr0wdFundingToolbox]');
+    let cftPlaceholders = document.querySelectorAll('[id^=cr0wdfundingToolbox]');
     cftPlaceholders.forEach(node => {
         node.addEventListener('click', function ($event) {
             let clickedDom = event.path[0];
@@ -167,7 +176,7 @@ function registerClick(apiUrl) {
                 {
                     'node_id': clickedDom.id,
                     'node_class': clickedDom.className,
-                    'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
+                    'show_id': node.closest('[id^=cr0wdfundingToolbox]').dataset.showId
                 }
             );
             xhttp.open('POST', apiUrl + 'tracking/click', true);
@@ -192,7 +201,7 @@ function registerInsertValue(apiUrl) {
                 {
                     'node_id': clickedDom.id,
                     'node_class': clickedDom.className,
-                    'show_id': node.closest('[id^=cr0wdFundingToolbox]').dataset.show_id
+                    'show_id': node.closest('[id^=cr0wdfundingToolbox]').dataset.show_id
                 }
             );
 

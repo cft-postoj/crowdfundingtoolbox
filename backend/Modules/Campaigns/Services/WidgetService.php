@@ -527,6 +527,15 @@ class WidgetService implements WidgetServiceInterface
                     )
                 ),
             ),
+            'third_step' => array(
+                'title' => array(
+                    'text' => 'Thank you for your support'
+                ),
+
+                'cta' => array(
+                    'description' => 'To get all rewards please  fill your personal data in My profile',
+                    'text' => 'My profile'
+                )),
             'terms' => array(
                 'text' => 'I agree to processing of personal data and receiving newsletters'
             )
@@ -798,7 +807,7 @@ class WidgetService implements WidgetServiceInterface
                 ->get()
                 ->where('active', true)
                 ->whereIn('campaign_id', $campaignIds)
-                ->whereIn('widget_type_id', [2, 3, 4, 5, 6]);
+                ->whereIn('widget_type_id', [1, 2, 3, 4, 5, 6]);
         $onlyThreeWidgets = array();
         $usedWidgetIds = array();
         $user = Auth::user();

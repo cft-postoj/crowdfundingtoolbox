@@ -1600,6 +1600,43 @@
                         </div>
                     </div>
                 </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(7)}">
+                    <div class="row collapsible--header" (click)="openTab(7)">
+                        <div class="col-11">
+                            MONETIZATION STEP 3
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(7)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(7)">
+                        <div class="settings--card">
+                            <div class="row">
+                                <div class="col-12 bold">
+                                    <div class="settings--card--header">
+                                        Step 3 title
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.title.text"></angular-editor>
+                                </div>
+                                <div class="col-12 bold">
+                                    <div class="settings--card--header">
+                                        CTA - redirect to my-profile
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.cta.text"></angular-editor>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="collapse-container" [ngClass]="'flex-open'"
                      *ngIf="widget.widget_type.method === widgetTypes.article.name">
                     <div class="row collapsible--header" (click)="openTab(10)">

@@ -128,6 +128,15 @@ class TrackingService
 
     public function getTrackingShowById($id)
     {
-        return TrackingShow::with('visit.portalUser.variableSymbol')->find($id);
+        return TrackingShow
+            ::with('visit.portalUser.variableSymbol')
+            ->with('widget')
+            ->with('visit.portalUser.user.portalUser.variableSymbol')->find($id);
+    }
+
+    public function getTrackingShowWithDonationById($id)
+    {
+        return TrackingShow
+            ::with('donation')->find($id);
     }
 }

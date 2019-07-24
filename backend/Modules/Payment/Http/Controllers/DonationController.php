@@ -42,4 +42,9 @@ class DonationController extends Controller
         return $this->donationService->cancelAssignment($id);
     }
 
+    protected function waitingForPayment(Request $request)
+    {
+        return $this->donationService->waitingForPayment($request['donation_id'], $request['payment_method_id']);
+    }
+
 }

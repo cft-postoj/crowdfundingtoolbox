@@ -23,4 +23,10 @@ class TrackingShow extends Model
         return $this->belongsTo('Modules\Campaigns\Entities\Widget','widget_id');
     }
 
+    public function donation()
+    {
+        return $this->hasOne('Modules\Payment\Entities\Donation');
+    }
+
+
 }

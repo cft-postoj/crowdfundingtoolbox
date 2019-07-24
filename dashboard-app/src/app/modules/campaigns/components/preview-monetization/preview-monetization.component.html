@@ -258,5 +258,41 @@
                 </div>
             </div>
         </div>
+        <div class="cft--monetization--container-step-3  cft--monatization--hidden">
+            <div class="cft--monatization--title"
+                 [ngStyle]="getMonetizationTitleStyles()"
+                 [innerHTML]="(widget.settings[deviceType].payment_settings.third_step.title.text) ?
+             '<h1>' +
+             widget.settings[deviceType].payment_settings.third_step.title.text +
+             '</h1>' : ''">
+            </div>
+            <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="payment-title">IBAN</td>
+                    <td class="payment-value payment-iban"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Var. symbol</td>
+                    <td class="payment-value payment-vs"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Amount</td>
+                    <td class="payment-value"><span class="payment-amount"></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 style="text-align: center">
+                {{widget.settings[deviceType].payment_settings.third_step.cta.description}}
+            </h4>
+            <div class="cft--button-container payment-option" [ngStyle]="getButtonContainerStyles()"
+                 *ngIf="ctaReplaced()">
+                <div type="submit" class="cft--button--redirect"
+                     [ngStyle]="getButtonStyles()" href="http://google.com" target="_blank"
+                     onclick="parent.donationInProgress(this)">
+                    {{widget.settings[deviceType].payment_settings.third_step.cta.text}}
+                </div>
+            </div>
+        </div>
     </div>
 </div>

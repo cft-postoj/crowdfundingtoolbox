@@ -1,4 +1,4 @@
-import { Targeting } from './targeting';
+import {Targeting} from './targeting';
 
 export class Campaign {
     id: number = 0;
@@ -9,10 +9,14 @@ export class Campaign {
     targeting = new Targeting();
     promote_settings = {
         start_date_value: '',
-        start_date_json: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()},
+        start_date_json: {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()},
         is_end_date: true,
         end_date_value: '',
-        end_date_json: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() + 1},
+        end_date_json: {
+            year: new Date().getFullYear(),
+            month: new Date().getMonth() + 1,
+            day: new Date().getDate() + 1
+        },
         donation_goal_value: ''
     };
 
@@ -35,7 +39,7 @@ export class Campaign {
             width: '100%',
             height: 'auto',
         },
-        monthly_prices : {
+        monthly_prices: {
             /* TODO: moznost pridat min value */
             // custom_price: {
             //     active: false,
@@ -44,10 +48,10 @@ export class Campaign {
             custom_price: false,
             count_of_options: 2,
             options: [
-                { value: 30},
-                { value: 20}
+                {value: 30},
+                {value: 20}
             ],
-            benefit : {
+            benefit: {
                 active: true,
                 text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
                 value: 10
@@ -57,10 +61,10 @@ export class Campaign {
             custom_price: false,
             count_of_options: 2,
             options: [
-                { value: 30},
-                { value: 20}
+                {value: 30},
+                {value: 20}
             ],
-            benefit : {
+            benefit: {
                 active: true,
                 text: 'S podporou 60 € a viac ročne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
                 value: 10
@@ -88,8 +92,18 @@ export class Campaign {
                 }
             }
         },
+        third_step: {
+            title: {
+                text: 'Thank you for your support'
+            },
+            cta: {
+                description: 'To get all rewards please  fill your personal data in My profile',
+                text: 'My profile'
+            }
+        },
+
         terms: {
-          text: 'I agree to processing of  personal data and receiving newsletters'
+            text: 'I agree to processing of  personal data and receiving newsletters'
         }
     };
 
@@ -105,8 +119,8 @@ export class Campaign {
             background: {
                 type: 'image-overlay',
                 image: {
-                  id: 10,
-                  url: ''
+                    id: 10,
+                    url: ''
                 },
                 color: '#1F4F7B',
                 opacity: 33

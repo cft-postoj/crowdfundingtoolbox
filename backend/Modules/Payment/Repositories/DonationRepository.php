@@ -15,6 +15,13 @@ class DonationRepository
         $this->model = Donation::class;
     }
 
+    public function getById($id)
+    {
+        return $this->model
+            ::where('id', $id)
+            ->first();
+    }
+
     public function getDetail($id)
     {
         return $this->model

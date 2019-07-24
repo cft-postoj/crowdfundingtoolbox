@@ -14,11 +14,10 @@ use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
 use Modules\UserManagement\Entities\DonorStatus;
-use Modules\UserManagement\Jobs\RemoveGeneratedToken;
-use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
-use Modules\UserManagement\Entities\PortalUser;
 use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Entities\UserCookieCouple;
+use Modules\UserManagement\Jobs\RemoveGeneratedToken;
+use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Repositories\UserDetailRepository;
 use Modules\UserManagement\Repositories\UserGdprRepository;
@@ -39,6 +38,8 @@ class PortalUserService implements PortalUserServiceInterface
     private $userDetailRepository;
     private $variableSymbolService;
     private $userPaymentOptionsRepository;
+    private $userService;
+    private $trackingService;
 
 
     public function __construct(PortalUserRepository $portalUserRepository,
@@ -49,7 +50,9 @@ class PortalUserService implements PortalUserServiceInterface
                                 UserDetailRepository $userDetailRepository,
                                 UserPaymentOptionsRepository $userPaymentOptionsRepository,
                                 GeneratedUserTokenService $generatedUserTokenService,
-                                VariableSymbolService $variableSymbolService)
+                                VariableSymbolService $variableSymbolService,
+                                UserService $userService,
+                                TrackingService $trackingService)
     {
         $this->portalUserRepository = $portalUserRepository;
         $this->userRepository = $userRepository;
@@ -60,7 +63,9 @@ class PortalUserService implements PortalUserServiceInterface
         $this->usernameUsedCounter = 0;
         $this->generatedUserTokenService = $generatedUserTokenService;
         $this->variableSymbolService = $variableSymbolService;
-        $this->userPaymentOptionsRepositoryuserPaymentOptionsRepository = $userPaymentOptionsRepository;
+        $this->userPaymentOptionsRepository = $userPaymentOptionsRepository;
+        $this->userService = $userService;
+        $this->trackingService = $trackingService;
     }
 
     public function getAll()
@@ -103,7 +108,7 @@ class PortalUserService implements PortalUserServiceInterface
             $user = $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $exception) {
             return response()->json([
-                'error' =>  $exception.getMessage()
+                'error' => $exception . getMessage()
             ], Response::HTTP_BAD_REQUREST);
         }
 
@@ -164,11 +169,6 @@ class PortalUserService implements PortalUserServiceInterface
                     $this->userDetailRepository->create($user->id);
                 }
 
-                DonorStatus::create(array(
-                    'portal_user_id' => $portalUserId,
-                    'monthly_donor' => false
-                ));
-
                 return \response()->json([
                     'token' => $generatedToken,
                     'message' => 'Account was successfully created.'
@@ -195,11 +195,6 @@ class PortalUserService implements PortalUserServiceInterface
             if ($this->userDetailRepository->get($newUserId) === null) {
                 $this->userDetailRepository->create($newUserId);
             }
-
-            DonorStatus::create(array(
-                'portal_user_id' => $portalUserId,
-                'monthly_donor' => false
-            ));
 
             // TODO check this
             $this->userRepository->coupleUserWithCookie($portalUser->id, intval($request['user_cookie']));
@@ -346,40 +341,74 @@ class PortalUserService implements PortalUserServiceInterface
     }
 
 
-    public function registerDuringDonation(string $email, int $cookie): User
+    public function registerDuringDonation($showId, string $email, int $cookie, bool $terms): User
     {
-        //find user by email. if email is already in database, don't create new user but return that user
-        $userByMail = User::where('email', $email)->first();
-        if ($userByMail) {
-            return $userByMail;
-        }
         $generatedPassword = $this->generatedUserTokenService->generatePasswordToken();
 
-        $username = explode('@', $email)[0];
-        $user = User::create([
-            'email' => $email,
-            'username' => $username,
-            'password' => bcrypt($generatedPassword),
-            'generate_password_token' => $generatedPassword
-        ]);
+        $user = $this->userRepository->getByEmail($email);
+        $existInUserTable = ($user !== null) ? true : false;
+        $existInPortalUserTable = ($user === null) ? false :
+            (($this->portalUserRepository->get($user->id) !== null) ? true : false);
+        if ($existInUserTable && $existInPortalUserTable) {
+            return $user;
+        } else if ($existInUserTable && !$existInPortalUserTable) {
+            /*
+             * in this case, user is registered as backoffice user and want to register as portal user with
+             * the same email address
+             */
+            $this->portalUserRepository->create($user->id);
+            $portalUserId = $this->portalUserRepository->get($user->id)['id'];
+            $this->userGdprRepository->create($terms, $portalUserId);
 
-        $user->portalUser = PortalUser::create([
-            'user_id' => $user->id
-        ]);
 
-        $user->portalUser->userCookieCouple = $this->coupleUserIdAndUserCookie($cookie, $user['id']);
+            $generatedToken = $this->generatedUserTokenService->create($user->id);
+            $this->variableSymbolService->create($portalUserId);
+            $this->userPaymentOptionsRepository->create(array(
+                'portal_user_id' => $portalUserId,
+                'pairing_type' => 'variable_symbol'
+            ));
+            Mail::to($user->email)->send(new AutoRegistrationEmail($user->username, $generatedToken));
 
-        Mail::to($email)->send(new AutoRegistrationEmail($username, $generatedPassword));
+            if ($this->userDetailRepository->get($user->id) === null) {
+                $this->userDetailRepository->create($user->id);
+            }
+            return $this->userRepository->getWithVariableSymbol($user->id);
+        } else {
 
-        return $user->portalUser;
+            /*
+             * create new user
+             */
+            $username = explode('@', $email)[0];
+            $newUserId = $this->userRepository->create($email, $generatedPassword, $this->checkUniqueUsername($username));
+            $portalUser = $this->portalUserRepository->create($newUserId);
+            $portalUserId = $this->portalUserRepository->get($newUserId)['id'];
+            $this->userGdprRepository->create($terms, $portalUserId);
+
+
+            $generatedToken = $this->generatedUserTokenService->create($newUserId);
+            $this->variableSymbolService->create($portalUserId);
+            $this->userPaymentOptionsRepository->create(array(
+                'portal_user_id' => $portalUserId,
+                'pairing_type' => 'variable_symbol'
+            ));
+            $user = $this->userRepository->getWithVariableSymbol($newUserId);
+            Mail::to($user->email)->send(new RegisterEmail($generatedToken));
+            if ($this->userDetailRepository->get($newUserId) === null) {
+                $this->userDetailRepository->create($newUserId);
+            }
+
+            // get userCookie by show_id
+            $trackingShow =  $this->trackingService->getTrackingShowById($showId);
+            // TODO check this
+            $this->couplePortalUserIdAndUserCookie($portalUser->id, $trackingShow->visit->user_cookie);
+            $user['secret'] = \Tymon\JWTAuth\Facades\JWTAuth::fromUser($user);
+            return $user;
+        }
     }
 
-    public function coupleUserIdAndUserCookie($userId, $cookieId): UserCookieCouple
+    public function couplePortalUserIdAndUserCookie($portalUserId, $cookieId): UserCookieCouple
     {
-        return UserCookieCouple::create([
-            'user_cookie_id' => $cookieId,
-            'portal_user_id' => $userId
-        ]);
+       return $this->userRepository->coupleUserWithCookie($portalUserId, $cookieId);
     }
 
     public function getDonationsByUser($userId)

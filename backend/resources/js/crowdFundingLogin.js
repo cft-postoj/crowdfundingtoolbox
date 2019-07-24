@@ -19,7 +19,7 @@ function loginAction() {
         let data = {
             'email': document.querySelector('form[name="cft-login"] input[name="cft-email"]').value,
             'password': document.querySelector('form[name="cft-login"] input[name="cft-password"]').value,
-            'user_cookie' : getCookie("cr0wdFundingToolbox-user_cookie")
+            'user_cookie' : getCookie("cr0wdfundingToolbox-user_cookie")
         };
         let xhttp = new XMLHttpRequest();
         xhttp.open('POST', apiUrl + 'login', true);
