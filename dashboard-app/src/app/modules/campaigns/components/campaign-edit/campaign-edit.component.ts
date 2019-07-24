@@ -91,7 +91,6 @@ export class CampaignEditComponent  implements OnInit {
                 : this.route.parent.snapshot.paramMap.get('id');
             this.campaignService.getCampaignById(this.id).subscribe((result: any) => {
                 this.campaign = result.data;
-                this.campaignService.writeDatesAsJson(this.campaign);
                 this.loading = false;
                 this.widgetService.getListByCampaignId(this.id).subscribe(result => {
                     this.widgets = result.data;
@@ -114,6 +113,7 @@ export class CampaignEditComponent  implements OnInit {
 
     handleSubmit() {
         this.submitted = true;
+        console.log(this.campaign)
         if (this.validInput()) {
             this.saving = true;
             this.loading = true;

@@ -1,6 +1,6 @@
-@import "../../../../../sass/variables";
-@import "../../../../../sass/classes";
-@import "../../../../../sass/mixins";
+@import 'variables';
+@import 'classes';
+@import 'mixins';
 
 .list-items--item {
     transition: 0.3s all;
@@ -19,6 +19,13 @@
     .pointer {
         &:hover {
             cursor: pointer;
+        }
+    }
+    ::ng-deep .targeting {
+        cursor: pointer;
+        @include transitionSingle(.3s ease);
+        &:hover {
+            color: $azure;
         }
     }
 }

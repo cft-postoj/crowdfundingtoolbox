@@ -1,13 +1,13 @@
 @extends('emails.layout')
-@section('title', 'Ďakujeme za registráciu.')
+@section('title', 'Thank you for register')
 
 @section('body')
-    Dobrý deň,<br/>radi by sme Vám poďakovali za registráciu na portáli www.postoj.sk.<br/>
+    Hello,<br/>we would like to thank you for registering at www.postoj.sk.<br/>
     <br/>
-    Prosím, kliknite na nasledujúce tlačidlo, vyplňte všetky Vaše kontaktné údaje a získajte darček. Odkaz je platný 1 hodinu od doručenia. <br/>
+    Please click on the following button, fill in all your contact details and get a gift. The link is valid for 1 hour from delivery. <br/>
 @endsection
 
 @section('displayButton', 'table')
 @section('buttonUrl', $portal_url . '/moj-ucet?generatedResetToken=' . $token . '&loggedIn=true')
-@section('buttonText', 'Môj účet')
-@section('buttonAlternative', 'V prípade, že nemôžete kliknúť na tlačidlo, skopírujte si nasledujúci link do prehliadača manuálne: ')
+@section('buttonText', 'My account')
+@section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')

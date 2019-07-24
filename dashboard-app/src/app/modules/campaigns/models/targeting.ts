@@ -70,11 +70,11 @@ export class Targeting {
     registration: any  = {
         before: {
             active: false,
-            date:  { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()},
+            date:  '',
         },
         after: {
             active: false,
-            date: { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()}
+            date: ''
         }
     }
     url = {
@@ -83,5 +83,5 @@ export class Targeting {
             {id: 0, path: 'https://www.postoj.sk'},
             {id: 0, path: 'https://www.postoj.sk/politika'}
             ]
-    }
+    };
 }

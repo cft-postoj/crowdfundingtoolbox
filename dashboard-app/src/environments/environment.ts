@@ -50,6 +50,7 @@ export const environment = {
     statisticsUrl: '/statistics/donation-and-donor-total',
     articlesStatistics: '/statistics/articles',
     campagignsStatistics: '/statistics/campaigns',
+    campaignStats: '/statistics/campaign',
 
     campaignTargeting: '/campaign-targeting',
 

@@ -24,6 +24,8 @@ export class TableStatsComponent implements OnInit {
     public loading: boolean = false;
     public statistics: any = [];
     public sortedStats: any = [];
+    @Input()
+    public showDate: boolean = true;
     @Input() public dataType;
 
     config = {
@@ -112,7 +114,7 @@ export class TableStatsComponent implements OnInit {
         });
         this.model.columns.push({
             value_name: 'duration',
-            description: 'Duration',
+            description: 'Created at',
             type: 'text',
             filter: new Filter()
         });

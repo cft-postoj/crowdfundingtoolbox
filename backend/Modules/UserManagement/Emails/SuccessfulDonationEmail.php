@@ -7,20 +7,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RegisterEmail extends Mailable
+class SuccessfulDonationEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $token;
+    private $username;
+    private $emailToken;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($username)
     {
-        $this->token = $token;
+        $this->username = $username;
     }
 
     /**
@@ -30,8 +30,8 @@ class RegisterEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Registration on www.postoj.sk')
+        return $this->subject('We got payment. Thank you!')
             ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
-            ->view('emails.register');
+            ->view('emails.successfulDonation', ['username' => $this->username]);
     }
 }

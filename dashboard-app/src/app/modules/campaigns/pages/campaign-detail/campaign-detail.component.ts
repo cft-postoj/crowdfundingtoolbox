@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {Component, Input, OnDestroy, OnInit, Output, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Subscription} from "rxjs";
@@ -12,6 +12,7 @@ import {ModalComponent} from "../../../core/parts/atoms";
 import {CampaignListComponent} from "../campaign-list/campaign-list.component";
 import {UserService} from '../../../user-management/services';
 import moment from 'moment/src/moment';
+import {StatisticsService} from '../../../statistics/services/statistics.service';
 
 @Component({
     templateUrl: './campaign-detail.component.html',
@@ -39,15 +40,19 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     previewOpen;
     deviceType = devices.desktop.name;
     widgetForPreview: Widget;
+    @Output()
+    public campaignStats: any = {};
     public campaignDateSelected: any = {
         start: moment(),
         end: moment()
     };
     public environment = environment;
 
+    public statsPeriod: string = 'total';
+
     constructor(private router: Router, private route: ActivatedRoute, private campaignService: CampaignService,
                 private widgetService: WidgetService, private userService: UserService, private _modalService: NgbModal,
-                private componentComService: ComponentCommunicationService) {
+                private componentComService: ComponentCommunicationService, private statisticsService: StatisticsService) {
         this.isActiveOverlay = false;
         this.pageTitle = 'Campaign name From API';
     }
@@ -59,7 +64,8 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
                 this.id = params["id"];
                 this.getData();
             }
-        )
+        );
+        this.getCampaignStats(null);
         this.changeSubscription = this.componentComService.alert.subscribe(message => {
             if (!!message) {
                 this.alertOpen = true;
@@ -74,6 +80,17 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.changeSubscription.unsubscribe();
+    }
+
+    getCampaignStats(event) {
+        this.loading = true;
+        if (event !== null) {
+            this.statsPeriod = event;
+        }
+        this.statisticsService.campaignStats(parseInt(this.id, 10), this.statsPeriod).subscribe((data) => {
+            this.campaignStats = data;
+            this.loading = false;
+        });
     }
 
     getData() {

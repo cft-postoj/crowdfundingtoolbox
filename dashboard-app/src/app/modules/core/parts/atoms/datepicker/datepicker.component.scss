@@ -19,6 +19,7 @@
     width: 500px;
     margin-left: -250px;
     margin-top: 15px;
+    z-index: 99;
     td.active, .btn {
       background-color: $azure;
       &.today {

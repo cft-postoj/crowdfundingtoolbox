@@ -120,106 +120,285 @@ class GeneralStatsService
                 $article_widget_amount = 0;
                 $custom_visit = 0;
                 $custom_amount = 0;
-                if (!in_array($campaign->widget->campaign->id, $ids)) {
-                    array_push($ids, $campaign->widget->campaign->id);
-                    foreach ($campaigns as $c) {
-                        if ($campaign->widget->campaign->id === $c->widget->campaign->id) {
-                            $visits++;
-                            switch ($c->widget->widget_type_id) {
-                                case 1: // landing page
-                                    $langing_page_visit++;
-                                    break;
-                                case 2: // sidebar
-                                    $sidebar_visit++;
-                                    break;
-                                case 3: // leaderboard
-                                    $leaderboard_visit++;
-                                    break;
-                                case 4: // popup
-                                    $popup_visit++;
-                                    break;
-                                case 5: // fixed
-                                    $fixed_visit++;
-                                    break;
-                                case 6: // locked
-                                    $locked_visit++;
-                                    break;
-                                case 7: // article widget
-                                    $article_widget_visit++;
-                                    break;
-                                case 9: // custom widget
-                                    $custom_visit++;
-                                    break;
-                            }
-                            if ($c->donation !== null) {
-                                if ($c->donation->payment_id !== null) {
-                                    $amount_sum += $c->donation->amount;
-                                    switch ($c->widget->widget_type_id) {
-                                        case 1: // landing page
-                                            $langing_page_amount += $c->donation->amount;
-                                            break;
-                                        case 2: // sidebar
-                                            $sidebar_amount += $c->donation->amount;
-                                            break;
-                                        case 3: // leaderboard
-                                            $leaderboard_amount += $c->donation->amount;
-                                            break;
-                                        case 4: // popup
-                                            $popup_amount += $c->donation->amount;
-                                            break;
-                                        case 5: // fixed
-                                            $fixed_amount += $c->donation->amount;
-                                            break;
-                                        case 6: // locked
-                                            $locked_amount += $c->donation->amount;
-                                            break;
-                                        case 7: // article widget
-                                            $article_widget_amount += $c->donation->amount;
-                                            break;
-                                        case 9: // custom widget
-                                            $custom_amount += $c->donation->amount;
-                                            break;
-                                    }
+
+                foreach ($campaign->widget as $w) {
+                    $visits += sizeof($w->show);
+                    switch ($w->widget_type_id) {
+                        case 1: // landing page
+                            $langing_page_visit = sizeof($w->show);
+                            break;
+                        case 2: // sidebar
+                            $sidebar_visit = sizeof($w->show);
+                            break;
+                        case 3: // leaderboard
+                            $leaderboard_visit = sizeof($w->show);
+                            break;
+                        case 4: // popup
+                            $popup_visit = sizeof($w->show);
+                            break;
+                        case 5: // fixed
+                            $fixed_visit = sizeof($w->show);
+                            break;
+                        case 6: // locked
+                            $locked_visit = sizeof($w->show);
+                            break;
+                        case 7: // article widget
+                            $article_widget_visit = sizeof($w->show);
+                            break;
+                        case 9: // custom widget
+                            $custom_visit = sizeof($w->show);
+                            break;
+                    }
+                    if ($w->donation != null) {
+                        foreach ($w->donation as $don) {
+                            if ($don->payment_id !== null) {
+                                $amount_sum += $don->amount;
+                                switch ($w->widget_type_id) {
+                                    case 1: // landing page
+                                        $langing_page_amount += $don->amount;
+                                        break;
+                                    case 2: // sidebar
+                                        $sidebar_amount += $don->amount;
+                                        break;
+                                    case 3: // leaderboard
+                                        $leaderboard_amount += $don->amount;
+                                        break;
+                                    case 4: // popup
+                                        $popup_amount += $don->amount;
+                                        break;
+                                    case 5: // fixed
+                                        $fixed_amount += $don->amount;
+                                        break;
+                                    case 6: // locked
+                                        $locked_amount += $don->amount;
+                                        break;
+                                    case 7: // article widget
+                                        $article_widget_amount += $don->amount;
+                                        break;
+                                    case 9: // custom widget
+                                        $custom_amount += $don->amount;
+                                        break;
                                 }
                             }
                         }
                     }
 
-                    $row = array(
-                        'id' => $campaign->widget->campaign->id,
-                        'title' => $campaign->widget->campaign->name,
-                        'created_at' => $campaign->widget->campaign->created_at,
-                        'visits' => $visits,
-                        'amount' => $amount_sum,
-                        'landing_page' => array(
-                            'visit' => $langing_page_visit,
-                            'amount' => $langing_page_amount
-                        ), 'leaderboard' => array(
-                            'visit' => $leaderboard_visit,
-                            'amount' => $leaderboard_amount
-                        ), 'sidebar' => array(
-                            'visit' => $sidebar_visit,
-                            'amount' => $sidebar_amount
-                        ), 'article_widget' => array(
-                            'visit' => $article_widget_visit,
-                            'amount' => $article_widget_amount
-                        ), 'locked_article' => array(
-                            'visit' => $locked_visit,
-                            'amount' => $locked_amount
-                        ), 'popup' => array(
-                            'visit' => $popup_visit,
-                            'amount' => $popup_amount
-                        ), 'fixed' => array(
-                            'visit' => $fixed_visit,
-                            'amount' => $fixed_amount
-                        ), 'custom' => array(
-                            'visit' => $custom_visit,
-                            'amount' => $custom_amount
-                        )
-                    );
-                    array_push($result, $row);
+                }
+                $row = array(
+                    'id' => $campaign->id,
+                    'title' => $campaign->name,
+                    'created_at' => $campaign->created_at,
+                    'visits' => $visits,
+                    'amount' => $amount_sum,
+                    'landing_page' => array(
+                        'visit' => $langing_page_visit,
+                        'amount' => $langing_page_amount
+                    ), 'leaderboard' => array(
+                        'visit' => $leaderboard_visit,
+                        'amount' => $leaderboard_amount
+                    ), 'sidebar' => array(
+                        'visit' => $sidebar_visit,
+                        'amount' => $sidebar_amount
+                    ), 'article_widget' => array(
+                        'visit' => $article_widget_visit,
+                        'amount' => $article_widget_amount
+                    ), 'locked_article' => array(
+                        'visit' => $locked_visit,
+                        'amount' => $locked_amount
+                    ), 'popup' => array(
+                        'visit' => $popup_visit,
+                        'amount' => $popup_amount
+                    ), 'fixed' => array(
+                        'visit' => $fixed_visit,
+                        'amount' => $fixed_amount
+                    ), 'custom' => array(
+                        'visit' => $custom_visit,
+                        'amount' => $custom_amount
+                    )
+                );
+                array_push($result, $row);
+            }
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], 400);
+        }
+        return $result;
+    }
+
+    public function getCampaignStatsById($period, $id)
+    {
+
+        try {
+            $from = Carbon::createFromFormat('Y-m-d H:i:s', '2015-01-01 0:00:00');
+            $to = Carbon::now();
+
+            $amount_sum = 0;
+            $visits = 0;
+            $donation_count = 0;
+            $langing_page_visit = 0;
+            $langing_page_amount = 0;
+            $landing_page_donation_count = 0;
+            $sidebar_visit = 0;
+            $sidebar_amount = 0;
+            $sidebar_donation_count = 0;
+            $leaderboard_visit = 0;
+            $leaderboard_amount = 0;
+            $leaderboard_donation_count = 0;
+            $popup_visit = 0;
+            $popup_amount = 0;
+            $popup_donation_count = 0;
+            $fixed_visit = 0;
+            $fixed_amount = 0;
+            $fixed_donation_count = 0;
+            $locked_visit = 0;
+            $locked_amount = 0;
+            $locked_donation_count = 0;
+            $article_widget_visit = 0;
+            $article_widget_amount = 0;
+            $article_widget_donation_count = 0;
+            $custom_visit = 0;
+            $custom_amount = 0;
+            $custom_donation_count = 0;
+
+            switch ($period) {
+                case 'year':
+                    $from = Carbon::now()->subDays(365);
+                    break;
+                case 'month':
+                    $from = Carbon::now()->subDays(30);
+                    break;
+                case 'week':
+                    $from = Carbon::now()->subDays(7);
+                    break;
+                case 'day':
+                    $from = Carbon::now()->subDays(1);
+                    break;
+            }
+
+            $campaign = $this->generalStatsRepository->campaignStats($from, $to, $id);
+            if ($campaign !== null){
+                foreach ($campaign->widget as $w) {
+                    $visits += sizeof($w->show);
+                    switch ($w->widget_type_id) {
+                        case 1: // landing page
+                            $langing_page_visit = sizeof($w->show);
+                            break;
+                        case 2: // sidebar
+                            $sidebar_visit = sizeof($w->show);
+                            break;
+                        case 3: // leaderboard
+                            $leaderboard_visit = sizeof($w->show);
+                            break;
+                        case 4: // popup
+                            $popup_visit = sizeof($w->show);
+                            break;
+                        case 5: // fixed
+                            $fixed_visit = sizeof($w->show);
+                            break;
+                        case 6: // locked
+                            $locked_visit = sizeof($w->show);
+                            break;
+                        case 7: // article widget
+                            $article_widget_visit = sizeof($w->show);
+                            break;
+                        case 9: // custom widget
+                            $custom_visit = sizeof($w->show);
+                            break;
+                    }
+
+                    if ($w->donation != null) {
+                        foreach ($w->donation as $don) {
+                            if ($don->payment_id !== null) {
+                                $donation_count++;
+                                $amount_sum += $don->amount;
+                                switch ($w->widget_type_id) {
+                                    case 1: // landing page
+                                        $langing_page_amount += $don->amount;
+                                        $landing_page_donation_count++;
+                                        break;
+                                    case 2: // sidebar
+                                        $sidebar_amount += $don->amount;
+                                        $sidebar_donation_count++;
+                                        break;
+                                    case 3: // leaderboard
+                                        $leaderboard_amount += $don->amount;
+                                        $leaderboard_donation_count++;
+                                        break;
+                                    case 4: // popup
+                                        $popup_amount += $don->amount;
+                                        $popup_donation_count++;
+                                        break;
+                                    case 5: // fixed
+                                        $fixed_amount += $don->amount;
+                                        $fixed_donation_count++;
+                                        break;
+                                    case 6: // locked
+                                        $locked_amount += $don->amount;
+                                        $locked_donation_count++;
+                                        break;
+                                    case 7: // article widget
+                                        $article_widget_amount += $don->amount;
+                                        $article_widget_donation_count++;
+                                        break;
+                                    case 9: // custom widget
+                                        $custom_amount += $don->amount;
+                                        $custom_donation_count++;
+                                        break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
+            $result = array(
+              'amount_sum' => $amount_sum,
+              'visits' => $visits,
+              'engagement' => ($visits == 0) ? 0 : number_format((float)($donation_count / $visits * 100), 2, ',', ' '),
+                'landing_page' => array(
+                    'amount' => $langing_page_amount,
+                    'visits' => $langing_page_visit,
+                    'donations_count' => $landing_page_donation_count,
+                    'engagement' => ($langing_page_visit == 0) ? 0 : number_format((float)($landing_page_donation_count / $langing_page_visit * 100), 2, ',', ' ')
+                ), 'sidebar' => array(
+                    'amount' => $sidebar_amount,
+                    'visits' => $sidebar_visit,
+                    'donations_count' => $sidebar_donation_count,
+                    'engagement' => ($sidebar_visit == 0) ? 0 : number_format((float)($sidebar_donation_count / $sidebar_visit * 100), 2, ',', ' ')
+                ), 'leaderboard' => array(
+                    'amount' => $leaderboard_amount,
+                    'visits' => $leaderboard_visit,
+                    'donations_count' => $leaderboard_donation_count,
+                    'engagement' => ($leaderboard_visit == 0) ? 0 : number_format((float)($leaderboard_donation_count / $leaderboard_visit * 100), 2, ',', ' ')
+                ), 'popup' => array(
+                    'amount' => $popup_amount,
+                    'visits' => $popup_visit,
+                    'donations_count' => $popup_donation_count,
+                    'engagement' => ($popup_visit == 0) ? 0 : number_format((float)($popup_donation_count / $popup_visit * 100), 2, ',', ' ')
+                ), 'fixed' => array(
+                    'amount' => $fixed_amount,
+                    'visits' => $fixed_visit,
+                    'donations_count' => $fixed_donation_count,
+                    'engagement' => ($fixed_visit == 0) ? 0 : number_format((float)($fixed_donation_count / $fixed_visit * 100), 2, ',', ' ')
+                ), 'locked' => array(
+                    'amount' => $locked_amount,
+                    'visits' => $locked_visit,
+                    'donations_count' => $locked_donation_count,
+                    'engagement' => ($locked_visit == 0) ? 0 : number_format((float)($locked_donation_count / $locked_visit * 100), 2, ',', ' ')
+                ), 'article_widget' => array(
+                    'amount' => $article_widget_amount,
+                    'visits' => $article_widget_visit,
+                    'donations_count' => $article_widget_donation_count,
+                    'engagement' => ($article_widget_visit == 0) ? 0 : number_format((float)($article_widget_donation_count / $article_widget_visit * 100), 2, ',', ' ')
+                ), 'custom' => array(
+                    'amount' => $custom_amount,
+                    'visits' => $custom_visit,
+                    'donations_count' => $custom_donation_count,
+                    'engagement' => ($custom_visit == 0) ? 0 : number_format((float)($custom_donation_count / $custom_visit * 100), 2, ',', ' ')
+                )
+            );
+
         } catch (\Exception $exception) {
             return response()->json([
                 'error' => $exception->getMessage()

@@ -13,6 +13,7 @@ use Modules\Payment\Services\VariableSymbolService;
 use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
+use Modules\UserManagement\Emails\AutoRegistrationEmail;
 use Modules\UserManagement\Entities\DonorStatus;
 use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Entities\UserCookieCouple;

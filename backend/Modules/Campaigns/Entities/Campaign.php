@@ -22,4 +22,8 @@ class Campaign extends Model
     public function promote() {
         return $this->hasOne('\Modules\Campaigns\Entities\CampaignPromote');
     }
+
+    public function widget() {
+        return $this->hasMany('\Modules\Campaigns\Entities\Widget');
+    }
 }

@@ -1,13 +1,13 @@
 @extends('emails.layout')
-@section('title', 'ZABUDNUTÉ HESLO')
+@section('title', 'Forgotten password')
 
 @section('body')
-    Dobrý deň,<br/>zaznamenali sme požiadavku na reset hesla pre Vašu e-mailovú adresu na portáli www.postoj.sk.<br/>
+    Hello,<br/>we have noticed a password reset request for your e-mail address at www.postoj.sk.<br/>
     <br/>
-    Pre reset hesla prosím kliknite na nasledujúce tlačidlo, <b>odkaz je platný 1 hodinu</b>: <br/>
+    Please click the following button to reset your password, <b>the link is valid for 1 hour</b>: <br/>
 @endsection
 
 @section('displayButton', 'table')
 @section('buttonUrl', $portal_url . '/moj-ucet#ucet?generatedResetToken=' . $token)
-@section('buttonText', 'Reset hesla')
-@section('buttonAlternative', 'V prípade, že nemôžete kliknúť na tlačidlo, skopírujte si nasledujúci link do prehliadača manuálne: ')
+@section('buttonText', 'Reset your password')
+@section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')

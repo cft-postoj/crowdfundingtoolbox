@@ -36,6 +36,8 @@ export class CampaignSettingsComponent implements OnInit {
     public dateTo: { day: number, year: number, month: number };
     public startDate: Moment;
     public endDate: Moment;
+    public registrationBeforeDate: Moment;
+    public registrationAfterDate: Moment;
     public startDateString: string;
     public endDateString: string;
     public campaignNameLength: number = 0;
@@ -59,6 +61,15 @@ export class CampaignSettingsComponent implements OnInit {
         start: moment(),
         end: moment()
     };
+
+    public targetingRegistrationBeforeDateFormat: any = {
+        start: moment(),
+        end: moment()
+    }
+    public targetingRegistrationAfterDateFormat: any = {
+        start: moment(),
+        end: moment()
+    }
 
     private changeUsersCountSubscribtion: Subscription;
 
@@ -107,6 +118,10 @@ export class CampaignSettingsComponent implements OnInit {
             moment() : moment(this.campaign.promote_settings.start_date_value);
         this.endDate = (this.campaign.promote_settings.end_date_value === '') ?
             moment() : moment(this.campaign.promote_settings.end_date_value);
+        this.registrationBeforeDate = (this.campaign.targeting.registration.before.date === '') ?
+            moment() : moment(this.campaign.targeting.registration.before.date);
+        this.registrationBeforeDate = (this.campaign.targeting.registration.after.date === '') ?
+            moment() : moment(this.campaign.targeting.registration.after.date);
         // console.log(this.endDate)
         setTimeout(() => {
             this.startDateFormat = {
@@ -116,6 +131,14 @@ export class CampaignSettingsComponent implements OnInit {
             this.endDateFormat = {
                 start: this.endDate,
                 end: this.endDate
+            };
+            this.targetingRegistrationBeforeDateFormat = {
+                start: this.registrationBeforeDate,
+                end: this.registrationBeforeDate
+            };
+            this.targetingRegistrationAfterDateFormat = {
+                start: this.registrationAfterDate,
+                end: this.registrationAfterDate
             };
         }, 500);
 
@@ -216,6 +239,7 @@ export class CampaignSettingsComponent implements OnInit {
         this.changeUsersCountSubscribtion = this.campaignService.getUsersTargetingCount(this.campaign.targeting).subscribe((data) => {
             this.targetingUsersCountEmit.emit(data);
             this.targetingDataEmit.emit(this.campaign.targeting);
+            this.campaignEmit.emit(this.campaign);
             this.targetingUsersLoadingEmit.emit(false);
         });
     }
@@ -233,5 +257,14 @@ export class CampaignSettingsComponent implements OnInit {
         this.campaign.promote_settings.end_date_value = endDate;
         console.log(this.campaign)
         this.campaignEmit.emit(this.campaign);
+    }
+
+    public changeTargetingRegistrationAfterDate(dateFrom) {
+        this.campaign.targeting.registration.after.date = dateFrom;
+        this.changeUsersCount();
+    }
+    public changeTargetingRegistrationBeforeDate(dateTo) {
+        this.campaign.targeting.registration.before.date = dateTo;
+        this.changeUsersCount();
     }
 }
