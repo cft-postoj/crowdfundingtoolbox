@@ -1,4 +1,4 @@
-<tr *ngFor="let item of items" class="list-items--item" [ngClass]="{'blur':!item.active}">
+<tr *ngFor="let item of items; let i = index;" class="list-items--item" [ngClass]="{'blur':!item.active}">
     <td>
         <app-switcher [(checked)]="item.active" (checkedChange)="emitActive(item)" [id]="item.id"></app-switcher>
     </td>
@@ -10,17 +10,21 @@
             {{item.description}}
         </span>
     </td>
-    <td>
-        {{item.target}}
+    <td (click)="editCampaign(item.id)" class="targeting">
+        Show actual campaign targeting
     </td>
     <td>
-        {{item.visits}}
+        {{getCampaignsVisits(item.widget)}}
     </td>
     <td>
-        {{item.funds}} €
+        {{getCampaignFunds(item.widget)}} €
     </td>
     <td>
-        {{item.date_to}}
+        {{helperService.formatDate(item.promote.start_date_value, 'DD.MM.YYYY')}}
+    </td>
+    <td>
+        {{(item.promote.is_end_date) ? helperService.formatDate(item.promote.end_date_value, 'DD.MM.YYYY')
+        : item.promote.donation_goal_value + ' €'}}
     </td>
     <td class="text-right">
     <span title="Preview" class="list-items--item--action" (click)="openPreview(item.id)">

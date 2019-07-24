@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Targeting} from '../../models';
 import targetingModalStrings from '../../../../translations/en/campaing-tracking-modal.json';
+import {HelpersService} from '../../../core/services/helpers.service';
 
 @Component({
     selector: 'app-target-modal',
@@ -25,7 +26,7 @@ export class TargetModalComponent implements OnInit, OnChanges {
 
     public targetingText: string = '';
 
-    constructor() {
+    constructor(private helperService: HelpersService) {
     }
 
     ngOnInit() {
@@ -137,13 +138,11 @@ export class TargetModalComponent implements OnInit, OnChanges {
             if (userRegistration.before.active || userRegistration.after.active) {
                 targetingSubtext += '<u>' + targetingModalStrings.targetingRegistrationDateTitle + '</u><ul>';
                 if (userRegistration.before.active) {
-                    const beforeDate = userRegistration.before.date.day + '.' + userRegistration.before.date.month + '.' +
-                        userRegistration.before.date.year;
+                    const beforeDate = this.helperService.formatDate(userRegistration.before.date, 'DD.MM.YYYY');
                     targetingSubtext += '<li>' + targetingModalStrings.registrationBefore + ' <b>' + beforeDate + '</b></li>';
                 }
                 if (userRegistration.after.active) {
-                    const afterDate = userRegistration.after.date.day + '.' + userRegistration.after.date.month + '.' +
-                        userRegistration.after.date.year;
+                    const afterDate = this.helperService.formatDate(userRegistration.after.date, 'DD.MM.YYYY');
                     targetingSubtext += '<li>' + targetingModalStrings.registrationAfter + ' <b>' + afterDate + '</b></li>';
                 }
                 targetingSubtext += '</ul>';

@@ -7,6 +7,7 @@ import {CampaignService} from '../../services';
 import {ComponentCommunicationService} from '../../../core/services';
 import {ModalComponent} from '../../../core/parts/atoms';
 import {Routing} from '../../../../constants/config.constants';
+import {HelpersService} from '../../../core/services/helpers.service';
 
 @Component({
     /* tslint:disable */ // selector must be defined in this shape (because encapsulated template in tbody)
@@ -32,16 +33,23 @@ export class CampaignListItemComponent {
     public campaign: Campaign = new Campaign();
     public changeSubscription: Subscription;
 
+    public targetedUsers: number = 0;
+    public targetedVisitors: number = 0;
+
+    public campaignTargeting: any = [];
+
     constructor(private _modalService: NgbModal,
                 private campaignService: CampaignService,
                 private router: Router,
-                private componentComService: ComponentCommunicationService) {}
+                public helperService: HelpersService,
+                private componentComService: ComponentCommunicationService) {
+    }
 
     editCampaign(id) {
         this.emitter.emit(id);
     }
 
-    emitActive(campaign){
+    emitActive(campaign) {
         this.activeEmitter.emit(campaign);
     }
 
@@ -49,7 +57,7 @@ export class CampaignListItemComponent {
         this.previewEmitter.emit(id);
     }
 
-    openDetail(id){
+    openDetail(id) {
         this.itemDetailEmitter.emit(id);
     }
 
@@ -71,6 +79,27 @@ export class CampaignListItemComponent {
         });
     }
 
+    getCampaignsVisits(widgets) {
+        let result = 0;
+        widgets.map((widget, key) => {
+            if (widget.show !== null) {
+                result += widget.show.length;
+            }
+        });
+        return result;
+    }
 
-
+    getCampaignFunds(widgets) {
+        let amount = 0;
+        widgets.map((widget, key) => {
+           if (widget.donation !== null) {
+               widget.donation.map((don, k) => {
+                   if (don.payment_id !== null) {
+                       amount += don.amount;
+                   }
+               });
+           }
+        });
+        return amount;
+    }
 }

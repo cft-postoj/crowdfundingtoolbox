@@ -436,11 +436,10 @@
                             <div class="col-5">Registration after:</div>
                             <div class="col-5">
                                 <app-datepicker
-                                        [(date)]="campaign.targeting.registration.after.date"
-                                        [maxDate]="campaign.targeting.registration.before.active ? campaign.targeting.registration.before.date : null"
-                                        [type]="'start'"
-                                        [disabled]="!campaign.targeting.registration.after.active"
-                                        (dateChange)="changeUsersCount()">
+                                        [selected]="targetingRegistrationAfterDateFormat"
+                                        (dateChange)="changeTargetingRegistrationAfterDate($event.start)"
+                                        [singleDatePicker]="true"
+                                        [type]="'start'">
                                 </app-datepicker>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'target_after'"
@@ -452,11 +451,10 @@
                             <div class="col-5">Registration before:</div>
                             <div class="col-5">
                                 <app-datepicker
-                                        [(date)]="campaign.targeting.registration.before.date"
-                                        [minDate]="campaign.targeting.registration.after.active ? campaign.targeting.registration.after.date : null"
-                                        [type]="'end'"
-                                        [disabled]="!campaign.targeting.registration.before.active"
-                                        (dateChange)="changeUsersCount()">
+                                        [selected]="targetingRegistrationBeforeDateFormat"
+                                        (dateChange)="changeTargetingRegistrationBeforeDate($event.start)"
+                                        [singleDatePicker]="true"
+                                        [type]="'start'">
                                 </app-datepicker>
                             </div>
                             <app-switcher class="col-2 text-right" [id]="'target_before'"

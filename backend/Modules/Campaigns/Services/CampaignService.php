@@ -127,7 +127,14 @@ class CampaignService implements CampaignServiceInterface
      */
     public function getAll()
     {
-        return Campaign::orderBy('active', 'desc')->orderBy('updated_at', 'desc')->get();
+        return Campaign::orderBy('active', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->with('targeting')
+            ->with('promote')
+            ->with('widget')
+            ->with('widget.show')
+            ->with('widget.donation')
+            ->get();
     }
 
     /**

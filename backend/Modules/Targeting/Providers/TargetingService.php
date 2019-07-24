@@ -68,8 +68,8 @@ class TargetingService
     public function updateTargetingFromRequest($campaignId, $requestTargeting)
     {
         try {
-            $targeting = Targeting::with('urls')->where('campaign_id', $campaignId)->first();
-            $targeting->update([
+            //dd($requestTargeting['signed_status']['signed']['active']);
+            Targeting::where('campaign_id', $campaignId)->update([
                 'signed' => $requestTargeting['signed_status']['signed']['active'],
                 'not_signed' => $requestTargeting['signed_status']['not_signed']['active'],
                 'one_time' => $requestTargeting['support']['one_time']['active'],
@@ -77,7 +77,6 @@ class TargetingService
                 'one_time_older_than_value' => $requestTargeting['support']['one_time']['older_than']['value'],
                 'one_time_not_older_than' => $requestTargeting['support']['one_time']['not_older_than']['active'],
                 'one_time_not_older_than_value' => $requestTargeting['support']['one_time']['not_older_than']['value'],
-                'one_time' => $requestTargeting['support']['one_time']['active'],
                 'one_time_min' => $requestTargeting['support']['one_time']['min']['active'],
                 'one_time_min_value' => $requestTargeting['support']['one_time']['min']['value'],
                 'one_time_max' => $requestTargeting['support']['one_time']['max']['active'],
@@ -105,9 +104,10 @@ class TargetingService
                 'registration_before_value' => $requestTargeting['registration']['before']['date'],
                 'registration_after' => $requestTargeting['registration']['after']['active'],
                 'registration_after_value' => $requestTargeting['registration']['after']['date'],
-                'url_specific' => $requestTargeting['url']['specific']
+                'url_specific' => ($requestTargeting['url']['specific'] == null) ? false : $requestTargeting['url']['specific']
             ]);
 
+            $targeting = Targeting::with('urls')->where('campaign_id', $campaignId)->first();
             //delete target urls that are not in new request
             foreach ($targeting->urls as $databaseUrl) {
                 $shouldBeRemoved = true;

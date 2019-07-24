@@ -33,4 +33,14 @@ class Widget extends Model
         return $this->belongsTo('\Modules\Campaigns\Entities\WidgetType');
     }
 
+    public function show()
+    {
+        return $this->hasMany('\Modules\UserManagement\Entities\TrackingShow');
+    }
+
+    public function donation()
+    {
+        return $this->hasMany('\Modules\Payment\Entities\Donation');
+    }
+
 }
