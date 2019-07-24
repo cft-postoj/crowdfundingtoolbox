@@ -236,6 +236,15 @@ export class Widget {
                         }
                     }
                 },
+                third_step: {
+                    title: {
+                        text: 'Thank you for your support'
+                    },
+                    cta: {
+                        description: 'To get all rewards please  fill your personal data in My profile',
+                        text: 'My profile'
+                    }
+                },
                 terms: {
                     text: 'I agree to processing of  personal data and receiving newsletters'
                 }
@@ -641,6 +650,15 @@ export class Widget {
                         }
                     }
                 },
+                third_step: {
+                    title: {
+                        text: 'Thank you for your support'
+                    },
+                    cta: {
+                        description: 'To get all rewards please  fill your personal data in My profile',
+                        text: 'My profile'
+                    }
+                },
                 terms: {
                     text: 'I agree to processing of  personal data and receiving newsletters'
                 }
@@ -1025,6 +1043,15 @@ export class Widget {
                         payBySquare: {
                             text: 'Done'
                         }
+                    }
+                },
+                third_step: {
+                    title: {
+                        text: 'Thank you for your support'
+                    },
+                    cta: {
+                        description: 'To get all rewards please  fill your personal data in My profile',
+                        text: 'My profile'
                     }
                 },
                 terms: {

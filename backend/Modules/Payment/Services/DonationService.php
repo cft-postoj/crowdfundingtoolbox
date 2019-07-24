@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Modules\Payment\Entities\Donation;
 use Modules\Payment\Entities\DonationInitialize;
 use Modules\Payment\Repositories\DonationRepository;
-use Modules\UserManagement\Entities\PortalUser;
+use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\TrackingService;
@@ -47,13 +47,13 @@ class DonationService
         $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
         $bankButtons = $this->bankButtonService->getBankButtons();
         $qrCode = $this->payBySquareService->getQRCodeFromData('0001', '20', $data['frequency']);
-        if (strpos($url, env('CFT_URL')) == 0) {
+        if (strpos($url, env('CFT_URL')) === 0) {
             return array(
                 'variable_symbol' => '0001',
                 'bank_account' => $bankOption->accountNumber,
                 'bankButtons' => $bankButtons,
                 'qrCode' => $qrCode,
-//                'user_token' => JWTAuth::fromUser($portalUser['user'])
+                'backoffice' => 'true'
             );
         }
         return $this->initialize($data);
@@ -64,47 +64,52 @@ class DonationService
     {
         try {
             // TODO: otestovat
-            $portalUser = $this->handleUserDuringInitialize($data);
+            $trackingShow = $this->trackingService->getTrackingShowById($data['show_id']);
+            $user = $this->portalUserService->registerDuringDonation($data['show_id'], $data['email'], $trackingShow->visit['user_cookie'], $data['terms']);
             $bankButtons = $this->bankButtonService->getBankButtons();
 
-
             $donation = Donation::create([
-                'show_id' => $data['show_id'],
-                'user_id' => $portalUser['user']['id'],
-//                'terms' => $data['terms'],
+                'tracking_show_id' => $data['show_id'],
+                'widget_id' => $trackingShow->widget->id,
+                'portal_user_id' => $user->portalUser->id,
                 'status' => 'initialized',
                 'is_monthly_donation' => $data['frequency'] == 'monthly',
-                'amount' => $data['donation_value']
+                'amount_initialized' => $data['amount']
             ]);
-
-            $qrCode = $this->payBySquareService->getQRCodeFromData($portalUser->variableSymbol->variableSymbol, $data['amount'], $data['frequency']);
+            $qrCode = $this->payBySquareService->getQRCodeFromData($user->portalUser->variableSymbol->variableSymbol, $data['amount'], $data['frequency']);
             $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
             return array(
-                'variable_symbol' => $portalUser->variableSymbol->variableSymbol,
+                'variable_symbol' => $user->portalUser->variableSymbol->variable_symbol,
                 'bank_account' => $bankOption->accountNumber,
                 'bankButtons' => $bankButtons,
-                'user_token' => JWTAuth::fromUser($portalUser['user']),
+                'user_token' => $user['secret'],
                 'qrCode' => $qrCode,
+                'donation_id' => $donation->id
             );
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getTrace());
         }
     }
 
+    public function waitingForPayment($donationId, $payment_method_id)
+    {
+         $donation =  $this->getById($donationId);
+         $donation->status = 'waiting_for_payment';
+         $donation->payment_method = $payment_method_id;
+         $donation->update();
+         return $donation;
+    }
+
     /** Create new user
      * @param $data
      * @return id of user
      */
-    private function handleUserDuringInitialize($data): PortalUser
+    private function handleUserDuringInitialize($data): User
     {
-        //TODO: otestovat
+
         $trackingShow = $this->trackingService->getTrackingShowById($data['show_id']);
-        $user = $trackingShow->visit['portalUser'];
-        if ($user == null) {
-            //create new user and connect his new user_id with his cookie
-            $user = $this->portalUserService->registerDuringDonation($data['email'], $trackingShow->visit['user_cookie']);
-        }
-        return $user;
+        $user = $this->portalUserService->registerDuringDonation($data['show_id'], $data['email'], $trackingShow->visit['user_cookie'], $data['terms']);
+
     }
 
     public function isUserOneTimeSupporter($donationsData)
@@ -267,6 +272,11 @@ class DonationService
         return response()->json([
             'message' => 'Successfully cancel assignment of donation with id ' . $id
         ], Response::HTTP_OK);
+    }
+
+    private function getById($donationId)
+    {
+        return $this->donationRepository->getById($donationId);
     }
 
 }

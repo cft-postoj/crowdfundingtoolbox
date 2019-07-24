@@ -19,7 +19,8 @@ class Donation extends Model
         'payment_id',
         'widget_id',
         'status',
-        'tracking_show_id'
+        'tracking_show_id',
+        'amount_initialized',
     ];
     protected $casts = [
         'amount' => 'float',

@@ -30,4 +30,10 @@ class TrackingShow extends Model
         return $this->hasOne('Modules\Payment\Entities\Donation', 'tracking_show_id', 'id');
     }
 
+    public function donation()
+    {
+        return $this->hasOne('Modules\Payment\Entities\Donation');
+    }
+
+
 }

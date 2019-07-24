@@ -1,5 +1,5 @@
 export const iframeCode = `
-  <div class="content" id="cr0wdFundingToolbox-test" data-show-id="0"></div>
+  <div class="content" id="cr0wdfundingToolbox-test" data-show-id="0"></div>
   <script type="text/javascript">
     if (dataFromParent) {
       // Subscribe to the Subject so you can trigger changes from Angular
@@ -70,10 +70,11 @@ export const globalStyles = `
     .submitted input:invalid ~ label.error {
         display: none;
     }    
-    .cft--monetization--container-step-2 .payment-table{
-    width: 100%;
+    .cft--monetization--container .payment-table{
+        width: 100%;
+        margin-bottom: 32px;
     }
-    .cft--monetization--container-step-2 .payment-title{
+    .cft--monetization--container .payment-title{
         color: #2b2b2b;
         text-align: left;
         border-bottom: 1px solid #e6e9eb;
@@ -98,7 +99,7 @@ export const globalStyles = `
           border: 1px solid #e6e9eb;
     }
     
-    .cft--monetization--container-step-2 .payment-value{
+    .cft--monetization--container .payment-value{
         font-weight: 700;
         padding: 18px 10px;
         color: #2b2b2b;

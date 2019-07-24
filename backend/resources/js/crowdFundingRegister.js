@@ -41,7 +41,7 @@ function register() {
             'password': document.querySelector('form[name="cft-register"] input[name="cft-password"]').value,
             'agreeMailing': document.querySelector('form[name="cft-register"] input[name="cft-mailing"]').checked,
             'agreePersonalData': document.querySelector('form[name="cft-register"] input[name="cft-agree"]').checked,
-            'user_cookie': getCookie("cr0wdFundingToolbox-user_cookie")
+            'user_cookie': getCookie("cr0wdfundingToolbox-user_cookie")
 
         };
         if (!data.agreePersonalData) {

@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     //let apiUrl = 'https://crowdfunding.ondas.me/api/portal/';
     let apiUrl = 'http://127.0.0.1:8000/api/portal/'; // TEST API
-    let sidebarPlaceholder = document.getElementById('cr0wdFundingToolbox-sidebar');
-    let fixedPlaceholder = document.getElementById('cr0wdFundingToolbox-fixed');
-    let leaderboardPlaceholder = document.getElementById('cr0wdFundingToolbox-leaderboard');
+    let sidebarPlaceholder = document.getElementById('cr0wdfundingToolbox-sidebar');
+    let fixedPlaceholder = document.getElementById('cr0wdfundingToolbox-fixed');
+    let leaderboardPlaceholder = document.getElementById('cr0wdfundingToolbox-leaderboard');
 
     let xhttp = new XMLHttpRequest();
     xhttp.responseType = 'json';
