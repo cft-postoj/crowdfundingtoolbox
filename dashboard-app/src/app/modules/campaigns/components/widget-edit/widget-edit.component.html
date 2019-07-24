@@ -1552,7 +1552,8 @@
                         </ng-container>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}"
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(6)">
                         <div class="col-11">
                             MONETIZATION STEP 2
@@ -1600,7 +1601,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(7)}">
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(7)}"
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(7)">
                         <div class="col-11">
                             MONETIZATION STEP 3

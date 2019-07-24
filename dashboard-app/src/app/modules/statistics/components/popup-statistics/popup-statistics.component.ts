@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import moment from 'moment/src/moment';
-import {Moment} from 'moment';
 import {ActivatedRoute, Router} from '@angular/router';
-import {url} from 'inspector';
 import {Routing} from '../../../../constants/config.constants';
 
 @Component({
