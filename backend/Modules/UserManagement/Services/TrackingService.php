@@ -3,13 +3,12 @@
 namespace Modules\UserManagement\Services;
 
 use Carbon\Carbon;
-use Modules\UserManagement\Entities\TrackingVisit;
 use Modules\UserManagement\Entities\TrackingClick;
+use Modules\UserManagement\Entities\TrackingInitializeDonationInvalid;
 use Modules\UserManagement\Entities\TrackingInsertEmail;
 use Modules\UserManagement\Entities\TrackingInsertValue;
 use Modules\UserManagement\Entities\TrackingShow;
-use Modules\UserManagement\Entities\TrackingInitializeDonationInvalid;
-use Modules\UserManagement\Repositories\TrackingVisitRepository;
+use Modules\UserManagement\Entities\TrackingVisit;
 
 class TrackingService
 {
@@ -127,4 +126,8 @@ class TrackingService
         return false;
     }
 
+    public function getTrackingShowById($id)
+    {
+        return TrackingShow::with('visit.portalUser.variableSymbol')->find($id);
+    }
 }

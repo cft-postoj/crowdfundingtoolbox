@@ -86,10 +86,10 @@ class TestDashboardSeeder extends Seeder
                         'status' => 'processed',
                         'payment_id' => $payment->id
                     ));
-                    // monthly donation is true
-                    DonorStatus::where('portal_user_id', Donation::where('id', $donation->id)->first()['portal_user_id'])->update(array(
-                        'monthly_donor' => true
-                    ));
+//                    // monthly donation is true
+//                    DonorStatus::where('portal_user_id', Donation::where('id', $donation->id)->first()['portal_user_id'])->update(array(
+//                        'monthly_donor' => true
+//                    ));
                 }
             }
         }

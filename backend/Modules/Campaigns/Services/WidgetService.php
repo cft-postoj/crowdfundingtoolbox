@@ -513,6 +513,22 @@ class WidgetService implements WidgetServiceInterface
                     'background' => "#0087ed",
                     'color' => "#ffffff"
                 ),
+            ),
+            'second_step' => array(
+                'title' => array(
+                    'text' => 'title'
+                ),
+                'cta' => array(
+                    'transfer' => array(
+                        'text' => 'Go to your bank'
+                    ),
+                    'payBySquare' => array(
+                        'text' => 'Go to your bank'
+                    )
+                ),
+            ),
+            'terms' => array(
+                'text' => 'I agree to processing of personal data and receiving newsletters'
             )
         );
         return $structure;

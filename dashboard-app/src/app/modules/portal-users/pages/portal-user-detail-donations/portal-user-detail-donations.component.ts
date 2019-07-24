@@ -9,11 +9,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class PortalUserDetailDonationsComponent implements OnInit {
 
-    private id: any;
+    public id: any;
     from = {year: 2010, month: 1, day: 1};
     to = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
     public donationsDetail;
-    private loading: boolean = true;
+    public loading: boolean = true;
     private nowDate = new Date();
     showMoreFirst: boolean;
     showMoreLast: boolean;

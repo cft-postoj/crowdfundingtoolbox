@@ -4,13 +4,14 @@ namespace Modules\Payment\Services;
 
 
 use Carbon\Carbon;
+use Illuminate\Http\Response;
 use Modules\Payment\Entities\Donation;
 use Modules\Payment\Entities\DonationInitialize;
 use Modules\Payment\Repositories\DonationRepository;
-use Modules\UserManagement\Entities\TrackingShow;
+use Modules\UserManagement\Entities\PortalUser;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Services\PortalUserService;
-use Illuminate\Http\Response;
+use Modules\UserManagement\Services\TrackingService;
 
 class DonationService
 {
@@ -18,27 +19,73 @@ class DonationService
     private $portalUserService;
     private $donationRepository;
     private $portalUserRepository;
+    private $trackingService;
+    private $paymentMethodsService;
+    private $bankButtonService;
+    private $payBySquareService;
 
     public function __construct(PortalUserService $portalUserService,
-                                DonationRepository $donationRepository, PortalUserRepository $portalUserRepository)
+                                DonationRepository $donationRepository,
+                                PortalUserRepository $portalUserRepository,
+                                TrackingService $trackingService,
+                                PaymentMethodsService $paymentMethodsService,
+                                BankButtonService $bankButtonService,
+                                PayBySquareService $payBySquareService)
     {
         $this->portalUserService = $portalUserService;
         $this->donationRepository = $donationRepository;
         $this->portalUserRepository = $portalUserRepository;
+        $this->trackingService = $trackingService;
+        $this->paymentMethodsService = $paymentMethodsService;
+        $this->bankButtonService = $bankButtonService;
+        $this->payBySquareService = $payBySquareService;
+    }
+
+    //if request is from dashboard, mock this function entirely
+    public function initializeBackend($data, $url)
+    {
+        $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
+        $bankButtons = $this->bankButtonService->getBankButtons();
+        $qrCode = $this->payBySquareService->getQRCodeFromData('0001', '20', $data['frequency']);
+        if (strpos($url, env('CFT_URL')) == 0) {
+            return array(
+                'variable_symbol' => '0001',
+                'bank_account' => $bankOption->accountNumber,
+                'bankButtons' => $bankButtons,
+                'qrCode' => $qrCode,
+//                'user_token' => JWTAuth::fromUser($portalUser['user'])
+            );
+        }
+        return $this->initialize($data);
+
     }
 
     public function initialize($data)
     {
         try {
-            $userId = $this->handleUserDuringInitialize($data);
+            // TODO: otestovat
+            $portalUser = $this->handleUserDuringInitialize($data);
+            $bankButtons = $this->bankButtonService->getBankButtons();
 
-            return DonationInitialize::create([
+
+            $donation = Donation::create([
                 'show_id' => $data['show_id'],
-                'user_id' => $userId,
-                'terms' => $data['terms'],
-                'frequency' => $data['frequency'],
-                'donation_value' => $data['donation_value']
+                'user_id' => $portalUser['user']['id'],
+//                'terms' => $data['terms'],
+                'status' => 'initialized',
+                'is_monthly_donation' => $data['frequency'] == 'monthly',
+                'amount' => $data['donation_value']
             ]);
+
+            $qrCode = $this->payBySquareService->getQRCodeFromData($portalUser->variableSymbol->variableSymbol, $data['amount'], $data['frequency']);
+            $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
+            return array(
+                'variable_symbol' => $portalUser->variableSymbol->variableSymbol,
+                'bank_account' => $bankOption->accountNumber,
+                'bankButtons' => $bankButtons,
+                'user_token' => JWTAuth::fromUser($portalUser['user']),
+                'qrCode' => $qrCode,
+            );
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getTrace());
         }
@@ -48,16 +95,16 @@ class DonationService
      * @param $data
      * @return id of user
      */
-    private function handleUserDuringInitialize($data): int
+    private function handleUserDuringInitialize($data): PortalUser
     {
-        $trackingShow = TrackingShow::with('visit.user')->find($data['show_id']);
-        $userId = $trackingShow->visit['user_id'];
-        if (!$userId) {
+        //TODO: otestovat
+        $trackingShow = $this->trackingService->getTrackingShowById($data['show_id']);
+        $user = $trackingShow->visit['portalUser'];
+        if ($user == null) {
             //create new user and connect his new user_id with his cookie
             $user = $this->portalUserService->registerDuringDonation($data['email'], $trackingShow->visit['user_cookie']);
-            $userId = $user->id;
         }
-        return $userId;
+        return $user;
     }
 
     public function isUserOneTimeSupporter($donationsData)

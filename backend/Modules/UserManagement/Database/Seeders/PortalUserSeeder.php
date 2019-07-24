@@ -50,11 +50,6 @@ class PortalUserSeeder extends Seeder
                 'pairing_type' => 'variable_symbol'
             ));
 
-            DonorStatus::create(array(
-                'portal_user_id' => $newUser->id,
-                'monthly_donor' => false
-            ));
-
             $userDetail = factory(UserDetail::class)->make();
             $userDetail['user_id'] = $user->id;
             $userDetail->save();

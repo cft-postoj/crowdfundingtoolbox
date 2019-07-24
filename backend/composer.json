@@ -20,6 +20,7 @@
         "maatwebsite/excel": "^3.1",
         "mpociot/laravel-apidoc-generator": "^3.3",
         "mtrajano/laravel-swagger": "^0.2.0",
+        "peterbodnar.com/bsqr": "^1.1",
         "nwidart/laravel-modules": "^4.1",
         "tymon/jwt-auth": "dev-develop"
     },

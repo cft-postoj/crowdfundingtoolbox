@@ -2,12 +2,11 @@
 
 namespace Modules\Campaigns\Http\Controllers;
 
+use App\Http\Services\CrowdfundingHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-
-use App\Http\Services\CrowdfundingHelper;
 use Modules\Campaigns\Entities\Image;
 
 class ImagesController extends Controller
@@ -94,23 +93,15 @@ class ImagesController extends Controller
     private function createDBRecord($fileName, $fileType, $fileSize)
     {
         try {
-            $image = Image::create([
+            $imageCreated = Image::create([
                 'path' => $fileName,
                 'type' => $fileType,
                 'size' => $fileSize
             ]);
-            $image->save();
-            $imageUrl =
-                (substr(asset('storage/public/uploads/' . $fileName), 0, 21) === 'http://localhost:8000') ?
-                    str_replace('http://localhost:8000', 'http://localhost/crowdfundingToolbox', asset('storage/public/uploads/' . $fileName)) :
-                    asset('storage/public/uploads/' . $fileName);
 
             return \response()->json([
                 'message' => 'Image was successfully uploaded.',
-                'file' => [
-                    'id'    =>  $image->id,
-                    'url' => $imageUrl
-                ]
+                'file' => $imageCreated
             ], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return \response()->json([

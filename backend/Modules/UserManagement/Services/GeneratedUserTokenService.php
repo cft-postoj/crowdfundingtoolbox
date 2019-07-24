@@ -92,7 +92,7 @@ class GeneratedUserTokenService implements GeneratedUserTokenServiceInterface
 
     }
 
-    private function generatePasswordToken()
+    public function generatePasswordToken()
     {
         $length = 32;
         try {

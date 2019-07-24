@@ -5,8 +5,8 @@ export const environment = {
     production: true,
 
     apiUrl: '/api',
-    backOfficeUrl:  keys.hostUrl + '/api/backoffice',
-    authServerUrl: keys.hostUrl + '/api/backoffice' ,
+    backOfficeUrl: keys.hostUrl + '/api/backoffice',
+    authServerUrl: keys.hostUrl + '/api/backoffice',
 
     fontsUrl: 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + keys.googleApiKey,
 
@@ -67,7 +67,11 @@ export const environment = {
     bankTransferMethod: '/payment/bank-transfer-details',
     payBySquareMethod: '/payment/pay-by-square-details',
 
+    bankButton: '/payment/bank-button',
+
     donations: '/donations',
-    unpairedPayments: '/unpaired-payments'
+    unpairedPayments: '/unpaired-payments',
+
+    exportCsv: '/export-csv'
 
 };

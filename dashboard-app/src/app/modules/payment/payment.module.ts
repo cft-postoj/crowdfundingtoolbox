@@ -19,6 +19,8 @@ import { PayBySquareComponent } from './components/pay-by-square/pay-by-square.c
 import { DonationDetailComponent } from './pages/donation-detail/donation-detail.component';
 import { UserDropdownComponent } from './components/user-dropdown/user-dropdown.component';
 import { UploadCsvComponent } from './components/upload-csv/upload-csv.component';
+import {TableModule} from 'primeng/table';
+import {InlineSVGModule} from 'ng-inline-svg';
 import { PaymentListComponent } from './pages/payment-list/payment-list.component';
 import { PaymentDetailComponent } from './pages/payment-detail/payment-detail.component';
 
@@ -29,10 +31,12 @@ import { PaymentDetailComponent } from './pages/payment-detail/payment-detail.co
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        TableModule,
 
         CoreModule,
         PaymentRoutingModule,
-        StatisticsModule
+        StatisticsModule,
+        InlineSVGModule.forRoot()
     ]
 })
 export class PaymentModule {

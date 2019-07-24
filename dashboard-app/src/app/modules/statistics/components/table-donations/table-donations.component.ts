@@ -39,7 +39,7 @@ export class TableDonationsComponent implements OnInit {
     public statsDateSelected: any;
 
     public model: TableModel = new TableModel();
-    private availableColumns: Column[] = [];
+    public availableColumns: Column[] = [];
 
     config = {
         height: '500px',
@@ -50,7 +50,7 @@ export class TableDonationsComponent implements OnInit {
 
     constructor(private donationService: DonationService,
                 private paymentMethodsService: PaymentMethodsService,
-                private tableService: TableService, private router: Router) {
+                public tableService: TableService, private router: Router) {
     }
 
     ngOnInit() {
