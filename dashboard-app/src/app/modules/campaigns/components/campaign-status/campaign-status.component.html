@@ -32,7 +32,7 @@
             </div>
             <div *ngIf="!percentage" class="text-center">
                 <span class="fs12">Crowdfunded</span>
-                <p class="fs24 font-weight-bold">{{2 | numbersk : true}}</p>
+                <p class="fs24 font-weight-bold">{{amount | numbersk : true}}</p>
             </div>
         </div>
         <div class="row mb25">
@@ -42,17 +42,17 @@
                         Views
                     </div>
                     <div class="info-container--footer">
-                        {{999 | numbersk}}
+                        {{views}}
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="info-container">
                     <div class="info-container--header">
-                        Clicks
+                        Donations
                     </div>
                     <div class="info-container--footer">
-                        {{999 | numbersk}}
+                        {{clicks}}
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                         Engagement
                     </div>
                     <div class="info-container--body">
-                        {{99 | numbersk}}%
+                        {{engagement}}%
                     </div>
                 </div>
             </div>

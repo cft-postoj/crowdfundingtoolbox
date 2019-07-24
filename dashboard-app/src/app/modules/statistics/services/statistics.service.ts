@@ -24,4 +24,8 @@ export class StatisticsService {
             to: to
         });
     }
+
+    public campaignStats(id: number, period: string): Observable<any> {
+        return this.http.get<any>(environment.backOfficeUrl + environment.campaignStats + '/' + id + '/' + period);
+    }
 }

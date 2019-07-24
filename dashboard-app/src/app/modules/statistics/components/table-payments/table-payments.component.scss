@@ -1,3 +1,5 @@
+@import 'mixins';
+@import 'variables';
 :host {
     position: absolute;
     overflow: auto;
@@ -6,4 +8,12 @@
 }
 tr.list-items--item {
     cursor: pointer;
+}
+
+th {
+    cursor: pointer;
+    @include transitionSingle(.3s ease);
+    &:hover {
+        color: $azure;
+    }
 }

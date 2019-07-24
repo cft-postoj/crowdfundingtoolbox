@@ -107,6 +107,7 @@ Route::group([
 
             Route::post('statistics/articles', '\Modules\Statistics\Http\Controllers\StatisticsController@articles');
             Route::post('statistics/campaigns', '\Modules\Statistics\Http\Controllers\StatisticsController@campaigns');
+            Route::get('statistics/campaign/{id}/{period}', '\Modules\Statistics\Http\Controllers\StatisticsController@campaign');
 
 
             // *********************************************

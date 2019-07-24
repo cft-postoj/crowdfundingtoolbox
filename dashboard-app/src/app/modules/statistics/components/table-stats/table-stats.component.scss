@@ -10,3 +10,11 @@
 tr.list-items--item {
   cursor: pointer;
 }
+
+th {
+  cursor: pointer;
+  @include transitionSingle(.3s ease);
+  &:hover {
+    color: $azure;
+  }
+}

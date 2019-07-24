@@ -90,5 +90,12 @@ class StatisticsController extends Controller
         );
     }
 
+    protected function campaign($id, $period) {
+        return \response()->json(
+            $this->generalStatsService->getCampaignStatsById($period, $id),
+            Response::HTTP_OK
+        );
+    }
+
 
 }

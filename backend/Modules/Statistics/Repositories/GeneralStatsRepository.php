@@ -5,6 +5,7 @@ namespace Modules\Statistics\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Campaigns\Entities\Campaign;
+use Modules\Payment\Entities\Donation;
 use Modules\UserManagement\Entities\TrackingShow;
 use Modules\UserManagement\Entities\TrackingVisit;
 
@@ -32,10 +33,22 @@ class GeneralStatsRepository
             ->with('widget.show')
             ->with('widget.donation')
             ->get();
-//        return TrackingShow::query()
-//            ->whereDate('created_at', '>=', $from)
-//            ->whereDate('created_at', '<=', $to)
-//            ->with(['widget', 'widget.donation', 'widget.campaign', 'widget.campaign.targeting'])
-//            ->get();
+    }
+
+    public function campaignStats($from, $to, $id)
+    {
+        return Campaign::where('id', $id)
+            ->with(['widget.donation' => function ($query) use ($from, $to) {
+                $query
+                    ->whereDate('created_at', '>=', $from)
+                    ->whereDate('created_at', '<=', $to);
+            }])
+            ->with(['widget.show' => function ($query) use ($from, $to) {
+                $query
+                    ->whereDate('created_at', '>=', $from)
+                    ->whereDate('created_at', '<=', $to);
+            }])
+            ->with('targeting')
+            ->first();
     }
 }

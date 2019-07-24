@@ -34,7 +34,10 @@
         >
     </span>
     </app-breadcrumbs>
-    <app-campaign-statistics></app-campaign-statistics>
+    <app-campaign-statistics
+    [campaignStats]="campaignStats"
+    [actualValue]="statsPeriod"
+    (filterEmit)="getCampaignStats($event)"></app-campaign-statistics>
     <app-loading [isLoading]="widgetsLoading"></app-loading>
     <div id="crowd-content" class="withStatistics" *ngIf="!widgetsLoading">
         <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
@@ -42,7 +45,7 @@
             <div class="row">
                 <div class="stats-card col-3 mt-5"
                      *ngFor="let widget of this.widgets">
-                    <app-campaign-status [campaignModel]="campaign" [id]="widget.id" [widget]="widget" (activeEmitter)="toggleWidgetActive(widget)" (previewEmitter)="openPreview($event)"></app-campaign-status>
+                    <app-campaign-status [campaignStats]="campaignStats" [campaignModel]="campaign" [id]="widget.id" [widget]="widget" (activeEmitter)="toggleWidgetActive(widget)" (previewEmitter)="openPreview($event)"></app-campaign-status>
                 </div>
             </div>
         </div>
