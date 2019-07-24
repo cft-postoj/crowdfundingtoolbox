@@ -1,4 +1,7 @@
 <div [ngClass]="{'sub-inactive': !isActive, 'preview' : previewOpen}" id="sidebar">
+    <button type="button" [class]="(isActive) ? 'closed sidebarToggle' : 'sidebarToggle'" title="Toggle sidebar" (click)="toggleSidebar()">
+        <img src="../assets/images/icons/breadcrumb.svg" />
+    </button>
     <div>
         <div class="main-items" [ngClass]="{ 'main-items--sub-active': isActive }">
             <div

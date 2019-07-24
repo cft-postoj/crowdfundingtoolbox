@@ -1,15 +1,15 @@
 <div class="sidebar-item-wrapper">
     <div class="sidebar-item-header">
-        {{currentType.title}}
+        {{currentType?.title}}
     </div>
     <div class="sub-items">
         <ul>
             <ng-container *ngFor="let item of items">
-                <li routerLinkActive="active-item" [routerLink]="[item.value]">{{item.title}}</li>
+                <li routerLinkActive="active-item" [routerLink]="[item.value]">{{item?.title}}</li>
             </ng-container>
         </ul>
     </div>
-    <ng-container *ngIf="currentType.title == sidebarTypes.campaigns.title ">
+    <ng-container *ngIf="currentType?.title == sidebarTypes.campaigns?.title">
         <div class="button-new-campaign">
             <app-button
                     (onClick)="this.router.navigateByUrl(routing.CAMPAIGNS_ALL_FULL_PATH+'/('+routing.RIGHT_OUTLET+':'+routing.NEW+')')"

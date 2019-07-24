@@ -124,28 +124,33 @@ export class SideBarComponent implements OnInit {
     showItem(itemName: string) {
         if (itemName === this.campaignsItemName) {
             this.sidebarItems = [];
-            if (this.campaigns) {
-                this.campaigns.forEach(
-                    campaign => {
-                        this.sidebarItems.push({
-                            title: campaign.name,
-                            value: '/' + Routing.CAMPAIGNS_FULL_PATH + '/' + campaign.id
-                        });
-                    }
-                );
-            }
-            this.sidebarItems.push({
-                title: 'All campaigns',
-                value: '/' + Routing.CAMPAIGNS_ALL_FULL_PATH
-            });
-            this.isActive = this.activeItem !== this.noActiveItem;
-            this.currentSidebarItemType = sidebarType.campaigns;
+            // if (this.campaigns) {
+            //     this.campaigns.forEach(
+            //         campaign => {
+            //             this.sidebarItems.push({
+            //                 title: campaign.name,
+            //                 value: '/' + Routing.CAMPAIGNS_FULL_PATH + '/' + campaign.id
+            //             });
+            //         }
+            //     );
+            // }
+            // this.sidebarItems.push({
+            //     title: 'All campaigns',
+            //     value: '/' + Routing.CAMPAIGNS_ALL_FULL_PATH
+            // });
+            // this.isActive = this.activeItem !== this.noActiveItem;
+            // this.currentSidebarItemType = sidebarType.campaigns;
         } else if (itemName === this.faqItemName) {
            window.open('https://docs.crowdfundingtoolbox.news/user-guide.pdf', '_blank');
         } else {
             this.isActive = false;
         }
         this.activeItem = itemName;
+
+    }
+
+    toggleSidebar() {
+        this.isActive = !this.isActive;
 
     }
 }
