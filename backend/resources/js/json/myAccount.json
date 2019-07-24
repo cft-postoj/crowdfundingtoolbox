@@ -1,14 +1,14 @@
 {
-  "myAccountButton": "Môj účet",
+  "myAccountButton": "My account",
   "myAccountUrl": "/moj-ucet",
-  "previewSlug": "prehlad",
+  "previewSlug": "preview",
   "newsletterSlug": "newsletter",
   "savedArticlesSlug": "ulozene-clanky",
-  "donationSlug": "vasa-podpora",
+  "donationSlug": "your-support",
   "ordersSlug": "objednavky",
-  "accountSlug": "ucet",
-  "resetYourPasswordAlert": "Prosím, resetujte si svoje heslo.",
-  "endRegister": "Dokončite svoju registráciu. Doplňte vyznačené chýbajúce údaje.",
-  "successUpdate": "Váš účet bol úspešne aktualizovaný.",
-  "errorUpdate": "Počas akutalizácie osobných údajov nastala chyba. Prosím, skúste neskôr alebo kontaktujte administrátora."
+  "accountSlug": "account",
+  "resetYourPasswordAlert": "Please, reset your password.",
+  "endRegister": "Complete your registration. Fill in the missing data.",
+  "successUpdate": "Your account has been successfully updated.\n",
+  "errorUpdate": "An error occurred while updating your personal information. Please try again later or contact your administrator."
 }

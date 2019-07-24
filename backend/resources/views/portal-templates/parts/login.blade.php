@@ -1,34 +1,34 @@
 <meta name="cft-csrf-token" content="{{ csrf_token() }}">
-<button type="button" id="cft--loginButton" class="cft--loginButton">Prihlásiť sa</button>
+<button type="button" id="cft--loginButton" class="cft--loginButton">Sign in</button>
 <div class="cft--loginDropdown">
     <form name="cft-forgottenPassword">
-        <h3>Zabudnuté heslo</h3>
+        <h3>Forgotten password</h3>
         <label for="cft-emailPassword">
             E-MAIL
         </label>
         <input type="email" id="cft-emailPassword" name="cft-email" class="" required>
         <span class="cft--loginDropdown--message cft-email"></span>
-        <button type="submit">Reset hesla</button>
-        <button type="button" id="cft--showLogin">Prihlásiť sa</button>
+        <button type="submit">Reset password</button>
+        <button type="button" id="cft--showLogin">Login</button>
     </form>
     <form name="cft-login" class="active">
         <label for="cft-email">
-            E-MAIL
+            EMAIL
         </label>
         <input type="email" id="cft-email" name="cft-email" class="" required>
         <span class="cft--loginDropdown--message cft-email"></span>
         <label for="cft-password">
-            HESLO <button type="button" id="cft--forgottenPassword">Zabudli ste heslo?</button>
+            PASSWORD <button type="button" id="cft--forgottenPassword">Forgot your password?</button>
         </label>
         <input type="password" id="cft-password" name="cft-password" class="" required>
         <span class="cft--loginDropdown--message cft-password"></span>
-        <button type="submit">Prihlásiť sa</button>
+        <button type="submit">Sign in</button>
     </form>
     <div class="cft--loginDropdown--register">
-        <b>Nie ste ešte registrovaný?</b>
-        <p>Ukladajte si články, spravujte newslettre, získajte prehľad objednávok z eshopu...</p>
+        <b>Not registered yet?</b>
+        <p>Lorem ipsum some sign in text...</p>
         <a href="{{$portal_register_url}}" target="_blank">
-            Registrovať sa
+            Register
         </a>
     </div>
 </div>

@@ -22,7 +22,7 @@ mix
         ]
     })
     .browserSync({
-        proxy: 'http://localhost:8001/portal/postoj',
+        proxy: 'https://www.demo-postoj.crowdfundingtoolbox.news/moj-ucet',
         files: [
             'public/css/app.css',
             'public/js/app.js',

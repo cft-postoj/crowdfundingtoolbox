@@ -1,11 +1,11 @@
 <div class="cft--register">
-    <h1>Registrácia</h1>
+    <h1>Registration</h1>
     <form name="cft-register">
-        <label for="cft-email">E-MAIL
+        <label for="cft-email">EMAIL
         <input type="email" name="cft-email" id="cft-email" required/>
         </label>
         <span class="cft--loginDropdown--error cft-email"></span>
-        <label for="cft-password">HESLO
+        <label for="cft-password">PASSWORD
         <input type="password" name="cft-password" id="cft-password" data-lpignore="true" required/>
         <img src="{{env('ASSETS_URL')}}/images/visible.svg" />
         </label>
@@ -15,7 +15,7 @@
             <label for="cft-mailing" class="checkbox cft--checkbox">
                 <input type="checkbox" name="cft-mailing" id="cft-mailing">
                 <span class="checkmark"></span>
-                Súhlasím s posielaním mailov z Postoja.
+                Agree with sending emails.
             </label>
         </div>
 
@@ -23,14 +23,14 @@
             <label for="cft-agree" class="checkbox cft--checkbox">
                 <input type="checkbox" name="cft-agree" id="cft-agree" required>
                 <span class="checkmark"></span>
-                Súhlasím so spracovaním <a href="#">osobných údajov</a>.
+                Agree with <a href="#">general conditions</a>.
             </label>
         </div>
         <span class="cft--loginDropdown--error cft-agree"></span>
         <span class="cft--loginDropdown--success cft-register"></span>
 
         <button type="submit">
-            Registrovať sa
+            Register
         </button>
     </form>
 </div>

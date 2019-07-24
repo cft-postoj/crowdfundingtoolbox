@@ -1,6 +1,6 @@
-<h2>Prehľad</h2>
+<h2>Preview</h2>
 
-<p class="cft--mt-20">Vitajte, <b class="cft--myAccount--preview--user"></b>!</p>
-<p class="cft--mt-20">Pre prihlásenie do účtu môžete využiť Vašu emailovú adresu alebo sa môžete prihlasovať aj cez Vaše
-    jedinečné prihlasovacie meno <b class="cft--myAccount--preview--username"></b>.</p>
-<p class="cft--mt-20">Ak si želáte upraviť Vaše osobné údaje, kliknite <b><a href="#ucet" class="cft--showSubMenu">sem</a></b>.</p>
+<p class="cft--mt-20">Welcome back <b class="cft--myAccount--preview--user"></b>!</p>
+<p class="cft--mt-20">You can use your email address to log in to your account, or you can log in using your unique username <b class="cft--myAccount--preview--username"></b>.</p>
+<p class="cft--mt-20">If you wish to edit your personal data, click
+    <b><a href="#ucet" class="cft--showSubMenu">here</a></b>.</p>

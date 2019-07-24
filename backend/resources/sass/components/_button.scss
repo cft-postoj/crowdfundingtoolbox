@@ -1,3 +1,4 @@
+@import '../helpers/variables';
 button {
   &#cft--loginButton {
     border: 1px solid $iron;
@@ -15,7 +16,7 @@ button {
       content: '';
       width: 16px;
       height: 16px;
-      background: url(../../img/icons/user.svg) no-repeat center;
+      background: url($assetUrl + 'user.svg') no-repeat center;
       margin-left: -25px;
       margin-top: 1px;
     }

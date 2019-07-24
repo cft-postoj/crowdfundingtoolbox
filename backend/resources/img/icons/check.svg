@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="Group">
+    <path d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100Z" id="Oval" fill="#F0F3F6" stroke="none" />
+    <path d="M1.46852 8.6277L8.95289e-13 10.4109L11.5084 21.2554L31.5002 1.5669L29.9798 -7.55144e-14L11.5084 18.3979L1.46852 8.6277Z" transform="translate(36 40)" id="green-check" fill="#38BF61" stroke="none" />
+  </g>
+</svg>

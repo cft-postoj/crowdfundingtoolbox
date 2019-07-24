@@ -1,10 +1,11 @@
 &--myAccount {
-  margin: 30px 0;
-  background: $white;
+  margin: 30px 0 0;
+  background: linear-gradient(90deg, transparent 50%, $athensGray 50%);
   &--sidebar {
     float: left;
     width: 200px;
     padding: 50px 0;
+    background: $white;
     ul {
       list-style: none;
       padding: 0;
@@ -70,7 +71,7 @@
     float: right;
     width: calc(100% - 200px);
     background: $athensGray;
-    padding: 50px;
+    padding: 50px 0 50px 50px;
     min-height: 60%;
     &--loading {
       margin: 0 auto;

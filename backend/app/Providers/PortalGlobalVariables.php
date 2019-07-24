@@ -24,12 +24,12 @@ class PortalGlobalVariables extends ServiceProvider
      */
     public function boot()
     {
-        if (env('APP_ENV') === 'production') {
+        if (env('APP_ENV') === 'prod') {
             /*
              * TODO add urls from Portal connections -- from database
              */
-            View::share('portal_url', 'https://www.postoj.ondas.me');
-            View::share('portal_register_url', 'https://www.postoj.ondas.me/registracia-donorov');
+            View::share('portal_url', 'https://www.demo-postoj.crowdfundingtoolbox.news');
+            View::share('portal_register_url', 'https://www.demo-postoj.crowdfundingtoolbox.news/registracia');
         } else {
             // urls for dev
             View::share('portal_url', 'http://www.postoj.local:8000');

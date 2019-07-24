@@ -1,5 +1,5 @@
 {
-  "incorrectEmail": "Nesprávny e-mail. Nemáte ešte registráciu?<br/><a href='http://registracia.postoj.local:8000'>Registrujte sa</a>",
+  "incorrectEmail": "Nesprávny e-mail. Nemáte ešte registráciu?<br/><a href='/registracia'>Registrujte sa</a>",
   "incorrectPassword": "Nesprávne heslo.",
   "successResetPassword": "Link s možnosťou zmeniť heslo bol zaslaný na Vašu e-mailovú adresu."
 }
