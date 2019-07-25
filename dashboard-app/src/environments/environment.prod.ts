@@ -4,7 +4,7 @@ export const environment = {
 
     production: true,
 
-    apiUrl: '/api',
+    apiUrl: 'https://backend.crowdfundingtoolbox.news/api',
     backOfficeUrl: keys.hostUrl + '/api/backoffice',
     authServerUrl: keys.hostUrl + '/api/backoffice',
 
@@ -46,6 +46,7 @@ export const environment = {
     statisticsUrl: '/statistics/donation-and-donor-total',
     articlesStatistics: '/statistics/articles',
     campagignsStatistics: '/statistics/campaigns',
+    campaignStats: '/statistics/campaign',
 
     campaignTargeting: '/campaign-targeting',
 

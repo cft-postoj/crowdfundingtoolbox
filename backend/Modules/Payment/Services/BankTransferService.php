@@ -32,7 +32,7 @@ class BankTransferService
                 'payment_method' => $this->paymentMethodId,
                 'payment_settings' => json_encode($request['payment_settings']) // is in JSON type
             );
-            if (sizeof($this->paymentOptionsRepository->getPaymentMethodDetails($this->paymentMethodId)) > 0) {
+            if ($this->paymentOptionsRepository->getPaymentMethodDetails($this->paymentMethodId) !== null) {
                 $this->paymentOptionsRepository->updatePaymentMethodDetails(array(
                     'payment_settings'   =>  json_encode($request['payment_settings'])
                 ), $this->paymentMethodId);

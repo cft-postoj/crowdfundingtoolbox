@@ -38,6 +38,7 @@ function getWidgets(apiUrl) {
                     // TODO fix this -- error when not script included (not monetization widget)
                     let scriptElement = document.createElement('script');
                     let inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
+
                     switch (el.widget_type.method) {
                         case 'sidebar':
                             scriptElement.appendChild(inlineScript);
@@ -69,17 +70,27 @@ function getWidgets(apiUrl) {
                         case 'fixed':
                             (fixedPlaceholder != null) &&
                             (fixedPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
-                            document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
-                                fixedPlaceholder.style.display = 'none';
-                            });
+                            if (document.querySelector('.cr0wdWidgetContent--closeWidget') !== null) {
+                                document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                    fixedPlaceholder.style.display = 'none';
+                                });
+                            }
                             break;
                         case 'popup':
                             if (isPopupEnableToVisit()) {
-                                (popupPlaceholder != null) &&
-                                (popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
-                                document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
-                                    popupPlaceholder.style.display = 'none';
-                                });
+                                console.log('bbbb');
+                                if (popupPlaceholder != null) {
+                                    console.log('aaa');
+                                    console.log(el.response[cr0wdGetDeviceType()]);
+                                    popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                } else {
+                                    console.log('test');
+                                }
+                                if (document.querySelector('.cr0wdWidgetContent--closeWidget') !== null) {
+                                    document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                        popupPlaceholder.style.display = 'none';
+                                    });
+                                }
                                 setVisitingPopupTime();
                             }
                             break;

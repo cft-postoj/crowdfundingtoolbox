@@ -1,26 +1,7 @@
 <div class="datepicker">
     <span
             [inlineSVG]="'/assets/images/icons/date_' + type + '.svg'"
-            (click)="d.toggle()"
     ></span>
-    <!--    <input-->
-    <!--            ngxDaterangepickerMd-->
-    <!--            readonly-->
-    <!--            class="datepicker&#45;&#45;input"-->
-    <!--            placeholder="DD.MM.YYYY"-->
-    <!--            name="dp"-->
-    <!--            [minDate]="minDate"-->
-    <!--            [maxDate]="maxDate"-->
-    <!--            [displayMonths]="displayMonths"-->
-    <!--            [navigation]="navigation"-->
-    <!--            [outsideDays]="outsideDays"-->
-    <!--            [showWeekNumbers]="showWeekNumbers"-->
-    <!--            ngbDatepicker #d="ngbDatepicker"-->
-    <!--            [(ngModel)]="date"-->
-    <!--            (ngModelChange)="changeEvent()"-->
-    <!--            (click)="d.toggle()"-->
-    <!--            [disabled]="disabled"-->
-    <!--    />-->
     <input type="text" matInput
            ngxDaterangepickerMd
            [locale]="{applyLabel: 'ok', format: 'DD.MM.YYYY', weekLabel: 'W', firstDay: 1}"

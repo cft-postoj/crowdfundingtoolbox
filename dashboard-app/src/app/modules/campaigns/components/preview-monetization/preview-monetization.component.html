@@ -134,7 +134,7 @@
         <div class="cft--monetization--container-step-2  cft--monatization--hidden">
             <div class="cft--monatization--title"
                  [ngStyle]="getMonetizationTitleStyles()"
-                 *ngIf=widget.settings[deviceType].payment_settings.second_step.title.text>
+                 *ngIf="widget.settings[deviceType].payment_settings.second_step !== undefined">
                 <h1 [ngStyle]="getMonetizationTitleStyles()" [innerHtml]="widget.settings[deviceType].payment_settings.second_step.title.text">
                 </h1>
             </div>
@@ -255,7 +255,7 @@
         <div class="cft--monetization--container-step-3  cft--monatization--hidden">
             <div class="cft--monatization--title"
                  [ngStyle]="getMonetizationTitleStyles()"
-                 *ngIf=widget.settings[deviceType].payment_settings.third_step.title.text>
+                 *ngIf="widget.settings[deviceType].payment_settings.third_step !== undefined">
                 <h1 [ngStyle]="getMonetizationTitleStyles()"
                     [innerHtml]="widget.settings[deviceType].payment_settings.third_step.title.text">
                 </h1>
