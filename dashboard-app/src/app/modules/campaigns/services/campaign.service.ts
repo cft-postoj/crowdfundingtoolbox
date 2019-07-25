@@ -11,8 +11,7 @@ export class CampaignService {
     }
 
     public createCampaign(campaign: Campaign): Observable<any> {
-        const campaignToSend = this.writeDatesAsStrings(campaign);
-        return this.http.post(environment.backOfficeUrl + environment.campaignUrl, campaignToSend);
+        return this.http.post(environment.backOfficeUrl + environment.campaignUrl, campaign);
     }
 
     public getCampaignById(campaignId): Observable<any> {

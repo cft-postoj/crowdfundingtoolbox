@@ -70,11 +70,11 @@ export class Targeting {
     registration: any  = {
         before: {
             active: false,
-            date:  '',
+            date:  '2019-07-25',
         },
         after: {
             active: false,
-            date: ''
+            date: '2015-01-01'
         }
     }
     url = {

@@ -93,17 +93,6 @@ export class CampaignSettingsComponent implements OnInit {
 
     ngOnInit(): void {
 
-        //
-        // this.id = this.route.snapshot.paramMap.get("id");
-        // this.campaignService.getCampaignById(this.id).subscribe((campaign: Campaign) => {
-        //     this.campaignData = campaign;
-        //     this.isActive = new Date(campaign.date_to) >= new Date();
-        //     this.dateTo = CampaignSettingsComponent.createDateObject(campaign.date_to);
-        //     this.dateFrom = CampaignSettingsComponent.createDateObject(campaign.date_from);
-        // }, (error) => {
-        //     console.error(error);
-        // });
-
 
         this.campaignEndRadioButtons = [];
         this.campaignEndRadioButtons.push(new RadioButton("Date", false));
@@ -122,6 +111,8 @@ export class CampaignSettingsComponent implements OnInit {
             moment() : moment(this.campaign.targeting.registration.before.date);
         this.registrationBeforeDate = (this.campaign.targeting.registration.after.date === '') ?
             moment() : moment(this.campaign.targeting.registration.after.date);
+        this.campaign.promote_settings.start_date_value = this.startDate.format('YYYY-MM-DD');
+        this.campaign.promote_settings.end_date_value = this.endDate.format('YYYY-MM-DD');
         // console.log(this.endDate)
         setTimeout(() => {
             this.startDateFormat = {
