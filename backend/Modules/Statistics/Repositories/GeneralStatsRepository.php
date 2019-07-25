@@ -32,6 +32,8 @@ class GeneralStatsRepository
             ->with('targeting')
             ->with('widget.show')
             ->with('widget.donation')
+            ->with('widget.donation.widget')
+            ->with('widget.donation.widgetReferral')
             ->get();
     }
 

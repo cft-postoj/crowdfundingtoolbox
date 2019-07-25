@@ -26,4 +26,5 @@ class Campaign extends Model
     public function widget() {
         return $this->hasMany('\Modules\Campaigns\Entities\Widget');
     }
+
 }

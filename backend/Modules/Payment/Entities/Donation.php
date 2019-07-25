@@ -38,7 +38,7 @@ class Donation extends Model
 
     public function widgetReferral()
     {
-        return $this->belongsTo('\Modules\Campaigns\Entities\Widget', 'id', 'referral_widget_id');
+        return $this->hasOne('\Modules\Campaigns\Entities\Widget', 'id', 'referral_widget_id');
     }
 
     public function payment()
