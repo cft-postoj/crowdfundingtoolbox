@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,7 +124,6 @@ Route::group([
             Route::get('payment-methods', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getAllMethods');
 
             Route::get('payment/list', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayments');
-            Route::get('payment/{id}', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayment');
             Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getBankTransferDetails');
             Route::post('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setBankTransferDetails');
             Route::put('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@setBankTransferDetails');
@@ -153,6 +151,8 @@ Route::group([
 
             Route::get('payment/bank-button', '\Modules\Payment\Http\Controllers\BankButtonController@getBankButtons');
             Route::put('payment/bank-button', '\Modules\Payment\Http\Controllers\BankButtonController@updateBankButtons');
+
+            Route::get('payment/{id}', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayment');
 
 
         // Import payments

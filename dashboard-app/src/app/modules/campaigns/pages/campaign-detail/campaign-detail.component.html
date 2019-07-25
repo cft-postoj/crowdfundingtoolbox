@@ -10,6 +10,7 @@
                       [(checked)]="campaign.active"
                       (checkedChange)="toggleActive(campaign)"
                       [extraClass]="'mr30'"
+                      [disabled]="campaign.prevent_disable"
         ></app-switcher>
         <app-datepicker
                 [selected]="campaignDateSelected"
@@ -31,6 +32,7 @@
                 [inlineSVG]="'/assets/images/icons/delete.svg'"
                 [removeSVGAttributes]="['fill']"
                 (click)="delete()"
+                *ngIf="!campaign.prevent_disable"
         >
     </span>
     </app-breadcrumbs>

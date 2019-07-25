@@ -12,7 +12,7 @@ class Campaign extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'active', 'description', 'date_from', 'date_to', 'headline_text', 'updated_at'
+        'name', 'active', 'description', 'date_from', 'date_to', 'headline_text', 'updated_at','prevent_disable'
     ];
 
     public function targeting() {

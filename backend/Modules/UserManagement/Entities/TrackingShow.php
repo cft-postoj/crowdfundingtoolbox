@@ -3,7 +3,6 @@
 namespace Modules\UserManagement\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 //store all widgets that user saw
 
@@ -29,11 +28,5 @@ class TrackingShow extends Model
     {
         return $this->hasOne('Modules\Payment\Entities\Donation', 'tracking_show_id', 'id');
     }
-
-    public function donation()
-    {
-        return $this->hasOne('Modules\Payment\Entities\Donation');
-    }
-
 
 }

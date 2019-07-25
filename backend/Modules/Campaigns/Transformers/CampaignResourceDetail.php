@@ -24,7 +24,8 @@ class CampaignResourceDetail extends Resource
             'payment_settings' => json_decode($this->payment_settings, true),
             'widget_settings' => json_decode($this->widget_settings, true),
             'targeting' => $this->createTargetingJson($this->targeting),
-            'promote_settings' => $this->createPromoteSettingsJson($this->promote)
+            'promote_settings' => $this->createPromoteSettingsJson($this->promote),
+            'prevent_disable' => $this->prevent_disable
         ];
     }
 

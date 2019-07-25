@@ -828,32 +828,41 @@
                                     <div class="col-12 col-xxl-6">
                                         Inside
                                         <app-input-group [buttons]="paddingButtons"
-                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer.button.padding[$event.name] = $event.value">
+                                                         (buttonChange)="widget.settings[this.deviceType].widget_settings.call_to_action.default.padding[$event.name] = $event.value">
 
                                         </app-input-group>
                                     </div>
                                     <div class="col-12 col-xxl-6 pt-3 pt-xxl-0">
                                         Outside
                                         <app-input-group [buttons]="marginButtons"
-                                                         (buttonChange)="widget.settings[deviceType].additional_settings.buttonContainer[$event.name] = $event.value">
+                                                         (buttonChange)="widget.settings[deviceType].widget_settings.call_to_action.default.margin[$event.name] = $event.value">
                                         </app-input-group>
                                     </div>
                                 </div>
                             </div>
                             <div class="settings--card">
                                 <div class="row">
-                                    <div class="col-12 bold">
+                                    <div class="col-6 bold">
                                         Button alignment
+                                    </div>
+                                    <div class="col-6 bold">
+                                        Width
                                     </div>
                                 </div>
                                 <div class="settings--card--body">
                                     <div class="row">
                                         <div class="col-6 vertical-align">
                                             <app-radio-button-group [class]="'full-width'"
-                                                                    [(currentValue)]="widget.settings[deviceType].additional_settings.buttonContainer.button.alignment"
+                                                                    [(currentValue)]="this.widget.settings[this.deviceType].widget_settings.call_to_action.default.fontSettings.alignment"
                                                                     [radioButtons]="radioButtons"
                                             >
                                             </app-radio-button-group>
+                                        </div>
+                                        <div class="col-6 editInput">
+                                            <input #ctaWidth
+                                                   placeholder="Width in % or px or auto"
+                                                   [(ngModel)]="widget.settings[deviceType].widget_settings.call_to_action.default.width"
+                                                   maxlength="120">
                                         </div>
                                     </div>
                                 </div>
@@ -1402,6 +1411,11 @@
                                                         (valueChange)="updateNumberOfSinglePayments($event)">
                                                     </app-inputNumber>
                                                 </div>
+                                                <div class="col-4 offset-2 pull-right">
+                                                    <app-checkbox
+                                                        [(checked)]="widget.settings[deviceType].payment_settings.once_prices.custom_price"
+                                                        [name]="'Custom price option'"></app-checkbox>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <ng-container
@@ -1579,7 +1593,7 @@
                                     <angular-editor class="angular-editor--simple"
                                                     [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.title.text"></angular-editor>
                                 </div>
-                                <div class="col-12 bold">
+                                <div class="col-12 bold pt-3">
                                     <div class="settings--card--header">
                                         CTA - transfer
                                     </div>
@@ -1588,7 +1602,7 @@
                                     <angular-editor class="angular-editor--simple"
                                                     [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text"></angular-editor>
                                 </div>
-                                <div class="col-12 bold">
+                                <div class="col-12 boldpt-3">
                                     <div class="settings--card--header">
                                         CTA - payBySquare
                                     </div>
@@ -1626,9 +1640,18 @@
                                     <angular-editor class="angular-editor--simple"
                                                     [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.title.text"></angular-editor>
                                 </div>
-                                <div class="col-12 bold">
+                                <div class="col-12 bold pt-3">
                                     <div class="settings--card--header">
-                                        CTA - redirect to my-profile
+                                        CTA - redirect to my profile description above button
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.cta.description"></angular-editor>
+                                </div>
+                                <div class="col-12 bold pt-3">
+                                    <div class="settings--card--header">
+                                        CTA - redirect to my profile
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">

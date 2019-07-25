@@ -300,10 +300,10 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
         this.marginButtons = [];
 
-        this.marginButtons.push(new RadioButton('top', this.widget.settings[this.deviceType].additional_settings.buttonContainer.top, assetsUrl + 'images/icons/margin_top.svg'))
-        this.marginButtons.push(new RadioButton('right', this.widget.settings[this.deviceType].additional_settings.buttonContainer.right, assetsUrl + 'images/icons/margin_right.svg'))
-        this.marginButtons.push(new RadioButton('bottom', this.widget.settings[this.deviceType].additional_settings.buttonContainer.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
-        this.marginButtons.push(new RadioButton('left', this.widget.settings[this.deviceType].additional_settings.buttonContainer.bottom, assetsUrl + 'images/icons/margin_left.svg'))
+        this.marginButtons.push(new RadioButton('top', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.top, assetsUrl + 'images/icons/margin_top.svg'))
+        this.marginButtons.push(new RadioButton('right', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.right, assetsUrl + 'images/icons/margin_right.svg'))
+        this.marginButtons.push(new RadioButton('bottom', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
+        this.marginButtons.push(new RadioButton('left', this.widget.settings[this.deviceType].widget_settings.call_to_action.default.margin.bottom, assetsUrl + 'images/icons/margin_left.svg'))
 
 
         this.shadowButtons = [];

@@ -34,7 +34,8 @@ class WidgetResource extends Resource
                 'desktop' => ($widgetSettings == null) ? null : json_decode($widgetSettings->desktop, true),
                 'tablet' => ($widgetSettings == null) ? null : json_decode($widgetSettings->tablet, true),
                 'mobile' => ($widgetSettings == null) ? null : json_decode($widgetSettings->mobile, true)
-            ]
+            ],
+            'prevent_disable' => $this->prevent_disable
         ];
     }
 }

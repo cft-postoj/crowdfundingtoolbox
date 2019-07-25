@@ -75,6 +75,7 @@ export class Widget {
                 },
                 call_to_action: {
                     default: {
+                        width: 'auto',
                         padding: {
                             top: '0',
                             right: '0',
@@ -95,6 +96,7 @@ export class Widget {
                             fontSize: 24
                         },
                         design: {
+                            width: 'auto',
                             fill: {
                                 active: true,
                                 color: '#B71100',
@@ -490,6 +492,7 @@ export class Widget {
                 },
                 call_to_action: {
                     default: {
+                        width: 'auto',
                         padding: {
                             top: '0',
                             right: '0',
@@ -878,6 +881,7 @@ export class Widget {
                 },
                 call_to_action: {
                     default: {
+                        width: 'auto',
                         padding: {
                             top: '0',
                             right: '0',

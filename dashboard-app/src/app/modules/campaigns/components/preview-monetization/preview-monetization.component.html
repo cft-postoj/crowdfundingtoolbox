@@ -8,10 +8,9 @@
         <div class="cft--monetization--container-step-1">
             <div class="cft--monatization--title"
                  [ngStyle]="getMonetizationTitleStyles()"
-                 [innerHTML]="(widget.settings[deviceType].payment_settings.second_step.title) ?
-                 '<h1>' +
-                 widget.settings[deviceType].payment_settings.second_step.title.text +
-                 '</h1>' : ''">
+                 *ngIf=widget.settings[deviceType].payment_settings.monetization_title?.text>
+                <h1 [ngStyle]="getMonetizationTitleStyles()" [innerHtml]="widget.settings[deviceType].payment_settings.monetization_title.text">
+                </h1>
             </div>
             <div class="cft--monatization--donation-button-wrapper cft--monatization--only-monthly"
                  [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value}"
@@ -97,8 +96,7 @@
             <form id="cft--monatization--form--donate" onsubmit="parent.handleSubmit(this, event)" class="form"
                   method="post" novalidate>
                 <div class="cft--monatization--form-group--donate" [ngStyle]="getFormGroupStyle()">
-                    <label for="cft--monatization--form--donate--email" class="label" [ngStyle]="getLabelStyle()">Váš
-                        e-mail</label>
+                    <label for="cft--monatization--form--donate--email" class="label" [ngStyle]="getLabelStyle()">Your email</label>
                     <input class="cft--monatization--form--donate--email" type="email"
                            id="cft--monatization--form--donate--email" [ngStyle]="getEmailDonateStyle()"
                            name="email"
@@ -110,37 +108,35 @@
                 <div class="cft--monatization--form--donate--terms" [ngStyle]="getFormGroupStyle()">
                     <input id="cft--monatization--form--donate--terms" type="checkbox" name="terms_agreed" value="0"
                            required>
-                    <label style="display: inline;" for="cft--monatization--form--donate--terms">{{widget.settings[deviceType].payment_settings.terms.text}}</label>
+                    <label style="display: inline; padding-left: 6px;" for="cft--monatization--form--donate--terms">{{widget.settings[deviceType].payment_settings.terms.text}}</label>
                     <label id="cft--monatization--form--donate--terms-error"
                            [ngStyle]="getErrorStyle()"
                            class="error"
                            for="cft--monatization--form--donate--terms">Please agree with terms and conditions</label>
                 </div>
                 <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="ctaReplaced()">
-                    <button type="submit" class="cft--button"
-                            [ngStyle]="getButtonStyles()">
-                        {{widget.settings[deviceType].cta.text}}
+                    <button type="submit" class="cft__cta__button"
+                            [ngStyle]="getButtonStyles()" [innerHtml]="widget.settings[deviceType].cta.text">
                     </button>
                 </div>
             </form>
             <div class="cft--monatization--additional-links cft--monatization--only-monthly"
                  [ngStyle]="additionalLinksStyle()"
                  *ngIf="widget.settings[deviceType].payment_settings.payment_type == paymentTypes.both.value">
-                <a href="javascript:void(0)" onclick="parent.oneTimePayment()">Jednorazový príspevok</a>
+                <a href="javascript:void(0)" onclick="parent.oneTimePayment()">One-time payment</a>
             </div>
             <div class="cft--monatization--additional-links cft--monatization--only-one-time cft--monatization--hidden"
                  [ngStyle]="additionalLinksStyle()"
                  *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
-                <a href="javascript:void(0)" onclick="parent.monthlyPayment()">Podporujte nás pravidelne</a>
+                <a href="javascript:void(0)" onclick="parent.monthlyPayment()">Monthly donation</a>
             </div>
         </div>
         <div class="cft--monetization--container-step-2  cft--monatization--hidden">
             <div class="cft--monatization--title"
                  [ngStyle]="getMonetizationTitleStyles()"
-                 [innerHTML]="(widget.settings[deviceType].payment_settings.second_step.title.text) ?
-             '<h1>' +
-             widget.settings[deviceType].payment_settings.second_step.title.text +
-             '</h1>' : ''">
+                 *ngIf=widget.settings[deviceType].payment_settings.second_step.title.text>
+                <h1 [ngStyle]="getMonetizationTitleStyles()" [innerHtml]="widget.settings[deviceType].payment_settings.second_step.title.text">
+                </h1>
             </div>
             <div class="payment-options cft--monatization--hidden">
                 <label class="payment-options__button"
@@ -242,29 +238,27 @@
             <!--payment option for bank transfer-->
             <div class="cft--button-container payment-option" [ngStyle]="getButtonContainerStyles()" data-id="1"
                  *ngIf="ctaReplaced()">
-                <a type="submit" class="cft--button--redirect"
+                <a type="submit" class="cft__cta__button cft--button--redirect"
                    [ngStyle]="getButtonStyles()" href="" target="_blank"
-                   onclick="parent.donationInProgress(this)">
-                    {{widget.settings[deviceType].payment_settings.second_step.cta.transfer.text}}
+                   onclick="parent.donationInProgress(this)" [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text">
                 </a>
             </div>
             <!--payment option for pay by square -->
             <div class="cft--button-container payment-option cft--monatization--hidden" [ngStyle]="getButtonContainerStyles()" data-id="3"
                  *ngIf="ctaReplaced()">
-                <div type="submit" class="cft--button--redirect"
+                <div type="submit" class="cft__cta__button cft--button--redirect"
                    [ngStyle]="getButtonStyles()" href="http://google.com" target="_blank"
-                   onclick="parent.donationInProgress(this)">
-                    {{widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text}}
+                   onclick="parent.donationInProgress(this)" [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text">
                 </div>
             </div>
         </div>
         <div class="cft--monetization--container-step-3  cft--monatization--hidden">
             <div class="cft--monatization--title"
                  [ngStyle]="getMonetizationTitleStyles()"
-                 [innerHTML]="(widget.settings[deviceType].payment_settings.third_step.title.text) ?
-             '<h1>' +
-             widget.settings[deviceType].payment_settings.third_step.title.text +
-             '</h1>' : ''">
+                 *ngIf=widget.settings[deviceType].payment_settings.third_step.title.text>
+                <h1 [ngStyle]="getMonetizationTitleStyles()"
+                    [innerHtml]="widget.settings[deviceType].payment_settings.third_step.title.text">
+                </h1>
             </div>
             <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
                 <tbody>
@@ -287,11 +281,10 @@
             </h4>
             <div class="cft--button-container payment-option" [ngStyle]="getButtonContainerStyles()"
                  *ngIf="ctaReplaced()">
-                <div type="submit" class="cft--button--redirect"
-                     [ngStyle]="getButtonStyles()" href="http://google.com" target="_blank"
-                     onclick="parent.donationInProgress(this)">
-                    {{widget.settings[deviceType].payment_settings.third_step.cta.text}}
-                </div>
+                <a type="submit" class="cft__cta__button cft--button--redirect cft__redirect-to-my-account"
+                     [ngStyle]="getButtonStyles()" target="_blank"
+                   [innerHtml]="widget.settings[deviceType].payment_settings.third_step.cta.text">
+                </a>
             </div>
         </div>
     </div>

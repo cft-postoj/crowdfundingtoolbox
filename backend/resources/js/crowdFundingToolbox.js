@@ -1,7 +1,6 @@
-import {
-    setCookie, getCookie
-} from "./helpers";
+import {getCookie, setCookie} from "./helpers";
 import {apiUrl} from './constants/url';
+import * as myAccountTexts from "./json/myAccount";
 
 const sidebarPlaceholder = document.getElementById('cr0wdfundingToolbox-sidebar');
 const fixedPlaceholder = document.getElementById('cr0wdfundingToolbox-fixed');
@@ -100,6 +99,7 @@ function getWidgets(apiUrl) {
                             break;
                     }
                 }
+                registerLoginButtons();
             }
         }
     };
@@ -213,6 +213,20 @@ function registerInsertValue(apiUrl) {
 
         })
     });
+}
+
+// insert redirect specified in myAccountUrl to all elements with class name cft__redirect-to-my-account
+function registerLoginButtons() {
+
+    const buttons = document.getElementsByClassName('cft__redirect-to-my-account');
+    for (var i=0; i < buttons.length; i++ ) {
+        console.log(buttons[i].onclick);
+        buttons[i].onclick = () => {
+            if (location.href.indexOf(myAccountTexts.myAccountUrl) === -1)
+                location.href = myAccountTexts.myAccountUrl;
+        }
+        console.log(buttons[i].onclick);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {

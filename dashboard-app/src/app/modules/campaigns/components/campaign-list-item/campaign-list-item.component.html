@@ -1,6 +1,6 @@
 <tr *ngFor="let item of items" class="list-items--item" [ngClass]="{'blur':!item.active}">
     <td>
-        <app-switcher [(checked)]="item.active" (checkedChange)="emitActive(item)" [id]="item.id"></app-switcher>
+        <app-switcher [(checked)]="item.active" (checkedChange)="emitActive(item)" [id]="item.id" [disabled]="item.prevent_disable"></app-switcher>
     </td>
     <td class="pointer" (click)="openDetail(item.id)">
         <p class="list-items--item--name" [ngClass]="{'title': item.active}">
