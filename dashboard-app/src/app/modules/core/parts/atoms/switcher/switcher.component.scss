@@ -39,7 +39,9 @@
       transform: translateX(-100%);
     }
   }
-
+  &:disabled + label {
+    cursor: not-allowed;
+  }
 
   + label:active:after {
     width: 31px;

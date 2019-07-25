@@ -15,6 +15,9 @@ export class SwitcherComponent implements OnInit {
     @Input()
     public checked: boolean;
 
+    @Input()
+    public disabled:false;
+
     @Output()
     public checkedChange = new EventEmitter<boolean>();
 

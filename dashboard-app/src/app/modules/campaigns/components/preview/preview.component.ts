@@ -12,10 +12,10 @@ import {
 } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {of, Subscription} from 'rxjs';
-import {iframeCode, globalStyles} from '../preview/previewCode';
+import {globalStyles, iframeCode} from '../preview/previewCode';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Widget} from '../../models';
-import {devices, widgetTypes, backgroundTypes, RadioButton} from '../../../core/models';
+import {backgroundTypes, devices, RadioButton, widgetTypes} from '../../../core/models';
 import {PreviewService, WidgetService} from '../../services';
 import {ConvertHexService} from '../../../core/services';
 
@@ -133,6 +133,26 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
 
+        //hover styles
+        let hoverStyleElement = document.createElement('style');
+        hoverStyleElement.setAttribute('class', 'hoverStyles');
+        hoverStyleElement.type = 'text/css';
+
+        let hoverStyles = parent.getElementsByClassName("hoverStyles") as any;
+        for (let style of hoverStyles) {
+            style.remove()
+        }
+
+        const cssHoverStyles = `
+            .cft__cta__button:hover{
+                ${this.getHoverButtonStyles()}
+             }
+            `;
+
+        hoverStyleElement.appendChild(document.createTextNode(cssHoverStyles));
+        parent.appendChild(hoverStyleElement);
+
+
     }
 
     public generateHTMLFromWidgets() {
@@ -153,8 +173,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             htmlsWrapper.widgets[index].id = this.widget.id;
             for (const type in this.deviceTypes) {
                 if (this.deviceTypes.hasOwnProperty(type)) {
-                    this.ref.detectChanges();
                     this.deviceType = this.deviceTypes[type].name;
+                    this.ref.detectChanges();
                     this.recreateStyles();
                     htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML;
                 }
@@ -294,8 +314,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         };
         const dynamicStyle = {
             'background-color': this.widget.settings[this.deviceType].widget_settings.general.background.color,
-            backgroundColor: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.backgroundColor,
-
         }
 
         const result = {...defaultStyle, ...dynamicStyle};

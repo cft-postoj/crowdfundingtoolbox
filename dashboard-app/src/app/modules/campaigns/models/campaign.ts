@@ -7,6 +7,7 @@ export class Campaign {
     description: string = '';
     headline_text: string = '';
     targeting = new Targeting();
+    prevent_disable:boolean;
     promote_settings = {
         start_date_value: '',
         start_date_json: {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()},
@@ -140,6 +141,7 @@ export class Campaign {
         },
         call_to_action: {
             default: {
+                width: 'auto',
                 padding: {
                     top: '10',
                     right: '25',

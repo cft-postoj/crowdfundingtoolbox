@@ -315,12 +315,21 @@ export function createBankButtons(monetizationEl, bankButtonsData) {
     bankButtonsWrapper.innerHTML = '';
     //max 5 buttons and then wrap them into select element as options
     for (var i = 0; i <= 4 && i < bankButtonsData.length; i++) {
-        bankButtonsWrapper.insertAdjacentHTML('beforeEnd',
-            `<div class="bank-button__container"> 
+        if(bankButtonsData[i].image == null) {
+            bankButtonsWrapper.insertAdjacentHTML('beforeEnd',
+                `<div class="bank-button__container"> 
+                        <div class="bank-button" data-bank-link="${bankButtonsData[i].redirect_link}" onclick="parent.setBankButton(this)">
+                            <span>${bankButtonsData[i].title}</span>
+                        </div> 
+                  </div>`);
+        } else {
+            bankButtonsWrapper.insertAdjacentHTML('beforeEnd',
+                `<div class="bank-button__container"> 
                         <div class="bank-button" data-bank-link="${bankButtonsData[i].redirect_link}" onclick="parent.setBankButton(this)">
                             <img src="${bankButtonsData[i].image.url}" alt="${bankButtonsData[i].title}">
                         </div> 
                   </div>`);
+        }
     }
     //create from 6th and later bank button select's option
     if (bankButtonsData.length > 5) {

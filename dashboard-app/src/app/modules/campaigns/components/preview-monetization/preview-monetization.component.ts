@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {
     changePaymentOptions,
@@ -12,11 +12,11 @@ import {
     setActiveButtonOneTime,
     setBankButton,
     showSecondStep,
+    showThirdPage,
+    step,
     trackEmailOnChange,
     trackInsertValue,
-    validateForm,
-    step,
-    showThirdPage
+    validateForm
 } from '../preview/landing';
 import {Widget} from '../../models';
 import {PreviewService} from '../../services';
@@ -29,7 +29,7 @@ import {environment} from '../../../../../environments/environment';
     templateUrl: './preview-monetization.component.html',
     styleUrls: ['./preview-monetization.component.scss']
 })
-export class PreviewMonetizationComponent implements OnInit {
+export class PreviewMonetizationComponent implements OnInit, OnChanges {
 
     @Input()
     public widget = new Widget();
@@ -56,6 +56,11 @@ export class PreviewMonetizationComponent implements OnInit {
             this.recreateStyles();
         })
 
+        this.recreateStyles();
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        this.ref.detectChanges();
         this.recreateStyles();
     }
 
@@ -161,6 +166,7 @@ export class PreviewMonetizationComponent implements OnInit {
             this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color);
 
         let defaultStyles = {
+            width: ctaStyles.default.width,
             padding: this.addPx(ctaStyles.default.padding.top) + ' ' +
                 this.addPx(ctaStyles.default.padding.right) + ' ' +
                 this.addPx(ctaStyles.default.padding.bottom) + ' ' +
@@ -192,7 +198,8 @@ export class PreviewMonetizationComponent implements OnInit {
             '-moz-border-radius-bottomright': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             'border-bottom-right-radius': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             cursor: 'pointer',
-            textDecoration: 'none'
+            textDecoration: 'none',
+            transition: '0.5s all'
         };
 
         if (this.widget.widget_type.method == widgetTypes.fixed.name) {
@@ -209,11 +216,10 @@ export class PreviewMonetizationComponent implements OnInit {
     }
 
     getButtonContainerStyles() {
-        let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer;
+        let additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer.button;
         let ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
         let containerStyles = {
-            display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
-            width: additionalSettings.width,
+            display: ctaStyles.default.display,
             position: additionalSettings.position,
             //top: additionalSettings.top,
             //right: additionalSettings.right,
@@ -317,7 +323,10 @@ export class PreviewMonetizationComponent implements OnInit {
     getLabelStyle() {
         return {
             width: '100%',
-            display: 'block'
+            display: 'block',
+            color: 'inherit',
+            'text-align': 'left',
+            'font-size': '100%'
         }
     }
 
@@ -331,7 +340,7 @@ export class PreviewMonetizationComponent implements OnInit {
         return {
             'color': 'inherit',
             'padding': '6px',
-            'max-width': '320px'
+            width: '100%'
         }
     }
 

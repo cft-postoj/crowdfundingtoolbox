@@ -309,6 +309,7 @@ class WidgetService implements WidgetServiceInterface
             ),
             'call_to_action' => array(
                 'default' => array(
+                    'width' => 'auto',
                     'padding' => array(),
                     'margin' => array(),
                     'fontSettings' => array(),

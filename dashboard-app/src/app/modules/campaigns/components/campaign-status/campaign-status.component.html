@@ -3,7 +3,7 @@
         <div class="stats-title">
             <span>{{widget.widget_type.name}}</span>
             <app-switcher [checked]="widget.active" (checkedChange)="toggleActive(widget)" [id]="id"
-                          class="float-right"></app-switcher>
+                          class="float-right" [disabled]="widget.prevent_disable"></app-switcher>
         </div>
         <div class="font-italic fs12">
             Last edited:
