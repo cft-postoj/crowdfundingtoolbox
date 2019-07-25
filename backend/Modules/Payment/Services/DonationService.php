@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Modules\Payment\Entities\Donation;
 use Modules\Payment\Entities\DonationInitialize;
 use Modules\Payment\Repositories\DonationRepository;
-use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Repositories\PortalUserRepository;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\TrackingService;
@@ -64,8 +63,9 @@ class DonationService
     {
         try {
             // TODO: otestovat
+            $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
             $trackingShow = $this->trackingService->getTrackingShowById($data['show_id']);
-            $user = $this->portalUserService->registerDuringDonation($data['show_id'], $data['email'], $trackingShow->visit['user_cookie'], $data['terms']);
+            $user = $this->portalUserService->registerDuringDonation($data['show_id'], $data['email'], $trackingShow->visit['user_cookie'], $data['terms'], $bankOption->accountNumber);
             $bankButtons = $this->bankButtonService->getBankButtons();
 
             $donation = Donation::create([
@@ -77,8 +77,7 @@ class DonationService
                 'amount_initialized' => $data['amount']
             ]);
             $qrCode = $this->payBySquareService->getQRCodeFromData($user->portalUser->variableSymbol->variableSymbol, $data['amount'], $data['frequency']);
-            $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
-            return array(
+           return array(
                 'variable_symbol' => $user->portalUser->variableSymbol->variable_symbol,
                 'bank_account' => $bankOption->accountNumber,
                 'bankButtons' => $bankButtons,
@@ -100,17 +99,6 @@ class DonationService
          return $donation;
     }
 
-    /** Create new user
-     * @param $data
-     * @return id of user
-     */
-    private function handleUserDuringInitialize($data): User
-    {
-
-        $trackingShow = $this->trackingService->getTrackingShowById($data['show_id']);
-        $user = $this->portalUserService->registerDuringDonation($data['show_id'], $data['email'], $trackingShow->visit['user_cookie'], $data['terms']);
-
-    }
 
     public function isUserOneTimeSupporter($donationsData)
     {

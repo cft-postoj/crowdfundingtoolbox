@@ -9,13 +9,11 @@
     IBAN: <b>{{$iban}}</b><br />
     VARIABLE SYMBOL: <b>{{$variableSymbol}}</b>
     <hr>
-    <br />
-    We created new account for you and you can set your password for your account here: https://www.postoj.sk?setPassword={{$emailToken}}
-    Please click on the following button, fill in all your contact details and get a gift. The link is valid for 1 hour from delivery. <br/>
+    <br/>
+    To ensure, that we can give you all benefits, please visit your profile and check your personal data.
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', $portal_url . '/moj-ucet?generatedResetToken=' . $emailToken . '&loggedIn=true')
+@section('buttonUrl', $portal_url . '/moj-ucet')
 @section('buttonText', 'My account')
 @section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')
-

@@ -5,7 +5,6 @@ namespace Modules\UserManagement\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ForgottenPasswordEmail extends Mailable
 {
@@ -30,7 +29,7 @@ class ForgottenPasswordEmail extends Mailable
     public function build()
     {
         return $this->subject('Forgotten password')
-            ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
             ->view('emails.forgottenPassword');
     }
 }

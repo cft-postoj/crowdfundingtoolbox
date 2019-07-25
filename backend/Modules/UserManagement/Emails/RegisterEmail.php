@@ -5,7 +5,6 @@ namespace Modules\UserManagement\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RegisterEmail extends Mailable
 {
@@ -31,7 +30,7 @@ class RegisterEmail extends Mailable
     public function build()
     {
         return $this->subject('Registration on www.postoj.sk')
-            ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
             ->view('emails.register');
     }
 }

@@ -34,7 +34,7 @@ class BackOfficeRegisterEmail extends Mailable
     public function build()
     {
         return $this->subject('CrowdfundingToolbox registration')
-            ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
             ->view('emails.backoffice.backofficeRegister');
     }
 }

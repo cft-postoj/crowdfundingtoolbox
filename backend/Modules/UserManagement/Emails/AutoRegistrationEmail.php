@@ -5,14 +5,13 @@ namespace Modules\UserManagement\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
+//auto registration email during donation. Contains infromation about payment and information about new account
 class AutoRegistrationEmail extends Mailable
 {
     use Queueable, SerializesModels;
     private $username;
     private $emailToken;
-    private $paymentMethod;
     private $variableSymbol;
     private $iban;
 
@@ -21,11 +20,10 @@ class AutoRegistrationEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($username, $emailToken, $paymentMethod, $variableSymbol, $iban)
+    public function __construct($username, $emailToken, $variableSymbol, $iban)
     {
         $this->username = $username;
         $this->emailToken = $emailToken;
-        $this->paymentMethod = $paymentMethod;
         $this->variableSymbol = $variableSymbol;
         $this->iban = $iban;
     }
@@ -38,9 +36,9 @@ class AutoRegistrationEmail extends Mailable
     public function build()
     {
         return $this->subject('Thank you for your support')
-            ->from('smtp@crowdfundingtoolbox.news', env('MAIL_FROM_NAME'))
+            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
             ->view('emails.autoRegister', ['username' => $this->username,
-                'emailToken' => $this->emailToken, 'paymentMethod' => $this->paymentMethod,
+                'emailToken' => $this->emailToken,
                 'variableSymbol' => $this->variableSymbol, 'iban' => $this->iban]);
     }
 }

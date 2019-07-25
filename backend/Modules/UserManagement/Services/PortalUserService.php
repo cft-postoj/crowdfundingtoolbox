@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 use Modules\Payment\Services\VariableSymbolService;
 use Modules\UserManagement\Emails\AutoRegistrationEmail;
+use Modules\UserManagement\Emails\DonationInitializeEmail;
 use Modules\UserManagement\Emails\ForgottenPasswordEmail;
 use Modules\UserManagement\Emails\RegisterEmail;
 use Modules\UserManagement\Entities\DonorStatus;
@@ -197,7 +198,7 @@ class PortalUserService implements PortalUserServiceInterface
             }
 
             // TODO check this
-            $this->userRepository->coupleUserWithCookie($portalUser->id, intval($request['user_cookie']));
+            $this->couplePortalUserIdAndUserCookie($portalUser->id, intval($request['user_cookie']));
             return \response()->json([
                 'token' => $generatedToken,
                 'message' => 'Account was successfully created.'
@@ -341,7 +342,7 @@ class PortalUserService implements PortalUserServiceInterface
     }
 
 
-    public function registerDuringDonation($showId, string $email, int $cookie, bool $terms): User
+    public function registerDuringDonation($showId, string $email, int $cookie, bool $terms, string $iban): User
     {
         $generatedPassword = $this->generatedUserTokenService->generatePasswordToken();
 
@@ -350,6 +351,10 @@ class PortalUserService implements PortalUserServiceInterface
         $existInPortalUserTable = ($user === null) ? false :
             (($this->portalUserRepository->get($user->id) !== null) ? true : false);
         if ($existInUserTable && $existInPortalUserTable) {
+            Mail::to($user->email)->send(
+                new DonationInitializeEmail($user->username, $user->portalUser->variableSymbol->variable_symbol, $iban));
+            // TODO check this
+            $this->couplePortalUserIdAndUserCookie($user->portalUser->id, $cookie);
             return $user;
         } else if ($existInUserTable && !$existInPortalUserTable) {
             /*
@@ -367,11 +372,13 @@ class PortalUserService implements PortalUserServiceInterface
                 'portal_user_id' => $portalUserId,
                 'pairing_type' => 'variable_symbol'
             ));
-            Mail::to($user->email)->send(new AutoRegistrationEmail($user->username, $generatedToken));
+            Mail::to($user->email)->send(
+                new AutoRegistrationEmail($user->username, $generatedToken, $iban, $user->portalUser->variableSymbol->variable_symbol));
 
             if ($this->userDetailRepository->get($user->id) === null) {
                 $this->userDetailRepository->create($user->id);
             }
+            $this->couplePortalUserIdAndUserCookie($user->portalUser->id, $cookie);
             return $this->userRepository->getWithVariableSymbol($user->id);
         } else {
 
@@ -392,7 +399,8 @@ class PortalUserService implements PortalUserServiceInterface
                 'pairing_type' => 'variable_symbol'
             ));
             $user = $this->userRepository->getWithVariableSymbol($newUserId);
-            Mail::to($user->email)->send(new RegisterEmail($generatedToken));
+            Mail::to($user->email)->send(
+                new AutoRegistrationEmail($user->username, $generatedToken, $iban, $user->portalUser->variableSymbol->variable_symbol));
             if ($this->userDetailRepository->get($newUserId) === null) {
                 $this->userDetailRepository->create($newUserId);
             }
@@ -408,7 +416,12 @@ class PortalUserService implements PortalUserServiceInterface
 
     public function couplePortalUserIdAndUserCookie($portalUserId, $cookieId): UserCookieCouple
     {
-        return $this->userRepository->coupleUserWithCookie($portalUserId, $cookieId);
+        //catch db exception to prevent fall of another functions
+        try {
+            return $this->userRepository->coupleUserWithCookie($portalUserId, $cookieId);
+        } catch (\Exception $exception) {
+            return new UserCookieCouple();
+        }
     }
 
     public function getDonationsByUser($userId)
