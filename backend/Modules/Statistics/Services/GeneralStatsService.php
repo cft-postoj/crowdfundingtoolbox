@@ -179,6 +179,34 @@ class GeneralStatsService
                                         $custom_amount += $don->amount;
                                         break;
                                 }
+                                if($don->widgetReferral !== null) {
+                                    switch ($don->widgetReferral->widget_type_id) {
+                                        case 1: // landing page
+                                            $langing_page_amount += $don->amount;
+                                            break;
+                                        case 2: // sidebar
+                                            $sidebar_amount += $don->amount;
+                                            break;
+                                        case 3: // leaderboard
+                                            $leaderboard_amount += $don->amount;
+                                            break;
+                                        case 4: // popup
+                                            $popup_amount += $don->amount;
+                                            break;
+                                        case 5: // fixed
+                                            $fixed_amount += $don->amount;
+                                            break;
+                                        case 6: // locked
+                                            $locked_amount += $don->amount;
+                                            break;
+                                        case 7: // article widget
+                                            $article_widget_amount += $don->amount;
+                                            break;
+                                        case 9: // custom widget
+                                            $custom_amount += $don->amount;
+                                            break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -345,6 +373,42 @@ class GeneralStatsService
                                         $custom_amount += $don->amount;
                                         $custom_donation_count++;
                                         break;
+                                }
+                                if($don->widgetReferral !== null) {
+                                    switch ($don->widgetReferral->widget_type_id) {
+                                        case 1: // landing page
+                                            $langing_page_amount += $don->amount;
+                                            $landing_page_donation_count++;
+                                            break;
+                                        case 2: // sidebar
+                                            $sidebar_amount += $don->amount;
+                                            $sidebar_donation_count++;
+                                            break;
+                                        case 3: // leaderboard
+                                            $leaderboard_amount += $don->amount;
+                                            $leaderboard_donation_count++;
+                                            break;
+                                        case 4: // popup
+                                            $popup_amount += $don->amount;
+                                            $popup_donation_count++;
+                                            break;
+                                        case 5: // fixed
+                                            $fixed_amount += $don->amount;
+                                            $fixed_donation_count++;
+                                            break;
+                                        case 6: // locked
+                                            $locked_amount += $don->amount;
+                                            $locked_donation_count++;
+                                            break;
+                                        case 7: // article widget
+                                            $article_widget_amount += $don->amount;
+                                            $article_widget_donation_count++;
+                                            break;
+                                        case 9: // custom widget
+                                            $custom_amount += $don->amount;
+                                            $custom_donation_count++;
+                                            break;
+                                    }
                                 }
                             }
                         }
