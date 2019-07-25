@@ -12,20 +12,23 @@
         <h3>We appreciate your support for paying to bank account</h3>
         <div class="cft--grid--row cft--mt-30">
             <div class="cft--grid--lg-2 cft--grid--sm-12">
-                <svg width="120px" height="120px" viewBox="0 0 100 100" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <svg width="120px" height="120px" viewBox="0 0 100 100" version="1.1"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
                     <desc>Created with Lunacy</desc>
                     <g id="Group">
-                        <path d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100Z" id="Oval" fill="#F0F3F6" stroke="none" />
-                        <path d="M1.46852 8.6277L8.95289e-13 10.4109L11.5084 21.2554L31.5002 1.5669L29.9798 -7.55144e-14L11.5084 18.3979L1.46852 8.6277Z" transform="translate(36 40)" id="green-check" fill="#38BF61" stroke="none" />
+                        <path d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100Z"
+                              id="Oval" fill="#F0F3F6" stroke="none"/>
+                        <path d="M1.46852 8.6277L8.95289e-13 10.4109L11.5084 21.2554L31.5002 1.5669L29.9798 -7.55144e-14L11.5084 18.3979L1.46852 8.6277Z"
+                              transform="translate(36 40)" id="green-check" fill="#38BF61" stroke="none"/>
                     </g>
                 </svg>
             </div>
             <div class="cft--grid--lg-10 cft--grid--sm-12">
                 <ul>
-                    <li>Your donation: <b>10 €</b></li>
-                    <li>Your variable symbol: <b>10001</b></li>
-                    <li>Our bank account number: <b>SK123456789</b></li>
-                    <li>Donating from 01.01.2016</li>
+                    <li>Your donation: <b id="cft--yourDonation"></b></li>
+                    <li>Your variable symbol: <b id="cft--variableSymbol"></b></li>
+                    <li>Our bank account number: <b id="cft--portalBankAccount"></b></li>
+                    <li>Donating from <span id="cft--donatingFrom"></span></li>
                 </ul>
                 <a href="/podpora">
                     Edit your support
@@ -45,57 +48,27 @@
 
     </div>
 </div>
-<br />
+<br/>
 <div class="cft--accountBox cft--accountBox--notSupporter">
     <a href="/podpora">
         Support us now at first time
     </a>
 </div>
 
-<h3 class="cft--mt-20 cft--mb-10">Donations</h3>
-<table class="cft--donationsTable">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Payment method</th>
-        <th>Period</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>1.</td>
-        <td>15.05.2019</td>
-        <td>15 €</td>
-        <td>Card pay</td>
-        <td>One-time payment</td>
-        <td class="ok">PROCESSED</td>
-    </tr>
-    <tr>
-        <td>2.</td>
-        <td>15.05.2019</td>
-        <td>15 €</td>
-        <td>Card pay</td>
-        <td>One-time payment</td>
-        <td class="waiting">WAITING</td>
-    </tr>
-    <tr>
-        <td>3.</td>
-        <td>15.05.2019</td>
-        <td>15 €</td>
-        <td>Card pay</td>
-        <td>One-time payment</td>
-        <td class="waiting">WAITING</td>
-    </tr>
-    <tr>
-        <td>4.</td>
-        <td>15.05.2019</td>
-        <td>15 €</td>
-        <td>Card pay</td>
-        <td>One-time payment</td>
-        <td class="waiting">WAITING</td>
-    </tr>
-    </tbody>
-</table>
+<h3 class="cft--mt-20 cft--mb-10 cft--is-supported">Donations</h3>
+<div class="cft--donationsTable cft--is-supported">
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Payment method</th>
+            <th>Period</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

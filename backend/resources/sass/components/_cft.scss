@@ -34,3 +34,9 @@
   padding: 0 !important;
   @include transitionSingle(.3s ease);
 }
+
+body {
+  @media screen and (max-width: 991px){
+    margin-top: 110px !important;
+  }
+}

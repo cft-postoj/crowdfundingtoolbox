@@ -1,4 +1,5 @@
 @import '../helpers/variables';
+
 button {
   &#cft--loginButton {
     border: 1px solid $iron;
@@ -11,6 +12,7 @@ button {
     position: relative;
     font-weight: bold;
     padding: 0 25px 0 50px;
+
     &:before {
       position: absolute;
       content: '';
@@ -20,14 +22,19 @@ button {
       margin-left: -25px;
       margin-top: 1px;
     }
+
     &.active {
       border: 1px solid $selago;
       background: $selago;
     }
+
     &:hover, &:focus, &:visited {
       border: 1px solid $curiousBlue;
       background: $selago;
     }
 
+    @media screen and (max-width: 991px) {
+      margin: 0 auto 15px auto;
+    }
   }
 }

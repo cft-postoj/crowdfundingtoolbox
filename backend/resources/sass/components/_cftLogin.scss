@@ -1,4 +1,8 @@
 .cftLogin {
+  float:right;
+  @media screen and (max-width: 991px){
+    float: none !important;
+  }
   &--cftLoginWrapper {
     position: fixed;
     top: 0;

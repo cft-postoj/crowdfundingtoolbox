@@ -23,6 +23,7 @@
     }
   }
   &--supporter {
+    display: none;
     &--footer {
       position: relative;
       width: 100%;
@@ -42,6 +43,9 @@
         padding: 7px 15px;
         font-weight: 600;
         margin-top: -8px;
+        @media screen and (max-width: 991px) {
+          margin-top: 5px;
+        }
         text-align: center;
         @include transitionSingle(.3s ease);
         &:hover {
@@ -53,6 +57,7 @@
     }
   }
   &--notSupporter {
+    display: none;
     background: transparent;
     a {
       display: block;
@@ -73,4 +78,8 @@
       }
     }
   }
+}
+
+&--is-supported, &--not-supported {
+  display: none;
 }

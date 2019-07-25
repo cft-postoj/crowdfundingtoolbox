@@ -54,7 +54,7 @@ class PaymentRepository
             ->whereDate('transaction_date', '<=', $to)
             ->with(['donation.portalUser.user.userDetail',
                 'donation.widget.campaign',
-                'donation.widget.widgetType','paymentMethod'])
+                'donation.widget.widgetType', 'paymentMethod'])
             ->orderBy('transaction_date', 'DESC');
 
         if ($monthly === 'true') {
@@ -78,5 +78,6 @@ class PaymentRepository
             ::where('iban', $iban)
             ->get();
     }
+
 
 }

@@ -398,7 +398,7 @@ class PortalUserService implements PortalUserServiceInterface
             }
 
             // get userCookie by show_id
-            $trackingShow =  $this->trackingService->getTrackingShowById($showId);
+            $trackingShow = $this->trackingService->getTrackingShowById($showId);
             // TODO check this
             $this->couplePortalUserIdAndUserCookie($portalUser->id, $trackingShow->visit->user_cookie);
             $user['secret'] = \Tymon\JWTAuth\Facades\JWTAuth::fromUser($user);
@@ -408,7 +408,7 @@ class PortalUserService implements PortalUserServiceInterface
 
     public function couplePortalUserIdAndUserCookie($portalUserId, $cookieId): UserCookieCouple
     {
-       return $this->userRepository->coupleUserWithCookie($portalUserId, $cookieId);
+        return $this->userRepository->coupleUserWithCookie($portalUserId, $cookieId);
     }
 
     public function getDonationsByUser($userId)
@@ -434,5 +434,11 @@ class PortalUserService implements PortalUserServiceInterface
     public function removeById($id)
     {
         return $this->portalUserRepository->removeById($id);
+    }
+
+    public function getUserSupportData()
+    {
+        $userId = $this->getPortalUserIdFromToken();
+        return $this->portalUserRepository->getUserSupportData($userId);
     }
 }

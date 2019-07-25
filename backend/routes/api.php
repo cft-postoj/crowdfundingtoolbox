@@ -201,6 +201,8 @@ Route::group([
       Route::put('update-user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@update');
       Route::get('base-user-data', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getBase');
       Route::get('logout', '\Modules\UserManagement\Http\Controllers\PortalUsersController@logout');
+      Route::get('your-support', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getUserSupportData');
+      Route::get('payment-options', '\Modules\Payment\Http\Controllers\PaymentController@getPaymentMethods');
 
         // *********************************************
         // PAYMENT

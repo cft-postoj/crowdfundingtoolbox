@@ -262,3 +262,35 @@ export function hideElementAfterTimeout(element, timeout) {
         }
     }, timeout);
 }
+
+export function getDateFormat(date) {
+    let formattedDate = date.split(' ')[0];
+    formattedDate = formattedDate.split('-');
+    return formattedDate[2] + '.' + formattedDate[1] + '.' + formattedDate[0];
+}
+
+export function getPaymentMethod(id) {
+    let paymentMethod = '';
+    switch (id) {
+        case 1:
+            paymentMethod = 'Bank transfer';
+            break;
+        case 2:
+            paymentMethod = 'Card pay';
+            break;
+        case 3:
+            paymentMethod = 'Pay by square';
+            break;
+        case 4:
+            paymentMethod = 'Google pay';
+            break;
+        case 5:
+            paymentMethod = 'Apple pay';
+            break;
+    }
+    return paymentMethod;
+}
+
+export function getPaymentPeriod(is_monthly_donation) {
+    return (is_monthly_donation) ? 'Monthly support' : 'One-time support';
+}

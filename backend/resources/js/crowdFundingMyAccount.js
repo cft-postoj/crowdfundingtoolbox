@@ -6,6 +6,7 @@ import {apiUrl, viewsUrl} from "./constants/url";
 import * as myAccountTexts from "./json/myAccount";
 import {accountInit} from "./my-account/account";
 import {previewInit} from "./my-account/preview";
+import {donationsInit} from "./my-account/donations";
 
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('cft--myaccount') !== null) {
@@ -98,6 +99,8 @@ function sectionContent(section, message) {
                     accountInit(message)
                 } else if (section === 'preview') {
                     previewInit();
+                } else if (section === 'donation') {
+                    donationsInit();
                 }
                 showSubmenu();
             }

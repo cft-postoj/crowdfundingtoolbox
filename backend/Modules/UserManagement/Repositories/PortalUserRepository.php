@@ -88,4 +88,14 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->delete();
     }
 
+    public function getUserSupportData($id)
+    {
+        return $this->model
+            ::where('user_id', $id)
+            ->with('donations')
+            ->with('variableSymbol')
+            ->with('userPaymentOptions')
+            ->first();
+    }
+
 }

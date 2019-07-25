@@ -5,9 +5,18 @@ namespace Modules\Payment\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Payment\Services\PaymentMethodsService;
 
 class PaymentController extends Controller
 {
+
+    protected $paymentMethodsService;
+
+    public function __construct(PaymentMethodsService $paymentMethodsService)
+    {
+        $this->paymentMethodsService = $paymentMethodsService;
+    }
+
     /*
      * FOR PORTAL USERS
      */
@@ -78,5 +87,10 @@ class PaymentController extends Controller
     protected function payViaApplePay(Request $request)
     {
 
+    }
+
+    protected function getPaymentMethods()
+    {
+        return $this->paymentMethodsService->getAllMethods();
     }
 }

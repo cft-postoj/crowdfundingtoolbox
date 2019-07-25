@@ -1,29 +1,39 @@
 &--donationsTable {
-  width: 100%;
-  thead {
-    background: $sail;
-    color: $white;
-    th {
-      text-align: center;
-      padding: 7px 5px;
-    }
-  }
-  tbody {
-    padding: 7px 15px;
-    tr {
-      &:nth-child(odd) {
-        background: $white;
-      }
-      td {
+
+  overflow-x: auto;
+  table {
+    width: 100%;
+    thead {
+      background: $sail;
+      color: $white;
+      th {
         text-align: center;
-        padding: 5px;
-        &.ok {
-          color: $green;
+        padding: 7px 5px;
+      }
+    }
+    tbody {
+      padding: 7px 15px;
+      tr {
+        &:nth-child(odd) {
+          background: $white;
         }
-        &.waiting {
-          color: $red;
+        &:nth-child(even) {
+          @media screen and (max-width: 991px) {
+            background: $athensGray;
+          }
+        }
+        td {
+          text-align: center;
+          padding: 5px;
+          &.ok {
+            color: $green;
+          }
+          &.waiting {
+            color: $red;
+          }
         }
       }
     }
   }
+
 }

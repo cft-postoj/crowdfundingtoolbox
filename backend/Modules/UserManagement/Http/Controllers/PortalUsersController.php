@@ -105,4 +105,12 @@ class PortalUsersController extends Controller
         return $this->portalUserService->getDonationsByUserPortalAndDate($id, $request['from'], $request['to']);
     }
 
+    protected function getUserSupportData()
+    {
+        return \response()->json(
+            $this->portalUserService->getUserSupportData(),
+            Response::HTTP_OK
+        );
+    }
+
 }
