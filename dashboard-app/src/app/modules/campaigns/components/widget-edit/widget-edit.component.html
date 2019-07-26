@@ -24,7 +24,8 @@
                     </div>
                 </div>
                 <p *ngIf="(widget.widget_type.method == widgetTypes.locked.name) ||  (widget.widget_type.method == widgetTypes.sidebar.name) ||  (widget.widget_type.method == widgetTypes.leaderboard.name)">
-                    <b>Take a note, this widget is positioning on whole width of parent container width (on your portal side) by default. If you want change widget width, set it up in BACKGROUND.</b>
+                    <b>Take a note, this widget is positioning on whole width of parent container width (on your portal
+                        side) by default. If you want change widget width, set it up in BACKGROUND.</b>
                 </p>
                 <div class="collapse-container" *ngIf="widget.widget_type.method === widgetTypes.locked.name"
                      [ngClass]="{'flex-open':isOpened(9)}">
@@ -149,20 +150,21 @@
                                             Color
                                         </div>
                                         <div class="col">
-                                            <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.color"/>
                                         </div>
                                         <div class="col vertical-align">
                                             Size (px)
                                         </div>
                                         <div class="col">
                                             <app-inputNumber
-                                                    [(value)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.fontSize"
-                                                    [class]="'float-right'">
+                                                [(value)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.fontSettings.fontSize"
+                                                [class]="'float-right'">
                                             </app-inputNumber>
                                         </div>
                                     </div>
@@ -182,12 +184,13 @@
                                     </div>
                                     <div class="col-4"
                                          *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.fill.active">
-                                        <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.fill.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.fill.color"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.fill.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.fill.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.fill.color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.fill.color"/>
                                     </div>
                                 </div>
                                 <div class="row pt-1 pb-1">
@@ -197,14 +200,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.active">
+                                        *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.border.color"/>
                                         </div>
                                         <div class="col-2 offset-1 vertical-align">
                                             Size (px)
@@ -223,14 +227,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.active">
+                                        *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.shadow.color"/>
                                         </div>
                                         <div class="col-5 vertical-align">
                                             <app-input-group [buttons]="shadowButtons"
@@ -253,12 +258,12 @@
                                     <div class="row">
                                         <div class="col-3 vertical-align">
                                             <app-radio-button-group
-                                                    [(currentValue)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.radius.active"
-                                                    [radioButtons]="radiusButtons">
+                                                [(currentValue)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.radius.active"
+                                                [radioButtons]="radiusButtons">
                                             </app-radio-button-group>
                                         </div>
                                         <ng-container
-                                                *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.radius.active">
+                                            *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.design.radius.active">
                                             <div class="col-3 vertical-align">
                                                 <app-input-group [buttons]="allRadiusesButton"
                                                                  (buttonChange)="writeRadiusValue($event.value)"
@@ -307,12 +312,13 @@
                                         Color
                                     </div>
                                     <div class="col-4 color-picker--simple">
-                                        <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.fontSettings.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.fontSettings.color"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.fontSettings.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.fontSettings.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.fontSettings.color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.fontSettings.color"/>
                                     </div>
                                 </div>
                             </div>
@@ -330,12 +336,13 @@
                                     </div>
                                     <div class="col-4"
                                          *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.fill.active">
-                                        <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.fill.color"
-                                               class="btn color-picker--custom"
-                                               [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.fill.color"
-                                               [cpPosition]="'top'"
-                                               [cpPresetColors]="colors"
-                                               [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.fill.color"/>
+                                        <input
+                                            [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.fill.color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.fill.color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.fill.color"/>
                                     </div>
                                 </div>
                                 <div class="row pt-1 pb-1">
@@ -345,14 +352,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.active">
+                                        *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.border.color"/>
                                         </div>
                                         <div class="col-2 offset-1 vertical-align">
                                             Size (px)
@@ -371,14 +379,15 @@
                                         </app-checkbox>
                                     </div>
                                     <ng-container
-                                            *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.active">
+                                        *ngIf="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.active">
                                         <div class="col-4">
-                                            <input [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.color"
-                                                   class="btn color-picker--custom"
-                                                   [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.color"
-                                                   [cpPosition]="'top'"
-                                                   [cpPresetColors]="colors"
-                                                   [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.color"/>
+                                            <input
+                                                [value]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.color"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.color"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].additional_settings.continueReadingButtonContainer.button.hover.design.shadow.color"/>
                                         </div>
                                         <div class="col-5 vertical-align">
                                             <app-input-group [buttons]="shadowButtons"
@@ -393,7 +402,7 @@
                     </div>
                 </div>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}"
-                *ngIf="widget.widget_type.method !== widgetTypes.custom.name">
+                     *ngIf="widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="collapsible--header row" (click)="openTab(1)">
                         <div class="col-11">
                             BACKGROUND
@@ -408,9 +417,12 @@
                     <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(1)">
                         <div class="settings--card">
                             <div class="row">
-                                <span class="col-12 font-weight-bold">
-                                    Width & Height
-                                </span>
+                                <div class="col-12">
+                                    <span>
+                                        Width & Height
+                                    </span>
+                                    <app-help class="pl-4 position-relative" [text]="'Width and height in px, % or string (no need to write px, just number should be fine)'"></app-help>
+                                </div>
                             </div>
                             <div class="row mt-2">
                                 <div class="col-6 editInput">
@@ -624,13 +636,15 @@
                                         Size (px)
                                     </div>
                                     <div class="col-3">
-                                        <app-inputNumber *ngIf="widget.settings[deviceType].additional_settings.textContainer.text.fontSize === undefined"
-                                                [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
-                                                [class]="'float-right'">
+                                        <app-inputNumber
+                                            *ngIf="widget.settings[deviceType].additional_settings.textContainer.text.fontSize === undefined"
+                                            [(value)]="widget.settings[deviceType].widget_settings.general.fontSettings.fontSize"
+                                            [class]="'float-right'">
                                         </app-inputNumber>
-                                        <app-inputNumber *ngIf="widget.settings[deviceType].additional_settings.textContainer.text.fontSize !== undefined"
-                                                         [(value)]="widget.settings[deviceType].additional_settings.textContainer.text.fontSize"
-                                                         [class]="'float-right'">
+                                        <app-inputNumber
+                                            *ngIf="widget.settings[deviceType].additional_settings.textContainer.text.fontSize !== undefined"
+                                            [(value)]="widget.settings[deviceType].additional_settings.textContainer.text.fontSize"
+                                            [class]="'float-right'">
                                         </app-inputNumber>
                                     </div>
                                     <div class="col-3 vertical-align">
@@ -1180,39 +1194,106 @@
                                 ></app-checkbox>
                             </div>
                         </div>
-                        <div class="settings--card">
+                        <div class="settings--card" *ngIf="widget.settings[deviceType].payment_settings.active">
                             <div class="row">
                                 <div class="col-12 bold">
                                     <div class="settings--card--header">
                                         Monetization title
                                     </div>
                                 </div>
-                                <div class="col-12 mt-2">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.monetization_title.text"></angular-editor>
+                            </div>
+                            <div class="settings--card">
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col-12 bold">
+                                            <div class="settings--card--header">
+                                                Text
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            <angular-editor class="angular-editor--simple"
+                                                            [(ngModel)]="widget.settings[deviceType].payment_settings.monetization_title.text"></angular-editor>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mt-3">
-                                <div class="col-3 vertical-align">
-                                    Title color:
+                            <div class="settings--card">
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <div class="col font-weight-bold">Position</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 col-xxl-2 vertical-align">
+                                            Alignment
+                                        </div>
+                                        <div class="col-8 col-xxl-2 vertical-align">
+                                            <app-radio-button-group [class]="'full-width'"
+                                                                    [(currentValue)]="widget.settings[deviceType].payment_settings.monetization_title.alignment"
+                                                                    [radioButtons]="radioButtons">
+                                            </app-radio-button-group>
+                                        </div>
+                                        <div class="col-2 vertical-align">
+                                            Margin
+                                        </div>
+                                        <div class="col-10 col-xxl-6 pt-2 pt-xxl-0">
+                                            <app-input-group [buttons]="marginMonetizationHeadlineText"
+                                                             (buttonChange)="widget.settings[deviceType].payment_settings.monetization_title.margin[$event.name] = $event.value">
+                                            </app-input-group>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-3 color-picker--simple">
-                                    <input
-                                        [value]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
-                                        class="btn color-picker--custom"
-                                        [style.background]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
-                                        [cpPosition]="'bottom'"
-                                        [cpPresetColors]="colors"
-                                        [(colorPicker)]="widget.settings[deviceType].payment_settings.monetization_title.textColor"/>
-                                </div>
-                                <div class="col-3 vertical-align">
-                                    Alignment:
-                                </div>
-                                <div class="col-3">
-                                    <app-radio-button-group [class]="'full-width'"
-                                                            [(currentValue)]="widget.settings[deviceType].payment_settings.monetization_title.alignment"
-                                                            [radioButtons]="radioButtons">
-                                    </app-radio-button-group>
+                            </div>
+                            <div class="settings--card">
+                                <div class="settings--card--body">
+                                    <div class="row">
+                                        <span class="col font-weight-bold">Design</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 vertical-align">
+                                            Font family
+                                        </div>
+                                        <div class="col-3 color-picker--simple">
+                                            <app-dropdown [items]="fontFamilyDropdownButtons"
+                                                          [class]="'classic default-border align-right'"
+                                                          [title]="'Choose font'"
+                                                          [customFonts]="true"
+                                                          [(currentValue)]="widget.settings[deviceType].payment_settings.monetization_title.fontSettings.fontFamily">
+                                            </app-dropdown>
+                                        </div>
+                                        <div class="col-3 vertical-align">
+                                            Text color
+                                        </div>
+                                        <div class="col-3 color-picker--simple color-picker--fixed ">
+                                            <input
+                                                [value]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].payment_settings.monetization_title.textColor"
+                                                [cpPosition]="'bottom'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].payment_settings.monetization_title.textColor"/>
+                                        </div>
+                                        <div class="col-3 vertical-align ">
+                                            Size (px)
+                                        </div>
+                                        <div class="col-3">
+                                            <app-inputNumber
+                                                [(value)]="widget.settings[deviceType].payment_settings.monetization_title.fontSettings.fontSize"
+                                                [class]="'float-right'">
+                                            </app-inputNumber>
+                                        </div>
+                                        <div class="col-3 vertical-align">
+                                            Background color
+                                        </div>
+                                        <div class="col-3 color-picker--simple color-picker--fixed">
+                                            <input
+                                                [value]="widget.settings[deviceType].payment_settings.monetization_title.fontSettings.backgroundColor"
+                                                class="btn color-picker--custom"
+                                                [style.background]="widget.settings[deviceType].payment_settings.monetization_title.fontSettings.backgroundColor"
+                                                [cpPosition]="'top'"
+                                                [cpPresetColors]="colors"
+                                                [(colorPicker)]="widget.settings[deviceType].payment_settings.monetization_title.fontSettings.backgroundColor"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1562,7 +1643,8 @@
                                         Terms and conditions
                                     </div>
                                     <div class="col-12">
-                                        <angular-editor [(ngModel)]="widget.settings[deviceType].payment_settings.terms.text"></angular-editor>
+                                        <angular-editor
+                                            [(ngModel)]="widget.settings[deviceType].payment_settings.terms.text"></angular-editor>
                                     </div>
                                 </div>
                             </div>
@@ -1570,7 +1652,8 @@
                     </div>
                 </div>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(6)}"
-                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name &&
+                        widget.settings[deviceType].payment_settings.active">
                     <div class="row collapsible--header" (click)="openTab(6)">
                         <div class="col-11">
                             MONETIZATION STEP 2
@@ -1619,7 +1702,8 @@
                     </div>
                 </div>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(7)}"
-                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
+                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name &&
+                        widget.settings[deviceType].payment_settings.active">
                     <div class="row collapsible--header" (click)="openTab(7)">
                         <div class="col-11">
                             MONETIZATION STEP 3
@@ -1704,7 +1788,9 @@
                     <div class="settings--card--wrapper show" [ngbCollapse]="isOpened(11)">
                         <div class="settings--card">
                             <div class="settings--card--body">
-                                <p>Here you can write your own html widget with inline styles. You can type plain text or <b>click on html button under this text</b> and start write your own html code.</p>
+                                <p>Here you can write your own html widget with inline styles. You can type plain text
+                                    or <b>click on html button under this text</b> and start write your own html code.
+                                </p>
                                 <angular-editor class="angular-editor--html"
                                                 [(ngModel)]="widget.settings[deviceType].additional_settings.customHtmlWidget"></angular-editor>
                             </div>
