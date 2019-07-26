@@ -47,7 +47,11 @@ export class TableHeaderComponent implements OnInit {
     setFilter(type, input) {
         this.model.columns.forEach(column => {
             if (column.description === this.column.description) {
-                column.filter[type] = input;
+                if (this.column.value_name.indexOf('user_detail.searchName') > -1) {
+                    column.filter[type] = input.toLowerCase();
+                } else {
+                    column.filter[type] = input;
+                }
             }
         });
         this.modelChange.emit(this.model);

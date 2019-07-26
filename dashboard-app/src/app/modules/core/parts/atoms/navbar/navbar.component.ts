@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NavbarItem} from '../../../models/navbar-item';
-import {Router} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {Location} from '@angular/common';
+import 'rxjs/add/operator/pairwise';
+import 'rxjs/add/operator/filter';
 
 @Component({
     selector: 'app-navbar',
@@ -12,7 +15,16 @@ export class NavbarComponent implements OnInit {
     @Input()
     navItems: NavbarItem[];
 
-    constructor(private router: Router) {
+    private previousUrl: string;
+
+
+    constructor(private router: Router, private location: Location) {
+        router.events
+            .filter(e => e instanceof NavigationEnd)
+            .pairwise().subscribe((e: any) => {
+            console.log(e);
+            localStorage.setItem('previousRoute', e[0].urlAfterRedirects);
+        });
     }
 
     ngOnInit() {
@@ -20,7 +32,11 @@ export class NavbarComponent implements OnInit {
     }
 
     showPage(index) {
-        return this.router.navigateByUrl(this.navItems[index].url);
+        setTimeout(() => {
+            this.router.navigateByUrl(localStorage.getItem('previousRoute'), {skipLocationChange: false}).then(() =>
+                this.router.navigate([this.navItems[index].url]));
+        }, 100);
+
     }
 
     private checkUrl() {

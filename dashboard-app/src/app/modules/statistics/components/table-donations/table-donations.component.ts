@@ -10,6 +10,8 @@ import {PaymentMethodsService} from '../../../payment/services/payment-methods.s
 import {Column} from '../../../core/models/column';
 import moment from 'moment/src/moment';
 import {Moment} from 'moment';
+import {ModalComponent} from '../../../core/parts/atoms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-table-donations',
@@ -27,6 +29,7 @@ export class TableDonationsComponent implements OnInit {
     @Input() public disabledDate: boolean = true;
     @Input() public donations: Donation[] = [];
     @Input() public showDates = true;
+    @Input() public isListOfAllDonations: boolean = false;
     public routing = Routing;
     public loading = true;
 
@@ -41,6 +44,10 @@ export class TableDonationsComponent implements OnInit {
     public model: TableModel = new TableModel();
     public availableColumns: Column[] = [];
 
+    alertOpen: boolean = false;
+    alertMessage: string = '';
+    alertType: string = '';
+
     config = {
         height: '500px',
         search: true,
@@ -50,6 +57,7 @@ export class TableDonationsComponent implements OnInit {
 
     constructor(private donationService: DonationService,
                 private paymentMethodsService: PaymentMethodsService,
+                private _modalService: NgbModal,
                 public tableService: TableService, private router: Router) {
     }
 
@@ -108,7 +116,7 @@ export class TableDonationsComponent implements OnInit {
             filter: new Filter()
         });
         this.availableColumns.push({
-            value_name: 'portal_user.user.user_detail.last_name',
+            value_name: 'portal_user.user.user_detail.searchName',
             description: 'Donor name',
             type: 'text',
             filter: new Filter()
@@ -211,6 +219,26 @@ export class TableDonationsComponent implements OnInit {
         this.to = event.end;
         this.getPaymentMethods();
         this.refreshTable();
+    }
+
+    public deleteDonation(event, donationId, donorEmail) {
+        event.preventDefault();
+        event.stopPropagation();
+        const modalRef = this._modalService.open(ModalComponent);
+        modalRef.componentInstance.title = 'Delete donation with id ' + donationId;
+        modalRef.componentInstance.text = 'Are you sure you want to delete donation with id ' + donationId +
+            ' from user with email ' + donorEmail;
+        modalRef.componentInstance.loading = false;
+        modalRef.componentInstance.duplicate = 'donation-assignment';
+        modalRef.result.then((data) => {
+            // change id for donation
+            this.donationService.deleteDonation(donationId).subscribe((d) => {
+                this.alertMessage = 'Successfully remove donation with id ' + donationId + '.';
+                this.alertType = 'success';
+                this.alertOpen = true;
+                this.refreshTable();
+            });
+        });
     }
 
 }

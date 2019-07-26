@@ -51,9 +51,10 @@ export class CtaSettingsComponent implements OnInit {
         this.fontWeight.push({title: "Light", value: 100});
         this.fontWeight.push({title: "Medium", value: 400});
 
-        this.generalSettings.fonts.map((val, key) => {
-            this.fontFamily.push({title: val, value: val});
-        });
+        this.radioButtons=[];
+        this.radiusButtons.push(new RadioButton("active", false, "/assets/images/icons/radius_disable.svg"));
+        this.radiusButtons.push(new RadioButton("disabled", true, "/assets/images/icons/radius_enable.svg"));
+
         this.recreateButtons();
 
         this.calcSpecificRadius();
@@ -74,9 +75,7 @@ export class CtaSettingsComponent implements OnInit {
         this.specificRadiusButtons.push(new RadioButton("br", this.call_to_action.default.design.radius.br, "/assets/images/icons/radius_LeftBottom.svg"))
         this.specificRadiusButtons.push(new RadioButton("bl", this.call_to_action.default.design.radius.bl, "/assets/images/icons/radius_LeftBottom.svg"))
 
-        this.radioButtons=[];
-        this.radiusButtons.push(new RadioButton("active", false, "/assets/images/icons/radius_disable.svg"));
-        this.radiusButtons.push(new RadioButton("disabled", true, "/assets/images/icons/radius_enable.svg"));
+
 
         this.paddingButtons = [];
         this.paddingButtons.push(new RadioButton("top", this.call_to_action.default.padding.top, "/assets/images/icons/padding_top.svg"))
@@ -124,7 +123,10 @@ export class CtaSettingsComponent implements OnInit {
     fetchGeneralSettings() {
         this.settingsService.getGeneralPageSettings().subscribe(response => {
             this.generalSettings = response;
-        })
+            response.fonts.map((font, key) => {
+                this.fontFamily.push({title: font, value: font});
+            });
+        });
     }
 
     fetchCtaSettings() {

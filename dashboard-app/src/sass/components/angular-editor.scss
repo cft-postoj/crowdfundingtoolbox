@@ -6,6 +6,13 @@
         }
     }
 }
+.angular-editor--halfSimple {
+    .angular-editor-toolbar {
+        div:nth-child(7),div:nth-child(8),div:nth-child(9),div:nth-child(10){
+            display: none!important;
+        }
+    }
+}
 .angular-editor--classic {
     #editor {
         min-height: 200px !important;

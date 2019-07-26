@@ -112,6 +112,7 @@ Route::group([
             // *********************************************
             // DONATIONS
             Route::get('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@getDetail');
+            Route::delete('donations/{id}/delete', '\Modules\Payment\Http\Controllers\DonationController@deleteDonation');
             Route::put('donations/{id}', '\Modules\Payment\Http\Controllers\DonationController@updateAssignemnt');
             Route::get('donations/{id}/cancel-assignment', '\Modules\Payment\Http\Controllers\DonationController@cancelAssignment');
 

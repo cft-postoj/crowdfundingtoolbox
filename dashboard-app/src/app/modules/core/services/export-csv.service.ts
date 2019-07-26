@@ -14,8 +14,8 @@ export class ExportCsvService {
     public makeExport(title: string, exportType: string, from: string, to: string) {
         return this.http.post(`${environment.backOfficeUrl}${environment.exportCsv}`, {
             title: title,
-            from: (from !== undefined) ? this.helperService.writeDateAsString(from) : null,
-            to: (to !== undefined) ? this.helperService.writeDateAsString(to) : null,
+            from: (from !== undefined) ? from : null,
+            to: (to !== undefined) ? to : null,
             type: exportType
         }, {
             responseType: 'blob'

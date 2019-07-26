@@ -33,6 +33,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     @Input() public exportTitle: string = '';
     @Input() public exportType: string = '';
     @Input() public exportFileName: string = '';
+    @Input() public isDashboardPreview: boolean = false;
 
     public showDelete: boolean = false;
 
@@ -89,7 +90,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'user.user_detail.last_name',
+            value_name: 'user.user_detail.searchName',
             description: 'User name',
             type: 'text',
             filter: new Filter()
@@ -173,6 +174,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log(this.from)
         this.getUsers();
     }
 

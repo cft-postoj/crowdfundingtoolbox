@@ -37,10 +37,10 @@ class GeneratedUserTokenService implements GeneratedUserTokenServiceInterface
         /*
                      * After one hour token will be soft deleted (if user won't click to link in email)
                      */
-        $job = (new RemoveGeneratedToken($lastToken))->delay(Carbon::now()->addMinutes(60));
-        dispatch($job);
-        // TODO SERVER FIX
-        call_in_background('queue:work --deamon');
+        //$job = (new RemoveGeneratedToken($lastToken))->delay(Carbon::now()->addMinutes(60));
+        //dispatch($job);
+        // TODO SERVER FIX or check date of created_at token in access via url
+        //call_in_background('queue:work --deamon');
         return $generatedToken;
     }
 

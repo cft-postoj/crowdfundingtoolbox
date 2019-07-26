@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {environment} from 'environments/environment';
 import {DropdownItem, sidebarType} from '../../models';
 import {Campaign} from '../../../campaigns/models';
@@ -7,6 +7,8 @@ import {Routing} from '../../../../constants/config.constants';
 import {PreviewService, CampaignService} from '../../../campaigns/services';
 import {ComponentCommunicationService} from '../../services';
 import {AuthenticationService} from '../../../user-management/services';
+import 'rxjs/add/operator/pairwise';
+import 'rxjs/add/operator/filter';
 
 @Component({
     selector: 'app-side-bar',
@@ -43,6 +45,12 @@ export class SideBarComponent implements OnInit {
                 private campaignService: CampaignService,
                 private previewService: PreviewService,
                 private componentComService: ComponentCommunicationService) {
+        router.events
+            .filter(e => e instanceof NavigationEnd)
+            .pairwise().subscribe((e: any) => {
+            console.log(e);
+            localStorage.setItem('previousRoute', e[0].urlAfterRedirects);
+        });
     }
 
     ngOnInit() {
@@ -74,7 +82,7 @@ export class SideBarComponent implements OnInit {
         this.campaignService.getAll().subscribe((campaigns: any) => {
             if (campaigns.data && campaigns.data.length) {
                 this.campaigns = campaigns.data;
-                this.showItem(this.campaignsItemName)
+                this.showItem(this.campaignsItemName, null)
             }
         }, (error) => {
             console.error(error);
@@ -118,10 +126,17 @@ export class SideBarComponent implements OnInit {
                 itemName = this.faqItemName;
                 break;
         }
-        return this.showItem(itemName);
+        return this.showItem(itemName, null);
     }
 
-    showItem(itemName: string) {
+    showItem(itemName: string, route: string) {
+        if (route !== null) {
+            setTimeout(() => {
+                this.router.navigateByUrl(localStorage.getItem('previousRoute'), {skipLocationChange: false}).then(() =>
+                    this.router.navigate([route]));
+            }, 100);
+        }
+
         if (itemName === this.campaignsItemName) {
             this.sidebarItems = [];
             // if (this.campaigns) {
@@ -146,6 +161,8 @@ export class SideBarComponent implements OnInit {
             this.isActive = false;
         }
         this.activeItem = itemName;
+
+
 
     }
 

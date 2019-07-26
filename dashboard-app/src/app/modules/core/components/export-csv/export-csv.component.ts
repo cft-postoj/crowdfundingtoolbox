@@ -64,9 +64,11 @@ export class ExportCsvComponent implements OnInit {
                     alertMessage: 'There was an error during export creating. ERROR: ' + error,
                     alertOpen: true
                 };
+                this.loadingEmitter.emit(false);
+                this.resultEmitter.emit(emitData);
             }, () => {
                 this.loadingEmitter.emit(false);
-                return this.resultEmitter.emit(emitData);
+                this.resultEmitter.emit(emitData);
             });
         }
     // }
