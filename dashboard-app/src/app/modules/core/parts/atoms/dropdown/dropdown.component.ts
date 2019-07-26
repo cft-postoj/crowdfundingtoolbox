@@ -3,7 +3,6 @@ import {DropdownItem} from "../../../models/dropdown-item";
 import {GoogleFontsService} from "../../../services/google-fonts.service";
 
 
-
 @Component({
     selector: 'app-dropdown',
     templateUrl: './dropdown.component.html',
@@ -35,7 +34,6 @@ export class DropdownComponent implements OnInit, OnChanges{
 
     ngOnInit() {
         this.setUp();
-        console.log('currentValue', this.currentValue);
     }
 
     ngOnChanges(){

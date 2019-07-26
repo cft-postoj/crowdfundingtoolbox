@@ -12,12 +12,11 @@ import {
     setActiveButtonOneTime,
     setBankButton,
     showSecondStep,
-    showThirdPage,
     step,
     trackEmailOnChange,
     trackInsertValue,
     validateForm
-} from '../preview/landing';
+} from './monetization-classic';
 import {Widget} from '../../models';
 import {PreviewService} from '../../services';
 import {ConvertHexService} from '../../../core/services';
@@ -83,22 +82,22 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
         style.type = 'text/css';
 
         const css = `
-            .active > .cft--monatization--donation-button{
+            [id^=cr0wdfundingToolbox] .active > .cft--monatization--donation-button{
                     color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
                     border-color: #32a300;
                 }
         
-            .cft--monatization--membership-checkbox.active:before{
+            [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox.active:before{
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
                     border: 1px solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color}
                 }
-            .cft--monatization--membership-checkbox.active:after{
+            [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox.active:after{
                     border: solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
                     border-width: 0 2px 2px 0;
                 }
                 
-            .cft--monatization--hidden{
+            [id^=cr0wdfundingToolbox] .cft--monatization--hidden{
                 display: none!important
              }
             `;
@@ -138,7 +137,6 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
         script.appendChild(document.createTextNode(donationInProgress.toString() + '\n'));
         script.appendChild(document.createTextNode(changePaymentOptions.toString() + '\n'));
         script.appendChild(document.createTextNode(step.toString() + '\n'));
-        script.appendChild(document.createTextNode(showThirdPage.toString() + '\n'));
 
         // change path in getEnvs and add domain if there is relative path in envs
         const isAbsolute = new RegExp('^([a-z]+://|//)', 'i');
@@ -164,7 +162,6 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
             ctaStyles.default.design.shadow.y + 'px ' +
             ctaStyles.default.design.shadow.b + 'px ' + '0px ' +
             this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color);
-
         let defaultStyles = {
             width: ctaStyles.default.width,
             padding: this.addPx(ctaStyles.default.padding.top) + ' ' +
@@ -176,7 +173,7 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
             textAlign: ctaStyles.default.fontSettings.alignment,
             color: ctaStyles.default.fontSettings.color,
             fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
-            display: this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display,
+            display: this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display || 'block',
             'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)
                 : 'transparent',
             border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.border.size + 'px solid ' +
@@ -198,7 +195,6 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
             '-moz-border-radius-bottomright': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             'border-bottom-right-radius': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             cursor: 'pointer',
-            textDecoration: 'none',
             transition: '0.5s all'
         };
 

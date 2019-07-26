@@ -1,27 +1,33 @@
 <div class="cft--monetization--container" [ngStyle]="getMonetizationContainerStyle()" id="cft-monetization__container"
      *ngIf="widget.settings[deviceType].payment_settings.active">
-    <form id="cft--monatization--form--donate">
-        <div class="cft--monatization--title" [innerHtml]="'Amount to donate: '">
+    <div class="cft--monetization--container-step-1">
+        <div class="cft--monatization--title"
+             [ngStyle]="getMonetizationTitleStyles()"
+             *ngIf=widget.settings[deviceType].payment_settings.monetization_title?.text>
+            <h1 [ngStyle]="getMonetizationTitleStyles()" [innerHtml]="widget.settings[deviceType].payment_settings.monetization_title.text">
+            </h1>
+        </div>
+        <div class="cft--monatization--title" [innerHtml]="'Amount: '">
         </div>
         <div class="cft--monatization--donation-button-wrapper cft--monatization--only-monthly"
              [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value}"
              [ngStyle]="getRowStyle()">
             <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
-                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == 'custom' }"
+                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == 'custom' }"
                  [ngStyle]="getMonatizationDonationButtonStyle()"
                  *ngIf="widget.settings[deviceType].payment_settings.monthly_prices.custom_price">
                 <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
                      onclick="parent.setActiveButtonMonthly(this, true)"
                      oninput="parent.setActiveButtonMonthly(this)">
-                    <input type="number" class="cft--monatization--donation-input-price"
-                           [ngStyle]="getDonationInputPriceStyle()" placeholder="custom"/>
+                    <input type="number" min="1" class="cft--monatization--donation-input-price hide-arrows"
+                           [ngStyle]="getDonationInputPriceStyle()" placeholder="+"/>
                     <div class="cft--monatization--donation-button-periodicity"
-                         [ngStyle]="getDonationButtonPeriodicityStyle()"> monthly
+                         [ngStyle]="getDonationButtonPeriodicityStyle()">
                     </div>
                 </div>
             </div>
             <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
-                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == option.value}"
+                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == option.value}"
                  [ngStyle]="getMonatizationDonationButtonStyle()"
                  *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options">
                 <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
@@ -32,14 +38,26 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="cft--monatization--donation-button-wrapper cft--monatization--only-one-time"
              [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value ||
-             widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value}"
+         widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value}"
              [ngStyle]="getRowStyle()">
+            <div class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
+                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.one_time_value == 'custom' }"
+                 [ngStyle]="getMonatizationDonationButtonStyle()"
+                 *ngIf="widget.settings[deviceType].payment_settings.once_prices.custom_price">
+                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
+                     onclick="parent.setActiveButtonOneTime(this, true)"
+                     oninput="parent.setActiveButtonOneTime(this)">
+                    <input type="number" min="1" class="cft--monatization--donation-input-price hide-arrows"
+                           [ngStyle]="getDonationInputPriceStyle()" placeholder="+"/>
+                </div>
+            </div>
             <div id="cft--monatization--donation-button--one-time"
                  class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
-                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == option.value}"
+                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.one_time_value == option.value}"
                  [ngStyle]="getMonatizationDonationButtonStyle()"
                  *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options">
                 <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
@@ -50,43 +68,63 @@
                     </div>
                 </div>
             </div>
-            <div class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
-                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.value == 'custom' }"
-                 [ngStyle]="getMonatizationDonationButtonStyle()"
-                 *ngIf="widget.settings[deviceType].payment_settings.once_prices.custom_price">
-                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
-                     onclick="parent.setActiveButtonOneTime(this, true)"
-                     oninput="parent.setActiveButtonOneTime(this)">
-                    <input type="number" class="cft--monatization--donation-input-price"
-                           [ngStyle]="getDonationInputPriceStyle()" placeholder="custom"/>
-                </div>
-            </div>
+
         </div>
         <div class="cft--monatization--title" [innerHtml]="'Frequency: '">
         </div>
-        <div class="cft--monatization--donation-button-wrapper" [ngStyle]="getRowStyle()">
-            <div id="cft--monatization--donation--monthly" class="cft--monatization--donation--one-monthly"
+        <div [ngStyle]="getRowStyle()">
+            <div class="cft--monatization--donation--monthly"
                  [ngClass]="{'active':widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value ||
-                 widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value}"
+             widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value}"
                  [ngStyle]="getMonatizationFrequencyButtonStyle()"
                  *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
-                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()" onclick="parent.monthlyPayment()">
+                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
+                     onclick="parent.monthlyPayment(this)">
                     <div style="text-align: center">Monthly</div>
                 </div>
             </div>
-            <div id="cft--monatization--donation--one-time" class="cft--monatization--donation-button" [ngStyle]="getMonatizationFrequencyButtonStyle()"
+            <div class="cft--monatization--donation--one-time"
+                 [ngStyle]="getMonatizationFrequencyButtonStyle()"
                  [ngClass]="{'active':widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value}"
-                 *ngIf="widget.settings[deviceType].payment_settings.payment_type == paymentTypes.both.value" >
-                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()" onclick="parent.oneTimePayment()">
+                 *ngIf="widget.settings[deviceType].payment_settings.payment_type == paymentTypes.both.value">
+                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
+                     onclick="parent.oneTimePayment(this)">
                     <div style="text-align: center">Once</div>
                 </div>
             </div>
         </div>
-        <div onsubmit="return parent.validateForm(this)" class="form" action="#"
+        <div class="cft--monatization--title" [innerHtml]="'Payment method:'">
+        </div>
+        <div class="cft--monatization--only-monthly" [ngStyle]="getRowStyle()">
+            <div class="payment-option" [ngClass]="'active'"
+                 [ngStyle]="getMonatizationFrequencyButtonStyle()"
+                 data-id="1" onclick="parent.changePaymentOptions(this)">
+                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()">
+                    <div style="text-align: center">Bank transfer</div>
+                </div>
+            </div>
+        </div>
+        <div class="cft--monatization--only-one-time cft--monatization--hidden" [ngStyle]="getRowStyle()">
+            <div class="payment-option" [ngClass]="'active'"
+                 [ngStyle]="getMonatizationFrequencyButtonStyle()"
+                 data-id="1" onclick="parent.changePaymentOptions(this)">
+                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()">
+                    <div style="text-align: center">Bank transfer</div>
+                </div>
+            </div>
+            <div class="payment-option"
+                 [ngStyle]="getMonatizationFrequencyButtonStyle()"
+                 data-id="3" onclick="parent.changePaymentOptions(this)">
+                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()">
+                    <div style="text-align: center">Pay by square</div>
+                </div>
+            </div>
+        </div>
+        <form onsubmit="return parent.handleSubmit(this, event)" class="cft--monatization--form--donate" action="#"
               method="post" novalidate>
             <div class="cft--monatization--form-group--donate" [ngStyle]="getFormGroupStyle()">
-                <label for="cft--monatization--form--donate--email" class="label" [ngStyle]="getLabelStyle()">Your
-                    e-mail</label>
+                <label for="cft--monatization--form--donate--email" [ngStyle]="getLabelStyle()">Your
+                    e-mail:</label>
                 <input class="cft--monatization--form--donate--email" type="email"
                        id="cft--monatization--form--donate--email" [ngStyle]="getEmailDonateStyle()"
                        name="email" required>
@@ -94,20 +132,228 @@
                        for="cft--monatization--form--donate--email">Wrong e-mail</label>
             </div>
             <div class="cft--monatization--form--donate--terms" [ngStyle]="getFormGroupStyle()">
-                <input id="cft--monatization--form--donate--terms" type="checkbox" name="terms_agreed" value="0" required>
-                <label for="cft--monatization--form--donate--terms">I agree with  <a
-                        href="https://podpora.postoj.sk/assets/donations-widget/pdf/suhlas_so_spracovanim_osobnych_udajov.pdf">terms and conditions</a></label>
+                <input id="cft--monatization--form--donate--terms" type="checkbox" name="terms_agreed" value="0"
+                       required>
+                <label style="display: inline; padding-left: 6px;" for="cft--monatization--form--donate--terms"
+                       [innerHtml]="widget.settings[deviceType].payment_settings.terms.text"></label>
                 <label id="cft--monatization--form--donate--terms-error"
                        [ngStyle]="getErrorStyle()"
                        class="error"
-                       for="cft--monatization--form--donate--terms">Please agree with terms and conditions</label>
+                       for="cft--monatization--form--donate--terms"> Please agree with terms and conditions</label>
             </div>
+
             <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="ctaReplaced()">
-                <button type="submit" class="cft--button"
+                <button type="submit" class="cft__cta__button"
                         [ngStyle]="getButtonStyles()">
                     {{widget.settings[deviceType].cta.text}}
                 </button>
             </div>
+        </form>
+    </div>
+    <div class="cft--monetization--container-step-2  cft--monatization--hidden">
+        <div class="cft--monatization--title"
+             [ngStyle]="getMonetizationTitleStyles()"
+             *ngIf=widget.settings[deviceType].payment_settings.second_step.title.text>
+            <h1 [ngStyle]="getMonetizationTitleStyles()"
+                [innerHtml]="widget.settings[deviceType].payment_settings.second_step.title.text">
+            </h1>
         </div>
-    </form>
+        <div class="payment-option__show" data-id="1">
+            <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="payment-title">IBAN</td>
+                    <td class="payment-value payment-iban"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Var. symbol</td>
+                    <td class="payment-value payment-vs"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Amount</td>
+                    <td class="payment-value"><span class="payment-amount"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="bank-button__wrapper">
+
+                <!--THIS COMMENTED CONTENT IS DYNAMICALLY REPLACED BASED ON RESPONSE FROM FIRST STEP USING FUNCTION-->
+                <!--createBankButtons(monetizationEl, bankButtonsData) from monetization.ts-->
+
+
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk" onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button bank-button__select" onclick="parent.setBankButton(this)">-->
+                <!--<select name="bank">-->
+                <!--<option disabled="" selected="">Iná banka</option>-->
+                <!--<option data-bank-link="https://www.fio.sk/ib2/login">Fio banka</option>-->
+                <!--<option data-bank-link="https://e-portal.jtbank.cz/index_sk.html">J&amp;T banka</option>-->
+                <!--<option data-bank-link="https://banking.oberbank.sk/smartoffice/sk/logon.htm">Oberbank-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://otpdirekt.otpbanka.sk/login/login_main_jelszoalapu.jsp">-->
+                <!--OTP-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://moja.postovabanka.sk/ib/logon.aspx">Poštová banka</option>-->
+                <!--<option data-bank-link="https://ib.primabanka.sk/ib/default.aspx">Prima banka</option>-->
+                <!--<option data-bank-link="https://ibank.privatbanka.sk/Extranet/pages/Login.aspx">Privat-->
+                <!--banka-->
+                <!--</option>-->
+                <!--<option  data-bank-link="https://ibs.sberbank.sk/ebweb/">Sberbank</option>-->
+                <!--<option  data-bank-link="https://sk.unicreditbanking.net/disp?r=57153.468477451475">-->
+                <!--Unicredit-->
+                <!--</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="qr__wrapper payment-option__show cft--monatization--hidden" data-id="3">
+            <div class="pay-by-square__wrapper">
+            </div>
+        </div>
+        <!--payment option for bank transfer-->
+        <div class="cft--button-container payment-option__show" [ngStyle]="getButtonContainerStyles()" data-id="1"
+             *ngIf="ctaReplaced()">
+            <a type="submit" class="cft__cta__button cft--button--redirect"
+               [ngStyle]="getButtonStyles()" href="" target="_blank"
+               onclick="parent.donationInProgress(this)" [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text">
+            </a>
+        </div>
+        <!--payment option for pay by square -->
+        <div class="cft--button-container payment-option__show cft--monatization--hidden" [ngStyle]="getButtonContainerStyles()" data-id="3"
+             *ngIf="ctaReplaced()">
+            <div type="submit" class="cft__cta__button cft--button--redirect"
+                 [ngStyle]="getButtonStyles()" href="http://google.com" target="_blank"
+                 onclick="parent.donationInProgress(this)" [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text">
+            </div>
+        </div>
+    </div>
+    <div class="cft--monetization--container-step-3  cft--monatization--hidden">
+        <div class="cft--monatization--title"
+             [ngStyle]="getMonetizationTitleStyles()"
+             *ngIf=widget.settings[deviceType].payment_settings.third_step.title.text>
+            <h1 [ngStyle]="getMonetizationTitleStyles()"
+                [innerHtml]="widget.settings[deviceType].payment_settings.third_step.title.text">
+            </h1>
+        </div>
+        <div class="payment-option__show" data-id="1">
+            <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="payment-title">IBAN</td>
+                    <td class="payment-value payment-iban"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Var. symbol</td>
+                    <td class="payment-value payment-vs"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Amount</td>
+                    <td class="payment-value"><span class="payment-amount"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="bank-button__wrapper">
+
+                <!--THIS COMMENTED CONTENT IS DYNAMICALLY REPLACED BASED ON RESPONSE FROM FIRST STEP USING FUNCTION-->
+                <!--createBankButtons(monetizationEl, bankButtonsData) from monetization.ts-->
+
+
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk" onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button bank-button__select" onclick="parent.setBankButton(this)">-->
+                <!--<select name="bank">-->
+                <!--<option disabled="" selected="">Iná banka</option>-->
+                <!--<option data-bank-link="https://www.fio.sk/ib2/login">Fio banka</option>-->
+                <!--<option data-bank-link="https://e-portal.jtbank.cz/index_sk.html">J&amp;T banka</option>-->
+                <!--<option data-bank-link="https://banking.oberbank.sk/smartoffice/sk/logon.htm">Oberbank-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://otpdirekt.otpbanka.sk/login/login_main_jelszoalapu.jsp">-->
+                <!--OTP-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://moja.postovabanka.sk/ib/logon.aspx">Poštová banka</option>-->
+                <!--<option data-bank-link="https://ib.primabanka.sk/ib/default.aspx">Prima banka</option>-->
+                <!--<option data-bank-link="https://ibank.privatbanka.sk/Extranet/pages/Login.aspx">Privat-->
+                <!--banka-->
+                <!--</option>-->
+                <!--<option  data-bank-link="https://ibs.sberbank.sk/ebweb/">Sberbank</option>-->
+                <!--<option  data-bank-link="https://sk.unicreditbanking.net/disp?r=57153.468477451475">-->
+                <!--Unicredit-->
+                <!--</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="qr__wrapper payment-option__show cft--monatization--hidden" data-id="3">
+            <div class="pay-by-square__wrapper">
+            </div>
+        </div>
+        <h4 style="text-align: center">
+            {{widget.settings[deviceType].payment_settings.third_step.cta.description}}
+        </h4>
+        <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()"
+             *ngIf="ctaReplaced()">
+            <a type="submit" class="cft__cta__button cft--button--redirect cft__redirect-to-my-account"
+               [ngStyle]="getButtonStyles()" target="_blank"
+               [innerHtml]="widget.settings[deviceType].payment_settings.third_step.cta.text">
+            </a>
+        </div>
+    </div>
 </div>

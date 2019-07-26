@@ -108,7 +108,8 @@
                 <div class="cft--monatization--form--donate--terms" [ngStyle]="getFormGroupStyle()">
                     <input id="cft--monatization--form--donate--terms" type="checkbox" name="terms_agreed" value="0"
                            required>
-                    <label style="display: inline; padding-left: 6px;" for="cft--monatization--form--donate--terms">{{widget.settings[deviceType].payment_settings.terms.text}}</label>
+                    <label style="display: inline; padding-left: 6px;" for="cft--monatization--form--donate--terms"
+                    [innerHtml]="widget.settings[deviceType].payment_settings.terms.text"></label>
                     <label id="cft--monatization--form--donate--terms-error"
                            [ngStyle]="getErrorStyle()"
                            class="error"
@@ -175,7 +176,7 @@
                 <div class="bank-button__wrapper">
 
                     <!--THIS COMMENTED CONTENT IS DYNAMICALLY REPLACED BASED ON RESPONSE FROM FIRST STEP USING FUNCTION-->
-                    <!--createBankButtons(monetizationEl, bankButtonsData) from landing.ts-->
+                    <!--createBankButtons(monetizationEl, bankButtonsData) from monetization.ts-->
 
 
                     <!--<div class="bank-button__container">-->
@@ -279,7 +280,7 @@
             <h4 style="text-align: center">
                 {{widget.settings[deviceType].payment_settings.third_step.cta.description}}
             </h4>
-            <div class="cft--button-container payment-option" [ngStyle]="getButtonContainerStyles()"
+            <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()"
                  *ngIf="ctaReplaced()">
                 <a type="submit" class="cft__cta__button cft--button--redirect cft__redirect-to-my-account"
                      [ngStyle]="getButtonStyles()" target="_blank"
