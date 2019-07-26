@@ -144,7 +144,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         const cssHoverStyles = `
-            .cft__cta__button:hover{
+            [id^=cr0wdfundingToolbox] .cft__cta__button:hover{
                 ${this.getHoverButtonStyles()}
              }
             `;
@@ -378,19 +378,21 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             ctaStyles.default.design.shadow.b + 'px ' + '0px ' +
             this.convertHex.convert((ctaStyles.default.design.shadow.color === undefined) ? '#000' : ctaStyles.default.design.shadow.color);
 
-
         const defaultStyles = {
-            padding: this.addPx(additionalSettings.padding.top) + ' ' +
-                this.addPx(additionalSettings.padding.right) + ' ' +
-                this.addPx(additionalSettings.padding.bottom) + ' ' +
-                this.addPx(additionalSettings.padding.left),
+            padding: this.addPx(ctaStyles.default.padding.top) + ' ' +
+                this.addPx(ctaStyles.default.padding.right) + ' ' +
+                this.addPx(ctaStyles.default.padding.bottom) + ' ' +
+                this.addPx(ctaStyles.default.padding.left),
+            width: ctaStyles.default.width,
             fontFamily: ctaStyles.default.fontSettings.fontFamily,
             fontWeight: ctaStyles.default.fontSettings.fontWeight,
             textAlign: ctaStyles.default.fontSettings.alignment,
             color: ctaStyles.default.fontSettings.color,
             fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
-            display: (this.widget.settings[this.deviceType].additional_settings.buttonContainer !== undefined) ?
-                this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display : 'block',
+            display: (this.widget.settings[this.deviceType].additional_settings.buttonContainer !== undefined &&
+                this.widget.settings[this.deviceType].additional_settings.buttonContainer.button &&
+                this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display !== undefined) ?
+                this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display : 'inline-block',
             'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)
                 : 'transparent',
             border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.border.size + 'px solid ' +
@@ -438,18 +440,15 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         let hoverStyles: string = '';
         hoverStyles += `
             color:${hoverSettings.fontSettings.color}!important;
-            font-weight:${hoverSettings.fontSettings.fontWeight}!important;
-           `;
+            font-weight:${hoverSettings.fontSettings.fontWeight}!important;`;
         if (hoverDesignSettings.fill.active) {
             hoverStyles += `
             background-color:${hoverDesignSettings.fill.color}!important;
-            opacity:${hoverDesignSettings.fill.opacity / 100}!important;
-            `;
+            opacity:${hoverDesignSettings.fill.opacity / 100}!important;`;
         }
         if (hoverDesignSettings.border.active) {
             hoverStyles += `
-            border: solid ${hoverDesignSettings.border.color} ${hoverDesignSettings.border.size}px !important;
-            `;
+            border: solid ${hoverDesignSettings.border.color} ${hoverDesignSettings.border.size}px !important;`;
         }
         if (hoverDesignSettings.shadow.active) {
             hoverStyles += ` box-shadow: ${hoverDesignSettings.shadow.x}px ${hoverDesignSettings.shadow.y}px ${hoverDesignSettings.shadow.b}px ${hoverDesignSettings.shadow.color}!important;`
@@ -508,14 +507,14 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         const additionalSettings = this.widget.settings[this.deviceType].additional_settings.buttonContainer;
         const ctaStyles = this.widget.settings[this.deviceType].widget_settings.call_to_action;
         const containerStyles = {
+            margin: this.addPx(ctaStyles.default.margin.top) + ' ' +
+                this.addPx(ctaStyles.default.margin.right) + ' ' +
+                this.addPx(ctaStyles.default.margin.bottom) + ' ' +
+                this.addPx(ctaStyles.default.margin.left),
             display: this.widget.settings[this.deviceType].widget_settings.call_to_action.default.display,
             width: (additionalSettings !== undefined) ? additionalSettings.width : '100%',
             position: (additionalSettings !== undefined) ? additionalSettings.position : 'relative',
-            textAlign: additionalSettings.button.alignment,
-            margin: this.addPx(additionalSettings.top) + ' ' +
-                this.addPx(additionalSettings.right) + ' ' +
-                this.addPx(additionalSettings.bottom) + ' ' +
-                this.addPx(additionalSettings.left),
+            textAlign: ctaStyles.default.fontSettings.alignment,
         };
 
         if (this.widget.widget_type.method === widgetTypes.fixed.name

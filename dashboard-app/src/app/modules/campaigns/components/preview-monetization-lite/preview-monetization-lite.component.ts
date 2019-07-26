@@ -5,12 +5,20 @@ import {paymentTypes, widgetTypes} from '../../../core/models';
 import {PreviewService} from '../../services';
 import {ConvertHexService} from '../../../core/services';
 import {
+    changePaymentOptions,
+    createBankButtons,
+    donationInProgress,
+    getEnvs,
+    handleSubmit,
     monthlyPayment,
     oneTimePayment,
     setActiveButtonMonthly,
     setActiveButtonOneTime,
+    showSecondStep,
+    step,
     validateForm
-} from '../preview/landing';
+} from './monetization-lite';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-preview-monetization-lite',
@@ -31,6 +39,8 @@ export class PreviewMonetizationLiteComponent implements OnInit {
     private subscription: Subscription;
 
     public paymentTypes = paymentTypes;
+
+    public environment = environment;
 
 
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
@@ -66,22 +76,22 @@ export class PreviewMonetizationLiteComponent implements OnInit {
         style.type = 'text/css';
 
         const css = `
-            .active > .cft--monatization--donation-button{
+            [id^=cr0wdfundingToolbox] .active > .cft--monatization--donation-button{
                     color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
                     border-color: #32a300;
                 }
         
-            .cft--monatization--membership-checkbox.active:before{
+            [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox.active:before{
                     background-color: ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.background};
                     border: 1px solid #32a300
                 }
-            .cft--monatization--membership-checkbox.active:after{
+            [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox.active:after{
                     border: solid ${this.widget.settings[this.deviceType].payment_settings.default_price.styles.color};
                     border-width: 0 2px 2px 0;
                 }
                 
-            .cft--monatization--hidden{
+            [id^=cr0wdfundingToolbox] .cft--monatization--hidden{
                 display: none!important
              }
             `;
@@ -106,12 +116,33 @@ export class PreviewMonetizationLiteComponent implements OnInit {
         let scriptActiveButtonOneTime = setActiveButtonOneTime.toString().replace('var target;',
             'let target = ' + this.widget.settings[this.deviceType].payment_settings.once_prices.benefit.value) + ';';
 
+        // change path in getEnvs and add domain if there is relative path in envs
+        const isAbsolute = new RegExp('^([a-z]+://|//)', 'i');
+        let absolutePath;
+        if (isAbsolute.test(this.environment.apiUrl)) {
+            absolutePath = this.environment.apiUrl;
+        } else {
+            absolutePath = window.location.origin + this.environment.apiUrl;
+        }
+        const scriptGetEnvs = getEnvs.toString().replace('apiPublicUrlValue', absolutePath);
+
+        script.appendChild(document.createTextNode(scriptGetEnvs + '\n'));
+
         script.appendChild(document.createTextNode(scriptActiveButtonMonthly + "\n"));
         script.appendChild(document.createTextNode(scriptActiveButtonOneTime + "\n"));
 
         script.appendChild(document.createTextNode(validateForm.toString() + "\n"));
         script.appendChild(document.createTextNode(oneTimePayment.toString() + "\n"));
         script.appendChild(document.createTextNode(monthlyPayment.toString() + "\n"));
+        script.appendChild(document.createTextNode(changePaymentOptions.toString() + "\n"));
+        script.appendChild(document.createTextNode(validateForm.toString() + "\n"));
+        script.appendChild(document.createTextNode(handleSubmit.toString() + "\n"));
+        script.appendChild(document.createTextNode(step.toString() + "\n"));
+        script.appendChild(document.createTextNode(createBankButtons.toString() + "\n"));
+        script.appendChild(document.createTextNode(showSecondStep.toString() + "\n"));
+        script.appendChild(document.createTextNode(donationInProgress.toString() + "\n"));
+
+
 
         parentScript.appendChild(script);
 
@@ -129,6 +160,7 @@ export class PreviewMonetizationLiteComponent implements OnInit {
             this.convertHex.convert((ctaStyles.default.design.shadow.color == undefined) ? '#000' : ctaStyles.default.design.shadow.color);
 
         let defaultStyles = {
+            width: ctaStyles.default.width,
             padding: this.addPx(ctaStyles.default.padding.top) + ' ' +
                 this.addPx(ctaStyles.default.padding.right) + ' ' +
                 this.addPx(ctaStyles.default.padding.bottom) + ' ' +
@@ -138,7 +170,7 @@ export class PreviewMonetizationLiteComponent implements OnInit {
             textAlign: ctaStyles.default.fontSettings.alignment,
             color: ctaStyles.default.fontSettings.color,
             fontSize: ctaStyles.default.fontSettings.fontSize + 'px',
-            display: this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display,
+            display: this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.display || 'block',
             'background-color': (ctaStyles.default.design.fill.active) ? this.convertHex.convert(ctaStyles.default.design.fill.color)
                 : 'transparent',
             border: (ctaStyles.default.design.border.active) ? ctaStyles.default.design.border.size + 'px solid ' +
@@ -160,7 +192,7 @@ export class PreviewMonetizationLiteComponent implements OnInit {
             '-moz-border-radius-bottomright': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             'border-bottom-right-radius': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             cursor: 'pointer',
-            textDecoration: 'none'
+            transition: '0.5s all'
         };
 
         if (this.widget.widget_type.method == widgetTypes.fixed.name) {
@@ -274,15 +306,14 @@ export class PreviewMonetizationLiteComponent implements OnInit {
 
     getFormGroupStyle() {
         return {
-            'padding-top': '16px'
+            'padding-top': '6px'
         }
     }
 
     getEmailDonateStyle() {
         return {
             'padding': '6px',
-            'margin-top': '12px',
-            'max-width': '320px'
+            'width': '100%'
         }
     }
 
@@ -358,6 +389,18 @@ export class PreviewMonetizationLiteComponent implements OnInit {
         return {
             'text-align': 'center',
             padding: '16px'
+        }
+    }
+
+    getMonetizationTitleStyles() {
+        const title = this.widget.settings[this.deviceType].payment_settings.monetization_title;
+        if (title) {
+            return {
+                color: title.textColor,
+                textAlign: title.alignment
+            };
+        } else {
+            return {};
         }
     }
 

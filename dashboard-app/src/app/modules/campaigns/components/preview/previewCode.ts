@@ -11,18 +11,18 @@ export const iframeCode = `
 `;
 export const globalStyles = `
     <style>
-    body {height: 100%; background: #FFFFFF;}
-    div {
-    box-sizing: border-box;
+    [id^=cr0wdfundingToolbox] body {height: 100%; background: #FFFFFF;}
+    [id^=cr0wdfundingToolbox] *{
+        box-sizing: border-box;
     }
-    .content {width: 100%;}
+    [id^=cr0wdfundingToolbox] .content {width: 100%;}
     
-    .cft--monatization--membership-checkbox {
+     [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox {
         position: relative;
         float: left
     }
     
-    .cft--monatization--membership-checkbox:before {
+     [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox:before {
         content: "";
         position: absolute;
         left: 0;
@@ -34,7 +34,7 @@ export const globalStyles = `
         transition: all .3s ease
     }
     
-    .cft--monatization--membership-checkbox:after {
+     [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox:after {
         content: "";
         position: absolute;
         top: 18px;
@@ -44,7 +44,7 @@ export const globalStyles = `
         transition: all .3s ease
     }
     
-    .cft--monatization--membership-checkbox.active:after{
+     [id^=cr0wdfundingToolbox] .cft--monatization--membership-checkbox.active:after{
         content: "";
         position: absolute;
         transition: all .3s ease;
@@ -57,31 +57,31 @@ export const globalStyles = `
         transform: rotate(45deg);
     }
 
-    .cft--monatization--donation-button input[type=number]::-webkit-inner-spin-button, 
-    .cft--monatization--donation-button input[type=number]::-webkit-outer-spin-button { 
+    [id^=cr0wdfundingToolbox].cft--monatization--donation-button input[type=number]::-webkit-inner-spin-button, 
+    [id^=cr0wdfundingToolbox].cft--monatization--donation-button input[type=number]::-webkit-outer-spin-button { 
       -webkit-appearance: none; 
       margin: 0; 
     }
     
-    .submitted input:invalid ~ label.error {
+     [id^=cr0wdfundingToolbox] .submitted input:invalid ~ label.error {
         display: block!important;
     }
     
-    .submitted input:invalid ~ label.error {
+     [id^=cr0wdfundingToolbox] .submitted input:invalid ~ label.error {
         display: none;
     }    
-    .cft--monetization--container .payment-table{
+     [id^=cr0wdfundingToolbox] .cft--monetization--container .payment-table{
         width: 100%;
         margin-bottom: 32px;
     }
-    .cft--monetization--container .payment-title{
+     [id^=cr0wdfundingToolbox] .cft--monetization--container .payment-title{
         color: #2b2b2b;
         text-align: left;
         border-bottom: 1px solid #e6e9eb;
         padding: 18px 0;
     }
     
-    .cft--monetization--container-step-2 .bank-button-container{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button-container{
           display: flex;
           display: -ms-flexbox;
           -ms-flex-wrap: wrap;
@@ -89,7 +89,7 @@ export const globalStyles = `
           width:100%;
     }
     
-    .cft--monetization--container-step-2 .bank-button__wrapper{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button__wrapper{
           position: relative;
           display: flex;
           display: -ms-flexbox;
@@ -99,7 +99,7 @@ export const globalStyles = `
           border: 1px solid #e6e9eb;
     }
     
-    .cft--monetization--container .payment-value{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container .payment-value{
         font-weight: 700;
         padding: 18px 10px;
         color: #2b2b2b;
@@ -107,26 +107,26 @@ export const globalStyles = `
         border-bottom: 1px solid #e6e9eb;
     }
     
-    .cft--monetization--container-step-2 .bank-button__container{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button__container{
         text-align: center;
         flex: 0 0 33.33333334%;
         max-width: 33.333334%;
         position: relative;
         height: 48px;
         }
-    .cft--monetization--container-step-2 .bank-button{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button{
         border: 1px solid #e6e9eb;
         width: 100%;
         height: 100%;
         cursor: pointer;
     }
-     .cft--monetization--container-step-2 .bank-button:hover{
+     [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button:hover{
         border: 1px solid #0c84df;
      }
-     .cft--monetization--container-step-2 .bank-button.active{
+     [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button.active{
         border: 1px solid #32a300;
      }
-    .cft--monetization--container-step-2 .bank-button img{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button img{
         position: absolute;      
         top: 0;
         bottom: 0;
@@ -134,7 +134,7 @@ export const globalStyles = `
         right: 0;
         margin: auto;
      }
-    .cft--monetization--container-step-2 select {
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 select {
         position: relative;
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -145,7 +145,7 @@ export const globalStyles = `
         border: none;
         margin: 1px;
     }
-    .cft--monetization--container-step-2 .bank-button__select:before{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .bank-button__select:before{
         content: "";
         position: absolute;
         top: 50%;
@@ -161,12 +161,12 @@ export const globalStyles = `
         transform: translateY(-50%);
         z-index: 1;
     }
-    .cft--monetization--container-step-2 .payment-options{
+   [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .payment-options{
         display: flex;
         width: 100%;
         margin: 20px 0 30px;
     }
-    .cft--monetization--container-step-2 .payment-options__button{
+   [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .payment-options__button{
         flex: 1;
         text-align: center;
         padding: 6px 12px;
@@ -176,12 +176,12 @@ export const globalStyles = `
         border-radius: 2px;
         min-height: 32px;
     }
-    .cft--monetization--container-step-2 .payment-options__button label{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .payment-options__button label{
        display: block;
        padding-top: 6px;
        mouse: pointer;
     }
-    .cft--monetization--container .head{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container .head{
         height: 40px;
         font-family: Georgia, Arial, Verdana, sans-serif;
         font-size: 14px;
@@ -194,7 +194,7 @@ export const globalStyles = `
         border-top-right-radius: 2px;
         }
         
-    .cft--monetization--container .step-back{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container .step-back{
         position: absolute;
         top: 0;
         left: 0;
@@ -203,7 +203,7 @@ export const globalStyles = `
         border-right: 1px solid #e7e9eb;
         cursor: pointer;
     }
-    .cft--monetization--container .step-back:before{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container .step-back:before{
         content: '\\25C0';
         position: absolute;
         top: 50%;
@@ -211,7 +211,7 @@ export const globalStyles = `
         margin-top: -11px;
         margin-left: -6px;
     }
-    .cft--monetization--container .step-back:before{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container .step-back:before{
         content: '\\25C0';
         position: absolute;
         top: 50%;
@@ -219,13 +219,19 @@ export const globalStyles = `
         margin-top: -11px;
         margin-left: -6px;
     }
-    .cft--monetization--container .pay-by-square__wrapper{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container .pay-by-square__wrapper{
         text-align: center;
     }
 
-    .cft--monetization--container .pay-by-square__wrapper svg{
+    [id^=cr0wdfundingToolbox] .cft--monetization--container .pay-by-square__wrapper svg{
         max-width: 210px;
     }
+    
+   [id^=cr0wdfundingToolbox] input[type=number].hide-arrows::-webkit-inner-spin-button, 
+   [id^=cr0wdfundingToolbox] input[type=number].hide-arrows::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+       margin: 0; 
+   }
     
 </style>
 `

@@ -67,8 +67,6 @@ export function setActiveButtonMonthly(chosenButton, focusInput: false, track: b
             inputs[0].focus();
         }
     }
-    console.log(landingDocument, landingDocument.getElementById('cft--monatization--membership-checkbox--monthly')
-        , chosenButton.getElementsByTagName('input')[0].value, target)
     let checkbox = landingDocument.getElementById('cft--monatization--membership-checkbox--monthly');
     if (chosenButton.getElementsByTagName('input')[0].value >= target) {
         checkbox.className += ' active';
@@ -121,14 +119,10 @@ export function setActiveButtonOneTime(chosenButton, focusInput: false, track: b
 
 export function validateForm(el) {
     let validInput = false;
-    let landingDocument = document;
-    if (document.getElementById('crowdWidgetContent-preview')) {
-        const iframe = document.getElementById('crowdWidgetContent-preview')  as HTMLIFrameElement
-        landingDocument = iframe.contentWindow.document;
-    }
-    const form = landingDocument.getElementById('cft--monatization--form--donate').className += ' submitted';
-    validInput = (landingDocument.getElementById('cft--monatization--form--donate--email') as HTMLSelectElement).checkValidity()
-        && (landingDocument.getElementById('cft--monatization--form--donate--terms') as HTMLSelectElement).checkValidity();
+    let monetizationCont = el.closest('.cft--monetization--container');
+    el.className += ' submitted';
+    validInput = (monetizationCont.querySelector('#cft--monatization--form--donate--email') as HTMLSelectElement).checkValidity()
+        && (monetizationCont.querySelector('#cft--monatization--form--donate--terms') as HTMLSelectElement).checkValidity();
     return validInput;
 }
 
@@ -267,15 +261,21 @@ export function monthlyPayment() {
 
 export function showSecondStep(monetizationEl, variableSymbol, bankAccount, bankButtons, value, frequency,
                                payBySquareBlob, userToken, donationId) {
-
     monetizationEl.dataset.donationId = donationId;
-    monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-iban').innerHTML = bankAccount;
-    monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-vs').innerHTML = variableSymbol;
-    monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-amount').innerHTML = value + ' € ' + frequency;
+    var ibanStep2 = monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-iban');
+    var vsStep2 = monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-vs');
+    var amountStep2 = monetizationEl.querySelector('.cft--monetization--container-step-2 .payment-amount');
+    ibanStep2 ? ibanStep2.innerHTML = bankAccount : '';
+    vsStep2 ? vsStep2.innerHTML = variableSymbol : '';
+    amountStep2 ? amountStep2.innerHTML = value : '';
 
-    monetizationEl.querySelector('.cft--monetization--container-step-3 .payment-iban').innerHTML = bankAccount;
-    monetizationEl.querySelector('.cft--monetization--container-step-3 .payment-vs').innerHTML = variableSymbol;
-    monetizationEl.querySelector('.cft--monetization--container-step-3 .payment-amount').innerHTML = value + ' € ' + frequency;
+    var ibanStep3 = monetizationEl.querySelector('.cft--monetization--container-step-3 .payment-iban');
+    var vsStep3 = monetizationEl.querySelector('.cft--monetization--container-step-3 .payment-vs');
+    var amountStep3 = monetizationEl.querySelector('.cft--monetization--container-step-3 .payment-amount');
+    ibanStep3 ? ibanStep3.innerHTML = bankAccount : '';
+    vsStep3 ? vsStep3.innerHTML = variableSymbol : '';
+    amountStep3 ? amountStep3.innerHTML = value : '';
+
 
     var paymentOptions = monetizationEl.querySelector('.payment-options')
     if (frequency === 'one-time') {
@@ -315,7 +315,7 @@ export function createBankButtons(monetizationEl, bankButtonsData) {
     bankButtonsWrapper.innerHTML = '';
     //max 5 buttons and then wrap them into select element as options
     for (var i = 0; i <= 4 && i < bankButtonsData.length; i++) {
-        if(bankButtonsData[i].image == null) {
+        if (bankButtonsData[i].image == null) {
             bankButtonsWrapper.insertAdjacentHTML('beforeEnd',
                 `<div class="bank-button__container"> 
                         <div class="bank-button" data-bank-link="${bankButtonsData[i].redirect_link}" onclick="parent.setBankButton(this)">
@@ -350,22 +350,21 @@ export function createBankButtons(monetizationEl, bankButtonsData) {
     }
 }
 
-export function showThirdPage(element, response) {
-    step(element, true);
-}
+
 
 export function donationInProgress(element) {
     const apiPublicUrl = getEnvs().apiPublicUrl + '/portal/';
     let xhr = new XMLHttpRequest();
+    var monetizationCont = element.closest('.cft--monetization--container');
     const data = JSON.stringify(
         {
-            'donation_id': element.closest('.cft--monetization--container').dataset.donationId,
-            'payment_method_id': element.closest('.payment-option').dataset.id
+            'donation_id': monetizationCont.dataset.donationId,
+            'payment_method_id': monetizationCont.querySelector('.payment-option').dataset.id
         }
     );
     xhr.onload = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            showThirdPage(element, xhr.response);
+            step(element, true);
         }
     }
     xhr.open('POST', apiPublicUrl + 'donation/waiting-for-payment', true);
