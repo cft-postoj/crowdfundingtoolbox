@@ -300,7 +300,10 @@ export class PreviewMonetizationLiteComponent implements OnInit {
     getLabelStyle() {
         return {
             width: '100%',
-            display: 'block'
+            display: 'block',
+            color: 'inherit',
+            'text-align': 'left',
+            'font-size': '100%'
         }
     }
 
