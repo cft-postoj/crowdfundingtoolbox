@@ -23,6 +23,9 @@
                         article's paragraphs.
                     </div>
                 </div>
+                <p *ngIf="(widget.widget_type.method == widgetTypes.locked.name) ||  (widget.widget_type.method == widgetTypes.sidebar.name) ||  (widget.widget_type.method == widgetTypes.leaderboard.name)">
+                    <b>Take a note, this widget is positioning on whole width of parent container width (on your portal side) by default. If you want change widget width, set it up in BACKGROUND.</b>
+                </p>
                 <div class="collapse-container" *ngIf="widget.widget_type.method === widgetTypes.locked.name"
                      [ngClass]="{'flex-open':isOpened(9)}">
                     <div class="collapsible--header row" (click)="openTab(9)">
