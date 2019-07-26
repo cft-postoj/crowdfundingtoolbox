@@ -47,7 +47,7 @@ export class SideBarComponent implements OnInit {
                 private componentComService: ComponentCommunicationService) {
         router.events
             .filter(e => e instanceof NavigationEnd)
-            .pairwise().subscribe((e) => {
+            .pairwise().subscribe((e: any) => {
             console.log(e);
             localStorage.setItem('previousRoute', e[0].urlAfterRedirects);
         });

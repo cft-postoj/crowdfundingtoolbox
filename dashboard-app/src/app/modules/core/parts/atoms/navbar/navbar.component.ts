@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
     constructor(private router: Router, private location: Location) {
         router.events
             .filter(e => e instanceof NavigationEnd)
-            .pairwise().subscribe((e) => {
+            .pairwise().subscribe((e: any) => {
             console.log(e);
             localStorage.setItem('previousRoute', e[0].urlAfterRedirects);
         });
