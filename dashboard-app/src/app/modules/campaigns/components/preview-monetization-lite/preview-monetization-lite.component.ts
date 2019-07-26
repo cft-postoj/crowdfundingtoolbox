@@ -198,7 +198,8 @@ export class PreviewMonetizationLiteComponent implements OnInit {
             '-moz-border-radius-bottomright': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             'border-bottom-right-radius': (ctaStyles.default.design.radius.active) ? ctaStyles.default.design.radius.br + 'px' : 0,
             cursor: 'pointer',
-            transition: '0.5s all'
+            transition: '0.5s all',
+            'text-decoration': 'none'
         };
 
         if (this.widget.widget_type.method == widgetTypes.fixed.name) {
