@@ -3,6 +3,7 @@ import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {DonorsAndDonations} from '../models/donors-and-donations';
 import {Donation} from '../models/donation';
+import {Observable} from 'rxjs';
 
 
 @Injectable({
@@ -90,5 +91,9 @@ export class DonationService {
                 headers: headers,
                 params: params
             });
+    }
+
+    public deleteDonation(donationId: number): Observable<any> {
+        return this.http.delete<any>(`${environment.backOfficeUrl}${environment.donations}/${donationId}/delete`);
     }
 }

@@ -35,8 +35,8 @@
                     <th app-table-header *ngIf="tableService.activeColumn(model,'transaction_id')" [column]="tableService.getColumnByValueName(model,'transaction_id')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.last_name')"
-                        [column]="tableService.getColumnByValueName(model,'donation.portal_user.user.user_detail.last_name')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.searchName')"
+                        [column]="tableService.getColumnByValueName(model,'donation.portal_user.user.user_detail.searchName')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'donation.portal_user.user.email')"
                         [column]="tableService.getColumnByValueName(model,'donation.portal_user.user.email')" [(model)]="model"
@@ -81,7 +81,7 @@
                         <app-status [active]="payment.donation"></app-status>
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'transaction_id')" [title]="payment.transaction_id">{{payment.transaction_id}}</td>
-                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.last_name')" class="pointer"
+                    <td *ngIf="tableService.activeColumn(model,'donation.portal_user.user.user_detail.searchName')" class="pointer"
                         [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, payment.donation?.portal_user.id]"
                         [title]="(payment.donation?.portal_user.user.user_detail.first_name || '---') +' '+ (payment.donation?.portal_user.user.user_detail.last_name || '')">
                         {{payment.donation?.portal_user.user.user_detail.first_name || '---'}} {{payment.donation?.portal_user.user.user_detail.last_name}}

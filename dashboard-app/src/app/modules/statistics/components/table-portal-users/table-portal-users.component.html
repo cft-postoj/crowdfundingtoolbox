@@ -6,7 +6,7 @@
             </h2>
         </div>
         <div class="col mx-auto" *ngIf="export">
-            <div class="text-center">
+            <div class="text-right">
                 <app-export-csv
                         [title]="exportTitle"
                         [exportFrom]="from"
@@ -27,7 +27,7 @@
                 </app-datepicker>
             </div>
         </ng-container>
-        <div class="col-3 d-flex align-items-center">
+        <div class="col-3 d-flex align-items-center" *ngIf="!isDashboardPreview">
             <ngx-select-dropdown [(ngModel)]="model.columns"
                                  [multiple]="true" [config]="config"
                                  [options]="availableColumns"></ngx-select-dropdown>
@@ -53,8 +53,8 @@
                     <th app-table-header *ngIf="tableService.activeColumn(model,'user.email')"
                         [column]="tableService.getColumnByValueName(model,'user.email')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.last_name')"
-                        [column]="tableService.getColumnByValueName(model,'user.user_detail.last_name')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.searchName')"
+                        [column]="tableService.getColumnByValueName(model,'user.user_detail.searchName')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'amount_sum')"
@@ -109,7 +109,7 @@
                     <td *ngIf="tableService.activeColumn(model,'user.email')">
                         {{portalUser.user.email}}
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'user.user_detail.last_name')" class="pointer"
+                    <td *ngIf="tableService.activeColumn(model,'user.user_detail.searchName')" class="pointer"
                         [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, portalUser.id]">
                         {{portalUser.user.user_detail?.first_name}} {{portalUser.user.user_detail?.last_name}}
                     </td>
@@ -166,7 +166,7 @@
    'Take a <b>coffee break</b>, it may take few minutes.<br />Once the process is done, you\'ll get message about it.' : ''"
             ></app-loading>
 
-            <div *ngIf="!loading && limit < portalUsersCount" class="container">
+            <div *ngIf="!loading && isDashboardPreview && portalUsersCount > 0" class="container">
                 <div class="row">
                     <div class="col">
                         <span class="clickable" (click)="showMore()">show more</span>

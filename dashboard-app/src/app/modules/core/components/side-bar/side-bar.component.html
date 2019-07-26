@@ -6,8 +6,7 @@
         <div class="main-items" [ngClass]="{ 'main-items--sub-active': isActive }">
             <div
                     class="item"
-                    [routerLink]="routing.STATS_FULL_PATH"
-                    (click)="showItem(statisticsItemName)">
+                    (click)="showItem(statisticsItemName, routing.STATS_FULL_PATH)">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/statistics_default.svg'"
@@ -19,8 +18,7 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(campaignsItemName)"
-                    [routerLink]="routing.CAMPAIGNS_ALL_FULL_PATH"
+                    (click)="showItem(campaignsItemName, routing.CAMPAIGNS_ALL_FULL_PATH)"
             >
                 <div
                         class="item--icon"
@@ -33,8 +31,7 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(usersItemName)"
-                    [routerLink]="routing.PORTAL_USER_LIST">
+                    (click)="showItem(usersItemName, routing.DASHBOARD + '/' + routing.PORTAL_USER_LIST)">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/users_default.svg'"
@@ -46,8 +43,7 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(donorsItemName)"
-                    [routerLink]="routing.PORTAL_USERS + '/' + routing.DONORS + '/' + routing.ALL">
+                    (click)="showItem(donorsItemName, routing.DASHBOARD + '/' +routing.PORTAL_USERS + '/' + routing.DONORS + '/' + routing.ALL)">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/donors-supporters.svg'"
@@ -59,8 +55,7 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(paymentsItemName)"
-                    [routerLink]="routing.DONATIONS_FULL_PATH">
+                    (click)="showItem(paymentsItemName, routing.DONATIONS_FULL_PATH)">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/payment_default.svg'"
@@ -72,8 +67,7 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(settingsItemName)"
-                    [routerLink]="'/' + routing.CONFIGURATION_FULL_PATH">
+                    (click)="showItem(settingsItemName, '/' + routing.CONFIGURATION_FULL_PATH)">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/settings.svg'"
@@ -85,7 +79,7 @@
             </div>
             <div
                     class="item"
-                    (click)="showItem(faqItemName)">
+                    (click)="showItem(faqItemName, null)">
                 <div
                         class="item--icon"
                         [inlineSVG]="'/assets/images/icons/faq.svg'"

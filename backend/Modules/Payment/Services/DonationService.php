@@ -77,7 +77,7 @@ class DonationService
                 'amount_initialized' => $data['amount']
             ]);
             $qrCode = $this->payBySquareService->getQRCodeFromData($user->portalUser->variableSymbol->variableSymbol, $data['amount'], $data['frequency']);
-           return array(
+            return array(
                 'variable_symbol' => $user->portalUser->variableSymbol->variable_symbol,
                 'bank_account' => $bankOption->accountNumber,
                 'bankButtons' => $bankButtons,
@@ -90,13 +90,18 @@ class DonationService
         }
     }
 
+    public function deleteDonation($id)
+    {
+        return $this->donationRepository->delete($id);
+    }
+
     public function waitingForPayment($donationId, $payment_method_id)
     {
-         $donation =  $this->getById($donationId);
-         $donation->status = 'waiting_for_payment';
-         $donation->payment_method = $payment_method_id;
-         $donation->update();
-         return $donation;
+        $donation = $this->getById($donationId);
+        $donation->status = 'waiting_for_payment';
+        $donation->payment_method = $payment_method_id;
+        $donation->update();
+        return $donation;
     }
 
 

@@ -188,6 +188,9 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->leftJoinSub($this->firstDonation, 'first_donation', function ($join) {
                 $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
             })
+            ->joinSub($this->donationsSum, 'donations_sum', function ($join) {
+                $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
+            })
             ->whereRaw('current_payment_date = first_payment_date')
             ->orderBy('last_donation_at', 'DESC')
             ->with('user.userDetail')

@@ -5,6 +5,7 @@ namespace Modules\Statistics\Services;
 
 use Carbon\Carbon;
 use Modules\Statistics\Repositories\StatsDonorRepository;
+use Modules\UserManagement\Services\UserSearchService;
 use stdClass;
 
 class StatsDonorService implements StatsDonorServiceInterface

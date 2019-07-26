@@ -20,6 +20,10 @@
                                  [options]="availableColumns"></ngx-select-dropdown>
         </div>
     </div>
+    <app-alert
+            [(open)]="alertOpen"
+            [message]="alertMessage"
+            [type]="alertType"></app-alert>
     <div class="row">
         <div class="col">
             <table class="list-items list-items--orderable">
@@ -42,8 +46,8 @@
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header
-                        *ngIf="tableService.activeColumn(model,'portal_user.user.user_detail.last_name')"
-                        [column]="tableService.getColumnByValueName(model,'portal_user.user.user_detail.last_name')"
+                        *ngIf="tableService.activeColumn(model,'portal_user.user.user_detail.searchName')"
+                        [column]="tableService.getColumnByValueName(model,'portal_user.user.user_detail.searchName')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'portal_user.user.email')"
                         [column]="tableService.getColumnByValueName(model,'portal_user.user.email')" [(model)]="model"
@@ -81,6 +85,7 @@
                     <th app-table-header *ngIf="tableService.activeColumn(model,'payment.created_by')"
                         [column]="tableService.getColumnByValueName(model,'payment.created_by')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
+                    <th *ngIf="isListOfAllDonations" class="delete"></th>
 
                 </tr>
                 </thead>
@@ -98,7 +103,7 @@
                     <td *ngIf="tableService.activeColumn(model,'payment.transaction_id')"
                         [title]="donation.payment?.transaction_id">{{donation.payment?.transaction_id || '---'}}
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'portal_user.user.user_detail.last_name')"
+                    <td *ngIf="tableService.activeColumn(model,'portal_user.user.user_detail.searchName')"
                         class="pointer"
                         [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation?.portal_user.id]"
                         [title]="(donation.portal_user?.user.user_detail.first_name || '---') +' '+ (donation?.portal_user.user.user_detail.last_name || '')">
@@ -139,6 +144,11 @@
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'payment.created_by')"
                         [title]="donation.payment?.created_by">{{donation.payment?.created_by || '---'}}
+                    </td>
+                    <td *ngIf="isListOfAllDonations" class="delete">
+                        <img src="../assets/images/icons/delete.svg"
+                             (click)="deleteDonation($event, donation.id, donation.portal_user?.user.email);"
+                             title="Delete donation"/>
                     </td>
                 </tr>
                 </tbody>

@@ -6,6 +6,7 @@
     width: auto;
     height: 100%;
     border-right: 3px solid $white;
+    position: relative;
     &.preview {
         display: none;
     }
@@ -14,7 +15,9 @@
         outline: none;
         border: none;
         cursor: pointer;
-        float: right;
+        right: 0;
+        position: absolute;
+        bottom: 15px;
         img {
             -webkit-transform: rotate(-180deg);
             -moz-transform: rotate(-180deg);

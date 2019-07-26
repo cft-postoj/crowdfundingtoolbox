@@ -99,7 +99,7 @@ export class TablePaymentsComponent implements OnInit {
             filter: new Filter()
         });
         this.availableColumns.push({
-            value_name: 'donation.portal_user.user.user_detail.last_name',
+            value_name: 'donation.portal_user.user.user_detail.searchName',
             description: 'Donor name',
             type: 'text',
             filter: new Filter()

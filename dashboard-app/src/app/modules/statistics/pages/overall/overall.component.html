@@ -238,6 +238,7 @@
             <div class="row">
                 <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
                                         [title]="'Stopped supporting'" [dataType]="'stoppedSupporting'" [limit]="'3'"
+                                        [isDashboardPreview]="true"
                                         [export]="true" [exportTitle]="'Export these stopped supporting donors'"
                                         [exportType]="'stopped-supporting'"
                                         [exportFileName]="'stopped-supporting-donors'"
@@ -248,6 +249,7 @@
             <div class="row">
                 <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
                                         [title]="'Did not pay'" [dataType]="'didNotPay'" [limit]="'3'"
+                                        [isDashboardPreview]="true"
                                         [export]="true" [exportTitle]="'Export these did not pay users'"
                                         [exportType]="'didnt-pay'"
                                         [exportFileName]="'didnt-pay-users'"
@@ -258,6 +260,7 @@
                                         [title]="'Only initialize donation'" [dataType]="'onlyInitializeDonation'"
                                         [limit]="'3'"
                                         [export]="true"
+                                        [isDashboardPreview]="true"
                                         [exportTitle]="'Export these users, which not complete donation'"
                                         [exportType]="'not-complete-support'"
                                         [exportFileName]="'not-complete-support'"

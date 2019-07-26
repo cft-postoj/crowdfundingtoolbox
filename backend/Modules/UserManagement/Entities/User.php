@@ -5,6 +5,7 @@ namespace Modules\UserManagement\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modules\UserManagement\Services\UserSearchService;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -57,4 +58,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('\Modules\UserManagement\Entities\DonorStatus');
     }
+
+
 }
