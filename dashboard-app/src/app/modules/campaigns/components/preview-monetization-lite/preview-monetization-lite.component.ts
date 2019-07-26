@@ -14,8 +14,11 @@ import {
     oneTimePayment,
     setActiveButtonMonthly,
     setActiveButtonOneTime,
+    setBankButton,
     showSecondStep,
     step,
+    trackEmailOnChange,
+    trackInsertValue,
     validateForm
 } from './monetization-lite';
 import {environment} from '../../../../../environments/environment';
@@ -141,6 +144,9 @@ export class PreviewMonetizationLiteComponent implements OnInit {
         script.appendChild(document.createTextNode(createBankButtons.toString() + "\n"));
         script.appendChild(document.createTextNode(showSecondStep.toString() + "\n"));
         script.appendChild(document.createTextNode(donationInProgress.toString() + "\n"));
+        script.appendChild(document.createTextNode(setBankButton.toString() + "\n"));
+        script.appendChild(document.createTextNode(trackEmailOnChange.toString() + "\n"));
+        script.appendChild(document.createTextNode(trackInsertValue.toString() + "\n"));
 
 
 

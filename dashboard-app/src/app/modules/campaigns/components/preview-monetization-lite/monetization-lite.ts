@@ -331,3 +331,52 @@ export function donationInProgress(element) {
 
 }
 
+export function setBankButton(element) {
+    let bankButtonWrapper = element.closest('.bank-button__wrapper');
+    let bankButtons = bankButtonWrapper.getElementsByClassName('bank-button') as any;
+    for (let bankButton of bankButtons) {
+        bankButton.className = bankButton.className.replace(/ active/g, '');
+    }
+    element.className += ' active';
+
+    //change href of anchor.
+    var anchor = element.closest('.cft--monetization--container-step-2').querySelector('.cft--button--redirect');
+    anchor.href = element.dataset.bankLink != null ? element.dataset.bankLink : element.querySelector(':checked').dataset.bankLink;
+}
+
+// send correct email to backend
+export function trackEmailOnChange(el) {
+    // TODO: get from  env
+    const apiPublicUrl = getEnvs().apiPublicUrl + '/portal/'; // TEST API
+    if (el.checkValidity()) {
+        let xhttp = new XMLHttpRequest();
+        const data = JSON.stringify(
+            {
+                'show_id': el.closest('[id^=cr0wdfundingToolbox]').dataset.showId,
+                'email': el.value,
+                'email_valid': el.checkValidity()
+            }
+        );
+        xhttp.open('POST', apiPublicUrl + 'tracking/insertEmail', true);
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
+        xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhttp.responseType = 'json';
+        xhttp.send(data);
+    }
+}
+// track when user interact with widget and picked some value
+export function trackInsertValue(chosenButton, frequency, apiUrl: string) {
+    let xhttp = new XMLHttpRequest();
+    const data = JSON.stringify(
+        {
+            'value': chosenButton.getElementsByTagName('input')[0].value,
+            'frequency': frequency,
+            'show_id': chosenButton.closest('[id^=cr0wdfundingToolbox]').dataset.showId
+        }
+    );
+    xhttp.open('POST', apiUrl + 'tracking/insertValue', true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
+    xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.responseType = 'json';
+    xhttp.send(data);
+}
