@@ -61,6 +61,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     public marginMonetization: RadioButton[] = [];
     public monetizationTypes: DropdownItem[] = [];
     private backgroundPadding: RadioButton[] = [];
+    private marginMonetizationHeadlineText: RadioButton[] = [];
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -342,6 +343,12 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         this.marginMonetization.push(new RadioButton('right', this.widget.settings[this.deviceType].payment_settings.design.margin.right, assetsUrl + 'images/icons/margin_right.svg'))
         this.marginMonetization.push(new RadioButton('bottom', this.widget.settings[this.deviceType].payment_settings.design.margin.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
         this.marginMonetization.push(new RadioButton('left', this.widget.settings[this.deviceType].payment_settings.design.margin.left, assetsUrl + 'images/icons/margin_left.svg'))
+
+        this.marginMonetizationHeadlineText = [];
+        this.marginMonetizationHeadlineText.push(new RadioButton('top', this.widget.settings[this.deviceType].payment_settings.monetization_title.margin.top, assetsUrl + 'images/icons/margin_top.svg'))
+        this.marginMonetizationHeadlineText.push(new RadioButton('right', this.widget.settings[this.deviceType].payment_settings.monetization_title.margin.right, assetsUrl + 'images/icons/margin_right.svg'))
+        this.marginMonetizationHeadlineText.push(new RadioButton('bottom', this.widget.settings[this.deviceType].payment_settings.monetization_title.margin.bottom, assetsUrl + 'images/icons/margin_bot.svg'))
+        this.marginMonetizationHeadlineText.push(new RadioButton('left', this.widget.settings[this.deviceType].payment_settings.monetization_title.margin.left, assetsUrl + 'images/icons/margin_left.svg'))
 
 
         this.fontFamilyDropdownButtons = [];

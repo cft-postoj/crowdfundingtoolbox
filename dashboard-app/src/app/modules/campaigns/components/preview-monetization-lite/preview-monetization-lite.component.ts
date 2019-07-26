@@ -40,11 +40,9 @@ export class PreviewMonetizationLiteComponent implements OnInit {
     recreateStylesEmitter;
 
     private subscription: Subscription;
-
     public paymentTypes = paymentTypes;
-
     public environment = environment;
-
+    private fontFamilyPreview ='';
 
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
                 private ref: ChangeDetectorRef) {
@@ -405,13 +403,38 @@ export class PreviewMonetizationLiteComponent implements OnInit {
     getMonetizationTitleStyles() {
         const title = this.widget.settings[this.deviceType].payment_settings.monetization_title;
         if (title) {
+
+            this.usedFontFamily(title.fontSettings.fontFamily);
             return {
+                'background-color': title.fontSettings.backgroundColor,
+                fontFamily: title.fontSettings.fontFamily,
+                'font-weight': title.fontSettings.bold,
+                'font-size': title.fontSettings.fontSize+'px',
+                margin: this.addPx(title.margin.top) + ' ' +
+                    this.addPx(title.margin.right) + ' ' +
+                    this.addPx(title.margin.bottom) + ' ' +
+                    this.addPx(title.margin.left),
                 color: title.textColor,
                 textAlign: title.alignment
             };
         } else {
             return {};
         }
+    }
+
+    private usedFontFamily(fontFamily) {
+        const tempArray = this.fontFamilyPreview.split('|');
+        if (tempArray.indexOf(fontFamily) === -1) {
+            if (fontFamily !== undefined) {
+                tempArray.push(fontFamily);
+            }
+        }
+        this.fontFamilyPreview = '';
+        tempArray.forEach(font => {
+            this.fontFamilyPreview +=
+                (this.fontFamilyPreview !== '') ?
+                    '|' + font : font;
+        });
     }
 
 }

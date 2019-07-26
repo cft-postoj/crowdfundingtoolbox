@@ -230,8 +230,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         }
         const defaultStyle = {
             position: (backgroundStyles.position !== undefined) ? backgroundStyles.position : 'relative',
-            height: (backgroundStyles.height !== undefined) ? backgroundStyles.height : 0,
-            width: (backgroundStyles.width !== undefined) ? backgroundStyles.width : 0,
+            height: (backgroundStyles.height !== undefined) ? this.addPx(backgroundStyles.height) : 0,
+            width: (backgroundStyles.width !== undefined) ? this.addPx(backgroundStyles.width) : 0,
             maxWidth: (backgroundStyles.maxWidth !== undefined) ? backgroundStyles.maxWidth : '100%',
             top: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.top : 0,
             bottom: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.bottom : 'auto',
@@ -305,19 +305,13 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getBodyStyle() {
         const bodyContainer = this.widget.settings[this.deviceType].additional_settings.bodyContainer;
-        const defaultStyle = {
+        return {
             position: (bodyContainer) ? bodyContainer.position : 'relative',
             width: (bodyContainer) ? bodyContainer.width : '100%',
             margin: (bodyContainer) ? bodyContainer.margin : 0,
             // set color from headline to bodyStyle to enable inheritation for all childs components
-            color: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color
+            color: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color,
         };
-        const dynamicStyle = {
-            'background-color': this.widget.settings[this.deviceType].widget_settings.general.background.color,
-        }
-
-        const result = {...defaultStyle, ...dynamicStyle};
-        return result;
     }
 
     getHeadlineTextStyle() {
@@ -333,7 +327,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             width: (additionalSettings !== undefined) ?
                 additionalSettings.text.width : '100%',
             display: (headlineText.text_display !== undefined) ? headlineText.text_display : 'block',
-
+            'background-color': headlineText.fontSettings.backgroundColor ,
             margin: this.addPx(headlineText.text_margin.top) + ' ' +
                 this.addPx(headlineText.text_margin.right) + ' ' +
                 this.addPx(headlineText.text_margin.bottom) + ' ' +
@@ -359,7 +353,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             display: (additionalText.text_display !== undefined) ? additionalText.text_display : 'block',
             padding: (this.widget.settings[this.deviceType].additional_settings.bodyContainer !== undefined) ?
                 this.widget.settings[this.deviceType].additional_settings.bodyContainer.padding : 0,
-
+            'background-color': additionalText.text_background ,
             margin: this.addPx(additionalText.text_margin.top) + ' ' +
                 this.addPx(additionalText.text_margin.right) + ' ' +
                 this.addPx(additionalText.text_margin.bottom) + ' ' +

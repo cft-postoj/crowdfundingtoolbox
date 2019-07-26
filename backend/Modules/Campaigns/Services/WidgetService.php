@@ -443,7 +443,19 @@ class WidgetService implements WidgetServiceInterface
             'payment_type' => 'both',
             'type' => 'classic',
             'monetization_title' => array(
-                'text' => 'We can write of <br/> your financial support!',
+                'fontSettings' => array(
+                    'fontFamily' => 'Roboto',
+                    'fontWeight' => 'bold',
+                    'backgroundColor' => '#fff',
+                    'fontSize' => 24
+                ),
+                'margin' => array(
+                    'top' => '0',
+                    'right' => '0',
+                    'bottom' => '0',
+                    'left' => '0'
+                ),
+                'text' => '',
                 'textColor' => '#000000',
                 'alignment' => 'center'
             ),

@@ -173,6 +173,23 @@ export class Widget {
                 active: true,
                 payment_type: 'both',
                 type: 'classic' || 'lite', // classic or lite
+                monetization_title: {
+                    fontSettings: {
+                        fontFamily: 'Roboto',
+                        fontWeight: 'bold',
+                        backgroundColor: '#fff',
+                        fontSize: 24
+                    },
+                    margin: {
+                        top: '15',
+                        right: '10',
+                        bottom: '15',
+                        left: '10'
+                    },
+                    text: '',
+                    textColor: '#000000',
+                    alignment: 'center'
+                },
                 design: {
                     background_color: '#fff',
                     padding: {
@@ -588,6 +605,23 @@ export class Widget {
             payment_settings: {
                 payment_type: 'both',
                 type: 'classic',
+                monetization_title: {
+                    fontSettings: {
+                        fontFamily: 'Roboto',
+                        fontWeight: 'bold',
+                        backgroundColor: '#fff',
+                        fontSize: 24
+                    },
+                    margin: {
+                        top: '15',
+                        right: '10',
+                        bottom: '15',
+                        left: '10'
+                    },
+                    text: '',
+                    textColor: '#000000',
+                    alignment: 'center'
+                },
                 design: {
                     background_color: '#fff',
                     padding: {
@@ -980,6 +1014,18 @@ export class Widget {
                 payment_type: 'both',
                 type: 'classic',
                 monetization_title: {
+                    fontSettings: {
+                        fontFamily: 'Roboto',
+                        fontWeight: 'bold',
+                        backgroundColor: '#fff',
+                        fontSize: 24
+                    },
+                    margin: {
+                        top: '15',
+                        right: '10',
+                        bottom: '15',
+                        left: '10'
+                    },
                     text: '',
                     textColor: '#000000',
                     alignment: 'center'
