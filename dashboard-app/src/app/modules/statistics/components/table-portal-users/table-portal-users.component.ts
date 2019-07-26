@@ -173,6 +173,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log(this.from)
         this.getUsers();
     }
 

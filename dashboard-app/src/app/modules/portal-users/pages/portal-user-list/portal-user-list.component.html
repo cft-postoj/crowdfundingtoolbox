@@ -2,7 +2,6 @@
     <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
     <!--  <app-button [label]="(filterActive) ? 'Reset filter' : 'Filter'" [type]="'button'" [class]="'classic float-right'" (onClick)="showFilter()"></app-button>-->
     <app-export-csv
-            *ngIf="!loading"
             [title]="'Export all users to csv'"
             [data]="users"
             [helperText]="'You can export all users from CFT system with all of donation and payment records.'"
@@ -11,6 +10,7 @@
             [fileName]="'export-donors'"
             (loadingEmitter)="exportLoading($event)"
             (resultEmitter)="export2Csv($event)"></app-export-csv>
+
     <app-loading [isLoading]="loading" [extraText]="(exportCsvLoading) ? 'Please wait, generating csv file...<br /> ' +
    'Take a <b>coffee break</b>, it may take few minutes.<br />Once the process is done, you\'ll get message about it.' : ''"></app-loading>
 

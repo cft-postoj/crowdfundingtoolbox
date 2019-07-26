@@ -72,9 +72,10 @@ export class OverallComponent implements OnInit {
             this.nowMoment = moment();
             this.from = this.statsDateSelected.start.format('YYYY-MM-DD');
             this.to = this.statsDateSelected.end.format('YYYY-MM-DD');
+            console.log(this.from)
             this.getDataForGraph();
             this.getOverallData();
-        }, 200);
+        }, 500);
     }
 
     getDataForGraph() {
