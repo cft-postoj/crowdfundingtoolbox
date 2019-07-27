@@ -12,6 +12,7 @@ import {ConfigurationComponent} from './modules/core/pages/configuration/configu
 import {TranslationCreateComponent, TranslationListComponent} from './modules/translations/components';
 import {UserSettingsComponent} from './modules/user-management/components/user-settings/user-settings.component';
 import {CreateUserComponent} from './modules/user-management/components/create-user/create-user.component';
+import {PortalConnectionsSettingsComponent} from './modules/core/components/portal-connections-settings/portal-connections-settings.component';
 
 export const appRoutes: Routes = [
     {
@@ -63,6 +64,10 @@ export const appRoutes: Routes = [
                 }, {
                     path: Routing.WIDGET,
                     component: WidgetSettingsComponent,
+                    outlet: Routing.RIGHT_OUTLET
+                }, {
+                    path: 'portal-connections',
+                    component: PortalConnectionsSettingsComponent,
                     outlet: Routing.RIGHT_OUTLET
                 }]
             },

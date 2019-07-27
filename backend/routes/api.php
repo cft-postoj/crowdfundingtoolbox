@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-header('Access-Control-Allow-Origin:  *');
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-Requested-With, Origin, Authorization, X-CSRF-TOKEN');
 
@@ -177,6 +177,11 @@ Route::group([
             Route::get('portal-users/{id}/donations-detail', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDonationsDetailInfo');
 
         // }
+
+        // Portal connections
+        Route::get('portal-connections/portal-url', '\App\Http\Controllers\ConnectionController@getPortalUrl');
+        Route::get('portal-connections/backend-url', '\App\Http\Controllers\ConnectionController@getBackendUrl');
+        Route::post('portal-connections/portal-url', '\App\Http\Controllers\ConnectionController@updatePortalUrl');
     });
 
 

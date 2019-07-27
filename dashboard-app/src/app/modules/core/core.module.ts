@@ -32,6 +32,7 @@ import { ExportCsvComponent } from './components/export-csv/export-csv.component
 import { HelpComponent } from './components/help/help.component';
 import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 import { PreviousPageComponent } from './components/previous-page/previous-page.component';
+import {PortalConnectionsSettingsComponent} from './components/portal-connections-settings/portal-connections-settings.component';
 
 @NgModule({
     declarations: [
@@ -64,6 +65,7 @@ import { PreviousPageComponent } from './components/previous-page/previous-page.
         ExportCsvComponent,
         HelpComponent,
         PreviousPageComponent,
+        PortalConnectionsSettingsComponent,
     ],
     imports: [
         CommonModule,

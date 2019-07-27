@@ -31,4 +31,8 @@ export class ConfigurationComponent {
     openBackofficeUserSettings() {
         this.router.navigateByUrl(`${Routing.DASHBOARD}/${Routing.USER_SETTINGS}`);
     }
+
+    openPortalConnectionsSettings() {
+        this.router.navigateByUrl(`${Routing.CONFIGURATION_FULL_PATH}/(${Routing.RIGHT_OUTLET}:portal-connections)`);
+    }
 }

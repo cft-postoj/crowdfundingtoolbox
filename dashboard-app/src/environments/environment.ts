@@ -78,6 +78,8 @@ export const environment = {
     donations: '/donations',
     unpairedPayments: '/unpaired-payments',
 
-    exportCsv: '/export-csv'
+    exportCsv: '/export-csv',
+
+    portalConnections: '/portal-connections/'
 
 };

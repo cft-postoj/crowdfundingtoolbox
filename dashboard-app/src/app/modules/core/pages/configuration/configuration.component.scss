@@ -97,6 +97,9 @@
         g path.backoffice_user_settings {
           fill: $azure;
         }
+        g path.connections {
+          fill: $azure;
+        }
       }
       .configurationPage--item--edit {
         color: $azure;
