@@ -131,6 +131,9 @@ export class SideBarComponent implements OnInit {
 
     showItem(itemName: string, route: string) {
         if (route !== null) {
+            if (route.indexOf('(') > -1) {
+                route = route.split('(')[0];
+            }
             setTimeout(() => {
                 this.router.navigateByUrl(localStorage.getItem('previousRoute'), {skipLocationChange: false}).then(() =>
                     this.router.navigate([route]));
