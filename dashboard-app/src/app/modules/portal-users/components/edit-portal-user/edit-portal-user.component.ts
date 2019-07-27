@@ -53,8 +53,7 @@ export class EditPortalUserComponent implements OnInit {
         }, (e) => {
             this.submitLoading = false;
             if (e.error !== null) {
-                this.errorMessage = 'There was an unknown error during the updating of portal user details.' +
-                    ' Please, try again later or contact administrator.';
+                this.errorMessage = 'Email or username are already used. Email and username must be unique!';
                 console.log(e);
                 if (e.error.error.password !== undefined) {
                     this.errorMessage = ' ' + e.error.error.password[0];

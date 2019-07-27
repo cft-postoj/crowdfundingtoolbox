@@ -90,7 +90,9 @@ export class CampaignListComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.changeSubscription.unsubscribe();
+        if (this.changeSubscription !== undefined) {
+            this.changeSubscription.unsubscribe();
+        }
     }
 
     handleActiveEmitter(campaign: Campaign) {
