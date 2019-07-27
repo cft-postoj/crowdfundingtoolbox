@@ -16,6 +16,9 @@ th {
     &:hover {
         color: $azure;
     }
+    &.id {
+        width: 50px !important;
+    }
 }
 ::ng-deep td.delete, ::ng-deep th.delete {
     text-align: right;

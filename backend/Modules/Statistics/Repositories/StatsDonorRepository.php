@@ -261,7 +261,17 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->joinSub($lastMonthlyDonation, 'latest_donation', function ($join) {
                 $join->on('last_donation_at', '=', 'latest_donation.created_at');
             })
-            ->with('user')
+            ->joinSub($this->donationsSum, 'donations_sum', function ($join) {
+                $join->on('portal_users.id', '=', 'donations_sum.portal_user_id');
+            })
+            ->joinSub($this->firstDonation, 'first_donation', function ($join) {
+                $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
+            })
+            ->orderBy('last_donation_at', 'DESC')
+            ->with('user.userDetail')
+            ->with('isMonthlyDonor')
+            ->with('variableSymbol')
+            ->with('firstDonation.widget.campaign')
             ->with('userPaymentOptions')
             ->whereDate('last_donation_at', '<=', $stopAfterDate)->count();
     }

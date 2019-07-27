@@ -48,7 +48,7 @@ export class SideBarComponent implements OnInit {
         router.events
             .filter(e => e instanceof NavigationEnd)
             .pairwise().subscribe((e: any) => {
-            console.log(e);
+                console.log(e);
             localStorage.setItem('previousRoute', e[0].urlAfterRedirects);
         });
     }

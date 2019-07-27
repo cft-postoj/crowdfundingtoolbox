@@ -185,6 +185,8 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType, this.limit).subscribe(
                 result => {
                     this.portalUsers = result.donors;
+                    console.log(result);
+                    console.log('HERE')
                     this.portalUsersCount = result.count;
                     this.sortedPortalUsers = Object.assign([], this.portalUsers);
                     console.log(result)

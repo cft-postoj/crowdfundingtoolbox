@@ -38,7 +38,7 @@ import localSk from '@angular/common/locales/sk';
         HttpClientModule,
         BrowserAnimationsModule,
         InlineSVGModule.forRoot(),
-        routing,
+        routing
     ],
     entryComponents: [ModalComponent],
     declarations: [

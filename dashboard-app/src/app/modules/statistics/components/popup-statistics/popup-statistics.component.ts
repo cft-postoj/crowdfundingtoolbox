@@ -25,7 +25,7 @@ export class PopupStatisticsComponent implements OnInit {
     end: moment()
   };
 
-  public monthly: boolean;
+  public monthly: any;
   public tableTitle: string;
 
   public from: string;
@@ -44,7 +44,7 @@ export class PopupStatisticsComponent implements OnInit {
       start: moment(this.from),
       end: moment(this.to)
     };
-    this.monthly = (urlParams.get('monthly') === 'true');
+    this.monthly = (urlParams.get('monthly') === 'true') ? true : ((urlParams.get('monthly') === 'false') ? false : '');
     this.tableTitle = urlParams.get('tableTitle');
     this.tables = {
       tableDonors: (urlParams.get('tableDonors') === 'true'),
