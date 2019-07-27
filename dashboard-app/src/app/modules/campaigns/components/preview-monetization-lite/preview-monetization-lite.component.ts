@@ -42,7 +42,7 @@ export class PreviewMonetizationLiteComponent implements OnInit {
     private subscription: Subscription;
     public paymentTypes = paymentTypes;
     public environment = environment;
-    private fontFamilyPreview ='';
+    public fontFamilyPreview ='';
 
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
                 private ref: ChangeDetectorRef) {

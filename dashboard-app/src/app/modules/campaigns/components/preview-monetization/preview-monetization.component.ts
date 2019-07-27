@@ -44,7 +44,7 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
     public paymentTypes = paymentTypes;
 
     public environment = environment;
-    private fontFamilyPreview ='';
+    public fontFamilyPreview ='';
 
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
                 private ref: ChangeDetectorRef) {
