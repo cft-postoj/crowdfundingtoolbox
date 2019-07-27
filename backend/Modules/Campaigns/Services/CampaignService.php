@@ -22,6 +22,7 @@ class CampaignService implements CampaignServiceInterface
     private $promoteService;
     private $widgetService;
     private $campaignRepository;
+    private $campaignPromoteService;
 
     public function __construct()
     {
@@ -30,6 +31,7 @@ class CampaignService implements CampaignServiceInterface
         $this->promoteService = new CampaignPromoteService();
         $this->widgetService = new WidgetService();
         $this->campaignRepository = new CampaignRepository();
+        $this->campaignPromoteService = new CampaignPromoteService();
     }
 
     //raw campaign data contains data from request with data used inf all connected entities to campaign
@@ -96,7 +98,13 @@ class CampaignService implements CampaignServiceInterface
         $newCampaign->save();
 
         $newPromote = $campaign->promote->replicate();
-        $newPromote->campaign_id = $newCampaign->id;
+
+        $this->campaignPromoteService->createCampaignPromoteSettings($newCampaign->id, $newPromote);
+
+//        $newPromote->campaign_id = $newCampaign->id;
+//        $newCampaign->promote = $newPromote;
+
+
 
         $this->widgetService->cloneWidgetsInCampaign($campaign, $newCampaign);
         $this->targetingService->cloneTargeting($campaign, $newCampaign);

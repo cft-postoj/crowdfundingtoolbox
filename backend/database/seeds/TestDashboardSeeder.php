@@ -283,9 +283,9 @@ class TestDashboardSeeder extends Seeder
                     'created_at' => $donationDate,
                     'updated_at' => $donationDate,
                     'payment_method' => $paymentMethods[array_rand($paymentMethods)],
-                    'status' => 'processed'
+                    'status' => 'waiting_for_payment'
                 ]);
-                if ($i % 7 !== 0) {
+                if ($i % 4 !== 0) {
                     $payment = $this->createPayment($donation->id, $portalUserId, $donation->amount, $donation->created_at);
                     if ($portalUserId !== null) {
                         Donation::where('id', $donation->id)->update(array(

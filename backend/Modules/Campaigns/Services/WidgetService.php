@@ -870,7 +870,15 @@ class WidgetService implements WidgetServiceInterface
 
             $newWidget->save();
             $newWidgetSettings = $widget->widgetSettings->replicate();
-            $newWidgetSettings->widget_id = $newWidget->id;
+            //$newWidgetSettings->widget_id = $newWidget->id;
+
+            // widget settings
+            WidgetSettings::create([
+                'widget_id' => $newWidget->id,
+                'desktop' => $newWidgetSettings['desktop'],
+                'tablet' => $newWidgetSettings['tablet'],
+                'mobile' => $newWidgetSettings['mobile']
+            ]);
 
             foreach ($widget->campaignImage as $img) {
                 $newImg = $img->replicate();
