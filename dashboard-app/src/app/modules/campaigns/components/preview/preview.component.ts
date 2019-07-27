@@ -120,6 +120,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     recreateStyles() {
+        console.log(this.widget)
+
         const parent = document.getElementById('styles');
 
         for (let style of  parent.getElementsByClassName('globalStyles') as any) {
@@ -261,6 +263,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         let dynamicStyle = {};
         if (this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.imageOverlay.value ||
             this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.image.value) {
+            console.log('here');
+            console.log(this.widget.settings[this.deviceType].widget_settings.general.background.image);
             dynamicStyle = {
                 'background-image': 'url(' + this.widget.settings[this.deviceType].widget_settings.general.background.image.url + ')'
             };

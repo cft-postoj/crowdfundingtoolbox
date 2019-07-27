@@ -471,7 +471,8 @@
                                      *ngIf="widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.image.value ||
                                       widget.settings[deviceType].widget_settings.general.background.type == backgroundTypes.imageOverlay.value">
                                     <app-dragAndDrop class="col-12"
-                                                     [(fileData)]="widget.settings[deviceType].widget_settings.general.background.image">
+                                                     (fileDataChange)="changeUploadedFile($event)"
+                                                     [fileData]="widget.settings[deviceType].widget_settings.general.background.image">
                                     </app-dragAndDrop>
                                 </div>
                                 <div class="row"

@@ -49,21 +49,20 @@ export class DragAndDropComponent {
         }, 500)
     }
 
-    private uploadImage(file) {
-        let formData: FormData = new FormData();
-        formData.append('image', file, file.name);
+    public uploadImage(file) {
+        const formData: FormData = new FormData();
+        formData.append('image', file, file.name.replace(' ', '%20'));
         this.imageUploadService.upload(formData).subscribe(
             data => {
                 let fileUrlTemp = data.file.url;
-                let myReader: FileReader = new FileReader();
+                const myReader: FileReader = new FileReader();
                 myReader.onloadend = () => {
                     fileUrlTemp = myReader.result;
                 };
                 myReader.readAsDataURL(this.file);
                 this.loading = false;
                 this.fileData = data.file;
-                this.fileDataChange.emit(this.fileData);
-                this.fileUrl = this.fileData.url
+                this.fileUrl = this.fileData.url;
             },
 
             e => {
@@ -71,8 +70,11 @@ export class DragAndDropComponent {
                 this.alertMessage = e.error.error.image[0];
                 this.loading = false;
                 window.localStorage.removeItem('campaignImage');
+            }, () => {
+                this.fileDataChange.emit(this.fileData);
+                this.fileUrlChange.emit(this.fileUrl);
             }
-        )
+        );
     }
 
     getUrl() {

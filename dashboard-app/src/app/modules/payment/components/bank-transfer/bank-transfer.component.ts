@@ -172,11 +172,10 @@ export class BankTransferComponent implements OnInit {
 
     private updateBanksButtonsByResult(result: BankButton[]) {
         this.bankButtons = result.map(single => {
-            let result = single;
-            if (result.image == null) {
-                result.image = new Image();
+            if (single.image == null) {
+                single.image = new Image();
             }
-            return result;
+            return single;
         });
     }
 }

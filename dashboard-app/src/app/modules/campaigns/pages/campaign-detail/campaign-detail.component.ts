@@ -79,7 +79,7 @@ export class CampaignDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.changeSubscription.unsubscribe();
+        //this.changeSubscription.unsubscribe();
     }
 
     getCampaignStats(event) {

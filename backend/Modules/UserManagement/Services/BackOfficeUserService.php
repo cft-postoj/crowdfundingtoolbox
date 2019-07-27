@@ -125,9 +125,16 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
 
             $newUser = json_encode($this->userService->create($request), true);
             $newUser = json_decode($newUser);
-            $newUserId = $newUser->original->user->id;
-            $newUserUsername = $newUser->original->user->username;
-            $newUserEmail = $newUser->original->user->email;
+            if (isset($newUser->original)) {
+                return \response()->json([
+                    'error' => $newUser->original->error->email[0]
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            $newUserId = $newUser->id;
+            $newUserUsername = $newUser->username;
+            $newUserEmail = $newUser->email;
+
+
 
             $this->userDetailRepository->createWithRequest(array_merge(...$resultDetail), $newUserId);
 
@@ -137,8 +144,7 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
                 ->send(new BackOfficeRegisterEmail($token, $newUserUsername));
         } catch (\Exception $exception) {
             return \response()->json([
-                'error' => $exception->getMessage(),
-                'message' => 'Email already exists.'
+                'error' => $exception->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
 

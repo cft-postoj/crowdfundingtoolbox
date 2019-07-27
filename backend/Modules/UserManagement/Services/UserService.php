@@ -4,6 +4,7 @@
 namespace Modules\UserManagement\Services;
 
 
+use http\Client\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
@@ -81,42 +82,53 @@ class UserService implements UserServiceInterface
             return $jsonError;
         }
 
-        $data = \request()->only('email', 'username', 'password');
+        try {
 
-        $username = $this->checkUniqueUsername(isset($data['username'])
-            ? $data['username'] : explode('@', $data['email'])[0]);
+            $data = \request()->only('email', 'username', 'password');
 
-        $user = User::create([
-            'username' => $username,
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-        $user->save();
+            $username = $this->checkUniqueUsername(isset($data['username'])
+                ? $data['username'] : explode('@', $data['email'])[0]);
 
-        if (strpos($prefix, 'backoffice') !== false) {
-            $currentAdmin = Auth::user();
-            if (BackOfficeUser::where('user_id', $currentAdmin->id)->first()->only('role_id')['role_id'] == 1) {
-                $backOfficeUser = BackOfficeUser::create([
-                    'user_id' => $user->id,
-                    'role_id' => ($request['role'] === 'admin') ? 1 : 2   // admin / manager user
+            $user = $this->userRepository->getByEmail($data['email']);
+            $existInUserTable = ($user === null) ? false : true;
+
+            if (!$existInUserTable) {
+                $user = User::create([
+                    'username' => $username,
+                    'email' => $data['email'],
+                    'password' => bcrypt($data['password'])
                 ]);
-                $backOfficeUser->save();
-            } else {
-                return response()->json([
-                    'message' => 'You don\'t have permissions to this action'
-                ], 400);
+                $user->save();
             }
-        } else {
-            PortalUser::create([
-                'user_id' => $user->id
-            ])->save();
-            Mail::to($data['email'])->send(new RegisterEmail());
+
+
+            if (strpos($prefix, 'backoffice') !== false) {
+                $currentAdmin = Auth::user();
+                if (BackOfficeUser::where('user_id', $currentAdmin->id)->first()->only('role_id')['role_id'] == 1) {
+                    $backOfficeUser = BackOfficeUser::create([
+                        'user_id' => $user->id,
+                        'role_id' => ($request['role'] === 'admin') ? 1 : 2   // admin / manager user
+                    ]);
+                    $backOfficeUser->save();
+                } else {
+                    return response()->json([
+                        'message' => 'You don\'t have permissions to this action'
+                    ], 400);
+                }
+            } else {
+                PortalUser::create([
+                    'user_id' => $user->id
+                ])->save();
+                Mail::to($data['email'])->send(new RegisterEmail());
+            }
+
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
         }
 
-        return response()->json([
-            'message' => 'Successfully created user!',
-            'user' => $user
-        ], 201);
+        return $user;
     }
 
     private function checkUniqueUsername($username)

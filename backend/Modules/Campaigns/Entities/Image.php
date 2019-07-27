@@ -24,9 +24,9 @@ class Image extends Model
     public function getUrlAttribute()
     {
             $appUrl = env('APP_URL');
-            if (env('APP_ENV') === 'prod') {
-                $appUrl = env('CFT_PORTAL_PROD_URL');
-            }
+//            if (env('APP_ENV') === 'prod') {
+//                $appUrl = env('CFT_PORTAL_PROD_URL');
+//            }
         return $appUrl.env('STORAGE_PREFIX').$this->attributes['path'];
     }
 

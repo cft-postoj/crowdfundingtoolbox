@@ -134,7 +134,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     ngOnDestroy() {
-        this.subcriptions.unsubscribe();
+        //this.subcriptions.unsubscribe();
     }
 
     closeEditWindow() {
@@ -382,6 +382,12 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
     setSpecificRadius(value: boolean) {
         this.specificRadius = value;
+    }
+
+    changeUploadedFile(event) {
+        this.widget.settings[this.deviceType].widget_settings.general.background.image = event;
+        console.log(event);
+        console.log(this.widget)
     }
 
 }

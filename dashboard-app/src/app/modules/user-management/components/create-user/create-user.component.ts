@@ -80,6 +80,9 @@ export class CreateUserComponent implements OnInit {
                 if (e.error.error.role !== undefined) {
                     this.alertMessage += ' ' + e.error.error.role[0];
                 }
+                if (typeof e.error.error === 'string') {
+                    this.alertMessage += ' ' + e.error.error;
+                }
                 this.alertType = 'danger';
                 this.alertOpen = true;
             }
