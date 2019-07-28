@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {TokenExpirationService} from "../../../user-management/services";
 
@@ -7,11 +7,12 @@ import {TokenExpirationService} from "../../../user-management/services";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(private expirationService: TokenExpirationService) { }
 
     public expiration: any = false;
+    public detectChanges: boolean = false;
 
     private subscribtion: Subscription;
 
@@ -21,6 +22,11 @@ export class DashboardComponent implements OnInit {
             this.expiration = data;
         });
     }
+
+    ngOnChanges(): void {
+        this.detectChanges = true;
+    }
+
 
     ngOnDestroy() {
         if (this.subscribtion !== undefined) {

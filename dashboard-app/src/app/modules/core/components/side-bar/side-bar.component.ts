@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {environment} from 'environments/environment';
 import {DropdownItem, sidebarType} from '../../models';
@@ -15,7 +15,7 @@ import 'rxjs/add/operator/filter';
     templateUrl: './side-bar.component.html',
     styleUrls: ['./side-bar.component.scss']
 })
-export class SideBarComponent implements OnInit {
+export class SideBarComponent implements OnInit, OnChanges {
 
     public toggleTranslations = false;
     public toggleWidgets = false;
@@ -48,8 +48,10 @@ export class SideBarComponent implements OnInit {
         router.events
             .filter(e => e instanceof NavigationEnd)
             .pairwise().subscribe((e: any) => {
-            console.log(e);
             localStorage.setItem('previousRoute', e[0].urlAfterRedirects);
+            if (router.routerState.snapshot.url.indexOf('campaigns') > -1) {
+                this.isActive = true;
+            }
         });
     }
 
@@ -179,6 +181,6 @@ export class SideBarComponent implements OnInit {
             if (actualUrl.indexOf(item) > -1) {
                 this.activeItem = item.toUpperCase();
             }
-        })
+        });
     }
 }
