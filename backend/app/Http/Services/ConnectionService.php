@@ -13,7 +13,7 @@ class ConnectionService
 
     public function getBackendUrl()
     {
-        return env('APP_URL');
+        return env('BACKEND_URL');
     }
 
     public function setPortalUrl($request)
