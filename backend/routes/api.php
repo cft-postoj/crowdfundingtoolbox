@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,27 +23,16 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-Requested-W
 Route::group([
     'prefix' => 'backoffice'
 ], function () {
-    Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
-    Route::post('check-generated-reset-token', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@checkGeneratedToken');
 
-    // Languages and Translations
-//    Route::get('default-strings', 'BackOfficeAPI\TranslationsController@getDefault');
-//    Route::get('languages', 'BackOfficeAPI\LanguagesController@get');
-//    Route::post('language', 'BackOfficeAPI\LanguagesController@create');
-//    Route::put('language', 'BackOfficeAPI\LanguagesController@update');
-//    Route::delete('language', 'BackOfficeAPI\LanguagesController@delete');
-//
-//    Route::get('translation/{id}', function ($id) {
-//        return App\Http\Controllers\BackOfficeAPI\TranslationsController::getTranslationsById($id);
-//    });
+    // CORS condition -- only defined domain in .env can have access to routes
+    if (strpos(request()->headers->get('referer'), env('APP_URL')) !== false) {
+        Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
+        Route::post('check-generated-reset-token', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@checkGeneratedToken');
 
+        Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
 
-    Route::post('register', '\Modules\UserManagement\Http\Controllers\UserServiceController@create');
-    //Route::get('test', 'BackOfficeAPI\CampaignsConfigurationController@getFonts');
-    //Route::get('test', 'BackOfficeAPI\WidgetsController@getGeneralSettings');
-
-    Route::group(['middleware' => ['jwt.verify']], function () {
-        //if (\Modules\UserManagement\Entities\BackOfficeUser::where('user_id', Auth::user()->id)->first() !== null) {
+        Route::group(['middleware' => ['jwt.verify']], function () {
+            //if (\Modules\UserManagement\Entities\BackOfficeUser::where('user_id', Auth::user()->id)->first() !== null) {
             // Create new user - only admin role can do this
             Route::get('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@get');
             Route::put('user-detail', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@update');
@@ -157,7 +147,7 @@ Route::group([
             Route::get('payment/{id}', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@getPayment');
 
 
-        // Import payments
+            // Import payments
             Route::post('payment/import/check-file-type', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@checkFileType');
             Route::post('payment/import/import-payments', '\Modules\Payment\Http\Controllers\PaymentBackOfficeController@importPayments');
 
@@ -176,70 +166,93 @@ Route::group([
             Route::get('portal-users/{id}/donations', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDonationsByUserPortalAndDate');
             Route::get('portal-users/{id}/donations-detail', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getDonationsDetailInfo');
 
-        // }
+            // }
 
-        // Portal connections
-        Route::get('portal-connections/portal-url', '\App\Http\Controllers\ConnectionController@getPortalUrl');
-        Route::get('portal-connections/backend-url', '\App\Http\Controllers\ConnectionController@getBackendUrl');
-        Route::post('portal-connections/portal-url', '\App\Http\Controllers\ConnectionController@updatePortalUrl');
-    });
-
+            // Portal connections
+            Route::get('portal-connections/portal-url', '\App\Http\Controllers\ConnectionController@getPortalUrl');
+            Route::get('portal-connections/backend-url', '\App\Http\Controllers\ConnectionController@getBackendUrl');
+            Route::post('portal-connections/portal-url', '\App\Http\Controllers\ConnectionController@updatePortalUrl');
+        });
+    } else {
+        Route::any('/{any}', function () {
+            $status = 422;
+            return [
+                "message" => $status . " error",
+                "errors" => [
+                    "message" => 'You don\'t have an access to content in this application!'
+                ],
+                "status_code" => $status
+            ];
+        })->where('any', '.*');
+    }
 
 });
 
 Route::group([
     'prefix' => 'portal'
 ], function () {
-    Route::post('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
-    //get Campaign
-    Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
-    Route::post('register', '\Modules\UserManagement\Http\Controllers\PortalUsersController@create');
-    Route::post('login', '\Modules\UserManagement\Http\Controllers\PortalUsersController@authenticate');
-    //Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
-    Route::post('forgotten-password', '\Modules\UserManagement\Http\Controllers\PortalUsersController@resetPassword');
-    Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\GeneratedUserTokenController@hasUserGeneratedToken');
-    Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
+    // CORS condition -- only defined domain in .env can have access to routes
+    if (strpos(request()->headers->get('referer'), env('CFT_PORTAL_URL')) !== false) {
+        Route::post('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
+        //get Campaign
+        Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
+        Route::post('register', '\Modules\UserManagement\Http\Controllers\PortalUsersController@create');
+        Route::post('login', '\Modules\UserManagement\Http\Controllers\PortalUsersController@authenticate');
+        //Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
+        Route::post('forgotten-password', '\Modules\UserManagement\Http\Controllers\PortalUsersController@resetPassword');
+        Route::post('has-user-generated-token', '\Modules\UserManagement\Http\Controllers\GeneratedUserTokenController@hasUserGeneratedToken');
+        Route::post('change-password', '\Modules\UserManagement\Http\Controllers\UserServiceController@changePassword');
 
 
-    Route::group(['middleware' => ['jwt.auth']], function () {
-      Route::get('is-user-logged-in', '\Modules\UserManagement\Http\Controllers\PortalUsersController@isUserLoggedIn');
-      Route::get('user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@get');
-      Route::put('update-user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@update');
-      Route::get('base-user-data', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getBase');
-      Route::get('logout', '\Modules\UserManagement\Http\Controllers\PortalUsersController@logout');
-      Route::get('your-support', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getUserSupportData');
-      Route::get('payment-options', '\Modules\Payment\Http\Controllers\PaymentController@getPaymentMethods');
+        Route::group(['middleware' => ['jwt.auth']], function () {
+            Route::get('is-user-logged-in', '\Modules\UserManagement\Http\Controllers\PortalUsersController@isUserLoggedIn');
+            Route::get('user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@get');
+            Route::put('update-user-details', '\Modules\UserManagement\Http\Controllers\UserDetailsController@update');
+            Route::get('base-user-data', '\Modules\UserManagement\Http\Controllers\UserDetailsController@getBase');
+            Route::get('logout', '\Modules\UserManagement\Http\Controllers\PortalUsersController@logout');
+            Route::get('your-support', '\Modules\UserManagement\Http\Controllers\PortalUsersController@getUserSupportData');
+            Route::get('payment-options', '\Modules\Payment\Http\Controllers\PaymentController@getPaymentMethods');
 
-        // *********************************************
-        // PAYMENT
-        Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentController@getBankTransferDetails');
-        Route::post('payment/pay-via-bank-transfer', '\Modules\Payment\Http\Controllers\PaymentController@payViaBankTransfer');
+            // *********************************************
+            // PAYMENT
+            Route::get('payment/bank-transfer-details', '\Modules\Payment\Http\Controllers\PaymentController@getBankTransferDetails');
+            Route::post('payment/pay-via-bank-transfer', '\Modules\Payment\Http\Controllers\PaymentController@payViaBankTransfer');
 
-        Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentController@getCardDetails');
-        Route::post('payment/pay-via-card', '\Modules\Payment\Http\Controllers\PaymentController@payViaCard');
+            Route::get('payment/card-details', '\Modules\Payment\Http\Controllers\PaymentController@getCardDetails');
+            Route::post('payment/pay-via-card', '\Modules\Payment\Http\Controllers\PaymentController@payViaCard');
 
-        Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentController@getPayBySquareDetails');
-        Route::post('payment/pay-via-pay-by-square', '\Modules\Payment\Http\Controllers\PaymentController@payViaPayBySquare');
+            Route::get('payment/pay-by-square-details', '\Modules\Payment\Http\Controllers\PaymentController@getPayBySquareDetails');
+            Route::post('payment/pay-via-pay-by-square', '\Modules\Payment\Http\Controllers\PaymentController@payViaPayBySquare');
 
-        Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getGooglePayDetails');
-        Route::post('payment/pay-via-google-pay', '\Modules\Payment\Http\Controllers\PaymentController@payViaGooglePay');
+            Route::get('payment/google-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getGooglePayDetails');
+            Route::post('payment/pay-via-google-pay', '\Modules\Payment\Http\Controllers\PaymentController@payViaGooglePay');
 
-        Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getApplePayDetails');
-        Route::post('payment/pay-via-apple-pay', '\Modules\Payment\Http\Controllers\PaymentController@payViaApplePay');
+            Route::get('payment/apple-pay-details', '\Modules\Payment\Http\Controllers\PaymentController@getApplePayDetails');
+            Route::post('payment/pay-via-apple-pay', '\Modules\Payment\Http\Controllers\PaymentController@payViaApplePay');
 
-        // *********************************************
-    });
-
-
-    Route::post('tracking/click', '\Modules\UserManagement\Http\Controllers\TrackingController@click');
-    Route::post('tracking/insertValue', '\Modules\UserManagement\Http\Controllers\TrackingController@insertValue');
-    Route::post('tracking/insertEmail', '\Modules\UserManagement\Http\Controllers\TrackingController@insertEmail');
-    Route::post('tracking/initialize-donation-invalid', '\Modules\UserManagement\Http\Controllers\TrackingController@initializeDonationInvalid');
-
-    Route::post('donation/initialize', '\Modules\Payment\Http\Controllers\DonationController@initialize');
-    Route::post('donation/waiting-for-payment', '\Modules\Payment\Http\Controllers\DonationController@waitingForPayment');
+            // *********************************************
+        });
 
 
+        Route::post('tracking/click', '\Modules\UserManagement\Http\Controllers\TrackingController@click');
+        Route::post('tracking/insertValue', '\Modules\UserManagement\Http\Controllers\TrackingController@insertValue');
+        Route::post('tracking/insertEmail', '\Modules\UserManagement\Http\Controllers\TrackingController@insertEmail');
+        Route::post('tracking/initialize-donation-invalid', '\Modules\UserManagement\Http\Controllers\TrackingController@initializeDonationInvalid');
+
+        Route::post('donation/initialize', '\Modules\Payment\Http\Controllers\DonationController@initialize');
+        Route::post('donation/waiting-for-payment', '\Modules\Payment\Http\Controllers\DonationController@waitingForPayment');
+    } else {
+        Route::any('/{any}', function () {
+            $status = 422;
+            return [
+                "message" => $status . " error",
+                "errors" => [
+                    "message" => 'You don\'t have an access to content in CFT application!'
+                ],
+                "status_code" => $status
+            ];
+        })->where('any', '.*');
+    }
 
 });
 
