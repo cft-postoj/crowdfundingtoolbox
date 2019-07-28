@@ -5,7 +5,7 @@
         title="Delete"
         [inlineSVG]="'assets/images/icons/preview_close.svg'"
   ></span>
-    <div class="header container">
+    <div class="header container-fluid">
         <div class="row preview--topPanel">
             <div class="col vertical-align">
                 PREVIEW MODE
@@ -13,6 +13,7 @@
             <div class="col vertical-align">
                 <ng-container *ngIf="campaignId">
                     <app-radio-button-group [radioButtons]="deviceTypeButtons" [(currentValue)]="deviceType"
+                                            (currentValueChange)="handleDeviceChange($event)"
                                             [clazz]="'radio-button-group--little radio-button-group--white'">
                     </app-radio-button-group>
                 </ng-container>

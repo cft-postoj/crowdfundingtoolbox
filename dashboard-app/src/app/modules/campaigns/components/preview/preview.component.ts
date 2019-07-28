@@ -120,7 +120,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     recreateStyles() {
-        console.log(this.widget)
 
         const parent = document.getElementById('styles');
 
@@ -192,7 +191,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             this.previewService.toggle(true);
 
         }
+        this.setDeviceDimensions();
 
+    }
+
+    private setDeviceDimensions() {
         // set device width/height
         if (this.deviceType === 'tablet') {
             this.deviceWidth = 768;
@@ -263,8 +266,6 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         let dynamicStyle = {};
         if (this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.imageOverlay.value ||
             this.widget.settings[this.deviceType].widget_settings.general.background.type === backgroundTypes.image.value) {
-            console.log('here');
-            console.log(this.widget.settings[this.deviceType].widget_settings.general.background.image);
             dynamicStyle = {
                 'background-image': 'url(' + this.widget.settings[this.deviceType].widget_settings.general.background.image.url + ')'
             };
@@ -331,7 +332,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             width: (additionalSettings !== undefined) ?
                 additionalSettings.text.width : '100%',
             display: (headlineText.text_display !== undefined) ? headlineText.text_display : 'block',
-            'background-color': headlineText.fontSettings.backgroundColor ,
+            'background-color': headlineText.fontSettings.backgroundColor,
             margin: this.addPx(headlineText.text_margin.top) + ' ' +
                 this.addPx(headlineText.text_margin.right) + ' ' +
                 this.addPx(headlineText.text_margin.bottom) + ' ' +
@@ -357,7 +358,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             display: (additionalText.text_display !== undefined) ? additionalText.text_display : 'block',
             padding: (this.widget.settings[this.deviceType].additional_settings.bodyContainer !== undefined) ?
                 this.widget.settings[this.deviceType].additional_settings.bodyContainer.padding : 0,
-            'background-color': additionalText.text_background ,
+            'background-color': additionalText.text_background,
             margin: this.addPx(additionalText.text_margin.top) + ' ' +
                 this.addPx(additionalText.text_margin.right) + ' ' +
                 this.addPx(additionalText.text_margin.bottom) + ' ' +
@@ -613,6 +614,10 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             display: (this.widget.widget_type.method !== 'custom') ? 'none' : 'block'
         }
         return styles;
+    }
+
+    handleDeviceChange(event) {
+       this.setDeviceDimensions();
     }
 
 }
