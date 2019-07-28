@@ -15,7 +15,7 @@ import 'rxjs/add/operator/filter';
     templateUrl: './side-bar.component.html',
     styleUrls: ['./side-bar.component.scss']
 })
-export class SideBarComponent implements OnInit, OnChanges {
+export class SideBarComponent implements OnInit {
 
     public toggleTranslations = false;
     public toggleWidgets = false;
