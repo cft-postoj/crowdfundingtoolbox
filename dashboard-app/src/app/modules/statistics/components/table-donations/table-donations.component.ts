@@ -30,6 +30,7 @@ export class TableDonationsComponent implements OnInit {
     @Input() public donations: Donation[] = [];
     @Input() public showDates = true;
     @Input() public isListOfAllDonations: boolean = false;
+    @Input() public extraClass: string;
     public routing = Routing;
     public loading = true;
 

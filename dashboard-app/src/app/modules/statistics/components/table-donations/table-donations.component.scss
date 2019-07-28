@@ -27,3 +27,7 @@ th {
         cursor: pointer;
     }
 }
+
+::ng-deep .autoHeight {
+    min-height: 500px;
+}
