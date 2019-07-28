@@ -48,26 +48,18 @@ export class SideBarComponent implements OnInit {
         router.events
             .filter(e => e instanceof NavigationEnd)
             .pairwise().subscribe((e: any) => {
-                console.log(e);
+            console.log(e);
             localStorage.setItem('previousRoute', e[0].urlAfterRedirects);
         });
     }
 
     ngOnInit() {
         if (this.router.routerState.snapshot.url.indexOf('campaigns') > -1) {
-            this.getCampaigns();
-            this.componentComService.alert.subscribe(message => {
-                this.getCampaignsAndCreateSidebar();
-            }, (error) => {
-                console.error(error);
-            });
-
-            this.previewService.change.subscribe(isOpen => {
-                this.previewOpen = isOpen;
-            });
+            this.isActive = true;
         } else {
             this.makeItemPublic();
         }
+        this.setActiveIcon();
     }
 
     getCampaigns() {
@@ -159,18 +151,34 @@ export class SideBarComponent implements OnInit {
             // this.isActive = this.activeItem !== this.noActiveItem;
             // this.currentSidebarItemType = sidebarType.campaigns;
         } else if (itemName === this.faqItemName) {
-           window.open('https://docs.crowdfundingtoolbox.news/user-guide.pdf', '_blank');
+            window.open('https://docs.crowdfundingtoolbox.news/user-guide.pdf', '_blank');
         } else {
             this.isActive = false;
         }
         this.activeItem = itemName;
 
 
-
     }
 
     toggleSidebar() {
         this.isActive = !this.isActive;
+    }
 
+    private setActiveIcon() {
+        const actualUrl = this.router.routerState.snapshot.url;
+        const items = [
+            this.statisticsItemName.toLowerCase(),
+            this.campaignsItemName.toLowerCase(),
+            this.usersItemName.toLowerCase(),
+            this.paymentsItemName.toLowerCase(),
+            this.settingsItemName.toLowerCase(),
+            this.donorsItemName.toLowerCase(),
+            this.faqItemName.toLowerCase()
+        ];
+        items.forEach((item, key) => {
+            if (actualUrl.indexOf(item) > -1) {
+                this.activeItem = item.toUpperCase();
+            }
+        })
     }
 }
