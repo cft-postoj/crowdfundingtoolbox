@@ -33,6 +33,7 @@ import { HelpComponent } from './components/help/help.component';
 import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 import { PreviousPageComponent } from './components/previous-page/previous-page.component';
 import {PortalConnectionsSettingsComponent} from './components/portal-connections-settings/portal-connections-settings.component';
+import { ResponsiveComponent } from './pages/responsive/responsive.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import {PortalConnectionsSettingsComponent} from './components/portal-connection
         HelpComponent,
         PreviousPageComponent,
         PortalConnectionsSettingsComponent,
+        ResponsiveComponent,
     ],
     imports: [
         CommonModule,

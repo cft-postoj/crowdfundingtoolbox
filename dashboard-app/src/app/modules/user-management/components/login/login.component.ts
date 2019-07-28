@@ -79,7 +79,11 @@ export class LoginComponent implements OnInit {
             this.alertType = 'success';
             this.alertOpen = true;
             setTimeout(() => {
-                this.router.navigateByUrl(this.routing.STATS_FULL_PATH);
+                if (window.innerWidth > 991) {
+                    this.router.navigateByUrl(this.routing.STATS_FULL_PATH);
+                } else {
+                    this.router.navigateByUrl('responsive');
+                }
                 this.loadingStop();
             }, 1000);
 

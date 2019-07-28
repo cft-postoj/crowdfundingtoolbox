@@ -12,12 +12,20 @@ import {ConfigurationComponent} from './modules/core/pages/configuration/configu
 import {TranslationCreateComponent, TranslationListComponent} from './modules/translations/components';
 import {UserSettingsComponent} from './modules/user-management/components/user-settings/user-settings.component';
 import {CreateUserComponent} from './modules/user-management/components/create-user/create-user.component';
-import {PortalConnectionsSettingsComponent} from './modules/core/components/portal-connections-settings/portal-connections-settings.component';
+import {PortalConnectionsSettingsComponent} from
+        './modules/core/components/portal-connections-settings/portal-connections-settings.component';
+import {ResponsiveComponent} from './modules/core/pages/responsive/responsive.component';
 
 export const appRoutes: Routes = [
     {
         path: 'login',
         loadChildren: './modules/user-management/user-management.module#UserManagementModule'
+    },
+    {
+        path: 'responsive',
+        canActivate: [LoginGuard],
+        canActivateChild: [LoginGuard],
+        component: ResponsiveComponent
     },
     {
         path: 'dashboard',
