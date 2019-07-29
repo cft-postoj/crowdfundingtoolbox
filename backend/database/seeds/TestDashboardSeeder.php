@@ -16,6 +16,7 @@ use Modules\UserManagement\Entities\PortalUser;
 use Modules\UserManagement\Entities\TrackingVisit;
 use Modules\UserManagement\Entities\TrackingShow;
 use Modules\Campaigns\Entities\Widget;
+use Carbon\Carbon;
 
 class TestDashboardSeeder extends Seeder
 {
@@ -39,22 +40,22 @@ class TestDashboardSeeder extends Seeder
      */
     public function run()
     {
-        // create landing default campaign
-        // $this->landingDefaultCampaign();
+         //create landing default campaign
+         $this->landingDefaultCampaign();
 //
 //        //create 5 campaigns
-//        for ($i = 0; $i < 5; $i++) {
-//            $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
-//        }
+        for ($i = 0; $i < 5; $i++) {
+            $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
+        }
 //
 //        // create 600 users
-//        for ($i = 0; $i < 60; $i++) {
-//            $this->call(PortalUserSeeder::class);
-//        }
+        for ($i = 0; $i < 10; $i++) {
+            $this->call(PortalUserSeeder::class);
+        }
         $users = PortalUser::all();
         for ($i = 0; $i < 2; $i++) { // 2 iterations of generate payments for all users
             foreach ($users as $user) {
-                $this->generateTrackingAndPayments($user->id);
+                $this->generateTrackingAndPayments($user->id, $user->created_at);
             }
         }
     }
@@ -187,38 +188,44 @@ class TestDashboardSeeder extends Seeder
 
 
     // TRACKING SEEDER (Flow -- trackingVisit -- trackingShow -- donations -- payments)
-    private function generateTrackingAndPayments($portalUserId)
+    private function generateTrackingAndPayments($portalUserId, $userCreatedAt)
     {
         // generate 30 tracking records for each portal user
         $trackingSites = array();
         array_push($trackingSites, array(
             'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/74/ked-george-soros-a-charles-koch-financuju-katolickeho-konzervativca',
             'article_id' => 74,
+            'author' => 'Ferko Mrkvicka',
             'title' => 'Keď George Soros a Charles Koch financujú katolíckeho konzervatívca'
         ));
         array_push($trackingSites, array(
             'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/73/klerofasisticke-pokusenie-ladislava-hanusa',
             'article_id' => 73,
+            'author' => 'John Doe',
             'title' => 'Klérofašistické pokušenie Ladislava Hanusa'
         ));
         array_push($trackingSites, array(
             'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/69/najvaecsia-reforma-smeru-v-zdravotnictve-za-dvanast-rokov-projekty-penty',
             'article_id' => 69,
+            'author' => 'Peter Balbercak',
             'title' => 'Najväčšia reforma Smeru v zdravotníctve za dvanásť rokov? Projekty Penty'
         ));
         array_push($trackingSites, array(
             'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/72/v-centre-bratislavy-vylupili-zlatnictvo-ukradli-sperky-za-viac-ako-50-tisic-eur',
             'article_id' => 72,
+            'author' => 'Donald Trump',
             'title' => 'V centre Bratislavy vylúpili zlatníctvo, ukradli šperky za viac ako 50-tisíc eur'
         ));
         array_push($trackingSites, array(
             'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/70/o-lobotku-udajne-prejavil-zaujem-ac-milano',
             'article_id' => 70,
+            'author' => 'Bill Cosby',
             'title' => 'O Lobotku údajne prejavil záujem AC Miláno'
         ));
         array_push($trackingSites, array(
             'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/68/zelensky-hovoril-s-putinom-aj-o-zajatych-ukrajinskych-namornikoch',
             'article_id' => 68,
+            'author' => 'George Bush',
             'title' => 'Zelenský hovoril s Putinom aj o zajatých ukrajinských námorníkoch'
         ));
         array_push($trackingSites, array(
@@ -229,15 +236,39 @@ class TestDashboardSeeder extends Seeder
 
         for ($i = 0; $i < 5; $i++) {
             $tracking = $trackingSites[array_rand($trackingSites)];
-            $donationDate = Carbon\Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59))->subDays(rand(0, 100));
-            $trackingVisit = TrackingVisit::create([
-                'portal_user_id' => $portalUserId,
-                'user_cookie' => null,
-                'url' => $tracking['url'],
-                'article_id' => $tracking['article_id'],
-                'title' => $tracking['title'],
-                'created_at' => $donationDate
-            ]);
+            $donationDate = Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59))->subDays(rand(0, 150));
+
+            // for case when donation would be older than user registration date
+            if (Carbon::createFromFormat('Y-m-d H:i:s', $userCreatedAt) > $donationDate) {
+                $donationDate = $userCreatedAt;
+            }
+
+            if ($tracking['article_id'] == null) {
+                $trackingVisit = TrackingVisit::create([
+                    'portal_user_id' => $portalUserId,
+                    'user_cookie' => null,
+                    'url' => $tracking['url'],
+                    'article_id' => null,
+                    'created_at' => $donationDate
+                ]);
+            } else {
+                $article = \Modules\Campaigns\Entities\Article::create([
+                    'article_id' => $tracking['article_id'],
+                    'author' => $tracking['author'],
+                    'title' => $tracking['title'],
+                    'article_created_at' => $donationDate,
+                    'created_at' => $donationDate
+                ]);
+
+                $trackingVisit = TrackingVisit::create([
+                    'portal_user_id' => $portalUserId,
+                    'user_cookie' => null,
+                    'url' => $tracking['url'],
+                    'article_id' => $article->id,
+                    'created_at' => $donationDate
+                ]);
+            }
+
             $widget = Widget::inRandomOrder()->first();
             $trackingShow = TrackingShow::create([
                 'tracking_visit_id' => $trackingVisit->id,
@@ -269,10 +300,27 @@ class TestDashboardSeeder extends Seeder
                             'status' => 'processed',
                             'payment_id' => $payment->id
                         ));
+                        $userPaymentOption = \Modules\UserManagement\Entities\UserPaymentOption::where('portal_user_id', $portalUserId)->first();
+                        if ($userPaymentOption->bank_account_number === null) {
+                            \Modules\UserManagement\Entities\UserPaymentOption::where('portal_user_id', $portalUserId)->update([
+                                'bank_account_number' => $this->generateIban()
+                            ]);
+                        }
                     }
                 }
             }
         }
+    }
+
+    private function generateIban()
+    {
+        $bankPrefixes = ['1100', '1111', '0900', '0200', '7500', '0720', '3000', '3100', '5200', '5800', '5900', '6500'];
+        $bankSecondIdentificators = ['0000', '5432', '5555', '1234', '0123', '0000', '0000'];
+        $set = '0123456789';
+        $rand = substr(str_shuffle($set), 0, 10);
+
+        return 'SK' . $bankPrefixes[array_rand($bankPrefixes)] .
+            $bankSecondIdentificators[array_rand($bankSecondIdentificators)] . '0000' . $rand;
     }
 
     private function getDesktopSettings()
