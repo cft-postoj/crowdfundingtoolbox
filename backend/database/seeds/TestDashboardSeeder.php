@@ -211,9 +211,64 @@ class TestDashboardSeeder extends Seeder
                             'device_type' => 3
                         ]);
                     }
+                    if ($w->widget_type_id == 1) { // landing
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
 
                 }
 
+            } else {
+                foreach ($c->widget as $w) {
+                    if ($w->widget_type_id == 1) { // landing
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+                }
             }
         }
     }

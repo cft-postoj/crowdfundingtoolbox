@@ -2188,9 +2188,9 @@ class WidgetService implements WidgetServiceInterface
             $this->widgetSettings['general']['background'] = array(
                 'type' => 'image',
                 'image' => array(
-                    'path' => 'sidebar-default.jpg',
-                    'id' => 0,
-                    'type' => 'image\/jpeg',
+                    'path' => 'landing.jpg',
+                    'id' => 4,
+                    'type' => 'image/jpeg',
                     'updated_at' => '',
                     'created_at' => '',
                     'url' => env('ASSETS_URL') . '/public/images/widgets/landing.jpg'),

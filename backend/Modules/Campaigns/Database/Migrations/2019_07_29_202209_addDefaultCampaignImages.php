@@ -36,6 +36,13 @@ class AddDefaultCampaignImages extends Migration
                     'size' => '166682',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
+                ),
+                array(
+                    'path' => 'landing.jpg',
+                    'type' => 'image/jpeg',
+                    'size' => '169161',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                 )
             )
         );
