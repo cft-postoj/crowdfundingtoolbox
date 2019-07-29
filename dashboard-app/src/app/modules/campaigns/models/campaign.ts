@@ -48,6 +48,7 @@ export class Campaign {
             // },
             custom_price: false,
             count_of_options: 2,
+            count_of_options_in_row:3,
             options: [
                 {value: 30},
                 {value: 20}
@@ -75,7 +76,7 @@ export class Campaign {
             active: true,
             value: 30,
             styles: {
-                background: '#3B3232',
+                background: '#32a300',
                 color: '#FFFFFF'
             }
         },

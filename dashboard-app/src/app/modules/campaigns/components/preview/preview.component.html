@@ -82,32 +82,32 @@
                 <div [ngStyle]="getArticleWidgetTextStyles()" *ngIf="widget.widget_type.method === 'article'"
                      [innerHTML]="widget.settings[deviceType].additional_settings.articleWidgetText">
                 </div>
-                <div *ngIf="widget.widget_type.method !== 'article'" class="cft--body" [ngStyle]="getBodyStyle()">
-                    <div class="cft--text-container" [ngStyle]="getTextContainerStyle()">
-                        <div class="cft--headline-text" [ngStyle]="getHeadlineTextStyle()"
-                             [innerHTML]="widget.settings[deviceType].headline_text">
+                <div [ngClass]="{'container': widget.widget_type.id===1}">
+                    <div *ngIf="widget.widget_type.method !== 'article'" class="cft--body" [ngStyle]="getBodyStyle()">
+                        <div class="cft--text-container" [ngStyle]="getTextContainerStyle()">
+                            <div class="cft--headline-text" [ngStyle]="getHeadlineTextStyle()"
+                                 [innerHTML]="widget.settings[deviceType].headline_text">
+                            </div>
+                            <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()"
+                                 [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
+                            </div>
                         </div>
-                        <div class="cft--additional-text" [ngStyle]="getAdditionalTextStyle()"
-                             [innerHTML]="widget.settings[deviceType].widget_settings.additional_text?.text">
-                        </div>
-                    </div>
-                    <app-preview-monetization
-                        class="preview-monetization"
+                        <app-preview-monetization
+                            class="preview-monetization"
                             *ngIf="widget.settings[deviceType].payment_settings.type === 'classic'"
-                            [widget]="widget" [deviceType]="deviceType"
-                            style="display: flex"></app-preview-monetization>
-                    <app-preview-monetization-lite
-                        class="preview-monetization"
+                            [widget]="widget" [deviceType]="deviceType"></app-preview-monetization>
+                        <app-preview-monetization-lite
+                            class="preview-monetization"
                             *ngIf="widget.settings[deviceType].payment_settings.type === 'lite'"
-                            [widget]="widget" [deviceType]="deviceType"
-                            style="display: flex"></app-preview-monetization-lite>
-                    <!-- CTA -->
-                    <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="!ctaReplaced()">
-                        <a class="cft__cta__button"
-                           [ngStyle]="getButtonStyles()"
-                           href="{{widget.settings[deviceType].cta.url}}">
-                            {{widget.settings[deviceType].cta.text}}
-                        </a>
+                            [widget]="widget" [deviceType]="deviceType"></app-preview-monetization-lite>
+                        <!-- CTA -->
+                        <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="!ctaReplaced()">
+                            <a class="cft__cta__button"
+                               [ngStyle]="getButtonStyles()"
+                               href="{{widget.settings[deviceType].cta.url}}">
+                                {{widget.settings[deviceType].cta.text}}
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <span [ngStyle]="getCloseWidgetStyles()" class="cr0wdWidgetContent--closeWidget">
@@ -123,7 +123,8 @@
 </svg>
                 </span>
             </div>
-            <div [ngStyle]="getCustomHtmlWidgetStyles()" [innerHTML]="widget.settings[deviceType].additional_settings.customHtmlWidget"></div>
+            <div [ngStyle]="getCustomHtmlWidgetStyles()"
+                 [innerHTML]="widget.settings[deviceType].additional_settings.customHtmlWidget"></div>
             <div id="styles">
             </div>
             <div id="scripts">

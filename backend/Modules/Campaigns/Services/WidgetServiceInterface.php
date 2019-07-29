@@ -23,7 +23,7 @@ interface WidgetServiceInterface
     public function updateWidgetSettingsFromCampaign($campaignId, $promoteSettings);
 
     public function overrideGeneralSettings($type, $settings, $widgetType);
-    public function paymentSettingsStructure($widgetTypeId);
+    public function paymentSettingsStructure($widgetTypeId, $deviceType);
 
     public function getAdditionalWidgetSettings($widgetType, $generalSettings, $deviceType);
 

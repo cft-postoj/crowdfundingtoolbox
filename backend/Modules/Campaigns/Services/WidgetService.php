@@ -174,7 +174,7 @@ class WidgetService implements WidgetServiceInterface
     public function createSettingsJson($widgetType, $deviceType)
     {
         $this->widgetSettings = $this->widgetSettingsStructure();
-        $this->paymentSettings = $this->paymentSettingsStructure($widgetType);
+        $this->paymentSettings = $this->paymentSettingsStructure($widgetType, $deviceType);
         // GET GENERAL CAMPAIGN SETTINGS
         $generalSettings = $this->getGeneralSettings();
         $generalWidgetSettings = json_decode($generalSettings['widget_settings'], true);
@@ -254,35 +254,49 @@ class WidgetService implements WidgetServiceInterface
         $typeId = $deviceType->id;
         $overridedSettings = $settings;
 
-        $overridedSettings['payment_settings']['design']['padding']['top'] = '5px';
-        $overridedSettings['payment_settings']['design']['padding']['right'] = '5px';
-        $overridedSettings['payment_settings']['design']['padding']['bottom'] = '5px';
-        $overridedSettings['payment_settings']['design']['padding']['left'] = '5px';
+        $overridedSettings['payment_settings']['design']['padding']['top'] = '5';
+        $overridedSettings['payment_settings']['design']['padding']['right'] = '5';
+        $overridedSettings['payment_settings']['design']['padding']['bottom'] = '5';
+        $overridedSettings['payment_settings']['design']['padding']['left'] = '5';
 
 
-        $overridedSettings['payment_settings']['design']['margin']['top'] = '5px';
-        $overridedSettings['payment_settings']['design']['margin']['right'] = '5px';
-        $overridedSettings['payment_settings']['design']['margin']['bottom'] = '5px';
-        $overridedSettings['payment_settings']['design']['margin']['left'] = '5px';
+        $overridedSettings['payment_settings']['design']['margin']['top'] = '40';
+        $overridedSettings['payment_settings']['design']['margin']['right'] = '0';
+        $overridedSettings['payment_settings']['design']['margin']['bottom'] = '5';
+        $overridedSettings['payment_settings']['design']['margin']['left'] = '5';
 
         // Landing Page Widget
         if ($widgetTypeId == 1):
             switch ($typeId) {
                 case 1: // desktop
-                    $overridedSettings['payment_settings']['design']['width'] = '40%';
-                    $overridedSettings['payment_settings']['design']['padding']['top'] = '15px';
-                    $overridedSettings['payment_settings']['design']['padding']['right'] = '30px';
-                    $overridedSettings['payment_settings']['design']['padding']['bottom'] = '15px';
-                    $overridedSettings['payment_settings']['design']['padding']['left'] = '30px';
+                    $overridedSettings['payment_settings']['design']['width'] = '532px';
+                    $overridedSettings['payment_settings']['design']['padding']['top'] = '25';
+                    $overridedSettings['payment_settings']['design']['padding']['right'] = '55';
+                    $overridedSettings['payment_settings']['design']['padding']['bottom'] = '25';
+                    $overridedSettings['payment_settings']['design']['padding']['left'] = '55';
                     $overridedSettings['payment_settings']['design']['shadow']['opacity'] = 1;
                     $overridedSettings['additional_settings']['buttonContainer']['position'] = 'relative';
                     $overridedSettings['additional_settings']['buttonContainer']['textAlign'] = 'center';
                     break;
                 case 2: // tablet
-
+                    $overridedSettings['payment_settings']['design']['width'] = '532px';
+                    $overridedSettings['payment_settings']['design']['padding']['top'] = '25';
+                    $overridedSettings['payment_settings']['design']['padding']['right'] = '55';
+                    $overridedSettings['payment_settings']['design']['padding']['bottom'] = '25';
+                    $overridedSettings['payment_settings']['design']['padding']['left'] = '55';
+                    $overridedSettings['payment_settings']['design']['shadow']['opacity'] = 1;
+                    $overridedSettings['additional_settings']['buttonContainer']['position'] = 'relative';
+                    $overridedSettings['additional_settings']['buttonContainer']['textAlign'] = 'center';
                     break;
                 case 3: // mobile
-
+                    $overridedSettings['payment_settings']['design']['width'] = 'auto';
+                    $overridedSettings['payment_settings']['design']['padding']['top'] = '24';
+                    $overridedSettings['payment_settings']['design']['padding']['right'] = '24';
+                    $overridedSettings['payment_settings']['design']['padding']['bottom'] = '24';
+                    $overridedSettings['payment_settings']['design']['padding']['left'] = '24';
+                    $overridedSettings['payment_settings']['design']['shadow']['opacity'] = 1;
+                    $overridedSettings['additional_settings']['buttonContainer']['position'] = 'relative';
+                    $overridedSettings['additional_settings']['buttonContainer']['textAlign'] = 'center';
                     break;
 
                 default:
@@ -367,6 +381,15 @@ class WidgetService implements WidgetServiceInterface
             switch ($widgetType) {
                 case 1: // landing widget
                     $output = $settings;
+                    $output['hover']['fontSettings']['fontWeight'] = 'Medium';
+                    $output['default']['width'] = '100%';
+                    $output['default']['padding'] = array(
+                        'top' => '12',
+                        'right' => '0',
+                        'bottom' => '12',
+                        'left' => '0'
+                    );
+                    $output['default']['fontSettings']['alignment'] = 'center';
                     break;
                 case 2: // sidebar widget
                     $output = $settings;
@@ -438,7 +461,7 @@ class WidgetService implements WidgetServiceInterface
         return $output;
     }
 
-    public function paymentSettingsStructure($widgetTypeId)
+    public function paymentSettingsStructure($widgetTypeId, $deviceType)
     {
         $structure = array(
             'active' => ($widgetTypeId == 1) ? true : false,
@@ -454,11 +477,11 @@ class WidgetService implements WidgetServiceInterface
                 'margin' => array(
                     'top' => '0',
                     'right' => '0',
-                    'bottom' => '0',
+                    'bottom' => '30',
                     'left' => '0'
                 ),
-                'text' => '',
-                'textColor' => '#000000',
+                'text' => 'We can write because of your financial support',
+                'textColor' => '#1f4e7b',
                 'alignment' => 'center'
             ),
             'design' => array(
@@ -477,7 +500,7 @@ class WidgetService implements WidgetServiceInterface
                 ),
                 'width' => '100%',
                 'height' => 'auto',
-                'text_color' => '#777777',
+                'text_color' => '#1f4e7b',
                 'shadow' => array(
                     'color' => '#77777',
                     'opacity' => 0,
@@ -487,45 +510,66 @@ class WidgetService implements WidgetServiceInterface
                 )
             ),
             'monthly_prices' => array(
-                'custom_price' => false,
-                'count_of_options' => 2,
+                'custom_price' => true,
+                'count_of_options' => 5,
+                'count_of_options_in_row' => 3,
                 'options' => array(
                     array(
                         'value' => 30
                     ),
                     array(
-                        'value' => 40
-                    )
+                        'value' => 20
+                    ),
+                    array(
+                        'value' => 15
+                    ),
+                    array(
+                        'value' => 10
+                    ),
+                    array(
+                        'value' => 5
+                    ),
                 ),
                 'benefit' => array(
                     'active' => true,
-                    'text' => '',
+                    'text' => 'Donate 10 € or more monthly to become a premium member',
                     'value' => 10
                 )
             ),
             'once_prices' => array(
-                'custom_price' => false,
-                'count_of_options' => 2,
+                'custom_price' => true,
+                'count_of_options' => 5,
+                'count_of_options_in_row' => 3,
                 'options' => array(
+                    array(
+                        'value' => 200
+                    ),
+                    array(
+                        'value' => 100
+                    ),
+                    array(
+                        'value' => 60
+                    ),
                     array(
                         'value' => 30
                     ),
                     array(
-                        'value' => 40
-                    )
+                        'value' => 20
+                    ),
                 ),
                 'benefit' => array(
                     'active' => true,
-                    'active' => true,
-                    'text' => '',
-                    'value' => 10
+                    'text' => 'Donate 100 € or more to become a premium member',
+                    'value' => 100
                 )
             ),
             'default_price' => array(
-                'active' => true,
-                'value' => 30,
+                'monthly_active' => true,
+                'monthly_value' => 20,
+                'one_time_active' => true,
+                'one_time_value' => 100,
                 'styles' => array(
-                    'background' => "#0087ed",
+                    'background' => "#3cc300",
                     'color' => "#ffffff"
                 ),
             ),
@@ -555,6 +599,17 @@ class WidgetService implements WidgetServiceInterface
                 'text' => 'I agree to processing of personal data and receiving newsletters'
             )
         );
+        switch ($deviceType) {
+            case 'desktop':
+                break;
+            case 'tablet':
+                break;
+            case 'mobile':
+                //change number of options in one row from 3 to 2
+                $structure['monthly_prices']['count_of_options_in_row'] = 2;
+                $structure['once_prices']['count_of_options_in_row'] = 2;
+                break;
+        }
         return $structure;
     }
 
@@ -583,7 +638,7 @@ class WidgetService implements WidgetServiceInterface
                             'bottom' => '0',
                             'left' => 'auto'
                         ),
-                        'position' => 'absolute',
+                        'position' => 'relative',
                         'top' => '80px',
                         'right' => 'auto',
                         'bottom' => 'auto',
