@@ -206,11 +206,12 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
-                    text_color: '#777'
+                    text_color: '#1f4e7b'
                 },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
+                    count_of_options_in_row: 3,
                     options: [
                         {value: 30},
                         {value: 40}
@@ -224,6 +225,7 @@ export class Widget {
                 once_prices: {
                     custom_price: false,
                     count_of_options: 2,
+                    count_of_options_in_row: 3,
                     options: [
                         {value: 80},
                         {value: 40}
@@ -240,7 +242,7 @@ export class Widget {
                     one_time_active: true,
                     one_time_value: 30,
                     styles: {
-                        background: '#3b3232',
+                        background: '#32a300',
                         color: '#ffffff'
                     }
                 },
@@ -638,11 +640,12 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
-                    text_color: '#777'
+                    text_color: '#1f4e7b'
                 },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
+                    count_of_options_in_row: 3,
                     options: [
                         {value: 30},
                         {value: 40}
@@ -656,6 +659,7 @@ export class Widget {
                 once_prices: {
                     custom_price: false,
                     count_of_options: 2,
+                    count_of_options_in_row: 2,
                     options: [
                         {value: 80},
                         {value: 40}
@@ -672,7 +676,7 @@ export class Widget {
                     one_time_active: true,
                     one_time_value: 30,
                     styles: {
-                        background: '#3b3232',
+                        background: '#32a300',
                         color: '#ffffff'
                     }
                 },
@@ -1039,18 +1043,19 @@ export class Widget {
                         left: '25'
                     },
                     margin: {
-                        top: '15',
-                        right: '10',
-                        bottom: '15',
-                        left: '10'
+                        top: '40',
+                        right: '0',
+                        bottom: '0',
+                        left: '0'
                     },
                     width: '100%',
                     height: 'auto',
-                    text_color: '#777'
+                    text_color: '#1f4e7b'
                 },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
+                    count_of_options_in_row: 2,
                     options: [
                         {value: 30},
                         {value: 40}
@@ -1064,6 +1069,7 @@ export class Widget {
                 once_prices: {
                     custom_price: false,
                     count_of_options: 2,
+                    count_of_options_in_row: 2,
                     options: [
                         {value: 80},
                         {value: 40}
@@ -1080,7 +1086,7 @@ export class Widget {
                     one_time_active: true,
                     one_time_value: 30,
                     styles: {
-                        background: '#3b3232',
+                        background: '#32a300',
                         color: '#ffffff'
                     }
                 },

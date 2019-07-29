@@ -100,7 +100,26 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
                 
             [id^=cr0wdfundingToolbox] .cft--monatization--hidden{
                 display: none!important
-             }
+            }
+            
+            [id^=cr0wdfundingToolbox] .container{
+                margin-right: auto;
+                margin-left: auto;
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+            @media (min-width: 768px) {
+              [id^=cr0wdfundingToolbox] .container {
+                  width: 750px; } 
+            }
+            @media (min-width: 992px) {
+               [id^=cr0wdfundingToolbox] .container {
+                  width: 970px; }
+            }
+            @media (min-width: 1200px) {
+               [id^=cr0wdfundingToolbox] .container {
+                   width: 1170px; }
+               }
             `;
 
         style.appendChild(document.createTextNode(css));
@@ -243,8 +262,8 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
             'display': '-ms-flexbox',
             '-ms-flex-wrap': 'wrap',
             'flex-wrap': 'wrap',
-            'margin-right': '-15px',
-            'margin-left': '-15px'
+            'margin-right': '-7px',
+            'margin-left': '-7px'
         }
 
         let defaultStyleDisplay2 = {
@@ -275,9 +294,10 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
     getMonetizationContainerStyle() {
         let paymentDesign = this.widget.settings[this.deviceType].payment_settings.design;
         return {
+            'box-shadow': '0 8px 24px 0 rgba(74, 26, 8, 0.2)',
             color: paymentDesign.text_color,
-            'width': paymentDesign.width,
-            'height': paymentDesign.height,
+            'width': this.addPx(paymentDesign.width),
+            'height': this.addPx(paymentDesign.height),
             'background-color': paymentDesign.background_color,
             margin: this.addPx(paymentDesign.margin.top) + ' ' +
                 this.addPx(paymentDesign.margin.right) + ' ' +
@@ -366,11 +386,11 @@ export class PreviewMonetizationComponent implements OnInit, OnChanges {
         }
     }
 
-    getMonatizationDonationButtonStyle() {
+    getMonatizationDonationButtonStyle(monthlyOrOneTime) {
         return {
-            'flex': '0 0 33.33333333%',
-            'max-width': '33.33333333%',
-            'padding': '6px 15px',
+            'flex': `0 0 ${100/this.widget.settings[this.deviceType].payment_settings[monthlyOrOneTime].count_of_options_in_row}%`,
+            'max-width': `${100/this.widget.settings[this.deviceType].payment_settings[monthlyOrOneTime].count_of_options_in_row}%`,
+            'padding': '6px 7px',
             'width': '100%',
             'min-height': '1px',
             'box-sizing': 'border-box',

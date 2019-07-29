@@ -1411,16 +1411,24 @@
                                     </div>
                                     <div class="settings--card--body">
                                         <div class="row">
-                                            <div class="col-3 vertical-align">
+                                            <div class="col-2 vertical-align">
                                                 Price options
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 <app-inputNumber
                                                     [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
                                                     (valueChange)="updateNumberOfMonthlyPrices($event)">
                                                 </app-inputNumber>
                                             </div>
-                                            <div class="col-4 offset-2 pull-right">
+                                            <div class="col-2 vertical-align">
+                                                Options in row
+                                            </div>
+                                            <div class="col-2">
+                                                <app-inputNumber
+                                                    [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options_in_row">
+                                                </app-inputNumber>
+                                            </div>
+                                            <div class="col-4 pull-right">
                                                 <app-checkbox
                                                     [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
                                                     [name]="'Custom price option'"></app-checkbox>
@@ -1487,16 +1495,24 @@
                                         </div>
                                         <ng-container *ngIf="!copyPrices">
                                             <div class="row">
-                                                <div class="col-3 vertical-align">
+                                                <div class="col-2 vertical-align">
                                                     Price options
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-2">
                                                     <app-inputNumber
                                                         [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
                                                         (valueChange)="updateNumberOfSinglePayments($event)">
                                                     </app-inputNumber>
                                                 </div>
-                                                <div class="col-4 offset-2 pull-right">
+                                                <div class="col-2 vertical-align">
+                                                    Options in row
+                                                </div>
+                                                <div class="col-2">
+                                                    <app-inputNumber
+                                                        [(value)]="widget.settings[deviceType].payment_settings.once_prices.count_of_options_in_row">
+                                                    </app-inputNumber>
+                                                </div>
+                                                <div class="col-4 pull-right">
                                                     <app-checkbox
                                                         [(checked)]="widget.settings[deviceType].payment_settings.once_prices.custom_price"
                                                         [name]="'Custom price option'"></app-checkbox>

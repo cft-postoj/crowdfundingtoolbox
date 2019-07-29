@@ -195,7 +195,8 @@ Route::group([
     'prefix' => 'portal'
 ], function () {
     // CORS condition -- only defined domain in .env can have access to routes
-    if (strpos(request()->headers->get('referer'), env('CFT_PORTAL_URL')) !== false) {
+    //TODO: request from backoffice in preview was also blocked, fix needed
+//    if (strpos(request()->headers->get('referer'), env('CFT_PORTAL_URL')) !== false) {
         Route::post('widgets', '\Modules\Campaigns\Http\Controllers\WidgetsController@getWidgets');
         //get Campaign
         Route::get('campaign', '\Modules\Campaigns\Http\Controllers\CampaignsController@getCampaignWidgets');
@@ -244,18 +245,18 @@ Route::group([
 
         Route::post('donation/initialize', '\Modules\Payment\Http\Controllers\DonationController@initialize');
         Route::post('donation/waiting-for-payment', '\Modules\Payment\Http\Controllers\DonationController@waitingForPayment');
-    } else {
-        Route::any('/{any}', function () {
-            $status = 422;
-            return [
-                "message" => $status . " error",
-                "errors" => [
-                    "message" => 'You don\'t have an access to content in CFT application!'
-                ],
-                "status_code" => $status
-            ];
-        })->where('any', '.*');
-    }
+//    } else {
+//        Route::any('/{any}', function () {
+//            $status = 422;
+//            return [
+//                "message" => $status . " error",
+//                "errors" => [
+//                    "message" => 'You don\'t have an access to content in CFT application!'
+//                ],
+//                "status_code" => $status
+//            ];
+//        })->where('any', '.*');
+//    }
 
 });
 

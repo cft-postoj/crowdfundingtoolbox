@@ -18,7 +18,7 @@
                  [ngStyle]="getRowStyle()">
                 <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
                      [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == option.value}"
-                     [ngStyle]="getMonatizationDonationButtonStyle()"
+                     [ngStyle]="getMonatizationDonationButtonStyle('monthly_prices')"
                      *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options">
                     <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
                          onclick="parent.setActiveButtonMonthly(this)">
@@ -33,12 +33,12 @@
                 </div>
                 <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
                      [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == 'custom' }"
-                     [ngStyle]="getMonatizationDonationButtonStyle()"
+                     [ngStyle]="getMonatizationDonationButtonStyle('monthly_prices')"
                      *ngIf="widget.settings[deviceType].payment_settings.monthly_prices.custom_price">
                     <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
                          onclick="parent.setActiveButtonMonthly(this, true)"
                          oninput="parent.setActiveButtonMonthly(this)">
-                        <input type="number" class="cft--monatization--donation-input-price"
+                        <input type="number" class="cft--monatization--donation-input-price hide-arrows"
                                [ngStyle]="getDonationInputPriceStyle()" placeholder="custom"/>
                         <div class="cft--monatization--donation-button-periodicity"
                              [ngStyle]="getDonationButtonPeriodicityStyle()"> monthly
@@ -53,7 +53,7 @@
                 <div id="cft--monatization--donation-button--one-time"
                      class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
                      [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.one_time_value == option.value}"
-                     [ngStyle]="getMonatizationDonationButtonStyle()"
+                     [ngStyle]="getMonatizationDonationButtonStyle('once_prices')"
                      *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options">
                     <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
                          onclick="parent.setActiveButtonOneTime(this)">
@@ -66,12 +66,12 @@
                 <div class="cft--monatization--donation-button-container cft--monatization--donation-button--one-time"
 
                      [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.one_time_value == 'custom' }"
-                     [ngStyle]="getMonatizationDonationButtonStyle()"
+                     [ngStyle]="getMonatizationDonationButtonStyle('once_prices')"
                      *ngIf="widget.settings[deviceType].payment_settings.once_prices.custom_price">
                     <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
                          onclick="parent.setActiveButtonOneTime(this, true)"
                          oninput="parent.setActiveButtonOneTime(this)">
-                        <input type="number" class="cft--monatization--donation-input-price"
+                        <input type="number" class="cft--monatization--donation-input-price hide-arrows"
                                [ngStyle]="getDonationInputPriceStyle()" placeholder="custom"/>
                     </div>
                 </div>
