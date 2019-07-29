@@ -106,7 +106,7 @@ class PortalUserService implements PortalUserServiceInterface
     public function getPortalUserIdFromToken()
     {
         try {
-            $user = $user = JWTAuth::parseToken()->authenticate();
+            $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $exception) {
             return response()->json([
                 'error' => $exception . getMessage()

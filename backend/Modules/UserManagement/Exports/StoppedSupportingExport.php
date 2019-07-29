@@ -44,6 +44,7 @@ class StoppedSupportingExport implements FromCollection
         );
         array_push($result, $header);
         foreach ($users->donors as $user) {
+            dd($user);
             $paymentMethod = '';
             $methodId = $user->last_donation_payment_method;
             switch ($methodId) {
@@ -75,7 +76,7 @@ class StoppedSupportingExport implements FromCollection
                 $iban,
                 $user->variableSymbol->variable_symbol,
                 $paymentMethod,
-                $user->firstDonation->amount_intitialized,
+                $user->firstDonation['amount_intitialized'],
                 $user->last_donation_value,
                 $user->amount_sum,
                 $user->last_donation_at

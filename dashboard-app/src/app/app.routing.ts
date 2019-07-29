@@ -15,6 +15,7 @@ import {CreateUserComponent} from './modules/user-management/components/create-u
 import {PortalConnectionsSettingsComponent} from
         './modules/core/components/portal-connections-settings/portal-connections-settings.component';
 import {ResponsiveComponent} from './modules/core/pages/responsive/responsive.component';
+import {BackofficeUserListComponent} from './modules/user-management/components/backoffice-user-list/backoffice-user-list.component';
 
 export const appRoutes: Routes = [
     {
@@ -57,6 +58,10 @@ export const appRoutes: Routes = [
             {
                 path: 'user-settings/create-user',
                 component: CreateUserComponent
+            },
+            {
+                path: 'user-settings/all',
+                component: BackofficeUserListComponent
             },
             {
                 path: Routing.CONFIGURATION,

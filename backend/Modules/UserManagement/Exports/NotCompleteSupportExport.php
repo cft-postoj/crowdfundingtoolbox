@@ -72,7 +72,7 @@ class NotCompleteSupportExport implements FromCollection
                 $iban,
                 $user->variableSymbol->variable_symbol,
                 $paymentMethod,
-                $user->last_donation_at
+                $user->firstDonation['amount_intitialized']
             );
             array_push($result, $row);
         }

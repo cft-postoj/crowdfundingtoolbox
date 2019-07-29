@@ -1,59 +1,62 @@
-<div class="userSettings">
-  <h2>Create new backoffice user</h2>
-  <div *ngIf="!pageLoading">
-  <div *ngIf="!isAdmin">
-    <p>You don't have an access to this page! <b>You can't create new backoffice user.</b></p>
-  </div>
-  <div class="row" *ngIf="isAdmin">
-    <div class="col-12 col-sm-12 col-md-12">
-      <form [formGroup]="userForm"  name="userDetail" (submit)="storeUserDetail()">
-        <app-alert [(open)]="alertOpen" [fixed]="alertFixed" [type]="alertType" [message]="alertMessage"></app-alert>
-        <div class="row">
-          <div class="col-12 col-sm-12 col-md-6">
-            <input
-                    type="email"
-                    formControlName="email"
-                    required
-                    placeholder="Email">
-          </div>
-          <div class="col-12 col-sm-12 col-md-6">
-            <input
-                    type="password"
-                    formControlName="password"
-                    required
-                    placeholder="Password">
-          </div>
-          <div class="col-12 col-sm-12 col-md-6">
-            <input
-                    type="text"
-                    formControlName="firstName"
-                    placeholder="First name">
-          </div>
-          <div class="col-12 col-sm-12 col-md-6">
-            <input
-                    type="text"
-                    formControlName="lastName"
-                    placeholder="Last name">
-          </div>
-          <div class="col-12 col-sm-12 col-md-6">
-            <select formControlName="role">
-              <option [selected]="true" disabled>Choose user role:</option>
-              <option value="admin">Administrator</option>
-              <option value="manager">Manager</option>
-            </select>
-          </div>
-          <div class="col-12 col-sm-12 col-md-6">
-            <button type="submit">Save</button>
-            <br />
-            <i>* username will be automatically generated from email</i>
-          </div>
+<app-backoffice-users (isAdminChange)="isAdminRole($event)">
+    <div class="userSettings">
+        <h2>Create new backoffice user</h2>
+        <div *ngIf="!pageLoading">
+            <div *ngIf="!isAdmin">
+                <p>You don't have an access to this page! <b>You can't create new backoffice user.</b></p>
+            </div>
+            <div class="row" *ngIf="isAdmin">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <form [formGroup]="userForm" name="userDetail" (submit)="storeUserDetail()">
+                        <app-alert [(open)]="alertOpen" [fixed]="alertFixed" [type]="alertType"
+                                   [message]="alertMessage"></app-alert>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <input
+                                        type="email"
+                                        formControlName="email"
+                                        required
+                                        placeholder="Email">
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <input
+                                        type="password"
+                                        formControlName="password"
+                                        required
+                                        placeholder="Password">
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <input
+                                        type="text"
+                                        formControlName="firstName"
+                                        placeholder="First name">
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <input
+                                        type="text"
+                                        formControlName="lastName"
+                                        placeholder="Last name">
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <select formControlName="role">
+                                    <option [selected]="true" disabled>Choose user role:</option>
+                                    <option value="admin">Administrator</option>
+                                    <option value="manager">Manager</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <button type="submit">Save</button>
+                                <br/>
+                                <i>* username will be automatically generated from email</i>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="afterEmail">After you create new user, new user'll get email with details.</p>
+                </div>
+            </div>
         </div>
-      </form>
-      <p class="afterEmail">After you create new user, new user'll get email with details.</p>
+        <div *ngIf="pageLoading" class="text-center">
+            <img src="../assets/images/loading.svg">
+        </div>
     </div>
-  </div>
-  </div>
-  <div *ngIf="pageLoading" class="text-center">
-    <img src="../assets/images/loading.svg">
-  </div>
-</div>
+</app-backoffice-users>
