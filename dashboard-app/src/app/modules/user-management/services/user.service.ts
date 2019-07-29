@@ -45,6 +45,6 @@ export class UserService {
     }
 
     delete(id: number) {
-        return this.http.delete(`${environment.apiUrl}${environment.userUrl}/${id}`);
+        return this.http.delete(`${environment.backOfficeUrl}/user/${id}`);
     }
 }

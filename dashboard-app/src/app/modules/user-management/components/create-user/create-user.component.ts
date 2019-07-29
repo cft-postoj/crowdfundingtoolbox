@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services';
 import {UserDetail} from '../../models/userDetail';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Routing} from '../../../../constants/config.constants';
 
 @Component({
     selector: 'app-create-user',
@@ -20,7 +22,7 @@ export class CreateUserComponent implements OnInit {
     public alertOpen: boolean = false;
     public alertFixed: boolean = false;
 
-    constructor(private userService: UserService, public formBuilder: FormBuilder) {
+    constructor(private userService: UserService, public formBuilder: FormBuilder, private router: Router) {
     }
 
     ngOnInit() {
@@ -89,6 +91,12 @@ export class CreateUserComponent implements OnInit {
         }, () => {
             this.pageLoading = false;
         });
+    }
+
+    public isAdminRole(event) {
+        if (!event) {
+            return this.router.navigateByUrl(`${Routing.DASHBOARD}/${Routing.USER_SETTINGS}`);
+        }
     }
 
 }

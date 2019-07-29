@@ -37,4 +37,14 @@ class BackOfficeUsersController extends Controller
     {
         return $this->backofficeUserService->checkGeneratedResetToken($request, $request->route()->getPrefix());
     }
+
+    protected function all()
+    {
+        return $this->backofficeUserService->all();
+    }
+
+    protected function delete($id)
+    {
+        return $this->backofficeUserService->delete($id);
+    }
 }

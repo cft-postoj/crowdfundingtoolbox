@@ -27,4 +27,17 @@ class BackOfficeUserRepository implements BackOfficeUserRepositoryInterface
             ->first();
     }
 
+    public function all() {
+        return $this->model
+            ::with('user')
+            ->with('user.userDetail')
+            ->get();
+    }
+
+    public function delete($id) {
+        return $this->model
+            ::where('user_id', $id)
+            ->delete();
+    }
+
 }

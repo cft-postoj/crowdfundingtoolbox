@@ -26,6 +26,9 @@ Route::group([
 
     // CORS condition -- only defined domain in .env can have access to routes
     if (strpos(request()->headers->get('referer'), env('APP_URL')) !== false) {
+        Route::get('all', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@all');
+        Route::delete('user/{id}', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@delete');
+
         Route::post('login', '\Modules\UserManagement\Http\Controllers\UserServiceController@authenticate');
         Route::post('check-generated-reset-token', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@checkGeneratedToken');
 

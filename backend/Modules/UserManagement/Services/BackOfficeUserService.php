@@ -11,6 +11,7 @@ use Modules\UserManagement\Repositories\BackOfficeUserRepository;
 use Modules\UserManagement\Repositories\GeneratedUserTokenRepository;
 use Modules\UserManagement\Repositories\UserDetailRepository;
 use Modules\UserManagement\Repositories\UserRepository;
+use JWTAuth;
 
 class BackOfficeUserService implements BackOfficeUserServiceInterface
 {
@@ -90,7 +91,7 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
 
     private function getAuthUser()
     {
-        return Auth::user();
+        return JWTAuth::parseToken()->authenticate();
     }
 
     public function create($request)
@@ -135,7 +136,6 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
             $newUserEmail = $newUser->email;
 
 
-
             $this->userDetailRepository->createWithRequest(array_merge(...$resultDetail), $newUserId);
 
             $token = $this->generatedUserTokenService->create($newUserId);
@@ -161,5 +161,38 @@ class BackOfficeUserService implements BackOfficeUserServiceInterface
     public function getById($id)
     {
         return $this->backOfficeUserRepository->get($id);
+    }
+
+    public function all()
+    {
+        return $this->backOfficeUserRepository->all();
+    }
+
+    public function delete($id)
+    {
+        try {
+            $user = $this->getAuthUser();
+            if ($id === 1) {
+                return response()->json([
+                    'error' => 'You cannot delete superadmin user!'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            if ($user->id === $id) {
+                return response()->json([
+                    'error' => 'You cannot delete your admin account!'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            $this->backOfficeUserRepository->delete($id);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        return response()->json(
+            [
+                'message' => 'Successfully deleted user with id ' . $id
+            ],
+            Response::HTTP_OK
+        );
     }
 }
