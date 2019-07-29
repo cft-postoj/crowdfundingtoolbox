@@ -191,7 +191,7 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'image',
                                 'image' => array(
                                     'path' => 'sidebar-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '79687',
                                     'updated_at' => '',
                                     'created_at' => '',
@@ -317,11 +317,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'image',
                                 'image' => array(
                                     'path' => 'locked-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '64507',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 1,
+                                    'id' => 2,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -572,11 +572,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'image',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -698,11 +698,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'image',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -824,11 +824,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'image',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -953,11 +953,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'color',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1079,11 +1079,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'color',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1205,11 +1205,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'color',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1333,11 +1333,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'color',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1459,11 +1459,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'color',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1585,11 +1585,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'color',
                                 'image' => array(
                                     'path' => 'leaderboard-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '166682',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 3,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1714,11 +1714,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'image',
                                 'image' => array(
                                     'path' => 'locked-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '64507',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 2,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1844,7 +1844,7 @@ class WidgetService implements WidgetServiceInterface
                                     'size' => '64507',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 2,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
                                 ),
                                 'color' => '#114b7d',
@@ -1966,11 +1966,11 @@ class WidgetService implements WidgetServiceInterface
                                 'type' => 'image',
                                 'image' => array(
                                     'path' => 'locked-default.jpg',
-                                    'type' => 'image\/jpeg',
+                                    'type' => 'image/jpeg',
                                     'size' => '64507',
                                     'updated_at' => '',
                                     'created_at' => '',
-                                    'id' => 0,
+                                    'id' => 2,
                                     'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
                                 ),
                                 'color' => '#114b7d',

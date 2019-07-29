@@ -40,13 +40,15 @@ class TestDashboardSeeder extends Seeder
      */
     public function run()
     {
-         //create landing default campaign
-         $this->landingDefaultCampaign();
+        //create landing default campaign
+        $this->landingDefaultCampaign();
 //
 //        //create 5 campaigns
         for ($i = 0; $i < 5; $i++) {
             $this->call(\Modules\Campaigns\Database\Seeders\CreateDummyCampaignSeeder::class);
         }
+
+        $this->setImagesToCampaigns();
 //
 //        // create 600 users
         for ($i = 0; $i < 10; $i++) {
@@ -121,6 +123,99 @@ class TestDashboardSeeder extends Seeder
         $probabilityPercent = $probabilityToChangeDonation * 100;
         $random = rand(0, 100);
         return $random < $probabilityPercent ? $this->getRandomDonation() : $previousUserDonation;
+    }
+
+    private function setImagesToCampaigns()
+    {
+        $campaigns = Campaign::with('widget')->get();
+        foreach ($campaigns as $c) {
+            if (sizeof($c->widget) > 1) { // if is not Landing Dummy Campaign
+                foreach ($c->widget as $w) {
+                    if ($w->widget_type_id == 2) { // sidebar
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 1,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 1,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+
+                    if ($w->widget_type_id == 2) { // leaderboard
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 3,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 3,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 3,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+
+                    if ($w->widget_type_id == 6) { // locked
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+
+                }
+
+            }
+        }
     }
 
     private function getRandomDonation()
