@@ -26,7 +26,7 @@ export class SideBarComponent implements OnInit {
     public readonly usersItemName = 'USERS';
     public readonly paymentsItemName = 'PAYMENTS';
     public readonly translationsItemName = 'TRANSLATIONS';
-    public readonly settingsItemName = 'SETTINGS';
+    public readonly settingsItemName = 'CONFIGURATION';
     public readonly donorsItemName = 'DONORS';
     public readonly faqItemName = 'FAQ';
     public isActive: boolean;
