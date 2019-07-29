@@ -71,7 +71,7 @@ class DidNotPayUsersExport implements FromCollection
                 $iban,
                 $user->variableSymbol->variable_symbol,
                 $paymentMethod,
-                $user->firstDonation->amount_intitialized,
+                $user->firstDonation['amount_intitialized'],
                 $user->last_donation_at
             );
             array_push($result, $row);
