@@ -92,7 +92,6 @@ class CampaignsController extends Controller
         return response()->json([
             'message' => 'Successfully created campaign!',
             'campaign' => $campaign,
-            //TODO: odstranit widgets a pouzivat len tie z kampane
             'widgets' => WidgetResource::collection($this->widgetService->getWidgetsByCampaginReduced($campaign))
         ], Response::HTTP_CREATED);
     }

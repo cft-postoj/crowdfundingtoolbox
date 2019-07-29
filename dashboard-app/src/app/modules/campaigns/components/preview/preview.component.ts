@@ -225,7 +225,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     getBackgroundStyle() {
         const backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
         const paddingBackground = backgroundStyles.padding;
-        if (paddingBackground === undefined) {
+        if (paddingBackground === undefined || paddingBackground === null) {
             backgroundStyles.padding = {
                 top: '0px',
                 right: '0px',
@@ -238,17 +238,17 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             height: (backgroundStyles.height !== undefined) ? this.addPx(backgroundStyles.height) : 0,
             width: (backgroundStyles.width !== undefined) ? this.addPx(backgroundStyles.width) : 0,
             maxWidth: (backgroundStyles.maxWidth !== undefined) ? backgroundStyles.maxWidth : '100%',
-            top: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.top : 0,
-            bottom: (backgroundStyles.fixedSettings !== undefined) ? backgroundStyles.fixedSettings.bottom : 'auto',
+            top: (backgroundStyles.fixedSettings !== null) ? backgroundStyles.fixedSettings.top : 0,
+            bottom: (backgroundStyles.fixedSettings !== null) ? backgroundStyles.fixedSettings.bottom : 'auto',
             left: (this.widget.widget_type.method === 'popup' && (this.deviceType !== 'mobile'))
                 ? 'calc(50% - ' + parseInt(backgroundStyles.width, 10) / 2 + 'px)' : 0, // center popup
             margin: '0 auto',
             'background-repeat': 'no-repeat',
             'background-size': 'cover',
-            padding: this.addPx(paddingBackground.top) + ' ' +
+            padding: (paddingBackground !== null && paddingBackground !== undefined) ? this.addPx(paddingBackground.top) + ' ' +
                 this.addPx(paddingBackground.right) + ' ' +
                 this.addPx(paddingBackground.bottom) + ' ' +
-                this.addPx(paddingBackground.left)
+                this.addPx(paddingBackground.left) : backgroundStyles.padding
         };
 
 
@@ -324,7 +324,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         const additionalSettings = this.widget.settings[this.deviceType].additional_settings.textContainer;
         this.usedFontFamily(headlineText.fontSettings.fontFamily);
         const dynamicStyle = {
-            'text-align': additionalSettings.text.textAlign,
+            'text-align': this.widget.settings[this.deviceType].widget_settings.general.fontSettings.alignment,
             'font-size': (additionalSettings.text.fontSize === undefined) ? headlineText.fontSettings.fontSize + 'px'
                 : additionalSettings.text.fontSize + 'px',
             'color': headlineText.fontSettings.color,

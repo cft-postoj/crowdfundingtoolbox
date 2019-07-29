@@ -103,12 +103,12 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
             this.monetizationTypes.push({title: 'Classic', value: 'classic'});
             this.monetizationTypes.push({title: 'Lite', value: 'lite'});
-            if (this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize !== undefined) {
-                this.widget.settings[this.deviceType].widget_settings.call_to_action.default.fontSettings.fontSize =
-                    this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize;
+            if (this.widget.settings[this.deviceType].additional_settings.buttonContainer.button !== undefined) {
+                if (this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize !== undefined) {
+                    this.widget.settings[this.deviceType].widget_settings.call_to_action.default.fontSettings.fontSize =
+                        this.widget.settings[this.deviceType].additional_settings.buttonContainer.button.fontSize;
+                }
             }
-
-            console.log(this.widget)
 
             this.recreateRadioButtons();
 
@@ -287,10 +287,13 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
 
         const backgroundStyles = this.widget.settings[this.deviceType].additional_settings;
         this.backgroundPadding = [];
-        this.backgroundPadding.push(new RadioButton('top', backgroundStyles.padding.top, assetsUrl + 'images/icons/padding_top.svg'));
-        this.backgroundPadding.push(new RadioButton('right', backgroundStyles.padding.right, assetsUrl + 'images/icons/padding_right.svg'));
-        this.backgroundPadding.push(new RadioButton('bottom', backgroundStyles.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'));
-        this.backgroundPadding.push(new RadioButton('left', backgroundStyles.padding.left, assetsUrl + 'images/icons/padding_left.svg'));
+        if (backgroundStyles.padding !== null) {
+            this.backgroundPadding.push(new RadioButton('top', backgroundStyles.padding.top, assetsUrl + 'images/icons/padding_top.svg'));
+            this.backgroundPadding.push(new RadioButton('right', backgroundStyles.padding.right, assetsUrl + 'images/icons/padding_right.svg'));
+            this.backgroundPadding.push(new RadioButton('bottom', backgroundStyles.padding.bottom, assetsUrl + 'images/icons/padding_bottom.svg'));
+            this.backgroundPadding.push(new RadioButton('left', backgroundStyles.padding.left, assetsUrl + 'images/icons/padding_left.svg'));
+
+        }
 
 
         this.marginAdditionalText = [];

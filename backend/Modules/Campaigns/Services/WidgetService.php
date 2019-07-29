@@ -169,6 +169,1958 @@ class WidgetService implements WidgetServiceInterface
         return $this->createSettingsJson($widgetTypeId, $deviceType);
     }
 
+    private function getWidgetSettings($widgetType, $deviceType, $generalSettingsHeadlineText)
+    {
+        $result = array();
+        switch ($widgetType) {
+            case 2: // sidebar
+                if ($deviceType == 'desktop') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'left',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 32
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'sidebar-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '79687',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 1,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/sidebar-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '10',
+                                    'right' => '70',
+                                    'bottom' => '15',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '330',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else if ($deviceType == 'tablet') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 32
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'locked-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '64507',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 1,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '10',
+                                    'right' => '70',
+                                    'bottom' => '15',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'left',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 32
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'sidebar-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '79687',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 1,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/sidebar-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '10',
+                                    'right' => '70',
+                                    'bottom' => '15',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '300',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                }
+                break;
+            case 3: // leaderboard
+                if ($deviceType == 'desktop') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 32
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '10',
+                                    'right' => '70',
+                                    'bottom' => '15',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 26
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else if ($deviceType == 'tablet') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 32
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => '20',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '10',
+                                    'right' => '70',
+                                    'bottom' => '15',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 32
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => '30',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '10',
+                                    'right' => '70',
+                                    'bottom' => '15',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                }
+                break;
+            case 4: // popup
+                if ($deviceType == 'desktop') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 32
+                            ),
+                            'background' => array(
+                                'type' => 'color',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '70',
+                                    'bottom' => '10',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '30',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 27
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else if ($deviceType == 'tablet') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 28
+                            ),
+                            'background' => array(
+                                'type' => 'color',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '70',
+                                    'bottom' => '10',
+                                    'left' => '70'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 22
+                            ),
+                            'background' => array(
+                                'type' => 'color',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => '30',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '50',
+                                    'bottom' => '10',
+                                    'left' => '50'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                }
+            case 5: // fixed
+                if ($deviceType == 'desktop') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 25
+                            ),
+                            'background' => array(
+                                'type' => 'color',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => '12',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '30',
+                                    'bottom' => '10',
+                                    'left' => '30'
+                                ),
+                                'margin' => array(
+                                    'top' => '8',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 27
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else if ($deviceType == 'tablet') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 20
+                            ),
+                            'background' => array(
+                                'type' => 'color',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => '10',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '30',
+                                    'bottom' => '10',
+                                    'left' => '30'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 18
+                            ),
+                            'background' => array(
+                                'type' => 'color',
+                                'image' => array(
+                                    'path' => 'leaderboard-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '166682',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/leaderboard-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => '30',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '30',
+                                    'bottom' => '10',
+                                    'left' => '30'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                }
+                break;
+            case 6: // locked
+                if ($deviceType == 'desktop') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'left',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 27
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'locked-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '64507',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => '12',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => '20'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '30',
+                                    'bottom' => '10',
+                                    'left' => '30'
+                                ),
+                                'margin' => array(
+                                    'top' => '30',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 27
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else if ($deviceType == 'tablet') {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 27
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'locked-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '64507',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '30',
+                                    'bottom' => '10',
+                                    'left' => '30'
+                                ),
+                                'margin' => array(
+                                    'top' => '30',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 24
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                } else {
+                    $result = array(
+                        'general' => array(
+                            'fontSettings' => array(
+                                'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                                'alignment' => 'center',
+                                'color' => '#FFFFFF',
+                                'backgroundColor' => 'rgba(0,0,0,0)',
+                                'fontSize' => 22
+                            ),
+                            'background' => array(
+                                'type' => 'image',
+                                'image' => array(
+                                    'path' => 'locked-default.jpg',
+                                    'type' => 'image\/jpeg',
+                                    'size' => '64507',
+                                    'updated_at' => '',
+                                    'created_at' => '',
+                                    'id' => 0,
+                                    'url' => env('ASSETS_URL') . '/public/images/widgets/locked-default.jpg'
+                                ),
+                                'color' => '#114b7d',
+                                'opacity' => 100
+                            ),
+                            'text_margin' => array(
+                                'top' => 'auto',
+                                'right' => 'auto',
+                                'bottom' => 'auto',
+                                'left' => 'auto'
+                            ),
+                            'text_display' => null,
+                            'text_background' => null,
+                            'common_text' => array()
+                        ),
+                        'call_to_action' => array(
+                            'default' => array(
+                                'padding' => array(
+                                    'top' => '5',
+                                    'right' => '30',
+                                    'bottom' => '10',
+                                    'left' => '30'
+                                ),
+                                'margin' => array(
+                                    'top' => '20',
+                                    'right' => 'auto',
+                                    'bottom' => '0',
+                                    'left' => 'auto'
+                                ),
+                                'fontSettings' => array(
+                                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                                    'fontWeight' => 400,
+                                    'alignment' => 'center',
+                                    'color' => '#FFFFFF',
+                                    'fontSize' => 22
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#9e0b0f',
+                                        'opacity' => 100,
+                                        'selected' => true
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0,
+                                        'selected' => true
+                                    ),
+                                    'radius' => array(
+                                        'active' => true,
+                                        'value' => '0',
+                                        'selected' => true,
+                                        'tl' => '10',
+                                        'tr' => '10',
+                                        'bl' => '10',
+                                        'br' => '10'
+                                    )
+                                ),
+                                'display' => 'relative'
+                            ),
+                            'hover' => array(
+                                'type' => 'fade',
+                                'fontSettings' => array(
+                                    'fontWeight' => 'bold',
+                                    'opacity' => 100,
+                                    'color' => '#FFFFFF'
+                                ),
+                                'design' => array(
+                                    'fill' => array(
+                                        'active' => true,
+                                        'color' => '#B71100',
+                                        'opacity' => 100
+                                    ),
+                                    'border' => array(
+                                        'active' => false,
+                                        'color' => '#FFFFFF',
+                                        'size' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'shadow' => array(
+                                        'active' => false,
+                                        'color' => '#B71100',
+                                        'x' => 2,
+                                        'y' => 2,
+                                        'b' => 2,
+                                        'opacity' => 0
+                                    ),
+                                    'radius' => array(
+                                        'active' => false,
+                                        'value' => '0'
+                                    )
+                                )
+                            )
+                        )
+                    );
+                }
+                break;
+            default:
+                break;
+        }
+        return $result;
+    }
+
+    private function headlineSettingText($widgetType, $deviceType, $generalWidgetSettings)
+    {
+        $result = '';
+        switch ($widgetType) {
+            case 3: // leaderboard
+                if ($deviceType == 'desktop') {
+                    $result = '<b>We can write because of your&nbsp;</b><div><b>financial support.</b></div>';
+                } else if ($deviceType == 'tablet') {
+                    $result = 'We can write because of your<div>&nbsp;financial support.</div>';
+                } else {
+                    $result = $generalWidgetSettings;
+                }
+                break;
+            case 4: // popup
+                if ($deviceType == 'desktop') {
+                    $result = '<b>Thank you for reading, please&nbsp;</b><div><b>support independency&nbsp;</b><div><b>of this media.</b></div></div>';
+                } else if ($deviceType == 'tablet') {
+                    $result = '<span><b>Thank you for reading, please&nbsp;</b></span><div><b>support independency&nbsp;</b><div><b>of this media.</b></div></div>';
+                } else {
+                    $result = '<span><b>Thank you for reading, please&nbsp;</b></span><div><b>support independency&nbsp;</b><div><b>of this media.</b></div></div>';
+                }
+                break;
+            case 5: //fixed
+                $result = '<b>Thank you for reading, please&nbsp;support independency&nbsp;of this media.</b>';
+                break;
+            case 6: // locked
+                if ($deviceType == 'mobile') {
+                    $result = '<b>We can write because of your financial support.</b>';
+                } else {
+                    $result = '<b>We can write&nbsp;</b><div><b>because of your</b></div><div><span><b>financial support.</b></span></div>';
+                }
+                break;
+            default:
+                $result = $generalWidgetSettings;
+        }
+        return $result;
+    }
+
     public function createSettingsJson($widgetType, $deviceType)
     {
         $this->widgetSettings = $this->widgetSettingsStructure();
@@ -177,64 +2129,111 @@ class WidgetService implements WidgetServiceInterface
         $generalSettings = $this->getGeneralSettings();
         $generalWidgetSettings = json_decode($generalSettings['widget_settings'], true);
         $generalSettingsHeadlineText = json_decode($generalSettings['font_settings_headline_text'], true);
-        $generalCtaSettings = json_decode($generalSettings['cta'], true);
-        $this->widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
-            'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
-            'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
-            'alignment' => 'center',
-            'color' => $generalSettingsHeadlineText['color'],
-            'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
-            'fontSize' => $generalSettingsHeadlineText['fontSize']
-        ), $widgetType);
 
-        $this->widgetSettings['general']['background'] = array(
-            'type' => 'color',
-            'image' => array('id' => 0, 'url' => null),
-            'color' => $generalWidgetSettings['backgroundColor'],
-            'opacity' => 100
-        );
+        if ($widgetType !== 1 && $widgetType !== 9 && $widgetType !== 7) { // all except landing, article and custom
+            // override settings with Postoj default settings
+            $result = array(
+                'headline_text' => $this->headlineSettingText($widgetType, $deviceType, $generalWidgetSettings['headline_text']['text']),
+                'widget_settings' => $this->getWidgetSettings($widgetType, $deviceType, $generalSettingsHeadlineText),
+                'payment_settings' => $this->paymentSettings,
+                'email_settings' => array(
+                    'active' => false,
+                    'subscribe_text' => ''
+                ),
+                'cta' => array(
+                    'text' => $generalWidgetSettings['cta']['text'],
+                    'url' => $generalWidgetSettings['cta']['url']
+                ),
+                'additional_settings' =>
+                    $this->getAdditionalWidgetSettings($widgetType, $generalSettings, $deviceType)
 
-        $this->widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $this->widgetSettings['general']['text_margin'], $widgetType);
+            );
+            $result['widget_settings']['additional_text'] = array(
+                'text' => $generalWidgetSettings['additional_text']['text'],
+                'fontSettings' => array(
+                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                    'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                    'alignment' => 'center',
+                    'color' => $generalSettingsHeadlineText['color'],
+                    'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                    'fontSize' => 18
+                ),
+                'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                'text_margin' => array(
+                    'top' => '0',
+                    'right' => 'auto',
+                    'bottom' => '0',
+                    'left' => 'auto'
+                )
+            );
 
-        $this->widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
+        } else {
+            $articleWidgetText = null;
+            if ($widgetType == 7) {
+                $articleWidgetText = '<p><b><font color="#004080">Thank you for reading this article.</font></b></p><p><b><font color=\"#004080\">Our articles are made only</font></b></p><p><b><font color="#114b7d">by our subscribers.<\/font><\/b><\/p><p><i>Lorem ipsum ...<\/i><\/p><p><b><a href="/podpora"><font color="#cc0000">Be our subscriber now!</font></a></b></p><p><b><font color="#114b7d">Thanks!</font></b></p>';
+            }
 
-        // Additional text
-        $this->widgetSettings['additional_text'] = array(
-            'text' => $generalWidgetSettings['additional_text']['text'],
-            'fontSettings' => array(
+            $generalCtaSettings = json_decode($generalSettings['cta'], true);
+            $this->widgetSettings['general']['fontSettings'] = $this->overrideGeneralSettings('headlineFonts', array(
                 'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
                 'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
                 'alignment' => 'center',
                 'color' => $generalSettingsHeadlineText['color'],
                 'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
-                'fontSize' => 18
-            ),
-            'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
-            'text_margin' => array(
-                'top' => '0',
-                'right' => 'auto',
-                'bottom' => '0',
-                'left' => 'auto'
-            )
-        );
+                'fontSize' => $generalSettingsHeadlineText['fontSize']
+            ), $widgetType);
 
+            $this->widgetSettings['general']['background'] = array(
+                'type' => 'color',
+                'image' => array('id' => 0, 'url' => null),
+                'color' => $generalWidgetSettings['backgroundColor'],
+                'opacity' => 100
+            );
 
-        $result = array(
-            'headline_text' => $generalWidgetSettings['headline_text']['text'],
-            'widget_settings' => $this->widgetSettings,
-            'payment_settings' => $this->paymentSettings,
-            'email_settings' => array(
-                'active' => false,
-                'subscribe_text' => ''
-            ),
-            'cta' => array(
-                'text' => $generalWidgetSettings['cta']['text'],
-                'url' => $generalWidgetSettings['cta']['url']
-            ),
-            'additional_settings' =>
-                $this->getAdditionalWidgetSettings($widgetType, $generalSettings, $deviceType)
+            $this->widgetSettings['general']['text_margin'] = $this->overrideGeneralSettings('headlineMargin', $this->widgetSettings['general']['text_margin'], $widgetType);
 
-        );
+            $this->widgetSettings['call_to_action'] = $this->overrideGeneralSettings('cta', $generalCtaSettings, $widgetType);
+
+            // Additional text
+            $this->widgetSettings['additional_text'] = array(
+                'text' => $generalWidgetSettings['additional_text']['text'],
+                'fontSettings' => array(
+                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                    'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                    'alignment' => 'center',
+                    'color' => $generalSettingsHeadlineText['color'],
+                    'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                    'fontSize' => 18
+                ),
+                'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                'text_margin' => array(
+                    'top' => '0',
+                    'right' => 'auto',
+                    'bottom' => '0',
+                    'left' => 'auto'
+                )
+            );
+
+            $result = array(
+                'headline_text' => $generalWidgetSettings['headline_text']['text'],
+                'articleWidgetText' => $articleWidgetText,
+                'widget_settings' => $this->widgetSettings,
+                'payment_settings' => $this->paymentSettings,
+                'email_settings' => array(
+                    'active' => false,
+                    'subscribe_text' => ''
+                ),
+                'cta' => array(
+                    'text' => $generalWidgetSettings['cta']['text'],
+                    'url' => $generalWidgetSettings['cta']['url']
+                ),
+                'additional_settings' =>
+                    $this->getAdditionalWidgetSettings($widgetType, $generalSettings, $deviceType)
+
+            );
+
+        }
+
 
         return $result;
     }

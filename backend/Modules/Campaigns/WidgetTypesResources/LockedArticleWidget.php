@@ -9,7 +9,7 @@ class LockedArticleWidget extends WidgetTypeResource
     public function initDesktop()
     {
         return $this->init(
-            $this->generalStyles('100%', '300px', 'relative', array(), 'block', array(
+            $this->generalStyles('100%', '250px', 'relative', array(), 'block', array(
                 'top' => '50',
                 'right' => '15',
                 'bottom' => '50',
@@ -140,8 +140,8 @@ class LockedArticleWidget extends WidgetTypeResource
     public function initTablet()
     {
         return $this->init(
-            $this->generalStyles('100%', '250px', 'relative', array(), 'block', array(
-                'top' => '10',
+            $this->generalStyles('100%', '200px', 'relative', array(), 'block', array(
+                'top' => '40',
                 'right' => '15',
                 'bottom' => '50',
                 'left' => '15'
@@ -269,7 +269,7 @@ class LockedArticleWidget extends WidgetTypeResource
     public function initMobile()
     {
         return $this->init(
-            $this->generalStyles('100%', 'auto', 'relative', array(), 'block', array(
+            $this->generalStyles('100%', '170px', 'relative', array(), 'block', array(
                 'top' => '20',
                 'right' => '15',
                 'bottom' => '50',

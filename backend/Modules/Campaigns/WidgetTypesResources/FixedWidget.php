@@ -107,7 +107,7 @@ class FixedWidget extends WidgetTypeResource
     public function initMobile()
     {
         return $this->init(
-            $this->generalStyles('100%', '220px', 'fixed', array(
+            $this->generalStyles('100%', '180px', 'fixed', array(
                 'top' => 'auto',
                 'bottom' => '0',
                 'zIndex' => 999999,
