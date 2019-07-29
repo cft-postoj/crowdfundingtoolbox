@@ -9,6 +9,8 @@ export class HelpComponent implements OnInit {
 
   @Input()
   public text: string = '';
+  @Input()
+  public extraClass: string = '';
 
   constructor() { }
 

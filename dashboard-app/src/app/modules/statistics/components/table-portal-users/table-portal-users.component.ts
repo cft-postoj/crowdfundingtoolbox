@@ -52,6 +52,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     public portalUsers: DonorStats[] = [];
     public sortedPortalUsers: PortalUser[];
     public portalUsersCount: number;
+    public helperText: string;
 
     config = {
         height: '500px',
@@ -171,6 +172,20 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
                 end: moment(this.to)
             };
         }, 500);
+
+        console.log(this.dataType);
+
+        if (this.dataType === 'stoppedSupporting') {
+            this.helperText = 'Users in this list are there because they stopped their monthly support :( ' +
+                'During the last 40 days, there was no donation from them.';
+        }
+        if (this.dataType === 'didNotPay') {
+            this.helperText = 'Users in this list are there because they created donation but no payment was record from them :(';
+        }
+        if (this.dataType === 'onlyInitializeDonation') {
+            this.helperText = 'Users in this list are there because the only initialized monetization ' +
+                'widget and didn\'t complete any step :(';
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -251,6 +266,13 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
         if (data !== null) {
            return this.helperService.getPaymentType(data);
         }
+    }
+
+    public checkActive(lastDonation) {
+        if (moment().diff(lastDonation, 'days') >= 40) {
+            return false;
+        }
+        return true;
     }
 
 }

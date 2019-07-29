@@ -2,9 +2,10 @@
     <b>CONFIGURATION WIZARD</b>
     <p>Before we start, please set up your global page settings</p>
     <div class="configurationPage--items">
-        <div class="row configurationPage--row">
-            <div class="col-md-4">
-                <div class="configurationPage--item"  (click)="openGlobal()">
+        <app-loading [isLoading]="loading"></app-loading>
+        <div class="row configurationPage--row" *ngIf="!loading">
+            <div class="col-md-4" *ngIf="isAdmin">
+                <div class="configurationPage--item" (click)="openGlobal()">
                     <b>GENERAL PAGE SETTINGS</b>
                     <p>General settings including fonts, colors etc…</p>
                     <svg class="icon_settings" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
@@ -29,7 +30,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" *ngIf="isAdmin">
                 <div class="configurationPage--item" (click)="openCta()">
                     <b>CALL TO ACTION SETTINGS</b>
                     <p>Set global CTA settings including paddings, margins, </p>
@@ -59,7 +60,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" *ngIf="isAdmin">
                 <div class="configurationPage--item" (click)="openWidgetSettings()">
                     <b>WIDGET SETTINGS</b>
                     <p></p>
@@ -87,7 +88,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" *ngIf="isAdmin">
                 <div class="configurationPage--item" (click)="openPaymentSettings()">
                     <b>PAYMENT SETTINGS</b>
                     <p></p>
@@ -141,7 +142,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" *ngIf="isAdmin">
                 <div class="configurationPage--item" (click)="openPortalConnectionsSettings()">
                     <b>PORTAL CONNECTIONS</b>
                     <p></p>

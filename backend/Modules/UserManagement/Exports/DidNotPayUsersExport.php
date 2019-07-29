@@ -36,7 +36,7 @@ class DidNotPayUsersExport implements FromCollection
             'didNotPay', null);
         $header = array(
             'Email', 'First name', 'Last name', 'Street', 'City', 'ZIP', 'Donation type', 'IBAN', 'Variable symbol',
-            'Transfer type', 'Declared amount', 'Date of declared donation'
+            'Transfer type', 'Last donation date'
         );
         array_push($result, $header);
         foreach ($users->donors as $user) {
@@ -71,7 +71,6 @@ class DidNotPayUsersExport implements FromCollection
                 $iban,
                 $user->variableSymbol->variable_symbol,
                 $paymentMethod,
-                $user->firstDonation['amount_intitialized'],
                 $user->last_donation_at
             );
             array_push($result, $row);

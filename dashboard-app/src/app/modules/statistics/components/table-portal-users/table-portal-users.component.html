@@ -3,6 +3,7 @@
         <div class="col">
             <h2>{{title}}
                 <ng-container *ngIf="enablePortalUsersCount && !loading">({{portalUsersCount}})</ng-container>
+                <app-help *ngIf="enablePortalUsersCount" [extraClass]="'help-relative'" [text]="helperText"></app-help>
             </h2>
         </div>
         <div class="col mx-auto" *ngIf="export">
@@ -104,7 +105,7 @@
                     (click)="showUserDetail(portalUser.user.id)" title="Show detail of donor">
                     <td *ngIf="tableService.activeColumn(model,'order')">{{i + 1}}</td>
                     <td class="status" *ngIf="tableService.activeColumn(model,'status')">
-                        <app-status [active]="portalUser.last_donation_at!=null"></app-status>
+                        <app-status [active]="checkActive(portalUser.last_donation_at)"></app-status>
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'user.email')">
                         {{portalUser.user.email}}
@@ -119,9 +120,9 @@
                     <td *ngIf="tableService.activeColumn(model,'payment_type')">
                         {{paymentMehotd(portalUser.first_donation?.payment_method)}}
                     </td>
-                    <td [title]="portalUser.user.user_detail.created_at | date:'dd.MM.yyyy HH:mm:ss'"
+                    <td [title]="portalUser.created_at | date:'dd.MM.yyyy HH:mm:ss'"
                         *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')">
-                        {{portalUser.user.user_detail.created_at | date:'dd.MM.yyyy'}}
+                        {{portalUser.created_at | date:'dd.MM.yyyy'}}
                     </td>
                     <td [title]="portalUser.last_donation_at | date:'dd.MM.yyyy HH:mm:ss'"
                         *ngIf="tableService.activeColumn(model,'last_donation_at')">
