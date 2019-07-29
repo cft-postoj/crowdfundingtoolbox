@@ -40,6 +40,7 @@ class WidgetService implements WidgetServiceInterface
     private $leaderboardWidget;
     private $lockedArticleWidget;
     private $articleWidget;
+    private $articleService;
 
     public function __construct()
     {
@@ -51,6 +52,7 @@ class WidgetService implements WidgetServiceInterface
         $this->leaderboardWidget = new LeaderboardWidget();
         $this->lockedArticleWidget = new LockedArticleWidget();
         $this->articleWidget = new ArticleWidget();
+        $this->articleService = new ArticleService();
     }
 
     public function createWidgetsForCampaign($campaignId)
@@ -808,7 +810,7 @@ class WidgetService implements WidgetServiceInterface
     /**
      * @return array
      */
-    public function getWidgets($url, $title, $userCookie, $userId, $ip)
+    public function getWidgets($url, $article, $userCookie, $userId, $ip)
     {
         $actualDate = date('Y-m-d');
         $campaignIds = Campaign::all()
@@ -829,15 +831,15 @@ class WidgetService implements WidgetServiceInterface
         if ($newCookie != null) {
             $userCookie = $newCookie->id;
         }
-        // get domain name from $url (third character /)
-        $articleId = '';
-        if ($url !== null) {
-            $articleId = explode('/', explode(explode('/', $url)[2], $url)[1])[0];
-        } else {
-            $url = '127.0.0.1:8001';
+
+        //handle article
+        $articleId = null;
+        if ($article != null) {
+            $articleId = $this->articleService->createArticleIfDontExist($article)->id;
         }
 
-        $trackingVisit = $this->trackingService->createVisit($userId, $userCookie, $url, $title, $articleId);
+
+        $trackingVisit = $this->trackingService->createVisit($userId, $userCookie, $url, $articleId);
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
                 $trackingShow = $this->trackingService->show($trackingVisit->id, $rand['widget_type_id']);

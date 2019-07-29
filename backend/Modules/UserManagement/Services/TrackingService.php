@@ -13,7 +13,7 @@ use Modules\UserManagement\Entities\TrackingVisit;
 class TrackingService
 {
 
-    public function createVisit($userId, $userCookie, $url, $title, $articleId)
+    public function createVisit($userId, $userCookie, $url, $articleId)
     {
         try {
             return TrackingVisit::create([
@@ -21,7 +21,6 @@ class TrackingService
                 'user_cookie' => $userCookie,
                 'url' => $url,
                 'article_id' => $articleId,
-                'title' => $title
             ]);
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getTrace());

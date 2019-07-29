@@ -13,7 +13,7 @@ class TrackingVisit extends Model
 
     protected $table = 'tracking_visit';
     protected $fillable = [
-        'portal_user_id','user_cookie', 'url', 'article_id', 'title'
+        'portal_user_id','user_cookie', 'url', 'article_id'
     ];
 
     public function show()
@@ -24,6 +24,10 @@ class TrackingVisit extends Model
     public function portalUser()
     {
         return $this->belongsTo('\Modules\UserManagement\Entities\PortalUser');
+    }
+    public function article()
+    {
+        return $this->belongsTo('\Modules\Campaigns\Entities\Article','article_id','article_id');
     }
 
 }

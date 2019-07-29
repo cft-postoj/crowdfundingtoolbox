@@ -1,5 +1,5 @@
 import {getCookie, setCookie} from "./helpers";
-import {apiUrl} from './constants/url';
+import {apiUrl, apiUrlLocal} from './constants/url';
 import * as myAccountTexts from "./json/myAccount";
 
 const sidebarPlaceholder = document.getElementById('cr0wdfundingToolbox-sidebar');
@@ -13,14 +13,34 @@ const landingPlaceholder = document.getElementById('cr0wdfundingToolbox-landing'
 
 function getWidgets(apiUrl) {
 
+    var requestData = {
+        'user_cookie': getCookie("cr0wdfundingToolbox-user_cookie"),
+        'user_id': localStorage.getItem('cft_usertoken'),
+        'url': window.location.href
+    }
+
+    //get article data
+    //customize for your page to get info about currently read article and send those information to backend
+    var isArticle = Number(location.href.split('/')[3])!==0 && Number.isInteger(Number(location.href.split('/')[3]))
+    if (isArticle) {
+        var articleId = +location.href.split('/')[3];
+        var articleAuthor = document.getElementById('cr0wdfundingToolbox__article-author');
+        var articleAuthorString = articleAuthor ? articleAuthor.innerText : 'undefined author'
+        var dateElementText = document.getElementById('cr0wdfundingToolbox__article-created-at');
+        var articleCreatedAt = dateElementText ? dateElementText.innerText.split('.')[2].split('•')[0].trim() +
+            '-' + dateElementText.innerText.split('.')[1].trim() +
+            '-' + dateElementText.innerText.split('.')[0] : 'undefined created at';
+        requestData['article'] = {
+            'article_id': articleId,
+            'article_author': articleAuthorString,
+            'article_title': document.querySelector('title').innerText,
+            'article_created_at': articleCreatedAt,
+        }
+    }
+
     //get widgets for users and track, that user has been on specific page
     let data = JSON.stringify(
-        {
-            'article_title': document.querySelector('title').innerText,
-            'user_cookie': getCookie("cr0wdfundingToolbox-user_cookie"),
-            'user_id': localStorage.getItem('cft_usertoken'),
-            'url': window.location.href
-        }
+        requestData
     );
 
     let xhttp = new XMLHttpRequest();
@@ -230,7 +250,7 @@ function registerInsertValue(apiUrl) {
 function registerLoginButtons() {
 
     const buttons = document.getElementsByClassName('cft__redirect-to-my-account');
-    for (var i=0; i < buttons.length; i++ ) {
+    for (var i = 0; i < buttons.length; i++) {
         console.log(buttons[i].onclick);
         buttons[i].onclick = () => {
             if (location.href.indexOf(myAccountTexts.myAccountUrl) === -1)
