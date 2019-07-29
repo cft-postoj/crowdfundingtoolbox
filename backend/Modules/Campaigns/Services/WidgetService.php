@@ -174,9 +174,9 @@ class WidgetService implements WidgetServiceInterface
     public function createSettingsJson($widgetType, $deviceType)
     {
         $this->widgetSettings = $this->widgetSettingsStructure();
-        $this->paymentSettings = $this->paymentSettingsStructure($widgetType, $deviceType);
         // GET GENERAL CAMPAIGN SETTINGS
         $generalSettings = $this->getGeneralSettings();
+        $this->paymentSettings = $this->paymentSettingsStructure($widgetType, $deviceType);
         $generalWidgetSettings = json_decode($generalSettings['widget_settings'], true);
         $generalSettingsHeadlineText = json_decode($generalSettings['font_settings_headline_text'], true);
         $generalCtaSettings = json_decode($generalSettings['cta'], true);
@@ -188,10 +188,15 @@ class WidgetService implements WidgetServiceInterface
             'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
             'fontSize' => $generalSettingsHeadlineText['fontSize']
         ), $widgetType);
-
         $this->widgetSettings['general']['background'] = array(
-            'type' => 'color',
-            'image' => array('id' => 0, 'url' => null),
+            'type' => 'image',
+            'image' => array(
+                'path' => 'sidebar-default.jpg',
+                'id' => 0,
+                'type' => 'image\/jpeg',
+                'updated_at' => '',
+                'created_at' => '',
+                'url' => env('ASSETS_URL') . '/public/images/widgets/landing.jpg'),
             'color' => $generalWidgetSettings['backgroundColor'],
             'opacity' => 100
         );
@@ -469,10 +474,10 @@ class WidgetService implements WidgetServiceInterface
             'type' => 'classic',
             'monetization_title' => array(
                 'fontSettings' => array(
-                    'fontFamily' => 'Roboto',
-                    'fontWeight' => 'bold',
+                    'fontFamily' => '"Roboto Slab", sans-serif',
+                    'fontWeight' => '700',
                     'backgroundColor' => '#fff',
-                    'fontSize' => 24
+                    'fontSize' => 21
                 ),
                 'margin' => array(
                     'top' => '0',
@@ -532,7 +537,7 @@ class WidgetService implements WidgetServiceInterface
                 ),
                 'benefit' => array(
                     'active' => true,
-                    'text' => 'Donate 10 € or more monthly to become a premium member',
+                    'text' => 'Donate 10 € or more monthly to <b>become a premium member</b>',
                     'value' => 10
                 )
             ),
@@ -620,7 +625,7 @@ class WidgetService implements WidgetServiceInterface
             case 1: // landing widget
                 $outputJson = array(
                     'width' => '100%',
-                    'height' => '100%',
+                    'height' => '688px',
                     'position' => 'relative',
                     'fixedSettings' => array(),
                     'display' => 'block',
