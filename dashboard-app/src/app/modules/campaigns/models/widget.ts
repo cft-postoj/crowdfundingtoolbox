@@ -172,6 +172,7 @@ export class Widget {
             payment_settings: {
                 active: true,
                 payment_type: 'both',
+                payment_method: 'bank_transfer',
                 type: 'classic' || 'lite', // classic or lite
                 monetization_title: {
                     fontSettings: {
@@ -606,6 +607,7 @@ export class Widget {
             },
             payment_settings: {
                 payment_type: 'both',
+                payment_method: 'bank_transfer',
                 type: 'classic',
                 monetization_title: {
                     fontSettings: {
@@ -1016,6 +1018,7 @@ export class Widget {
             payment_settings: {
                 active: false,
                 payment_type: 'both',
+                payment_method: 'bank_transfer',
                 type: 'classic',
                 monetization_title: {
                     fontSettings: {

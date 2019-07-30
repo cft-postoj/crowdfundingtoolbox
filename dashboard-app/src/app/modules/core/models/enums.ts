@@ -22,6 +22,15 @@ export var paymentTypes = {
     both: {title: "Both options", value: "both"},
 }
 
+export var paymentMethods = {
+    bankTransfer: {title: "Bank transfer", value: "bank_transfer"},
+    creditCard: {title: "Credit card", value: "credit_card"},
+    payBySquare: {title: "Pay by square", value: "pay_by_square"},
+    googlePay: {title: "Google Pay", value: "google_pay"},
+    applePay: {title: "Apple Pay", value: "apple_pay"}
+
+}
+
 export var widgetTypes = {
     landing: {
         name: 'landing',

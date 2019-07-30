@@ -1400,6 +1400,23 @@
                                             [colClass]="'col'"></app-radio-button>
                                     </div>
                                 </div>
+                                <ng-container
+                                    *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.monthly.value &&
+                                    widget.settings[deviceType].payment_settings.type == 'lite'">
+                                    <div class="row mt-3">
+                                        <div class="col-12 bold">
+                                            Default payment method
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <app-dropdown class="classic col"
+                                                      [class]="'classic mr15'"
+                                                      [items]="paymentMethodsDropdown"
+                                                      [title]="'Choose default payment method'"
+                                                      [(currentValue)]="widget.settings[deviceType].payment_settings.payment_method"
+                                        ></app-dropdown>
+                                    </div>
+                                </ng-container>
                             </div>
                             <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value ||
                                                         widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">

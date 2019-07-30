@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {Widget} from '../../models';
 import {Subscription} from 'rxjs';
-import {paymentTypes, widgetTypes} from '../../../core/models';
+import {paymentMethods, paymentTypes, widgetTypes} from '../../../core/models';
 import {PreviewService} from '../../services';
 import {ConvertHexService} from '../../../core/services';
 import {
@@ -43,6 +43,7 @@ export class PreviewMonetizationLiteComponent implements OnInit {
     public paymentTypes = paymentTypes;
     public environment = environment;
     public fontFamilyPreview ='';
+    paymentMethods = paymentMethods;
 
     constructor(private previewService: PreviewService, private convertHex: ConvertHexService,
                 private ref: ChangeDetectorRef) {
@@ -386,7 +387,7 @@ export class PreviewMonetizationLiteComponent implements OnInit {
         return {
             'flex': '0 0 50%',
             'max-width': '50%',
-            'padding': '6px 15px',
+            'padding': '6px 7px',
             'width': '100%',
             'min-height': '1px',
             'box-sizing': 'border-box',

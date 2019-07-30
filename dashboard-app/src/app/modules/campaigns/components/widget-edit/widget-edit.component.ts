@@ -3,7 +3,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {Widget} from '../../models';
 import {Routing} from '../../../../constants/config.constants';
-import {backgroundTypes, devices, DropdownItem, paymentTypes, RadioButton, widgetTypes} from '../../../core/models';
+import {
+    backgroundTypes,
+    devices,
+    DropdownItem,
+    paymentMethods,
+    paymentTypes,
+    RadioButton,
+    widgetTypes
+} from '../../../core/models';
 import {PreviewService, WidgetService} from '../../services';
 import {ComponentCommunicationService, GeneralSettingsService} from '../../../core/services';
 import {environment} from '../../../../../environments/environment';
@@ -42,6 +50,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     public ctaSettings: string = 'Default';
     creatingHTMLs = false;
     widgetTypes = widgetTypes;
+    paymentMethods = paymentMethods;
     public allRadiusesButton: RadioButton[] = [];
     private specificRadius: boolean;
     public specificRadiusButtons: RadioButton[] = [];
@@ -62,6 +71,7 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     public monetizationTypes: DropdownItem[] = [];
     private backgroundPadding: RadioButton[] = [];
     private marginMonetizationHeadlineText: RadioButton[] = [];
+    public paymentMethodsDropdown: DropdownItem[] = [];
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -87,6 +97,8 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.once.title, this.paymentTypes.once.value))
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.both.title, this.paymentTypes.both.value))
 
+        this.paymentMethodsDropdown.push(new DropdownItem(this.paymentMethods.bankTransfer.title, this.paymentMethods.bankTransfer.value));
+        this.paymentMethodsDropdown.push(new DropdownItem(this.paymentMethods.payBySquare.title, this.paymentMethods.payBySquare.value));
         this.id = this.route.snapshot.paramMap.get('widgetId');
 
         this.widgetService.getById(this.id).subscribe((response: any) => {
