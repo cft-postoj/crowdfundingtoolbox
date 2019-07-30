@@ -18,6 +18,11 @@ class TrackingController extends Controller
         $this->trackingService = new TrackingService();
     }
 
+    protected function show(Request $request)
+    {
+        return $this->trackingService->show($request['tracking_visit_id'],$request['widget_id']);
+    }
+
     protected function click(Request $request)
     {
         return $this->trackingService->click($request);
