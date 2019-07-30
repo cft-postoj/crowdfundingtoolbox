@@ -24,14 +24,19 @@ class CampaignService implements CampaignServiceInterface
     private $campaignRepository;
     private $campaignPromoteService;
 
-    public function __construct()
+    public function __construct(UserServiceController $userService,
+                                TargetingService $targetingService,
+                                CampaignPromoteService $promoteService,
+                                WidgetService $widgetService,
+                                CampaignRepository $campaignRepository,
+                                CampaignPromoteService $campaignPromoteService)
     {
-        $this->userService = new UserServiceController();
-        $this->targetingService = new TargetingService();
-        $this->promoteService = new CampaignPromoteService();
-        $this->widgetService = new WidgetService();
-        $this->campaignRepository = new CampaignRepository();
-        $this->campaignPromoteService = new CampaignPromoteService();
+        $this->userService = $userService;
+        $this->targetingService = $targetingService;
+        $this->promoteService = $promoteService;
+        $this->widgetService = $widgetService;
+        $this->campaignRepository = $campaignRepository;
+        $this->campaignPromoteService = $campaignPromoteService;
     }
 
     //raw campaign data contains data from request with data used inf all connected entities to campaign
@@ -157,6 +162,12 @@ class CampaignService implements CampaignServiceInterface
     {
         return Campaign::where('id', Widget::where('id', $id)->first()['campaign_id'])
             ->first();
+    }
+
+    public function getActiveCampaigns($signed, $notSigned, $url)
+    {
+        return $this->campaignRepository->getActiveCampaigns($signed, $notSigned, $url);
+
     }
 
 }

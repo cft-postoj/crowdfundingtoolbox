@@ -15,6 +15,7 @@ use Modules\Campaigns\Entities\WidgetResult;
 use Modules\Campaigns\Entities\WidgetSettings;
 use Modules\Campaigns\Entities\WidgetVersion;
 use Modules\Campaigns\Http\Controllers\WidgetTypesController;
+use Modules\Campaigns\Repositories\CampaignRepository;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Campaigns\Transformers\WidgetResultResource;
 use Modules\Campaigns\WidgetTypesResources\ArticleWidget;
@@ -23,8 +24,10 @@ use Modules\Campaigns\WidgetTypesResources\LeaderboardWidget;
 use Modules\Campaigns\WidgetTypesResources\LockedArticleWidget;
 use Modules\Campaigns\WidgetTypesResources\PopupWidget;
 use Modules\Campaigns\WidgetTypesResources\SidebarWidget;
+use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\TrackingService;
 use Modules\UserManagement\Services\UserService;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class WidgetService implements WidgetServiceInterface
 {
@@ -41,18 +44,32 @@ class WidgetService implements WidgetServiceInterface
     private $lockedArticleWidget;
     private $articleWidget;
     private $articleService;
+    private $portalUserService;
+    private $campaignRepository;
 
-    public function __construct()
+    public function __construct(TrackingService $trackingService,
+                                UserService $userService,
+                                SidebarWidget $sidebarWidget,
+                                FixedWidget $fixedWidget,
+                                PopupWidget $popupWidget,
+                                LeaderboardWidget $leaderboardWidget,
+                                LockedArticleWidget $lockedArticleWidget,
+                                ArticleWidget $articleWidget,
+                                ArticleService $articleService,
+                                PortalUserService $portalUserService,
+                                CampaignRepository $campaignRepository)
     {
-        $this->trackingService = new TrackingService();
-        $this->userService = new UserService();
-        $this->sidebarWidget = new SidebarWidget();
-        $this->fixedWidget = new FixedWidget();
-        $this->popupWidget = new PopupWidget();
-        $this->leaderboardWidget = new LeaderboardWidget();
-        $this->lockedArticleWidget = new LockedArticleWidget();
-        $this->articleWidget = new ArticleWidget();
-        $this->articleService = new ArticleService();
+        $this->trackingService = $trackingService;
+        $this->userService = $userService;
+        $this->sidebarWidget = $sidebarWidget;
+        $this->fixedWidget = $fixedWidget;
+        $this->popupWidget = $popupWidget;
+        $this->leaderboardWidget = $leaderboardWidget;
+        $this->lockedArticleWidget = $lockedArticleWidget;
+        $this->articleWidget = $articleWidget;
+        $this->articleService = $articleService;
+        $this->portalUserService = $portalUserService;
+        $this->campaignRepository = $campaignRepository;
     }
 
     public function createWidgetsForCampaign($campaignId)
@@ -2601,7 +2618,7 @@ class WidgetService implements WidgetServiceInterface
                     'text' => 'My profile'
                 )),
             'terms' => array(
-                'text' => 'I agree to processing of personal data and receiving newsletters'
+                'text' => 'I agree to processing of personal data and receiving sletters'
             )
         );
         switch ($deviceType) {
@@ -2870,39 +2887,44 @@ class WidgetService implements WidgetServiceInterface
     /**
      * @return array
      */
-    public function getWidgets($url, $article, $userCookie, $userId, $ip)
+    public function getWidgets($url, $article, $userCookie, $userToken, $ip)
     {
-        $actualDate = date('Y-m-d');
-        $campaignIds = Campaign::all()
-            ->where('active', true)
-            ->where('promote.start_date_value', '<=', $actualDate)
-            ->pluck('id');
-        $randomResponse =
-            Widget::inRandomOrder()
-                ->get()
-                ->where('active', true)
-                ->whereIn('campaign_id', $campaignIds)
-                ->whereIn('widget_type_id', [1, 2, 3, 4, 5, 6]);
-        $onlyThreeWidgets = array();
-        $usedWidgetIds = array();
-        $user = Auth::user();
-        $userId = $user != null ? $user->id : null;
-        $newCookie = $this->userService->createCookieIfNew($userCookie, $userId, $ip);
-        if ($newCookie != null) {
-            $userCookie = $newCookie->id;
-        }
 
         //handle article
         $articleId = null;
         if ($article != null) {
             $articleId = $this->articleService->createArticleIfDontExist($article)->id;
         }
+        $user = (JWTAuth::getToken())
+            ? ((JWTAuth::check()) ? JWTAuth::parseToken()->authenticate() : null)
+            : null;
 
+        $campaignIds = [];
+        //logged user
+        if ($user != null) {
+            $userId = $user['id'];
+            $portalUserId = $this->portalUserService->getPortalUserIdByUserId($userId);
+            $trackingVisit = $this->trackingService->createVisit($portalUserId, null, $url, $articleId);
+            $campaignIds = $this->getActiveCampaigns(true, null, $url)->pluck('id');
 
-        $trackingVisit = $this->trackingService->createVisit($userId, $userCookie, $url, $articleId);
+        } else {
+            $cookie = $this->userService->createCookieIfNew($userCookie, null, $ip);
+            $userCookieId = $cookie->id;
+            $trackingVisit = $this->trackingService->createVisit(null, $userCookieId, $url, $articleId);
+            $campaignIds = $this->getActiveCampaigns(null, true, $url)->pluck('id');
+        }
+
+        $randomResponse =
+            Widget::inRandomOrder()
+                ->get()
+                ->where('active', true)
+                ->whereIn('campaign_id', $campaignIds);
+        $onlyThreeWidgets = array();
+        $usedWidgetIds = array();
+
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
-                $trackingShow = $this->trackingService->show($trackingVisit->id, $rand['widget_type_id']);
+                $trackingShow = $this->trackingService->show($trackingVisit->id, $rand->id);
                 $rand['show_id'] = $trackingShow->id;
                 array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
                 array_push($usedWidgetIds, $rand['widget_type_id']);
@@ -2949,5 +2971,11 @@ class WidgetService implements WidgetServiceInterface
                 $newImg->save();
             }
         }
+    }
+
+    private function getActiveCampaigns($signed, $notSigned, $url)
+    {
+        $activeCampaigns = $this->campaignRepository->getActiveCampaigns($signed, $notSigned, $url);
+        return $activeCampaigns;
     }
 }

@@ -136,6 +136,7 @@ function getWidgets(apiUrl) {
     };
     xhttp.open('POST', apiUrl + 'widgets');
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
     xhttp.send(data);
 }
 

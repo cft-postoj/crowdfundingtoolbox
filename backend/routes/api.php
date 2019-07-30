@@ -25,7 +25,7 @@ Route::group([
 ], function () {
 
     // CORS condition -- only defined domain in .env can have access to routes
-    if (strpos(request()->headers->get('referer'), env('APP_URL')) !== false) {
+//    if (strpos(request()->headers->get('referer'), env('APP_URL')) !== false) {
         Route::get('all', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@all');
         Route::delete('user/{id}', '\Modules\UserManagement\Http\Controllers\BackOfficeUsersController@delete');
 
@@ -176,23 +176,23 @@ Route::group([
             Route::get('portal-connections/backend-url', '\App\Http\Controllers\ConnectionController@getBackendUrl');
             Route::post('portal-connections/portal-url', '\App\Http\Controllers\ConnectionController@updatePortalUrl');
         });
-    } else {
-        Route::any('/{any}', function () {
-            $status = 422;
-            return [
-                "message" => $status . " error",
-                "errors" => [
-                    "message" => 'You don\'t have an access to content in this application!'
-                ],
-                "status_code" => $status
-            ];
-        })->where('any', '.*');
-    }
+//    } else {
+//        Route::any('/{any}', function () {
+//            $status = 422;
+//            return [
+//                "message" => $status . " error",
+//                "errors" => [
+//                    "message" => 'You don\'t have an access to content in this application!'
+//                ],
+//                "status_code" => $status
+//            ];
+//        })->where('any', '.*');
+//    }
 
 });
 
 Route::group([
-    'prefix' => 'portal'
+    'prefix' => 'portal',
 ], function () {
     // CORS condition -- only defined domain in .env can have access to routes
     //TODO: request from backoffice in preview was also blocked, fix needed
