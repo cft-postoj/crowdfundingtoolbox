@@ -3,6 +3,7 @@ export class Widget {
     updated_at: any = new Date();
     campaign_id = 0;
     active = true;
+    prevent_disable = false;
     widget_type = {
         id: 0,
         name: '',

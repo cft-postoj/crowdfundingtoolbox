@@ -49,7 +49,7 @@ class DonationService
             $qrCodeOption = $this->paymentMethodsService->getBankOption($data['frequency'], 3);
         }
         $bankButtons = $this->bankButtonService->getBankButtons();
-        if (strpos($url, env('CFT_URL')) === 0) {
+        if (strpos($url, env('APP_URL')) === 0) {
             $qrCode = $this->payBySquareService->getQRCodeFromData('0001', '20', $data['frequency'], $qrCodeOption->accountNumber);
             return array(
                 'variable_symbol' => '0001',
