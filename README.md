@@ -71,7 +71,7 @@ For login, you can use default user details or you can create new one via Postma
 
 **Default user details (manager role):**
 
-_username: **demo**, password: **demo**_
+_username: **demo**, password: **demo123**_
 
 
 Please, start your local server (for example XAMPP) to correctly show uploaded images.
