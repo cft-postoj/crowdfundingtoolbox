@@ -342,7 +342,7 @@ class PortalUserService implements PortalUserServiceInterface
     }
 
 
-    public function registerDuringDonation($showId, string $email, int $cookie, bool $terms, string $iban): User
+    public function registerDuringDonation($showId, string $email, $cookie, bool $terms, string $iban): User
     {
         $generatedPassword = $this->generatedUserTokenService->generatePasswordToken();
 
@@ -373,7 +373,7 @@ class PortalUserService implements PortalUserServiceInterface
                 'pairing_type' => 'variable_symbol'
             ));
             Mail::to($user->email)->send(
-                new AutoRegistrationEmail($user->username, $generatedToken, $iban, $user->portalUser->variableSymbol->variable_symbol));
+                new AutoRegistrationEmail($user->username, $generatedToken, $user->portalUser->variableSymbol->variable_symbol, $iban));
 
             if ($this->userDetailRepository->get($user->id) === null) {
                 $this->userDetailRepository->create($user->id);
@@ -400,7 +400,7 @@ class PortalUserService implements PortalUserServiceInterface
             ));
             $user = $this->userRepository->getWithVariableSymbol($newUserId);
             Mail::to($user->email)->send(
-                new AutoRegistrationEmail($user->username, $generatedToken, $iban, $user->portalUser->variableSymbol->variable_symbol));
+                new AutoRegistrationEmail($user->username, $generatedToken, $user->portalUser->variableSymbol->variable_symbol, $iban));
             if ($this->userDetailRepository->get($newUserId) === null) {
                 $this->userDetailRepository->create($newUserId);
             }

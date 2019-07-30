@@ -104,7 +104,7 @@ function register() {
                         document.querySelector('form[name="cft-register"] span.cft-register #cft-seconds').innerHTML = i + ' ' + secondsText;
                         if (i === 0) {
 
-                            window.location.href = myAccountUrl + '?generatedResetToken=' + token + '&loggedIn=true';
+                            window.location.href = '/' + myAccountUrl + '?generatedResetToken=' + token + '&loggedIn=true';
                         }
                         await sleep(1000);
 

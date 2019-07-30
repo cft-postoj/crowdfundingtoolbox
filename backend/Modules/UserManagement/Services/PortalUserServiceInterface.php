@@ -20,5 +20,5 @@ interface PortalUserServiceInterface
 
     public function logout();
 
-    public function registerDuringDonation($showId, string $email, int $cookie, bool $terms, string $iban): User;
+    public function registerDuringDonation($showId, string $email, $cookie, bool $terms, string $iban): User;
 }

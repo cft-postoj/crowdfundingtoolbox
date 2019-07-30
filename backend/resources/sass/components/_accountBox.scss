@@ -2,6 +2,11 @@
   background: $white;
   &--content {
     padding: 30px;
+    &--waiting {
+      display: none;
+      color: $red;
+
+    }
   }
   position: relative;
   @include borderRadius(4px);

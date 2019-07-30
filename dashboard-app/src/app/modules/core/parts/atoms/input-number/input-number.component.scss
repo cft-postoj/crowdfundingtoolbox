@@ -19,10 +19,9 @@ input[type=number]::-webkit-outer-spin-button {
         border: 1px solid $geyser;
         @include borderRadius(4px);
         width: 100%;
-        padding: 5px 12px;
+        padding: 14px 12px;
         @include transitionSingle(.3s ease);
         outline: none;
-        height: 30px !important;
         &:focus, &:active {
             border: 1px solid $bali;
             outline: none;
@@ -49,8 +48,8 @@ input[type=number]::-webkit-outer-spin-button {
         input {
             font-size: 12px;
             max-width: 60px;
-            height: 14px;
-            padding-left: 2px;
+            height: 30px !important;
+            padding: 5px 12px;
         }
         .crowdfundingNumber--arrows {
             top: -8px;

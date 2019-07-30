@@ -54,10 +54,69 @@ class TestDashboardSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $this->call(PortalUserSeeder::class);
         }
+        $this->createArticles();
         $users = PortalUser::all();
-        for ($i = 0; $i < 2; $i++) { // 2 iterations of generate payments for all users
+        for ($i = 0; $i < 3; $i++) { // 2 iterations of generate payments for all users
             foreach ($users as $user) {
                 $this->generateTrackingAndPayments($user->id, $user->created_at);
+            }
+        }
+    }
+
+    private function createArticles()
+    {
+        $trackingSites = array();
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/74/ked-george-soros-a-charles-koch-financuju-katolickeho-konzervativca',
+            'article_id' => 74,
+            'author' => 'Ferko Mrkvicka',
+            'title' => 'Keď George Soros a Charles Koch financujú katolíckeho konzervatívca'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/73/klerofasisticke-pokusenie-ladislava-hanusa',
+            'article_id' => 73,
+            'author' => 'John Doe',
+            'title' => 'Klérofašistické pokušenie Ladislava Hanusa'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/69/najvaecsia-reforma-smeru-v-zdravotnictve-za-dvanast-rokov-projekty-penty',
+            'article_id' => 69,
+            'author' => 'Peter Balbercak',
+            'title' => 'Najväčšia reforma Smeru v zdravotníctve za dvanásť rokov? Projekty Penty'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/72/v-centre-bratislavy-vylupili-zlatnictvo-ukradli-sperky-za-viac-ako-50-tisic-eur',
+            'article_id' => 72,
+            'author' => 'Donald Trump',
+            'title' => 'V centre Bratislavy vylúpili zlatníctvo, ukradli šperky za viac ako 50-tisíc eur'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/70/o-lobotku-udajne-prejavil-zaujem-ac-milano',
+            'article_id' => 70,
+            'author' => 'Bill Cosby',
+            'title' => 'O Lobotku údajne prejavil záujem AC Miláno'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/68/zelensky-hovoril-s-putinom-aj-o-zajatych-ukrajinskych-namornikoch',
+            'article_id' => 68,
+            'author' => 'George Bush',
+            'title' => 'Zelenský hovoril s Putinom aj o zajatých ukrajinských námorníkoch'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news',
+            'article_id' => null,
+            'title' => ''
+        ));
+        for ($i = 0; $i < sizeof($trackingSites); $i++) {
+            if ($trackingSites[$i]['article_id'] !== null) {
+                $articleCreated = Carbon::now()->subDays(150, 180);
+                \Modules\Campaigns\Entities\Article::create([
+                    'article_id' => $trackingSites[$i]['article_id'],
+                    'author' => $trackingSites[$i]['author'],
+                    'title' => $trackingSites[$i]['title'],
+                    'article_created_at' => $articleCreated,
+                    'created_at' => $articleCreated
+                ]);
             }
         }
     }
@@ -116,376 +175,22 @@ class TestDashboardSeeder extends Seeder
             'tablet' => $this->getTabletResult(),
             'mobile' => $this->getMobileResult()
         ]);
-    }
 
-    private function changeMonthlySupport($previousUserDonation, float $probabilityToChangeDonation)
-    {
-        $probabilityPercent = $probabilityToChangeDonation * 100;
-        $random = rand(0, 100);
-        return $random < $probabilityPercent ? $this->getRandomDonation() : $previousUserDonation;
-    }
-
-    private function setImagesToCampaigns()
-    {
-        $campaigns = Campaign::with('widget')->get();
-        foreach ($campaigns as $c) {
-            if (sizeof($c->widget) > 1) { // if is not Landing Dummy Campaign
-                foreach ($c->widget as $w) {
-                    if ($w->widget_type_id == 2) { // sidebar
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 1,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 1
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 2,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 2
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 1,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 3
-                        ]);
-                    }
-
-                    if ($w->widget_type_id == 2) { // leaderboard
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 3,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 1
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 3,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 2
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 3,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 3
-                        ]);
-                    }
-
-                    if ($w->widget_type_id == 6) { // locked
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 2,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 1
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 2,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 2
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 2,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 3
-                        ]);
-                    }
-                    if ($w->widget_type_id == 1) { // landing
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 4,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 1
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 4,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 2
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 4,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 3
-                        ]);
-                    }
-
-                }
-
-            } else {
-                foreach ($c->widget as $w) {
-                    if ($w->widget_type_id == 1) { // landing
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 4,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 1
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 4,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 2
-                        ]);
-                        \Modules\Campaigns\Entities\CampaignImage::create([
-                            'campaign_id' => $c->id,
-                            'image_id' => 4,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                            'widget_id' => $w->id,
-                            'device_type' => 3
-                        ]);
-                    }
-                }
-            }
-        }
-    }
-
-    private function getRandomDonation()
-    {
-        return rand(1, 6) * 5;
-    }
-
-    private function createPayment($donation_id, $portal_user_id, $amount, $transaction_date)
-    {
-        if ($portal_user_id !== null) {
-            $variable_symbol = PortalUser::where('id', $portal_user_id)
-                ->with('variableSymbol')
-                ->first()->variableSymbol['variable_symbol'];
-        } else {
-            $variable_symbol = 2019; // case for bad variable symbol
-        }
-
-        $request = array(
-            'transaction_id' => $this->transactionId(10),
-            'variable_symbol' => $variable_symbol,
-            'iban' => $this->iban(16),
-            'amount' => $amount,
-            'transfer_type' => $this->paymentMethod(),
-            'created_by' => $this->createdBy(),
-            'transaction_date' => $transaction_date
-        );
-        $payment = $this->paymentService->createPayment($request);
-        return $payment;
-    }
-
-    private function transactionId($length)
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-
-    private function iban($length)
-    {
-        $characters = '0123456789';
-        $charactersLength = strlen($characters);
-        $randomString = 'SK';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
-
-    private function paymentMethod()
-    {
-        $methods = $this->paymentMehhodService->all();
-        return $methods[array_rand(json_decode($methods))]->id;
-    }
-
-    private function createdBy()
-    {
-        // randomly return one of next values
-        $createdByArr = ['API', 'parsing', 'import'];
-        return $createdByArr[array_rand($createdByArr)];
-    }
-
-
-    // TRACKING SEEDER (Flow -- trackingVisit -- trackingShow -- donations -- payments)
-    private function generateTrackingAndPayments($portalUserId, $userCreatedAt)
-    {
-        // generate 30 tracking records for each portal user
-        $trackingSites = array();
-        array_push($trackingSites, array(
-            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/74/ked-george-soros-a-charles-koch-financuju-katolickeho-konzervativca',
-            'article_id' => 74,
-            'author' => 'Ferko Mrkvicka',
-            'title' => 'Keď George Soros a Charles Koch financujú katolíckeho konzervatívca'
-        ));
-        array_push($trackingSites, array(
-            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/73/klerofasisticke-pokusenie-ladislava-hanusa',
-            'article_id' => 73,
-            'author' => 'John Doe',
-            'title' => 'Klérofašistické pokušenie Ladislava Hanusa'
-        ));
-        array_push($trackingSites, array(
-            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/69/najvaecsia-reforma-smeru-v-zdravotnictve-za-dvanast-rokov-projekty-penty',
-            'article_id' => 69,
-            'author' => 'Peter Balbercak',
-            'title' => 'Najväčšia reforma Smeru v zdravotníctve za dvanásť rokov? Projekty Penty'
-        ));
-        array_push($trackingSites, array(
-            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/72/v-centre-bratislavy-vylupili-zlatnictvo-ukradli-sperky-za-viac-ako-50-tisic-eur',
-            'article_id' => 72,
-            'author' => 'Donald Trump',
-            'title' => 'V centre Bratislavy vylúpili zlatníctvo, ukradli šperky za viac ako 50-tisíc eur'
-        ));
-        array_push($trackingSites, array(
-            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/70/o-lobotku-udajne-prejavil-zaujem-ac-milano',
-            'article_id' => 70,
-            'author' => 'Bill Cosby',
-            'title' => 'O Lobotku údajne prejavil záujem AC Miláno'
-        ));
-        array_push($trackingSites, array(
-            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/68/zelensky-hovoril-s-putinom-aj-o-zajatych-ukrajinskych-namornikoch',
-            'article_id' => 68,
-            'author' => 'George Bush',
-            'title' => 'Zelenský hovoril s Putinom aj o zajatých ukrajinských námorníkoch'
-        ));
-        array_push($trackingSites, array(
-            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news',
-            'article_id' => null,
-            'title' => ''
-        ));
-
-        for ($i = 0; $i < 5; $i++) {
-            $tracking = $trackingSites[array_rand($trackingSites)];
-            $donationDate = Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59))->subDays(rand(0, 150));
-
-            // for case when donation would be older than user registration date
-            if (Carbon::createFromFormat('Y-m-d H:i:s', $userCreatedAt) > $donationDate) {
-                $donationDate = Carbon::createFromFormat('Y-m-d H:i:s', $userCreatedAt)->addMinutes(rand(1, 60));
-            }
-
-            if ($tracking['article_id'] == null) {
-                $trackingVisit = TrackingVisit::create([
-                    'portal_user_id' => $portalUserId,
-                    'user_cookie' => null,
-                    'url' => $tracking['url'],
-                    'article_id' => null,
-                    'created_at' => $donationDate
-                ]);
-            } else {
-                $article = \Modules\Campaigns\Entities\Article::create([
-                    'article_id' => $tracking['article_id'],
-                    'author' => $tracking['author'],
-                    'title' => $tracking['title'],
-                    'article_created_at' => $donationDate,
-                    'created_at' => $donationDate
-                ]);
-
-                $trackingVisit = TrackingVisit::create([
-                    'portal_user_id' => $portalUserId,
-                    'user_cookie' => null,
-                    'url' => $tracking['url'],
-                    'article_id' => $article->id,
-                    'created_at' => $donationDate
-                ]);
-            }
-
-            $widget = Widget::inRandomOrder()->first();
-            $trackingShow = TrackingShow::create([
-                'tracking_visit_id' => $trackingVisit->id,
-                'widget_id' => $widget->id,
-                'created_at' => $donationDate
-            ]);
-            if ($widget->widget_type_id === 1) {
-                $widgetReferral = Widget::inRandomOrder()->first();
-                $amountInitialized = abs(rand(1.5, 30.4));
-                $paymentMethods = [1, 2, 3, 4, 5];
-                $donationStatuses = ['waiting_for_payment', 'initialized', 'waiting_for_payment']; // 2:1
-                $donation = Donation::create([
-                    'portal_user_id' => $portalUserId,
-                    'widget_id' => $widget->id,
-                    'referral_widget_id' => ($widgetReferral->widget_type_id !== 1) ? $widgetReferral->id : null,
-                    'amount' => rand(1, 50),
-                    'amount_initialized' => $amountInitialized,
-                    'is_monthly_donation' => (bool)random_int(0, 1),
-                    'created_at' => $donationDate,
-                    'updated_at' => $donationDate,
-                    'tracking_show_id' => $trackingShow->id,
-                    'payment_method' => $paymentMethods[array_rand($paymentMethods)],
-                    'status' => $donationStatuses[array_rand($donationStatuses)]
-                ]);
-                if ($i % 7 !== 0) {
-                    $payment = $this->createPayment($donation->id, $portalUserId, $donation->amount, $donation->created_at);
-                    if ($portalUserId !== null) {
-                        Donation::where('id', $donation->id)->update(array(
-                            'status' => 'processed',
-                            'payment_id' => $payment->id
-                        ));
-                        $userPaymentOption = \Modules\UserManagement\Entities\UserPaymentOption::where('portal_user_id', $portalUserId)->first();
-                        if ($userPaymentOption->bank_account_number === null) {
-                            \Modules\UserManagement\Entities\UserPaymentOption::where('portal_user_id', $portalUserId)->update([
-                                'bank_account_number' => $this->generateIban()
-                            ]);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private function generateIban()
-    {
-        $bankPrefixes = ['1100', '1111', '0900', '0200', '7500', '0720', '3000', '3100', '5200', '5800', '5900', '6500'];
-        $bankSecondIdentificators = ['0000', '5432', '5555', '1234', '0123', '0000', '0000'];
-        $set = '0123456789';
-        $rand = substr(str_shuffle($set), 0, 10);
-
-        return 'SK' . $bankPrefixes[array_rand($bankPrefixes)] .
-            $bankSecondIdentificators[array_rand($bankSecondIdentificators)] . '0000' . $rand;
     }
 
     private function getDesktopSettings()
     {
-        return '{"headline_text":null,"widget_settings":{"general":{"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":32},"background":{"type":"color","image":{"id":0,"url":null},"color":"#114b7d","opacity":100},"text_margin":{"top":"auto","right":"auto","bottom":"auto","left":"auto"},"text_display":null,"text_background":null,"common_text":[]},"call_to_action":{"default":{"padding":{"top":"12","right":"15","bottom":"12","left":"15"},"margin":{"top":"10","right":"auto","bottom":"0","left":"auto"},"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":400,"alignment":"center","color":"#FFFFFF","fontSize":20},"design":{"fill":{"active":true,"color":"#ed1c24","opacity":100,"selected":true},"border":{"active":false,"color":"#ed1c24","size":2,"opacity":0,"selected":true},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0,"selected":true},"radius":{"active":false,"value":"0","selected":true,"tl":"5","tr":"5","br":"5","bl":"5"}},"width":"100%"},"hover":{"type":"fade","fontSettings":{"fontWeight":400,"opacity":100,"color":"#ffffff"},"design":{"fill":{"active":true,"color":"#9e0b0f","opacity":100},"border":{"active":false,"color":"#9e0b0f","size":2,"opacity":0},"shadow":{"active":false,"color":"#B71100","x":"4","y":2,"b":"10","opacity":0},"radius":{"active":false,"value":"0"}}}},"additional_text":{"text":null,"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":18},"backgroundColor":"rgba(0,0,0,0)","text_margin":{"top":"0","right":"auto","bottom":"0","left":"auto"}}},"payment_settings":{"active":true,"payment_type":"both","type":"classic","monetization_title":{"text":"We can write because of <br> your financial support!","textColor":"#114b7d","alignment":"center"},"design":{"background_color":"#ffffff","padding":{"top":"0","right":"30px","bottom":"15px","left":"30px"},"margin":{"top":"35px","right":"5px","bottom":"5px","left":"35px"},"width":"30%","height":"auto","text_color":"#777777","shadow":{"color":"#77777","opacity":1,"x":3,"y":3,"b":3}},"monthly_prices":{"custom_price":true,"count_of_options":5,"options":[{"value":30},{"value":20},{"value":15},{"value":10},{"value":5}],"benefit":{"active":true,"text":"Donate 20 \u20ac or more monthly to become a premium member","value":20}},"once_prices":{"custom_price":true,"count_of_options":5,"options":[{"value":200},{"value":100},{"value":60},{"value":30},{"value":20}],"benefit":{"active":true,"text":"<span style=\"font-family: Lato, sans-serif;\">Donate 100 \u20ac or more to become a premium member<\/span>","value":100}},"default_price":{"active":true,"value":30,"styles":{"background":"#0087ed","color":"#ffffff"},"monthly_active":true,"monthly_value":20,"one_time_active":true,"one_time_value":100},"second_step":{"title":{"text":"Please choose payment option"},"cta":{"transfer":{"text":"Redirect to your bank"},"payBySquare":{"text":"Done"}}},"third_step":{"title":{"text":"Thank you for your support"},"cta":{"description":"To get all rewards please  fill your personal data in My profile","text":"My profile"}},"terms":{"text":"I agree to processing of personal data and receiving newsletters"}},"email_settings":{"active":false,"subscribe_text":null},"cta":{"text":"Support us","url":"https:\/\/podpora.postoj.sk"},"additional_settings":{"width":"100%","height":"100%","position":"relative","fixedSettings":[],"display":"block","padding":{"top":"0","right":"0","bottom":"0","left":"0"},"bodyContainer":{"width":"100%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"textContainer":{"width":"50%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"buttonContainer":{"width":"100%","position":"relative","top":"50px","right":"auto","bottom":"auto","left":"auto","textAlign":"center","button":{"width":"35%","display":"inline-block"}}}}';
+        return '{"headline_text":"","articleWidgetText":null,"widget_settings":{"general":{"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":32},"background":{"type":"image","image":{"path":"sidebar-default.jpg","id":0,"type":"image\\\/jpeg","updated_at":"","created_at":"","url":"' . env('ASSETS_URL') . '\/public\/images\/widgets\/landing.jpg"},"color":"#114b7d","opacity":100},"text_margin":[],"text_display":"","text_background":"","common_text":[]},"call_to_action":{"default":{"padding":{"top":"12","right":"0","bottom":"12","left":"0"},"margin":{"top":"10","right":"auto","bottom":"0","left":"auto"},"fontSettings":{"fontFamily":"Neuton","fontWeight":400,"alignment":"center","color":"#FFFFFF","fontSize":24},"design":{"fill":{"active":true,"color":"#9e0b0f","opacity":100,"selected":true},"border":{"active":false,"color":"#B71100","size":2,"opacity":0,"selected":true},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0,"selected":true},"radius":{"active":false,"value":"0","selected":true,"tl":"10","tr":"10","br":"10","bl":"10"}},"width":"100%"},"hover":{"type":"fade","fontSettings":{"fontWeight":"Medium","opacity":100,"color":"#FFFFFF"},"design":{"fill":{"active":true,"color":"#B71100","opacity":100},"border":{"active":false,"color":"#B71100","size":2,"opacity":0},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0},"radius":{"active":false,"value":"0"}}}},"additional_text":{"text":null,"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":18},"backgroundColor":"rgba(0,0,0,0)","text_margin":{"top":"0","right":"auto","bottom":"0","left":"auto"}}},"payment_settings":{"active":true,"payment_type":"both","type":"classic","monetization_title":{"fontSettings":{"fontFamily":"\"Roboto Slab\", sans-serif","fontWeight":"700","backgroundColor":"#fff","fontSize":21},"margin":{"top":"0","right":"0","bottom":"30","left":"0"},"text":"We can write because of your financial support","textColor":"#1f4e7b","alignment":"center"},"design":{"background_color":"#ffffff","padding":{"top":"25","right":"55","bottom":"25","left":"55"},"margin":{"top":"40","right":"0","bottom":"5","left":"5"},"width":"532px","height":"auto","text_color":"#1f4e7b","shadow":{"color":"#77777","opacity":1,"x":3,"y":3,"b":3}},"monthly_prices":{"custom_price":true,"count_of_options":5,"count_of_options_in_row":3,"options":[{"value":30},{"value":20},{"value":15},{"value":10},{"value":5}],"benefit":{"active":true,"text":"Donate 10 \u20ac or more monthly to <b>become a premium member<\/b>","value":10}},"once_prices":{"custom_price":true,"count_of_options":5,"count_of_options_in_row":3,"options":[{"value":200},{"value":100},{"value":60},{"value":30},{"value":20}],"benefit":{"active":true,"text":"Donate 100 \u20ac or more to become a premium member","value":100}},"default_price":{"monthly_active":true,"monthly_value":20,"one_time_active":true,"one_time_value":100,"styles":{"background":"#3cc300","color":"#ffffff"}},"second_step":{"title":{"text":"title"},"cta":{"transfer":{"text":"Go to your bank"},"payBySquare":{"text":"Go to your bank"}}},"third_step":{"title":{"text":"Thank you for your support"},"cta":{"description":"To get all rewards please  fill your personal data in My profile","text":"My profile"}},"terms":{"text":"I agree to processing of personal data and receiving newsletters"}},"email_settings":{"active":false,"subscribe_text":""},"cta":{"text":"Support us","url":"https:\/\/podpora.postoj.sk"},"additional_settings":{"width":"100%","height":"688px","position":"relative","fixedSettings":[],"display":"block","padding":{"top":"0","right":"0","bottom":"0","left":"0"},"bodyContainer":{"width":"100%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"relative","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"textContainer":{"width":"50%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"buttonContainer":{"width":"100%","position":"relative","top":"50px","right":"auto","bottom":"auto","left":"auto","textAlign":"center","button":{"width":"35%","display":"inline-block"}}}}';
     }
 
     private function getTabletSettings()
     {
-        return '{"headline_text":null,"widget_settings":{"general":{"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":32},"background":{"type":"color","image":{"id":0,"url":null},"color":"#114b7d","opacity":100},"text_margin":{"top":"auto","right":"auto","bottom":"auto","left":"auto"},"text_display":null,"text_background":null,"common_text":[]},"call_to_action":{"default":{"padding":{"top":"12","right":"15","bottom":"12","left":"15"},"margin":{"top":"10","right":"0","bottom":"0","left":"0"},"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":400,"alignment":"center","color":"#FFFFFF","fontSize":20},"design":{"fill":{"active":true,"color":"#ed1c24","opacity":100,"selected":true},"border":{"active":false,"color":"#ed1c24","size":2,"opacity":0,"selected":true},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0,"selected":true},"radius":{"active":false,"value":"0","selected":true,"tl":"10","tr":"10","br":"10","bl":"10"}},"width":"100%"},"hover":{"type":"fade","fontSettings":{"fontWeight":100,"opacity":100,"color":"#FFFFFF"},"design":{"fill":{"active":true,"color":"#9e0b0f","opacity":100},"border":{"active":false,"color":"#B71100","size":2,"opacity":0},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0},"radius":{"active":false,"value":"0"}}}},"additional_text":{"text":null,"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":18},"backgroundColor":"rgba(0,0,0,0)","text_margin":{"top":"0","right":"auto","bottom":"0","left":"auto"}}},"payment_settings":{"active":true,"payment_type":"both","type":"classic","monetization_title":{"text":"<span style=\"font-family: Lato, sans-serif;\">We can write because of&nbsp;<\/span><br style=\"font-family: Lato, sans-serif;\"><span style=\"font-family: Lato, sans-serif;\">your financial support!<\/span>","textColor":"#114b7d","alignment":"center"},"design":{"background_color":"#ffffff","padding":{"top":"5px","right":"80px","bottom":"5px","left":"80px"},"margin":{"top":"25px","right":"85px","bottom":"25px","left":"85px"},"width":"100%","height":"auto","text_color":"#777777","shadow":{"color":"#77777","opacity":0,"x":3,"y":3,"b":3}},"monthly_prices":{"custom_price":true,"count_of_options":5,"options":[{"value":30},{"value":20},{"value":15},{"value":10},{"value":5}],"benefit":{"active":true,"text":"<span style=\"font-family: Lato, sans-serif;\">Donate 20 \u20ac or more monthly to become a premium member<\/span>","value":10}},"once_prices":{"custom_price":true,"count_of_options":5,"options":[{"value":200},{"value":100},{"value":60},{"value":30},{"value":20}],"benefit":{"active":true,"text":"<span style=\"color: rgb(119, 119, 119); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255);\">Donate 100 \u20ac or more to become a premium member<\/span>","value":10}},"default_price":{"active":true,"value":30,"styles":{"background":"#0087ed","color":"#ffffff"}},"second_step":{"title":{"text":"<span style=\"font-family: Lato, sans-serif;\">Please choose payment option<\/span>"},"cta":{"transfer":{"text":"<span style=\"font-family: Lato, sans-serif;\">Redirect to your bank<\/span><br>"},"payBySquare":{"text":"<span style=\"font-family: Lato, sans-serif;\">Done<\/span>"}}},"third_step":{"title":{"text":"Thank you for your support"},"cta":{"description":"To get all rewards please  fill your personal data in My profile","text":"My profile"}},"terms":{"text":"I agree to processing of personal data and receiving newsletters"}},"email_settings":{"active":false,"subscribe_text":null},"cta":{"text":"Support us","url":null},"additional_settings":{"width":"100%","height":"100%","position":"relative","fixedSettings":[],"display":"block","padding":{"top":"0","right":"0","bottom":"0","left":"0"},"bodyContainer":{"width":"100%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"textContainer":{"width":"50%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"buttonContainer":{"width":"100%","position":"absolute","top":"50px","right":"auto","bottom":"auto","left":"auto","textAlign":"center","button":{"width":"35%","display":"inline-block"}}}}';
+        return '{"headline_text":"","articleWidgetText":null,"widget_settings":{"general":{"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":32},"background":{"type":"image","image":{"path":"sidebar-default.jpg","id":0,"type":"image\\\/jpeg","updated_at":"","created_at":"","url":"' . env('ASSETS_URL') . '\/backend\/public\/images\/widgets\/landing.jpg"},"color":"#114b7d","opacity":100},"text_margin":[],"text_display":"","text_background":"","common_text":[]},"call_to_action":{"default":{"padding":{"top":"12","right":"0","bottom":"12","left":"0"},"margin":{"top":"10","right":"auto","bottom":"0","left":"auto"},"fontSettings":{"fontFamily":"Neuton","fontWeight":400,"alignment":"center","color":"#FFFFFF","fontSize":24},"design":{"fill":{"active":true,"color":"#9e0b0f","opacity":100,"selected":true},"border":{"active":false,"color":"#B71100","size":2,"opacity":0,"selected":true},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0,"selected":true},"radius":{"active":false,"value":"0","selected":true,"tl":"10","tr":"10","br":"10","bl":"10"}},"width":"100%"},"hover":{"type":"fade","fontSettings":{"fontWeight":"Medium","opacity":100,"color":"#FFFFFF"},"design":{"fill":{"active":true,"color":"#B71100","opacity":100},"border":{"active":false,"color":"#B71100","size":2,"opacity":0},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0},"radius":{"active":false,"value":"0"}}}},"additional_text":{"text":null,"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":18},"backgroundColor":"rgba(0,0,0,0)","text_margin":{"top":"0","right":"auto","bottom":"0","left":"auto"}}},"payment_settings":{"active":true,"payment_type":"both","type":"classic","monetization_title":{"fontSettings":{"fontFamily":"\"Roboto Slab\", sans-serif","fontWeight":"700","backgroundColor":"#fff","fontSize":21},"margin":{"top":"0","right":"0","bottom":"30","left":"0"},"text":"We can write because of your financial support","textColor":"#1f4e7b","alignment":"center"},"design":{"background_color":"#ffffff","padding":{"top":"25","right":"55","bottom":"25","left":"55"},"margin":{"top":"40","right":"0","bottom":"5","left":"5"},"width":"532px","height":"auto","text_color":"#1f4e7b","shadow":{"color":"#77777","opacity":1,"x":3,"y":3,"b":3}},"monthly_prices":{"custom_price":true,"count_of_options":5,"count_of_options_in_row":3,"options":[{"value":30},{"value":20},{"value":15},{"value":10},{"value":5}],"benefit":{"active":true,"text":"Donate 10 \u20ac or more monthly to <b>become a premium member<\/b>","value":10}},"once_prices":{"custom_price":true,"count_of_options":5,"count_of_options_in_row":3,"options":[{"value":200},{"value":100},{"value":60},{"value":30},{"value":20}],"benefit":{"active":true,"text":"Donate 100 \u20ac or more to become a premium member","value":100}},"default_price":{"monthly_active":true,"monthly_value":20,"one_time_active":true,"one_time_value":100,"styles":{"background":"#3cc300","color":"#ffffff"}},"second_step":{"title":{"text":"title"},"cta":{"transfer":{"text":"Go to your bank"},"payBySquare":{"text":"Go to your bank"}}},"third_step":{"title":{"text":"Thank you for your support"},"cta":{"description":"To get all rewards please  fill your personal data in My profile","text":"My profile"}},"terms":{"text":"I agree to processing of personal data and receiving newsletters"}},"email_settings":{"active":false,"subscribe_text":""},"cta":{"text":"Support us","url":"https:\/\/podpora.postoj.sk"},"additional_settings":{"width":"100%","height":"688px","position":"relative","fixedSettings":[],"display":"block","padding":{"top":"0","right":"0","bottom":"0","left":"0"},"bodyContainer":{"width":"100%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"relative","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"textContainer":{"width":"50%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"buttonContainer":{"width":"100%","position":"relative","top":"50px","right":"auto","bottom":"auto","left":"auto","textAlign":"center","button":{"width":"35%","display":"inline-block"}}}}';
     }
 
     private function getMobileSettings()
     {
-        return '{"headline_text":null,"widget_settings":{"general":{"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":32},"background":{"type":"color","image":{"id":0,"url":null},"color":"#114b7d","opacity":100},"text_margin":{"top":"auto","right":"auto","bottom":"auto","left":"auto"},"text_display":null,"text_background":null,"common_text":[]},"call_to_action":{"default":{"padding":{"top":"8","right":"15","bottom":"8","left":"15"},"margin":{"top":"10","right":"auto","bottom":"0","left":"auto"},"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":400,"alignment":"center","color":"#FFFFFF","fontSize":20},"design":{"fill":{"active":true,"color":"#ed1c24","opacity":100,"selected":true},"border":{"active":false,"color":"#B71100","size":2,"opacity":0,"selected":true},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0,"selected":true},"radius":{"active":false,"value":"0","selected":true,"tl":"10","tr":"10","br":"10","bl":"10"}},"width":"100%"},"hover":{"type":"fade","fontSettings":{"fontWeight":100,"opacity":100,"color":"#FFFFFF"},"design":{"fill":{"active":true,"color":"#B71100","opacity":100},"border":{"active":false,"color":"#B71100","size":2,"opacity":0},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0},"radius":{"active":false,"value":"0"}}}},"additional_text":{"text":null,"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":18},"backgroundColor":"rgba(0,0,0,0)","text_margin":{"top":"0","right":"auto","bottom":"0","left":"auto"}}},"payment_settings":{"active":true,"payment_type":"both","type":"classic","monetization_title":{"text":"<span style=\"font-family: Lato, sans-serif;\">We can write because of&nbsp;<\/span><br style=\"font-family: Lato, sans-serif;\"><span style=\"font-family: Lato, sans-serif;\">your financial support!<\/span>","textColor":"#114b7d","alignment":"center"},"design":{"background_color":"#ffffff","padding":{"top":"5px","right":"15px","bottom":"5px","left":"15px"},"margin":{"top":"15px","right":"15px","bottom":"15px","left":"15px"},"width":"100%","height":"auto","text_color":"#777777","shadow":{"color":"#77777","opacity":0,"x":3,"y":3,"b":3}},"monthly_prices":{"custom_price":true,"count_of_options":5,"options":[{"value":30},{"value":20},{"value":15},{"value":10},{"value":5}],"benefit":{"active":true,"text":"<span style=\"font-family: Lato, sans-serif;\">Donate 20 \u20ac or more monthly to become a premium member<\/span>","value":20}},"once_prices":{"custom_price":true,"count_of_options":5,"options":[{"value":200},{"value":100},{"value":60},{"value":30},{"value":20}],"benefit":{"active":true,"text":"<span style=\"font-family: Lato, sans-serif;\">Donate 100 \u20ac or more to become a premium member<\/span>","value":100}},"default_price":{"active":true,"value":30,"styles":{"background":"#0087ed","color":"#ffffff"},"monthly_active":true,"one_time_active":true,"monthly_value":20,"one_time_value":100},"second_step":{"title":{"text":"<span style=\"font-family: Lato, sans-serif;\">Please choose payment option<\/span>"},"cta":{"transfer":{"text":"<span style=\"font-family: Lato, sans-serif;\">Redirect to your bank<\/span>"},"payBySquare":{"text":"<span style=\"font-family: Lato, sans-serif;\">Done<\/span>"}}},"third_step":{"title":{"text":"<span style=\"font-family: Lato, sans-serif;\">Thank you for your support<\/span>"},"cta":{"description":"<span style=\"font-family: Lato, sans-serif;\">To get all rewards please fill your personal data in My profile<\/span>","text":"<span style=\"font-family: Lato, sans-serif;\">My profile<\/span>"}},"terms":{"text":"I agree to processing of personal data and receiving newsletters"}},"email_settings":{"active":false,"subscribe_text":null},"cta":{"text":"Support us","url":"https:\/\/podpora.postoj.sk"},"additional_settings":{"width":"100%","height":"100%","position":"relative","fixedSettings":[],"display":"block","padding":{"top":"0","right":"0","bottom":"0","left":"0"},"bodyContainer":{"width":"100%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"textContainer":{"width":"50%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"buttonContainer":{"width":"100%","position":"absolute","top":"50px","right":"auto","bottom":"auto","left":"auto","textAlign":"center","button":{"width":"35%","display":"inline-block"}}}}';
+        return '{"headline_text":"","articleWidgetText":null,"widget_settings":{"general":{"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":32},"background":{"type":"image","image":{"path":"sidebar-default.jpg","id":0,"type":"image\\\/jpeg","updated_at":"","created_at":"","url":"' . env('ASSETS_URL') . '/public\/images\/widgets\/landing.jpg"},"color":"#114b7d","opacity":100},"text_margin":[],"text_display":"","text_background":"","common_text":[]},"call_to_action":{"default":{"padding":{"top":"12","right":"0","bottom":"12","left":"0"},"margin":{"top":"10","right":"auto","bottom":"0","left":"auto"},"fontSettings":{"fontFamily":"Neuton","fontWeight":400,"alignment":"center","color":"#FFFFFF","fontSize":24},"design":{"fill":{"active":true,"color":"#9e0b0f","opacity":100,"selected":true},"border":{"active":false,"color":"#B71100","size":2,"opacity":0,"selected":true},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0,"selected":true},"radius":{"active":false,"value":"0","selected":true,"tl":"10","tr":"10","br":"10","bl":"10"}},"width":"100%"},"hover":{"type":"fade","fontSettings":{"fontWeight":"Medium","opacity":100,"color":"#FFFFFF"},"design":{"fill":{"active":true,"color":"#B71100","opacity":100},"border":{"active":false,"color":"#B71100","size":2,"opacity":0},"shadow":{"active":false,"color":"#B71100","x":2,"y":2,"b":2,"opacity":0},"radius":{"active":false,"value":"0"}}}},"additional_text":{"text":null,"fontSettings":{"fontFamily":"Roboto Slab","fontWeight":"bold","alignment":"center","color":"#FFFFFF","backgroundColor":"rgba(0,0,0,0)","fontSize":18},"backgroundColor":"rgba(0,0,0,0)","text_margin":{"top":"0","right":"auto","bottom":"0","left":"auto"}}},"payment_settings":{"active":true,"payment_type":"both","type":"classic","monetization_title":{"fontSettings":{"fontFamily":"\"Roboto Slab\", sans-serif","fontWeight":"700","backgroundColor":"#fff","fontSize":21},"margin":{"top":"0","right":"0","bottom":"30","left":"0"},"text":"We can write because of your financial support","textColor":"#1f4e7b","alignment":"center"},"design":{"background_color":"#ffffff","padding":{"top":"24","right":"24","bottom":"24","left":"24"},"margin":{"top":"40","right":"0","bottom":"5","left":"5"},"width":"auto","height":"auto","text_color":"#1f4e7b","shadow":{"color":"#77777","opacity":1,"x":3,"y":3,"b":3}},"monthly_prices":{"custom_price":true,"count_of_options":5,"count_of_options_in_row":2,"options":[{"value":30},{"value":20},{"value":15},{"value":10},{"value":5}],"benefit":{"active":true,"text":"Donate 10 \u20ac or more monthly to <b>become a premium member<\/b>","value":10}},"once_prices":{"custom_price":true,"count_of_options":5,"count_of_options_in_row":2,"options":[{"value":200},{"value":100},{"value":60},{"value":30},{"value":20}],"benefit":{"active":true,"text":"Donate 100 \u20ac or more to become a premium member","value":100}},"default_price":{"monthly_active":true,"monthly_value":20,"one_time_active":true,"one_time_value":100,"styles":{"background":"#3cc300","color":"#ffffff"}},"second_step":{"title":{"text":"title"},"cta":{"transfer":{"text":"Go to your bank"},"payBySquare":{"text":"Go to your bank"}}},"third_step":{"title":{"text":"Thank you for your support"},"cta":{"description":"To get all rewards please  fill your personal data in My profile","text":"My profile"}},"terms":{"text":"I agree to processing of personal data and receiving newsletters"}},"email_settings":{"active":false,"subscribe_text":""},"cta":{"text":"Support us","url":"https:\/\/podpora.postoj.sk"},"additional_settings":{"width":"100%","height":"688px","position":"relative","fixedSettings":[],"display":"block","padding":{"top":"0","right":"0","bottom":"0","left":"0"},"bodyContainer":{"width":"100%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"relative","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"textContainer":{"width":"50%","margin":{"top":"0","right":"auto","bottom":"0","left":"auto"},"position":"absolute","top":"80px","right":"auto","bottom":"auto","left":"auto","text":{"width":"100%"}},"buttonContainer":{"width":"100%","position":"relative","top":"50px","right":"auto","bottom":"auto","left":"auto","textAlign":"center","button":{"width":"35%","display":"inline-block"}}}}';
     }
 
     private function getDesktopResult()
@@ -2520,6 +2225,356 @@ function getEnvs() {
     };
 }
 </script></div>';
+    }
+
+    private function changeMonthlySupport($previousUserDonation, float $probabilityToChangeDonation)
+    {
+        $probabilityPercent = $probabilityToChangeDonation * 100;
+        $random = rand(0, 100);
+        return $random < $probabilityPercent ? $this->getRandomDonation() : $previousUserDonation;
+    }
+
+    private function setImagesToCampaigns()
+    {
+        $campaigns = Campaign::with('widget')->get();
+        foreach ($campaigns as $c) {
+            if (sizeof($c->widget) > 1) { // if is not Landing Dummy Campaign
+                foreach ($c->widget as $w) {
+                    if ($w->widget_type_id == 2) { // sidebar
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 1,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 1,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+
+                    if ($w->widget_type_id == 2) { // leaderboard
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 3,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 3,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 3,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+
+                    if ($w->widget_type_id == 6) { // locked
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 2,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+                    if ($w->widget_type_id == 1) { // landing
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+
+                }
+
+            } else {
+                foreach ($c->widget as $w) {
+                    if ($w->widget_type_id == 1) { // landing
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 1
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 2
+                        ]);
+                        \Modules\Campaigns\Entities\CampaignImage::create([
+                            'campaign_id' => $c->id,
+                            'image_id' => 4,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                            'widget_id' => $w->id,
+                            'device_type' => 3
+                        ]);
+                    }
+                }
+            }
+        }
+    }
+
+    private function getRandomDonation()
+    {
+        return rand(1, 6) * 5;
+    }
+
+    private function createPayment($donation_id, $portal_user_id, $amount, $transaction_date)
+    {
+        if ($portal_user_id !== null) {
+            $variable_symbol = PortalUser::where('id', $portal_user_id)
+                ->with('variableSymbol')
+                ->first()->variableSymbol['variable_symbol'];
+        } else {
+            $variable_symbol = 2019; // case for bad variable symbol
+        }
+
+        $request = array(
+            'transaction_id' => $this->transactionId(10),
+            'variable_symbol' => $variable_symbol,
+            'iban' => $this->iban(16),
+            'amount' => $amount,
+            'transfer_type' => $this->paymentMethod(),
+            'created_by' => $this->createdBy(),
+            'transaction_date' => $transaction_date
+        );
+        $payment = $this->paymentService->createPayment($request);
+        return $payment;
+    }
+
+    private function transactionId($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    private function iban($length)
+    {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = 'SK';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    private function paymentMethod()
+    {
+        $methods = $this->paymentMehhodService->all();
+        return $methods[array_rand(json_decode($methods))]->id;
+    }
+
+    private function createdBy()
+    {
+        // randomly return one of next values
+        $createdByArr = ['API', 'parsing', 'import'];
+        return $createdByArr[array_rand($createdByArr)];
+    }
+
+
+    // TRACKING SEEDER (Flow -- trackingVisit -- trackingShow -- donations -- payments)
+    private function generateTrackingAndPayments($portalUserId, $userCreatedAt)
+    {
+        // generate 30 tracking records for each portal user
+        $trackingSites = array();
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/74/ked-george-soros-a-charles-koch-financuju-katolickeho-konzervativca',
+            'article_id' => 74,
+            'author' => 'Ferko Mrkvicka',
+            'title' => 'Keď George Soros a Charles Koch financujú katolíckeho konzervatívca'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/73/klerofasisticke-pokusenie-ladislava-hanusa',
+            'article_id' => 73,
+            'author' => 'John Doe',
+            'title' => 'Klérofašistické pokušenie Ladislava Hanusa'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/69/najvaecsia-reforma-smeru-v-zdravotnictve-za-dvanast-rokov-projekty-penty',
+            'article_id' => 69,
+            'author' => 'Peter Balbercak',
+            'title' => 'Najväčšia reforma Smeru v zdravotníctve za dvanásť rokov? Projekty Penty'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/72/v-centre-bratislavy-vylupili-zlatnictvo-ukradli-sperky-za-viac-ako-50-tisic-eur',
+            'article_id' => 72,
+            'author' => 'Donald Trump',
+            'title' => 'V centre Bratislavy vylúpili zlatníctvo, ukradli šperky za viac ako 50-tisíc eur'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/70/o-lobotku-udajne-prejavil-zaujem-ac-milano',
+            'article_id' => 70,
+            'author' => 'Bill Cosby',
+            'title' => 'O Lobotku údajne prejavil záujem AC Miláno'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news/68/zelensky-hovoril-s-putinom-aj-o-zajatych-ukrajinskych-namornikoch',
+            'article_id' => 68,
+            'author' => 'George Bush',
+            'title' => 'Zelenský hovoril s Putinom aj o zajatých ukrajinských námorníkoch'
+        ));
+        array_push($trackingSites, array(
+            'url' => 'https://www.demo-postoj.crowdfundingtoolbox.news',
+            'article_id' => null,
+            'title' => ''
+        ));
+
+        $articles = json_decode(\Modules\Campaigns\Entities\Article::all());
+
+        for ($i = 0; $i < 5; $i++) {
+            $tracking = $trackingSites[array_rand($trackingSites)];
+            $donationDate = Carbon::now()->setHour(rand(8, 23))->setMinute(rand(0, 59))->setSecond(rand(0, 59))->subDays(rand(0, 150));
+
+            // for case when donation would be older than user registration date
+            if (Carbon::createFromFormat('Y-m-d H:i:s', $userCreatedAt) > $donationDate) {
+                $donationDate = Carbon::createFromFormat('Y-m-d H:i:s', $userCreatedAt)->addMinutes(rand(1, 360));
+            }
+
+            if ($tracking['article_id'] == null) {
+                $trackingVisit = TrackingVisit::create([
+                    'portal_user_id' => $portalUserId,
+                    'user_cookie' => null,
+                    'url' => $tracking['url'],
+                    'article_id' => null,
+                    'created_at' => $donationDate
+                ]);
+            } else {
+
+                $trackingVisit = TrackingVisit::create([
+                    'portal_user_id' => $portalUserId,
+                    'user_cookie' => null,
+                    'url' => $tracking['url'],
+                    'article_id' => $articles[array_rand($articles)]->id,
+                    'created_at' => $donationDate
+                ]);
+            }
+
+            $widget = Widget::inRandomOrder()->first();
+            $trackingShow = TrackingShow::create([
+                'tracking_visit_id' => $trackingVisit->id,
+                'widget_id' => $widget->id,
+                'created_at' => $donationDate
+            ]);
+            if ($widget->widget_type_id === 1) {
+                $widgetReferral = Widget::inRandomOrder()->first();
+                $amountInitialized = abs(rand(1.5, 50.4));
+                $paymentMethods = [1, 2, 3, 4, 5];
+                $donationStatuses = ['waiting_for_payment', 'initialized', 'waiting_for_payment']; // 2:1
+                $donation = Donation::create([
+                    'portal_user_id' => $portalUserId,
+                    'widget_id' => $widget->id,
+                    'referral_widget_id' => ($widgetReferral->widget_type_id !== 1) ? $widgetReferral->id : null,
+                    'amount' => rand(1, 50),
+                    'amount_initialized' => $amountInitialized,
+                    'is_monthly_donation' => (bool)random_int(0, 1),
+                    'created_at' => $donationDate,
+                    'updated_at' => $donationDate,
+                    'tracking_show_id' => $trackingShow->id,
+                    'payment_method' => $paymentMethods[array_rand($paymentMethods)],
+                    'status' => $donationStatuses[array_rand($donationStatuses)]
+                ]);
+                if ($i % 7 !== 0) {
+                    $payment = $this->createPayment($donation->id, $portalUserId, $donation->amount, $donation->created_at);
+                    if ($portalUserId !== null) {
+                        Donation::where('id', $donation->id)->update(array(
+                            'status' => 'processed',
+                            'payment_id' => $payment->id
+                        ));
+                        $userPaymentOption = \Modules\UserManagement\Entities\UserPaymentOption::where('portal_user_id', $portalUserId)->first();
+                        if ($userPaymentOption->bank_account_number === null) {
+                            \Modules\UserManagement\Entities\UserPaymentOption::where('portal_user_id', $portalUserId)->update([
+                                'bank_account_number' => $this->generateIban()
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private function generateIban()
+    {
+        $bankPrefixes = ['1100', '1111', '0900', '0200', '7500', '0720', '3000', '3100', '5200', '5800', '5900', '6500'];
+        $bankSecondIdentificators = ['0000', '5432', '5555', '1234', '0123', '0000', '0000'];
+        $set = '0123456789';
+        $rand = substr(str_shuffle($set), 0, 10);
+
+        return 'SK' . $bankPrefixes[array_rand($bankPrefixes)] .
+            $bankSecondIdentificators[array_rand($bankSecondIdentificators)] . '0000' . $rand;
     }
 
 }
