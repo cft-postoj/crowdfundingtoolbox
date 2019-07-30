@@ -56,4 +56,35 @@ class CampaignRepository implements CampaignRepositoryInterface
         ]);
         return $campaignVersion;
     }
+
+    public function getActiveCampaigns($signed, $notSigned, $url)
+    {
+        $actualDate = date('Y-m-d');
+        $campaignQuery = Campaign::query()
+            ->whereHas('promote', function ($query) use ($actualDate, $url) {
+                $query->where('end_date_value', '>=', $actualDate)
+                    ->orWhere('is_end_date', false);
+            })
+            ->whereHas('targeting', function ($query) use ($url) {
+                $query->where('url_specific', false)
+                    ->orWhereHas('urls', function ($query) use ($url) {
+                        $query->where('path','like', '%'.$url.'%');
+                    });
+            })
+            ->where('active', true);
+        if ($signed != null) {
+            $campaignQuery = $campaignQuery
+                ->whereHas('targeting', function ($query) use ($signed) {
+                    $query->where('signed', $signed);
+                });
+        }
+        if ($notSigned != null) {
+            $campaignQuery = $campaignQuery
+                ->whereHas('targeting', function ($query) use ($notSigned) {
+                    $query->where('not_signed', $notSigned);
+                });
+        }
+
+        return $campaignQuery->get('id');
+    }
 }

@@ -5,7 +5,6 @@ namespace Modules\Campaigns\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Campaigns\Services\WidgetResultService;
 use Modules\Campaigns\Services\WidgetService;
@@ -22,13 +21,17 @@ class WidgetsController extends Controller
     private $widgetResultService;
     private $trackingService;
 
-    public function __construct()
+    public function __construct(
+        WidgetService $widgetService,
+        WidgetSettingsService $widgetSettingsService,
+        WidgetResultService $widgetResultService,
+        TrackingService $trackingService)
     {
         $this->widgetSettings = array();
-        $this->widgetService = new WidgetService();
-        $this->widgetSettingsService = new WidgetSettingsService();
-        $this->widgetResultService = new WidgetResultService();
-        $this->trackingService = new TrackingService();
+        $this->widgetService = $widgetService;
+        $this->widgetSettingsService = $widgetSettingsService;
+        $this->widgetResultService = $widgetResultService;
+        $this->trackingService = $trackingService;
     }
 
 
@@ -204,7 +207,6 @@ class WidgetsController extends Controller
     }
 
 
-
     /**
      * @OA\Get(
      *     path="/api/portal/widgets",
@@ -224,7 +226,7 @@ class WidgetsController extends Controller
     {
         try {
             $onlyThreeWidgets = $this->widgetService->getWidgets(
-                request()->headers->get('referer' ), $request['article'],
+                request()->headers->get('referer'), $request['article'],
                 $request['user_cookie'], $request['user_id'], $_SERVER['REMOTE_ADDR']);
         } catch (\Exception $e) {
             return \response()->json([

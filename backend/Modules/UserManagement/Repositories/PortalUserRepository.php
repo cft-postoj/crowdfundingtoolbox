@@ -98,4 +98,13 @@ class PortalUserRepository implements PortalUserRepositoryInterface
             ->first();
     }
 
+
+    public function getPortalUserIdByUserId($userId)
+    {
+        return $this->model
+            ::select('id')
+            ->where('user_id', $userId)
+            ->first();
+    }
+
 }

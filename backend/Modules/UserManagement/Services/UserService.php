@@ -45,7 +45,7 @@ class UserService implements UserServiceInterface
             $deviceType = 'robot';
         }
 
-        if ($userCookie == "" && $userId == null) {
+        if (($userCookie == null || $userCookie == "" || $userCookie == "null") && $userId == null) {
             return UserCookie::create([
                 'device_type' => $deviceType,
                 'browser' => $agent->browser(),

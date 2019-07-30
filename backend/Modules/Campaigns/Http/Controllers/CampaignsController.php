@@ -13,13 +13,7 @@ use Modules\Campaigns\Transformers\CampaignResource;
 use Modules\Campaigns\Transformers\CampaignResourceDetail;
 use Modules\Campaigns\Transformers\WidgetResource;
 use Modules\Targeting\Providers\TargetingService;
-use Modules\UserManagement\Emails\AutoRegistrationEmail;
-use Modules\UserManagement\Emails\BackOfficeRegisterEmail;
-use Modules\UserManagement\Emails\ForgottenPasswordEmail;
-use Modules\UserManagement\Emails\RegisterEmail;
-use Modules\UserManagement\Emails\SuccessfulDonationEmail;
 use Modules\UserManagement\Http\Controllers\UserServiceController;
-use Illuminate\Support\Facades\Mail;
 
 class CampaignsController extends Controller
 {
@@ -30,14 +24,19 @@ class CampaignsController extends Controller
     private $promoteService;
     private $campaignService;
 
-    public function __construct()
+    public function __construct(UserServiceController $userService,
+                                WidgetsController $widgetsController,
+                                WidgetService $widgetService,
+                                TargetingService $targetingService,
+                                CampaignPromoteService $promoteService,
+                                CampaignService $campaignService)
     {
-        $this->userService = new UserServiceController();
-        $this->widgetsController = new WidgetsController();
-        $this->widgetService = new WidgetService();
-        $this->targetingService = new TargetingService();
-        $this->promoteService = new CampaignPromoteService();
-        $this->campaignService = new CampaignService();
+        $this->userService = $widgetsController;
+        $this->widgetsController = $widgetsController;
+        $this->widgetService = $widgetService;
+        $this->targetingService = $targetingService;
+        $this->promoteService = $promoteService;
+        $this->campaignService = $campaignService;
     }
 
     /**
