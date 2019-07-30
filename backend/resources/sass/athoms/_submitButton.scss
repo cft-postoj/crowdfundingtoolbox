@@ -1,0 +1,14 @@
+&--submitButton {
+  background: $curiousBlue;
+  color: $white;
+  height: 40px;
+  @include borderRadius(3px);
+  border: none;
+  width: 162px;
+  font-weight: 700;
+  font-size: 14px;
+
+  &:hover {
+    @include boxShadow(0px 2px 6px rgba(0, 0, 0, .2));
+  }
+}

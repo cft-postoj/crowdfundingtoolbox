@@ -1,0 +1,26 @@
+&--grid--row {
+  width: 100%;
+  display: block;
+}
+
+
+@for $i from 1 through 12 {
+  &--grid--lg-#{$i} {
+    @media screen and (min-width: $lg) {
+      width: calc(#{$i / 12 * 100}% - 15px);
+      display: inline-block;
+      &:last-child {
+        float: right;
+      }
+      &.withoutPadding-lg {
+        width: calc(#{$i / 12 * 100}%);
+      }
+    }
+  }
+  &--grid--sm-#{$i} {
+    @media screen and (max-width: $sm) {
+      width: calc(#{$i / 12 * 100}%);
+      display: inline-block;
+    }
+  }
+}

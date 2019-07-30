@@ -1,0 +1,286 @@
+<div class="h-100 d-flex flex-column">
+    <app-navbar-stats></app-navbar-stats>
+    <app-breadcrumbs
+            [pageTitle]="'Overall'">
+        <div class="row">
+            <div class="col-12">
+                choose dates range:
+                <app-datepicker
+                        [selected]="statsDateSelected"
+                        (dateChange)="momentDateChange($event)"
+                        [maxMomentDate]="nowMoment"
+                        [type]="'start'">
+                </app-datepicker>
+            </div>
+            <div class="col-6 pt-2">
+                <app-dropdown [class]="'classic'"
+                              [clazz]="'selectWrapper--small selectWrapper--dark'" [items]="typeDropdownButtons"
+                              [(currentValue)]="type"
+                              (currentValueChange)="getDataForGraph()">
+                </app-dropdown>
+            </div>
+
+            <div class="col-6 pt-2">
+                <app-radio-button-group [clazz]="'radio-button-group--little'" [radioButtons]="intervalRadioButtons"
+                                        [(currentValue)]="interval" (currentValueChange)="getDataForGraph()">
+                </app-radio-button-group>
+            </div>
+        </div>
+
+    </app-breadcrumbs>
+    <div id="crowd-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <p-chart *ngIf="!graphLoading" type="line" [data]="data" [options]="options"
+                             [height]="'40vh'" [responsive]=""></p-chart>
+                </div>
+            </div>
+        </div>
+        <app-loading [isLoading]="graphLoading || donorsAndDonationsLoading" [height]="'40vh'"></app-loading>
+
+        <div class="container-fluid">
+            <div class="row" *ngIf="!donorsAndDonationsLoading">
+                <div class="col-12 col-lg-6 pt-2">
+                    <div class="card">
+                        <div class="container">
+                            <div class="row">
+                                <div class="card-header card-header--white">
+                                    <div class="col">
+                                        <h4>Payments</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.total.amount_sum"
+                                            [previous]="donorsAndDonations.current.total.amount_sum - donorsAndDonations.previous.total.amount_sum"
+                                            [currency]="true">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          tables.tableDonors, true, from, to, undefined, 'Payments', '' ] }}]">
+                                        total</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.monthly.amount_sum"
+                                            [previous]="donorsAndDonations.current.monthly.amount_sum - donorsAndDonations.previous.monthly.amount_sum"
+                                            [currency]="true">
+                                    </app-total-current-and-previous>
+
+                                </div>
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.one_time.amount_sum"
+                                            [previous]="donorsAndDonations.current.one_time.amount_sum - donorsAndDonations.previous.one_time.amount_sum "
+                                            [currency]="true">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          tables.tableDonors, true, from, to, true, 'Monthly payments', '' ] }}]">
+                                        monthly </span>
+                                </div>
+                                <div class="col-6">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          tables.tableDonors, true, from, to, false, 'One-time payments', '' ] }}]">
+                                        one time </span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.monthly.amount_avg "
+                                            [previous]="donorsAndDonations.current.monthly.amount_avg - donorsAndDonations.previous.monthly.amount_avg"
+                                            [currency]="true">
+                                    </app-total-current-and-previous>
+                                </div>
+                                <div class="col-6">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.one_time.amount_avg "
+                                            [previous]="donorsAndDonations.current.one_time.amount_avg - donorsAndDonations.previous.one_time.amount_avg"
+                                            [currency]="true">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Avg monthly
+                                </div>
+                                <div class="col-6">
+                                    Avg one time
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 pt-2">
+                    <div class="card">
+                        <div class="container">
+                            <div class="row">
+                                <div class="card-header card-header--white">
+                                    <div class="col">
+                                        <h4>Total donors</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.total.donors_count "
+                                            [previous]="donorsAndDonations.current.total.donors_count -
+                                        donorsAndDonations.previous.total.donors_count ">
+                                    </app-total-current-and-previous>
+                                </div>
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.monthly.donors_count "
+                                            [previous]="donorsAndDonations.current.monthly.donors_count -
+                                          donorsAndDonations.previous.monthly.donors_count">
+                                    </app-total-current-and-previous>
+                                </div>
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.one_time.donors_count"
+                                            [previous]="donorsAndDonations.current.one_time.donors_count -
+                                         donorsAndDonations.previous.one_time.donors_count">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          true, tables.tablePayments, from, to, undefined, 'Donors', '' ] }}]">
+                                        total</span>
+                                </div>
+                                <div class="col">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          true, tables.tablePayments, from, to, true, 'Monthly donors', '' ] }}]">
+                                        monthly</span>
+                                </div>
+                                <div class="col">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          true, tables.tablePayments, from, to, false, 'One-time donors', '' ] }}]">
+                                        one time</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="card-header card-header--white">
+                                    <div class="col">
+                                        <h4>New donors</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.total.donors_new"
+                                            [previous]="donorsAndDonations.current.total.donors_new -
+                                         donorsAndDonations.previous.total.donors_new">
+                                    </app-total-current-and-previous>
+                                </div>
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.monthly.donors_new"
+                                            [previous]="donorsAndDonations.current.monthly.donors_new -
+                                        donorsAndDonations.previous.monthly.donors_new">
+                                    </app-total-current-and-previous>
+                                </div>
+                                <div class="col">
+                                    <app-total-current-and-previous
+                                            [current]="donorsAndDonations.current.one_time.donors_new "
+                                            [previous]="donorsAndDonations.current.one_time.donors_new -
+                                        donorsAndDonations.previous.one_time.donors_new">
+                                    </app-total-current-and-previous>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          true, tables.tablePayments, from, to, undefined, 'New donors', 'new' ] }}]">
+                                        total</span>
+                                </div>
+                                <div class="col">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          true, tables.tablePayments, from, to, true, 'New monthly donors', 'new' ] }}]">
+                                        monthly</span>
+                                </div>
+                                <div class="col">
+                                    <span class="clickable"
+                                          [routerLink]="[{ outlets: { 'popup': [ 'donors', true,
+                                          true, tables.tablePayments, from, to, false, 'New one-time donors', 'new' ] }}]">
+                                        one time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
+                                        [title]="'Stopped supporting'" [dataType]="'stoppedSupporting'" [limit]="'3'"
+                                        [isDashboardPreview]="true"
+                                        [export]="true" [exportTitle]="'Export these stopped supporting donors'"
+                                        [exportType]="'stopped-supporting'"
+                                        [exportFileName]="'stopped-supporting-donors'"
+                                        [showDates]="false" [enablePortalUsersCount]="true"
+                                        (showMoreClicked)="openModal('Stopped supporting', null, 'tableDonors','stoppedSupporting')">
+                </app-table-portal-users>
+            </div>
+            <div class="row">
+                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
+                                        [title]="'Did not pay'" [dataType]="'didNotPay'" [limit]="'3'"
+                                        [isDashboardPreview]="true"
+                                        [export]="true" [exportTitle]="'Export these did not pay users'"
+                                        [exportType]="'didnt-pay'"
+                                        [exportFileName]="'didnt-pay-users'"
+                                        [showDates]="false" [enablePortalUsersCount]="true"
+                                        (showMoreClicked)="openModal('Did not pay', null, 'tableDonors','didNotPay')">
+                </app-table-portal-users>
+                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
+                                        [title]="'Only initialize donation'" [dataType]="'onlyInitializeDonation'"
+                                        [limit]="'3'"
+                                        [export]="true"
+                                        [isDashboardPreview]="true"
+                                        [exportTitle]="'Export these users, which not complete donation'"
+                                        [exportType]="'not-complete-support'"
+                                        [exportFileName]="'not-complete-support'"
+                                        [showDates]="false" [enablePortalUsersCount]="true"
+                                        (showMoreClicked)="openModal('Only initialize donation', null, 'tableDonors','onlyInitializeDonation')">
+                </app-table-portal-users>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--    <app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">-->
+<!--        <app-table-portal-users *ngIf="tables.tableDonors" [statsDateSelected]="statsDateSelected" [from]="from"-->
+<!--                                [to]="to" [monthly]="monthly"-->
+<!--                                [title]="tableTitle" [dataType]="dataType"></app-table-portal-users>-->
+<!--        <app-table-payments *ngIf="tables.tablePayments" [statsDateSelected]="statsDateSelected" [from]="from" [to]="to"-->
+<!--                            [monthly]="monthly"-->
+<!--                            [title]="tableTitle" [dataType]="dataType"></app-table-payments>-->
+<!--    </app-modal-full-size>-->
+
+<router-outlet name="popup"></router-outlet>

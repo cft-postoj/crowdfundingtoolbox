@@ -17,20 +17,32 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dashboard-app",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/.htaccess"
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ngx-select-dropdown/dist/assets/style.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
-            "scripts": []
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/sass"
+              ]
+            },
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -85,9 +97,14 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

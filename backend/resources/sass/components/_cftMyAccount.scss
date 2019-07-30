@@ -1,0 +1,115 @@
+&--myAccount {
+  margin: 30px 0 0;
+  background: linear-gradient(90deg, transparent 50%, $athensGray 50%);
+  @media screen and (max-width: 991px) {
+    background: $athensGray;
+  }
+  &--sidebar {
+    float: left;
+    width: 200px;
+    padding: 50px 0;
+    background: $white;
+    @media screen and (max-width: 991px) {
+      float: none;
+      width: 100%;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        padding: 0;
+        a {
+          display: block;
+          padding: 10px 25px;
+          color: $blumine;
+          font-size: 15px;
+          position: relative;
+          &:hover, &:focus {
+            text-decoration: none;
+            color: $curiousBlue;
+            &:after {
+              content: '';
+              width: 12px;
+              height: 12px;
+              background: url(/images/arrow.svg) no-repeat;
+              position: absolute;
+              right: 30px;
+              top: 15px;
+            }
+          }
+        }
+        &.active {
+          a {
+            background: $selago;
+            color: $curiousBlue;
+            position: relative;
+            &:before {
+              content: '';
+              width: 2px;
+              height: 100%;
+              position: absolute;
+              left: 0;
+              top: 0;
+              background: $curiousBlue;
+            }
+            &:after {
+              content: '';
+              width: 12px;
+              height: 12px;
+              background: url(/images/arrow.svg) no-repeat;
+              position: absolute;
+              right: 30px;
+              top: 15px;
+              @include transitionSingle(.3s ease);
+            }
+          }
+          &:hover {
+            a {
+              &:after {
+                right: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &--body {
+    float: right;
+    width: calc(100% - 200px);
+    background: $athensGray;
+    padding: 50px 0 50px 50px;
+    min-height: 60%;
+    &--loading {
+      margin: 0 auto;
+    }
+    > div {
+      h2 {
+        color: $black;
+      }
+      p {
+        a {
+          text-decoration: underline;
+        }
+      }
+    }
+    @media screen and (max-width: 991px) {
+      float: none;
+      width: 100%;
+      padding: 15px;
+      background: transparent;
+    }
+  }
+  &.badRequest {
+    .cft--myAccount--body {
+      width: 100%;
+      text-align: center;
+      h4 {
+        margin: 15px 0;
+      }
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+}

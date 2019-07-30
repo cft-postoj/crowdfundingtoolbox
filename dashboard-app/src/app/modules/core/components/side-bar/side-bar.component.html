@@ -1,0 +1,97 @@
+<div [ngClass]="{'sub-inactive': isActive, 'preview' : previewOpen}" id="sidebar">
+    <button type="button" [class]="(isActive) ? 'closed sidebarToggle' : 'sidebarToggle'" title="Toggle sidebar" (click)="toggleSidebar()">
+        <img src="../assets/images/icons/breadcrumb.svg" />
+    </button>
+    <div>
+        <div class="main-items" [ngClass]="{ 'main-items--sub-active': isActive }">
+            <div
+                    class="item"
+                    (click)="showItem(statisticsItemName, routing.STATS_FULL_PATH)">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/statistics_default.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === statisticsItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">Statistics</p>
+            </div>
+            <div
+                    class="item"
+                    (click)="showItem(campaignsItemName, routing.CAMPAIGNS_ALL_FULL_PATH)"
+            >
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/campaigns_default.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === campaignsItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">Campaigns</p>
+            </div>
+            <div
+                    class="item"
+                    (click)="showItem(usersItemName, routing.DASHBOARD + '/' + routing.PORTAL_USER_LIST)">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/users_default.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === usersItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">Users</p>
+            </div>
+            <div
+                    class="item"
+                    (click)="showItem(donorsItemName, routing.DASHBOARD + '/' +routing.PORTAL_USERS + '/' + routing.DONORS + '/' + routing.ALL)">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/donors-supporters.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === donorsItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">Donors</p>
+            </div>
+            <div
+                    class="item"
+                    (click)="showItem(paymentsItemName, routing.DONATIONS_FULL_PATH)">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/payment_default.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === paymentsItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">Payments</p>
+            </div>
+            <div
+                    class="item"
+                    (click)="showItem(settingsItemName, '/' + routing.CONFIGURATION_FULL_PATH)">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/settings.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === settingsItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">Settings</p>
+            </div>
+            <div
+                    class="item"
+                    (click)="showItem(faqItemName, null)">
+                <div
+                        class="item--icon"
+                        [inlineSVG]="'/assets/images/icons/faq.svg'"
+                        [removeSVGAttributes]="['fill']"
+                        [ngClass]="{'icon--sub-inactive': isActive, 'icon--active': activeItem === faqItemName}"
+                >
+                </div>
+                <p *ngIf="!isActive">FAQ</p>
+            </div>
+        </div>
+        <div class="item-content" [ngClass]="{'item-content--active': isActive}">
+            <app-sidebar-item *ngIf="isActive" [currentType]="currentSidebarItemType"  [items]="sidebarItems" ></app-sidebar-item>
+        </div>
+    </div>
+</div>

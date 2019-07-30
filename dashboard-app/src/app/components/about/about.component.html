@@ -1,0 +1,9 @@
+<h1>Hi about {{currentUser?.user_detail.first_name}}!</h1>
+<p>You're logged in with Angular 7!!</p>
+<h3>All registered users:</h3>
+<ul>
+  <li *ngFor="let user of users">
+    {{user.email}} ({{user.user_detail.first_name}} {{user.user_detail.last_name}})
+    - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+  </li>
+</ul>

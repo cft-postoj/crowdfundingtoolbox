@@ -1,0 +1,25 @@
+.header--description {
+    position: relative;
+}
+
+div[order=true] {
+    .header--description:after {
+        content: "";
+        position: absolute;
+        background: url(/assets/images/icons/breadcrumb.svg) no-repeat;
+        width: 18px;
+        height: 18px;
+        right: 12px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        transition: 0.2s all;
+        transform: rotate(-90deg);
+    }
+}
+
+div[asc=false] {
+    .header--description:after {
+        transform: rotate(90deg);
+    }
+}

@@ -1,0 +1,9 @@
+<div class="row">
+    <div *ngFor="let rb of radioButtons; let i = index" [ngClass]="colClass">
+        <label class="radio-button">
+            <input type="radio" name={{name}} (click)="onChange(rb.value)" [(checked)]="rb.value == currentValue">
+            <span class="checkmark"></span>
+            <p class="m-0">{{rb.name}}</p>
+        </label>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+@import "variables";
+
+.targetModal {
+  width: 50%;
+  text-align: center;
+  height: 100vh;
+  &--content {
+    color: $white;
+    max-width: 500px;
+    margin: calc(50% - 270px) auto 0;
+    height: 600px;
+    background: rgba(0,116,233, .8);
+    padding: 30px;
+    position: relative;
+    div.usersCount {
+      display: block;
+      margin: 15px 0;
+      font-size: 40px;
+      font-weight: bold;
+      p {
+        cursor: pointer;
+      }
+      span {
+        font-weight: 100;
+        font-size: 15px;
+        margin-top: -5px;
+        display: block;
+      }
+    }
+    div.visitorsCount {
+      display: block;
+      margin: 15px 0;
+      font-size: 40px;
+      font-weight: bold;
+      span {
+        font-weight: 100;
+        font-size: 15px;
+        margin-top: -5px;
+        display: block;
+      }
+    }
+    &--notes {
+      position: absolute;
+      bottom: 0;
+      left: 15px;
+      right: 15px;
+    }
+    &--choosed {
+      margin-bottom: 30px;
+      div {
+        max-height: 120px;
+        overflow-y: auto;
+        ::ng-deep ul {
+          margin-bottom: 0 !important;
+        }
+        ::ng-deep u {
+          display: block;
+        }
+      }
+    }
+  }
+}

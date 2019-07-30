@@ -1,0 +1,14 @@
+{
+  "myAccountButton": "My account",
+  "myAccountUrl": "/moj-ucet",
+  "previewSlug": "preview",
+  "newsletterSlug": "newsletter",
+  "savedArticlesSlug": "ulozene-clanky",
+  "donationSlug": "your-support",
+  "ordersSlug": "objednavky",
+  "accountSlug": "account",
+  "resetYourPasswordAlert": "Please, reset your password.",
+  "endRegister": "Complete your registration. Fill in the missing data.",
+  "successUpdate": "Your account has been successfully updated.\n",
+  "errorUpdate": "An error occurred while updating your personal information. Please try again later or contact your administrator."
+}

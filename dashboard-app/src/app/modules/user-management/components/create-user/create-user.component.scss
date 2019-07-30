@@ -1,0 +1,41 @@
+@import 'variables';
+.userSettings {
+  padding: 15px;
+  h2 {
+    color: $azure;
+  }
+  form {
+    margin-top: 30px;
+    border-top: 1px solid $outer-space;
+    padding-top: 30px;
+    input, select {
+      display: block;
+      width: 100%;
+      border: none;
+      padding: 10px 15px;
+      margin: 7px 0;
+    }
+    button {
+      margin: 7px 0;
+      padding: 9px 15px;
+      min-width: 150px;
+      background: $outer-space;
+      border: none;
+      outline: none;
+      color: $white;
+    }
+  }
+  &--createNewUser {
+    background: $azure;
+    color: $white;
+    padding: 15px;
+    border: none;
+    outline: none;
+  }
+
+  p.afterEmail {
+    color: $azure;
+    margin-top: 30px;
+    text-align: center;
+  }
+}

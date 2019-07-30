@@ -1,42 +1,101 @@
 @import "variables";
 @import "mixins";
+
 .list-items {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 2px;
-  padding: 0;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+    padding: 0;
 
-  th {
-    color: $bali;
-    font-weight: 400;
-    padding: 12px 30px;
-    position: sticky;
-    top: 0;
-    background-color: $aquaHaze ;
-    z-index: 9;
-  }
-  &--item {
-    background: transparent;
-    td {
-      background: $white;
-      height: 72px;
-      padding: 12px 30px;
-      font-size: 12px;
-      max-width: 300px;
-      margin-bottom: 150px;
-      color: $outer-space;
+    th {
+        color: $bali;
+        font-weight: 400;
+        padding: 12px 30px;
+        position: sticky;
+        top: 0;
+        background-color: $aquaHaze;
+        z-index: 9;
     }
-    &--name {
-      font-size: 16px;
-      margin-bottom: 0;
-      color: $black;
-      line-height: 16px;
-      + span {
-        color: $outer-space;
-        font-size: 12px;
-      }
+    &--item {
+        background: transparent;
+        td {
+            background: $white;
+            height: 72px;
+            padding: 12px 30px;
+            font-size: 12px;
+            max-width: 300px;
+            margin-bottom: 150px;
+            color: $outer-space;
+        }
+        &--name {
+            font-size: 16px;
+            margin-bottom: 0;
+            color: $black;
+            line-height: 16px;
+            + span {
+                color: $outer-space;
+                font-size: 12px;
+            }
+        }
     }
 
-  }
+    &.list-items--orderable {
+        table-layout: fixed;
+        th {
+            padding: 6px 8px;
+            min-width: 150px;
+            div[order=true] {
+                .description:after {
+                    content: "";
+                    position: absolute;
+                    background: url(/assets/images/icons/breadcrumb.svg) no-repeat;
+                    width: 18px;
+                    height: 18px;
+                    right: 12px;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto;
+                    transition: 0.2s all;
+                    transform: rotate(-90deg);
+                }
+            }
+            div[asc=false] {
+                .description:after {
+                    transform: rotate(90deg);
+                }
+            }
+            &.id {
+                width: 36px;
+            }
+        }
+        tbody {
+            td {
+                height: 36px;
+                padding: 6px 8px;
+                background: inherit;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            tr {
+                background-color: $white;
+            }
+            tr:nth-of-type(odd) {
+                td {
+                    background-color: $aquaHaze;
+                }
+            }
+            tr:hover {
+                td {
+                    background-color: $geyser;
+                }
+            }
+
+        }
+        .pointer {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
 

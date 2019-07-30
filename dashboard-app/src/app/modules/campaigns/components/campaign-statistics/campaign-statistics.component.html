@@ -1,0 +1,28 @@
+<div class="campaignStatistics">
+    <div class="row h-100">
+        <div class="col-3">
+            Crowdfunding - total
+            <b>{{campaignStats?.amount_sum}} €</b>
+        </div>
+        <div class="col-3">
+            Pageviews - total
+            <b>{{campaignStats?.visits}}</b>
+        </div>
+        <div class="col-3">
+            Engagement - total
+            <b>{{campaignStats?.engagement}} %</b>
+        </div>
+        <div class="col-3 filters my-auto">
+            <input type="radio" name="campaignStatisticsFilter" value="total" id="total" (change)="filterChange($event.target.value)">
+            <label for="total" [class]="(actualValue == 'total') ? 'active' : ''">Total</label>
+            <input type="radio" name="campaignStatisticsFilter" value="year" id="year" (change)="filterChange($event.target.value)">
+            <label for="year" [class]="(actualValue == 'year') ? 'active' : ''">Year</label>
+            <input type="radio" name="campaignStatisticsFilter" value="month" id="month" (change)="filterChange($event.target.value)">
+            <label for="month" [class]="(actualValue == 'month') ? 'active' : ''">Month</label>
+            <input type="radio" name="campaignStatisticsFilter" value="week" id="week" (change)="filterChange($event.target.value)">
+            <label for="week" [class]="(actualValue == 'week') ? 'active' : ''">Week</label>
+            <input type="radio" name="campaignStatisticsFilter" value="day" id="day" (change)="filterChange($event.target.value)">
+            <label for="day" [class]="(actualValue == 'day') ? 'active' : ''">Day</label>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<div class="configurationPage" style="margin: 0 auto">
+    <b>CONFIGURATION WIZARD</b>
+    <p>Before we start, please set up your global page settings</p>
+    <div class="configurationPage--items">
+        <app-loading [isLoading]="loading"></app-loading>
+        <div class="row configurationPage--row" *ngIf="!loading">
+            <div class="col-md-4" *ngIf="isAdmin">
+                <div class="configurationPage--item" (click)="openGlobal()">
+                    <b>GENERAL PAGE SETTINGS</b>
+                    <p>General settings including fonts, colors etc…</p>
+                    <svg class="icon_settings" xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+                        <g id="settings_big" transform="translate(-585 -433)">
+                            <rect data-name="safe area" width="256" height="256" transform="translate(585 433)" fill="#8aa1b1" opacity="0"/>
+                            <g transform="translate(653.517 501.517)">
+                                <path id="Path_47" data-name="Path 47" d="M113.822,46.667H102.6a4.31,4.31,0,0,1-3.049-7.358l7.938-7.936a6.183,6.183,0,0,0,0-8.74L97.367,12.516a6.327,6.327,0,0,0-8.74,0l-7.936,7.936A4.309,4.309,0,0,1,73.333,17.4V6.178A6.184,6.184,0,0,0,67.156,0H52.844a6.184,6.184,0,0,0-6.178,6.178V17.4a4.309,4.309,0,0,1-7.358,3.047l-7.936-7.936a6.327,6.327,0,0,0-8.74,0L12.516,22.633a6.183,6.183,0,0,0,0,8.74l7.938,7.936A4.31,4.31,0,0,1,17.4,46.667H6.178A6.184,6.184,0,0,0,0,52.844V67.153a6.185,6.185,0,0,0,6.178,6.18H17.4a4.31,4.31,0,0,1,3.049,7.358l-7.938,7.936a6.183,6.183,0,0,0,0,8.74l10.118,10.118a6.323,6.323,0,0,0,8.74,0l7.936-7.938a4.31,4.31,0,0,1,7.358,3.049v11.227A6.184,6.184,0,0,0,52.844,120H67.153a6.184,6.184,0,0,0,6.178-6.178V102.6a4.31,4.31,0,0,1,7.358-3.049l7.936,7.938a6.327,6.327,0,0,0,8.74,0l10.118-10.118a6.183,6.183,0,0,0,0-8.74l-7.938-7.936a4.31,4.31,0,0,1,3.051-7.358h11.227A6.184,6.184,0,0,0,120,67.156V52.844A6.184,6.184,0,0,0,113.822,46.667Zm1.733,20.489a1.736,1.736,0,0,1-1.733,1.733H102.6A8.756,8.756,0,0,0,96.4,83.836l7.938,7.936a1.734,1.734,0,0,1,0,2.453L94.224,104.342a1.734,1.734,0,0,1-2.453,0L83.836,96.4A8.756,8.756,0,0,0,68.889,102.6v11.227a1.736,1.736,0,0,1-1.733,1.733H52.844a1.736,1.736,0,0,1-1.733-1.733V102.6a8.619,8.619,0,0,0-5.4-8.089,8.856,8.856,0,0,0-3.407-.691A8.633,8.633,0,0,0,36.164,96.4l-7.936,7.938a1.734,1.734,0,0,1-2.453,0L15.658,94.222a1.734,1.734,0,0,1,0-2.453L23.6,83.833A8.754,8.754,0,0,0,17.4,68.889H6.178a1.736,1.736,0,0,1-1.733-1.733V52.844a1.736,1.736,0,0,1,1.733-1.733H17.4A8.756,8.756,0,0,0,23.6,36.164l-7.938-7.936a1.734,1.734,0,0,1,0-2.453L25.776,15.658a1.734,1.734,0,0,1,2.453,0l7.936,7.936A8.756,8.756,0,0,0,51.111,17.4V6.178a1.736,1.736,0,0,1,1.733-1.733H67.153a1.736,1.736,0,0,1,1.736,1.733V17.4A8.756,8.756,0,0,0,83.836,23.6l7.936-7.936a1.734,1.734,0,0,1,2.453,0l10.118,10.118a1.734,1.734,0,0,1,0,2.453L96.4,36.167A8.756,8.756,0,0,0,102.6,51.113h11.227a1.732,1.732,0,0,1,1.733,1.731Z" transform="translate(0 0)" fill="#8aa1b1"/>
+                                <path id="Path_48" data-name="Path 48" d="M37.828,18A19.828,19.828,0,1,0,57.656,37.828,19.849,19.849,0,0,0,37.828,18Zm0,35.249A15.422,15.422,0,1,1,53.249,37.828,15.441,15.441,0,0,1,37.828,53.249Z" transform="translate(22.172 22.172)" fill="#8aa1b1"/>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="configurationPage--item--edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                          <g id="edit_24px" transform="translate(-1816 -136)">
+                            <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon" transform="translate(246 20)">
+                              <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#8aa1b1"/>
+                            </g>
+                          </g>
+                        </svg>
+                        Set
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="isAdmin">
+                <div class="configurationPage--item" (click)="openCta()">
+                    <b>CALL TO ACTION SETTINGS</b>
+                    <p>Set global CTA settings including paddings, margins, </p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+                        <g id="Group_35" data-name="Group 35" transform="translate(-992 -433)">
+                            <rect data-name="safe area" width="256" height="256" transform="translate(992 433)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon" transform="translate(1060 585.546)">
+                                <g id="Group_21" data-name="Group 21" transform="translate(0 -54.546)">
+                                    <path id="Path_65" data-name="Path 65" d="M9.444,0H-59.444A25.555,25.555,0,0,0-85,25.556,25.556,25.556,0,0,0-59.444,51.111h34.857l-.794-2.222H-59.444A23.36,23.36,0,0,1-82.778,25.556,23.359,23.359,0,0,1-59.444,2.222H9.444a23.333,23.333,0,1,1,0,46.667H-5.418l-1.474.953,1.268,1.269H9.444A25.556,25.556,0,0,0,9.444,0" transform="translate(85)" fill="#8aa1b1"/>
+                                </g>
+                                <g class="call2actions_setings" id="Group_22" data-name="Group 22" transform="translate(57.201 -19.016)">
+                                    <path id="Path_66" data-name="Path 66" d="M1.739,1.394,9.424-3.579l-25.077-8.967L-6.686,12.53l4.973-7.684L3.67,10.23A2.441,2.441,0,1,0,7.123,6.777Z" transform="translate(15.653 12.546)" fill="#8aa1b1"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="configurationPage--item--edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                          <g id="edit_24px" transform="translate(-1816 -136)">
+                            <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon" transform="translate(246 20)">
+                              <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#8aa1b1"/>
+                            </g>
+                          </g>
+                        </svg>
+                        Set
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="isAdmin">
+                <div class="configurationPage--item" (click)="openWidgetSettings()">
+                    <b>WIDGET SETTINGS</b>
+                    <p></p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+                        <g id="widget_icon" data-name="widget icon" transform="translate(-1398 -433)">
+                            <rect data-name="safe area" width="256" height="256" transform="translate(1398 433)" fill="#f2f1ef" opacity="0"/>
+                            <g id="_004-app" data-name="004-app" transform="translate(1466 501)">
+                                <path id="Path_49" data-name="Path 49" d="M48.073,0H7.086A7.093,7.093,0,0,0,0,7.086V48.073a7.093,7.093,0,0,0,7.086,7.086H48.073a7.093,7.093,0,0,0,7.086-7.086V7.086A7.093,7.093,0,0,0,48.073,0Zm2.843,48.073a2.846,2.846,0,0,1-2.843,2.843H7.086a2.846,2.846,0,0,1-2.843-2.843V7.086A2.846,2.846,0,0,1,7.086,4.243H48.073a2.846,2.846,0,0,1,2.843,2.843Z" fill="#8aa1b1"/>
+                                <path id="Path_50" data-name="Path 50" d="M78.073,0H37.086A7.093,7.093,0,0,0,30,7.086V48.073a7.093,7.093,0,0,0,7.086,7.086H78.073a7.093,7.093,0,0,0,7.086-7.086V7.086A7.093,7.093,0,0,0,78.073,0Zm2.843,48.073a2.846,2.846,0,0,1-2.843,2.843H37.086a2.846,2.846,0,0,1-2.843-2.843V7.086a2.846,2.846,0,0,1,2.843-2.843H78.073a2.846,2.846,0,0,1,2.843,2.843Z" transform="translate(34.842)" fill="#8aa1b1"/>
+                                <path id="Path_51" data-name="Path 51" d="M48.073,30H7.086A7.093,7.093,0,0,0,0,37.086V78.073a7.093,7.093,0,0,0,7.086,7.086H48.073a7.093,7.093,0,0,0,7.086-7.086V37.086A7.093,7.093,0,0,0,48.073,30Zm2.843,48.073a2.846,2.846,0,0,1-2.843,2.843H7.086a2.846,2.846,0,0,1-2.843-2.843V37.086a2.846,2.846,0,0,1,2.843-2.843H48.073a2.846,2.846,0,0,1,2.843,2.843Z" transform="translate(0 34.842)" fill="#8aa1b1"/>
+                                <path id="Path_52" class="widgets_settings" data-name="Path 52" d="M83.037,55.458H59.7V32.121a2.121,2.121,0,0,0-4.243,0V55.458H32.121a2.121,2.121,0,1,0,0,4.243H55.458V83.037a2.121,2.121,0,1,0,4.243,0V59.7H83.037a2.121,2.121,0,0,0,0-4.243Z" transform="translate(34.842 34.842)" fill="#8aa1b1"/>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="configurationPage--item--edit">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g id="edit_24px" transform="translate(-1816 -136)">
+                          <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                          <g id="icon" transform="translate(246 20)">
+                            <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#8aa1b1"/>
+                          </g>
+                        </g>
+                      </svg>
+                      Set
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="isAdmin">
+                <div class="configurationPage--item" (click)="openPaymentSettings()">
+                    <b>PAYMENT SETTINGS</b>
+                    <p></p>
+                    <svg width="256" height="256" viewBox="0 0 36 36">
+                        <g id="payment_default" transform="translate(-40 -162)">
+                            <rect id="safe_area" data-name="safe area" width="36" height="36" transform="translate(40 162)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon">
+                                <path id="Path_17" data-name="Path 17" d="M54.8,1.81C53.685.543,51.661,0,49.07,0H41.554A1.075,1.075,0,0,0,40.49.9L37.36,20.593a.642.642,0,0,0,.637.739h4.64L43.8,14l-.036.231a1.071,1.071,0,0,1,1.06-.9h2.2c4.333,0,7.724-1.746,8.715-6.8.03-.15.076-.438.076-.438A4.771,4.771,0,0,0,54.8,1.81Z" transform="translate(10.648 168)" fill="#8aa1b1"/>
+                                <path id="Path_18" class="payment_settings" data-name="Path 18" d="M183.643,150.5c-1.077,4.972-4.513,7.6-9.966,7.6H171.7l-1.476,9.341h3.206a.939.939,0,0,0,.93-.789l.038-.2.738-4.636.048-.255a.938.938,0,0,1,.928-.789h.586c3.79,0,6.756-1.527,7.623-5.944A5.139,5.139,0,0,0,183.643,150.5Z" transform="translate(-115.998 24.557)" fill="#8aa1b1"/>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="configurationPage--item--edit">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g id="edit_24px" transform="translate(-1816 -136)">
+                          <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                          <g id="icon" transform="translate(246 20)">
+                            <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#8aa1b1"/>
+                          </g>
+                        </g>
+                      </svg>
+                      Set
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="configurationPage--item" (click)="openBackofficeUserSettings()">
+                    <b>BACKOFFICE USER SETTINGS</b>
+                    <p></p>
+                    <svg width="256" height="256" viewBox="0 0 36 36">
+                        <g id="users_default" transform="translate(-40 -162)">
+                            <rect id="safe_area" data-name="safe area" width="36" height="36" transform="translate(40 162)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon">
+                                <path id="Path_4" data-name="Path 4" d="M66.254,57.142a4.653,4.653,0,1,0,4.382,4.646A4.524,4.524,0,0,0,66.254,57.142Z" transform="translate(-12.972 113.858)" fill="#8aa1b1"/>
+                                <path class="backoffice_user_settings" id="Path_5" data-name="Path 5" d="M291.4,71.321h-.03a3.635,3.635,0,0,0-2.667,1.206,4.149,4.149,0,0,0,.046,5.595,3.636,3.636,0,0,0,2.656,1.161h.03a3.635,3.635,0,0,0,2.667-1.206,4.079,4.079,0,0,0,1.062-2.806A3.882,3.882,0,0,0,291.4,71.321Z" transform="translate(-228.151 100.344)" fill="#8aa1b1"/>
+                                <path class="backoffice_user_settings" id="Path_6" data-name="Path 6" d="M274.732,257.358h-.364a6.552,6.552,0,0,0-4.408,1.7,8.459,8.459,0,0,1,3.3,6.276h8.045v-1.4A6.583,6.583,0,0,0,274.732,257.358Z" transform="translate(-211.303 -76.971)" fill="#8aa1b1"/>
+                                <path id="Path_7" data-name="Path 7" d="M14.55,292.936A7.062,7.062,0,0,0,7.5,286.318H7.064A7.063,7.063,0,0,0,0,293.382v.838H14.565v-.838Q14.565,293.157,14.55,292.936Z" transform="translate(46 -104.573)" fill="#8aa1b1"/>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="configurationPage--item--edit">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g id="edit_24px" transform="translate(-1816 -136)">
+                          <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                          <g id="icon" transform="translate(246 20)">
+                            <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#8aa1b1"/>
+                          </g>
+                        </g>
+                      </svg>
+                      Set
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="isAdmin">
+                <div class="configurationPage--item" (click)="openPortalConnectionsSettings()">
+                    <b>PORTAL CONNECTIONS</b>
+                    <p></p>
+                    <svg width="256" height="256" viewBox="0 0 36 36">
+                        <g id="connections_default" transform="translate(-40 -162)">
+                            <rect id="safe_area" data-name="safe area" width="36" height="36" transform="translate(40 162)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon">
+                                <path id="Path_16" class="connections" data-name="Path 16" d="M18.971,12.209,16.421,9.66a3.551,3.551,0,0,0-5.049.049L10.294,8.63a3.447,3.447,0,0,0,1.078-2.561,3.384,3.384,0,0,0-1.017-2.488L7.831,1.045A3.358,3.358,0,0,0,5.331,0,3.384,3.384,0,0,0,2.843,1.02l-1.8,1.789A3.344,3.344,0,0,0,0,5.3,3.4,3.4,0,0,0,1.029,7.8l2.549,2.549a3.4,3.4,0,0,0,2.5,1.029A3.433,3.433,0,0,0,8.627,10.3l1.078,1.078a3.447,3.447,0,0,0-1.078,2.561,3.384,3.384,0,0,0,1.017,2.488l2.525,2.537a3.535,3.535,0,0,0,4.988.025l1.8-1.789A3.344,3.344,0,0,0,20,14.709,3.405,3.405,0,0,0,18.971,12.209ZM8.628,6.964,8.4,6.731q-.19-.2-.263-.264A2.964,2.964,0,0,0,7.9,6.284a.988.988,0,0,0-.312-.159,1.249,1.249,0,0,0-.337-.043A1.171,1.171,0,0,0,6.079,7.258a1.248,1.248,0,0,0,.043.337.984.984,0,0,0,.159.313,2.948,2.948,0,0,0,.184.233q.067.073.263.264l.233.227a1.185,1.185,0,0,1-.882.38,1.13,1.13,0,0,1-.833-.331L2.7,6.131A1.135,1.135,0,0,1,2.353,5.3,1.12,1.12,0,0,1,2.7,4.476L4.5,2.687a1.184,1.184,0,0,1,.833-.331,1.135,1.135,0,0,1,.833.343L8.689,5.236a1.134,1.134,0,0,1,.343.833A1.19,1.19,0,0,1,8.628,6.964ZM17.3,15.53l-1.8,1.789a1.181,1.181,0,0,1-.833.319,1.129,1.129,0,0,1-.833-.331L11.312,14.77a1.134,1.134,0,0,1-.343-.833,1.189,1.189,0,0,1,.4-.895l.227.233q.19.2.264.264a2.909,2.909,0,0,0,.233.184.982.982,0,0,0,.313.159,1.247,1.247,0,0,0,.337.043,1.172,1.172,0,0,0,1.177-1.176,1.256,1.256,0,0,0-.043-.337.98.98,0,0,0-.16-.313,2.959,2.959,0,0,0-.184-.233q-.067-.073-.264-.264l-.233-.226a1.168,1.168,0,0,1,.882-.392,1.133,1.133,0,0,1,.833.343L17.3,13.876a1.135,1.135,0,0,1,.343.833A1.12,1.12,0,0,1,17.3,15.53Z" transform="translate(48 169.997)" fill="#8aa1b1"/>
+                            </g>
+                        </g>
+                    </svg>
+
+                    <span class="configurationPage--item--edit">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g id="edit_24px" transform="translate(-1816 -136)">
+                          <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                          <g id="icon" transform="translate(246 20)">
+                            <path id="Path_30" data-name="Path 30" d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z" transform="translate(1574 120.001)" fill="#8aa1b1"/>
+                          </g>
+                        </g>
+                      </svg>
+                      Set
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<router-outlet name="right"></router-outlet>

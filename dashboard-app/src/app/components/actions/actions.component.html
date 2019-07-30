@@ -1,0 +1,32 @@
+<div class="actions row m-0">
+    <div class="col-3 vertical-align">
+        <button
+                *ngIf="!hidePreviewButton"
+                type="button"
+                (click)="showPreview()"
+                class="actions--preview"
+        >
+            <span [inlineSVG]="'../../assets/images/icons/preview.svg'"></span>
+            {{(live) ? 'Live Preview' : 'Preview'}}
+        </button>
+    </div>
+    <div class="col-3 p-0 vertical-align" *ngIf="deviceType">
+        <app-radio-button-group [radioButtons]="deviceTypeButtons" (currentValueChange)="handleDeviceTypeChange($event)"
+                                [currentValue]="deviceType"></app-radio-button-group>
+    </div>
+    <div class="actions--right col text-right vertical-align">
+
+        <button
+                type="button"
+                (click)="submitChanges()"
+                [disabled]="submitting"
+                class="actions--right--submit">
+            <ng-container *ngIf="!submitting">
+                Save changes
+            </ng-container>
+            <ng-container *ngIf="submitting">
+                Saving ...
+            </ng-container>
+        </button>
+    </div>
+</div>

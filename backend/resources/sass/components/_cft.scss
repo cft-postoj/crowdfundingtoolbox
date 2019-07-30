@@ -1,0 +1,42 @@
+.cft {
+  &--loginButton {
+    display: block;
+  }
+  &--myAccountButton {
+    display: none;
+  }
+  @import '../helpers/grid';
+  @import "cftMyAccount";
+  @import "alert";
+  @import 'loginDropDown';
+  @import 'register';
+  @import 'formBox';
+  @import '../athoms/input';
+  @import '../athoms/checkbox';
+  @import '../athoms/select';
+  @import '../athoms/submitButton';
+  @import '../athoms/button';
+  @import './donationsTable';
+  @import './accountBox';
+}
+
+// display none for last pass
+#__lpform_cft-password {
+  display: none !important;
+}
+
+@import '../helpers/mixins';
+.cr0wdfunding--locked--hideContent {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  @include transitionSingle(.3s ease);
+}
+
+body {
+  @media screen and (max-width: 991px){
+    margin-top: 110px !important;
+  }
+}

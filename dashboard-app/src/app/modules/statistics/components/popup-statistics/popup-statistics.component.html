@@ -1,0 +1,8 @@
+<app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" (openChange)="closeModal()" [(open)]="modalOpened">
+  <app-table-portal-users *ngIf="tables.tableDonors" [statsDateSelected]="statsDateSelected" [from]="from"
+                          [to]="to" [monthly]="monthly"
+                          [title]="tableTitle" [dataType]="dataType"></app-table-portal-users>
+  <app-table-payments *ngIf="tables.tablePayments" [statsDateSelected]="statsDateSelected" [from]="from" [to]="to"
+                      [monthly]="monthly"
+                      [title]="tableTitle" [dataType]="dataType"></app-table-payments>
+</app-modal-full-size>

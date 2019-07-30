@@ -1,0 +1,7 @@
+<div [style.height]="height"
+     *ngIf="isLoading"
+     [inlineSVG]="'/assets/images/loading.svg'"
+     class="text-center">
+</div>
+<div class="text-center azure" *ngIf="extraText != null" [innerHTML]="extraText">
+</div>

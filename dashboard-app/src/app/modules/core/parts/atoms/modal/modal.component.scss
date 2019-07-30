@@ -1,0 +1,13 @@
+@import 'variables';
+::ng-deep .text-primary {
+  div {
+    color: $outer-space;
+    font-weight: 400;
+    span {
+      color: $red;
+    }
+  }
+  span {
+    color: $outer-space;
+  }
+}

@@ -1,0 +1,304 @@
+<div class="bankTransfer">
+    <h2>Bank Transfer</h2>
+    <hr>
+    <app-alert
+        [(open)]="alertOpen"
+        [type]="alertType"
+        [message]="alertMessage"></app-alert>
+    <div class="text-center" *ngIf="loading">
+        <img src="../assets/images/loading.svg"/>
+    </div>
+    <form [formGroup]="paymentForm" (submit)="storeBankTransferData()" *ngIf="!loading">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+                <h4>Monthly subscription</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="enabledMonthly">
+                            {{(checkedMonthly) ? 'Enabled:' : 'Disabled:'}}
+                        </label>
+                        <app-switcher
+                            [id]="'monthly'"
+                            [checked]="checkedMonthly"
+                            (checkedChange)="changeCheckedMonthly($event)"
+                            id="enabledMonthly"></app-switcher>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="accountNumberMonthly">
+                            Bank account number (IBAN form):
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="accountNumberMonthly"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedMonthly"
+                            [value]="bankTransferData.monthlyPayment?.accountNumber"
+                            id="accountNumberMonthly" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="specificSymbolMonthly">
+                            Specific symbol:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="specificSymbolMonthly"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedMonthly"
+                            [value]="bankTransferData.monthlyPayment?.specificSymbol"
+                            id="specificSymbolMonthly"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="constantSymbolMonthly">
+                            Constant symbol:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="constantSymbolMonthly"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedMonthly"
+                            [value]="bankTransferData.monthlyPayment?.constantSymbol"
+                            id="constantSymbolMonthly"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="swiftMonthly">
+                            SWIFT:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="swiftMonthly"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedMonthly"
+                            [value]="bankTransferData.monthlyPayment?.swift"
+                            id="swiftMonthly"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="bankNameMonthly">
+                            Bank name:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="bankNameMonthly"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedMonthly"
+                            [value]="bankTransferData.monthlyPayment?.bankName"
+                            id="bankNameMonthly"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="bankAccountOwnerMonthly">
+                            Bank account owner:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="bankAccountOwnerMonthly"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedMonthly"
+                            [value]="bankTransferData.monthlyPayment?.accountOwner"
+                            id="bankAccountOwnerMonthly"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="paymentNoteMonthly" class="textarea">
+                            Payment notes: *
+                        </label>
+                        <textarea
+                            formControlName="paymentNoteMonthly"
+                            id="paymentNoteMonthly"
+                            [value]="bankTransferData.monthlyPayment?.paymentNote"
+                            [appDisableControl]="!checkedMonthly">
+                        </textarea>
+
+                        <i>* payment notes is showed in monetization widget and in email with payment details.</i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 border-left">
+                <h4>One-time payment</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-4">
+                        <label for="enabledOneTime">
+                            {{(checkedOneTime) ? 'Enabled:' : 'Disabled:'}}
+                        </label>
+                        <app-switcher
+                            [id]="'oneTime'"
+                            [checked]="checkedOneTime"
+                            (checkedChange)="changeCheckedOneTime($event)"
+                            id="enabledOneTime"></app-switcher>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-8">
+                        <app-checkbox
+                            [checked]="copyFromMonthlySubscription"
+                            (change)="copyInputsFromMonthlySubscription($event)"
+                            [name]="'Copy from monthly subscription'"></app-checkbox>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="accountNumberOneTime">
+                            Bank account number (IBAN form):
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="accountNumberOneTime"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedOneTime"
+                            [value]="bankTransferData.oneTimePayment?.accountNumber"
+                            id="accountNumberOneTime"
+                            required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="specificSymbolOneTime">
+                            Specific symbol:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="specificSymbolOneTime"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedOneTime"
+                            [value]="bankTransferData.oneTimePayment?.specificSymbol"
+                            id="specificSymbolOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="constantSymbolOneTime">
+                            Constant symbol:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="constantSymbolOneTime"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedOneTime"
+                            [value]="bankTransferData.oneTimePayment?.constantSymbol"
+                            id="constantSymbolOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="swiftOneTime">
+                            SWIFT:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="swiftOneTime"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedOneTime"
+                            [value]="bankTransferData.oneTimePayment?.swift"
+                            id="swiftOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="bankNameOneTime">
+                            Bank name:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="bankNameOneTime"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedOneTime"
+                            [value]="bankTransferData.oneTimePayment?.bankName"
+                            id="bankNameOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="bankAccountOwnerOneTime">
+                            Bank account owner:
+                        </label>
+                        <input
+                            type="text"
+                            formControlName="bankAccountOwnerOneTime"
+                            data-lpignore="true"
+                            [appDisableControl]="!checkedOneTime"
+                            [value]="bankTransferData.oneTimePayment?.accountOwner"
+                            id="bankAccountOwnerOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="paymentNoteOneTime" class="textarea">
+                            Payment notes: *
+                        </label>
+                        <textarea
+                            formControlName="paymentNoteOneTime"
+                            id="paymentNoteOneTime"
+                            [value]="bankTransferData.oneTimePayment?.paymentNote"
+                            [appDisableControl]="!checkedOneTime">
+                        </textarea>
+
+                        <i>* payment notes is showed in monetization widget and in email with payment details.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <h4>Bank buttons</h4>
+            <app-help class="position-relative"
+                      [text]="'Used in donation widgets to redirect user into his bank'"></app-help>
+            <div class="col-12">
+                <p-table [value]="bankButtons">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:2.5em"></th>
+                            <th>Title</th>
+                            <th>Image</th>
+                            <th>Link</th>
+                            <th style="width:100px">Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-bankButton let-index="rowIndex">
+                        <tr [pReorderableRow]="index">
+                            <td style="width:2.5em"><i class="fa fa-bars" pReorderableRowHandle></i></td>
+                            <td>
+                                <input type="text" class="full-width" [ngModelOptions]="{standalone: true}"
+                                       [(ngModel)]="bankButton.title"/>
+                            </td>
+                            <td>
+                                <app-dragAndDrop [clazz]="'dragAndDrop--small'"
+                                                 [fileUrl]="bankButton.image.url"
+                                                 [(fileData)]="bankButton.image"></app-dragAndDrop>
+                            </td>
+                            <td>
+                                <input type="text" class="full-width" [ngModelOptions]="{standalone: true}"
+                                       [(ngModel)]="bankButton.redirect_link"/>
+                            </td>
+                            <td>
+                                <span class="add-button vertical-align hoverable hoverable--danger"
+                                      title="Delete bank button"
+                                      [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                      [removeSVGAttributes]="['fill']" (click)="deleteBankButton(bankButton)">
+                                    </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="offset-11 col-1">
+                <span class="add-button vertical-align hoverable" title="Add new bank button"
+                      [inlineSVG]="'/assets/images/icons/add.svg'"
+                      [removeSVGAttributes]="['fill']" (click)="addNewBankButton()">
+                </span>
+            </div>
+        </div>
+        <button type="submit">
+            Confirm
+        </button>
+    </form>
+</div>

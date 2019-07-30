@@ -1,0 +1,41 @@
+@import 'variables';
+@import 'mixins';
+.paymentOptions {
+  padding: 15px;
+  position: absolute;
+  overflow: auto;
+  height: 93%;
+  width: 100%;
+  th.waiting_for_payment {
+    color: $red;
+  }
+  th.processed {
+    color: $green;
+  }
+  th.underline {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  button {
+    border: none;
+    outline: none;
+    padding: 7px 15px;
+    width: 100%;
+    display: block;
+    margin: 15px 0;
+    color: $white;
+    @include transitionSingle(.3s ease);
+    &.cancelPayment {
+      background: rgba($azure, .7);
+      &:hover {
+        background: rgba($azure, 1);
+      }
+    }
+    &.deleteDonation {
+      background: rgba($red, .7);
+      &:hover {
+        background: rgba($red, 1);
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@import 'variables';
+@import 'mixins';
+
+::ng-deep .topPanel {
+  padding: 14px 15px !important;
+  &__title {
+    min-width: 250px !important;
+  }
+  h1 {
+    padding-left: 0 !important;
+  }
+  &__admin__absolute {
+    padding: 30px !important;
+    min-width: auto !important;
+    position: absolute !important;
+    right: 0 !important;
+    &__logout {
+      padding-top: 10px !important;
+    }
+    &__user {
+      padding-bottom: 0 !important;
+    }
+  }
+}
+.responsiveContent {
+  position: relative;
+  top: 70px;
+  width: 100%;
+  .responsiveNotes {
+    position: relative;
+    background: rgba($red, .2);
+    color: $red;
+    padding: 20px 15px 15px;
+    svg {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+  }
+  table {
+    width: 100%;
+    overflow-x: auto;
+    thead {
+      background: $bali;
+      th {
+        padding: 15px;
+        color: $white;
+      }
+    }
+    tbody {
+      background: transparent;
+      tr {
+        &:nth-child(even) {
+          background: rgba($alto, .3);
+        }
+        td {
+          padding: 15px;
+        }
+      }
+    }
+  }
+}

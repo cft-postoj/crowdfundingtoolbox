@@ -1,0 +1,90 @@
+&--accountBox {
+  background: $white;
+  &--content {
+    padding: 30px;
+    &--waiting {
+      display: none;
+      color: $red;
+
+    }
+  }
+  position: relative;
+  @include borderRadius(4px);
+  color: $blumine;
+  ul {
+    list-style: none;
+    padding-left: 0;
+    li {
+      color: $black;
+      font-size: 13px;
+      line-height: 22px;
+    }
+  }
+  a {
+    color: $azure;
+    @include transitionSingle(.3s ease);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  &--supporter {
+    display: none;
+    &--footer {
+      position: relative;
+      width: 100%;
+      padding: 20px;
+      background: url($assetUrl + 'account-supports-background.png') no-repeat;
+      background-size: cover;
+      h4 {
+        color: $azure !important;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      a {
+        display: block;
+        color: $white;
+        background: $azure;
+        @include borderRadius(4px);
+        padding: 7px 15px;
+        font-weight: 600;
+        margin-top: -8px;
+        @media screen and (max-width: 991px) {
+          margin-top: 5px;
+        }
+        text-align: center;
+        @include transitionSingle(.3s ease);
+        &:hover {
+          background: $white;
+          color: $azure;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  &--notSupporter {
+    display: none;
+    background: transparent;
+    a {
+      display: block;
+      color: $white;
+      background: $azure;
+      max-width: 500px;
+      font-size: 25px;
+      @include borderRadius(4px);
+      padding: 15px 30px;
+      font-weight: 600;
+      margin: 0 auto;
+      text-align: center;
+      @include transitionSingle(.3s ease);
+      &:hover {
+        background: $white;
+        color: $azure;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+&--is-supported, &--not-supported {
+  display: none;
+}

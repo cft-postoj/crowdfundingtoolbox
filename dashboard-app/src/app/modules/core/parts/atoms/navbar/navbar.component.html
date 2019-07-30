@@ -1,0 +1,10 @@
+<nav class="navbar navbar-dark">
+  <app-previous-page></app-previous-page>
+  <!-- Navbar content -->
+  <button type="button"
+          *ngFor="let item of navItems; let i = index"
+          [class]="(item.active) ? 'active' : ''"
+          (click)="showPage(i); setActive(item)">
+    {{item.title}}
+  </button>
+</nav>

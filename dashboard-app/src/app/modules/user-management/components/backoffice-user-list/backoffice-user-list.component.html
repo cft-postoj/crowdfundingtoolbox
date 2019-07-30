@@ -1,0 +1,31 @@
+<app-backoffice-users (isAdminChange)="isAdminRole($event)">
+  <div class="userSettings">
+    <h2>All backoffice users</h2>
+    <app-alert [(open)]="alertOpen" [message]="alertMessage" [type]="alertType"></app-alert>
+    <app-loading [isLoading]="loading"></app-loading>
+    <table class="table" *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Created at</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index;">
+          <td>{{i+1}}.</td>
+          <td>{{user.user.user_detail?.first_name}}</td>
+          <td>{{user.user.user_detail?.last_name}}</td>
+          <td>{{user.user.email}}</td>
+          <td>{{(user.role_id === 1) ? 'Administrator' : 'Manager'}}</td>
+          <td>{{user.created_at | date:'dd.MM.yyyy'}}</td>
+          <td><img class="deleteBackOfficeUser" title="Delete user" (click)="deleteUser(user.id)" src="../assets/images/icons/delete.svg"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</app-backoffice-users>

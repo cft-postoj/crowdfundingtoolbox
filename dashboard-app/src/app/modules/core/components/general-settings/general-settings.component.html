@@ -1,0 +1,196 @@
+<div class="active bg-overlay"></div>
+<div class="active settings d-flex">
+    <div class="settings--head">
+        <b>GENERAL PAGE SETTINGS</b>
+        <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close"
+              class="settings--close">
+        </span>
+
+    </div>
+    <ng-container *ngIf="loading">
+        <app-loading [isLoading]="loading"></app-loading>
+    </ng-container>
+
+    <ng-container *ngIf="!loading">
+        <div class="settings--body">
+            <div class="settings--body--content">
+                <div class="settings--card--wrapper">
+                    <div class="settings--card">
+                        <div class="settings--card--header row">
+                            <div class="col-sm-12">
+                                Colors
+                            </div>
+                        </div>
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div *ngFor="let color of generalSetting.colors; let i = index"
+                                     class="col-3 col-xxl-2 colors color-picker--fixed">
+                                    <div class="row">
+                                        <div class="col pr-0">
+                                            <input class="btn color-picker--custom"
+                                                   [style.background]="color"
+                                                   [cpPosition]="'left'"
+                                                   [cpMaxPresetColorsLength]="'25'"
+                                                   [(colorPicker)]="color"
+                                                   (colorPickerClose)="changeValueInArray(i , $event)"
+                                                   readonly/>
+                                        </div>
+                                        <div class="col-3 pl-2 flex-center">
+                                            <span title="Delete color"
+                                                  [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                                  [removeSVGAttributes]="['fill']" (click)="delete(i)"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                        <span class="add-button vertical-align" title="Add new color"
+                              [inlineSVG]="'/assets/images/icons/add.svg'"
+                              [removeSVGAttributes]="['fill']" (click)="addColor()"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper">
+                    <div class="settings--card">
+                        <div class="settings--card--header row">
+                            <div class="col-sm-12">
+                                Fonts
+                            </div>
+                        </div>
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <app-google-font-settings [selectedValues]="generalSetting.fonts"
+                                                              (selectedValuesChange)="updateValues($event)"></app-google-font-settings>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper">
+                    <div class="settings--card">
+                        <div class="settings--card--header row">
+                            <div class="col-12">
+                                Headline text
+                            </div>
+                        </div>
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-2 vertical-align">
+                                    Font
+                                </div>
+                                <div class="col-4">
+                                    <app-dropdown [items]="fontFamilyDropdownButtons"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'family'"
+                                                  [customFonts]="true"
+                                                  [(currentValue)]="generalSetting.font_settings_headline_text.fontFamily">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-2  vertical-align">
+                                    Weight
+                                </div>
+                                <div class="col-4">
+                                    <app-dropdown [items]="fontWeight"
+                                                  [class]="'classic default-border align-right'"
+                                                  [title]="'weight'"
+                                                  [(currentValue)]="generalSetting.font_settings_headline_text.fontWeight">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-2 vertical-align">
+                                    Color
+                                </div>
+                                <div class="col-4 color-picker--fixed color-picker--simple">
+                                    <input class="btn color-picker--custom"
+                                           [value]="generalSetting.font_settings_headline_text.color"
+                                           [style.background]="generalSetting.font_settings_headline_text.color"
+                                           [cpPosition]="'bottom'"
+                                           [cpPresetColors]="generalSetting.colors"
+                                           [(colorPicker)]="generalSetting.font_settings_headline_text.color"
+                                    />
+                                </div>
+                                <div class="col-2 vertical-align">
+                                    Size (px)
+                                </div>
+                                <div class="col-4">
+                                    <app-inputNumber
+                                            [(value)]="generalSetting.font_settings_headline_text.fontSize" numberOfFonts
+                                            [class]="'float-right'">
+                                    </app-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings--card--wrapper">
+                        <div class="settings--card">
+                            <div class="row settings--card--header">
+                                <div class="col-sm-12">
+                                    Additional text
+                                </div>
+                            </div>
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <div class="col-2 vertical-align">
+                                        Font
+                                    </div>
+                                    <div class="col-4">
+                                        <app-dropdown [items]="fontFamilyDropdownButtons"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'family'"
+                                                      [customFonts]="true"
+                                                      [(currentValue)]="generalSetting.font_settings_additional_text.fontFamily">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-2  vertical-align">
+                                        Weight
+                                    </div>
+                                    <div class="col-4">
+                                        <app-dropdown [items]="fontWeight"
+                                                      [class]="'classic default-border align-right'"
+                                                      [title]="'weight'"
+                                                      [(currentValue)]="generalSetting.font_settings_additional_text.fontWeight">
+                                        </app-dropdown>
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Color
+                                    </div>
+                                    <div class="col-4 color-picker--fixed color-picker--simple">
+                                        <input class="btn color-picker--custom"
+                                               [value]="generalSetting.font_settings_additional_text.color"
+                                               [style.background]="generalSetting.font_settings_additional_text.color"
+                                               [cpPosition]="'bottom'"
+                                               [cpPresetColors]="generalSetting.colors"
+                                               [(colorPicker)]="generalSetting.font_settings_additional_text.color"
+                                        />
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Size (px)
+                                    </div>
+                                    <div class="col-4">
+                                        <app-inputNumber
+                                                [(value)]="generalSetting.font_settings_additional_text.fontSize"
+                                                [class]="'float-right'">
+                                        </app-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="description text-center pb-3">
+                    New created campaigns inherit these settings. Changing in settings don't affect already created
+                    campaigns.
+                </div>
+
+            </div>
+        </div>
+    </ng-container>
+    <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+    <app-actions
+            class="actions"
+            (submit)="updateSettings()"
+            [submitting]="saving"
+            [hidePreviewButton]="'true'"></app-actions>
+</div>

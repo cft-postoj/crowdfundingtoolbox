@@ -1,0 +1,36 @@
+@import 'mixins';
+@import 'variables';
+:host {
+    position: absolute;
+    overflow: auto;
+    height: calc(100% - 60px);
+    width: 100%;
+}
+tr.list-items--item {
+    cursor: pointer;
+    overflow-x: hidden;
+    img.deleteUser {
+        cursor: pointer;
+    }
+    img.editUser {
+        cursor: pointer;
+        float: left;
+    }
+
+}
+td.actionTd, th.actionTd {
+    width: 70px;
+}
+td.status, th.status {
+    width: 90px;
+}
+th {
+    cursor: pointer;
+    @include transitionSingle(.3s ease);
+    &:hover {
+        color: $azure;
+    }
+    &.id {
+        width: 50px !important;
+    }
+}

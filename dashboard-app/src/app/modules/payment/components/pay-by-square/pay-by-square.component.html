@@ -1,0 +1,132 @@
+<div class="payBySquare">
+    <h2>Pay By Square</h2>
+    <hr>
+    <i>This payment method is available only for one-time payments.</i>
+    <app-alert
+            [(open)]="alertOpen"
+            [type]="alertType"
+            [message]="alertMessage"></app-alert>
+    <div class="text-center" *ngIf="loading">
+        <img src="../assets/images/loading.svg"/>
+    </div>
+    <form [formGroup]="paymentForm" (submit)="storePayBySquareData()" *ngIf="!loading">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12">
+                <h4>One-time payment</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-4">
+                        <label for="enabledOneTime">
+                            {{(checkedOneTime) ? 'Enabled:' : 'Disabled:'}}
+                        </label>
+                        <app-switcher
+                                [id]="'oneTime'"
+                                [checked]="checkedOneTime"
+                                (checkedChange)="changeCheckedOneTime($event)"
+                                id="enabledOneTime"></app-switcher>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="accountNumberOneTime">
+                            Bank account number (IBAN form):
+                        </label>
+                        <input
+                                type="text"
+                                formControlName="accountNumberOneTime"
+                                data-lpignore="true"
+                                [appDisableControl]="!checkedOneTime"
+                                [value]="payBySquareData.oneTimePayment.accountNumber"
+                                id="accountNumberOneTime"
+                                required/>
+
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="specificSymbolOneTime">
+                            Specific symbol:
+                        </label>
+                        <input
+                                type="text"
+                                formControlName="specificSymbolOneTime"
+                                data-lpignore="true"
+                                [appDisableControl]="!checkedOneTime"
+                                [value]="payBySquareData.oneTimePayment.specificSymbol"
+                                id="specificSymbolOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="constantSymbolOneTime">
+                            Constant symbol:
+                        </label>
+                        <input
+                                type="text"
+                                formControlName="constantSymbolOneTime"
+                                data-lpignore="true"
+                                [appDisableControl]="!checkedOneTime"
+                                [value]="payBySquareData.oneTimePayment.constantSymbol"
+                                id="constantSymbolOneTime"/>
+
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="swiftOneTime">
+                            SWIFT:
+                        </label>
+                        <input
+                                type="text"
+                                formControlName="swiftOneTime"
+                                data-lpignore="true"
+                                [appDisableControl]="!checkedOneTime"
+                                [value]="payBySquareData.oneTimePayment.swift"
+                                id="swiftOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="bankNameOneTime">
+                            Bank name:
+                        </label>
+                        <input
+                                type="text"
+                                formControlName="bankNameOneTime"
+                                data-lpignore="true"
+                                [appDisableControl]="!checkedOneTime"
+                                [value]="payBySquareData.oneTimePayment.bankName"
+                                id="bankNameOneTime"/>
+
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6">
+                        <label for="bankAccountOwnerOneTime">
+                            Bank account owner:
+                        </label>
+                        <input
+                                type="text"
+                                formControlName="bankAccountOwnerOneTime"
+                                data-lpignore="true"
+                                [appDisableControl]="!checkedOneTime"
+                                [value]="payBySquareData.oneTimePayment.accountOwner"
+                                id="bankAccountOwnerOneTime"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="paymentNoteOneTime" class="textarea">
+                            Payment notes: *
+                        </label>
+                        <textarea
+                                formControlName="paymentNoteOneTime"
+                                id="paymentNoteOneTime"
+                                [value]="payBySquareData.oneTimePayment.paymentNote"
+                                [appDisableControl]="!checkedOneTime">
+                        </textarea>
+
+                        <i>* payment notes is showed in monetization widget and in email with payment details.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit">
+            Confirm
+        </button>
+    </form>
+</div>

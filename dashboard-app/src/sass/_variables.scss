@@ -13,8 +13,34 @@ $gullGray: #9BAFBC;
 $cararra: #F2F1EF;
 $alto: #DDDDDD;
 $green: #10BE16;
+$red: #FF0000;
 
 $gray-themecolor: #F4F7F9;
 
 $sidebar-fontcolor: #B0AEAF;
 $sidebar-headercolor: #2E3131;
+
+$xxl: 1440px;
+
+/* set the overriding variables */
+$grid-breakpoints: (
+        xxxs: 0,
+        xxs: 320px,
+        xs: 568px,
+        sm: 667px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1440px,
+);
+
+$container-max-widths: (
+        xxxs: 0,
+        xxs: 320px,
+        xs: 568px,
+        sm: 667px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1440px,
+);

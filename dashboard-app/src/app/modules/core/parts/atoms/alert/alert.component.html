@@ -1,0 +1,8 @@
+<ngb-alert
+        *ngIf="open"
+        [id]="(fixed) ? 'fixed' : ''"
+        [type]="type"
+        (close)="closeAlert()"
+>
+    <span [innerHTML]="message"></span>
+</ngb-alert>

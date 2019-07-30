@@ -1,0 +1,26 @@
+<app-breadcrumbs
+    [pageTitle]="'Campaign stats'">
+  <ngx-select-dropdown [(ngModel)]="model"
+                       [multiple]="true" [config]="config"
+                       [options]="dropdownOptions"></ngx-select-dropdown>
+</app-breadcrumbs>
+<table class="list-items list-items--orderable">
+  <thead>
+  <tr>
+    <th app-table-header *ngFor="let column of model"
+        [column]="column" [(model)]="model"
+        (modelChange)="sortCampaignsStats($event)" [hide]="['filters']"></th>
+  </tr>
+  <tr>
+    <th app-table-header *ngFor="let column of model"
+        [column]="column" [(model)]="model"
+        (modelChange)="sortCampaignsStats($event)" [hide]="['title']"></th>
+  </tr>
+  </thead>
+  <tr *ngFor="let item of sortedCampaignsStats" class="list-items--item" [ngClass]="{'blur':!item.active}">
+    <td *ngFor="let column of model" class="pointer">
+      {{item[column.value_name]}}
+    </td>
+  </tr>
+</table>
+
