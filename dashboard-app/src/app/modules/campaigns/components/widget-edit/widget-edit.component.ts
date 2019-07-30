@@ -134,7 +134,9 @@ export class WidgetEditComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     ngOnDestroy() {
-        //this.subcriptions.unsubscribe();
+        if (this.subcriptions !== undefined) {
+            this.subcriptions.unsubscribe();
+        }
     }
 
     closeEditWindow() {

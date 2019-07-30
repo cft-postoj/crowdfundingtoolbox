@@ -21,7 +21,7 @@ function getWidgets(apiUrl) {
 
     //get article data
     //customize for your page to get info about currently read article and send those information to backend
-    var isArticle = Number(location.href.split('/')[3])!==0 && Number.isInteger(Number(location.href.split('/')[3]))
+    var isArticle = Number(location.href.split('/')[3]) !== 0 && Number.isInteger(Number(location.href.split('/')[3]))
     if (isArticle) {
         var articleId = +location.href.split('/')[3];
         var articleAuthor = document.getElementById('cr0wdfundingToolbox__article-author');
@@ -43,6 +43,9 @@ function getWidgets(apiUrl) {
         requestData
     );
 
+    let popupIsActive = false;
+    let fixedIsActive = false;
+
     let xhttp = new XMLHttpRequest();
     xhttp.responseType = 'json';
     xhttp.onreadystatechange = function () {
@@ -61,6 +64,8 @@ function getWidgets(apiUrl) {
 
                     switch (el.widget_type.method) {
                         case 'sidebar':
+                            console.log('HEREEE')
+                            console.log(inlineScript);
                             scriptElement.appendChild(inlineScript);
                             if (sidebarPlaceholder != null) {
                                 sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
@@ -72,37 +77,21 @@ function getWidgets(apiUrl) {
                             break;
                         case 'leaderboard':
                             // TODO fix this -- error when not script included (not monetization widget)
-                            leaderboardPlaceholder.appendChild(inlineScript);
                             if (leaderboardPlaceholder != null) {
-                                leaderboardPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
-                                leaderboardPlaceholder.dataset.showId = el.show_id;
-                                leaderboardPlaceholder.appendChild(scriptElement);
-                            }
-                            break;
-                        case 'landing':
-                            scriptElement.appendChild(inlineScript);
-                            if (landingPlaceholder != null) {
-                                landingPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
-                                landingPlaceholder.dataset.showId = el.show_id;
-                                landingPlaceholder.appendChild(scriptElement);
-                            }
-                            break;
-                        case 'fixed':
-                            (fixedPlaceholder != null) &&
-                            (fixedPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
-                            if (document.querySelector('.cr0wdWidgetContent--closeWidget') !== null) {
-                                document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
-                                    fixedPlaceholder.style.display = 'none';
-                                });
+                                setTimeout(() => {
+                                    leaderboardPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                    leaderboardPlaceholder.dataset.showId = el.show_id;
+                                    leaderboardPlaceholder.appendChild(scriptElement);
+                                }, 500);
                             }
                             break;
                         case 'popup':
                             if (isPopupEnableToVisit()) {
                                 console.log('bbbb');
                                 if (popupPlaceholder != null) {
-                                    console.log('aaa');
-                                    console.log(el.response[cr0wdGetDeviceType()]);
+                                    popupIsActive = true;
                                     popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                    fixedPlaceholder.style.display = 'none';
                                 } else {
                                     console.log('test');
                                 }
@@ -111,7 +100,20 @@ function getWidgets(apiUrl) {
                                         popupPlaceholder.style.display = 'none';
                                     });
                                 }
-                                setVisitingPopupTime();
+                                // Uncomment this if you want to set popup time to 30 minutes after show
+                                //setVisitingPopupTime();
+
+                            }
+                            break;
+                        case 'fixed':
+                            if (fixedPlaceholder != null && !popupIsActive) {
+                                (fixedPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                                fixedIsActive = true;
+                            }
+                            if (document.querySelector('.cr0wdWidgetContent--closeWidget') !== null) {
+                                document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
+                                    fixedPlaceholder.style.display = 'none';
+                                });
                             }
                             break;
                         case 'locked':
@@ -126,11 +128,24 @@ function getWidgets(apiUrl) {
                             (customPlaceholder != null) &&
                             (customPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
                             break;
+                        case 'landing':
+                            console.log('HEREEE')
+                            console.log(inlineScript);
+                            scriptElement.appendChild(inlineScript);
+                            if (landingPlaceholder != null) {
+                                console.log(el.widget_type.method);
+                                landingPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                landingPlaceholder.dataset.showId = el.show_id;
+                                landingPlaceholder.appendChild(scriptElement);
+                            }
+                            break;
                         default:
                             break;
                     }
                 }
                 registerLoginButtons();
+
+                // TODO: FAIL -- do popup widgetu sa zaznamenava landing
             }
         }
     };

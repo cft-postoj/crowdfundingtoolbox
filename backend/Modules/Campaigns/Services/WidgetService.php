@@ -2810,8 +2810,7 @@ class WidgetService implements WidgetServiceInterface
                 Widget::inRandomOrder()
                     ->get()
                     ->where('active', true)
-                    ->whereIn('campaign_id', $campaignIds)
-                    ->whereIn('widget_type_id', [2, 3, 5]);
+                    ->whereIn('campaign_id', $campaignIds);
             $onlyThreeWidgets = array();
             $usedWidgetIds = array();
 
@@ -2844,8 +2843,7 @@ class WidgetService implements WidgetServiceInterface
                 Widget::inRandomOrder()
                     ->get()
                     ->where('active', true)
-                    ->whereIn('campaign_id', $campaignIds)
-                    ->whereIn('widget_type_id', [2, 3, 5]);
+                    ->whereIn('campaign_id', $campaignIds);
             $onlyThreeWidgets = array();
             $usedWidgetIds = array();
             foreach ($randomResponse as $rand) {
@@ -2864,7 +2862,7 @@ class WidgetService implements WidgetServiceInterface
     public function getWidgetsByCampaginReduced($campaign)
     {
         return Widget::all()
-            ->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]);
+            ->where('campaign_id', $campaign->id);
     }
 
     /**
@@ -2881,8 +2879,7 @@ class WidgetService implements WidgetServiceInterface
             Widget::inRandomOrder()
                 ->get()
                 ->where('active', true)
-                ->whereIn('campaign_id', $campaignIds)
-                ->whereIn('widget_type_id', [1, 2, 3, 4, 5, 6]);
+                ->whereIn('campaign_id', $campaignIds);
         $onlyThreeWidgets = array();
         $usedWidgetIds = array();
         $user = Auth::user();

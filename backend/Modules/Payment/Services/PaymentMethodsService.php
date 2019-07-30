@@ -27,9 +27,9 @@ class PaymentMethodsService
             Response::HTTP_OK);
     }
 
-    public function getBankOption($frequency)
+    public function getBankOption($frequency, $methodId)
     {
-        $bankOption = $this->paymentMethodsRepository->getMethodById(1);
+        $bankOption = $this->paymentMethodsRepository->getMethodById($methodId);
         if ($frequency == 'monthly') {
             return json_decode($bankOption->paymentOption->payment_settings)->monthlyPayment;
         } else {

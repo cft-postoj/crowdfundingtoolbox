@@ -43,10 +43,11 @@ class DonationService
     //if request is from dashboard, mock this function entirely
     public function initializeBackend($data, $url)
     {
-        $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
+        $bankOption = $this->paymentMethodsService->getBankOption($data['frequency'], 1);
+        $qrCodeOption = $this->paymentMethodsService->getBankOption($data['frequency'], 3);
         $bankButtons = $this->bankButtonService->getBankButtons();
-        $qrCode = $this->payBySquareService->getQRCodeFromData('0001', '20', $data['frequency']);
         if (strpos($url, env('CFT_URL')) === 0) {
+            $qrCode = $this->payBySquareService->getQRCodeFromData('0001', '20', $data['frequency'], $qrCodeOption->accountNumber);
             return array(
                 'variable_symbol' => '0001',
                 'bank_account' => $bankOption->accountNumber,
@@ -63,7 +64,8 @@ class DonationService
     {
         try {
             // TODO: otestovat
-            $bankOption = $this->paymentMethodsService->getBankOption($data['frequency']);
+            $bankOption = $this->paymentMethodsService->getBankOption($data['frequency'], 1);
+            $qrCodeOption = $this->paymentMethodsService->getBankOption($data['frequency'], 3);
             $trackingShow = $this->trackingService->getTrackingShowById($data['show_id']);
             $user = $this->portalUserService->registerDuringDonation($data['show_id'], $data['email'], $trackingShow->visit['user_cookie'], $data['terms'], $bankOption->accountNumber);
             $bankButtons = $this->bankButtonService->getBankButtons();
@@ -76,7 +78,7 @@ class DonationService
                 'is_monthly_donation' => $data['frequency'] == 'monthly',
                 'amount_initialized' => $data['amount']
             ]);
-            $qrCode = $this->payBySquareService->getQRCodeFromData($user->portalUser->variableSymbol->variableSymbol, $data['amount'], $data['frequency']);
+            $qrCode = $this->payBySquareService->getQRCodeFromData($user->portalUser->variableSymbol->variable_symbol, $data['amount'], $data['frequency'], $qrCodeOption->accountNumber);
             return array(
                 'variable_symbol' => $user->portalUser->variableSymbol->variable_symbol,
                 'bank_account' => $bankOption->accountNumber,
