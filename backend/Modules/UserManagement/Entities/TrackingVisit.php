@@ -27,7 +27,7 @@ class TrackingVisit extends Model
     }
     public function article()
     {
-        return $this->belongsTo('\Modules\Campaigns\Entities\Article','article_id','article_id');
+        return $this->belongsTo('\Modules\Campaigns\Entities\Article','article_id');
     }
 
 }

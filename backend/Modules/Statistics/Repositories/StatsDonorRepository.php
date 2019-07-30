@@ -100,6 +100,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('variableSymbol')
             ->with('userPaymentOptions')
             ->with('firstDonation.widget.campaign')
+            ->with('lastUserDonation.paymentMethod')
             ->get();
     }
 
@@ -197,6 +198,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
             ->with('firstDonation.widget.campaign')
+            ->with('lastUserDonation.paymentMethod')
             ->with('userPaymentOptions')
             ->get();
     }
@@ -233,6 +235,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('variableSymbol')
             ->with('firstDonation.widget.campaign')
             ->with('userPaymentOptions')
+            ->with('lastUserDonation.paymentMethod')
             ->whereDate('last_donation_at', '<=', $stopAfterDate);
         if ($limit !== null) {
             $resultQuery = $resultQuery->limit($limit);
@@ -273,6 +276,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('variableSymbol')
             ->with('firstDonation.widget.campaign')
             ->with('userPaymentOptions')
+            ->with('lastUserDonation.paymentMethod')
             ->whereDate('last_donation_at', '<=', $stopAfterDate)->count();
     }
 
@@ -309,6 +313,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('variableSymbol')
             ->with('userPaymentOptions')
             ->with('firstDonation.widget.campaign')
+            ->with('lastUserDonation.paymentMethod')
             ->where('lastDonation.status', 'waiting_for_payment');
         if ($limit !== null) {
             $resultQuery = $resultQuery->limit($limit);
@@ -344,6 +349,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
                 $join->on('portal_users.id', '=', 'first_donation.portal_user_id');
             })
             ->with('userPaymentOptions')
+            ->with('lastUserDonation.paymentMethod')
             ->where('lastDonation.status', 'waiting_for_payment');
 
         return $resultQuery->count();
@@ -406,6 +412,7 @@ class StatsDonorRepository implements StatsDonorRepositoryInterface
             ->with('isMonthlyDonor')
             ->with('variableSymbol')
             ->with('firstDonation.widget.campaign')
+            ->with('lastUserDonation.paymentMethod')
             ->get();
     }
 

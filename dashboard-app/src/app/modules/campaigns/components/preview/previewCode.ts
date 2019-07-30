@@ -133,6 +133,8 @@ export const globalStyles = `
         left: 0;
         right: 0;
         margin: auto;
+        max-width: 100%;
+        max-height: 100%;
      }
     [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 select {
         position: relative;

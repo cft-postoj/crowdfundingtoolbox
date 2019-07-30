@@ -60,6 +60,8 @@ class PortalUserSeeder extends Seeder
 
             $userDetail = factory(UserDetail::class)->make();
             $userDetail['user_id'] = $user->id;
+            $userDetail['created_at'] = $this->randomDate;
+            $userDetail['updated_at'] = $this->randomDate;
             $userDetail->save();
 
 //            $user->userDetail()->factory(User::class, 10)->create();

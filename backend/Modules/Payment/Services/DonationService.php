@@ -44,7 +44,10 @@ class DonationService
     public function initializeBackend($data, $url)
     {
         $bankOption = $this->paymentMethodsService->getBankOption($data['frequency'], 1);
-        $qrCodeOption = $this->paymentMethodsService->getBankOption($data['frequency'], 3);
+        $qrCodeOption = $bankOption;
+        if ($data['frequency'] !== 'monthly') {
+            $qrCodeOption = $this->paymentMethodsService->getBankOption($data['frequency'], 3);
+        }
         $bankButtons = $this->bankButtonService->getBankButtons();
         if (strpos($url, env('CFT_URL')) === 0) {
             $qrCode = $this->payBySquareService->getQRCodeFromData('0001', '20', $data['frequency'], $qrCodeOption->accountNumber);
@@ -65,7 +68,10 @@ class DonationService
         try {
             // TODO: otestovat
             $bankOption = $this->paymentMethodsService->getBankOption($data['frequency'], 1);
-            $qrCodeOption = $this->paymentMethodsService->getBankOption($data['frequency'], 3);
+            $qrCodeOption = $bankOption;
+            if ($data['frequency'] !== 'monthly') {
+                $qrCodeOption = $this->paymentMethodsService->getBankOption($data['frequency'], 3);
+            }
             $trackingShow = $this->trackingService->getTrackingShowById($data['show_id']);
             $user = $this->portalUserService->registerDuringDonation($data['show_id'], $data['email'], $trackingShow->visit['user_cookie'], $data['terms'], $bankOption->accountNumber);
             $bankButtons = $this->bankButtonService->getBankButtons();

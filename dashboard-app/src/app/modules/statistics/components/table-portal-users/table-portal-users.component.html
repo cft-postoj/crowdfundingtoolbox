@@ -61,8 +61,8 @@
                     <th app-table-header *ngIf="tableService.activeColumn(model,'amount_sum')"
                         [column]="tableService.getColumnByValueName(model,'amount_sum')"
                         [(model)]="model" (modelChange)="sortTable()"></th>
-                    <th app-table-header *ngIf="tableService.activeColumn(model,'payment_type')"
-                        [column]="tableService.getColumnByValueName(model,'payment_type')"
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'last_user_donation.payment_method.method_name')"
+                        [column]="tableService.getColumnByValueName(model,'last_user_donation.payment_method.method_name')"
                         [(model)]="model"
                         (modelChange)="sortTable()"></th>
                     <th app-table-header *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')"
@@ -117,12 +117,12 @@
                     <td *ngIf="tableService.activeColumn(model,'amount_sum')">
                         {{portalUser.amount_sum | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
                     </td>
-                    <td *ngIf="tableService.activeColumn(model,'payment_type')">
-                        {{paymentMehotd(portalUser.first_donation?.payment_method)}}
+                    <td *ngIf="tableService.activeColumn(model,'last_user_donation.payment_method.method_name')">
+                        {{portalUser.last_user_donation.payment_method.method_name}}
                     </td>
-                    <td [title]="portalUser.created_at | date:'dd.MM.yyyy HH:mm:ss'"
+                    <td [title]="portalUser.user.user_detail.created_at | date:'dd.MM.yyyy HH:mm:ss'"
                         *ngIf="tableService.activeColumn(model,'user.user_detail.created_at')">
-                        {{portalUser.created_at | date:'dd.MM.yyyy'}}
+                        {{portalUser.user.user_detail.created_at| date:'dd.MM.yyyy'}}
                     </td>
                     <td [title]="portalUser.last_donation_at | date:'dd.MM.yyyy HH:mm:ss'"
                         *ngIf="tableService.activeColumn(model,'last_donation_at')">
