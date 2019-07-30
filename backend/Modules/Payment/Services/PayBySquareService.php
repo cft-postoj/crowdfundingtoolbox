@@ -69,9 +69,9 @@ class PayBySquareService
     }
 
     //$frequency: one-time or monthly
-    public function getQRCodeFromData($variableSymbol, $amount, $frequency)
+    public function getQRCodeFromData($variableSymbol, $amount, $frequency, $iban)
     {
-
+        $this->iban = $iban;
         //http://www.sbaonline.sk/files/subory/projekty/qr-kod/bysquare-payspecifications-1.1.0.pdf
         //https://github.com/prog/php-bsqr
 
@@ -81,11 +81,12 @@ class PayBySquareService
             $payment->amount  = round($amount, 2, PHP_ROUND_HALF_UP);
 
             $payment->currencyCode = "EUR";
+            $payment->note = 'pay-by-square';
             $payment->variableSymbol = $variableSymbol;
             // $payment->constantSymbol = $invoice->constant_symbol;
             $payment->bankAccounts[] = call_user_func(function() {
                 $bankAccount = new BankAccount();
-                $bankAccount->iban = 'SK52 1100 0000 0029 4346 0300';
+                $bankAccount->iban = $this->iban;
                 return $bankAccount;
             });
             return $payment;

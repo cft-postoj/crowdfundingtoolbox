@@ -64,6 +64,14 @@ class PortalUser extends Model
             ->orderBy('created_at', 'ASC');
     }
 
+    public function lastUserDonation()
+    {
+        return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')
+            ->whereNotNull('payment_id')
+            ->with('payment')
+            ->orderBy('created_at', 'DESC');
+    }
+
     public function last()
     {
         return $this->hasOne('Modules\Payment\Entities\Donation', 'portal_user_id', 'id')

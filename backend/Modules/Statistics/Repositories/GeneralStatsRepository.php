@@ -4,6 +4,7 @@
 namespace Modules\Statistics\Repositories;
 
 use Illuminate\Support\Facades\DB;
+use Modules\Campaigns\Entities\Article;
 use Modules\Campaigns\Entities\Campaign;
 use Modules\Payment\Entities\Donation;
 use Modules\UserManagement\Entities\TrackingShow;
@@ -15,7 +16,7 @@ class GeneralStatsRepository
     {
         return TrackingVisit::query()
             ->whereNotNull('article_id')
-            ->whereRaw('LENGTH(article_id) < 10 AND LENGTH(article_id) > 0')// only 10 characters (for ids)
+            ->with('article')
             ->whereDate('created_at', '>=', $from)
             ->whereDate('created_at', '<=', $to)
             ->with('show')

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {DonorStats} from '../../models/donor-stats';
 import {DonorService} from '../../services/donor.service';
 import {Routing} from '../../../../constants/config.constants';
@@ -12,13 +12,14 @@ import moment from 'moment/src/moment';
 import {ModalComponent} from '../../../core/parts/atoms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {HelpersService} from '../../../core/services/helpers.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-table-portal-users',
     templateUrl: './table-portal-users.component.html',
     styleUrls: ['./table-portal-users.component.scss']
 })
-export class TablePortalUsersComponent implements OnInit, OnChanges {
+export class TablePortalUsersComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() public statsDateSelected;
     @Input() public from;
@@ -36,6 +37,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     @Input() public isDashboardPreview: boolean = false;
 
     public showDelete: boolean = false;
+    private subscribtion: Subscription;
 
     exportCsvLoading: boolean = false;
 
@@ -103,7 +105,7 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             filter: new Filter()
         });
         this.model.columns.push({
-            value_name: 'payment_type',
+            value_name: 'last_user_donation.payment_method.method_name',
             description: 'Type',
             type: 'none',
             filter: new Filter()
@@ -189,7 +191,6 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(this.from)
         this.getUsers();
     }
 
@@ -197,11 +198,9 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
     getUsers() {
         if (this.from !== undefined && this.to !== undefined) {
             this.loading = true;
-            this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType, this.limit).subscribe(
+            this.subscribtion = this.donorService.getDonors(this.from, this.to, this.monthly, this.dataType, this.limit).subscribe(
                 result => {
                     this.portalUsers = result.donors;
-                    console.log(result);
-                    console.log('HERE')
                     this.portalUsersCount = result.count;
                     this.sortedPortalUsers = Object.assign([], this.portalUsers);
                     console.log(result)
@@ -273,6 +272,12 @@ export class TablePortalUsersComponent implements OnInit, OnChanges {
             return false;
         }
         return true;
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscribtion !== undefined) {
+            this.subscribtion.unsubscribe();
+        }
     }
 
 }

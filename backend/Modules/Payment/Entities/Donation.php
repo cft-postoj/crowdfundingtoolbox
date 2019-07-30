@@ -47,8 +47,13 @@ class Donation extends Model
     }
 
     public function trackingShow()
-        {
-        return $this->belongsTo('\Modules\UserManagement\Entities\TrackingShow','tracking_show_id');
+    {
+        return $this->belongsTo('\Modules\UserManagement\Entities\TrackingShow', 'tracking_show_id');
+    }
+
+    public function paymentMethod()
+    {
+        return $this->hasOne('\Modules\Payment\Entities\PaymentMethod', 'id', 'payment_method');
     }
 
 }

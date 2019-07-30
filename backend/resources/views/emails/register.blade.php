@@ -8,6 +8,6 @@
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', $portal_url . '/moj-ucet?generatedResetToken=' . $token . '&loggedIn=true')
+@section('buttonUrl', env('CFT_PORTAL_URL') . '/moj-ucet?generatedResetToken=' . $token . '&loggedIn=true')
 @section('buttonText', 'My account')
 @section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')

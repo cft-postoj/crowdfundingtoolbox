@@ -326,7 +326,7 @@ export function createBankButtons(monetizationEl, bankButtonsData) {
             bankButtonsWrapper.insertAdjacentHTML('beforeEnd',
                 `<div class="bank-button__container"> 
                         <div class="bank-button" data-bank-link="${bankButtonsData[i].redirect_link}" onclick="parent.setBankButton(this)">
-                            <img src="${bankButtonsData[i].image.url}" alt="${bankButtonsData[i].title}">
+                            <img src="${bankButtonsData[i].image.url}" alt="${bankButtonsData[i].title}" style="max-height: 100%; max-width: 100%;">
                         </div> 
                   </div>`);
         }

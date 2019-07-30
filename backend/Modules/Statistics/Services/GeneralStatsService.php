@@ -63,7 +63,7 @@ class GeneralStatsService
                         }
                     }
                     $row = array(
-                        'title' => $article->title,
+                        'title' => $article->article->title,
                         'url' => $article->url,
                         'visits' => $visits,
                         'amount' => $amount,

@@ -8,6 +8,6 @@
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', $portal_url . '/moj-ucet#ucet?generatedResetToken=' . $token)
+@section('buttonUrl', env('CFT_PORTAL_URL') . '/moj-ucet#ucet?generatedResetToken=' . $token)
 @section('buttonText', 'Reset your password')
 @section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')

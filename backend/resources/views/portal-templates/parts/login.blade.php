@@ -27,7 +27,7 @@
     <div class="cft--loginDropdown--register">
         <b>Not registered yet?</b>
         <p>Lorem ipsum some sign in text...</p>
-        <a href="{{$portal_register_url}}" target="_blank">
+        <a href="{{env('CFT_PORTAL_REGISTER_URL')}}" target="_blank">
             Register
         </a>
     </div>

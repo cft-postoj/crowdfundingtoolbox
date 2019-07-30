@@ -390,7 +390,7 @@ class TestDashboardSeeder extends Seeder
 
             // for case when donation would be older than user registration date
             if (Carbon::createFromFormat('Y-m-d H:i:s', $userCreatedAt) > $donationDate) {
-                $donationDate = $userCreatedAt;
+                $donationDate = Carbon::createFromFormat('Y-m-d H:i:s', $userCreatedAt)->addMinutes(rand(1, 60));
             }
 
             if ($tracking['article_id'] == null) {
