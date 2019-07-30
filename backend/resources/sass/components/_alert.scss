@@ -1,0 +1,22 @@
+&--alert {
+  display: none;
+  opacity: 0;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  margin: 15px 0;
+  //cursor: pointer;
+  @include transitionSingle(.3s);
+  &.error {
+    background: $fairPink;
+    color: $brightRed;
+  }
+  &.success {
+    background: $green;
+    color: $white;
+  }
+  &.active {
+    display: block;
+    opacity: 1;
+  }
+}

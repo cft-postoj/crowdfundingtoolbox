@@ -1,0 +1,204 @@
+<app-alert [(open)]="alertOpen" [fixed]="false" [type]="alertType" [message]="alertMessage"></app-alert>
+<div class="user-detail d-flex flex-column" *ngIf="!loading">
+    <div class="row">
+        <div class="col-12">
+            <h4>
+                Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:
+                <span class="user-detail--lastUpdated"
+                      [innerHTML]="updatedBy + (updatedByDate | date:'dd.MM.yyyy - HH:mm:ss')">
+                </span>
+                <button type="button" class="user-detail--edit" title="Edit portal user" (click)="showEditModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g id="edit_24px" transform="translate(-1816 -136)">
+                            <rect id="safe_area" data-name="safe area" width="24" height="24"
+                                  transform="translate(1816 136)" fill="#f2f1ef" opacity="0"/>
+                            <g id="icon" transform="translate(246 20)">
+                                <path id="Path_30" data-name="Path 30"
+                                      d="M0,12.621V16H3.378l9.778-9.867L9.778,2.755ZM15.733,3.555a.859.859,0,0,0,0-1.244L13.689.266a.859.859,0,0,0-1.244,0l-1.6,1.6,3.378,3.378Z"
+                                      transform="translate(1574 120.001)" fill="#0074E9"/>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+            </h4>
+        </div>
+    </div>
+    <ng-container *ngIf="user">
+        <div class="row">
+            <div class="col-6 col-xl">
+                <div class="card card--small">
+                    <div class="card-header card-header--white">
+                        <div class="col-12 text-center">
+                            <h4>General info</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> First name:</div>
+                                    <div class="col-6"> {{user.user_detail.first_name}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Last name:</div>
+                                    <div class="col-6"> {{user.user_detail.last_name}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Email:</div>
+                                    <div class="col-6"> {{user.email}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Username:</div>
+                                    <div class="col-6"> {{user.username}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Telephone:</div>
+                                    <div class="col-6"> {{user.user_detail.telephone}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-6 col-xl">
+                <div class="card card--small">
+                    <div class="card-header card-header--white">
+                        <div class="col-12 text-center">
+                            <h4>Address</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Street:</div>
+                                    <div class="col-6"> {{user.user_detail.street}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> House number:</div>
+                                    <div class="col-6"> {{user.user_detail.house_number}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> ZIP:</div>
+                                    <div class="col-6"> {{user.user_detail.zip}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> City:</div>
+                                    <div class="col-6"> {{user.user_detail.city}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Country:</div>
+                                    <div class="col-6"> {{user.user_detail.country}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-xl">
+                <div class="card card--small">
+                    <div class="card-header card-header--white">
+                        <div class="col-12 text-center">
+                            <h4>Payments</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> IBAN:</div>
+                                    <div class="col-6"> {{user.portal_user.user_payment_options?.bank_account_number}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Card number:</div>
+                                    <div class="col-6"> {{user.portal_user.user_payment_options?.payment_card_number}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Card expiration:</div>
+                                    <div class="col-6">
+                                        {{user.portal_user.user_payment_options?.payment_card_expiration_date}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Variable symbol:</div>
+                                    <div class="col-6"> {{user.portal_user.variable_symbol.variable_symbol}}</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Monthly donor:</div>
+                                    <div class="col-6">
+                                        <app-status [active]="user.portal_user.is_monthly_donor !== null"></app-status>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6 text-right"> Last donation:</div>
+                                    <div class="col-6"
+                                         [title]="user.portal_user.last?.created_at | date:'dd.MM.yyyy - HH:mm:ss'">
+                                        {{user.portal_user.last?.created_at | date:'dd.MM.yyyy' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <app-exlude-user-from-targeting
+            [excluded]="user.portal_user.exclude_from_campaign !== null"
+            [excludingReason]="(user.portal_user.exclude_from_campaign !== null) ? user.portal_user.exclude_from_campaign.reason_notes : ''"
+            (excludedUserEmit)="updatedExcluded($event)"
+            [portalUserId]="user.portal_user.id"
+    ></app-exlude-user-from-targeting>
+
+
+    <br/>
+
+    <div class="row userNotes">
+        <div class="col">
+            <b>User notes:</b> <img src="../assets/images/icons/edit.svg"
+                                    [title]="(user.portal_user.notes == null) ? 'Add notes' : 'Edit notes'"
+                                    (click)="showEditModal()"><br/>
+            <p [innerHTML]="(user.portal_user.notes == null)
+            ? '<i>This user cannot have any notes yet.</i>'
+            : '<span>' + user.portal_user.notes + '</span>'"></p>
+        </div>
+    </div>
+
+</div>
+
+<app-loading [isLoading]="loading"></app-loading>
+<app-modal-full-size class="active bg-overlay" *ngIf="modalOpened" [(open)]="modalOpened">
+    <app-edit-portal-user [userData]="user" (updatedEmit)="updatedUserDetails($event)"></app-edit-portal-user>
+</app-modal-full-size>

@@ -1,0 +1,33 @@
+@import 'mixins';
+@import 'variables';
+
+:host {
+    position: absolute;
+    overflow: auto;
+    width: 100%;
+}
+tr.list-items--item {
+    cursor: pointer;
+}
+
+th {
+    cursor: pointer;
+    @include transitionSingle(.3s ease);
+    &:hover {
+        color: $azure;
+    }
+    &.id {
+        width: 50px !important;
+    }
+}
+::ng-deep td.delete, ::ng-deep th.delete {
+    text-align: right;
+    width: 40px;
+    img {
+        cursor: pointer;
+    }
+}
+
+::ng-deep .autoHeight {
+    min-height: 500px;
+}

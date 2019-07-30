@@ -1,0 +1,31 @@
+@import 'variables';
+@import 'classes';
+@import 'mixins';
+
+.list-items--item {
+    transition: 0.3s all;
+    &--action {
+        margin: 0 3px;
+        cursor: pointer;
+        svg g path {
+            @include transitionSingle(.3s ease);
+        }
+        &:hover {
+            svg g path {
+                fill: $azure;
+            }
+        }
+    }
+    .pointer {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    ::ng-deep .targeting {
+        cursor: pointer;
+        @include transitionSingle(.3s ease);
+        &:hover {
+            color: $azure;
+        }
+    }
+}

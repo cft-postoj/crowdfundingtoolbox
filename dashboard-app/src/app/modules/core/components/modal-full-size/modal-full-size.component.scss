@@ -1,0 +1,25 @@
+.preview {
+    display: block;
+    position: absolute;
+    width: 90%;
+    top: 5%;
+    height: 80%;
+    left: 5%;
+    z-index: 99;
+    background: white;
+    border: 1px transparent;
+    border-radius: 4px;
+    color: #8AA1B1;
+    font-size: 14px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    .btn-close {
+        position: absolute;
+        right: -14px;
+        top: -14px;
+        cursor: pointer;
+        z-index: 9999;
+
+    }
+}
+

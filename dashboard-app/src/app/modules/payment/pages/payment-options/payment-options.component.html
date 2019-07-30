@@ -1,0 +1,15 @@
+
+<div class="paymentOptions">
+    <div>
+        <p>Here you can set payment methods and connections for all widget payments from your portal.</p>
+        <app-payment-methods-list
+                (modalContentEmit)="showModal($event)"></app-payment-methods-list>
+    </div>
+</div>
+<app-modal-full-size
+        class="active bg-overlay"
+        *ngIf="modalOpened"
+        [(open)]="modalOpened">
+    <app-bank-transfer *ngIf="modalType === 'bank-transfer'"></app-bank-transfer>
+    <app-pay-by-square *ngIf="modalType === 'pay-by-square'"></app-pay-by-square>
+</app-modal-full-size>

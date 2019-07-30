@@ -1,0 +1,128 @@
+<div class="active bg-overlay"></div>
+<div class="active settings d-flex">
+    <div class="settings--head">
+        <b>WIDGET SETTINGS</b>
+        <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close"
+              class="settings--close">
+        </span>
+    </div>
+    <ng-container *ngIf="loading">
+        <app-loading [isLoading]="loading"></app-loading>
+    </ng-container>
+
+    <ng-container *ngIf="!loading">
+        <div class="settings--body">
+            <div class="settings--body--content">
+                <div class="settings--card--wrapper">
+                    <h5>Headline text</h5>
+                    <div class="settings--card">
+                        <div class="row editInput">
+                            <div class="col">
+                                <angular-editor
+                                        class="angular-editor--halfSimple"
+                                        [(ngModel)]="widget_settings.general.headline_text.text"
+                                        [config]="{placeholder: 'Write headline text here, please', editable: true}"
+                                ></angular-editor>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Additional text</h5>
+                    <div class="settings--card">
+                        <div class="row editInput">
+                            <div class="col">
+                                <angular-editor
+                                        class="angular-editor--halfSimple"
+                                        [(ngModel)]="widget_settings.general.additional_text.text"
+                                        [config]="{placeholder: 'Write additional text here, please', editable: true}"
+                                ></angular-editor>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Call To Action widgets settings</h5>
+                    <div class="settings--card">
+                        <div class="row">
+                            <span class="col font-weight-bold">Button text</span>
+                        </div>
+                        <div class="row editInput">
+                            <div class="col">
+                                <input #cta id="cta_button"
+                                       placeholder="Please add text for button"
+                                       [(ngModel)]="widget_settings.general.cta.text"
+                                       maxlength="60">
+                                <span class="actualLength">
+                                       {{widget_settings.general.cta.text ? widget_settings.general.cta.text.length : 0}} / {{cta?.maxLength}}
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings--card">
+                        <div class="row">
+                            <div class="col">
+                                URL
+                            </div>
+                        </div>
+                        <div class="editInput row">
+                            <div class="col">
+                                <input #cta_url id="cta_url"
+                                       placeholder="Please add url"
+                                       [(ngModel)]="widget_settings.general.cta.url"
+                                       maxlength="2000">
+                                <span class="actualLength">
+                                       {{widget_settings.general.cta.url ? widget_settings.general.cta.url.length : 0}} / {{cta_url?.maxLength}}
+                                     </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Widget Background Color</h5>
+                    <div class="settings--card">
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input class="btn color-picker--custom"
+                                           [value]="widget_settings.general.backgroundColor"
+                                           [style.background]="widget_settings.general.backgroundColor"
+                                           [cpPosition]="'top'"
+                                           [cpPresetColors]="generalSettings.colors"
+                                           [(colorPicker)]="widget_settings.general.backgroundColor"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Other settings</h5>
+                    <div class="settings--card">
+                        <div class="settings--card--body">
+                            <div class="row">
+                                <div class="col-12 bold">
+                                    Paddings and margins
+                                </div>
+                                <div class="col-12 col-xxl-6">
+                                    Paddings
+                                    <app-input-group [buttons]="paddingButtons"
+                                                     (buttonChange)="widget_settings.general.padding[$event.name] = $event.value">
+
+                                    </app-input-group>
+                                </div>
+                                <div class="col-12 col-xxl-6">
+                                    Margins
+                                    <app-input-group [buttons]="marginButtons"
+                                                     (buttonChange)="widget_settings.general.margin[$event.name] = $event.value">
+                                    </app-input-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+    <app-actions
+            class="actions"
+            (submit)="updateSettings()"
+            [submitting]="saving"
+            [hidePreviewButton]="'true'"></app-actions>
+</div>

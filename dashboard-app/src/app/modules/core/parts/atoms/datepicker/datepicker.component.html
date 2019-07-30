@@ -1,0 +1,22 @@
+<div class="datepicker">
+    <span
+            [inlineSVG]="'/assets/images/icons/date_' + type + '.svg'"
+    ></span>
+    <input type="text" matInput
+           ngxDaterangepickerMd
+           [locale]="{applyLabel: 'ok', format: 'DD.MM.YYYY', weekLabel: 'W', firstDay: 1}"
+           [singleDatePicker]="singleDatePicker"
+           [autoApply]="singleDatePicker"
+           [class]="(singleDatePicker) ? 'single' : 'range'"
+           startKey="start"
+           endKey="end"
+           [minDate]="minMomentDate"
+           [maxDate]="maxMomentDate"
+           [value]="endDate"
+           (datesUpdated)="changeEvent()"
+           (click)="datepickerOpened = true"
+           [(ngModel)]="selected"
+           [disabled]="disabled"
+           name="daterange"/>
+
+</div>

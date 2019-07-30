@@ -1,0 +1,44 @@
+@import 'variables';
+.datepicker {
+  cursor: pointer;
+  display: inline-block;
+  span {
+    padding-right: 10px;
+    ::ng-deep svg {
+      margin-top: -2px;
+    }
+
+  }
+  input {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 140px;
+  }
+  ::ng-deep .md-drppicker {
+    width: 500px;
+    margin-left: -250px;
+    margin-top: 15px;
+    z-index: 99;
+    td.active, .btn {
+      background-color: $azure;
+      &.today {
+        background-color: $outer-space;
+      }
+    }
+  }
+  input[name="daterange"] {
+    &.single {
+       + ::ng-deep ngx-daterangepicker-material {
+         .md-drppicker {
+           width: auto;
+           margin-left: 0;
+         }
+       }
+    }
+    &.range {
+      width: 250px;
+    }
+  }
+}
+

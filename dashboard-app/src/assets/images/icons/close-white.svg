@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+    <g id="close" transform="translate(-1850 -23)">
+        <rect id="safearea" width="40" height="40" transform="translate(1850 23)" fill="#b0aeaf" opacity="0"/>
+        <g id="icon" transform="translate(5 5)">
+            <path id="Path_31" data-name="Path 31" d="M13.747,12.712,8.03,6.95,13.747,1.1a.653.653,0,0,0,0-.945.653.653,0,0,0-.945,0L7.085,5.96,1.1.2A.591.591,0,0,0,.153.2a.685.685,0,0,0,0,.9L6.095,6.9.153,12.712a.653.653,0,0,0,0,.945.677.677,0,0,0,.5.18.677.677,0,0,0,.5-.18L7.085,7.85,12.8,13.657a.677.677,0,0,0,.5.18.522.522,0,0,0,.45-.18A.652.652,0,0,0,13.747,12.712Z" transform="translate(1850.05 23.05)" fill="#ffffff"/>
+        </g>
+    </g>
+</svg>

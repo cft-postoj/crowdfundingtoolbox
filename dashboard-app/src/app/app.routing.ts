@@ -1,22 +1,32 @@
-import {RouterModule, Routes} from '@angular/router';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {Routing} from './constants/config.constants';
+import {
+    CtaSettingsComponent,
+    DashboardComponent,
+    GeneralSettingsComponent,
+    WidgetSettingsComponent
+} from './modules/core/components';
+import {LoginGuard} from './modules/user-management/services';
+import {AboutComponent, ContactComponent} from './components';
+import {ConfigurationComponent} from './modules/core/pages/configuration/configuration.component';
+import {TranslationCreateComponent, TranslationListComponent} from './modules/translations/components';
+import {UserSettingsComponent} from './modules/user-management/components/user-settings/user-settings.component';
+import {CreateUserComponent} from './modules/user-management/components/create-user/create-user.component';
+import {PortalConnectionsSettingsComponent} from
+        './modules/core/components/portal-connections-settings/portal-connections-settings.component';
+import {ResponsiveComponent} from './modules/core/pages/responsive/responsive.component';
+import {BackofficeUserListComponent} from './modules/user-management/components/backoffice-user-list/backoffice-user-list.component';
 
-import {LoginComponent} from './login';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {AboutComponent} from './about/about.component';
-import {ContactComponent} from './contact/contact.component';
-import {TranslationsComponent} from './translations/translations.component';
-import {NewTranslationComponent} from './translations/new-translation/new-translation.component';
-import {CampaignsComponent} from './pages/campaigns/list/campaigns.component';
-import {ConfigurationComponent} from './pages/configuration/configuration.component';
-import {LoginGuard} from './_guard';
-import {CampaignDetailComponent} from "./pages/campaigns/detail/campaignDetail.component";
-import {Routing} from "./constants/config.constants";
-import {CampaignEditComponent} from "./pages/campaigns/edit/campaignEdit.component";
-import {WidgetEditComponent} from "./pages/widget/widget-edit/widget-edit.component";
-
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     {
-        path: 'login', component: LoginComponent
+        path: 'login',
+        loadChildren: './modules/user-management/user-management.module#UserManagementModule'
+    },
+    {
+        path: 'responsive',
+        canActivate: [LoginGuard],
+        canActivateChild: [LoginGuard],
+        component: ResponsiveComponent
     },
     {
         path: 'dashboard',
@@ -32,65 +42,74 @@ const appRoutes: Routes = [
                 component: ContactComponent
             }, {
                 path: 'translations',
-                component: TranslationsComponent
+                component: TranslationListComponent
             },
             {
                 path: 'translations/new',
-                component: NewTranslationComponent,
+                component: TranslationCreateComponent,
                 data: {
                     title: 'Translations'
                 },
             },
             {
-                path: 'configuration',
-                component: ConfigurationComponent
+                path: 'user-settings',
+                component: UserSettingsComponent
             },
             {
-                path: Routing.CAMPAIGNS_ALL,
-                component: CampaignsComponent,
-                data: {
-                    title: 'Campaigns'
-                },
-                children: [
-                    {
-                        path: Routing.NEW,
-                        component: CampaignEditComponent,
-                        outlet: Routing.RIGHT_OUTLET,
-                        data: {new: true}
-                    },
-                    {
-                        path: Routing.EDIT + '/:id',
-                        component: CampaignEditComponent,
-                        outlet: Routing.RIGHT_OUTLET
-                    },
-                ]
-
+                path: 'user-settings/create-user',
+                component: CreateUserComponent
             },
             {
-                path: Routing.CAMPAIGNS + '/:id',
-                component: CampaignDetailComponent,
-                data: {parent: null},
-                children: [
-                    {
-                        path: Routing.EDIT + "/:widgetId",
-                        component: WidgetEditComponent,
-                        outlet: Routing.RIGHT_OUTLET
-                    },
-                    {
-                        path: Routing.EDIT,
-                        component: CampaignEditComponent,
-                        outlet: Routing.RIGHT_OUTLET
-                    }
-                ]
+                path: 'user-settings/all',
+                component: BackofficeUserListComponent
             },
+            {
+                path: Routing.CONFIGURATION,
+                component: ConfigurationComponent,
+                children: [{
+                    path: Routing.GENERAL,
+                    component: GeneralSettingsComponent,
+                    outlet: Routing.RIGHT_OUTLET
+                }, {
+                    path: Routing.CTA,
+                    component: CtaSettingsComponent,
+                    outlet: Routing.RIGHT_OUTLET
+                }, {
+                    path: Routing.WIDGET,
+                    component: WidgetSettingsComponent,
+                    outlet: Routing.RIGHT_OUTLET
+                }, {
+                    path: 'portal-connections',
+                    component: PortalConnectionsSettingsComponent,
+                    outlet: Routing.RIGHT_OUTLET
+                }]
+            },
+            {
+                path: Routing.CAMPAIGNS,
+                loadChildren: './modules/campaigns/campaigns.module#CampaignsModule'
+            },
+            {
+                path: Routing.PORTAL_USERS,
+                loadChildren: './modules/portal-users/portal-users.module#PortalUsersModule'
+            },
+            {
+                path: Routing.STATS,
+                loadChildren: './modules/statistics/statistics.module#StatisticsModule'
+            },
+            {
+                path: Routing.PAYMENT,
+                loadChildren: './modules/payment/payment.module#PaymentModule'
+            }
         ]
     },
-    {
-        path: '**',
-        redirectTo: '/dashboard',
-        canActivate: [LoginGuard],
-    }
+    // {
+    //     path: '**',
+    //     redirectTo: Routing.STATS_FULL_PATH,
+    //     canActivate: [LoginGuard],
+    // }
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes, {
+    preloadingStrategy: PreloadAllModules
+});
 

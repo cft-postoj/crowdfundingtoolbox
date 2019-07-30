@@ -1,0 +1,8 @@
+.donors-list {
+  height: calc(100vh - 70px);
+  table {
+    thead {
+      position: sticky;
+    }
+  }
+}

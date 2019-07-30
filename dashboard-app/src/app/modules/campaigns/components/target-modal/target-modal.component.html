@@ -1,0 +1,29 @@
+<div class="targetModal">
+    <div class="targetModal--content">
+        <div class="targetModal--content--choosed">
+            <h4>Your campaign is targeting on:</h4>
+            <div class="text-left" [innerHTML]="targetingText"></div>
+        </div>
+
+        <hr class="mb30">
+
+        <h4>This campaign will be targeted on:</h4>
+
+        <div class="usersCount">
+            <p *ngIf="!loading" (click)="showSignedUsersList()" title="Show list">{{usersCount}}</p>
+            <img src="/assets/images/icons/white-loading.svg" *ngIf="loading" />
+            <span>signed users</span></div>
+
+        <hr>
+
+        <div class="visitorsCount">
+            <p *ngIf="!loading">{{(visitorsCount === 999999) ? '∞' : visitorsCount}}</p>
+            <img src="/assets/images/icons/white-loading.svg" *ngIf="loading" />
+            <span>not signed users</span></div>
+
+
+        <p class="targetModal--content--notes">If you change some of targeting values, you can specify set of targeted
+            users.</p>
+    </div>
+</div>
+

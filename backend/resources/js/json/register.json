@@ -1,0 +1,11 @@
+{
+  "emailExists": "Zadaný email existuje, prosím <a href='/'>Prihláste sa</a>.",
+  "emailIncorrect": "Prosím, zadajte e-mail v správnom tvare.",
+  "passwordIncorrect": "Heslo musí obsahovať aspoň 6 znakov.",
+  "agreeConfirm": "Pre pokračovanie musíte súhlasiť so spracovaním osobných údajov.",
+  "undefinedError": "Počas registrácie nastala neočakávaná chyba. Skúste znova alebo kontaktujte administrátora.",
+  "registerSuccess": "Registrácia prebehla úspešne. Na Vašu emailovú adresu bolo zaslané potvrdenie o registrácii.<br />O <span id='cft-seconds'>5 sekúnd</span> prebehne presmerovanie na Váš účet, kde si môžete zmeniť údaje.",
+  "secondsRedirectMoreThan4Or0": "sekúnd",
+  "secondsRedirect2To4": "sekundy",
+  "secondRedirect": "sekunda"
+}

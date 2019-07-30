@@ -1,0 +1,147 @@
+<div class="active bg-overlay"></div>
+<div class="active settings d-flex">
+    <div class="settings--head">
+        <b>PORTAL CONNECTIONS</b>
+        <span [inlineSVG]="'/assets/images/icons/close.svg'" (click)="closeEditWindow()" title="Close"
+              class="settings--close">
+        </span>
+    </div>
+    <ng-container *ngIf="loading">
+        <app-loading [isLoading]="loading"></app-loading>
+    </ng-container>
+
+    <ng-container *ngIf="!loading">
+        <div class="settings--body">
+            <div class="settings--body--content">
+                <div class="settings--card--wrapper">
+                    <h5>PORTAL URL</h5>
+                    <p>It is URL of your portal. We recommend to use SSL certificate on both sides (Toolbox app and your
+                        portal).
+                        Take a note, this URL will be checked during the toolbox request from portal for CORS. Only this
+                        portal (with included URL) will have access to data.</p>
+                    <div class="settings--card">
+                        <div class="row editInput">
+                            <div class="col">
+                                <input id="portalUrl"
+                                       placeholder="Please, add your portal URL"
+                                       [(ngModel)]="portalUrl"
+                                       (change)="checkUrl($event)"
+                                       maxlength="60">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper">
+                    <h5>TOOLBOX SCRIPT</h5>
+                    <p>It is necessary part of implementation. By this script, all widgets and user management sites are
+                        displayed on portal. <b>Please, add this script before closing BODY tag:</b></p>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>script
+                                src="{{backendUrl}}/public/js/app.js"<span>></span>
+                                <span><</span>/script<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper">
+                    <h5>TOOLBOX STYLE</h5>
+                    <p>It is necessary part of implementation. By this style file, all user management sites are
+                        styled on portal. <b>Please, add this script before closing HEAD tag:</b></p>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>link rel="stylesheet"
+                                href="{{backendUrl}}/public/css/app.css" /<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card--wrapper">
+                    <h5>PLACEHOLDERS</h5>
+                    <p>Here are HTML placeholders which are necessary part of implementation. You need to copy these
+                        placeholders to your portal templates on place, where you wsant to show widgets.</p>
+                    <p><b>Landing page widget</b></p>
+                    <i>Main monetization widget situated on full screen.</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-landing'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                    <p><b>Sidebar widget</b></p>
+                    <i>Classic sidebar widget, defualt set on 300x600.</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-sidebar'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                    <p><b>Leaderboard widget</b></p>
+                    <i>Full width banner depend on parent container.</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-leaderboard'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                    <p><b>Fixed widget</b></p>
+                    <i>Fixed/Cookie widget which has fixed position on full screen and is situated on top or on bottom of page.</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-fixed'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                    <p><b>Popup widget</b></p>
+                    <i>Classic popup banner.</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-popup'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                    <p><b>Locked article widget</b></p>
+                    <i>Locked article widget is situated in articles and it hide second half of whole content of articles.</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-locked'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                    <p><b>Article widget</b></p>
+                    <i>Simple article widget. It can be only text with hyperlinks, or simple banner without CTA button.</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-article'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                    <p><b>Custom HTML widget</b></p>
+                    <i>HTML widget with inline CSS (inline styles are necessary for this).</i>
+                    <div class="settings--card">
+                        <div class="settings--card--code">
+                            <code>
+                                <span><</span>div id="cr0wdfundingToolbox-custom'"<span>><</span>/div<span>></span>
+                            </code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+    <app-actions
+            class="actions"
+            (submit)="updateSettings()"
+            [submitting]="saving"
+            [hidePreviewButton]="'true'"></app-actions>
+</div>

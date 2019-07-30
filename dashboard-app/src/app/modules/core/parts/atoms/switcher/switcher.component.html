@@ -1,0 +1,8 @@
+<input
+        type="checkbox"
+        class="switcher"
+        [id]="'switch' + id"
+        (change)="toggle()"
+        [attr.disabled] = "disabled ? 'disabled' : null"
+        [(ngModel)]="checked"/>
+<label [for]="'switch' + id" [class]="extraClass"> </label>

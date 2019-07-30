@@ -1,0 +1,10 @@
+@import '../../../../../../sass/variables';
+@import '../../../../../../sass/mixins';
+
+
+input[type="text"] {
+  border: 1px solid $aquaHaze;
+  @include borderRadius(4px);
+  padding: 10px 15px;
+  outline: none;
+}

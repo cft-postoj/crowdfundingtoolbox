@@ -1,0 +1,22 @@
+@import 'mixins';
+@import 'variables';
+:host {
+    position: absolute;
+    overflow: auto;
+    height: calc(100% - 60px);
+    width: 100%;
+}
+tr.list-items--item {
+    cursor: pointer;
+}
+
+th {
+    cursor: pointer;
+    @include transitionSingle(.3s ease);
+    &:hover {
+        color: $azure;
+    }
+    &.id {
+        width: 50px !important;
+    }
+}

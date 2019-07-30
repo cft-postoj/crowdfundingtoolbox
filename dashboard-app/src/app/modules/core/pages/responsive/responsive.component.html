@@ -1,0 +1,79 @@
+<div class="topPanel">
+    <div class="topPanel__title d-flex">
+        <h1>CROWDFUNDING toolbox</h1>
+    </div>
+    <div class="topPanel__admin">
+        <div class="topPanel__admin__photo d-flex" (click)="clickPanel()">
+            {{signature}}
+        </div>
+    </div>
+</div>
+
+<div [class]="(adminPanelActive) ? 'active topPanel__admin__absolute' : 'topPanel__admin__absolute'">
+    <div class="d-flex topPanel__admin__absolute__container">
+        <div class="topPanel__admin__absolute__photo d-flex">
+            {{signature}}
+        </div>
+        <div class="topPanel__admin__absolute__user d-flex">
+            <div class="d-block">
+                <h5>{{firstName}} {{lastName}}</h5>
+                <p class="topPanel__admin__user__position">{{role}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="topPanel__admin__absolute__logout" (click)="logout()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+            <g id="logout" transform="translate(-244 -1022)">
+                <rect id="safe_area" data-name="safe area" width="36" height="36" transform="translate(244 1022)"
+                      fill="#f2f1ef" opacity="0"/>
+                <g id="icon">
+                    <path id="Path_1" data-name="Path 1"
+                          d="M9.335,20a9.334,9.334,0,0,1-6.2-16.309A1.333,1.333,0,0,1,4.9,5.686a6.664,6.664,0,1,0,8.86,0,1.333,1.333,0,1,1,1.772-1.992A9.334,9.334,0,0,1,9.335,20ZM10.668,8V1.332A1.332,1.332,0,1,0,8,1.332V8a1.332,1.332,0,0,0,2.665,0Z"
+                          transform="translate(252.917 1030.449)" fill="#2E3131"/>
+                </g>
+            </g>
+        </svg>
+        Sign out
+    </div>
+
+</div>
+<div class="responsiveContent">
+    <div class="responsiveNotes" *ngIf="showWarning">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" (click)="closeWarning()" viewBox="0 0 24 24"
+             title="Close warning">
+            <g transform="translate(-1850 -23)">
+                <rect id="safearea" width="24" height="24" transform="translate(1850 23)" fill="#b0aeaf" opacity="0"/>
+                <g id="icon" transform="translate(5 5)">
+                    <path id="Path_31" data-name="Path 31"
+                          d="M13.747,12.712,8.03,6.95,13.747,1.1a.653.653,0,0,0,0-.945.653.653,0,0,0-.945,0L7.085,5.96,1.1.2A.591.591,0,0,0,.153.2a.685.685,0,0,0,0,.9L6.095,6.9.153,12.712a.653.653,0,0,0,0,.945.677.677,0,0,0,.5.18.677.677,0,0,0,.5-.18L7.085,7.85,12.8,13.657a.677.677,0,0,0,.5.18.522.522,0,0,0,.45-.18A.652.652,0,0,0,13.747,12.712Z"
+                          transform="translate(1850.05 23.05)" fill="#ff0000"/>
+                </g>
+            </g>
+        </svg>
+        <p>This is the lite version of CrowdfundingToolbox app. In this version you can only activate/deactivate
+            campaigns. If
+            you can manage all settings and options of Toolbox, please use desktop version.</p>
+    </div>
+    <app-alert [(open)]="alertOpen" [message]="alertMessage" [type]="alertType"></app-alert>
+    <app-loading [isLoading]="loading"></app-loading>
+    <table *ngIf="!loading">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name/Description</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let campaign of campaignsData; let i = index;">
+            <td>{{i + 1}}.</td>
+            <td><b>{{campaign.title}}</b><br>{{campaign.description}}</td>
+            <td>
+                <app-switcher [id]="'campaign' + i"
+                              [checked]="campaign.active"
+                              (checkedChange)="changeActiveCampaign($event, campaign.id)"></app-switcher>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,8 @@
+.user-dropdown {
+  ::ng-deep .ngx-select__toggle {
+    width: 100%;
+  }
+  &.top15 {
+    margin-top: -18px;
+  }
+}

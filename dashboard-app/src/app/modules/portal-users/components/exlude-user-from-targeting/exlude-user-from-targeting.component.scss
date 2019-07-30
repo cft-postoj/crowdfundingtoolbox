@@ -1,0 +1,72 @@
+@import "variables";
+@import "mixins";
+
+b {
+  display: inline-block;
+  width: 10%;
+  margin-right: 15px;
+}
+input[type="text"] {
+  width: 75%;
+  padding: 14px;
+  border: 1px solid $bali;
+  outline: none;
+  display: inline-block;
+}
+span {
+  margin-left: 15px;
+  font-weight: 500;
+  &.overlay {
+    position: absolute;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+}
+
+label {
+  background: $azure;
+  color: $white;
+  padding: 15px 15px 15px 30px;
+  cursor: pointer;
+  position: relative;
+  @include transitionSingle(.3s ease);
+  &:hover {
+    @include boxShadow(0 0 10px rgba(0, 0, 0, .5));
+  }
+  .checkmark {
+    position: absolute;margin-top: auto;
+    margin-bottom: auto;
+    top: 0;
+    bottom: 0;
+    left: 15px;
+    height: 24px;
+    width: 24px;
+    background-color: #eee;
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 9px;
+      top: 4px;
+      width: 7px;
+      height: 14px;
+      border: solid $azure;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+  input {
+    visibility: hidden;
+    &:checked ~ .checkmark:after {
+      display: block;
+    }
+  }
+
+
+}

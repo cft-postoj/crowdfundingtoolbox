@@ -1,0 +1,13 @@
+<div [class]="extraClass + ' user-dropdown'">
+  <p><b>{{label}}</b></p>
+  <ngx-select [multiple]="false"
+              [items]="users"
+              [disabled]="false"
+              [keepSelectedItems]="true"
+              [(ngModel)]="selectedValue"
+              (select)="selectAction()"
+              [autoActiveOnMouseEnter]="true"
+              id="usersList"
+              [placeholder]="(placeholder) ? placeholder : 'No user selected'" #usersList>
+  </ngx-select>
+</div>

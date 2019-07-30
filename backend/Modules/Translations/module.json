@@ -1,0 +1,14 @@
+{
+    "name": "Translations",
+    "alias": "translations",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Translations\\Providers\\TranslationsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
