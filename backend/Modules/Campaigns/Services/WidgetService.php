@@ -2924,12 +2924,12 @@ class WidgetService implements WidgetServiceInterface
 
         foreach ($randomResponse as $rand) {
             if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
-                $trackingShow = $this->trackingService->show($trackingVisit->id, $rand->id);
-                $rand['show_id'] = $trackingShow->id;
+                $rand['widget_id'] = $rand->id;
                 array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
                 array_push($usedWidgetIds, $rand['widget_type_id']);
             }
         }
+        $result['tracking_visit_id'] = $trackingVisit->id;
         $result['widgets'] = $onlyThreeWidgets;
         $result['user_cookie'] = $userCookie;
         return $result;

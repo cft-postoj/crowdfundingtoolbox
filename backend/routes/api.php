@@ -238,6 +238,7 @@ Route::group([
         });
 
 
+        Route::post('tracking/show', '\Modules\UserManagement\Http\Controllers\TrackingController@show');
         Route::post('tracking/click', '\Modules\UserManagement\Http\Controllers\TrackingController@click');
         Route::post('tracking/insertValue', '\Modules\UserManagement\Http\Controllers\TrackingController@insertValue');
         Route::post('tracking/insertEmail', '\Modules\UserManagement\Http\Controllers\TrackingController@insertEmail');

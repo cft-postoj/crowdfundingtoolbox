@@ -21,7 +21,7 @@ function getWidgets(apiUrl) {
 
     //get article data
     //customize for your page to get info about currently read article and send those information to backend
-    var isArticle = Number(location.href.split('/')[3])!==0 && Number.isInteger(Number(location.href.split('/')[3]))
+    var isArticle = Number(location.href.split('/')[3]) !== 0 && Number.isInteger(Number(location.href.split('/')[3]))
     if (isArticle) {
         var articleId = +location.href.split('/')[3];
         var articleAuthor = document.getElementById('cr0wdfundingToolbox__article-author');
@@ -58,38 +58,37 @@ function getWidgets(apiUrl) {
                     // TODO fix this -- error when not script included (not monetization widget)
                     let scriptElement = document.createElement('script');
                     let inlineScript = document.createTextNode(parseScriptFromResponse(el.response[cr0wdGetDeviceType()]));
-
+                    scriptElement.appendChild(inlineScript);
                     switch (el.widget_type.method) {
                         case 'sidebar':
-                            scriptElement.appendChild(inlineScript);
                             if (sidebarPlaceholder != null) {
                                 sidebarPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
                                 console.log(cr0wdGetDeviceType());
                                 console.log(el.response[cr0wdGetDeviceType()]);
-                                sidebarPlaceholder.dataset.showId = el.show_id;
                                 sidebarPlaceholder.appendChild(scriptElement);
+                                sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, sidebarPlaceholder);
                             }
                             break;
                         case 'leaderboard':
                             // TODO fix this -- error when not script included (not monetization widget)
-                            leaderboardPlaceholder.appendChild(inlineScript);
                             if (leaderboardPlaceholder != null) {
+                                leaderboardPlaceholder.appendChild(inlineScript);
                                 leaderboardPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
-                                leaderboardPlaceholder.dataset.showId = el.show_id;
                                 leaderboardPlaceholder.appendChild(scriptElement);
+                                sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, leaderboardPlaceholder);
                             }
                             break;
                         case 'landing':
-                            scriptElement.appendChild(inlineScript);
                             if (landingPlaceholder != null) {
                                 landingPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
-                                landingPlaceholder.dataset.showId = el.show_id;
                                 landingPlaceholder.appendChild(scriptElement);
+                                sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, landingPlaceholder);
                             }
                             break;
                         case 'fixed':
                             (fixedPlaceholder != null) &&
-                            (fixedPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            (fixedPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]) &&
+                            (sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, fixedPlaceholder));
                             if (document.querySelector('.cr0wdWidgetContent--closeWidget') !== null) {
                                 document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
                                     fixedPlaceholder.style.display = 'none';
@@ -103,6 +102,8 @@ function getWidgets(apiUrl) {
                                     console.log('aaa');
                                     console.log(el.response[cr0wdGetDeviceType()]);
                                     popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
+                                    popupPlaceholder.appendChild(scriptElement);
+                                    sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, popupPlaceholder);
                                 } else {
                                     console.log('test');
                                 }
@@ -116,15 +117,20 @@ function getWidgets(apiUrl) {
                             break;
                         case 'locked':
                             (lockedPlaceholder != null) &&
-                            (setLockedContentArticle(el.response[cr0wdGetDeviceType()]));
+                            (setLockedContentArticle(el.response[cr0wdGetDeviceType()])) &&
+                            (lockedPlaceholder.appendChild(scriptElement)) &&
+                            (sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, lockedPlaceholder));
                             break;
                         case 'article':
                             (articlePlaceholder != null) &&
-                            (articlePlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            (articlePlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]) &&
+                            (sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, articlePlaceholder));
                             break;
                         case 'custom':
                             (customPlaceholder != null) &&
-                            (customPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]);
+                            (customPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()]) &&
+                            (customPlaceholder.appendChild(scriptElement)) &&
+                            (sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, customPlaceholder));
                             break;
                         default:
                             break;
@@ -140,6 +146,23 @@ function getWidgets(apiUrl) {
     xhttp.send(data);
 }
 
+function sendTrackingShow(trackingVisit, widgetId, element) {
+    let data = JSON.stringify({
+        'tracking_visit_id': trackingVisit,
+        'widget_id': widgetId,
+    });
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            element.dataset.showId = xhr.response.id;
+        }
+    };
+    xhr.open('POST', apiUrl + 'tracking/show');
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
+    xhr.send(data);
+}
 
 function setLockedContentArticle(widgetContent) {
     let countOfParagraphs = 0;
