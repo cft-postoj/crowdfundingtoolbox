@@ -71,7 +71,8 @@
             </div>
 
         </div>
-        <div class="cft--monatization--title" [innerHtml]="'Frequency: '">
+        <div *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value"
+             class="cft--monatization--title" [innerHtml]="'Frequency: '">
         </div>
         <div [ngStyle]="getRowStyle()">
             <div class="cft--monatization--donation--monthly"
@@ -96,7 +97,8 @@
         </div>
         <div class="cft--monatization--title" [innerHtml]="'Payment method:'">
         </div>
-        <div class="cft--monatization--only-monthly" [ngStyle]="getRowStyle()">
+        <div class="cft--monatization--only-monthly" [ngStyle]="getRowStyle()"
+             [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type == paymentTypes.once.value}">
             <div class="payment-option" [ngClass]="'active'"
                  [ngStyle]="getMonatizationFrequencyButtonStyle()"
                  data-id="1" onclick="parent.changePaymentOptions(this)">
@@ -105,8 +107,11 @@
                 </div>
             </div>
         </div>
-        <div class="cft--monatization--only-one-time cft--monatization--hidden" [ngStyle]="getRowStyle()">
-            <div class="payment-option" [ngClass]="'active'"
+        <div class="cft--monatization--only-one-time" [ngStyle]="getRowStyle()"
+             [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value}">
+            <div class="payment-option"
+                 [ngClass]="{'active':widget.settings[deviceType].payment_settings.payment_method == paymentMethods.bankTransfer.value ||
+                  widget.settings[deviceType].payment_settings.payment_method==null }"
                  [ngStyle]="getMonatizationFrequencyButtonStyle()"
                  data-id="1" onclick="parent.changePaymentOptions(this)">
                 <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()">
@@ -114,6 +119,7 @@
                 </div>
             </div>
             <div class="payment-option"
+                 [ngClass]="{'active':widget.settings[deviceType].payment_settings.payment_method==paymentMethods.payBySquare.value}"
                  [ngStyle]="getMonatizationFrequencyButtonStyle()"
                  data-id="3" onclick="parent.changePaymentOptions(this)">
                 <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()">
@@ -159,7 +165,9 @@
                 [innerHtml]="widget.settings[deviceType].payment_settings.second_step.title.text">
             </h1>
         </div>
-        <div class="payment-option__show" data-id="1">
+        <div class="payment-option__show"
+             [ngClass]="{'cft--monatization--hidden':widget.settings[deviceType].payment_settings.payment_method === paymentMethods.payBySquare.value}"
+             data-id="1">
             <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
                 <tbody>
                 <tr>
@@ -236,7 +244,9 @@
                 <!--</div>-->
             </div>
         </div>
-        <div class="qr__wrapper payment-option__show cft--monatization--hidden" data-id="3">
+        <div class="qr__wrapper payment-option__show "
+             [ngClass]="{'cft--monatization--hidden':widget.settings[deviceType].payment_settings.payment_method !== paymentMethods.payBySquare.value}"
+             data-id="3">
             <div class="pay-by-square__wrapper">
             </div>
         </div>

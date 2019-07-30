@@ -23,6 +23,7 @@ export class Campaign {
 
     payment_settings = {
         payment_type: 'both',
+        payment_method: 'bank_transfer',
         design: {
             background_color: '#fff',
             padding: {
