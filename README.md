@@ -4,8 +4,8 @@
 
 Web application platform built on:
 
-* Laravel 5.7 - backend logic and REST API endpoints
-* Angular 7 - dashboard frontend logic
+* Laravel 5.8 - backend logic and REST API endpoints
+* Angular 7.3 - dashboard frontend logic
 * pure JavaScript - script for communication betweeen journalism portal and Crowdfunding application.
 
 ### Requirements
@@ -16,6 +16,7 @@ Web application platform built on:
     * MySQL
  
  _* in development was used PostgreSQL._
+ We recommend to use database that supports partitioning.
  
 ### Set up - local usage
 ```
