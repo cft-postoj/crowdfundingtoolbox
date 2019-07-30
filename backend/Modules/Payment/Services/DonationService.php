@@ -66,7 +66,6 @@ class DonationService
     public function initialize($data)
     {
         try {
-            // TODO: otestovat
             $bankOption = $this->paymentMethodsService->getBankOption($data['frequency'], 1);
             $qrCodeOption = $bankOption;
             if ($data['frequency'] !== 'monthly') {
@@ -77,6 +76,7 @@ class DonationService
             $bankButtons = $this->bankButtonService->getBankButtons();
 
             $donation = Donation::create([
+                'referral_widget_id' => $data['referral_widget_id'],
                 'tracking_show_id' => $data['show_id'],
                 'widget_id' => $trackingShow->widget->id,
                 'portal_user_id' => $user->portalUser->id,

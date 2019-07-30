@@ -342,7 +342,7 @@ class PortalUserService implements PortalUserServiceInterface
     }
 
 
-    public function registerDuringDonation($showId, string $email, int $cookie, bool $terms, string $iban): User
+    public function registerDuringDonation($showId, string $email,  $cookie,  $terms, string $iban): User
     {
         $generatedPassword = $this->generatedUserTokenService->generatePasswordToken();
 

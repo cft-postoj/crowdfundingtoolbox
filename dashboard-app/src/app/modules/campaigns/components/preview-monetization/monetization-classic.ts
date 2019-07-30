@@ -157,6 +157,7 @@ export function handleSubmit(el, event) {
         let formData = new FormData(el);
         let data = JSON.stringify(
             {
+                'referral_widget_id': location.search.substr(1).split("referral_widget_id=")[1],
                 'show_id': el.closest('[id^=cr0wdfundingToolbox]').dataset.showId,
                 'email': el.querySelector('#cft--monatization--form--donate--email').value,
                 'email_valid': el.querySelector('#cft--monatization--form--donate--email').checkValidity(),

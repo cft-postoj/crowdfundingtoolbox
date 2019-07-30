@@ -165,6 +165,13 @@ function getWidgets(apiUrl) {
 }
 
 function sendTrackingShow(trackingVisit, widgetId, element) {
+    // modify all anchor elements href to add show_id to enable tracking,
+    // that user used this widget to redirect to donation
+    var anchorElements = element.querySelectorAll('a');
+    for (var i = 0; i < anchorElements.length; i++) {
+        anchorElements[i].href = anchorElements[i].href + `?referral_widget_id=${widgetId}`
+    }
+
     let data = JSON.stringify({
         'tracking_visit_id': trackingVisit,
         'widget_id': widgetId,
@@ -173,6 +180,7 @@ function sendTrackingShow(trackingVisit, widgetId, element) {
     xhr.responseType = 'json';
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
+            //set tracking show, required for donation and tracking
             element.dataset.showId = xhr.response.id;
         }
     };

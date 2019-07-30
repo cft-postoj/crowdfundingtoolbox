@@ -18,6 +18,7 @@ class Donation extends Model
         'portal_user_id',
         'payment_id',
         'widget_id',
+        'referral_widget_id',
         'status',
         'tracking_show_id',
         'amount_initialized',

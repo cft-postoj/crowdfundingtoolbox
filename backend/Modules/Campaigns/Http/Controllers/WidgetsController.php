@@ -22,13 +22,17 @@ class WidgetsController extends Controller
     private $widgetResultService;
     private $trackingService;
 
-    public function __construct()
+    public function __construct(
+        WidgetService $widgetService,
+        WidgetSettingsService $widgetSettingsService,
+        WidgetResultService $widgetResultService,
+        TrackingService $trackingService)
     {
         $this->widgetSettings = array();
-        $this->widgetService = new WidgetService();
-        $this->widgetSettingsService = new WidgetSettingsService();
-        $this->widgetResultService = new WidgetResultService();
-        $this->trackingService = new TrackingService();
+        $this->widgetService = $widgetService;
+        $this->widgetSettingsService = $widgetSettingsService;
+        $this->widgetResultService = $widgetResultService;
+        $this->trackingService = $trackingService;
     }
 
 
