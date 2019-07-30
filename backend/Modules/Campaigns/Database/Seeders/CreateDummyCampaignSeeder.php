@@ -13,10 +13,10 @@ class CreateDummyCampaignSeeder extends Seeder
     private $campaignService;
 
 
-    public function __construct()
+    public function __construct(CampaignService $campaignService)
     {
 
-        $this->campaignService = new CampaignService();
+        $this->campaignService = $campaignService;
     }
 
 

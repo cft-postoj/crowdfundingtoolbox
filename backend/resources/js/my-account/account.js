@@ -107,7 +107,6 @@ function editAccountDetails() {
             'cft-agree': document.querySelector(formSelector + ' input[name="cft-agree"]').checked,
             'cft-city': document.querySelector(formSelector + ' input[name="cft-city"]').value,
             'cft-country': document.querySelector(formSelector + ' select[name="cft-country"]').value,
-            'cft-deliveryAddressSame': document.querySelector(formSelector + ' input[name="cft-deliveryAddressSame"]').checked,
             'cft-email': document.querySelector(formSelector + ' input[name="cft-email"]').value,
             'cft-firstName': document.querySelector(formSelector + ' input[name="cft-firstName"]').value,
             'cft-house-number': document.querySelector(formSelector + ' input[name="cft-house-number"]').value,

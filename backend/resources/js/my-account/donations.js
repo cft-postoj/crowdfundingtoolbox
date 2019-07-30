@@ -30,9 +30,14 @@ function getSupportData() {
             const portalBankAccount = document.getElementById('cft--portalBankAccount');
             const donatingFrom = document.getElementById('cft--donatingFrom');
             const table = document.querySelector('.cft--donationsTable table tbody');
+            const warning = document.querySelector('.cft--accountBox--content--waiting');
             variableSymbol.innerText = data.variable_symbol.variable_symbol;
-            yourDonationElem.innerText = data.donations[0].amount + ' €';
+            const amount = (data.donations[0].amount === null) ? data.donations[0].amount_initialized : data.donations[0].amount;
+            yourDonationElem.innerText = amount + ' €';
             portalBankAccount.innerText = getIban(data.donations[0].payment_method);
+            if (data.donations[0].payment_id === null) {
+                warning.style.display = 'block';
+            }
 
             let firstDate = '';
             data.donations.map((donation, key) => {
@@ -44,9 +49,10 @@ function getSupportData() {
                     status = 'PROCESSED';
                 }
                 const newElement = document.createElement('tr');
+                const amount = (donation.amount === null) ? donation.amount_initialized : donation.amount;
                 newElement.innerHTML = '<td>' + (key + 1) + '.</td>' +
                     '<td>' + getDateFormat(donation.created_at) + '</td>' +
-                    '<td>' + donation.amount + ' €</td>' +
+                    '<td>' + amount + ' €</td>' +
                     '<td>' + getPaymentMethod(donation.payment_method) + '</td>' +
                     '<td>' + getPaymentPeriod(donation.is_monthly_donation) + '</td>' +
                     '<td class="' + statusClass + '">' + status + '</td>';

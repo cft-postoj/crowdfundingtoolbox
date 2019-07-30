@@ -10,6 +10,9 @@
 <div class="cft--accountBox cft--accountBox--supporter">
     <div class="cft--accountBox--content">
         <h3>We appreciate your support for paying to bank account</h3>
+        <span class="cft--accountBox--content--waiting">
+            Actually we are waiting for payment from your last donation. If you sent it, please let us know!
+        </span>
         <div class="cft--grid--row cft--mt-30">
             <div class="cft--grid--lg-2 cft--grid--sm-12">
                 <svg width="120px" height="120px" viewBox="0 0 100 100" version="1.1"
