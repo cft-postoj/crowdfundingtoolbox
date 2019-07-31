@@ -1,5 +1,6 @@
 .header--description {
     position: relative;
+    padding-right: 12px;
 }
 
 div[order=true] {
@@ -9,7 +10,7 @@ div[order=true] {
         background: url(/assets/images/icons/breadcrumb.svg) no-repeat;
         width: 18px;
         height: 18px;
-        right: 12px;
+        right: -3px;
         top: 0;
         bottom: 0;
         margin: auto;

@@ -100,20 +100,17 @@ function getWidgets(apiUrl) {
                             break;
                         case 'popup':
                             if (isPopupEnableToVisit()) {
-                                console.log('bbbb');
                                 if (popupPlaceholder != null) {
                                     popupIsActive = true;
                                     popupPlaceholder.innerHTML = el.response[cr0wdGetDeviceType()];
-                                    fixedPlaceholder.style.display = 'none';
+                                    (fixedPlaceholder != null) && (fixedPlaceholder.style.display = 'none');
                                     popupPlaceholder.appendChild(scriptElement);
                                     sendTrackingShow(xhttp.response.tracking_visit_id, el.widget_id, popupPlaceholder);
                                 } else {
                                     console.log('test');
                                 }
                                 if (document.querySelector('.cr0wdWidgetContent--closeWidget') !== null) {
-                                    document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
-                                        popupPlaceholder.style.display = 'none';
-                                    });
+                                    addEventListenerForCloseWidget(popupPlaceholder);
                                 }
                                 // Uncomment this if you want to set popup time to 30 minutes after show
                                 //setVisitingPopupTime();
@@ -126,9 +123,7 @@ function getWidgets(apiUrl) {
                                 fixedIsActive = true;
                             }
                             if (document.querySelector('.cr0wdWidgetContent--closeWidget') !== null) {
-                                document.querySelector('.cr0wdWidgetContent--closeWidget').addEventListener('click', function () {
-                                    fixedPlaceholder.style.display = 'none';
-                                });
+                                addEventListenerForCloseWidget(fixedPlaceholder);
                             }
                             break;
                         case 'locked':
@@ -162,6 +157,14 @@ function getWidgets(apiUrl) {
     xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('cft_usertoken'));
     xhttp.send(data);
+}
+
+function addEventListenerForCloseWidget(placeholder) {
+    document.querySelectorAll('.cr0wdWidgetContent--closeWidget').forEach((sel, key) => {
+        sel.addEventListener('click', function () {
+            placeholder.style.display = 'none';
+        });
+    });
 }
 
 function sendTrackingShow(trackingVisit, widgetId, element) {

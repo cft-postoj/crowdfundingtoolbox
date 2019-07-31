@@ -46,7 +46,7 @@
                             {{item.transaction_id}}
                         </td>
                         <td>
-                            {{item.transaction_date | date:'dd.MM.yyyy' }}
+                            {{item.transaction_date | safariDate | date:'dd.MM.yyyy' }}
                         </td>
                         <td>
                             {{item.variable_symbol}}

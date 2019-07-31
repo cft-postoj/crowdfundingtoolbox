@@ -129,12 +129,12 @@
                         monthly}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'created_at')"
-                        [title]="donation.created_at | date:'dd.MM.yyyy HH:mm:ss'">
-                        {{donation.created_at | date:'dd.MM.yyyy'}}
+                        [title]="donation.created_at | safariDate | date:'dd.MM.yyyy HH:mm:ss'">
+                        {{donation.created_at | safariDate | date:'dd.MM.yyyy'}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'payment.transaction_date')"
-                        [title]="donation.payment?.transaction_date | date:'dd.MM.yyyy HH:mm:ss'">
-                        {{(donation.payment?.transaction_date | date:'dd.MM.yyyy') || '---'}}
+                        [title]="donation.payment?.transaction_date | safariDate | date:'dd.MM.yyyy HH:mm:ss'">
+                        {{(donation.payment?.transaction_date | safariDate | date:'dd.MM.yyyy') || '---'}}
                     </td>
                     <td *ngIf="tableService.activeColumn(model,'payment.payment_method.method_name')">
                         {{donation.payment?.payment_method.method_name || '---'}}
