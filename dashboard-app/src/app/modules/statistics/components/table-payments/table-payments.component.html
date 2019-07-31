@@ -93,7 +93,7 @@
                     <td *ngIf="tableService.activeColumn(model,'amount')">{{payment.amount | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}</td>
                     <td *ngIf="tableService.activeColumn(model,'donation.is_monthly_donation')">{{payment.donation?.is_monthly_donation | monthly}}</td>
                     <td *ngIf="tableService.activeColumn(model,'transaction_date')"
-                        [title]="payment.transaction_date | date:'dd.MM.yyyy HH:mm:ss'">{{payment.transaction_date | date:'dd.MM.yyyy'}}</td>
+                        [title]="payment.transaction_date | safariDate | date:'dd.MM.yyyy HH:mm:ss'">{{payment.transaction_date | safariDate | date:'dd.MM.yyyy'}}</td>
                     <td *ngIf="tableService.activeColumn(model,'payment_method.method_name')">{{payment.payment_method.method_name}}</td>
                     <td *ngIf="tableService.activeColumn(model,'donation.widget.campaign.name')"
                         [title]="payment.donation?.widget.campaign.name || '---'">{{payment.donation?.widget.campaign.name || '---'}}</td>

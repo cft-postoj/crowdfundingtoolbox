@@ -22,7 +22,7 @@
           <td>{{user.user.user_detail?.last_name}}</td>
           <td>{{user.user.email}}</td>
           <td>{{(user.role_id === 1) ? 'Administrator' : 'Manager'}}</td>
-          <td>{{user.created_at | date:'dd.MM.yyyy'}}</td>
+          <td>{{user.created_at | safariDate | date:'dd.MM.yyyy'}}</td>
           <td><img class="deleteBackOfficeUser" title="Delete user" (click)="deleteUser(user.id)" src="../assets/images/icons/delete.svg"></td>
         </tr>
       </tbody>
