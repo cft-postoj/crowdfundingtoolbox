@@ -34,6 +34,7 @@ import {NgxDaterangepickerMd} from 'ngx-daterangepicker-material';
 import { PreviousPageComponent } from './components/previous-page/previous-page.component';
 import {PortalConnectionsSettingsComponent} from './components/portal-connections-settings/portal-connections-settings.component';
 import { ResponsiveComponent } from './pages/responsive/responsive.component';
+import { SafariDatePipe } from './pipes/safari-date.pipe';
 
 @NgModule({
     declarations: [
@@ -68,6 +69,7 @@ import { ResponsiveComponent } from './pages/responsive/responsive.component';
         PreviousPageComponent,
         PortalConnectionsSettingsComponent,
         ResponsiveComponent,
+        SafariDatePipe,
     ],
     imports: [
         CommonModule,
@@ -114,6 +116,7 @@ import { ResponsiveComponent } from './pages/responsive/responsive.component';
         // pipes
         SafePipe,
         SlovakNumberFormatter,
+        SafariDatePipe,
         // modules
         CommonModule,
         RouterModule,

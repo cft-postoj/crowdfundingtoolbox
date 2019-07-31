@@ -5,7 +5,7 @@
             <h4>
                 Detail of portal user with id <span *ngIf="user">{{user.id}}</span>:
                 <span class="user-detail--lastUpdated"
-                      [innerHTML]="updatedBy + (updatedByDate | date:'dd.MM.yyyy - HH:mm:ss')">
+                      [innerHTML]="updatedBy + (updatedByDate | safariDate | date:'dd.MM.yyyy - HH:mm:ss')">
                 </span>
                 <button type="button" class="user-detail--edit" title="Edit portal user" (click)="showEditModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -162,8 +162,8 @@
                                 <div class="row">
                                     <div class="col-6 text-right"> Last donation:</div>
                                     <div class="col-6"
-                                         [title]="user.portal_user.last?.created_at | date:'dd.MM.yyyy - HH:mm:ss'">
-                                        {{user.portal_user.last?.created_at | date:'dd.MM.yyyy' }}
+                                         [title]="user.portal_user.last?.created_at | safariDate | date:'dd.MM.yyyy - HH:mm:ss'">
+                                        {{user.portal_user.last?.created_at | safariDate | date:'dd.MM.yyyy' }}
                                     </div>
                                 </div>
                             </div>
