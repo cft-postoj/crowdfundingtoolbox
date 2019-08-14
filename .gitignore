@@ -16,7 +16,6 @@
 /backendyarn-error.log
 /backend.phpunit.result.cache
 /backend/storage/app/*
-/backend/storage/framework/*
 /backend/storage/logs/*
 /backend/.env
 /dashboard-app/src/environments
