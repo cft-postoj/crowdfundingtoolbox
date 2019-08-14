@@ -16,7 +16,6 @@ Web application platform built on:
     * MySQL
  
  _* in development was used PostgreSQL._
- We recommend to use database that supports partitioning.
  
 ### Set up - local usage
 ```
@@ -67,6 +66,7 @@ export const keys = {
     hostUrl: 'http://127.0.0.1:8001' // backend url
 };
 ```
+You can find in src folder file **keys.example.ts** which you can copy to new file **keys.ts**.
 
 Next you can run Angular local app with command (run in dashboard-app folder):
 ```
