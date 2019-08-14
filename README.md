@@ -60,6 +60,13 @@ php artisan serve
 
 For API documentation was used Swagger. You can test routing with Postman or some similar tool. Not every routes are describe via Swagger.
 
+Before you run Angular app, you need to create **keys.ts** file in src folder (dashboard-app/src). keys.ts file need to have this structure:
+```
+export const keys = {
+    googleApiKey: 'your_google_api_key', // for google fonts
+    hostUrl: 'http://127.0.0.1:8001' // backend url
+};
+```
 
 Next you can run Angular local app with command (run in dashboard-app folder):
 ```
