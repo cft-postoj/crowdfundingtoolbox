@@ -80,7 +80,7 @@ class PayBySquareService
             $payment = new Payment();
             $payment->amount  = round($amount, 2, PHP_ROUND_HALF_UP);
 
-            $payment->currencyCode = "EUR";
+            $payment->currencyCode = env('CURRENCY');
             $payment->note = 'pay-by-square';
             $payment->variableSymbol = $variableSymbol;
             // $payment->constantSymbol = $invoice->constant_symbol;
