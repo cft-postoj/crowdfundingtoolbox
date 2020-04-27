@@ -48,7 +48,7 @@ class PayBySquareService
         try {
             $requestArr = array(
                 'payment_method' => $this->paymentMethodId,
-                'payment_settings' => json_encode($request['payment_settings']) // is in JSON type
+                'payment_settings' => json_encode($request['payment_settings'])
             );
             if ($this->paymentOptionsRepository->getPaymentMethodDetails($this->paymentMethodId) !== null) {
                 $this->paymentOptionsRepository->updatePaymentMethodDetails(array(
@@ -72,8 +72,12 @@ class PayBySquareService
     public function getQRCodeFromData($variableSymbol, $amount, $frequency, $iban)
     {
         $this->iban = $iban;
-        //http://www.sbaonline.sk/files/subory/projekty/qr-kod/bysquare-payspecifications-1.1.0.pdf
-        //https://github.com/prog/php-bsqr
+
+        /*
+         * Shape and technic from documentations:
+         * http://www.sbaonline.sk/files/subory/projekty/qr-kod/bysquare-payspecifications-1.1.0.pdf
+         * https://github.com/prog/php-bsqr
+         */
 
         $document = new Pay();
         $document->payments[] = call_user_func(function() use ($variableSymbol, $amount) {
@@ -83,7 +87,6 @@ class PayBySquareService
             $payment->currencyCode = env('CURRENCY');
             $payment->note = 'pay-by-square';
             $payment->variableSymbol = $variableSymbol;
-            // $payment->constantSymbol = $invoice->constant_symbol;
             $payment->bankAccounts[] = call_user_func(function() {
                 $bankAccount = new BankAccount();
                 $bankAccount->iban = $this->iban;
