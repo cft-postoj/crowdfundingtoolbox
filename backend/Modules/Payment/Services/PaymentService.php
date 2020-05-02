@@ -14,7 +14,6 @@ use Modules\UserManagement\Services\GeneratedUserTokenService;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\UserPaymentOptionService;
 use Modules\UserManagement\Services\UserService;
-use PhpImap\Exceptions\InvalidParameterException;
 
 class PaymentService
 {

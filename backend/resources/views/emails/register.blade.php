@@ -1,13 +1,19 @@
 @extends('emails.layout')
-@section('title', 'Thank you for register')
+@section('title', __('cft-emails.register.title'))
 
 @section('body')
-    Hello,<br/>we would like to thank you for registering at www.postoj.sk.<br/>
-    <br/>
-    Please click on the following button, fill in all your contact details and get a gift. The link is valid for 1 hour from delivery. <br/>
+    {!! __('cft-emails.register.body') !!}
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', env('CFT_PORTAL_URL') . '/moj-ucet?generatedResetToken=' . $token . '&loggedIn=true')
-@section('buttonText', 'My account')
-@section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')
+@section('buttonUrl', __('cftJSmessages.myAccountTexts.myAccountUrl') . '?generatedToken=' . $token . '&user=' . $portal_user_id . '&loggedIn=true')
+@section('buttonText', __('cft-emails.register.buttonText'))
+@section('buttonAlternative')
+    {!!  __('cft-emails.register.buttonAlternative') !!}
+@endsection
+
+@section('footer')
+    {!! __('cft-emails.register.notActionValidation') !!}
+    {!! __('cft-emails.register.footer') !!}
+@endsection
+

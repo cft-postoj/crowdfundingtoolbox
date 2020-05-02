@@ -1,21 +1,23 @@
 @extends('emails.layout')
-@section('title', 'Thank you for supporting')
+@section('title', __('cft-emails.thankYouForSupporting.title'))
 
 @section('body')
-    Hello,<br/>thank you for donating www.postoj.sk.<br/>
+    {!! __('cft-emails.thankYouForSupporting.bodyPart1') !!}
+    <br/>
     <br/>
     <hr>
-    If you didn't send money yet, please use these information:<br />
+    {!! __('cft-emails.thankYouForSupporting.bodyPart1') !!}
+    <br />
     IBAN: <b>{{$iban}}</b><br />
-    VARIABLE SYMBOL: <b>{{$variableSymbol}}</b>
+    {!! __('cft-emails.thankYouForSupporting.variableSymbol') !!}: <b>{{$variableSymbol}}</b>
     <hr>
     <br />
-    We created new account for you and you can set your password for your account here: {{env('CFT_PORTAL_URL')}}?setPassword={{$emailToken}}
-    Please click on the following button, fill in all your contact details and get a gift. The link is valid for 1 hour from delivery. <br/>
+    {!! __('cft-emails.thankYouForSupporting.bodyPart3') !!}
+    <br/>
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', env('CFT_PORTAL_URL') . '/moj-ucet?generatedResetToken=' . $emailToken . '&loggedIn=true')
-@section('buttonText', 'My account')
-@section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')
+@section('buttonUrl', env('CFT_PORTAL_URL') . __('cftJSmessages.myAccountTexts.myAccountUrl') . '#' . __('cftJSmessages.myAccountTexts.accountSlug') . '?generatedToken=' . $token . '&loggedIn=true')
+@section('buttonText', __('cft-emails.thankYouForSupporting.buttonText'))
+@section('buttonAlternative', __('cft-emails.thankYouForSupporting.buttonAlternative'))
 

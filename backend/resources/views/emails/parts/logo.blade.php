@@ -1,3 +1,3 @@
-<a href="https://www.postoj.sk">
-    <img src="https://www.postoj.sk/assets/frontend/build/img/brand-main.png" />
+<a href="https://www.crowdfundingtoolbox.news">
+    <img src="your-website-logo.png" />
 </a>
