@@ -32,9 +32,24 @@ class PaymentRepository
     public function getUnpairedPayments()
     {
         return $this->model
-            ::with('donation')
-            ->doesnthave('donation')
-            ->orderby('id', 'DESC')
+            ::doesntHave('donation')
+            ->orderByDesc('payments.transaction_date')
+            ->get();
+    }
+
+    public function getAscUnpairedPayments()
+    {
+        return $this->model
+            ::doesntHave('donation')
+            ->orderBy('payments.transaction_date', 'asc')
+            ->get();
+    }
+
+    public function getUnpairedPaymentsDesc()
+    {
+        return $this->model
+            ::doesntHave('donation')
+            ->orderBy('payments.transaction_date')
             ->get();
     }
 
@@ -46,16 +61,17 @@ class PaymentRepository
             ->first();
     }
 
-    public function getPayments($from, $to, $monthly)
+    public function getPayments($from, $to, $monthly, $pageSize, $filterColumns)
     {
+        $query = Payment::filter($filterColumns)
+            ->orderBy('payments.transaction_date', 'DESC');
 
-        $query = Payment::query()
-            ->whereDate('transaction_date', '>=', $from)
-            ->whereDate('transaction_date', '<=', $to)
-            ->with(['donation.portalUser.user.userDetail',
-                'donation.widget.campaign',
-                'donation.widget.widgetType', 'paymentMethod'])
-            ->orderBy('transaction_date', 'DESC');
+        if ($from !== null) {
+            $query = $query->whereDate('payments.transaction_date', '>=', $from);
+        }
+        if ($to !== null) {
+            $query = $query->whereDate('payments.transaction_date', '<=', $to);
+        }
 
         if ($monthly === 'true') {
             $query = $query->has('donationMonthlyTrue');
@@ -63,7 +79,7 @@ class PaymentRepository
         if ($monthly === 'false') {
             $query = $query->has('donationMonthlyFalse');
         }
-        return $query->get();
+        return $query->paginate($pageSize);
     }
 
     public function all()
@@ -79,5 +95,34 @@ class PaymentRepository
             ->get();
     }
 
+    public function getByTransactionId($tid)
+    {
+        return $this->model
+            ::where('transaction_id', $tid)
+            ->first();
+    }
+
+    public function getByUuid($uuid)
+    {
+        return $this->model
+            ::where('uuid', $uuid)
+            ->first();
+    }
+
+    public function existTransactionId($transactionId)
+    {
+        return $this->model
+            ::where('transaction_id', $transactionId)
+            ->first();
+    }
+
+    public function updateByAccountNumber($accountNumber, $accountName)
+    {
+        return $this->model
+            ::where('iban', $accountNumber)
+            ->update(array(
+                'account_name' => $accountName
+            ));
+    }
 
 }

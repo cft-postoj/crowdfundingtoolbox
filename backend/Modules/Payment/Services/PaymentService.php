@@ -37,7 +37,6 @@ class PaymentService
     private $payerReferenceIndex;
     private $paymentNoteIndex;
     private $transactionIdIndex;
-    private $bmailService;
     private $userService;
 
 
@@ -51,7 +50,6 @@ class PaymentService
         $this->portalUserService = new PortalUserService();
         $this->userPaymentOptionService = new UserPaymentOptionService();
         $this->variableSymbolService = new VariableSymbolService();
-        $this->bmailService = new BmailService();
         $this->userService = new UserService();
     }
 
