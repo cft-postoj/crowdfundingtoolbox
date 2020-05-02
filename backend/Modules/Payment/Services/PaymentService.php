@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Modules\Campaigns\Entities\UserDonationData;
-use Modules\Payment\Entities\Payment;
 use Modules\Payment\Repositories\PaymentRepository;
 use Modules\UserManagement\Emails\DonationEmail;
 use Modules\UserManagement\Services\GeneratedUserTokenService;
@@ -16,7 +15,6 @@ use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\UserPaymentOptionService;
 use Modules\UserManagement\Services\UserService;
 use PhpImap\Exceptions\InvalidParameterException;
-use PhpImap\Mailbox as ImapMailbox;
 
 class PaymentService
 {
@@ -726,9 +724,6 @@ class PaymentService
                     }
                 }
                 $counter++;
-//                if ($counter - 1 !== $countOfSuccessfullyCreatedRecords) {
-//                    dd($counter - 1, $countOfSuccessfullyCreatedRecords, 'daco plane', $csv);
-//                }
             }
         } catch (\Exception $exception) {
             return response()->json([
@@ -814,7 +809,7 @@ class PaymentService
 
     private function isSamePayments($database, $csv)
     {
-        // remove all diacritical mark to trying to match with tb BMAIL, that removes all diacritic
+        // remove all diacritical mark to trying to match, that removes all diacritic
         $table = array(
             'Á' => 'A', 'Ä' => 'A', 'á' => 'a', 'ä' => 'a',
             'Č' => 'C', 'č' => 'c',
@@ -850,24 +845,6 @@ class PaymentService
     public function getByTransactionId($transactionId)
     {
         return $this->paymentRepository->getByTransactionId($transactionId);
-    }
-
-    public function getPaymentsFromBmail($sinceDays = 0, $beforeDays = 0)
-    {
-
-        try {
-            $mailbox = new ImapMailbox('{smtp.webglobe.sk:143}INBOX', env('DONATIONS_MAIL_USERNAME'), env('DONATIONS_MAIL_PASSWORD'), __DIR__);
-        } catch (InvalidParameterException $e) {
-            Log::error('Unable to connect to smtp server (smtp.webglobe.sk) using login banka@postoj.sk.');
-        }
-        // add day to 'BEFORE' because before date is exclusive,
-        // 'SINCE' is inclusive, no need to sub day
-        $criteria = 'SINCE "' . Carbon::now()->subDays($sinceDays)->format('d-M-Y')
-            . '" BEFORE "' . Carbon::now()->addDay()->subDays($beforeDays)->format('d-M-Y') . '"';
-        Log::info('Getting b-mails using criteria: ' . $criteria);
-
-        $mailsIds = $mailbox->searchMailbox($criteria);
-        $this->parseBmail($mailsIds, $mailbox);
     }
 
     public function importUsersIbans()
