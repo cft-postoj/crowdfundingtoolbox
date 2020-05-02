@@ -20,7 +20,6 @@
 /backend/storage/logs/*
 /backend/.env
 /dashboard-app/src/environments
-/dashboard-app/src/keys.ts
 /backend/public/css/app.css
 /backend/public/js/app.js
 /dist
