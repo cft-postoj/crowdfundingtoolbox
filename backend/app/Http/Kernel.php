@@ -37,9 +37,11 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
+        //'throttle' => ['throttle:5000,1'], //No idea why, but this works!
+
         'api' => [
-            'throttle:120,1',
-            'bindings',
+            //'throttle:5000,1',
+            'bindings'
         ],
     ];
 
@@ -54,12 +56,14 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'multiauth' => \SMartins\PassportMultiauth\Http\Middleware\MultiAuthenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'service_account' => \App\Http\Middleware\OnlyServiceAccountMiddleware::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        //'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'throttle' => \App\Http\Middleware\NoThrottle::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'client_credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
         'client'    =>  \Laravel\Passport\Guards\TokenGuard::class,
@@ -67,6 +71,8 @@ class Kernel extends HttpKernel
         'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
         'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
         'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
+        'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
+        'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
     ];
 
     /**
