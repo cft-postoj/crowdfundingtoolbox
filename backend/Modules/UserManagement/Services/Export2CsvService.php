@@ -5,8 +5,6 @@ namespace Modules\UserManagement\Services;
 
 use Modules\UserManagement\Exports\DidNotPayUsersExport;
 use Modules\UserManagement\Exports\DonorsExport;
-use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Modules\UserManagement\Exports\NotCompleteSupportExport;
 use Modules\UserManagement\Exports\StoppedSupportingExport;
@@ -48,7 +46,7 @@ class Export2CsvService
         $headers = array(
             'Content-Type' => 'text/csv',
         );
-        $filename = "export.csv";
+        $filename = 'export.csv';
         $handle = fopen($filename, 'w+');
         switch ($request['type']) {
             case 'donors':
@@ -68,6 +66,11 @@ class Export2CsvService
                 break;
             case 'not-complete-support':
                 foreach ($this->notCompleteSupportExport->getData($from, $to) as $row) {
+                    fputcsv($handle, $row);
+                }
+                break;
+            case 'gift-donors':
+                foreach ($this->donorsExport->donorsGiftExport() as $row) {
                     fputcsv($handle, $row);
                 }
                 break;

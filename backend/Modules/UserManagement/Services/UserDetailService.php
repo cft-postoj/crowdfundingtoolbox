@@ -23,6 +23,7 @@ class UserDetailService implements UserDetailServiceInterface
     private $user;
     private $portalUserId;
     private $userPaymentOptionsRepository;
+    private $userMailerApiService;
 
     public function __construct(UserDetailRepository $userDetailRepository,
                                 UserGdprRepository $userGdprRepository,
@@ -84,16 +85,18 @@ class UserDetailService implements UserDetailServiceInterface
 
             // UPDATE USER DETAILS
             $customRequest = array();
-            if ($request['cft-firstName'] != null) {
-                array_push($customRequest, array('first_name' => $request['cft-firstName']));
-                if ($oldUserData->first_name !== $request['cft-firstName']) {
-                    $updateData .= 'FIRST NAME, ';
+            if ($oldUserData !== null) {
+                if ($request['cft-firstName'] != null) {
+                    array_push($customRequest, array('first_name' => $request['cft-firstName']));
+                    if ($oldUserData->first_name !== $request['cft-firstName']) {
+                        $updateData .= 'FIRST NAME, ';
+                    }
                 }
-            }
-            if ($request['cft-lastName'] != null) {
-                array_push($customRequest, array('last_name' => $request['cft-lastName']));
-                if ($oldUserData->last_name !== $request['cft-lastName']) {
-                    $updateData .= 'LAST NAME, ';
+                if ($request['cft-lastName'] != null) {
+                    array_push($customRequest, array('last_name' => $request['cft-lastName']));
+                    if ($oldUserData->last_name !== $request['cft-lastName']) {
+                        $updateData .= 'LAST NAME, ';
+                    }
                 }
             }
             array_push($customRequest, array(
@@ -106,27 +109,30 @@ class UserDetailService implements UserDetailServiceInterface
                 'country' => $request['cft-country'],
                 'delivery_address_is_same' => $request['cft-deliveryAddressSame']
             ));
-            if ($oldUserData->telephone_prefix !== $request['cft-telephone-prefix']) {
-                $updateData .= 'TELEPHONE PREFIX, ';
+            if ($oldUserData !== null) {
+                if ($oldUserData->telephone_prefix !== $request['cft-telephone-prefix']) {
+                    $updateData .= 'TELEPHONE PREFIX, ';
+                }
+                if ($oldUserData->telephone !== $request['cft-telephone']) {
+                    $updateData .= 'TELEPHONE, ';
+                }
+                if ($oldUserData->street !== $request['cft-street']) {
+                    $updateData .= 'STREET, ';
+                }
+                if ($oldUserData->house_number !== $request['cft-house-number']) {
+                    $updateData .= 'HOUSE NUMBER, ';
+                }
+                if ($oldUserData->city !== $request['cft-city']) {
+                    $updateData .= 'CITY, ';
+                }
+                if ($oldUserData->zip !== $request['cft-zip']) {
+                    $updateData .= 'ZIP, ';
+                }
+                if ($oldUserData->country !== $request['cft-country']) {
+                    $updateData .= 'COUNTRY, ';
+                }
             }
-            if ($oldUserData->telephone !== $request['cft-telephone']) {
-                $updateData .= 'TELEPHONE, ';
-            }
-            if ($oldUserData->street !== $request['cft-street']) {
-                $updateData .= 'STREET, ';
-            }
-            if ($oldUserData->house_number !== $request['cft-house-number']) {
-                $updateData .= 'HOUSE NUMBER, ';
-            }
-            if ($oldUserData->city !== $request['cft-city']) {
-                $updateData .= 'CITY, ';
-            }
-            if ($oldUserData->zip !== $request['cft-zip']) {
-                $updateData .= 'ZIP, ';
-            }
-            if ($oldUserData->country !== $request['cft-country']) {
-                $updateData .= 'COUNTRY, ';
-            }
+
 
             $this->userDetailRepository->update(array_merge(...$customRequest), $userId);
 
@@ -221,7 +227,8 @@ class UserDetailService implements UserDetailServiceInterface
         }
 
         return \response()->json([
-            'message' => 'Successfully updated user account.'
+            'message' => 'Successfully updated user account.',
+            'user_token' => JWTAuth::fromUser($currentUser)
         ], Response::HTTP_CREATED);
     }
 
@@ -262,5 +269,9 @@ class UserDetailService implements UserDetailServiceInterface
         );
     }
 
+    public function getByUserId($userId)
+    {
+        return $this->userDetailRepository->get($userId);
+    }
 
 }

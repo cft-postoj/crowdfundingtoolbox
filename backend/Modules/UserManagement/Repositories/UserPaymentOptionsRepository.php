@@ -17,6 +17,7 @@ class UserPaymentOptionsRepository
 
     public function create($request)
     {
+        //dd($request);
         return $this->model
             ::create(
                 $request
@@ -41,6 +42,20 @@ class UserPaymentOptionsRepository
     {
         return $this->model
             ::where('bank_account_number', $iban)
+            ->first();
+    }
+
+    public function getOptionsByIban($iban)
+    {
+        return $this->model
+            ::where('bank_account_number', $iban)
+            ->get();
+    }
+
+    public function getByCardId($card_id)
+    {
+        return $this->model
+            ::where('card_id', $card_id)
             ->first();
     }
 }

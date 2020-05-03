@@ -21,6 +21,21 @@ class GeneratedUserTokenRepository implements GeneratedUserTokenRepositoryInterf
         return $this->model::all();
     }
 
+    public function getByUserId($userId)
+    {
+        return $this->model
+            ::where('user_id', $userId)
+            ->orderByDesc('id')
+            ->first();
+    }
+
+    public function getByToken($token)
+    {
+        return $this->model
+            ::where('generated_token', $token)
+            ->first();
+    }
+
     public function getUserIdByToken($token)
     {
         return $this->model
@@ -40,8 +55,8 @@ class GeneratedUserTokenRepository implements GeneratedUserTokenRepositoryInterf
     {
         $generatedToken = $this->model
             ::create([
-                'user_id'   =>  $userId,
-                'generated_token'   =>  $token
+                'user_id' => $userId,
+                'generated_token' => $token
             ]);
         return $generatedToken;
     }

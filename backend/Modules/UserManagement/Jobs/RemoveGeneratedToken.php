@@ -21,9 +21,9 @@ class RemoveGeneratedToken implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(GeneratedUserToken $generatedUserToken)
+    public function __construct()
     {
-        $this->generatedUserToken = $generatedUserToken;
+        $this->generatedUserToken = new GeneratedUserToken();
     }
 
     /**

@@ -28,13 +28,19 @@ class UserGdprRepository implements UserGdprRepositoryInterface
             ->first();
     }
 
+    public function createMass($mass)
+    {
+        return $this->model
+            ::create($mass);
+    }
+
     public function create($request, $portal_user_id)
     {
         return $this->model
             ::create([
-                'portal_user_id'    =>  $portal_user_id,
-                'agree_mail_sending'    =>  $request['agreeMailing'],
-                'agree_general_conditions'  =>  $request['agreePersonalData']
+                'portal_user_id' => $portal_user_id,
+                'agree_mail_sending' => true,
+                'agree_general_conditions' => $request['agreePersonalData']
             ]);
     }
 
@@ -43,8 +49,8 @@ class UserGdprRepository implements UserGdprRepositoryInterface
         return $this->model
             ::where('portal_user_id', $portal_user_id)
             ->update([
-                'agree_mail_sending'    =>  $request['agreeMailing'],
-                'agree_general_conditions'  =>  $request['agreePersonalData']
+                'agree_mail_sending' => $request['agreeMailing'],
+                'agree_general_conditions' => $request['agreePersonalData']
             ]);
     }
 }

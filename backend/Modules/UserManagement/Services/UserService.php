@@ -6,10 +6,12 @@ namespace Modules\UserManagement\Services;
 
 use http\Client\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 use Modules\UserManagement\Entities\BackOfficeUser;
 use Modules\UserManagement\Entities\PortalUser;
+use Modules\UserManagement\Entities\ServiceAccount;
 use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Entities\UserCookie;
 use Modules\UserManagement\Repositories\UserRepository;
@@ -29,7 +31,7 @@ class UserService implements UserServiceInterface
         return $this->userRepository->get($id);
     }
 
-    public function createCookieIfNew($userCookie, $userId, $ip)
+    public function createCookieIfNew($ip)
     {
         $agent = new Agent();
         $deviceType = 'not detected';
@@ -45,15 +47,33 @@ class UserService implements UserServiceInterface
             $deviceType = 'robot';
         }
 
-        if (($userCookie == null || $userCookie == "" || $userCookie == "null") && $userId == null) {
-            return UserCookie::create([
-                'device_type' => $deviceType,
-                'browser' => $agent->browser(),
-                'platform' => $agent->platform(),
-                'languages' => implode(" ", $agent->languages()),
-                'ip' => $ip,
+        return UserCookie::create([
+            'device_type' => $deviceType,
+            'browser' => $agent->browser(),
+            'platform' => $agent->platform(),
+            'languages' => implode(" ", $agent->languages()),
+            'ip' => $ip,
+        ]);
+    }
+
+    public function createServiceAccount($data)
+    {
+
+        $username = $this->checkUniqueUsername(isset($data['username'])
+            ? $data['username'] : explode('@', $data['email'])[0]);
+
+        $user = $this->userRepository->getByEmail($data['email']);
+        $existInUserTable = ($user === null) ? false : true;
+
+        if (!$existInUserTable) {
+            $user = User::create([
+                'username' => $username,
+                'email' => $data['email'],
+                'password' => bcrypt($data['password'])
             ]);
         }
+        ServiceAccount::create(['user_id' => $user->id]);
+        Log::info('service account with email ' . $data['email'] . ' successfully created');
     }
 
     public function create($request)
@@ -144,4 +164,29 @@ class UserService implements UserServiceInterface
     {
         return $this->userRepository->getUserByEmail($email);
     }
+
+    public function getUserByEmailWithUserPaymentOptions(string $email)
+    {
+        return $this->userRepository->getUserByEmailWithUserPaymentOptions($email);
+    }
+
+    public function isBackofficeUser($id)
+    {
+        return $this->userRepository->isBackofficeUser($id);
+    }
+
+    public function isServiceAccount($id)
+    {
+        return $this->userRepository->isServiceAccount($id);
+    }
+
+    public function userHaveValidAddress($userDetail) : bool
+    {
+        if ($userDetail == null) {
+            return false;
+        }
+        return !empty($userDetail->first_name) && !empty($userDetail->last_name) &&
+            !empty($userDetail->street) && !empty($userDetail->street) && !empty($userDetail->city);
+    }
+
 }

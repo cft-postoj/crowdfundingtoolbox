@@ -205,7 +205,6 @@ class UserServiceController extends Controller
         ]);
 
         if ($valid->fails()) {
-            /* TODO: pridat podmienku pre situaciu, kedy uz pouzivatel existuje, no nie ako portal user alebo backoffice - teda email/username is exist */
             $jsonError = response()->json([
                 'error' => $valid->errors()
             ], 400);
