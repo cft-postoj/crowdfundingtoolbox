@@ -14,7 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'Modules\UserManagement\Console\UpdateDonorStatus',
-        'App\Console\Commands\testExecution',
         'Modules\UserManagement\Console\SendRegistrationMailDuringDonation',
         'Modules\Payment\Console\DonationsCalcMonthlyStatus',
         'Modules\Payment\Console\BulkPairUnpairedPayments',
