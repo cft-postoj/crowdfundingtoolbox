@@ -19,30 +19,34 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
     public function getDonationsGroupIsMonthly($from, $to, $interval, $isMonthly)
     {
         $payment = Payment::query()
-            ->select('id')
-            ->whereDate('transaction_date', '>=', $from)
-            ->whereDate('transaction_date', '<=', $to);
+            ->select('id', 'payments.transaction_date', 'amount')
+            ->whereDate('payments.transaction_date', '>=', $from)
+            ->whereDate('payments.transaction_date', '<=', $to);
 
-        return $this->model::select(
-            DB::raw("date_trunc('$interval', created_at) AS date"), DB::raw('sum(amount) as value'))
-            ->joinSub($payment, 'payment', function ($join) {
+        $donationQuery = Donation::query()->select(
+            DB::raw("date_trunc('$interval', payment.transaction_date) AS date"), DB::raw('sum(payment.amount) as value'))
+            ->rightJoinSub($payment, 'payment', function ($join) {
                 $join->on('donations.payment_id', '=', 'payment.id');
             })
-            ->where('is_monthly_donation', $isMonthly)
-            ->groupBy(DB::raw('date'))
-            ->get();
+            ->groupBy(DB::raw('date'));
+        if ($isMonthly === false) {
+            $donationQuery->where('is_monthly_donation', false)->orWhereNull('is_monthly_donation');
+        } else {
+            $donationQuery->where('is_monthly_donation', true);
+        }
+        return $donationQuery->get();
     }
 
     public function getDonorsGroupIsMonthly($from, $to, $interval, $isMonthly)
     {
         $payment = Payment::query()
-            ->select('id')
-            ->whereDate('transaction_date', '>=', $from)
-            ->whereDate('transaction_date', '<=', $to);
+            ->select('id', 'payments.transaction_date', 'amount')
+            ->whereDate('payments.transaction_date', '>=', $from)
+            ->whereDate('payments.transaction_date', '<=', $to);
 
-        return $this->model::select(
-            DB::raw("date_trunc('$interval', created_at) AS date"), DB::raw('count(portal_user_id) as value'))
-            ->joinSub($payment, 'payment', function ($join) {
+        return Donation::select(
+            DB::raw("date_trunc('$interval', payment.transaction_date) AS date"), DB::raw('count(portal_user_id) as value'))
+            ->rightJoinSub($payment, 'payment', function ($join) {
                 $join->on('donations.payment_id', '=', 'payment.id');
             })
             ->where('is_monthly_donation', $isMonthly)
@@ -56,42 +60,33 @@ class StatsDonationRepository implements StatsDonationRepositoryInterface
         return Payment::query()
             ->select(DB::raw('sum(payments.amount) as amount_sum'),
                 DB::raw('avg(payments.amount) as amount_avg'),
-                DB::raw( 'count(DISTINCT portal_user_id) as donors_count')
+                DB::raw('count(DISTINCT portal_user_id) as donors_count')
             )
-            ->leftJoin('donations', 'payments.id', '=', 'donations.payment_id')
-            ->whereDate('transaction_date', '>=', $from)
-            ->whereDate('transaction_date', '<=', $to)
+            ->leftJoin('donations', function ($leftJoin) {
+                $leftJoin->on('payments.id', '=', 'donations.payment_id')
+                    ->whereNull('donations.deleted_at');
+            })
+            ->whereDate('payments.transaction_date', '>=', $from)
+            ->whereDate('payments.transaction_date', '<=', $to)
             ->first();
     }
 
     public function getDonorsAndDonationsTotalGroupMonthly($from, $to)
     {
-         return Payment::query()
+        return Payment::query()
             ->select(DB::raw('sum(payments.amount) as amount_sum'),
                 DB::raw('avg(payments.amount) as amount_avg'),
-                DB::raw( 'count(DISTINCT portal_user_id) as donors_count'),
+                DB::raw('count(DISTINCT portal_user_id) as donors_count'),
                 'is_monthly_donation'
             )
-            ->leftJoin('donations', 'payments.id', '=', 'donations.payment_id')
+            ->leftJoin('donations', function ($leftJoin) {
+                $leftJoin->on('payments.id', '=', 'donations.payment_id')
+                    ->whereNull('donations.deleted_at');
+            })
             ->whereDate('transaction_date', '>=', $from)
             ->whereDate('transaction_date', '<=', $to)
             ->groupBy(DB::raw('is_monthly_donation'))
             ->get();
-    }
-
-    public function getDonations($from, $to, $monthly)
-    {
-        $query = Donation::query()
-            ->has('portalUser')
-            ->whereDate('created_at', '>=', $from)
-            ->whereDate('created_at', '<=', $to)
-            ->with(['portalUser.user.userDetail', 'widget.campaign', 'widget.widgetType','payment.paymentMethod']);
-
-        //if monthly is set, filter lastDonationAt
-        if ($monthly !== null) {
-            $lastDonationAt = $query->where('is_monthly_donation', $monthly);
-        }
-        return $query->get();
     }
 
 }

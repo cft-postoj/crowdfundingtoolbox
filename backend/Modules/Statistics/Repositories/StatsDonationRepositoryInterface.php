@@ -19,8 +19,4 @@ interface StatsDonationRepositoryInterface
     //get sum of donors and donations specific between $from and $to grouped by monthly
     public function getDonorsAndDonationsTotalGroupMonthly($from, $to);
 
-    //get all donations between date $from and $to grouped by monthly
-    public function getDonations($from, $to, $monthly);
-
-
 }

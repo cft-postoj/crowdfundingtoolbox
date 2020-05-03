@@ -5,21 +5,24 @@ namespace Modules\Statistics\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Modules\Statistics\Services\GeneralStatsService;
 use Modules\Statistics\Services\StatsDonationService;
-use Modules\Statistics\Services\StatsDonorService;
+use Modules\UserManagement\Services\PortalUserService;
+use Modules\UserManagement\Entities\PortalUser;
 
 class StatisticsController extends Controller
 {
 
     private $statsDonationService;
-    private $statsDonorService;
+    private $portalUserService;
     private $generalStatsService;
+    protected $client;
 
-    public function __construct(StatsDonationService $statsDonationService, StatsDonorService $statsDonorService, GeneralStatsService $generalStatsService)
+    public function __construct(StatsDonationService $statsDonationService, PortalUserService $portalUserService, GeneralStatsService $generalStatsService)
     {
         $this->statsDonationService = $statsDonationService;
-        $this->statsDonorService = $statsDonorService;
+        $this->portalUserService = $portalUserService;
         $this->generalStatsService = $generalStatsService;
     }
 
@@ -49,27 +52,10 @@ class StatisticsController extends Controller
         );
     }
 
-    protected function donorsAll(Request $request)
-    {
-        return \response()->json(
-            $this->statsDonorService->getDonors($request['from'], $request['to'], $request['monthly'],
-                $request['dataType'], $request['limit']),
-            Response::HTTP_OK
-        );
-    }
-
-    protected function getDonationsAll(Request $request)
-    {
-        return \response()->json(
-            $this->statsDonationService->getDonations($request['from'], $request['to'], $request['monthly']),
-            Response::HTTP_OK
-        );
-    }
-
     protected function getDonorsTotal(Request $request)
     {
         return \response()->json(
-            $this->statsDonorService->getDonorsTotal($request['from'], $request['to']),
+            $this->portalUserService->getDonorsTotal($request['from'], $request['to']),
             Response::HTTP_OK
         );
     }
@@ -90,7 +76,8 @@ class StatisticsController extends Controller
         );
     }
 
-    protected function campaign($id, $period) {
+    protected function campaign($id, $period)
+    {
         return \response()->json(
             $this->generalStatsService->getCampaignStatsById($period, $id),
             Response::HTTP_OK
