@@ -2,15 +2,18 @@
 
 namespace Modules\UserManagement\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\UserManagement\Entities\PortalUser;
-use Modules\UserManagement\Entities\User;
+use Illuminate\Support\Facades\Log;
+use Modules\UserManagement\Services\DonorCategoryService;
 use Modules\UserManagement\Services\ExcludeFromTargetingService;
 use Modules\UserManagement\Services\Export2CsvService;
+use Modules\UserManagement\Services\PortalUserDonorCategoryService;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\UserService;
+use JWTAuth;
 
 class PortalUsersController extends Controller
 {
@@ -18,16 +21,22 @@ class PortalUsersController extends Controller
     private $portalUserService;
     private $excludeFromTargetingService;
     private $export2CsvService;
+    private $portalUserDonorCategoryService;
+    private $donorCategoryService;
 
     public function __construct(PortalUserService $portalUserService,
                                 Export2CsvService $export2CsvService,
                                 UserService $userService,
-                                ExcludeFromTargetingService $excludeFromTargetingService)
+                                ExcludeFromTargetingService $excludeFromTargetingService,
+                                PortalUserDonorCategoryService $portalUserDonorCategoryService,
+                                DonorCategoryService $donorCategoryService)
     {
         $this->userService = $userService;
         $this->portalUserService = $portalUserService;
         $this->excludeFromTargetingService = $excludeFromTargetingService;
         $this->export2CsvService = $export2CsvService;
+        $this->portalUserDonorCategoryService = $portalUserDonorCategoryService;
+        $this->donorCategoryService = $donorCategoryService;
     }
 
     public function all()
@@ -37,6 +46,15 @@ class PortalUsersController extends Controller
             Response::HTTP_OK
         );
     }
+
+    public function findByString(Request $request)
+    {
+        return \response()->json(
+            $this->portalUserService->findByString($request['string']),
+            Response::HTTP_OK
+        );
+    }
+
 
     public function getById($id)
     {
@@ -50,6 +68,18 @@ class PortalUsersController extends Controller
     {
         return \response()->json(
             $this->portalUserService->removeById($id),
+            Response::HTTP_OK
+        );
+    }
+
+    protected function impersonate($id)
+    {
+        $user = $this->portalUserService->getById($id);
+        $token = JWTAuth::customClaims(['exp' => Carbon::now()->addMinutes(15)->timestamp])->fromUser($user);
+        $userWhoIsImpersonating = JWTAuth::parseToken()->authenticate();
+        Log::info('user ' . $userWhoIsImpersonating->email . ' is impersonating user with email ' . $user->email);
+        return \response()->json(
+            ['token' => $token],
             Response::HTTP_OK
         );
     }
@@ -100,6 +130,13 @@ class PortalUsersController extends Controller
         return $this->portalUserService->getDonationsDetailInfo($id);
     }
 
+    protected function getPortalUserDonorCategory($id)
+    {
+        return \response()->json(
+            $this->portalUserDonorCategoryService->getByPortalUserId($id)
+            , Response::HTTP_OK);
+    }
+
     protected function getDonationsByUserPortalAndDate(Request $request, $id)
     {
         return $this->portalUserService->getDonationsByUserPortalAndDate($id, $request['from'], $request['to']);
@@ -111,6 +148,57 @@ class PortalUsersController extends Controller
             $this->portalUserService->getUserSupportData(),
             Response::HTTP_OK
         );
+    }
+
+    protected function importDonors(Request $request)
+    {
+        return \response()->json(
+            array('donors' => $this->portalUserService->importDonors(),
+                'message' => 'Users successfully imported.')
+            ,
+            Response::HTTP_OK
+        );
+    }
+
+    protected function importSubscribers(Request $request)
+    {
+        return \response()->json(
+            array('donors' => $this->portalUserService->importSubscribers(),
+                'message' => 'Users successfully imported.')
+            ,
+            Response::HTTP_OK
+        );
+    }
+
+    protected function importSubscribersSvetKrestanstva(Request $request)
+    {
+        return \response()->json(
+            array('donors' => $this->portalUserService->importSubscribersSvetKrestanstva(),
+                'message' => 'Users successfully imported.')
+            ,
+            Response::HTTP_OK
+        );
+    }
+
+    protected function getPortalUsers(Request $request)
+    {
+        return \response()->json(
+            $this->portalUserService->getPortalUsers($request['from'], $request['to'], $request['monthly'],
+                $request['dataType'], $request['page_size'], $request->all()),
+            Response::HTTP_OK
+        );
+    }
+
+    protected function updatePassword(Request $request)
+    {
+        return $this->portalUserService->updatePassword($request);
+    }
+
+    protected function refreshToken()
+    {
+        return \response()->json([
+            'user_token' => $this->portalUserService->getJWTToken()
+        ], Response::HTTP_OK);
     }
 
 }

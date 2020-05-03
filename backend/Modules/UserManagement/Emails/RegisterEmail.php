@@ -11,15 +11,17 @@ class RegisterEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $token;
+    public $portal_user_id;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token, $portal_user_id)
     {
         $this->token = $token;
+        $this->portal_user_id = $portal_user_id;
     }
 
     /**
@@ -29,8 +31,8 @@ class RegisterEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Registration on www.postoj.sk')
-            ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
+        return $this->subject(__('cft-emails.register.subject'))
+            ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
             ->view('emails.register');
     }
 }

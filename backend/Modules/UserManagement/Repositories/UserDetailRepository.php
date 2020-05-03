@@ -47,4 +47,10 @@ class UserDetailRepository implements UserDetailRepositoryInterface
                 'last_name' => $request['last_name']
             ]);
     }
+
+    public function createMass($userDetailMass)
+    {
+        return $this->model
+            ::create($userDetailMass);
+    }
 }

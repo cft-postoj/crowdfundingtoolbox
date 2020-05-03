@@ -1,6 +1,6 @@
 import {Donation} from './donation';
 
-export class Payment {
+export class Payment implements Modifiable {
     id: number;
     transaction_id: string;
     donation: Donation;
@@ -12,4 +12,6 @@ export class Payment {
     transfer_type: number;
     status: string;
     payment_notes: string;
+    account_name: string;
+    markAsModify: boolean;
 }

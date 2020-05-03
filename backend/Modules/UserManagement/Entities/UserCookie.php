@@ -12,4 +12,8 @@ class UserCookie extends Model
     protected $table = 'user_cookie';
     protected $fillable = ['device_type', 'browser', 'platform', 'ip', 'ip_forwarded'];
 
+    public function userCookieCouple()
+    {
+        return $this->belongsTo('\Modules\UserManagement\Entities\UserCookieCouple');
+    }
 }

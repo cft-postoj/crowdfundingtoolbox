@@ -1,0 +1,3 @@
+interface Modifiable {
+    markAsModify: boolean;
+}

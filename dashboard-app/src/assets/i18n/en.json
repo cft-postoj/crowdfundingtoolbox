@@ -1,0 +1,38 @@
+{
+  "CAMPAIGNS": {
+    "WIDGETS": {
+      "MONETIZATION": {
+        "ONE_TIME_SUPPORT": "One-time support",
+        "STEP": "Step <span>{{value1}}</span> of {{value2}}",
+        "MONTHLY": "monthly",
+        "ONCE": "once",
+        "MONTHLY_DONATION": "Monthly donation",
+        "FOREIGN_DONATION": "Foreign donation",
+        "IBAN": "IBAN",
+        "VAR_SYMBOL": "Variable symbol",
+        "AMOUNT": "Amount",
+        "EMAIL": "Your email",
+        "CUSTOM": "custom",
+        "PAYMENT_TYPES": {
+          "BANK_TRANSFER": "Bank transfer",
+          "PBS": "Pay by square",
+          "CARD": "Pay by card"
+        },
+        "CARDPAY_BUTTON": "Pay ",
+        "COMFORTPAY_BUTTON": "Monthly subscription for ",
+        "HOME_PAYMENT": "Home payment",
+        "FOREIGN_PAYMENT": "Foreign payment",
+        "ERRORS": {
+          "AGREE_TERMS": "Please agree with terms and conditions",
+          "EMAIL_WRONG_FORMAT": "E-mail has wrong format"
+        },
+        "GO_TO_MYACCOUNT": "Go to your account",
+        "REGISTER": "Register",
+        "RECAPITULATION": "Recapitulation",
+        "FREQUENCY": "Frequency",
+        "PAYMENT_METHOD": "Payment method",
+        "MIN_PAYMENT_ERROR": "Support must be at least 1 €."
+      }
+    }
+  }
+}

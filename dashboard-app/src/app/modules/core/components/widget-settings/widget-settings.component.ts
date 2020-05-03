@@ -4,6 +4,7 @@ import {GeneralSettings, RadioButton} from "../../models";
 import {GeneralSettingsService} from "../../services";
 import {Routing} from "../../../../constants/config.constants";
 import {WidgetSettings} from "../../models/widget-settings";
+import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-widget-settings',
@@ -21,6 +22,7 @@ export class WidgetSettingsComponent implements OnInit {
     alertOpen: boolean = false;
     alertMessage: string = '';
     alertType: string = '';
+    uploadUrl: string = environment.backOfficeUrl + '/upload-wysiwyg';
 
     public widget_settings = new WidgetSettings();
 

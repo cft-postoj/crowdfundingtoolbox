@@ -6,6 +6,15 @@
         }
     }
 }
+
+.angular-editor--withImage {
+    .angular-editor-toolbar {
+        select[title="Formatting"], select[title="Font Name"], div:nth-child(6),div:nth-child(7),div:nth-child(9),div:nth-child(11),div:nth-child(12) {
+            display: none !important;
+        }
+    }
+}
+
 .angular-editor--halfSimple {
     .angular-editor-toolbar {
         div:nth-child(7),div:nth-child(8),div:nth-child(9),div:nth-child(10){

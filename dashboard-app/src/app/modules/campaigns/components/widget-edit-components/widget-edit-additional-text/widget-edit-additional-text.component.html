@@ -1,0 +1,107 @@
+<div class="collapse-container" [ngClass]="{'flex-open': open}"
+     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
+    <div class="row collapsible--header" (click)="toogleOpen() ">
+        <div class="col-11">
+            {{title}}
+        </div>
+        <div class="col-1 vertical-align">
+            <label class="button-expand"
+                   type="button"
+                   [attr.aria-expanded]="open" aria-controls="targeting-settings">
+            </label>
+        </div>
+    </div>
+    <div class="settings--card--wrapper" [ngbCollapse]="!open">
+        <div class="settings--card">
+                            <span class="row">
+                                <div class="col font-weight-bold">Additional text</div>
+                            </span>
+            <div class="row editInput">
+                <div class="col-12">
+                    <angular-editor id="angular-editor-additional-text" class="angular-editor--withImage"
+                                    [(ngModel)]="additionalText.text"
+                                    [config]="{placeholder: 'Write additional text here, please', editable: true, uploadUrl: uploadUrl}"></angular-editor>
+                </div>
+            </div>
+        </div>
+        <div class="settings--card">
+            <div class="settings--card--body">
+                <div class="row">
+                    <div class="col font-weight-bold">Position</div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-xxl-2 vertical-align">
+                        Alignment
+                    </div>
+                    <div class="col-8 col-xxl-2 vertical-align">
+                        <app-radio-button-group [class]="'full-width'"
+                                                [(currentValue)]="additionalText.fontSettings.alignment"
+                                                [radioButtons]="radioButtons">
+                        </app-radio-button-group>
+                    </div>
+                    <div class="col-2 vertical-align">
+                        Margin
+                    </div>
+                    <div class="col-10 col-xxl-6 pt-2 pt-xxl-0">
+                        <app-input-group [buttons]="marginAdditionalText"
+                                         (buttonChange)="additionalText.text_margin[$event.name] = $event.value">
+                        </app-input-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="settings--card">
+            <div class="settings--card--body">
+                <div class="row">
+                    <span class="col font-weight-bold">Design</span>
+                </div>
+                <div class="row">
+                    <div class="col-3 vertical-align">
+                        Font family
+                    </div>
+                    <div class="col-3">
+                        <app-dropdown [items]="fontFamilyDropdownButtons"
+                                      [class]="'classic default-border align-right'"
+                                      [title]="'Choose font'"
+                                      [customFonts]="true"
+                                      [(currentValue)]="additionalText.fontSettings.fontFamily">
+                        </app-dropdown>
+                    </div>
+                    <div class="col-3 vertical-align">
+                        Text color
+                    </div>
+                    <div class="col-3 color-picker--simple color-picker--fixed">
+                        <input
+                            [value]="additionalText.fontSettings.color"
+                            class="btn color-picker--custom"
+                            [style.background]="additionalText.fontSettings.color"
+                            [cpPosition]="'bottom'"
+                            [cpPresetColors]="colors"
+                            [(colorPicker)]="additionalText.fontSettings.color"/>
+                    </div>
+                    <div class="col-3 vertical-align ">
+                        Size (px)
+                    </div>
+                    <div class="col-3">
+                        <app-inputNumber
+                            [(value)]="additionalText.fontSettings.fontSize"
+                            [class]="'float-right'">
+                        </app-inputNumber>
+                    </div>
+                    <div class="col-3 vertical-align">
+                        Background color
+                    </div>
+                    <div class="col-3 color-picker--simple color-picker--fixed">
+                        <input
+                            [value]="additionalText.text_background"
+                            class="btn color-picker--custom"
+                            [style.background]="additionalText.text_background"
+                            [cpPosition]="'top'"
+                            [cpPresetColors]="colors"
+                            [(colorPicker)]="additionalText.text_background"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

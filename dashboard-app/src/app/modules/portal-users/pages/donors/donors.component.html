@@ -1,10 +1,20 @@
 <app-navbar [navItems]="navItems"></app-navbar>
-<app-table-portal-users
-  [dataType]="''"
-  [from]="from"
-  [to]="to"
-  [statsDateSelected]="statsDateSelected"
-  [monthly]="undefined"
-  [title]="tableTitle"
-  [showDates]="false"
-></app-table-portal-users>
+<div class="donors-list d-flex flex-column">
+    <app-alert [(open)]="alertOpen" [type]="alertType" [message]="alertMessage"></app-alert>
+    <!--  <app-button [label]="(filterActive) ? 'Reset filter' : 'Filter'" [type]="'button'" [class]="'classic float-right'" (onClick)="showFilter()"></app-button>-->
+
+    <app-loading [isLoading]="exportCsvLoading" [extraText]="(exportCsvLoading) ? 'Please wait, generating csv file...<br /> ' +
+   'Take a <b>coffee break</b>, it may take few minutes.<br />Once the process is done, you\'ll get message about it.' : ''"></app-loading>
+
+    <div id="crowd-content">
+        <app-portal-user-table
+                [dataType]="''"
+                [from]="from"
+                [to]="to"
+                [statsDateSelected]="statsDateSelected"
+                [monthly]="undefined"
+                [title]="tableTitle"
+                [showDates]="false"
+        ></app-portal-user-table>
+    </div>
+</div>

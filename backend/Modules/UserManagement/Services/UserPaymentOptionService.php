@@ -4,16 +4,15 @@
 namespace Modules\UserManagement\Services;
 
 use Illuminate\Http\Response;
-
 use Modules\UserManagement\Repositories\UserPaymentOptionsRepository;
 
 class UserPaymentOptionService
 {
     private $userPaymentOptionRepository;
 
-    public function __construct(UserPaymentOptionsRepository $userPaymentOptionsRepository)
+    public function __construct()
     {
-        $this->userPaymentOptionRepository = $userPaymentOptionsRepository;
+        $this->userPaymentOptionRepository = new UserPaymentOptionsRepository();
     }
 
     public function update($request, $portal_user_id)
@@ -43,5 +42,41 @@ class UserPaymentOptionService
     public function getByIban($iban)
     {
         return $this->userPaymentOptionRepository->getByIban($iban);
+    }
+
+    public function getCardId($portal_user_id)
+    {
+        if ($this->userPaymentOptionRepository->getByPortalUser($portal_user_id) !== null) {
+            if ($this->userPaymentOptionRepository->getByPortalUser($portal_user_id)['card_id'] !== null &&
+                $this->userPaymentOptionRepository->getByPortalUser($portal_user_id)['comfortPay_subscriber']) {
+                return $this->userPaymentOptionRepository->getByPortalUser($portal_user_id)['card_id'];
+            }
+        }
+        $generateCardId = $this->generateCardId();
+        $this->update([
+            'card_id' => $generateCardId
+        ], $portal_user_id);
+        return $generateCardId;
+    }
+
+    public function get($portal_user_id)
+    {
+        return $this->userPaymentOptionRepository->getByPortalUser($portal_user_id);
+    }
+
+    private function generateCardId()
+    {
+        $min = 24789;
+        $max = 965548996362569999;
+        $random = rand($min, $max);
+        if ($this->userPaymentOptionRepository->getByCardId($random) === null) {
+            return $random;
+        }
+        return $this->generateCardId();
+    }
+
+    public function getOptionsByIban($iban)
+    {
+        return $this->userPaymentOptionRepository->getOptionsByIban($iban);
     }
 }

@@ -27,6 +27,11 @@ class TrackingService
         }
     }
 
+    public function createMass($mass)
+    {
+        TrackingVisit::create($mass);
+    }
+
     public function show($trackingVisitId, $widgetId)
     {
         try {
@@ -137,5 +142,10 @@ class TrackingService
     {
         return TrackingShow
             ::with('donation')->find($id);
+    }
+
+    public function getWidgetIdBytTrackingId($id)
+    {
+        return TrackingShow::where('id', $id)->first()['widget_id'];
     }
 }

@@ -6,17 +6,18 @@ use Carbon\Carbon;
 use Modules\Statistics\Entities\DonorsAndDonationsTotal;
 use Modules\Statistics\Entities\DonorsAndDonationsTotalWrapper;
 use Modules\Statistics\Repositories\StatsDonationRepository;
+use Modules\UserManagement\Services\PortalUserService;
 use stdClass;
 
 class StatsDonationService implements StatsDonationServiceInterface
 {
     private $statsDonationRepository;
-    private $statsDonorService;
+private $portalUserService;
 
-    public function __construct(StatsDonationRepository $statsDonationRepository, StatsDonorService $statsDonorService)
+    public function __construct(StatsDonationRepository $statsDonationRepository, PortalUserService $portalUserService)
     {
+        $this->portalUserService = $portalUserService;
         $this->statsDonationRepository = $statsDonationRepository;
-        $this->statsDonorService = $statsDonorService;
     }
 
     public function getDonationsGroup($from, $to, $interval)
@@ -74,13 +75,12 @@ class StatsDonationService implements StatsDonationServiceInterface
         }
 
         // add new donors in result
-        $newUsersCount = $this->statsDonorService->countOfNewDonors($from, $to);
-        $result->monthly->donors_new = $this->getCount($newUsersCount, true);
-        $result->one_time->donors_new = $this->getCount($newUsersCount, false);
+        $result->monthly->donors_new = $this->portalUserService->getDonorsNew($from, $to, true,1,[], true);
+        $result->one_time->donors_new =  $this->portalUserService->getDonorsNew($from, $to, false,1, [], true);
 
         //add total
         $result->total = $this->statsDonationRepository->getDonorsAndDonationsTotal($from, $to);
-        $result->total->donors_new = $result->monthly->donors_new +  $result->one_time->donors_new;
+        $result->total->donors_new = $this->portalUserService->getDonorsNew($from, $to, null,1, [], true);
 
         return $result;
     }
@@ -97,14 +97,9 @@ class StatsDonationService implements StatsDonationServiceInterface
         $result = new stdClass;
         $result->current = $actual;
         $result->previous = $historic;
-
         return $result;
     }
 
-    public function getDonations($from, $to, $monthly)
-    {
-        return $this->statsDonationRepository->getDonations($from, $to, $monthly);
-    }
 
     private function getDonorsAndDonationsTotalGroupMonthly($from, $to)
     {

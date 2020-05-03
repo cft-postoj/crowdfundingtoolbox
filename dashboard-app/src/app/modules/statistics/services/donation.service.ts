@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {DonorsAndDonations} from '../models/donors-and-donations';
 import {Donation} from '../models/donation';
 import {Observable} from 'rxjs';
+import {Column} from '../../core/models/column';
+import {HelpersService} from '../../core/services/helpers.service';
 
 
 @Injectable({
@@ -11,7 +13,7 @@ import {Observable} from 'rxjs';
 })
 export class DonationService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private helpersService: HelpersService) {
     }
 
     public getDonationsGroup(from: string, to: string,
@@ -59,16 +61,24 @@ export class DonationService {
     }
 
     public getDonations(from: string, to: string,
-                        monthly) {
+                        monthly, page: number = 1, filterColumns?: Column[], sort?, pageSize: number = 10): Observable<any> {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
             .append('from', from)
-            .append('to', to);
+            .append('to', to)
+            .append('page', page + '')
+            .append('page_size', pageSize + '');
         if (monthly !== undefined) {
             params = params.append('monthly', monthly);
         }
+        if (filterColumns !== undefined) {
+            params = this.helpersService.transformFilterColumnsToParams(params, filterColumns);
+        }
+        if (sort && sort.sort_by !== null && sort.asc !== null) {
+            params = params.append('order_' + sort.sort_by.value_name, sort.asc ? 'ASC' : 'DESC');
+        }
         return this.http.get<Donation[]>(
-            `${environment.backOfficeUrl}${environment.donationUrl}${environment.all}`,
+            `${environment.backOfficeUrl}${environment.donations}${environment.list}`,
             {
                 headers: headers,
                 params: params

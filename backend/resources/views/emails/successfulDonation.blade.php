@@ -1,15 +1,11 @@
 @extends('emails.layout')
-@section('title', 'Thank you for your donation.')
+@section('title', __('cft-emails.successfulDonation.title'))
 
 @section('body')
-    Hello,
-    we have great news for you.<br />
-    Your donation was successfully assigned to our bank account and we would like to say <b>BIG THANK YOU</b>!
-    <br />
-    You can see all interesting in your account:
+    {!! __('cft-emails.successfulDonation.body') !!}
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', env('CFT_PORTAL_URL') . '/moj-ucet')
-@section('buttonText', 'My account')
-@section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')
+@section('buttonUrl', env('CFT_PORTAL_URL') . __('cftJSmessages.myAccountText.myAccountUrl'))
+@section('buttonText', __('cft-emails.successfulDonation.buttonText'))
+@section('buttonAlternative', __('cft-emails.successfulDonation.buttonAlternative'))

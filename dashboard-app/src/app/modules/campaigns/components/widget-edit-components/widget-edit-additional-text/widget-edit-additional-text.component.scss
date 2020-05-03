@@ -1,0 +1,126 @@
+@import 'variables';
+@import 'mixins';
+
+.collapse-container {
+    font-family: Lato,
+    'sans-serif';
+    color: #2E3131;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 12px 0;
+
+    .collapsible {
+        &--header {
+            padding: 0 6px;
+            font-weight: bold;
+            font-size: 17px;
+            cursor: pointer;
+            flex: none;
+            color: $azure;
+            letter-spacing: 1px;
+            @media screen and (max-width: 1480px) {
+                padding-top: 12px;
+            }
+        }
+    }
+
+    .settings--card--wrapper {
+        overflow: visible;
+        flex: 1;
+        flex-wrap: wrap;
+        align-content: baseline;
+        padding-bottom: 5px;
+
+        .colors {
+            display: flex;
+
+            span {
+                cursor: pointer;
+
+                ::ng-deep svg {
+                    fill: $bali;
+                }
+            }
+        }
+
+        .settings--card {
+            padding: 12px;
+            margin: 6px;
+            border-style: none;
+            border-width: 1px;
+            border-color: rgba(0, 0, 0, .07);
+            border-radius: 5px;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff));
+            background-image: linear-gradient(180deg, #fff, #fff);
+            box-shadow: 0 2px 7px 0 rgba(5, 34, 97, .1);
+            transition: 0.3s all;
+            @media screen and (min-width: $xxl) {
+                margin: 12px 6px;
+            }
+
+            &--header {
+                font-weight: 700;
+            }
+
+            &--body {
+                > .row {
+                    > [class*=col] {
+                        padding-top: 8px;
+                    }
+                }
+
+                hr {
+                    margin-top: 6px;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .add-button {
+            cursor: pointer;
+
+            ::ng-deep svg {
+                max-height: 50px;
+            }
+        }
+
+    }
+
+    &-input {
+        margin-top: 10px;
+        margin-bottom: -15px;
+        border: none;
+    }
+
+    .collapse-container {
+        padding: 12px 0;
+    }
+
+    //.flex-open {
+    //    flex: 1;
+    //}
+    //
+    //.flex-closed {
+    //    flex: 1 0 auto;
+    //}
+
+    &.container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .button-expand {
+        border: none;
+        background: url('/assets/images/icons/plus.svg');
+        float: right;
+        width: 16px;
+        height: 15px;
+        cursor: pointer;
+
+        &[aria-expanded=true] {
+            background: url('/assets/images/icons/minus.svg');
+        }
+
+    }
+}

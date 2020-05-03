@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'app_config' => json_decode(env("APP_CONFIG", "{}"), TRUE),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -80,7 +82,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -171,7 +173,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        EloquentFilter\ServiceProvider::class,
         /*
          * Application Service Providers...
          */

@@ -4,6 +4,7 @@
 namespace Modules\UserManagement\Repositories;
 
 
+use Illuminate\Support\Facades\DB;
 use Modules\UserManagement\Entities\User;
 use Modules\UserManagement\Entities\UserCookieCouple;
 
@@ -18,7 +19,8 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAll()
     {
-        // TODO: Implement getAll() method.
+        return $this->model
+            ->all();
     }
 
     public function get($id)
@@ -39,7 +41,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getByEmail($email)
     {
-        return User::where('email', $email)->first();
+        return User::where('email', $email)->with('portalUser.variableSymbol')->first();
     }
 
     public function getPortalUsers()
@@ -52,6 +54,20 @@ class UserRepository implements UserRepositoryInterface
             ->with('portalUser.isMonthlyDonor')
             ->with('portalUser.excludeFromCampaign')
             ->with('portalUser.userPaymentOptions')
+            ->get();
+    }
+
+    public function findByString($string)
+    {
+        return $this->model
+            ::select(['id', 'email'])
+            ->has('portalUser')
+            ->whereHas('userDetail', function ($query) use ($string) {
+                $query->where(DB::raw("CONCAT(first_name,' ',last_name)"), 'ILIKE', '%' . $string . '%');
+            })
+            ->orWhere('email','LIKE', '%'.$string.'%')
+            ->with(['userDetail:id,user_id,first_name,last_name', 'portalUser'])
+            ->limit(100)
             ->get();
     }
 
@@ -75,7 +91,6 @@ class UserRepository implements UserRepositoryInterface
                 'password' => bcrypt($password),
                 'username' => $username
             ]);
-        $user->save();
         return $user->id;
     }
 
@@ -126,6 +141,14 @@ class UserRepository implements UserRepositoryInterface
             ->get();
     }
 
+    public function getUserByEmailWithUserPaymentOptions(string $email)
+    {
+        return User
+            ::where('email', $email)
+            ->with('portalUser.userPaymentOptions')
+            ->first();
+    }
+
     public function getWithVariableSymbol($userId)
     {
         return $this->model
@@ -133,4 +156,20 @@ class UserRepository implements UserRepositoryInterface
             ->with('portalUser.variableSymbol')
             ->first();
     }
+
+    public function isBackofficeUser($userId)
+    {
+        return User::query()
+            ->where('id', $userId)
+            ->has('backOfficeUser')
+            ->exists();
+    }
+    public function isServiceAccount($userId)
+    {
+        return User::query()
+            ->where('id', $userId)
+            ->has('serviceAccount')
+            ->exists();
+    }
+
 }

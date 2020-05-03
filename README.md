@@ -44,7 +44,11 @@ After you have set database, you can run **db migrations** by command:
 ```
 php artisan migrate
 ```
-After successfully run migration, you should have database with 24 tables.
+After successfully run migration, you should have database with 24 tables and run DB seeder with command:
+```
+php artisan db:seed
+```
+
 
 **Run Laravel server:**
 ```
@@ -82,6 +86,8 @@ _username: **demo**, password: **demo123**_
 
 
 Please, start your local server (for example XAMPP) to correctly show uploaded images.
+
+If you want to see working lists in dashboard-app, you need to insert some testing portal users and donations/payments to tables.
 
 ### Set up - prod usage
 If you want to migrate application to prod server, you need to build Angular app with command:
@@ -121,6 +127,8 @@ Every time when you want you can update your campaign and widgets. Campaign have
 If you changed some specific widget settings in widget edit window, you cannot override this settings by change global widget settings in campaign.
 
 Every widget has live preview, which help to customize widget content. Preview is scaled to 55% from original.
+
+In project you can find several schedule jobs for storing user data, checking payments etc. You can find and edit it in Laravel project --> app/console/Kernel.php
 
 #### Portal communication
 If you can show created widgets on your portal, you have to paste external script to portal footer. Communication script is in public folder of Laravel app - /public/js/crowdFundingToolbox.js
@@ -186,3 +194,9 @@ There is used JWT auth.
 
 ### License
 MIT License
+
+
+
+***
+If you have any problem with application setup, please create github issue or contact us on crowdfundingtoolbox.news.
+***

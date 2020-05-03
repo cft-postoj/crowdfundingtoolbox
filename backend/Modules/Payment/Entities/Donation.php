@@ -2,13 +2,20 @@
 
 namespace Modules\Payment\Entities;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class Donation extends Model
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, Filterable;
+
+    //define class to filter
+    public function modelFilter()
+    {
+        return $this->provideFilter(\Modules\Payment\Entities\DonationFilter::class);
+    }
 
     protected $table = 'donations';
     protected $fillable = [
@@ -21,7 +28,11 @@ class Donation extends Model
         'referral_widget_id',
         'status',
         'tracking_show_id',
+        'referral_tracking_show_id',
         'amount_initialized',
+        'notes',
+        'uuid',
+        'trans_date'
     ];
     protected $casts = [
         'amount' => 'float',
@@ -50,6 +61,11 @@ class Donation extends Model
     public function trackingShow()
     {
         return $this->belongsTo('\Modules\UserManagement\Entities\TrackingShow', 'tracking_show_id');
+    }
+
+    public function trackingShowReferral()
+    {
+        return $this->belongsTo('\Modules\UserManagement\Entities\TrackingShow', 'referral_donation_show_id');
     }
 
     public function paymentMethod()

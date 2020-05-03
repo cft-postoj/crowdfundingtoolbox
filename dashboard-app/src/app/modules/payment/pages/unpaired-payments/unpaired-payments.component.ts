@@ -1,5 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DonationService} from '../../services/donation.service';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Payment} from '../../models/payment';
 import {TableModel} from '../../../core/models/table-model';
 import {TableService} from '../../../core/services/table.service';
@@ -8,8 +7,9 @@ import {ModalComponent} from '../../../core/parts/atoms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PaymentService} from '../../services/payment.service';
 import {PortalUser} from '../../../portal-users/models/portal-user';
-import {PortalUserService} from '../../../portal-users/services/portal-user.service';
 import {PaymentMethodsService} from '../../services/payment-methods.service';
+import {Column} from '../../../core/models/column';
+import {PaymentTableComponent} from '../../components/payment-table/payment-table.component';
 
 @Component({
     selector: 'app-unpaired-payments',
@@ -18,7 +18,6 @@ import {PaymentMethodsService} from '../../services/payment-methods.service';
 })
 export class UnpairedPaymentsComponent implements OnInit {
 
-    public loading: boolean = true;
     public items: any = [];
     private payments: Payment[];
     public textSearch: string;
@@ -26,8 +25,6 @@ export class UnpairedPaymentsComponent implements OnInit {
     private allUsers: PortalUser[];
 
     public paymentMethods: any = [];
-
-    public users: any = [];
 
     public model: TableModel = new TableModel();
 
@@ -37,34 +34,18 @@ export class UnpairedPaymentsComponent implements OnInit {
 
     @Output() modelChange = new EventEmitter();
 
-    constructor(private paymentService: PaymentService, private portalUserService: PortalUserService,
+    @ViewChild(PaymentTableComponent)
+    private tablePayments: PaymentTableComponent;
+
+
+    constructor(private paymentService: PaymentService,
                 private paymentMethodsService: PaymentMethodsService,
                 private tableService: TableService, private _modalService: NgbModal) {
     }
 
     ngOnInit() {
         this.getPaymentMethods();
-        this.getUnpairedPayments();
-        this.getUsers();
-        this.model.columns.push({
-            value_name: 'iban',
-            description: 'IBAN',
-            type: 'text',
-            filter: new Filter()
-        });
-    }
-
-    private getUnpairedPayments() {
-        this.paymentService.getUnpairedPayments().subscribe((data: Payment[]) => {
-            this.payments = data;
-            this.payments.map((item, key) => {
-                if (key < 200) {
-                    this.items.push(item);
-                }
-            });
-            // TODO LOAD MORE (LAZY LOADING)
-            this.loading = false;
-        });
+        this.model.columns.push(new Column('iban', 'IBAN', 'text'));
     }
 
     private getPaymentMethods() {
@@ -75,11 +56,7 @@ export class UnpairedPaymentsComponent implements OnInit {
         });
     }
 
-    sortTable() {
-        this.items = this.tableService.sort(this.model, this.payments);
-    }
-
-    changeDonationAssignment(userId) {
+    changeDonationAssignment(user) {
         // check if all filtered records have same IBAN
         let userIban = '';
         let error = null;
@@ -113,19 +90,13 @@ export class UnpairedPaymentsComponent implements OnInit {
 
             const iban = this.items[0].iban;
 
-            this.allUsers.map((u, key) => {
-                if (u.id === userId) {
-                    this.assignToUserModal('Assign payment to user with email ' + u.email + '.',
-                        'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
-                        '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + u.email + '</b>.</span><br><br>' +
-                        'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
-                        'paired via IBAN for this specific user.</div> <span>' +
-                        'Do you want to continue with this action</span>', userId, u.email, iban);
-                }
-            });
+            this.assignToUserModal('Assign payment to user with email ' + user.email + '.',
+                'Are you sure you want to assign all payments with IBAN of choosed payment to choosed user?',
+                '<div><br><span>You\'ll assign ' + stringCount + ' to user with email <b>' + user.email + '</b>.</span><br><br>' +
+                'If you confirm this, user will have assigned new IBAN from this payment and all payments with this IBAN will be ' +
+                'paired via IBAN for this specific user.</div> <span>' +
+                'Do you want to continue with this action</span>', user.id, user.email, iban);
         }
-
-
     }
 
     pairViaIbanModal(itemId) {
@@ -155,11 +126,9 @@ export class UnpairedPaymentsComponent implements OnInit {
         modalRef.componentInstance.loading = false;
         modalRef.componentInstance.duplicate = 'donation-assignment';
         modalRef.result.then((data) => {
-                this.loading = true;
                 this.paymentService.pairViaIban(itemIds).subscribe((d) => {
+                    this.tablePayments.instantFilterPayments();
                     this.alertMessage = d.message;
-                    this.loading = true;
-                    this.getUnpairedPayments();
                     this.alertType = d.status;
                     this.alertOpen = true;
                 }, (error) => {
@@ -195,8 +164,7 @@ export class UnpairedPaymentsComponent implements OnInit {
         modalRef.result.then((data) => {
                 // change id for donation
                 this.paymentService.pairPaymentToUser(userId, iban).subscribe((d) => {
-                    this.loading = true;
-                    this.getUnpairedPayments();
+                    this.tablePayments.instantFilterPayments();
                     this.alertMessage = 'Successfully paired payment to user with email ' + userEmail + '.';
                     this.alertType = 'success';
                     this.alertOpen = true;
@@ -210,15 +178,9 @@ export class UnpairedPaymentsComponent implements OnInit {
         );
     }
 
-    getUsers() {
-        this.portalUserService.getAll().subscribe((data: [PortalUser]) => {
-            this.allUsers = data;
-            data.map((u, key) => {
-                const value = u.user_detail.first_name + ' ' + u.user_detail.last_name + ' [email: ' + u.email + ', ID: ' + u.id + ']';
-                this.users.push(value);
-            });
-        });
+
+    public updatePayments(event: any) {
+        this.payments = event;
+        this.items = event;
     }
-
-
 }

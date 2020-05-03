@@ -4,7 +4,7 @@ import {
     EventEmitter,
     Input,
     KeyValueDiffer,
-    KeyValueDiffers,
+    KeyValueDiffers, OnChanges,
     OnInit,
     Output,
     ViewChild
@@ -25,7 +25,8 @@ import {Moment} from 'moment';
 })
 
 export class CampaignSettingsComponent implements OnInit {
-
+    @ViewChild('authorsList') authorsListRef: any;
+    @ViewChild('categoriesList') categoriesListRef: any;
 
     @Input()
     public campaign: Campaign;
@@ -46,12 +47,18 @@ export class CampaignSettingsComponent implements OnInit {
     public differ: KeyValueDiffer<string, any>;
     public campaignEndRadioButtons: RadioButton[];
     public paymentTypeRadioButtons: RadioButton[];
+    public howOftenRadioButtons: RadioButton[];
+    public closeFixedPopupRadioButtons: RadioButton[];
     public campaignEndValue;
     public copyPrices;
 
     public paymentTypes = paymentTypes;
 
     public newUrl: string;
+    public newExcludedUrl: string;
+    public newAuthor: string;
+
+    public selectedAuthors = [];
 
     public startDateFormat: any = {
         start: moment(),
@@ -71,6 +78,11 @@ export class CampaignSettingsComponent implements OnInit {
         end: moment()
     }
 
+    public authors = [];
+    public categories = [];
+    public currentValueOftenDisplay = 'page_view';
+    public currentValueCloseFixedPopup = 'show';
+
     private changeUsersCountSubscribtion: Subscription;
 
     @Output()
@@ -81,6 +93,7 @@ export class CampaignSettingsComponent implements OnInit {
     public targetingDataEmit = new EventEmitter();
 
     @ViewChild('newUrlInput') newUrlInput: ElementRef;
+    @ViewChild('newExcludedUrlInput') newExcludedUrlInput: ElementRef;
 
     constructor(private differs: KeyValueDiffers, private route: ActivatedRoute, private campaignService: CampaignService) {
         this.differ = this.differs.find({}).create();
@@ -95,8 +108,19 @@ export class CampaignSettingsComponent implements OnInit {
 
 
         this.campaignEndRadioButtons = [];
+        this.howOftenRadioButtons = [];
+        this.closeFixedPopupRadioButtons = [];
         this.campaignEndRadioButtons.push(new RadioButton("Date", false));
         this.campaignEndRadioButtons.push(new RadioButton("Donation goal", true));
+
+        this.howOftenRadioButtons.push(new RadioButton('Show for every page view', 'page_view'));
+        this.howOftenRadioButtons.push(new RadioButton('Show for every session', 'session'));
+        this.howOftenRadioButtons.push(new RadioButton('Show for nth page view', 'nth_page_view'));
+        this.howOftenRadioButtons.push(new RadioButton('Show for every page view with defined pause', 'page_view_pause'));
+
+        this.closeFixedPopupRadioButtons.push(new RadioButton('Show again on every page (if popup, show again after 30min)', 'show'));
+        this.closeFixedPopupRadioButtons.push(new RadioButton('Don\'t show again (after click on X)', 'dont_show'));
+        this.closeFixedPopupRadioButtons.push(new RadioButton('Show again after nth page views', 'show_after_views'));
 
         this.paymentTypeRadioButtons = [];
         this.paymentTypeRadioButtons.push(new RadioButton(this.paymentTypes.monthly.title, this.paymentTypes.monthly.value));
@@ -131,11 +155,74 @@ export class CampaignSettingsComponent implements OnInit {
                 start: this.registrationAfterDate,
                 end: this.registrationAfterDate
             };
+
         }, 500);
 
         console.log(moment(this.campaign.promote_settings.start_date_value));
         console.log(this.startDateFormat)
         this.changeUsersCount();
+
+        // Add excluded urls (when it's not exist)
+        if (this.campaign.targeting.excludedPages === undefined) {
+            this.campaign.targeting.excludedPages = {
+                specific: false,
+                homepage: false,
+                list: []
+            };
+        }
+        if (this.campaign.targeting.authors === undefined) {
+            this.campaign.targeting.authors = {
+                specific: false,
+                list: []
+            };
+        }
+        if (this.campaign.targeting.categories === undefined) {
+            this.campaign.targeting.categories = {
+                specific: false,
+                list: []
+            };
+        }
+        if (this.campaign.targeting.howOftenDisplay === undefined) {
+            this.campaign.targeting.howOftenDisplay = {
+                pageView: {
+                    active: true
+                },
+                session: {
+                    active: false
+                },
+                nthPageView: {
+                    active: false,
+                    nthPage: 5
+                },
+                pageViewWithPause: {
+                    active: false,
+                    count: 5,
+                    pause: 2
+                }
+            };
+        }
+
+        if (this.campaign.targeting.popupFixed === undefined) {
+            this.campaign.targeting.popupFixed = {
+                showAgain: {
+                    active: true
+                },
+                dontShowAgain: {
+                    active: false
+                },
+                afterNthPage: {
+                    active: false,
+                    nthPage: 5
+                }
+            };
+        }
+
+        this.selectedAuthors = this.campaign.targeting.authors.list;
+        console.log(this.selectedAuthors)
+
+        this.getTargetingArticlesData();
+        this.initHowOftenDisplay();
+        this.initCloseFixedPopupWidget();
 
     }
 
@@ -222,6 +309,21 @@ export class CampaignSettingsComponent implements OnInit {
         }
     }
 
+    addExcludedUrl() {
+        if (this.campaign.targeting.excludedPages.specific) {
+            if (this.newExcludedUrl) {
+                this.campaign.targeting.excludedPages.list.push({
+                    id: 0,
+                    path: this.newExcludedUrl
+                });
+                this.newExcludedUrl = undefined;
+            } else {
+                this.newExcludedUrlInput.nativeElement.focus();
+            }
+        }
+    }
+
+
     changeUsersCount() {
         if (this.changeUsersCountSubscribtion !== undefined) {
             this.changeUsersCountSubscribtion.unsubscribe();
@@ -254,8 +356,125 @@ export class CampaignSettingsComponent implements OnInit {
         this.campaign.targeting.registration.after.date = dateFrom;
         this.changeUsersCount();
     }
+
     public changeTargetingRegistrationBeforeDate(dateTo) {
         this.campaign.targeting.registration.before.date = dateTo;
         this.changeUsersCount();
+    }
+
+    private getTargetingArticlesData() {
+        this.campaignService.getTargetingArticlesData().subscribe((data) => {
+            data.authors.map((author, key) => {
+                this.authors.push(author);
+            });
+            data.categories.map((category, key) => {
+                this.categories.push(category);
+            });
+
+        });
+    }
+
+    public changeHowOftenDisplay(event) {
+        let pageView = false;
+        let session = false;
+        let nthPageView = false;
+        let pageViewWithPause = false;
+
+        switch (event) {
+            case 'page_view':
+                pageView = true;
+                break;
+            case 'session':
+                session = true;
+                break;
+            case 'nth_page_view':
+                nthPageView = true;
+                break;
+            case 'page_view_pause':
+                pageViewWithPause = true;
+                break;
+        }
+        this.campaign.targeting.howOftenDisplay.pageView.active = pageView;
+        this.campaign.targeting.howOftenDisplay.session.active = session;
+        this.campaign.targeting.howOftenDisplay.nthPageView.active = nthPageView;
+        this.campaign.targeting.howOftenDisplay.pageViewWithPause.active = pageViewWithPause;
+    }
+
+    public changeValueCloseFixedPopup(event) {
+        let showAgain = false;
+        let dontShowAgain = false;
+        let showAfterNthPage = false;
+        switch (event) {
+            case 'show':
+                showAgain = true;
+                break;
+            case 'dont_show':
+                dontShowAgain = true;
+                break;
+            case 'show_after_views':
+                showAfterNthPage = true;
+                break;
+        }
+        this.campaign.targeting.popupFixed.showAgain.active = showAgain;
+        this.campaign.targeting.popupFixed.dontShowAgain.active = dontShowAgain;
+        this.campaign.targeting.popupFixed.afterNthPage.active = showAfterNthPage;
+    }
+
+    private initHowOftenDisplay() {
+        const targeting = this.campaign.targeting;
+        if (targeting.howOftenDisplay.pageView.active) {
+            this.currentValueOftenDisplay = 'page_view';
+        } else if (targeting.howOftenDisplay.session.active) {
+            this.currentValueOftenDisplay = 'session';
+        } else if (targeting.howOftenDisplay.nthPageView.active) {
+            this.currentValueOftenDisplay = 'nth_page_view';
+        } else {
+            this.currentValueOftenDisplay = 'page_view_pause';
+        }
+    }
+
+    private initCloseFixedPopupWidget() {
+        const targeting = this.campaign.targeting;
+        if (targeting.popupFixed.showAgain.active) {
+            this.currentValueCloseFixedPopup = 'show';
+        } else if (targeting.popupFixed.dontShowAgain.active) {
+            this.currentValueCloseFixedPopup = 'dont_show';
+        } else {
+            this.currentValueCloseFixedPopup = 'show_after_views';
+        }
+    }
+
+    public selectAuthorAction() {
+        const children = this.authorsListRef.mainElRef.nativeElement.children[1].children;
+        this.campaign.targeting.authors.list = [];
+        for (const ch of children) {
+            const currentAuthor = ch.innerText;
+            this.campaign.targeting.authors.list.push(currentAuthor);
+        }
+    }
+
+    public removeAuthorAction(e) {
+        for (let i = 0; i < this.campaign.targeting.authors.list.length; i++) {
+            if (this.campaign.targeting.authors.list[i] === e) {
+                this.campaign.targeting.authors.list.splice(i, 1);
+            }
+        }
+    }
+
+    public selectCategoryAction() {
+        const children = this.categoriesListRef.mainElRef.nativeElement.children[1].children;
+        this.campaign.targeting.categories.list = [];
+        for (const ch of children) {
+            const currentAuthor = ch.innerText;
+            this.campaign.targeting.categories.list.push(currentAuthor);
+        }
+    }
+
+    public removeCategoryAction(e) {
+        for (let i = 0; i < this.campaign.targeting.categories.list.length; i++) {
+            if (this.campaign.targeting.categories.list[i] === e) {
+                this.campaign.targeting.categories.list.splice(i, 1);
+            }
+        }
     }
 }

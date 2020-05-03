@@ -15,9 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        Passport::routes();
-//        Passport::tokensExpireIn(now()->addDay(1));
-//        Passport::refreshTokensExpireIn(now()->addDays(16));
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 2000);
     }
 
     /**

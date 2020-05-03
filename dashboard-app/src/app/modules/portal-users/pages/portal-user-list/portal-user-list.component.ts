@@ -4,6 +4,7 @@ import {PortalUser} from "../../models/portal-user";
 import {Router} from '@angular/router';
 import {Routing} from '../../../../constants/config.constants';
 import moment from 'moment/src/moment';
+import {NavbarItem} from '../../../core/models/navbar-item';
 
 @Component({
     selector: 'app-donor-list',
@@ -29,6 +30,7 @@ export class PortalUserListComponent implements OnInit {
         tableDonors: true
     };
     public statsDateSelected: any;
+    public navItems: NavbarItem[];
 
     constructor(private portalUserService: PortalUserService, private router: Router) {
     }
@@ -38,6 +40,19 @@ export class PortalUserListComponent implements OnInit {
         this.from = '2015-01-01'; // statically defined list of donors from this date
         this.to = moment().format('YYYY-MM-DD');
         this.tableTitle = 'All users';
+
+        this.navItems = [
+            {
+                title: 'All users',
+                url: Routing.DASHBOARD + '/' + Routing.PORTAL_USERS + '/' + Routing.ALL,
+                active: true
+            },
+            {
+                title: 'Import users',
+                url: Routing.DASHBOARD + '/' + Routing.PORTAL_USERS + '/' + Routing.IMPORT,
+                active: false
+            }
+        ];
         //this.getUsers();
     }
 

@@ -37,7 +37,7 @@
     }
 
     /* Show the checkmark when checked */
-     input:checked ~ .checkmark:after {
+    input:checked ~ .checkmark:after {
         display: block;
     }
 
@@ -56,7 +56,8 @@
 
     /* Create a custom checkbox */
     .checkmark {
-        position: absolute;margin-top: auto;
+        position: absolute;
+        margin-top: auto;
         margin-bottom: auto;
         top: 0;
         bottom: 0;
@@ -72,6 +73,9 @@
             position: absolute;
             display: none;
         }
+    }
+    &.force-height {
+        height: 35px;
     }
 }
 

@@ -1,6 +1,10 @@
 <div class="user-detail-donations d-flex flex-column">
     <div class="container-fluid">
-
+        <app-alert
+            [(open)]="alertOpen"
+            [message]="alertMessage"
+            [type]="alertType">
+        </app-alert>
         <div class="row pt-2" *ngIf="!loading">
             <div class="col-6">
                 <div class="card">
@@ -31,6 +35,81 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
+                    <div class="card-header">
+                        <div class="col">
+                            <h4>Donor categories</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2 offset-10 text-right" title="manually set category">
+                                <img class="clickable" src="../assets/images/icons/edit.svg"
+                                     (click)="addingNewCategory = !addingNewCategory">
+                            </div>
+                            <ng-container *ngIf="addingNewCategory">
+                                <div class="col-8">
+                                    <app-dropdown [class]="'classic default-border'"
+                                                  [title]="'Pick category that you want to set'"
+                                                  [items]="donorCategoriesDropdownItems"
+                                                  (currentValueChange)="newCategory = $event">
+                                    </app-dropdown>
+                                </div>
+                                <div class="col-4 actions--right text-right vertical-align">
+                                    <button type="button"
+                                            (click)="assignDonorCategoryToPortalUser()"
+                                            [disabled]="assigning || !newCategory"
+                                            class="btn btn-submit btn--auto-width">
+                                        <ng-container *ngIf="!assigning">
+                                            Save
+                                        </ng-container>
+                                        <ng-container *ngIf="assigning">
+                                            Saving ...
+                                        </ng-container>
+                                    </button>
+                                </div>
+                            </ng-container>
+                            <div class="col-12 pt-2">
+                                <table class="list-items list-items--orderable">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Manually assigned</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody *ngIf="!portalUserDonorCategoriesLoading">
+                                    <tr *ngFor="let portalUserDonorCategory of portalUserDonorCategoriesShow; let i = index;"
+                                        class="list-items--item"
+                                        [ngClass]="{'list-items--item--active':portalUserDonorCategory.active}">
+                                        <td>{{portalUserDonorCategory.donor_category?.name}}</td>
+                                        <td>{{portalUserDonorCategory.valid_from | safariDate | date:'dd.MM.yyyy'}}</td>
+                                        <td>{{portalUserDonorCategory.valid_to | safariDate | date:'dd.MM.yyyy'}}</td>
+                                        <td>
+                                            <app-status [active]="portalUserDonorCategory.manually_created"
+                                                        [titles]="['manually created','created automatically']"></app-status>
+                                        </td>
+                                        <td>
+                                            <span class="add-button vertical-align hoverable hoverable--danger"
+                                                  title="Delete assignment to category"
+                                                  [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                                  [removeSVGAttributes]="['fill']"
+                                                  (click)="deleteAssignment(portalUserDonorCategory)">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <span
+                                    *ngIf="portalUserDonorCategories && portalUserDonorCategories.length > categoriesLessSize"
+                                    class="clickable"
+                                    (click)="showHidePortalUserDonorCategories()">
+                                            {{showMoreDonorCategories ? 'less':'show more'}}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-6">
@@ -44,7 +123,8 @@
                         <div class="row">
                             <div class="col-6"
                                  [title]="(donationsDetail.first_donation?.payment.transaction_date | safariDate | date:'dd.MM.yyyy HH:mm:ss') || 'user did not supported yet'">
-                                date: {{(donationsDetail.first_donation?.payment.transaction_date | safariDate | date:'dd.MM.yyyy')
+                                date: {{(donationsDetail.first_donation?.payment.transaction_date | safariDate |
+                                date:'dd.MM.yyyy')
                                 || '---'}}
                             </div>
                             <div class="col-6">
@@ -53,7 +133,7 @@
                             </div>
                             <div class="col-12">
                                 <span class="clickable"
-                                    (click)="showMoreFirst = !showMoreFirst">{{showMoreFirst ? 'less':'show more'}}</span>
+                                      (click)="showMoreFirst = !showMoreFirst">{{showMoreFirst ? 'less':'show more'}}</span>
                             </div>
                             <app-donation-detail-simplified class="col-12" *ngIf="showMoreFirst"
                                                             [donation]="donationsDetail.first_donation"></app-donation-detail-simplified>
@@ -69,7 +149,8 @@
                         <div class="row">
                             <div class="col-6"
                                  [title]="(donationsDetail.last?.payment.transaction_date | safariDate | date:'dd.MM.yyyy HH:mm:ss') || 'user did not supported yet'">
-                                date: {{(donationsDetail.last?.payment.transaction_date | safariDate | date:'dd.MM.yyyy') || '---'}}
+                                date: {{(donationsDetail.last?.payment.transaction_date | safariDate |
+                                date:'dd.MM.yyyy') || '---'}}
                             </div>
                             <div class="col-6">
                                 amount: {{(donationsDetail.last?.payment.amount || 0) | currency: 'EUR': 'symbol':
@@ -77,7 +158,7 @@
                             </div>
                             <div class="col-12">
                                 <span class="clickable"
-                                    (click)="showMoreLast = !showMoreLast">{{showMoreLast ? 'less':'show more'}}</span>
+                                      (click)="showMoreLast = !showMoreLast">{{showMoreLast ? 'less':'show more'}}</span>
                             </div>
                             <app-donation-detail-simplified class="col-12" *ngIf="showMoreLast"
                                                             [donation]="donationsDetail.last"></app-donation-detail-simplified>
@@ -88,11 +169,11 @@
         </div>
         <app-loading [isLoading]="loading"></app-loading>
         <div class="row pt-2">
-            <app-table-donations class="col-12 position-relative overflow-visible"
-                                 [extraClass]="'autoHeight'"
-                                 [title]="'Donations'" [from]="from" [to]="to" [dataType]="'portalUser'" [id]="id"
-                                 [disabledDate]="false">
-            </app-table-donations>
+            <app-donation-table class="col-12 position-relative overflow-visible"
+                                [extraClass]="'autoHeight'"
+                                [title]="'Donations'" [from]="from" [to]="to" [dataType]="'portalUser'" [id]="id"
+                                [disabledDate]="false">
+            </app-donation-table>
         </div>
     </div>
     <br/>

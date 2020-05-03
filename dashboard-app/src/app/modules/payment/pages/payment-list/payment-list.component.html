@@ -1,8 +1,10 @@
 <app-payment>
   <div class="paymentOptions">
-    <app-table-payments
+    <app-payment-table
             [from]="from"
             [to]="to"
-            [disabledDate]="false"></app-table-payments>
+            [disabledDate]="false"
+            [actionType]="'bulkPairing'"
+    ></app-payment-table>
   </div>
 </app-payment>

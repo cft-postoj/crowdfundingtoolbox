@@ -51,8 +51,12 @@
             <!--</div>-->
 
         <!--<ngb-alert *ngIf="!validInput()"  [type]="'danger'" >{{ errorMessage }}</ngb-alert>-->
-        <app-alert *ngIf="!validInput() && submitted" [type]="'danger'" [(open)]="error" [message]="errorMessage" > </app-alert>
-        <app-actions (preview)="previewOpen = !previewOpen" class="actions" (submit)="handleSubmit()" [submitting]="saving" [hidePreviewButton]="newCampaign"></app-actions>
+        <app-alert *ngIf="alertOpen" [type]="alertType" [(open)]="alertOpen" [message]="alertMessage" > </app-alert>
+        <app-actions (preview)="previewOpen = !previewOpen" class="actions"
+                     (submit)="handleSubmit($event)"
+                     [submitting]="saving"
+                     [hidePreviewButton]="newCampaign"
+                     [saveWithoutClosingButton]="true"></app-actions>
         <app-signed-users-list
             [showSignedUsersModal]="showUsersList"
             (showSignedUsersModalChange)="showUsersList = $event"

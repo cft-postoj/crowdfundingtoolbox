@@ -20,6 +20,7 @@ export class Campaign {
         },
         donation_goal_value: ''
     };
+    public priority: number;
 
     payment_settings = {
         payment_type: 'both',
@@ -42,7 +43,6 @@ export class Campaign {
             height: 'auto',
         },
         monthly_prices: {
-            /* TODO: moznost pridat min value */
             // custom_price: {
             //     active: false,
             //     min: 10
@@ -58,7 +58,29 @@ export class Campaign {
                 active: true,
                 text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
                 value: 10
-            }
+            },
+            benefits: [{
+                id: 1,
+                name: 'edit text of this benefit'
+            }],
+            columns_count: 1,
+            columns: [{
+                header: {
+                    enable: false,
+                    text: 'BEST OPTION',
+                    color: '#00f',
+                },
+                title: 'Title',
+                active_benefits: [],
+                show_benefits: [],
+                custom_price: false,
+                count_of_options: 2,
+                count_of_options_in_row: 3,
+                options: [
+                    {value: 30},
+                    {value: 20}
+                ],
+            }]
         },
         once_prices: {
             custom_price: false,

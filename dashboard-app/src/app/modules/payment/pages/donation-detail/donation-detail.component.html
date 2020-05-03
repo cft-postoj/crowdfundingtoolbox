@@ -2,7 +2,7 @@
     <div class="paymentOptions">
         <h2>Donation detail</h2>
         <div class="text-center" *ngIf="loading">
-            <img src="../assets/images/loading.svg" />
+            <img src="../assets/images/loading.svg"/>
         </div>
         <div class="row" *ngIf="!loading">
             <div class="col-12 col-sm-12 col-md-8">
@@ -18,8 +18,9 @@
                     </tr>
                     <tr>
                         <td>Donor name</td>
-                        <th (click)="showDetailDonor()" class="underline">{{(!isNullOrUndefined(detail.portal_user)) ?
-                            detail.portal_user.user.user_detail.first_name + ' ' +  detail.portal_user.user.user_detail.last_name : 'N/A'}}</th>
+                        <th (click)="showDetailDonor()"
+                            class="underline">{{(!isNullOrUndefined(detail.portal_user.user.user_detail.first_name)) ?
+                            detail.portal_user.user.user_detail.first_name + ' ' + detail.portal_user.user.user_detail.last_name : 'N/A'}}</th>
                     </tr>
                     <tr>
                         <td>Donor ID</td>
@@ -39,7 +40,7 @@
                     </tr>
                     <tr>
                         <td>Frequency</td>
-                        <th>{{(detail.is_monhtly_donation) ? 'monthly' : 'one-time'}}</th>
+                        <th>{{(detail.is_monthly_donation) ? 'monthly' : 'one-time'}}</th>
                     </tr>
                     <tr>
                         <td>Type</td>
@@ -52,7 +53,7 @@
                     <tr>
                         <td>Campaign name</td>
                         <th (click)="showCampaignDetail(campaignId)" class="underline"
-                        title="Show campaign detail">{{campaignName}}</th>
+                            title="Show campaign detail">{{campaignName}}</th>
                     </tr>
                     <tr>
                         <td>Created by</td>
@@ -66,20 +67,19 @@
             </div>
             <div class="col-12 col-sm-12 col-md-4">
                 <app-user-dropdown
-                        [userId]="(detail.portal_user === null) ? null : detail.portal_user.user.id"
-                        [users]="users"
-                        [selectedValue]="selectedUser"
-                        [label]="'Change donation assignment:'"
-                        (changeIdEmit)="changeDonationAssignment($event)"></app-user-dropdown>
-                <button type="button" class="cancelPayment" (click)="cancelDonationAssignment('cancel')" *ngIf="detail.status === 'processed'">
+                    [currentUser]=" detail?.portal_user?.user || null"
+                    [selectedValue]="selectedUser"
+                    [label]="'Change donation assignment:'"
+                    (changeIdEmit)="changeDonationAssignment($event)"></app-user-dropdown>
+                <button type="button" class="cancelPayment" (click)="cancelDonationAssignment('cancel')"
+                        *ngIf="detail.status === 'processed'">
                     Cancel payment assignment of any user
                 </button>
-                <button type="button" class="deleteDonation" (click)="cancelDonationAssignment('delete')" *ngIf="detail.status !== 'processed'">
+                <button type="button" class="deleteDonation" (click)="cancelDonationAssignment('delete')"
+                        *ngIf="detail.status !== 'processed'">
                     Delete this donation
                 </button>
             </div>
-
         </div>
-
     </div>
 </app-payment>

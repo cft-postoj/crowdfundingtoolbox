@@ -1,4 +1,4 @@
-import { MonthlyPipe } from './monthly.pipe';
+import { MonthlyPipe } from '../../core/pipes/monthly.pipe';
 
 describe('MonthlyPipe', () => {
   it('create an instance', () => {

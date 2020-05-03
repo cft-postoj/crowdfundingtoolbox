@@ -16,19 +16,24 @@ import {DonationDetailSimplifiedComponent} from './components/donation-detail-si
 import { TransferTypeConvertToStringPipe } from './pipes/transfer-type-convert-to-string.pipe';
 import { DonorsComponent } from './pages/donors/donors.component';
 import { DonorsNewComponent } from './pages/donors-new/donors-new.component';
+import { PortalUserImportComponent } from './pages/portal-user-import/portal-user-import.component';
+import {PaymentModule} from '../payment/payment.module';
+import {PortalUserTableComponent} from './components/portal-user-table/portal-user-table.component';
 
 @NgModule({
     declarations: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
         BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, PortalUserDetailDonationsComponent,
-        PortalUserDetailGeneralComponent, DonationDetailSimplifiedComponent, TransferTypeConvertToStringPipe, DonorsComponent, DonorsNewComponent],
+        PortalUserDetailGeneralComponent, DonationDetailSimplifiedComponent, TransferTypeConvertToStringPipe, DonorsComponent,
+        DonorsNewComponent, PortalUserImportComponent, PortalUserTableComponent],
     imports: [
         CommonModule,
         PotralUsersRoutingModule,
         CoreModule,
-        StatisticsModule
+        PaymentModule,
     ],
     exports: [PortalUserDetailComponent, PortalUserListComponent, PortalUserFilterComponent, PortalUserListItemComponent,
-        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, DonationDetailSimplifiedComponent]
+        BackToListComponent, ExludeUserFromTargetingComponent, EditPortalUserComponent, DonationDetailSimplifiedComponent,
+        PortalUserTableComponent]
 })
 export class PortalUsersModule {
 }

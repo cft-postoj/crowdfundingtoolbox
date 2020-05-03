@@ -265,3 +265,6 @@ html, body {
   margin-top: 70px;
 }
 
+::ng-deep p-paginator p-dropdown label {
+    color: blue;
+}

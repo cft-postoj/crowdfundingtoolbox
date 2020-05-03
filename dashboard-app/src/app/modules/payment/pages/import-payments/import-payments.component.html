@@ -1,16 +1,27 @@
 <app-payment>
     <div class="paymentOptions">
-        <app-alert
-                [(open)]="alertOpen"
-                [message]="alertMessage"
-                [type]="alertType"></app-alert>
+        <app-alert *ngFor="let alert of alerts"
+            [(open)]="alert.alertOpen"
+            [message]="alert.alertMessage"
+            [type]="alert.alertType"></app-alert>
         <div class="importPayments">
             <p>
                 Here you can manually import payments. File must be in .csv format.
             </p>
             <app-upload-csv
-                    [loading]="loading"
-                    (changeFileEmitter)="processFile($event)"></app-upload-csv>
+                [loading]="loading"
+                (changeFileEmitter)="processFiles($event)"
+                [multiple]="true"></app-upload-csv>
+        </div>
+
+        <div class="importPayments">
+            <p>
+                Here you can pair account names to payments.
+            </p>
+            <app-upload-csv
+                    [loading]="loadingPairing"
+                    (changeFileEmitter)="processFilePairing($event)"
+                    [multiple]="true"></app-upload-csv>
         </div>
     </div>
 </app-payment>

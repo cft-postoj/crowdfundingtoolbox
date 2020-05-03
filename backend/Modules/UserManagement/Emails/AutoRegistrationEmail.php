@@ -35,10 +35,10 @@ class AutoRegistrationEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Thank you for your support')
+        return $this->subject(__('cft-emails.donationInitialize.title'))
             ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
             ->view('emails.autoRegister', ['username' => $this->username,
-                'emailToken' => $this->emailToken,
+                'token' => $this->emailToken,
                 'variableSymbol' => $this->variableSymbol, 'iban' => $this->iban]);
     }
 }

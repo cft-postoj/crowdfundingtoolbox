@@ -18,14 +18,23 @@ import { DisableControlDirective } from './disable-control.directive';
 import { PayBySquareComponent } from './components/pay-by-square/pay-by-square.component';
 import { DonationDetailComponent } from './pages/donation-detail/donation-detail.component';
 import { UserDropdownComponent } from './components/user-dropdown/user-dropdown.component';
-import { UploadCsvComponent } from './components/upload-csv/upload-csv.component';
 import {TableModule} from 'primeng/table';
 import {InlineSVGModule} from 'ng-inline-svg';
 import { PaymentListComponent } from './pages/payment-list/payment-list.component';
 import { PaymentDetailComponent } from './pages/payment-detail/payment-detail.component';
+import { CreditCardComponent } from './components/credit-card/credit-card.component';
+import {DonationTableComponent} from './components/donation-table/donation-table.component';
+import {PaymentTableComponent} from './components/payment-table/payment-table.component';
 
 @NgModule({
-    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent, DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent, DisableControlDirective, PayBySquareComponent, DonationDetailComponent, UserDropdownComponent, UploadCsvComponent, PaymentListComponent, PaymentDetailComponent],
+    declarations: [PaymentOptionsComponent, PaymentMethodsListComponent, PaymentMethodsListItemComponent, PaymentComponent,
+        DonationsComponent, UnpairedPaymentsComponent, ImportPaymentsComponent, BankTransferComponent, DisableControlDirective,
+        PayBySquareComponent, DonationDetailComponent, UserDropdownComponent, PaymentListComponent, PaymentDetailComponent,
+        CreditCardComponent, PaymentTableComponent, DonationTableComponent],
+    exports: [
+        PaymentTableComponent,
+        DonationTableComponent
+    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -35,7 +44,6 @@ import { PaymentDetailComponent } from './pages/payment-detail/payment-detail.co
 
         CoreModule,
         PaymentRoutingModule,
-        StatisticsModule,
         InlineSVGModule.forRoot()
     ]
 })

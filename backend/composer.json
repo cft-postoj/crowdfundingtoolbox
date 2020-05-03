@@ -12,6 +12,7 @@
         "darkaonline/l5-swagger": "5.8.*",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.5",
         "illuminated/helper-functions": "^5.8",
         "jadjoubran/laravel-angular": "^0.4.0",
         "jenssegers/agent": "^2.6",
@@ -20,9 +21,13 @@
         "maatwebsite/excel": "^3.1",
         "mpociot/laravel-apidoc-generator": "^3.3",
         "mtrajano/laravel-swagger": "^0.2.0",
-        "peterbodnar.com/bsqr": "^1.1",
         "nwidart/laravel-modules": "^4.1",
-        "tymon/jwt-auth": "dev-develop"
+        "peterbodnar.com/bsqr": "^1.1",
+        "php-imap/php-imap": "^4.0",
+        "spatie/laravel-responsecache": "^6.3",
+        "tucker-eric/eloquentfilter": "^2.3",
+        "tymon/jwt-auth": "dev-develop",
+        "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -13,6 +13,7 @@ export class CheckboxComponent implements OnInit {
 
 
     @Input() public checked: boolean;
+    @Input() public clazz: string;
     @Output() checkedChange = new EventEmitter<boolean>();
 
     constructor() {

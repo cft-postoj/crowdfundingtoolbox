@@ -5,6 +5,7 @@ import {environment} from '../../../../environments/environment';
 import {PaymentMethod} from '../models/payment-method';
 import {BankTransfer} from '../models/bank-transfer';
 import {PayBySquare} from '../models/pay-by-square';
+import {CreditCard} from '../models/card';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,16 @@ export class PaymentMethodsService {
   public setPayBySquareData(payBySquare: PayBySquare): Observable<any> {
     return this.http.put(`${environment.backOfficeUrl}${environment.payBySquareMethod}`, {
       payment_settings: payBySquare
+    });
+  }
+
+  public getCreditCardData(): Observable<CreditCard> {
+    return this.http.get<CreditCard>(`${environment.backOfficeUrl}${environment.cardMethod}`);
+  }
+
+  public setCreditCardData(creditCardData: CreditCard): Observable<any> {
+    return this.http.put(`${environment.backOfficeUrl}${environment.cardMethod}`, {
+      payment_settings: creditCardData
     });
   }
 }

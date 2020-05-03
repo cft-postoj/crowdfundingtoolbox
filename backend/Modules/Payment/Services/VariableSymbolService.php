@@ -14,11 +14,10 @@ class VariableSymbolService
     private $initialVariableSymbol;
     protected $portalUserService;
 
-    public function __construct(VariableSymbolRepository $variableSymbolRepository)
+    public function __construct()
     {
-        $this->variableSymbolRepository = $variableSymbolRepository;
+        $this->variableSymbolRepository = new VariableSymbolRepository();
         $this->initialVariableSymbol = 100000; // Initial variable symbol for portal users
-        //$this->portalUserService = $portalUserService;
     }
 
     public function all()
@@ -27,6 +26,23 @@ class VariableSymbolService
             $this->variableSymbolRepository->all(),
             Response::HTTP_OK
         );
+    }
+
+    public function createSpecific($portal_user_id, $vs)
+    {
+        try {
+            $this->variableSymbolRepository->create($portal_user_id, $vs);
+        } catch (\Exception $exception) {
+            return \response()->json([
+                'error' => $exception->getMessage()
+            ],
+                Response::HTTP_BAD_REQUEST);
+        }
+
+        return \response()->json([
+            'message' => 'Successfully generated variable symbol.'
+        ],
+            Response::HTTP_CREATED);
     }
 
     public function create($portal_user_id)
@@ -59,6 +75,10 @@ class VariableSymbolService
     public function getByPortalUser()
     {
         return $this->variableSymbolRepository->getByPortalUser($this->portalUserService->getPortalUserIdFromToken());
+    }
+
+    public function getByPortalUserId($portalUserId) {
+        return $this->variableSymbolRepository->getByPortalUser($portalUserId);
     }
 
     public function getPortalUserByVariableSymbol($variable_symbol)

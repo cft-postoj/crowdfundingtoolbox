@@ -46,6 +46,7 @@
 }
 
 .hoverable {
+    fill: $bali;
     &:hover {
         fill: $azure;
         color: $azure;

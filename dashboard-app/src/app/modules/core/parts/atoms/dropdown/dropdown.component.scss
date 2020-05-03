@@ -29,7 +29,7 @@
             vertical-align: middle;
             @include transitionSingle(.3s ease);
             &:hover, &:focus {
-                border: none;
+                border: 1px solid transparent;
                 background: $aquaHaze;
             }
         }
@@ -64,13 +64,23 @@
             height: 32px;
         }
         &:after {
-            top: 8px;
+            top: 6px;
+            right: 4px;
         }
     }
 
     &.selectWrapper--dark {
         select {
             background: $aquaHaze;
+        }
+    }
+    &.selectWrapper--white {
+        select {
+            background-color: white;
+            &:hover, &:focus {
+                border: 1px solid transparent;
+                background: white;
+            }
         }
     }
 }

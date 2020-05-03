@@ -67,6 +67,10 @@ export var widgetTypes = {
     custom: {
         name: 'custom',
         method: 'custom'
+    },
+    article_advanced: {
+        name: 'article_advanced',
+        method: 'article_advanced'
     }
 }
 

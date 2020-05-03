@@ -18,6 +18,8 @@ import {Widget} from '../../models';
 import {backgroundTypes, devices, RadioButton, widgetTypes} from '../../../core/models';
 import {PreviewService, WidgetService} from '../../services';
 import {ConvertHexService} from '../../../core/services';
+import {monetizationTypes} from '../../models/enums';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-preview',
@@ -76,7 +78,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     public iframeCode = iframeCode;
     public globalStyles = globalStyles;
     private subscription: Subscription;
-
+    public monetizationTypes = monetizationTypes;
 
     constructor(private previewService: PreviewService, public el: ElementRef,
                 private convertHex: ConvertHexService, private widgetService: WidgetService,
@@ -87,7 +89,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         this.deviceTypeButtons.push(new RadioButton(devices.desktop.name, devices.desktop.name, '/assets/images/icons/desktop_default.svg'))
         this.deviceTypeButtons.push(new RadioButton(devices.tablet.name, devices.tablet.name, '/assets/images/icons/tablet_default.svg'))
         this.deviceTypeButtons.push(new RadioButton(devices.mobile.name, devices.mobile.name, '/assets/images/icons/mobile_default.svg'))
-        //get widgets by widgetId only when campaign id is defined and widgets aren't defined using Input()
+        // get widgets by widgetId only when campaign id is defined and widgets aren't defined using Input()
         if (this.campaignId && !(this.widgets && this.widgets.length > 0)) {
             this.loading = true;
             this.widget = new Widget();
@@ -107,7 +109,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         doc.write(this.iframeCode);
         doc.close();
         if (!this.deviceType) {
-            this.deviceType = this.deviceTypes.desktop.name
+            this.deviceType = this.deviceTypes.desktop.name;
         }
 
         this.subscription = this.previewService.updatePreviewChange.subscribe(update => {
@@ -123,7 +125,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
         const parent = document.getElementById('styles');
 
-        for (let style of  parent.getElementsByClassName('globalStyles') as any) {
+        for (let style of parent.getElementsByClassName('globalStyles') as any) {
             style.remove()
         }
 
@@ -134,7 +136,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         style.appendChild(document.createTextNode(css));
         parent.appendChild(style);
 
-        //hover styles
+        // hover styles
         let hoverStyleElement = document.createElement('style');
         hoverStyleElement.setAttribute('class', 'hoverStyles');
         hoverStyleElement.type = 'text/css';
@@ -160,14 +162,15 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         let htmlsWrapper: any = {};
         htmlsWrapper.widgets = [];
 
-        //get widgets from createdCampaign
+        // get widgets from createdCampaign
         if (this.createdCampaign) {
             this.widgets = this.createdCampaign.widgets;
         }
 
         if (!this.widgets.length) {
-            this.widgets.push(this.widget)
+            this.widgets.push(this.widget);
         }
+        const previousDeviceType = this.deviceType;
         this.widgets.forEach((wid, index) => {
             this.widget = wid;
             htmlsWrapper.widgets.push({});
@@ -175,12 +178,31 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             for (const type in this.deviceTypes) {
                 if (this.deviceTypes.hasOwnProperty(type)) {
                     this.deviceType = this.deviceTypes[type].name;
-                    this.ref.detectChanges();
-                    this.recreateStyles();
-                    htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML;
+                    if (this.widget.contains_additional_widget_settings) {
+                        htmlsWrapper.widgets[index][this.deviceType] = [];
+                        this.widget.additional_widget_settings.forEach((widgetSettings: any) => {
+                            if (widgetSettings.active) {
+                                this.widget.settings = widgetSettings.settings;
+                                this.widget.widget_type.active_subtype = this.widget.widget_type.widgetSubtypes.find(
+                                    x => {
+                                        return x.name = widgetSettings.name;
+                                    }
+                                );
+                                this.ref.detectChanges();
+                                this.recreateStyles();
+                                htmlsWrapper.widgets[index][this.deviceType] +=
+                                    `<div data-position="${widgetSettings.name}">${this.previewContent.nativeElement.innerHTML}</div>`;
+                            }
+                        });
+                    } else {
+                        this.ref.detectChanges();
+                        this.recreateStyles();
+                        htmlsWrapper.widgets[index][this.deviceType] = this.previewContent.nativeElement.innerHTML;
+                    }
                 }
             }
         });
+        this.deviceType = previousDeviceType;
         this.previewService.sendGeneratedHtml(htmlsWrapper);
         return of(htmlsWrapper);
 
@@ -204,8 +226,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             this.deviceWidth = 380;
             this.deviceHeight = 600;
         } else {
-            this.deviceWidth = 1366;
-            this.deviceHeight = 600;
+            this.deviceWidth = 966;
+            this.deviceHeight = 800;
         }
     }
 
@@ -248,7 +270,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             padding: (paddingBackground !== null && paddingBackground !== undefined) ? this.addPx(paddingBackground.top) + ' ' +
                 this.addPx(paddingBackground.right) + ' ' +
                 this.addPx(paddingBackground.bottom) + ' ' +
-                this.addPx(paddingBackground.left) : backgroundStyles.padding
+                this.addPx(paddingBackground.left) : backgroundStyles.padding,
+            backgroundPosition: 'center'
         };
 
 
@@ -316,6 +339,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             margin: (bodyContainer) ? bodyContainer.margin : 0,
             // set color from headline to bodyStyle to enable inheritation for all childs components
             color: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color,
+            height: (this.widget.widget_type.method === widgetTypes.popup.name && this.deviceType === 'mobile')
+                ? '95vh' : 'auto',
+            overflowY: (this.widget.widget_type.method === widgetTypes.popup.name && this.deviceType === 'mobile')
+                ? 'auto' : 'hidden',
+            overflowX: 'hidden'
         };
     }
 
@@ -330,7 +358,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             'color': headlineText.fontSettings.color,
             fontFamily: headlineText.fontSettings.fontFamily,
             width: (additionalSettings !== undefined) ?
-                additionalSettings.text.width : '100%',
+                this.subMarginFromWidth(this.widget.settings[this.deviceType].additional_settings.textContainer.text.width,
+                    headlineText.text_margin.left, headlineText.text_margin.right) :
+                this.subMarginFromWidth('100%', headlineText.text_margin.left, headlineText.text_margin.right),
             display: (headlineText.text_display !== undefined) ? headlineText.text_display : 'block',
             'background-color': headlineText.fontSettings.backgroundColor,
             margin: this.addPx(headlineText.text_margin.top) + ' ' +
@@ -342,8 +372,7 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         return result;
     }
 
-    getAdditionalTextStyle() {
-        const additionalText = this.widget.settings[this.deviceType].widget_settings.additional_text;
+    getAdditionalTextStyle(additionalText = this.widget.settings[this.deviceType].widget_settings.additional_text) {
         this.usedFontFamily(additionalText.fontSettings.fontFamily);
         if (!additionalText) {
             return;
@@ -354,7 +383,9 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
             'color': additionalText.fontSettings.color,
             fontFamily: additionalText.fontSettings.fontFamily,
             width: (this.widget.settings[this.deviceType].additional_settings.textContainer !== undefined) ?
-                this.widget.settings[this.deviceType].additional_settings.textContainer.text.width : '100%',
+                this.subMarginFromWidth(this.widget.settings[this.deviceType].additional_settings.textContainer.text.width,
+                    additionalText.text_margin.left, additionalText.text_margin.right) :
+                this.subMarginFromWidth('100%', additionalText.text_margin.left, additionalText.text_margin.right),
             display: (additionalText.text_display !== undefined) ? additionalText.text_display : 'block',
             padding: (this.widget.settings[this.deviceType].additional_settings.bodyContainer !== undefined) ?
                 this.widget.settings[this.deviceType].additional_settings.bodyContainer.padding : 0,
@@ -525,13 +556,17 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getCloseWidgetStyles() {
+        let widgetSettings = this.widget.settings[this.deviceType].widget_settings;
         const styles = {
             position: 'absolute',
-            right: '15px',
-            top: (this.widget.widget_type.method === 'fixed') ? 'calc(50% - 10px)' : '15px',
-            width: '20px',
+            right: (this.deviceType === 'tablet') ? '7px' : ((this.deviceType === 'mobile') ? '25px' : '15px'),
+            top: widgetSettings.close_top || ((this.widget.widget_type.method === 'fixed')
+                ? 'calc(50% - 10px)' : ((this.deviceType === 'tablet') ? '7px' : ((this.deviceType === 'mobile') ? '0px' : '15px'))),
+            width: widgetSettings.close_text ? 'auto' : '20px',
             height: '20px',
             cursor: 'pointer',
+            color: widgetSettings.close_color || widgetSettings.general.fontSettings.color,
+            'font-size' : this.addPx(widgetSettings.close_font_size) || '12px',
             display: (this.widget.widget_type.method === 'fixed' || this.widget.widget_type.method === 'popup')
                 ? 'block' : 'none'
         };
@@ -540,7 +575,8 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
 
     getCloseButtonStyles() {
         const styles = {
-            fill: this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color
+            fill: this.widget.settings[this.deviceType].widget_settings.close_color ||
+                this.widget.settings[this.deviceType].widget_settings.general.fontSettings.color
         };
         return styles;
     }
@@ -549,10 +585,11 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
         const styles = {
             display: (this.widget.widget_type.method === 'popup') ? 'block' : 'none',
             width: '100%',
-            height: '100%',
+            height: 'calc(100% + 140px)',
             top: '-140px',
             position: 'absolute',
             zIndex: 9999,
+            left: 0,
             background: 'rgba(0, 0, 0, .7)'
         };
         return styles;
@@ -617,7 +654,20 @@ export class PreviewComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     handleDeviceChange(event) {
-       this.setDeviceDimensions();
+        this.setDeviceDimensions();
+    }
+
+    private subMarginFromWidth(width: string, left: string, right: string): string {
+        let result = width;
+        let px = width.split('px');
+        let percent = width.split('%');
+        if (px.length > 1 ) {
+            result = `calc(${Number(px[0])}px - (${this.addPx(left)} + ${this.addPx(right)}))`;
+        }
+        if (percent.length > 1 ) {
+            result = `calc(${Number(percent[0])}% - (${this.addPx(left)} + ${this.addPx(right)}))`;
+        }
+        return result;
     }
 
 }

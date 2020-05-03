@@ -4,9 +4,9 @@ export class Filter {
     max: number;
     text: string;
 
-    constructor() {
-        this.min = Number.MIN_SAFE_INTEGER;
-        this.max = Number.MAX_SAFE_INTEGER;
-        this.text = '';
+    constructor(min: number = null, max: number = null, text: string = '') {
+        this.min = min;
+        this.max = max;
+        this.text = text;
     }
 }

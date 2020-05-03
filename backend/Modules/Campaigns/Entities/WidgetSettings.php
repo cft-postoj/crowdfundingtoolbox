@@ -12,4 +12,10 @@ class WidgetSettings extends Model
     protected $fillable = [
         'widget_id', 'desktop', 'tablet', 'mobile'
     ];
+
+    public function widget()
+    {
+        return $this->belongsTo('Modules\Campaigns\Entities\Widget', 'widget_id');
+    }
+
 }

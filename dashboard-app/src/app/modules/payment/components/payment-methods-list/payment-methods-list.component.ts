@@ -36,17 +36,17 @@ export class PaymentMethodsListComponent implements OnInit {
                 this.modalContent = 'bank-transfer';
                 break;
             case 2:
-                this.modalContent = 'card-pay';
+                this.modalContent = 'card';
                 break;
             case 3:
                 this.modalContent = 'pay-by-square';
                 break;
-            case 4:
-                this.modalContent = 'google-pay';
-                break;
-            case 5:
-                this.modalContent = 'apple-pay';
-                break;
+            // case 4:
+            //     this.modalContent = 'google-pay';
+            //     break;
+            // case 5:
+            //     this.modalContent = 'apple-pay';
+            //     break;
             default:
                 break;
         }

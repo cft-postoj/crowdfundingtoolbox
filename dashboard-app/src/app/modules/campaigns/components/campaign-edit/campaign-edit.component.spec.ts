@@ -67,7 +67,7 @@ describe('CampaignEditComponent', () => {
     expect(component.loading).toEqual(true);
   });
   it('error defaults to: false', () => {
-    expect(component.error).toEqual(false);
+    expect(component.alertOpen).toEqual(false);
   });
   it('submitted defaults to: false', () => {
     expect(component.submitted).toEqual(false);

@@ -48,7 +48,22 @@ export class AuthenticationService {
 
         const date = this.getTokenExpirationDate(token);
         if (date === undefined) return false;
+        const parsedToken = this.parseToken(token);
+        if (parsedToken.role == null) {
+            return false;
+        }
+
         return !(date.valueOf() > new Date().valueOf());
+    }
+
+    private parseToken(token) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
     }
 
     public obtainNewToken(email: string,

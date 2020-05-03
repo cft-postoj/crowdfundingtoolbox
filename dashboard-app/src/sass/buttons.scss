@@ -37,6 +37,37 @@
         0px 1px 0px rgba($black, .3),
         1px 1px 0px rgba($black, .3);
     }
+
+    &--auto-width {
+        width: 100%;
+    }
+
+    &-submit {
+        background: $green !important;
+        color: $white;
+        font-weight: bold;
+        @include borderRadius(4px);
+        padding: 10px 40px 10px 15px;
+        text-align: left;
+        position: relative;
+        @include transitionSingle(.3s ease);
+        &:after {
+            position: absolute;
+            right: 15px;
+            top: 17px;
+            content: '';
+            width: 14px;
+            height: 9px;
+            background: url('/assets/images/icons/check.svg') no-repeat;
+            @media screen and (max-height: 750px) {
+                top: 15px;
+            }
+        }
+        &:hover {
+            @include boxShadow(0 0 15px $bali);
+            color: white;
+        }
+    }
 }
 
 .btn-group {

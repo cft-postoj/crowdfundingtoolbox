@@ -1,75 +1,26 @@
 <app-payment>
-    <div class="paymentOptions">
-        <div class="text-center" *ngIf="loading">
-            <img src="../assets/images/loading.svg"/>
-        </div>
-        <div *ngIf="!loading">
-            <h3 class="text-center" *ngIf="payments.length === 0">No unpaired payments were found!</h3>
-            <div *ngIf="payments.length > 0">
-                <h2>Unpaired payments</h2>
-                <div class="row">
-                    <div class="col">
-                        <button type="button" class="pairAllPayments" (click)="pairViaIbanModal(null)">
-                            Pair all payments via IBAN
-                        </button>
-                    </div>
-                    <div class="col">
-                        <app-user-dropdown
-                                [users]="users"
-                                [userId]="null"
-                                [label]="null"
-                                [extraClass]="'top15'"
-                                [placeholder]="'Assign payments to user'"
-                                (changeIdEmit)="changeDonationAssignment($event)"></app-user-dropdown>
-                    </div>
-                </div>
-
-                <table class="list-items list-items--orderable">
-                    <thead>
-                    <tr>
-                        <th class="id">#</th>
-                        <th>Transaction ID</th>
-                        <th>Transaction date</th>
-                        <th>Variable symbol</th>
-                        <th class="iban" app-table-header [(model)]="model" [column]="model.columns[0]" (modelChange)="sortTable()">
-                        </th>
-                        <th>Amount</th>
-                        <th>Created by</th>
-                        <th>Transfer type</th>
-                        <th colspan="2">Payment notes</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let item of items; let i = index" class="list-items--item">
-                        <td>{{i + 1}}</td>
-                        <td>
-                            {{item.transaction_id}}
-                        </td>
-                        <td>
-                            {{item.transaction_date | safariDate | date:'dd.MM.yyyy' }}
-                        </td>
-                        <td>
-                            {{item.variable_symbol}}
-                        </td>
-                        <td>
-                            {{item.iban}}
-                        </td>
-                        <td>
-                            {{item.amount | currency: 'EUR': 'symbol': '1.0-2':'sk'}}
-                        </td>
-                        <td>
-                            {{item.created_by}}
-                        </td>
-                        <td>
-                            {{paymentMethods[item.transfer_type - 1]}}
-                        </td>
-                        <td colspan="2">
-                            {{item.payment_notes}}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <div class="paymentOptions col-12">
+        <h2>Unpaired payments</h2>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="pairAllPayments" (click)="pairViaIbanModal(null)">
+                    Pair all payments via IBAN
+                </button>
             </div>
+            <div class="col">
+                <app-user-dropdown
+                    [label]="null"
+                    [extraClass]="'top15'"
+                    [placeholder]="'Assign payments to user'"
+                    (changedUser)="changeDonationAssignment($event)">
+                </app-user-dropdown>
+            </div>
+        </div>
+        <div class="row">
+            <app-payment-table [dataType]="'unpaired'"
+                               [disabledDate]="true" [emitDataChanges]="true" (dataChange)="updatePayments($event)" #tablePayments
+                               [customOpenColumns]="['payment_notes']" [customCloseColumns]="['campaign_name']"  >
+            </app-payment-table>
         </div>
     </div>
     <app-alert

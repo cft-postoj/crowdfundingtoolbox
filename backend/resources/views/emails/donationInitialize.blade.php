@@ -1,19 +1,21 @@
 @extends('emails.layout')
-@section('title', 'Thank you for supporting')
+@section('title', __('cft-emails.donationInitialize.title'))
 
 @section('body')
-    Hello,<br/>thank you for donating www.postoj.sk.<br/>
+    {!! __('cft-emails.donationInitialize.bodyPart1') !!}
+    <br/>
     <br/>
     <hr>
-    If you didn't send money yet, please use these information:<br />
+    {!! __('cft-emails.donationInitialize.bodyPart2') !!}
+    <br />
     IBAN: <b>{{$iban}}</b><br />
-    VARIABLE SYMBOL: <b>{{$variableSymbol}}</b>
+    {!! __('cft-emails.donationInitialize.variableSymbol') !!}: <b>{{$variableSymbol}}</b>
     <hr>
     <br/>
-    To ensure, that we can give you all benefits, please visit your profile and check your personal data.
+    {!! __('cft-emails.donationInitialize.bodyPart3') !!}
 @endsection
 
 @section('displayButton', 'table')
-@section('buttonUrl', env('CFT_PORTAL_URL') . '/moj-ucet')
-@section('buttonText', 'My account')
-@section('buttonAlternative', 'If you can\'t click the button, copy and paste the following link into your browser manually: ')
+@section('buttonUrl', env('CFT_PORTAL_URL') . __('cftJSmessages.myAccountTexts.myAccountUrl'))
+@section('buttonText', __('cft-emails.donationInitialize.buttonText'))
+@section('buttonAlternative', __('cft-emails.donationInitialize.buttonAlternative'))

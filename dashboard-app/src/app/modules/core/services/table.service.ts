@@ -80,5 +80,11 @@ export class TableService {
         return result;
     }
 
-
+    public getOnlyChangedColumns(model) {
+        return model.columns.filter(column => {
+            return column.type != 'none' &&
+                ((column.type == 'text' && column.filter.text != '') ||
+                    (column.type == 'number' && (column.filter.min != null || column.filter.max != null)));
+        });
+    }
 }

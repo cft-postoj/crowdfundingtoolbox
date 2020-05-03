@@ -1,0 +1,17 @@
+.ng-select--custom {
+    .btn {
+        width: auto;
+        height: auto;
+    }
+
+    input.form-control.ui-select-search {
+        cursor: pointer;
+        background: url('/assets/images/icons/add.svg') no-repeat;
+        padding-left: 50px !important;
+        height: 50px !important;
+    }
+
+    .ui-select-container .dropdown-menu {
+        display: block;
+    }
+}

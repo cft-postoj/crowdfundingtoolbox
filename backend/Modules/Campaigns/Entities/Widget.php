@@ -15,7 +15,12 @@ class Widget extends Model
 
     public function widgetSettings()
     {
-        return $this->hasOne('\Modules\Campaigns\Entities\WidgetSettings');
+        return $this->hasMany('\Modules\Campaigns\Entities\WidgetSettings');
+    }
+
+    public function widgetResults()
+    {
+        return $this->hasOne('\Modules\Campaigns\Entities\WidgetResult');
     }
 
     public function campaignImage()
@@ -41,6 +46,12 @@ class Widget extends Model
     public function donation()
     {
         return $this->hasMany('\Modules\Payment\Entities\Donation');
+    }
+
+    //all donations, where this widget is referral widget
+    public function donationReferral()
+    {
+        return $this->hasMany('\Modules\Payment\Entities\Donation','referral_widget_id');
     }
 
 }

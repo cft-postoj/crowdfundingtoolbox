@@ -24,11 +24,10 @@
                 <td>{{i + 1}}.</td>
                 <td>{{user.email}}</td>
                 <td>
-                    {{(user.first_name !== null) ? user.first_name : ''}}
-                    {{(user.last_name !== null) ? ' ' + user.last_name : ''}}
+                    {{(user.name !== null) ? user.name : ''}}
                 </td>
                 <td>
-                    <svg (click)="showUserDetail(user.id)" title="Show detail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <svg (click)="showUserDetail(user.user_id)" title="Show detail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g id="preview_24px" transform="translate(-1736 -136)">
                             <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1736 136)" fill="#f2f1ef" opacity="0"/>
                             <g id="eye" transform="translate(1740 44.275)">
