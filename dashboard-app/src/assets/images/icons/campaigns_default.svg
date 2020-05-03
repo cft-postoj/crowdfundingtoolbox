@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <g id="campaigns_default" transform="translate(-40 -162)">
+    <rect id="safe_area" data-name="safe area" width="36" height="36" transform="translate(40 162)" fill="#8aa1b1" opacity="0"/>
+    <g id="icon" transform="translate(46 168)">
+      <rect id="Rectangle_40" data-name="Rectangle 40" width="10.667" height="8" transform="translate(13.333)" fill="#8aa1b1"/>
+      <rect id="Rectangle_41" data-name="Rectangle 41" width="10.667" height="13.333" fill="#8aa1b1"/>
+      <rect id="Rectangle_42" data-name="Rectangle 42" width="10.667" height="8" transform="translate(0 16)" fill="#8aa1b1"/>
+      <rect id="Rectangle_43" data-name="Rectangle 43" width="10.667" height="13.333" transform="translate(13.333 10.667)" fill="#8aa1b1"/>
+    </g>
+  </g>
+</svg>

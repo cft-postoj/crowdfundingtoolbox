@@ -1,0 +1,412 @@
+<link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
+<div class="cft--monetization--container" [ngStyle]="getMonetizationContainerStyle()" id="cft-monetization__container"
+     *ngIf="widget.settings[deviceType].payment_settings.active">
+    <div class="cft--monetization--container-step-1">
+        <div [ngStyle]="getRowStyle()">
+            <h2 class="cft--monatization--title"
+                *ngIf="widget.settings[deviceType].payment_settings.monetization_title?.text"
+                [ngStyle]="getMonetizationTitleStyles()"
+                [innerHtml]="widget.settings[deviceType].payment_settings.monetization_title.text">
+            </h2>
+            <div class="cft--monatization--column-wrapper cft--monatization--only-monthly"
+                 [ngStyle]="getColumnWrapperStyle(column)"
+                 [ngClass]="{'active': columnWrapperIsActive(column), 'header--active' : column.header.enable}"
+                 *ngFor="let column of widget.settings[deviceType].payment_settings.monthly_prices.columns">
+                <div class="cft--monatization--header" [ngStyle]="getHeaderStyle(column)">
+                    <span *ngIf="column.header.enable" [ngStyle]="getHeaderTextStyle(column)"
+                          [innerHTML]="column.header.text"></span>
+                    <span *ngIf="!column.header.enable">&#8203;</span>
+                </div>
+                <div class="cft--monatization--column-container" [ngStyle]="getColumnContainerStyle()">
+                    <div class="cft--monatization--column-content" [ngStyle]="getColumnContentStyle()">
+                        <div class="cft--monatization--column-container__title" [ngStyle]="getColumnTitleStyle()"
+                             [innerHtml]="column.title">
+                        </div>
+                        <div class="cft--monatization--column-container__benefits"
+                             [ngStyle]="getColumnContainerBenefitsStyle(column)">
+                            <div class="benefit__row"
+                                 [ngClass]="{'active':isBenefitActive(column, benefit) === true}"
+                                 [ngStyle]="getBenefitStyle()"
+                                 *ngFor="let benefit of column.show_benefits; let i = index">
+                                <div class="benefit__svg" [ngStyle]="getBenefitSvgStyle()">
+                                    <svg class="cross" width="10px" height="10px" viewBox="0 0 10 10" version="1.1"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M5.83847 4.91924L9.83847 0.919238L8.91923 0L4.91924 4L0.919238 0L0 0.919238L4 4.91924L0 8.91923L0.919238 9.83847L4.91924 5.83847L8.91923 9.83847L9.83847 8.91923L5.83847 4.91924Z"
+                                            id="Combined-Shape" fill="#888C91" stroke="none"/>
+                                    </svg>
+                                    <svg class="check" width="12px" height="9px" viewBox="0 0 12 9" version="1.1"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M4.1791 6.45522L1.04478 3.32089L0 4.36567L4.1791 8.54477L11.25 1.04478L10.2052 0L4.1791 6.45522Z"
+                                            id="Shape" fill="#1F4E7B" stroke="none"/>
+                                    </svg>
+                                </div>
+                                <div class="benefit__text" [ngStyle]="getBenefitTextStyle()" [innerHTML]="benefit.text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cft--monatization--donation-button-wrapper cft--monatization--only-monthly"
+                         [ngStyle]="getRowStyleDonationButton()">
+                        <div
+                            class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
+                            [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == option.value }"
+                            [ngStyle]="getMonatizationButtonInColumnStyle(column)"
+                            *ngFor="let option of column.options">
+                            <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
+                                 onclick="parent.setActiveButtonMonthlyColumn(this)">
+                                <input type="hidden" value="{{option.value}}">
+                                <div class="cft--monatization--donation-button-price"
+                                     [ngStyle]="getDonationButtonPriceStyle()">
+                                    {{option.value}}
+                                </div>
+                                <div class="cft--monatization--donation-button-periodicity"
+                                     [ngStyle]="getDonationButtonPeriodicityStyle()">
+                                    {{'€ mesačne'}}
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
+                            [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == 'custom' }"
+                            [ngStyle]="getMonatizationButtonInColumnStyle(column)"
+                            *ngIf="column.custom_price">
+                            <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
+                                 onclick="parent.setActiveButtonMonthlyColumn(this, true)"
+                                 oninput="parent.setActiveButtonMonthlyColumn(this)">
+                                <input type="number" class="cft--monatization--donation-input-price hide-arrows"
+                                       [ngStyle]="getDonationInputPriceStyle()"
+                                       placeholder="{{'vlastná suma'}}"/>
+                                <div class="cft--monatization--donation-button-periodicity"
+                                     [ngStyle]="getDonationButtonPeriodicityStyle()">
+                                    <!--{{'€ mesačne'}}-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form onsubmit="return parent.handleSubmitColumn(this, event)" class="cft--monatization--form--donate" action="#"
+              method="post" novalidate>
+
+            <div class="cft--monatization--form-group--donate" [ngStyle]="getFormGroupStyle()">
+                <div class="email" style="display: inline-block; text-align: center; max-width: 100%">
+                    <label for="cft--monatization--form--donate--email" [ngStyle]="getLabelStyle()">{{'CAMPAIGNS.WIDGETS.MONETIZATION.EMAIL' | translate}}</label>
+                        <div style="display: inline-block; max-width: 100%">
+                            <input class="cft--monatization--form--donate--email" type="email"
+                                   id="cft--monatization--form--donate--email" [ngStyle]="getEmailDonateStyle()"
+                                   name="email" required>
+                            <label id="cft--monatization--form-email-error" class="error" [ngStyle]="getErrorStyle()"
+                                   for="cft--monatization--form--donate--email">{{'CAMPAIGNS.WIDGETS.MONETIZATION.ERRORS.EMAIL_WRONG_FORMAT' | translate}}</label>
+                        </div>
+                        <div class="cft--button-container" [ngStyle]="getEmailButtonContainerStyles()">
+                            <button type="submit" class="cft__cta__button"
+                                    [ngStyle]="getButtonStyles()">
+                                {{widget.settings[deviceType].cta.text}}
+                            </button>
+                        </div>
+                </div>
+            </div>
+            <div class="cft--monatization--form--donate--terms" [ngStyle]="getFormGroupStyle()">
+                <div class="" style="position: relative; display: inline">
+                    <input id="cft--monatization--form--donate--terms" type="checkbox" name="terms_agreed" value="0"
+                           required>
+                    <span class="checkmark"></span>
+                    <label style="display: inline; padding-left: 26px;" for="cft--monatization--form--donate--terms"
+                           [innerHtml]="widget.settings[deviceType].payment_settings.terms.text"></label>
+                    <label id="cft--monatization--form--donate--terms-error"
+                           [ngStyle]="getErrorStyle()"
+                           class="error"
+                           for="cft--monatization--form--donate--terms">{{'CAMPAIGNS.WIDGETS.MONETIZATION.ERRORS.AGREE_TERMS' | translate}}</label>
+                </div>
+            </div>
+            <div class="cft--button-container only-logged-users" [ngStyle]="getEmailButtonContainerStyles(true)">
+                <button type="submit" class="cft__cta__button"
+                        [ngStyle]="getButtonStyles()">
+                    {{widget.settings[deviceType].cta.text}}
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="cft--monetization--container-step-2  cft--monatization--hidden">
+        <div class="cft--monatization--title"
+             [ngStyle]="getMonetizationTitleStyles()"
+             *ngIf="widget.settings[deviceType].payment_settings.second_step !== undefined">
+            <h2 [ngStyle]="getMonetizationTitleStyles()"
+                [innerHtml]="widget.settings[deviceType].payment_settings.second_step.title.text">
+            </h2>
+        </div>
+        <input type="hidden" name="choosedPaymentType" value="monthly">
+        <div class="cft--monetization--nationalPayment">
+            <div class="cft--monetization--nationalPayment--country">
+                <label onclick="parent.paymentCountryTypeColumn(this, 'home')">{{'CAMPAIGNS.WIDGETS.MONETIZATION.HOME_PAYMENT' | translate}}
+                    <input type="radio" name="nationalPayment" checked>
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="cft--monetization--nationalPayment--country">
+                <label onclick="parent.paymentCountryTypeColumn(this, 'foreign')">{{'CAMPAIGNS.WIDGETS.MONETIZATION.FOREIGN_PAYMENT' | translate}}
+                    <input type="radio" name="nationalPayment">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+        <div class="payment-options">
+            <label class="payment-options__button" style="cursor: pointer"
+                   [for]="'cr0wdWidgetContent-'+widget.widget_type.method+'-transfer'"
+                   onclick="parent.changePaymentOptions(this)">
+                <input type="radio" name="payment-option" value="1"
+                       [class]="'cr0wdWidgetContent-'+widget.widget_type.method+'-transfer'"
+                       [id]="'cr0wdWidgetContent-'+widget.widget_type.method+'-transfer'" checked>
+                <div>{{'CAMPAIGNS.WIDGETS.MONETIZATION.PAYMENT_TYPES.BANK_TRANSFER' | translate}}</div>
+            </label>
+            <label class="payment-options__button" style="cursor: pointer"
+                   [for]="'cr0wdWidgetContent-'+widget.widget_type.method+'-cardPay'"
+                   onclick="parent.changePaymentOptions(this)">
+                <input type="radio" name="payment-option" value="2"
+                       [class]="'cr0wdWidgetContent-'+widget.widget_type.method+'-cardPay'"
+                       [id]="'cr0wdWidgetContent-'+widget.widget_type.method+'-cardPay'">
+                <div>{{'CAMPAIGNS.WIDGETS.MONETIZATION.PAYMENT_TYPES.CARD' | translate}}</div>
+            </label>
+            <label class="payment-options__button payment-options__button__pbs cft--monatization--hidden"
+                   [for]="'cr0wdWidgetContent-'+widget.widget_type.method+'-payBySquare'"
+                   onclick="parent.changePaymentOptions(this)" style="cursor: pointer">
+                <input type="radio" name="payment-option" value="3"
+                       [class]="'cr0wdWidgetContent-'+widget.widget_type.method+'-payBySquare'"
+                       [id]="'cr0wdWidgetContent-'+widget.widget_type.method+'-payBySquare'">
+                <div>{{'CAMPAIGNS.WIDGETS.MONETIZATION.PAYMENT_TYPES.PBS' | translate}}</div>
+            </label>
+        </div>
+        <div class="payment-option" data-id="1">
+            <div class="cft--monetization--bankTransfer">
+                <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="payment-title">{{'CAMPAIGNS.WIDGETS.MONETIZATION.IBAN' | translate}}</td>
+                        <td class="payment-value payment-iban"></td>
+                    </tr>
+                    <tr>
+                        <td class="payment-title">{{'CAMPAIGNS.WIDGETS.MONETIZATION.VAR_SYMBOL' | translate}}</td>
+                        <td class="payment-value payment-vs"></td>
+                    </tr>
+                    <tr>
+                        <td class="payment-title">{{'CAMPAIGNS.WIDGETS.MONETIZATION.AMOUNT' | translate}}</td>
+                        <td class="payment-value"><span class="payment-amount"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="bank-button__wrapper">
+
+                    <!--THIS COMMENTED CONTENT IS DYNAMICALLY REPLACED BASED ON RESPONSE FROM FIRST STEP USING FUNCTION-->
+                    <!--createBankButtons(monetizationEl, bankButtonsData) from monetization.ts-->
+
+                    <!--<div class="bank-button__container">-->
+                    <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk" onclick="parent.setBankButton(this)">-->
+                    <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="bank-button__container">-->
+                    <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                    <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="bank-button__container">-->
+                    <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                    <!--<img-->
+                    <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="bank-button__container">-->
+                    <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                    <!--<img-->
+                    <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="bank-button__container">-->
+                    <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                    <!--<img-->
+                    <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="bank-button__container">-->
+                    <!--<div class="bank-button bank-button__select" onclick="parent.setBankButton(this)">-->
+                    <!--<select name="bank">-->
+                    <!--<option disabled="" selected="">Iná banka</option>-->
+                    <!--<option data-bank-link="https://www.fio.sk/ib2/login">Fio banka</option>-->
+                    <!--<option data-bank-link="https://e-portal.jtbank.cz/index_sk.html">J&amp;T banka</option>-->
+                    <!--<option data-bank-link="https://banking.oberbank.sk/smartoffice/sk/logon.htm">Oberbank-->
+                    <!--</option>-->
+                    <!--<option data-bank-link="https://otpdirekt.otpbanka.sk/login/login_main_jelszoalapu.jsp">-->
+                    <!--OTP-->
+                    <!--</option>-->
+                    <!--<option data-bank-link="https://moja.postovabanka.sk/ib/logon.aspx">Poštová banka</option>-->
+                    <!--<option data-bank-link="https://ib.primabanka.sk/ib/default.aspx">Prima banka</option>-->
+                    <!--<option data-bank-link="https://ibank.privatbanka.sk/Extranet/pages/Login.aspx">Privat-->
+                    <!--banka-->
+                    <!--</option>-->
+                    <!--<option  data-bank-link="https://ibs.sberbank.sk/ebweb/">Sberbank</option>-->
+                    <!--<option  data-bank-link="https://sk.unicreditbanking.net/disp?r=57153.468477451475">-->
+                    <!--Unicredit-->
+                    <!--</option>-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="payment-option cft--monatization--hidden" data-id="2">
+            <img src="{{environment.assetsUrl}}images/payment/cardpay.jpg" [ngStyle]="cardPayLogoStyles()"
+                 class="payment-option--cardPay--oneTime cft--monatization--hidden"/>
+            <img src="{{environment.assetsUrl}}images/payment/comfortpay.png" [ngStyle]="cardPayLogoStyles()"
+                 class="payment-option--cardPay--monthly"/>
+        </div>
+        <div class="qr__wrapper payment-option cft--monatization--hidden" data-id="3">
+            <div class="pay-by-square__wrapper">
+            </div>
+        </div>
+        <!--payment option for bank transfer-->
+        <div class="cft--button-container payment-option" [ngStyle]="getButtonContainerStyles()" data-id="1"
+             *ngIf="ctaReplaced()">
+            <a type="submit" class="cft__cta__button cft--button--redirect"
+               [ngStyle]="getButtonStyles()" href="" target="_blank"
+               onclick="parent.donationInProgressColumn(this)"
+               [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text">
+            </a>
+        </div>
+        <!--payment option for card pay-->
+        <div class="cft--button-container payment-option cft--monatization--hidden" [ngStyle]="getButtonContainerStyles()" data-id="2"
+             *ngIf="ctaReplaced()">
+            <a type="submit" class="cft__cta__button cft--button--redirect cft--ctaButton--cardPay"
+               [ngStyle]="getButtonStyles()" href="" target="_blank"
+               onclick="parent.donationInProgress(this)">
+                    <span class="cft--ctaButton--cardPay--monthly">
+                        {{'CAMPAIGNS.WIDGETS.MONETIZATION.COMFORTPAY_BUTTON' | translate}}
+                        <span class="cft--ctaButton--cardPay--value"></span>
+                    </span>
+                <span class="cft--ctaButton--cardPay--oneTime cft--monatization--hidden">
+                        {{'CAMPAIGNS.WIDGETS.MONETIZATION.CARDPAY_BUTTON' | translate}}
+                    <span class="cft--ctaButton--cardPay--value"></span>
+                    </span>
+            </a>
+            <div style="text-align:center;margin: 30px auto">
+                <img src="{{environment.assetsUrl}}images/payment/cards.jpg">
+            </div>
+        </div>
+        <!--payment option for pay by square -->
+        <div class="cft--button-container payment-option cft--monatization--hidden"
+             [ngStyle]="getButtonContainerStyles()" data-id="3"
+             *ngIf="ctaReplaced()">
+            <div type="submit" class="cft__cta__button cft--button--redirect"
+                 [ngStyle]="getButtonStyles()" href="http://google.com" target="_blank"
+                 onclick="parent.donationInProgressColumn(this)"
+                 [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text">
+            </div>
+        </div>
+    </div>
+    <div class="cft--monetization--container-step-3  cft--monatization--hidden">
+        <div class="cft--monatization--title"
+             [ngStyle]="getMonetizationTitleStyles()"
+             *ngIf=widget.settings[deviceType].payment_settings.third_step.title.text>
+            <h1 [ngStyle]="getMonetizationTitleStyles()"
+                [innerHtml]="widget.settings[deviceType].payment_settings.third_step.title.text">
+            </h1>
+        </div>
+        <div class="payment-option__show"
+             [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type == paymentTypes.once.value}"
+             data-id="1">
+            <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="payment-title">{{'CAMPAIGNS.WIDGETS.MONETIZATION.IBAN' | translate}}</td>
+                    <td class="payment-value payment-iban"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">{{'CAMPAIGNS.WIDGETS.MONETIZATION.VAR_SYMBOL' | translate}}</td>
+                    <td class="payment-value payment-vs"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">{{'CAMPAIGNS.WIDGETS.MONETIZATION.AMOUNT' | translate}}</td>
+                    <td class="payment-value"><span class="payment-amount"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="bank-button__wrapper">
+
+                <!--THIS COMMENTED CONTENT IS DYNAMICALLY REPLACED BASED ON RESPONSE FROM FIRST STEP USING FUNCTION-->
+                <!--createBankButtons(monetizationEl, bankButtonsData) from monetization.ts-->
+
+
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk" onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button bank-button__select" onclick="parent.setBankButton(this)">-->
+                <!--<select name="bank">-->
+                <!--<option disabled="" selected="">Iná banka</option>-->
+                <!--<option data-bank-link="https://www.fio.sk/ib2/login">Fio banka</option>-->
+                <!--<option data-bank-link="https://e-portal.jtbank.cz/index_sk.html">J&amp;T banka</option>-->
+                <!--<option data-bank-link="https://banking.oberbank.sk/smartoffice/sk/logon.htm">Oberbank-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://otpdirekt.otpbanka.sk/login/login_main_jelszoalapu.jsp">-->
+                <!--OTP-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://moja.postovabanka.sk/ib/logon.aspx">Poštová banka</option>-->
+                <!--<option data-bank-link="https://ib.primabanka.sk/ib/default.aspx">Prima banka</option>-->
+                <!--<option data-bank-link="https://ibank.privatbanka.sk/Extranet/pages/Login.aspx">Privat-->
+                <!--banka-->
+                <!--</option>-->
+                <!--<option  data-bank-link="https://ibs.sberbank.sk/ebweb/">Sberbank</option>-->
+                <!--<option  data-bank-link="https://sk.unicreditbanking.net/disp?r=57153.468477451475">-->
+                <!--Unicredit-->
+                <!--</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="payment-option payment-option__show" data-id="2">
+            <img src="{{environment.assetsUrl}}images/payment/cardpay.jpg" [ngStyle]="cardPayLogoStyles()"
+                 class="payment-option--cardPay--oneTime cft--monatization--hidden"/>
+            <img src="{{environment.assetsUrl}}images/payment/comfortpay.png" [ngStyle]="cardPayLogoStyles()"
+                 class="payment-option--cardPay--monthly"/>
+        </div>
+        <div class="qr__wrapper payment-option__show"
+             [ngClass]="{'cft--monatization--hidden':widget.settings[deviceType].payment_settings.payment_method !== paymentMethods.payBySquare.value}"
+             data-id="3">
+            <div class="pay-by-square__wrapper">
+            </div>
+        </div>
+        <h4 style="text-align: center">
+            {{widget.settings[deviceType].payment_settings.third_step.cta.description}}
+        </h4>
+    </div>
+</div>

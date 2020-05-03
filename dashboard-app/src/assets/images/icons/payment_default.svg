@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <g id="payment_default" transform="translate(-40 -162)">
+    <rect id="safe_area" data-name="safe area" width="36" height="36" transform="translate(40 162)" fill="#f2f1ef" opacity="0"/>
+    <g id="icon">
+      <path id="Path_17" data-name="Path 17" d="M54.8,1.81C53.685.543,51.661,0,49.07,0H41.554A1.075,1.075,0,0,0,40.49.9L37.36,20.593a.642.642,0,0,0,.637.739h4.64L43.8,14l-.036.231a1.071,1.071,0,0,1,1.06-.9h2.2c4.333,0,7.724-1.746,8.715-6.8.03-.15.076-.438.076-.438A4.771,4.771,0,0,0,54.8,1.81Z" transform="translate(10.648 168)" fill="#8aa1b1"/>
+      <path id="Path_18" data-name="Path 18" d="M183.643,150.5c-1.077,4.972-4.513,7.6-9.966,7.6H171.7l-1.476,9.341h3.206a.939.939,0,0,0,.93-.789l.038-.2.738-4.636.048-.255a.938.938,0,0,1,.928-.789h.586c3.79,0,6.756-1.527,7.623-5.944A5.139,5.139,0,0,0,183.643,150.5Z" transform="translate(-115.998 24.557)" fill="#8aa1b1"/>
+    </g>
+  </g>
+</svg>

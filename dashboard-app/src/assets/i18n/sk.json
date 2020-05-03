@@ -1,0 +1,39 @@
+{
+  "CAMPAIGNS": {
+    "WIDGETS": {
+      "MONETIZATION": {
+        "AUTOMATIC_REFRESH": "(automatické obnovovanie)",
+        "ONE_TIME_SUPPORT": "Jednorazová podpora",
+        "STEP": "Krok <span>{{value1}}</span> z {{value2}}",
+        "MONTHLY": "mesačne",
+        "ONCE": "jednorazovo",
+        "MONTHLY_DONATION": "Pravidelná podpora",
+        "FOREIGN_DONATION": "Podpora zo zahraničia",
+        "IBAN": "IBAN",
+        "VAR_SYMBOL": "Var. symbol",
+        "AMOUNT": "Suma",
+        "EMAIL": "Váš email",
+        "CUSTOM": "iná suma",
+        "PAYMENT_TYPES": {
+          "BANK_TRANSFER": "Platba na účet",
+          "PBS": "Pay by square",
+          "CARD": "Platobná karta"
+        },
+        "CARDPAY_BUTTON": "Zaplatiť ",
+        "COMFORTPAY_BUTTON": "Mesačný príspevok ",
+        "HOME_PAYMENT": "Domáca platba",
+        "FOREIGN_PAYMENT": "Zahraničná platba",
+        "ERRORS": {
+          "AGREE_TERMS": "Pre pokračovanie musíte súhlasiť so spracovaním osobných údajov",
+          "EMAIL_WRONG_FORMAT": "Zadaný email je v nesprávnom tvare."
+        },
+        "GO_TO_MYACCOUNT": "Prejdite do Vášho účtu",
+        "REGISTER": "Registrovať",
+        "RECAPITULATION": "Rekapitulácia platobného príkazu",
+        "FREQUENCY": "Frekvencia",
+        "PAYMENT_METHOD": "Platobná metóda",
+        "MIN_PAYMENT_ERROR": "Podpora musí byť vo výške min. 1 €"
+      }
+    }
+  }
+}

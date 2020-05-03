@@ -1,0 +1,61 @@
+<app-navbar [navItems]="navItems"></app-navbar>
+<div class="import">
+    <app-alert
+        [(open)]="alertOpen"
+        [message]="alertMessage"
+        [type]="alertType"></app-alert>
+    <div class="importPayments">
+        <p>
+            Please use this button to import donors (export from database).
+        </p>
+        <app-upload-csv
+            [loading]="loading"
+            (changeFileEmitter)="processFileDonors($event)"></app-upload-csv>
+    </div>
+
+</div>
+
+<div class="import">
+    <app-alert
+        [(open)]="alertOpenSubscribers"
+        [message]="alertMessageSubscribers"
+        [type]="alertTypeSubscribers"></app-alert>
+    <div class="importPayments">
+        <p>
+            Please use this button to import subscribers (export from database).
+        </p>
+        <app-upload-csv
+            [loading]="loadingSubscribers"
+            (changeFileEmitter)="processFileSubscribers($event)"></app-upload-csv>
+    </div>
+</div>
+
+<div class="import">
+    <app-alert
+        [(open)]="alertOpenIbans"
+        [message]="alertMessageIbans"
+        [type]="alertTypeIbans"></app-alert>
+    <div class="importPayments">
+        <p>
+            Please use this button to import ibans with users.
+        </p>
+        <app-upload-csv
+            [loading]="loadingIbans"
+            (changeFileEmitter)="processFileIbans($event)"></app-upload-csv>
+    </div>
+</div>
+
+<div class="import">
+    <app-alert
+        [(open)]="alertOpenSubscribersSvetKrestanstva"
+        [message]="alertMessageSubscribersSvetKrestanstva"
+        [type]="alertTypeSubscribersSvetKrestanstva"></app-alert>
+    <div class="importPayments">
+        <p>
+            Please use this button to import subscribers from 'svet krestanstva' (export from database).
+        </p>
+        <app-upload-csv
+            [loading]="loadingSubscribersSvetKrestanstva"
+            (changeFileEmitter)="processFileSubscribersSvetKrestanstva($event)"></app-upload-csv>
+    </div>
+</div>

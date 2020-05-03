@@ -1,0 +1,8 @@
+<svg id="Group_34" data-name="Group 34" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <rect id="safe_area" data-name="safe area" width="24" height="24" fill="#fff" opacity="0"/>
+  <g id="Rectangle_135" data-name="Rectangle 135" transform="translate(4 4)" fill="none" stroke="#fff" stroke-width="2">
+    <rect width="16" height="16" rx="4" stroke="none"/>
+    <rect x="1" y="1" width="14" height="14" rx="3" fill="none"/>
+  </g>
+  <path id="kriz" d="M6,16V10H0V6H6V0h4V6h6v4H10v6Z" transform="translate(4 3.999)" fill="transparent"/>
+</svg>

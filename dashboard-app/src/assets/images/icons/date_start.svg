@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f2f1ef;
+        opacity: 0;
+      }
+
+      .cls-2 {
+        fill: #8aa1b1;
+      }
+    </style>
+  </defs>
+  <g id="date_start" transform="translate(-1140 -215)">
+    <rect id="safearea" class="cls-1" width="24" height="24" transform="translate(1140 215)"/>
+    <g id="icon" transform="translate(1119.5 219)">
+      <path id="Path_32" data-name="Path 32" class="cls-2" d="M38.3,1.6h-.8V0H35.9V1.6H29.5V0H27.9V1.6h-.8a1.6,1.6,0,0,0-1.6,1.6V14.4A1.6,1.6,0,0,0,27.1,16H38.3a1.6,1.6,0,0,0,1.6-1.6V3.2A1.6,1.6,0,0,0,38.3,1.6Zm0,12.8H27.1V5.6H38.3Z"/>
+      <rect id="Rectangle_57" data-name="Rectangle 57" class="cls-2" width="4.267" height="4.267" transform="translate(28.617 7.039)"/>
+    </g>
+  </g>
+</svg>

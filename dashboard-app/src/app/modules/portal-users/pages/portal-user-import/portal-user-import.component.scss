@@ -1,0 +1,10 @@
+@import 'variables';
+@import 'mixins';
+.import {
+    background: $white;
+    @include boxShadow(0 0 30px rgba($azure, .3));
+    max-width: 700px;
+    margin: 70px auto 0;
+    padding: 30px;
+    text-align: center;
+}

@@ -1,0 +1,303 @@
+<link [href]="'https://fonts.googleapis.com/css?family=' + fontFamilyPreview | safe" rel="stylesheet">
+<div class="cft--monetization--container" [ngStyle]="getMonetizationContainerStyle()" id="cft-monetization__container"
+     *ngIf="widget.settings[deviceType].payment_settings.active">
+    <div class="cft--monetization--container-step-1">
+        <div class="cft--monatization--donation-button-wrapper cft--monatization--only-monthly"
+             [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value}"
+             [ngStyle]="getRowStyle()"
+             *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options">
+            <div class="cft--monatization--donation-button-container cft--monatization--donation-button--monthly"
+                 [ngClass]="{'active': widget.settings[deviceType].payment_settings.default_price.monthly_value == option.value}"
+                 [ngStyle]="getMonatizationDonationButtonStyle('monthly_prices')">
+                <div class="cft--monatization--donation-button" [ngStyle]="getDonationButtonStyle()"
+                     onclick="parent.setActiveButtonMonthly(this)">
+                    <input type="hidden" value="{{option.value}}">
+                    <div class="cft--monatization--donation-button-price" [ngStyle]="getDonationButtonPriceStyle()">
+                        <div class="cft--monatization--donation-button-price__info"
+                             [ngStyle]="getButtonPriceInfoStyle()">
+                            <div class="cft--monatization--donation-button-price__info__title"
+                                 [ngStyle]="getButtonPriceInfoTitleStyle()">
+                                <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <path d="M8 0C3.584 0 0 3.584 0 8C0 12.416 3.584 16 8 16C12.416 16 16 12.416 16 8C16 3.584 12.416 0 8 0L8 0Z" id="path_1" />
+                                        <clipPath id="clip_1">
+                                            <use xlink:href="#path_1" />
+                                        </clipPath>
+                                    </defs>
+                                    <g id="Path">
+                                        <use stroke="none" fill="#FFFFFF" xlink:href="#path_1" />
+                                        <g clip-path="url(#clip_1)">
+                                            <use xlink:href="#path_1" fill="none" stroke="#158EEA" stroke-width="2" />
+                                        </g>
+                                    </g>
+                                    <path class="only-active" d="M4 0C1.792 0 0 1.792 0 4C0 6.208 1.792 8 4 8C6.208 8 8 6.208 8 4C8 1.792 6.208 0 4 0L4 0Z" transform="translate(4 4)" id="Path" fill="#158EEA" stroke="none" />
+                                </svg>
+                                <div class="cft--monatization--donation-button-price__info__title__text"
+                                     [ngStyle]="getButtonPriceInfoTitleTextStyle()" [innerHtml]="option.title"></div>
+                            </div>
+                            <div class="cft--monatization--donation-button-price__info__benefits"
+                                 [ngStyle]="getButtonPriceInfoBenefitsStyle()"
+                                 [innerHtml]="option.description">
+                            </div>
+                        </div>
+                        <div class="cft--monatization--donation-button-price__price" [ngStyle]="getButtonPriceStyle()">
+                            <div class="cft--monatization--donation-button-price__price__value"
+                                 [ngStyle]="getButtonPriceValueStyle()">
+                                {{option.value}} {{option.currency || '€'}}
+                            </div>
+                            <div class="cft--monatization--donation-button-price__price__description"
+                                 [ngStyle]="getButtonPriceDescriptionStyle()">
+                                {{option.currency || 'monthly'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form onsubmit="return parent.handleSubmit(this, event)" class="cft--monatization--form--donate" action="#"
+              method="post" novalidate>
+            <div class="cft--monatization--form--donate--terms" [ngStyle]="getFormGroupStyle()">
+                <input id="cft--monatization--form--donate--terms" type="checkbox" name="terms_agreed" value="0"
+                       required>
+                <label style="display: inline; padding-left: 6px;" for="cft--monatization--form--donate--terms"
+                       [innerHtml]="widget.settings[deviceType].payment_settings.terms.text"></label>
+                <label id="cft--monatization--form--donate--terms-error"
+                       [ngStyle]="getErrorStyle()"
+                       class="error"
+                       for="cft--monatization--form--donate--terms"> Please agree with terms and conditions</label>
+            </div>
+            <div class="cft--monatization--form-group--donate" [ngStyle]="getFormGroupStyle()">
+                <label for="cft--monatization--form--donate--email" [ngStyle]="getLabelStyle()">Your
+                    e-mail:</label>
+                <input class="cft--monatization--form--donate--email" type="email"
+                       id="cft--monatization--form--donate--email" [ngStyle]="getEmailDonateStyle()"
+                       name="email" required>
+                <label id="cft--monatization--form-email-error" class="error" [ngStyle]="getErrorStyle()"
+                       for="cft--monatization--form--donate--email">Wrong e-mail</label>
+            </div>
+            <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()" *ngIf="ctaReplaced()">
+                <button type="submit" class="cft__cta__button"
+                        [ngStyle]="getButtonStyles()">
+                    {{widget.settings[deviceType].cta.text}}
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="cft--monetization--container-step-2  cft--monatization--hidden">
+        <div class="cft--monatization--title"
+             [ngStyle]="getMonetizationTitleStyles()"
+             *ngIf=widget.settings[deviceType].payment_settings.second_step.title.text>
+            <h1 [ngStyle]="getMonetizationTitleStyles()"
+                [innerHtml]="widget.settings[deviceType].payment_settings.second_step.title.text">
+            </h1>
+        </div>
+        <div class="payment-option__show"
+             [ngClass]="{'cft--monatization--hidden':widget.settings[deviceType].payment_settings.payment_method === paymentMethods.payBySquare.value}"
+             data-id="1">
+            <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="payment-title">IBAN</td>
+                    <td class="payment-value payment-iban"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Var. symbol</td>
+                    <td class="payment-value payment-vs"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Amount</td>
+                    <td class="payment-value"><span class="payment-amount"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="bank-button__wrapper">
+
+                <!--THIS COMMENTED CONTENT IS DYNAMICALLY REPLACED BASED ON RESPONSE FROM FIRST STEP USING FUNCTION-->
+                <!--createBankButtons(monetizationEl, bankButtonsData) from monetization.ts-->
+
+
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk" onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button bank-button__select" onclick="parent.setBankButton(this)">-->
+                <!--<select name="bank">-->
+                <!--<option disabled="" selected="">Iná banka</option>-->
+                <!--<option data-bank-link="https://www.fio.sk/ib2/login">Fio banka</option>-->
+                <!--<option data-bank-link="https://e-portal.jtbank.cz/index_sk.html">J&amp;T banka</option>-->
+                <!--<option data-bank-link="https://banking.oberbank.sk/smartoffice/sk/logon.htm">Oberbank-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://otpdirekt.otpbanka.sk/login/login_main_jelszoalapu.jsp">-->
+                <!--OTP-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://moja.postovabanka.sk/ib/logon.aspx">Poštová banka</option>-->
+                <!--<option data-bank-link="https://ib.primabanka.sk/ib/default.aspx">Prima banka</option>-->
+                <!--<option data-bank-link="https://ibank.privatbanka.sk/Extranet/pages/Login.aspx">Privat-->
+                <!--banka-->
+                <!--</option>-->
+                <!--<option  data-bank-link="https://ibs.sberbank.sk/ebweb/">Sberbank</option>-->
+                <!--<option  data-bank-link="https://sk.unicreditbanking.net/disp?r=57153.468477451475">-->
+                <!--Unicredit-->
+                <!--</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="qr__wrapper payment-option__show "
+             [ngClass]="{'cft--monatization--hidden':widget.settings[deviceType].payment_settings.payment_method !== paymentMethods.payBySquare.value}"
+             data-id="3">
+            <div class="pay-by-square__wrapper">
+            </div>
+        </div>
+        <!--payment option for bank transfer-->
+        <div class="cft--button-container payment-option__show" [ngStyle]="getButtonContainerStyles()" data-id="1"
+             *ngIf="ctaReplaced()">
+            <a type="submit" class="cft__cta__button cft--button--redirect"
+               [ngStyle]="getButtonStyles()" href="" target="_blank"
+               onclick="parent.donationInProgress(this)"
+               [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text">
+            </a>
+        </div>
+        <!--payment option for pay by square -->
+        <div class="cft--button-container payment-option__show cft--monatization--hidden"
+             [ngStyle]="getButtonContainerStyles()" data-id="3"
+             *ngIf="ctaReplaced()">
+            <div type="submit" class="cft__cta__button cft--button--redirect"
+                 [ngStyle]="getButtonStyles()" href="http://google.com" target="_blank"
+                 onclick="parent.donationInProgress(this)"
+                 [innerHtml]="widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text">
+            </div>
+        </div>
+    </div>
+    <div class="cft--monetization--container-step-3  cft--monatization--hidden">
+        <div class="cft--monatization--title"
+             [ngStyle]="getMonetizationTitleStyles()"
+             *ngIf=widget.settings[deviceType].payment_settings.third_step.title.text>
+            <h1 [ngStyle]="getMonetizationTitleStyles()"
+                [innerHtml]="widget.settings[deviceType].payment_settings.third_step.title.text">
+            </h1>
+        </div>
+        <div class="payment-option__show"
+             [ngClass]="{'cft--monatization--hidden': widget.settings[deviceType].payment_settings.payment_type == paymentTypes.once.value}"
+             data-id="1">
+            <table class="payment-table" cellpadding="0" cellspacing="0" border="0">
+                <tbody>
+                <tr>
+                    <td class="payment-title">IBAN</td>
+                    <td class="payment-value payment-iban"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Var. symbol</td>
+                    <td class="payment-value payment-vs"></td>
+                </tr>
+                <tr>
+                    <td class="payment-title">Amount</td>
+                    <td class="payment-value"><span class="payment-amount"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="bank-button__wrapper">
+
+                <!--THIS COMMENTED CONTENT IS DYNAMICALLY REPLACED BASED ON RESPONSE FROM FIRST STEP USING FUNCTION-->
+                <!--createBankButtons(monetizationEl, bankButtonsData) from monetization.ts-->
+
+
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk" onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button" data-bank-link="http://tatrabanka.sk"  onclick="parent.setBankButton(this)">-->
+                <!--<img-->
+                <!--src="http://localhost/crowdfundingToolbox/backend/storage/public/uploads/Cz3xx-tatra-banka.jpg">-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="bank-button__container">-->
+                <!--<div class="bank-button bank-button__select" onclick="parent.setBankButton(this)">-->
+                <!--<select name="bank">-->
+                <!--<option disabled="" selected="">Iná banka</option>-->
+                <!--<option data-bank-link="https://www.fio.sk/ib2/login">Fio banka</option>-->
+                <!--<option data-bank-link="https://e-portal.jtbank.cz/index_sk.html">J&amp;T banka</option>-->
+                <!--<option data-bank-link="https://banking.oberbank.sk/smartoffice/sk/logon.htm">Oberbank-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://otpdirekt.otpbanka.sk/login/login_main_jelszoalapu.jsp">-->
+                <!--OTP-->
+                <!--</option>-->
+                <!--<option data-bank-link="https://moja.postovabanka.sk/ib/logon.aspx">Poštová banka</option>-->
+                <!--<option data-bank-link="https://ib.primabanka.sk/ib/default.aspx">Prima banka</option>-->
+                <!--<option data-bank-link="https://ibank.privatbanka.sk/Extranet/pages/Login.aspx">Privat-->
+                <!--banka-->
+                <!--</option>-->
+                <!--<option  data-bank-link="https://ibs.sberbank.sk/ebweb/">Sberbank</option>-->
+                <!--<option  data-bank-link="https://sk.unicreditbanking.net/disp?r=57153.468477451475">-->
+                <!--Unicredit-->
+                <!--</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="qr__wrapper payment-option__show"
+             [ngClass]="{'cft--monatization--hidden':widget.settings[deviceType].payment_settings.payment_method !== paymentMethods.payBySquare.value}"
+             data-id="3">
+            <div class="pay-by-square__wrapper">
+            </div>
+        </div>
+        <h4 style="text-align: center">
+            {{widget.settings[deviceType].payment_settings.third_step.cta.description}}
+        </h4>
+        <div class="cft--button-container" [ngStyle]="getButtonContainerStyles()"
+             *ngIf="ctaReplaced()">
+            <a type="submit" class="cft__cta__button cft--button--redirect cft__redirect-to-my-account"
+               [ngStyle]="getButtonStyles()" target="_blank"
+               [innerHtml]="widget.settings[deviceType].payment_settings.third_step.cta.text">
+            </a>
+        </div>
+    </div>
+</div>

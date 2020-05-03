@@ -1,0 +1,69 @@
+<div class="creditCard">
+    <h2>Credit card</h2>
+    <hr>
+    <app-alert
+            [(open)]="alertOpen"
+            [type]="alertType"
+            [message]="alertMessage"></app-alert>
+    <div class="text-center" *ngIf="loading">
+        <img src="../assets/images/loading.svg"/>
+    </div>
+    <form [formGroup]="paymentForm" (submit)="storeCreditCardDetails()" *ngIf="!loading">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6">
+                <h4>Pravidelná podpora</h4>
+                <hr>
+                <div class="creditCard--image">
+                    <img src="../assets/images/payment/comfortpay.png">
+                </div>
+                <i>Platobná brána ComfortPay je doplnkom k platobnej bráne CardPay od Tatra Banky. Umožní Vám
+                    automaticky inkasovať platby kartou od Vašich zákazníkov, či už s pravidelnou alebo nepravidelnou
+                    frekvenciou. Viac informácií o systéme CardPay a ComfortPay nájdete na stránkach Tatra banky.</i>
+                <p>Všetky bezpečnostné informácie sú uvedené a zabezpečené zdrojovým kódom. Na tomto mieste je možné len
+                    nastaviť si notifikačný email po vykonanej platbe.</p>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="emailNotifyMonthly">
+                            Emailová adresa notifikácii:
+                        </label>
+                        <input
+                                type="email"
+                                formControlName="emailNotifyMonthly"
+                                data-lpignore="true"
+                                [value]="creditCardData.monthlyPayment?.emailNotify"
+                                id="emailNotifyMonthly"
+                                required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 border-left">
+                <h4>Jednorazová podpora</h4>
+                <hr>
+                <div class="creditCard--image">
+                    <img src="../assets/images/payment/cardpay.jpg">
+                </div>
+                <i>Platobná brána CardPay od Tatra Banky umožní Vašim zákazníkom platiť za nakúpený tovar prostredníctvom
+                    platobných kariet. Platobná brána bez doplnku ComfortPay podporuje iba jednorazové platby.</i>
+                <p>Všetky bezpečnostné informácie sú uvedené a zabezpečené zdrojovým kódom. Na tomto mieste je možné len
+                    nastaviť si notifikačný email po vykonanej platbe.</p>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="emailNotifyOneTime">
+                            Emailová adresa notifikácii:
+                        </label>
+                        <input
+                                type="email"
+                                formControlName="emailNotifyOneTime"
+                                data-lpignore="true"
+                                [value]="creditCardData.oneTimePayment?.emailNotify"
+                                id="emailNotifyOneTime"
+                                required/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit">
+            Odoslať
+        </button>
+    </form>
+</div>

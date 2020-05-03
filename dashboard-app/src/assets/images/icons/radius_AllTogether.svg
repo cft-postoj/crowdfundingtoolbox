@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="radius_AllTogether" transform="translate(-1140 -354)">
+    <rect id="safe_area" data-name="safe area" width="24" height="24" transform="translate(1140 354)" fill="##F4F7F9" opacity="0"/>
+    <g id="base" transform="translate(1144 358)" fill="##F4F7F9" stroke="none" stroke-width="2">
+      <rect width="16" height="16" rx="4" stroke="none"/>
+      <rect x="1" y="1" width="14" height="14" rx="3" fill="#F4F7F9"/>
+    </g>
+    <g id="active" transform="translate(1144 358)" fill="#F4F7F9" stroke="#0074e9" stroke-width="2">
+      <rect width="16" height="16" rx="4" stroke="none"/>
+      <rect x="1" y="1" width="14" height="14" rx="3" fill="#F4F7F9"/>
+    </g>
+    <path id="kriz" d="M6,16V10H0V6H6V0h4V6h6v4H10v6Z" transform="translate(1144 357.999)" fill="#F4F7F9"/>
+  </g>
+</svg>

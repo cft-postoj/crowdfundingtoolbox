@@ -1,0 +1,184 @@
+<div [class]="(extraClass !== null) ? extraClass + ' container-fluid' : 'container-fluid'">
+    <div class="row">
+        <div class="col">
+            <h2>{{title}}</h2>
+        </div>
+        <ng-container *ngIf="showDates">
+            <div class="col-6 d-flex align-items-center">
+                dates range:
+                <app-datepicker
+                        [selected]="statsDateSelected"
+                        (dateChange)="momentDateChange($event)"
+                        [maxMomentDate]="nowMoment"
+                        [type]="'start'">
+                </app-datepicker>
+            </div>
+        </ng-container>
+        <div class="col-3 d-flex align-items-center">
+            <ngx-select-dropdown [(ngModel)]="model.columns"
+                                 [multiple]="true" [config]="config"
+                                 [options]="availableColumns"></ngx-select-dropdown>
+        </div>
+    </div>
+    <app-alert
+            [(open)]="alertOpen"
+            [message]="alertMessage"
+            [type]="alertType"></app-alert>
+    <div class="row">
+        <div class="col">
+            <table class="list-items list-items--orderable">
+                <thead>
+                <tr>
+                    <th app-table-header class="id" *ngIf="tableService.activeColumn(model,'order')"
+                        [column]="tableService.getColumnByValueName(model,'order')"
+                        [(model)]="model">#
+                    </th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'payment')"
+                        [column]="tableService.getColumnByValueName(model,'payment')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'status')"
+                        [column]="tableService.getColumnByValueName(model,'status')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()">
+                    </th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'transaction_id')"
+                        [column]="tableService.getColumnByValueName(model,'transaction_id')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header
+                        *ngIf="tableService.activeColumn(model,'full_name')"
+                        [column]="tableService.getColumnByValueName(model,'full_name')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'email')"
+                        [column]="tableService.getColumnByValueName(model,'email')" [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'user_id')"
+                        [column]="tableService.getColumnByValueName(model,'user_id')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'iban')"
+                        [column]="tableService.getColumnByValueName(model,'iban')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'variable_symbol')"
+                        [column]="tableService.getColumnByValueName(model,'variable_symbol')" [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'amount')"
+                        [column]="tableService.getColumnByValueName(model,'amount')" [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'is_monthly_donation')"
+                        [column]="tableService.getColumnByValueName(model,'is_monthly_donation')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'created_at')"
+                        [column]="tableService.getColumnByValueName(model,'created_at')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'transaction_date')"
+                        [column]="tableService.getColumnByValueName(model,'transaction_date')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'payment_method_name')"
+                        [column]="tableService.getColumnByValueName(model,'payment_method_name')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'campaign_name')"
+                        [column]="tableService.getColumnByValueName(model,'campaign_name')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th app-table-header *ngIf="tableService.activeColumn(model,'created_by')"
+                        [column]="tableService.getColumnByValueName(model,'created_by')"
+                        [(model)]="model"
+                        (modelChange)="instantFilterDonations()"
+                        (modelFilterChange)="lazyFilterDonations()"></th>
+                    <th *ngIf="isListOfAllDonations" class="delete"></th>
+                </tr>
+                </thead>
+                <tbody *ngIf="!loading">
+                <tr *ngFor="let donation of donations; let i = index" class="list-items--item"
+                     [routerLink]="['/'+ routing.DONATIONS_FULL_PATH, donation.id]">
+                    <td *ngIf="tableService.activeColumn(model,'order')">{{i + 1 + (paginatorData.page * paginatorData.rows)}}</td>
+                    <td *ngIf="tableService.activeColumn(model,'payment')">
+                        <app-status [active]="donation.payment_id" [titles]="['paired with payment','not paired with payment']"></app-status>
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'status')" [title]="donation.status">
+                        {{donation.status}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'transaction_id')"
+                        [title]="donation.transaction_id">{{donation.transaction_id || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'full_name')"
+                        class="pointer"
+                        [routerLink]="['/'+ routing.PORTAL_USERS_FULL_PATH, donation.user_id]"
+                        [title]="(donation.first_name || '---') +' '+ (donation.last_name || '')">
+                        {{donation.first_name || '---'}}
+                        {{donation.last_name}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'email')"
+                        [title]="donation.email">{{donation.email || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'user_id')"> {{donation.user_id || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'iban')" [title]="donation.iban">
+                        {{donation.iban || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'variable_symbol')">
+                        {{donation.variable_symbol || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'amount')">{{donation.amount | currency: 'EUR': 'symbol':
+                        '1.0-2' :'sk'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'is_monthly_donation')">{{donation.is_monthly_donation |
+                        monthly}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'created_at')"
+                        [title]="donation.created_at | safariDate | date:'dd.MM.yyyy HH:mm:ss'">
+                        {{donation.created_at | safariDate | date:'dd.MM.yyyy'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'transaction_date')"
+                        [title]="donation.transaction_date | safariDate | date:'dd.MM.yyyy HH:mm:ss'">
+                        {{(donation.transaction_date | safariDate | date:'dd.MM.yyyy') || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'payment_method_name')">
+                        {{donation.payment_method_name || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'campaign_name')"
+                        [title]="donation.campaign_name || '---'">{{donation.campaign_name || '---'}}
+                    </td>
+                    <td *ngIf="tableService.activeColumn(model,'created_by')"
+                        [title]="donation.created_by">{{donation.created_by || '---'}}
+                    </td>
+                    <td *ngIf="isListOfAllDonations" class="delete">
+                        <img src="../../../../../assets/images/icons/delete.svg"
+                             (click)="deleteDonation($event, donation.id, donation.email);"
+                             title="Delete donation"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 *ngIf="!loading && donations.length===0" class="text-center"> No donations found for choosed dates range. </h4>
+            <app-loading [isLoading]="loading"></app-loading>
+        </div>
+    </div>
+    <p-paginator *ngIf="!limit" [showCurrentPageReport]="true" [rows]="paginatorData.rows" [rowsPerPageOptions]="[10,20,50,100,200]"
+                 [totalRecords]="donationsCount"
+                 (onPageChange)="changePage($event)" #paginator>
+    </p-paginator>
+</div>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <g id="center_active" transform="translate(-1188 -450)">
+    <rect id="saferena" width="36" height="36" transform="translate(1188 450)" fill="#f2f1ef" opacity="0"/>
+    <g id="icon" transform="translate(1194 426)">
+      <rect id="Rectangle_95" data-name="Rectangle 95" width="20" height="3" rx="1.5" transform="translate(2 33)" fill="#8aa1b1"/>
+      <rect id="Rectangle_96" data-name="Rectangle 96" width="6" height="3" rx="1.5" transform="translate(9 49)" fill="#8aa1b1"/>
+      <rect id="Rectangle_97" data-name="Rectangle 97" width="12" height="3" rx="1.5" transform="translate(6 41)" fill="#8aa1b1"/>
+    </g>
+  </g>
+</svg>
