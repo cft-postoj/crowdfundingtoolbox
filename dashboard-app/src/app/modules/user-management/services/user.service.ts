@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
-import {User} from "../models";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'environments/environment';
+import {User} from '../models';
 import {Observable} from 'rxjs';
 import {UserDetail} from '../models/userDetail';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class UserService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     public getUserDetail(): Observable<any> {
         return this.http.get(`${environment.backOfficeUrl}${environment.userDetail}`);
@@ -47,4 +48,10 @@ export class UserService {
     delete(id: number) {
         return this.http.delete(`${environment.backOfficeUrl}/user/${id}`);
     }
+
+    public impersonate(portalUserId: number): Observable<{ token: string }> {
+        return this.http.post<{ token: string }>(`${environment.backOfficeUrl}${environment.portalUsersUrl}/${portalUserId}/impersonate`,
+            {});
+    }
+
 }

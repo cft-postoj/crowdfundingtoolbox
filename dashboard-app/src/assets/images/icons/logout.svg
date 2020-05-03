@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
-  <g id="logout" transform="translate(-244 -1022)">
-    <rect id="safe_area" data-name="safe area" width="36" height="36" transform="translate(244 1022)" fill="#f2f1ef" opacity="0"/>
-    <g id="icon">
-      <path id="Path_1" data-name="Path 1" d="M9.335,20a9.334,9.334,0,0,1-6.2-16.309A1.333,1.333,0,0,1,4.9,5.686a6.664,6.664,0,1,0,8.86,0,1.333,1.333,0,1,1,1.772-1.992A9.334,9.334,0,0,1,9.335,20ZM10.668,8V1.332A1.332,1.332,0,1,0,8,1.332V8a1.332,1.332,0,0,0,2.665,0Z" transform="translate(252.917 1030.449)" fill="#fff"/>
-    </g>
-  </g>
-</svg>

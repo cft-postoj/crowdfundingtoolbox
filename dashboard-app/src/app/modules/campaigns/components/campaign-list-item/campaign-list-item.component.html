@@ -14,10 +14,16 @@
         Show actual campaign targeting
     </td>
     <td>
-        {{getCampaignsVisits(item.widget)}}
+        {{item.priority}}
     </td>
     <td>
-        {{getCampaignFunds(item.widget)}} €
+        {{item.campaign_show_count}}
+    </td>
+    <td>
+        {{item.donation_direct_sum || 0 | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
+    </td>
+    <td>
+        {{item.donation_referral_sum || 0 | currency: 'EUR': 'symbol': '1.0-2' :'sk'}}
     </td>
     <td>
         {{helperService.formatDate(item.promote.start_date_value, 'DD.MM.YYYY')}}

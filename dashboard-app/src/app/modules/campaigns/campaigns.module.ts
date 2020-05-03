@@ -10,7 +10,6 @@ import {
     CampaignListItemComponent,
     CampaignSettingsComponent,
     CampaignStatisticsComponent,
-    CampaignStatusComponent,
     PreviewComponent,
     WidgetEditComponent
 } from './components';
@@ -22,10 +21,15 @@ import {CampaignNotFoundComponent} from './pages/campaign-not-found/campaign-not
 import {CampaignsStatsComponent} from './pages/campaigns-stats/campaigns-stats.component';
 import {TargetModalComponent} from './components/target-modal/target-modal.component';
 import {SignedUsersListComponent} from './components/signed-users-list/signed-users-list.component';
+import {WidgetCardComponent} from './components/widget-card/widget-card.component';
+import { PreviewMonetizationRowComponent } from './components/preview-monetization-row/preview-monetization-row.component';
+import { PreviewMonetizationColumnComponent } from './components/preview-monetization-column/preview-monetization-column.component';
+import {TranslateModule} from '@ngx-translate/core';
+import { WidgetEditAdditionalTextComponent } from './components/widget-edit-components/widget-edit-additional-text/widget-edit-additional-text.component';
 
 @NgModule({
     declarations: [
-        CampaignStatusComponent,
+        WidgetCardComponent,
         CampaignListComponent,
         CampaignListItemComponent,
         CampaignEditComponent,
@@ -39,6 +43,9 @@ import {SignedUsersListComponent} from './components/signed-users-list/signed-us
         CampaignsStatsComponent,
         TargetModalComponent,
         SignedUsersListComponent,
+        PreviewMonetizationRowComponent,
+        PreviewMonetizationColumnComponent,
+        WidgetEditAdditionalTextComponent,
     ],
 
     imports: [
@@ -52,9 +59,10 @@ import {SignedUsersListComponent} from './components/signed-users-list/signed-us
         NgCircleProgressModule.forRoot({
             space: -5
         }),
+        TranslateModule,
     ],
     exports: [
-        CampaignStatusComponent,
+        WidgetCardComponent,
         CampaignListComponent,
         CampaignEditComponent,
         CampaignSettingsComponent,

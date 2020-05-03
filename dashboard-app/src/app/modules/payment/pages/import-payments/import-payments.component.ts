@@ -11,9 +11,12 @@ import {PaymentService} from '../../services/payment.service';
 export class ImportPaymentsComponent implements OnInit {
 
     public loading: boolean = false;
+    public loadingPairing: boolean = false;
     public alertOpen: boolean = false;
     public alertMessage: string = '';
     public alertType: string = '';
+    private queue: any[] = [];
+    public alerts: { alertOpen, alertMessage, alertType }[] = [];
 
     constructor(private _modalService: NgbModal, private paymentService: PaymentService) {
     }
@@ -22,51 +25,131 @@ export class ImportPaymentsComponent implements OnInit {
 
     }
 
-    public processFile(file) {
-        if (file !== null) {
-            this.paymentService.checkUploadedFileType(file).subscribe((data) => {
-                console.log(data);
-            }).unsubscribe();
-            this.showModal(file.name, file);
+    public processFiles(files) {
+        if (files !== null && files.length) {
+            this.showModal(files);
         }
     }
 
-    /*
-    TODO: double check (if payment with same data is more times) and if is in payment table
-     */
+    public processFilePairing(files) {
+        if (files !== null && files.length) {
+            this.showModalPairing(files);
+        }
+    }
 
-    private showModal(documentName, file) {
+    private showModal(files: FileList) {
+        console.log(files);
+        var filesNames = '';
+        this.queue = [];
+        for (let i = 0; i < files.length; i++) {
+            this.queue.push(files.item(i));
+            filesNames += files.item(i).name;
+            filesNames += i + 1 !== files.length ? ', ' : '.';
+        }
         const modalRef = this._modalService.open(ModalComponent); // if user is admin
-        modalRef.componentInstance.title = 'Import payments from document <b>' + documentName + '</b>';
+        modalRef.componentInstance.title = 'Import payments from document <b>' + filesNames + '</b>';
         modalRef.componentInstance.text = 'Are you sure you want to import all payments from this document? ' +
             'System\'ll process only unique payments (all payments which are already in system will be skiped. ' +
             'Do you want to continue';
         modalRef.componentInstance.loading = false;
         modalRef.componentInstance.duplicate = 'donation-assignment';
 
-        modalRef.result.then((data) => {
-                this.loading = true;
-                this.paymentService.importPayments(file).subscribe((d) => {
-                    console.log(d)
-                    if (d.type === 1 && d.loaded && d.total){
-                        console.log("gaju");
-                        console.log(d.total)
-                    }
-                    this.loading = false;
-                    this.alertMessage = d.message;
-                    this.alertType = 'success';
-                    this.alertOpen = true;
-                }, (error) => {
-                    this.loading = false;
-                    this.alertMessage = (error.error !== null) ? error.error.error : 'During the payments import there was an unknown error. ' +
-                        'Please, try it later or contact administrator.';
-                    this.alertType = 'danger';
-                    this.alertOpen = true;
-                });
-            }, (error) => {
+        modalRef.result.then(
+            (data) => {
+                this.handleImportPayment(files[0]);
+            },
+            (error) => {
                 console.log(error);
             }
         );
+    }
+
+    private showModalPairing(files: FileList) {
+        console.log(files);
+        var filesNames = '';
+        this.queue = [];
+        for (let i = 0; i < files.length; i++) {
+            this.queue.push(files.item(i));
+            filesNames += files.item(i).name;
+            filesNames += i + 1 !== files.length ? ', ' : '.';
+        }
+        const modalRef = this._modalService.open(ModalComponent); // if user is admin
+        modalRef.componentInstance.title = 'Pair account name to payments from document <b>' + filesNames + '</b>';
+        modalRef.componentInstance.text = 'Are you sure you want to pair all account names to payments from this document? ' +
+            'Do you want to continue';
+        modalRef.componentInstance.loadingPairing = false;
+        modalRef.componentInstance.duplicate = 'donation-assignment';
+
+        modalRef.result.then(
+            (data) => {
+                this.handleImportPaymentForPairing(files[0]);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
+    public handleImportPayment(file) {
+        if (!this.loading) {
+            this.loading = true;
+            this.paymentService.importPayments(file).subscribe((d) => {
+                console.log(d)
+                if (d.type === 1 && d.loaded && d.total) {
+                    console.log(d.total)
+                }
+                this.loading = false;
+                this.alerts.push({
+                    alertMessage: '<b>Result for uploaded file ' + file.name + ':</b><br>' + d.message,
+                    alertType: 'success',
+                    alertOpen: true
+                });
+                this.queue.shift();
+                console.log(this.queue);
+                if (this.queue.length !== 0) {
+                    this.handleImportPayment(this.queue[0]);
+                }
+            }, (error) => {
+                this.loading = false;
+                this.alerts.push({
+                    alertMessage: (error.error !== null) ? error.error.error : 'During the payments import there was an unknown error. ' +
+                        'Please, try it later or contact administrator.',
+                    alertType: 'danger',
+                    alertOpen: true
+                });
+            });
+        }
+    }
+
+    public handleImportPaymentForPairing(file) {
+        if (!this.loadingPairing) {
+            this.loadingPairing = true;
+            this.paymentService.pairAccountNameToPayments(file).subscribe((d) => {
+                console.log(d)
+                if (d.type === 1 && d.loaded && d.total) {
+                    console.log(d.total);
+                }
+                this.loadingPairing = false;
+                this.alerts.push({
+                    alertMessage: '<b>Result for uploaded file ' + file.name + ':</b><br>' + d.message,
+                    alertType: 'success',
+                    alertOpen: true
+                });
+                this.queue.shift();
+                console.log(this.queue);
+                if (this.queue.length !== 0) {
+                    this.handleImportPayment(this.queue[0]);
+                }
+            }, (error) => {
+                this.loadingPairing = false;
+                this.alerts.push({
+                    alertMessage: (error.error !== null) ? error.error.error : 'During the payments import there was an unknown error. ' +
+                        'Please, try it later or contact administrator.',
+                    alertType: 'danger',
+                    alertOpen: true
+                });
+            });
+        }
     }
 
 }

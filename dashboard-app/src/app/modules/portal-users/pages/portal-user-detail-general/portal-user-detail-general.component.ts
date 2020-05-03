@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PortalUser} from '../../models/portal-user';
 import {DropdownItem} from '../../../core/models';
 import {PortalUserService} from '../../services/portal-user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Routing} from '../../../../constants/config.constants';
+import {environment} from '../../../../../environments/environment';
+import {UserService} from '../../../user-management/services';
 
 @Component({
-  selector: 'app-portal-user-detail-general',
-  templateUrl: './portal-user-detail-general.component.html',
-  styleUrls: ['./portal-user-detail-general.component.scss']
+    selector: 'app-portal-user-detail-general',
+    templateUrl: './portal-user-detail-general.component.html',
+    styleUrls: ['./portal-user-detail-general.component.scss']
 })
 export class PortalUserDetailGeneralComponent implements OnInit {
 
@@ -27,7 +29,10 @@ export class PortalUserDetailGeneralComponent implements OnInit {
     updatedByDate: Date;
 
 
-    constructor(private portalUserService: PortalUserService, private router: Router, private route: ActivatedRoute) {
+    constructor(private portalUserService: PortalUserService,
+                private userService: UserService,
+                private router: Router,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -124,4 +129,14 @@ export class PortalUserDetailGeneralComponent implements OnInit {
         });
     }
 
+    public impersonateUser() {
+        this.userService.impersonate(this.user.id).subscribe(
+            result => {
+                window.open(`${environment.portalUrl}/moj-ucet?impersonate=${result.token}`);
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
 }

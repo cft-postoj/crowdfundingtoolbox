@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import moment from 'moment/src/moment';
 import {NavbarItem} from '../../../core/models/navbar-item';
 import {Routing} from '../../../../constants/config.constants';
+import {PortalUserService} from '../../services/portal-user.service';
+import {PortalUser} from '../../models/portal-user';
 
 @Component({
     selector: 'app-donors',
@@ -20,7 +22,14 @@ export class DonorsComponent implements OnInit {
     };
     public statsDateSelected: any;
 
-    constructor() {
+    public importingDonors = false;
+
+    alertOpen: boolean = false;
+    alertType: string = '';
+    alertMessage: string = '';
+    exportCsvLoading: boolean = false;
+
+    constructor(public portalUserService: PortalUserService) {
     }
 
     ngOnInit() {
@@ -45,4 +54,14 @@ export class DonorsComponent implements OnInit {
         };
     }
 
+    export2Csv(event) {
+        console.log('result ' + event);
+        this.alertOpen = event.alertOpen;
+        this.alertMessage = event.alertMessage;
+        this.alertType = event.alertType;
+    }
+
+    exportLoading(event) {
+        this.exportCsvLoading = event;
+    }
 }

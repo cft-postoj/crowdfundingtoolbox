@@ -12,4 +12,5 @@
         [(open)]="modalOpened">
     <app-bank-transfer *ngIf="modalType === 'bank-transfer'"></app-bank-transfer>
     <app-pay-by-square *ngIf="modalType === 'pay-by-square'"></app-pay-by-square>
+    <app-credit-card *ngIf="modalType === 'card'"></app-credit-card>
 </app-modal-full-size>

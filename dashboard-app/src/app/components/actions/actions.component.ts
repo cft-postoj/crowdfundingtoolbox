@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {devices, RadioButton} from "../../modules/core/models";
+import {devices, RadioButton} from '../../modules/core/models';
 
 @Component({
     selector: 'app-actions',
@@ -23,6 +23,9 @@ export class ActionsComponent implements OnInit {
     @Input()
     public live;
 
+    @Input()
+    public saveWithoutClosingButton: any;
+
     @Output()
     public deviceTypeChange = new EventEmitter<any>();
 
@@ -39,9 +42,12 @@ export class ActionsComponent implements OnInit {
 
     ngOnInit() {
         if (this.deviceType) {
-            this.deviceTypeButtons.push(new RadioButton(devices.desktop.name, devices.desktop.name, "/assets/images/icons/desktop_default.svg"))
-            this.deviceTypeButtons.push(new RadioButton(devices.tablet.name, devices.tablet.name, "/assets/images/icons/tablet_default.svg"))
-            this.deviceTypeButtons.push(new RadioButton(devices.mobile.name, devices.mobile.name, "/assets/images/icons/mobile_default.svg"))
+            this.deviceTypeButtons.push(new RadioButton(devices.desktop.name, devices.desktop.name,
+                '/assets/images/icons/desktop_default.svg'));
+            this.deviceTypeButtons.push(new RadioButton(devices.tablet.name, devices.tablet.name,
+                '/assets/images/icons/tablet_default.svg'));
+            this.deviceTypeButtons.push(new RadioButton(devices.mobile.name, devices.mobile.name,
+                '/assets/images/icons/mobile_default.svg'));
         }
     }
 
@@ -53,12 +59,8 @@ export class ActionsComponent implements OnInit {
 
     }
 
-    public submitChanges() {
-        // on submit, change device type to desktop (for correctly saving html output)
-        this.deviceType = 'desktop';
-        this.handleDeviceTypeChange('desktop');
-
-        this.submit.emit();
+    public submitChanges(close = false) {
+        this.submit.emit(close);
     }
 
     handleDeviceTypeChange(event) {

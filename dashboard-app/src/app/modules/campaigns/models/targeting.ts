@@ -1,7 +1,9 @@
 export class Targeting {
     signed_status = {
         signed : {
-            active: true
+            active: true,
+            valid_address: true,
+            not_valid_address: true,
         },
         not_signed : {
             active: false
@@ -66,7 +68,7 @@ export class Targeting {
             min: 20,
             max: 0
         }
-    }
+    };
     registration: any  = {
         before: {
             active: false,
@@ -76,12 +78,61 @@ export class Targeting {
             active: false,
             date: '2015-01-01'
         }
-    }
+    };
     url = {
         specific: false,
         list: [
             {id: 0, path: 'https://www.postoj.sk'},
             {id: 0, path: 'https://www.postoj.sk/politika'}
             ]
+    };
+    excludedPages = {
+        specific: false,
+        homepage: false,
+        list: [
+            {id: 0, path: 'https://www.postoj.sk'},
+            {id: 0, path: 'https://www.postoj.sk/politika'}
+        ]
+    };
+    authors = {
+      specific: false,
+      list: [
+
+      ]
+    };
+    categories = {
+        specific: false,
+        list: [
+
+        ]
+    };
+    howOftenDisplay = {
+      pageView: {
+          active: true
+      },
+      session: {
+          active: false
+      },
+      nthPageView: {
+          active: false,
+          nthPage: 5
+      },
+      pageViewWithPause: {
+          active: false,
+          count: 5,
+          pause: 2
+      }
+    };
+    popupFixed = {
+      showAgain: {
+          active: true
+      },
+      dontShowAgain: {
+          active: false
+      },
+      afterNthPage: {
+          active: false,
+          nthPage: 5
+      }
     };
 }

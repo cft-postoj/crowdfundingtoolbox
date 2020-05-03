@@ -1,5 +1,6 @@
 .user-dropdown {
   ::ng-deep .ngx-select__toggle {
+    height: initial;
     width: 100%;
   }
   &.top15 {

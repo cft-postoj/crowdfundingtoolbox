@@ -1,10 +1,16 @@
 @import 'variables';
 @import 'mixins';
+
+.paymentOptions {
+    overflow-y: auto;
+    height: calc(100vh - 160px);
+}
+
 .importPayments {
   background: $white;
   @include boxShadow(0 0 30px rgba($azure, .3));
   max-width: 700px;
-  margin: 70px auto 0;
+  margin: 70px auto 40px;
   padding: 30px;
   text-align: center;
 }

@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {DonorsTotal} from '../models/DonorsTotal';
+import {Column} from '../../core/models/column';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -30,32 +31,7 @@ export class DonorService {
     }
 
 
-    public getDonors(from: string, to: string,
-                     monthly,
-                     dataType: string,
-                     limit: string) {
-        const headers = new HttpHeaders().append('Content-Type', 'application/json');
-        let params = new HttpParams()
-            .append('from', from)
-            .append('to', to);
-        if (monthly !== undefined) {
-            params = params.append('monthly', monthly);
-        }
-        if (dataType !== undefined) {
-            params = params.append('dataType', dataType);
-        }
-        if (limit !== undefined) {
-            params = params.append('limit', limit);
-        }
-        return this.http.get<any>(
-            `${environment.backOfficeUrl}${environment.donorUrl}${environment.all}`,
-            {
-                headers: headers,
-                params: params
-            });
-    }
-
-    public deleteUser(id: number) {
+    public deleteUser(id: number): Observable<any> {
         return this.http.get(`${environment.backOfficeUrl}${environment.portalUsersUrl}/${id}/delete`);
     }
 

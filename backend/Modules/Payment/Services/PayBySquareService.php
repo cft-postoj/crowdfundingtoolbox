@@ -27,9 +27,9 @@ class PayBySquareService
     protected $paymentOptionsRepository;
     protected $variableSymbolService;
 
-    public function __construct(PaymentOptionsRepository $paymentOptionsRepository)
+    public function __construct()
     {
-        $this->paymentOptionsRepository = $paymentOptionsRepository;
+        $this->paymentOptionsRepository = new PaymentOptionsRepository();
         $this->variableSymbolService = VariableSymbolService::class;
         $this->paymentMethodId = 3; // PAY BY SQUARE in payment_methods table
     }

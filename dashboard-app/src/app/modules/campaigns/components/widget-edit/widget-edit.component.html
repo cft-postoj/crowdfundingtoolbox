@@ -401,6 +401,51 @@
                         </div>
                     </div>
                 </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(12)}"
+                     *ngIf="widget.widget_type.method === widgetTypes.article.name || widget.widget_type.method === widgetTypes.article_advanced.name">
+                    <div class="collapsible--header row" (click)="openTab(12)">
+                        <div class="col-11">
+                            POSITION
+                        </div>
+                        <div class="col-1">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(12)" aria-controls="general-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(12)">
+                        <div class="settings--card">
+                            <div class="settings--card--header">
+                                Available subtypes
+                            </div>
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <ng-container *ngFor="let widgetSetting of widgetSettings">
+                                        <div class="col-6 pt-2">
+                                            {{widgetSetting.name}}
+                                        </div>
+                                        <div class="col-6 pt-2">
+                                            <app-checkbox [name]="'Active'"
+                                                          [(checked)]="widgetSetting.active">
+                                            </app-checkbox>
+                                        </div>
+                                    </ng-container>
+                                    <div class="col-12 pt-2 bold">
+                                        Edit settings for position:
+                                    </div>
+                                    <div class="col-12">
+                                        <app-dropdown [class]="'classic default-border align-right'"
+                                                      [(currentValue)]="activeWidgetSettings"
+                                                      (currentValueChange)="updateCurrentWidgetSettings($event)"
+                                                      [items]="availableSubtypes">
+                                        </app-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(1)}"
                      *ngIf="widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="collapsible--header row" (click)="openTab(1)">
@@ -421,7 +466,8 @@
                                     <span>
                                         Width & Height
                                     </span>
-                                    <app-help class="pl-4 position-relative" [text]="'Width and height in px, % or string (no need to write px, just number should be fine)'"></app-help>
+                                    <app-help class="pl-4 position-relative"
+                                              [text]="'Width and height in px, % or string (no need to write px, just number should be fine)'"></app-help>
                                 </div>
                             </div>
                             <div class="row mt-2">
@@ -574,8 +620,10 @@
                             <div class="settings--card--body">
                                 <div class="row editInput">
                                     <div class="col-12">
-                                        <angular-editor class="angular-editor--simple"
-                                                        [(ngModel)]="widget.settings[deviceType].headline_text"></angular-editor>
+                                        <angular-editor id="angular-editor-headline-text"
+                                                        class="angular-editor--withImage"
+                                                        [(ngModel)]="widget.settings[deviceType].headline_text"
+                                                        [config]="{uploadUrl: uploadUrl, placeholder: 'Write additional text here, please2', editable: true }"></angular-editor>
                                     </div>
                                 </div>
                             </div>
@@ -665,112 +713,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(3)}"
-                     *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
-                    <div class="row collapsible--header" (click)="openTab(3)">
-                        <div class="col-11">
-                            ADDITIONAL TEXT
-                        </div>
-                        <div class="col-1 vertical-align">
-                            <label class="button-expand"
-                                   type="button"
-                                   [attr.aria-expanded]="isOpened(3)" aria-controls="targeting-settings">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(3)">
-                        <div class="settings--card">
-                            <span class="row">
-                                <div class="col font-weight-bold">Additional text</div>
-                            </span>
-                            <div class="row editInput">
-                                <div class="col-12">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].widget_settings.additional_text.text"></angular-editor>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="settings--card">
-                            <div class="settings--card--body">
-                                <div class="row">
-                                    <div class="col font-weight-bold">Position</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4 col-xxl-2 vertical-align">
-                                        Alignment
-                                    </div>
-                                    <div class="col-8 col-xxl-2 vertical-align">
-                                        <app-radio-button-group [class]="'full-width'"
-                                                                [(currentValue)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.alignment"
-                                                                [radioButtons]="radioButtons">
-                                        </app-radio-button-group>
-                                    </div>
-                                    <div class="col-2 vertical-align">
-                                        Margin
-                                    </div>
-                                    <div class="col-10 col-xxl-6 pt-2 pt-xxl-0">
-                                        <app-input-group [buttons]="marginAdditionalText"
-                                                         (buttonChange)="widget.settings[deviceType].widget_settings.additional_text.text_margin[$event.name] = $event.value">
-                                        </app-input-group>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="settings--card">
-                            <div class="settings--card--body">
-                                <div class="row">
-                                    <span class="col font-weight-bold">Design</span>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 vertical-align">
-                                        Font family
-                                    </div>
-                                    <div class="col-3">
-                                        <app-dropdown [items]="fontFamilyDropdownButtons"
-                                                      [class]="'classic default-border align-right'"
-                                                      [title]="'Choose font'"
-                                                      [customFonts]="true"
-                                                      [(currentValue)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontFamily">
-                                        </app-dropdown>
-                                    </div>
-                                    <div class="col-3 vertical-align">
-                                        Text color
-                                    </div>
-                                    <div class="col-3 color-picker--simple color-picker--fixed">
-                                        <input
-                                            [value]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
-                                            class="btn color-picker--custom"
-                                            [style.background]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"
-                                            [cpPosition]="'bottom'"
-                                            [cpPresetColors]="colors"
-                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.color"/>
-                                    </div>
-                                    <div class="col-3 vertical-align ">
-                                        Size (px)
-                                    </div>
-                                    <div class="col-3">
-                                        <app-inputNumber
-                                            [(value)]="widget.settings[deviceType].widget_settings.additional_text.fontSettings.fontSize"
-                                            [class]="'float-right'">
-                                        </app-inputNumber>
-                                    </div>
-                                    <div class="col-3 vertical-align">
-                                        Background color
-                                    </div>
-                                    <div class="col-3 color-picker--simple color-picker--fixed">
-                                        <input
-                                            [value]="widget.settings[deviceType].widget_settings.additional_text.text_background"
-                                            class="btn color-picker--custom"
-                                            [style.background]="widget.settings[deviceType].widget_settings.additional_text.text_background"
-                                            [cpPosition]="'top'"
-                                            [cpPresetColors]="colors"
-                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.additional_text.text_background"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-widget-edit-additional-text
+                    [title]="'ADDITIONAL TEXT'"
+                    [widget]="widget"
+                    [colors]="colors"
+                    [deviceType]="deviceType"
+                    [fontFamilyDropdownButtons]="fontFamilyDropdownButtons"
+                    [additionalText]="widget.settings[deviceType].widget_settings.additional_text">
+                </app-widget-edit-additional-text>
+                <app-widget-edit-additional-text
+                    [title]="'ADDITIONAL TEXT BOTTOM'"
+                    [widget]="widget"
+                    [colors]="colors"
+                    [deviceType]="deviceType"
+                    [fontFamilyDropdownButtons]="fontFamilyDropdownButtons"
+                    [additionalText]="widget.settings[deviceType].widget_settings.additional_text_bottom">
+                </app-widget-edit-additional-text>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(4)}"
                      *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(4)">
@@ -1171,6 +1129,68 @@
                         </div>
                     </div>
                 </div>
+                <div class="collapse-container" [ngClass]="{'flex-open':isOpened(13)}"
+                     *ngIf="widget.widget_type.method == widgetTypes.fixed.name ||
+                      widget.widget_type.method == widgetTypes.popup.name">
+                    <div class="row collapsible--header" (click)="openTab(13)">
+                        <div class="col-11">
+                            CLOSE BUTTON
+                        </div>
+                        <div class="col-1 vertical-align">
+                            <label class="button-expand"
+                                   type="button"
+                                   [attr.aria-expanded]="isOpened(13)" aria-controls="targeting-settings">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(13)">
+                        <div class="settings--card">
+                            <div class="settings--card--body">
+                                <div class="row">
+                                    <div class="col font-weight-bold">
+                                        Text
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <angular-editor id="angular-editor-text" class="angular-editor"
+                                                        [(ngModel)]="widget.settings[deviceType].widget_settings.close_text"
+                                                        [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 col-md-4 vertical-align">
+                                        <span>Top offset</span>
+                                        <app-help class="position-relative pl-3"
+                                                  [text]="'Type 12px for specific top offset or calc(50% - 10px) to center in the middle'">
+                                        </app-help>
+                                    </div>
+                                    <div class="col-6 col-md-4 vertical-align">Color</div>
+                                    <div class="col-6 col-md-4 vertical-align">Font size [px]</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 col-md-4 editInput ">
+                                        <input class="h-100" type="text"
+                                               [(ngModel)]="widget.settings[deviceType].widget_settings.close_top">
+                                    </div>
+                                    <div class="col-6 col-md-4 color-picker--simple color-picker--fixed">
+                                        <input
+                                            [value]="widget.settings[deviceType].widget_settings.close_color"
+                                            class="btn h-100 color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].widget_settings.close_color"
+                                            [cpPosition]="'bottom'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].widget_settings.close_color"/>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <app-inputNumber [class]="'float-right'"
+                                                         [(value)]="widget.settings[deviceType].widget_settings.close_font_size"></app-inputNumber>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="collapse-container" [ngClass]="{'flex-open':isOpened(5)}"
                      *ngIf="widget.widget_type.method !== widgetTypes.article.name && widget.widget_type.method !== widgetTypes.custom.name">
                     <div class="row collapsible--header" (click)="openTab(5)">
@@ -1195,7 +1215,28 @@
                                 ></app-checkbox>
                             </div>
                         </div>
-                        <div class="settings--card" *ngIf="widget.settings[deviceType].payment_settings.active">
+                        <div class="settings--card"
+                             *ngIf="widget.settings[deviceType].payment_settings.active && widget.widget_type.method !== 'leaderboard'">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="settings--card--header">
+                                        Monetization design options
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <app-checkbox
+                                        [(checked)]="widget.settings[deviceType].payment_settings.design.shadowBox"
+                                        [name]="'Show shadow on monetization box'"></app-checkbox>
+                                </div>
+                                <div class="col-6">
+                                    <app-checkbox
+                                        [(checked)]="widget.settings[deviceType].payment_settings.design.stepsPanel"
+                                        [name]="'Show steps panel'"></app-checkbox>
+                                </div>
+                            </div>
+                            <hr>
                             <div class="row">
                                 <div class="col-12 bold">
                                     <div class="settings--card--header">
@@ -1212,8 +1253,10 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-2">
-                                            <angular-editor class="angular-editor--simple"
-                                                            [(ngModel)]="widget.settings[deviceType].payment_settings.monetization_title.text"></angular-editor>
+                                            <angular-editor id="angular-editor-monetization-title"
+                                                            class="angular-editor--simple"
+                                                            [(ngModel)]="widget.settings[deviceType].payment_settings.monetization_title.text"
+                                                            [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                         </div>
                                     </div>
                                 </div>
@@ -1385,165 +1428,115 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="settings--card">
-                                <div class="row">
-                                    <div class="col-12 bold">
-                                        Payment type
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 mt-3">
-                                        <app-radio-button
-                                            [name]="'paymentType'"
-                                            [radioButtons]="paymentTypeRadioButtons"
-                                            [(currentValue)]="widget.settings[deviceType].payment_settings.payment_type"
-                                            [colClass]="'col'"></app-radio-button>
-                                    </div>
-                                </div>
-                                <ng-container
-                                    *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.monthly.value &&
-                                    widget.settings[deviceType].payment_settings.type == 'lite'">
-                                    <div class="row mt-3">
+                            <!--container containing payment frequency options-->
+                            <ng-container
+                                *ngIf="widget.settings[deviceType].payment_settings.type != monetizationTypesEnums.column.type; else columnsContainer">
+                                <div class="settings--card"
+                                     *ngIf="widget.settings[deviceType].payment_settings.type !== 'row'">
+                                    <div class="row">
                                         <div class="col-12 bold">
-                                            Default payment method
+                                            Payment type
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <app-dropdown class="classic col"
-                                                      [class]="'classic mr15'"
-                                                      [items]="paymentMethodsDropdown"
-                                                      [title]="'Choose default payment method'"
-                                                      [(currentValue)]="widget.settings[deviceType].payment_settings.payment_method"
-                                        ></app-dropdown>
-                                    </div>
-                                </ng-container>
-                            </div>
-                            <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value ||
-                                                        widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
-                                <div class="settings--card">
-                                    <div class="settings--card--header row">
-                                        <div class="col">
-                                            Monthly prices
+                                        <div class="col-12 mt-3">
+                                            <app-radio-button
+                                                [name]="'paymentType'"
+                                                [radioButtons]="paymentTypeRadioButtons"
+                                                [(currentValue)]="widget.settings[deviceType].payment_settings.payment_type"
+                                                [colClass]="'col'"></app-radio-button>
                                         </div>
                                     </div>
-                                    <div class="settings--card--body">
-                                        <div class="row">
-                                            <div class="col-2 vertical-align">
-                                                Price options
-                                            </div>
-                                            <div class="col-2">
-                                                <app-inputNumber
-                                                    [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
-                                                    (valueChange)="updateNumberOfMonthlyPrices($event)">
-                                                </app-inputNumber>
-                                            </div>
-                                            <div class="col-2 vertical-align">
-                                                Options in row
-                                            </div>
-                                            <div class="col-2">
-                                                <app-inputNumber
-                                                    [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options_in_row">
-                                                </app-inputNumber>
-                                            </div>
-                                            <div class="col-4 pull-right">
-                                                <app-checkbox
-                                                    [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
-                                                    [name]="'Custom price option'"></app-checkbox>
+                                    <ng-container
+                                        *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.monthly.value &&
+                                    widget.settings[deviceType].payment_settings.type == 'lite'">
+                                        <div class="row mt-3">
+                                            <div class="col-12 bold">
+                                                Default payment method
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <ng-container
-                                                *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
-                                                <div class="col-6 pt-3 col-xxl-4">
-                                                    <div class="row">
-                                                        <div class="col-6 vertical-align">
-                                                            Price No.{{i + 1}}
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <app-inputNumber [(value)]="option.value">
-                                                            </app-inputNumber>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ng-container>
+                                            <app-dropdown class="classic col"
+                                                          [class]="'classic mr15'"
+                                                          [items]="paymentMethodsDropdown"
+                                                          [title]="'Choose default payment method'"
+                                                          [(currentValue)]="widget.settings[deviceType].payment_settings.payment_method"
+                                            ></app-dropdown>
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-10 bold">
-                                                Benefit
-                                            </div>
-                                            <app-switcher class="col-2 text-right"
-                                                          [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-switcher>
-                                            <div class="col-12">
-                                                <angular-editor class="angular-editor--simple"
-                                                                [(ngModel)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text"></angular-editor>
-                                            </div>
-                                            <div class="col-6 vertical-align">
-                                                Min. donation for benefit
-                                            </div>
-                                            <div class="col-6">
-                                                <app-inputNumber
-                                                    [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
-                                                    [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-inputNumber>
-                                            </div>
+                                    </ng-container>
+                                </div>
+                                <div class="settings--card"
+                                     *ngIf="widget.settings[deviceType].payment_settings.type !== 'row'">
+                                    <div class="row">
+                                        <div class="col-12 bold">
+                                            Currency in price options
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-3">
+                                            <input class="w-100" type="text"
+                                                   [(ngModel)]="widget.settings[deviceType].payment_settings.currency"
+                                                   placeholder="Please, type currency symbol">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-3">
+                                            <app-radio-button
+                                                [name]="'currencyOptions'"
+                                                [radioButtons]="currencyOptionseRadioButtons"
+                                                [(currentValue)]="widget.settings[deviceType].payment_settings.currencyInPriceOptions"
+                                                [colClass]="'col'"></app-radio-button>
                                         </div>
                                     </div>
                                 </div>
-                            </ng-container>
-                            <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value ||
-                                                     widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
-                                <div class="settings--card">
-                                    <div class="settings--card--header">
-                                        <div class="row">
+                                <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.monthly.value ||
+                                                        widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
+                                    <div class="settings--card">
+                                        <div class="settings--card--header row">
                                             <div class="col">
-                                                Single payment
+                                                Monthly prices
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="settings--card--body">
-                                        <div class="row">
-                                            <div
-                                                *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value"
-                                                class="col pt-2">
-                                                <app-checkbox [name]="'Copy prices from monthly prices'"
-                                                              [(checked)]="copyPrices">
-                                                </app-checkbox>
-                                            </div>
-                                        </div>
-                                        <ng-container *ngIf="!copyPrices">
+                                        <div class="settings--card--body">
                                             <div class="row">
                                                 <div class="col-2 vertical-align">
                                                     Price options
                                                 </div>
                                                 <div class="col-2">
                                                     <app-inputNumber
-                                                        [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
-                                                        (valueChange)="updateNumberOfSinglePayments($event)">
+                                                        [value]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options"
+                                                        (valueChange)="updateNumberOfMonthlyPrices($event)">
                                                     </app-inputNumber>
                                                 </div>
-                                                <div class="col-2 vertical-align">
-                                                    Options in row
-                                                </div>
-                                                <div class="col-2">
-                                                    <app-inputNumber
-                                                        [(value)]="widget.settings[deviceType].payment_settings.once_prices.count_of_options_in_row">
-                                                    </app-inputNumber>
-                                                </div>
-                                                <div class="col-4 pull-right">
+                                                <ng-container
+                                                    *ngIf="widget.settings[deviceType].payment_settings.type !== 'row'">
+                                                    <div class="col-2 vertical-align">
+                                                        Options in row
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <app-inputNumber
+                                                            [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.count_of_options_in_row">
+                                                        </app-inputNumber>
+                                                    </div>
+                                                </ng-container>
+                                                <div class="col-4 pull-right"
+                                                     [ngClass]="{'offset-4':widget.settings[deviceType].payment_settings.type === 'row'}">
                                                     <app-checkbox
-                                                        [(checked)]="widget.settings[deviceType].payment_settings.once_prices.custom_price"
+                                                        [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.custom_price"
                                                         [name]="'Custom price option'"></app-checkbox>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <!--basic settings-->
+                                            <div class="row"
+                                                 *ngIf="widget.settings[deviceType].payment_settings.type !== 'row'">
                                                 <ng-container
-                                                    *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options; let i = index">
+                                                    *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
                                                     <div class="col-6 pt-3 col-xxl-4">
                                                         <div class="row">
                                                             <div class="col-6 vertical-align">
                                                                 Price No.{{i + 1}}
                                                             </div>
-                                                            <div class="col-6 ">
+                                                            <div class="col-6">
                                                                 <app-inputNumber [(value)]="option.value">
                                                                 </app-inputNumber>
                                                             </div>
@@ -1551,67 +1544,459 @@
                                                     </div>
                                                 </ng-container>
                                             </div>
+                                            <!--advanced settings-->
+                                            <ng-container
+                                                *ngIf="widget.settings[deviceType].payment_settings.type === 'row'">
+                                                <div class="settings--card"
+                                                     *ngFor="let option of widget.settings[deviceType].payment_settings.monthly_prices.options; let i = index">
+                                                    <div class="settings--card--body">
+                                                        <div class="row">
+                                                            <div class="col-6 vertical-align">
+                                                                Price No.{{i + 1}}
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <app-inputNumber [(value)]="option.value">
+                                                                </app-inputNumber>
+                                                            </div>
+                                                            <div class="col-12 vertical-align">
+                                                                Title
+                                                            </div>
+                                                            <div class="col-12 vertical-align">
+                                                                <angular-editor id="angular-editor-option-{i}"
+                                                                                class="angular-editor--simple"
+                                                                                [(ngModel)]="option.title"
+                                                                                [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
+                                                            </div>
+                                                            <div class="col-12 vertical-align">
+                                                                Description
+                                                            </div>
+                                                            <div class="col-12 vertical-align">
+                                                                <angular-editor id="angular-editor-description-{i}"
+                                                                                class="angular-editor--halfSimple"
+                                                                                [(ngModel)]="option.description"
+                                                                                [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-10 bold">
                                                     Benefit
                                                 </div>
                                                 <app-switcher class="col-2 text-right"
-                                                              [(checked)]="widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-switcher>
+                                                              [(checked)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-switcher>
                                                 <div class="col-12">
-                                                    <angular-editor class="angular-editor--simple"
-                                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.once_prices.benefit.text"></angular-editor>
+                                                    <angular-editor id="angular-editor-benefit-monthly"
+                                                                    class="angular-editor--simple"
+                                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.text"
+                                                                    [config]="{placeholder: 'Write additional text here, please', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                                 </div>
                                                 <div class="col-6 vertical-align">
                                                     Min. donation for benefit
                                                 </div>
                                                 <div class="col-6">
                                                     <app-inputNumber
-                                                        [(value)]="widget.settings[deviceType].payment_settings.once_prices.benefit.value"
-                                                        [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-inputNumber>
+                                                        [(value)]="widget.settings[deviceType].payment_settings.monthly_prices.benefit.value"
+                                                        [disabled]="!widget.settings[deviceType].payment_settings.monthly_prices.benefit.active"></app-inputNumber>
                                                 </div>
                                             </div>
-                                        </ng-container>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="widget.settings[deviceType].payment_settings.payment_type==paymentTypes.once.value ||
+                                                     widget.settings[deviceType].payment_settings.payment_type==paymentTypes.both.value">
+                                    <div class="settings--card">
+                                        <div class="settings--card--header">
+                                            <div class="row">
+                                                <div class="col">
+                                                    Single payment
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="settings--card--body">
+                                            <div class="row">
+                                                <div
+                                                    *ngIf="widget.settings[deviceType].payment_settings.payment_type != paymentTypes.once.value"
+                                                    class="col pt-2">
+                                                    <app-checkbox [name]="'Copy prices from monthly prices'"
+                                                                  [(checked)]="copyPrices">
+                                                    </app-checkbox>
+                                                </div>
+                                            </div>
+                                            <ng-container *ngIf="!copyPrices">
+                                                <div class="row">
+                                                    <div class="col-2 vertical-align">
+                                                        Price options
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <app-inputNumber
+                                                            [value]="widget.settings[deviceType].payment_settings.once_prices.count_of_options"
+                                                            (valueChange)="updateNumberOfSinglePayments($event)">
+                                                        </app-inputNumber>
+                                                    </div>
+                                                    <div class="col-2 vertical-align">
+                                                        Options in row
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <app-inputNumber
+                                                            [(value)]="widget.settings[deviceType].payment_settings.once_prices.count_of_options_in_row">
+                                                        </app-inputNumber>
+                                                    </div>
+                                                    <div class="col-4 pull-right">
+                                                        <app-checkbox
+                                                            [(checked)]="widget.settings[deviceType].payment_settings.once_prices.custom_price"
+                                                            [name]="'Custom price option'"></app-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <ng-container
+                                                        *ngFor="let option of widget.settings[deviceType].payment_settings.once_prices.options; let i = index">
+                                                        <div class="col-6 pt-3 col-xxl-4">
+                                                            <div class="row">
+                                                                <div class="col-6 vertical-align">
+                                                                    Price No.{{i + 1}}
+                                                                </div>
+                                                                <div class="col-6 ">
+                                                                    <app-inputNumber [(value)]="option.value">
+                                                                    </app-inputNumber>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-10 bold">
+                                                        Benefit
+                                                    </div>
+                                                    <app-switcher class="col-2 text-right"
+                                                                  [(checked)]="widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-switcher>
+                                                    <div class="col-12">
+                                                        <angular-editor id="angular-editor-benefit-one-time"
+                                                                        class="angular-editor--withImage"
+                                                                        [(ngModel)]="widget.settings[deviceType].payment_settings.once_prices.benefit.text"
+                                                                        [config]="{placeholder: 'Write additional text here, please', editable: true, uploadUrl: uploadUrl}"></angular-editor>
+                                                    </div>
+                                                    <div class="col-6 vertical-align">
+                                                        Min. donation for benefit
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <app-inputNumber
+                                                            [(value)]="widget.settings[deviceType].payment_settings.once_prices.benefit.value"
+                                                            [disabled]="!widget.settings[deviceType].payment_settings.once_prices.benefit.active"></app-inputNumber>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <ng-template #columnsContainer>
+                                <div class="settings--card">
+                                    <div class="settings--card--header">
+                                        Benefits
+                                    </div>
+                                    <div class="settings--card--body">
+                                        <p-orderList
+                                            [value]="widget.settings[deviceType].payment_settings.monthly_prices.benefits">
+                                            <ng-template let-benefit let-i="index" pTemplate="item">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-10 col-xxl-2 order-0">
+                                                            Benefit (id {{benefit.id}}):
+                                                        </div>
+                                                        <div class="col-12 col-xxl-9 order-2">
+                                                            <angular-editor
+                                                                id="angular-editor-benefits-monthly-{{benefit.id}}"
+                                                                class="angular-editor--withImage"
+                                                                [(ngModel)]="benefit.text"
+                                                                (ngModelChange)="updateBenefit(benefit, $event)"
+                                                                [config]="{placeholder: 'Write additional text here, please', editable: true, uploadUrl: uploadUrl}">
+                                                            </angular-editor>
+                                                        </div>
+                                                        <div class="col-2 col-xxl-1 order-1 order-xxl-3">
+                                                        <span
+                                                            class="add-button vertical-align hoverable hoverable--danger"
+                                                            title="Delete benefit"
+                                                            [inlineSVG]="'/assets/images/icons/delete.svg'"
+                                                            [removeSVGAttributes]="['fill']"
+                                                            (click)="deleteBenefit(benefit)">
+                                                         </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </p-orderList>
+                                        <div class="offset-11 col-1">
+                                            <span class="add-button vertical-align hoverable" title="Add new benefit"
+                                                  [inlineSVG]="'/assets/images/icons/add.svg'"
+                                                  [removeSVGAttributes]="['fill']"
+                                                  (click)="addNewBenefit()">
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </ng-container>
+                                <div class="settings--card">
+                                    <div class="settings--card--header">
+                                        Columns
+                                    </div>
+                                    <div class="settings--card--body">
+                                        <div class="row">
+                                            <div class="col-6 col-xl-3 vertical-align">
+                                                Count
+                                            </div>
+                                            <div class="col-6 col-xl-3">
+                                                <app-inputNumber
+                                                    [value]="widget.settings[deviceType].payment_settings.monthly_prices.columns_count"
+                                                    (valueChange)="updateColumnsCount($event)">
+                                                </app-inputNumber>
+                                            </div>
+                                        </div>
+                                        <div
+                                            *ngFor="let column of widget.settings[deviceType].payment_settings.monthly_prices.columns; let i=index"
+                                            class="settings--card">
+                                            <div class="settings--card--header">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        No.{{i + 1}}: {{column.title}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="settings--card--body">
+                                                <div class="row">
+                                                    <div class="col-8 bold">
+                                                        Header
+                                                    </div>
+                                                    <div class="col-2 text-right">
+                                                        on/off
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <app-switcher class="float-right"
+                                                                      [(checked)]="column.header.enable">
+                                                        </app-switcher>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <angular-editor id="angular-editor-column-header-{{i}}"
+                                                                        class="angular-editor--simple"
+                                                                        [(ngModel)]="column.header.text"
+                                                                        [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}">
+                                                        </angular-editor>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 vertical-align">
+                                                        Color - text
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input
+                                                            [value]="column.header.color"
+                                                            class="btn color-picker--custom"
+                                                            [style.background]="column.header.color"
+                                                            [cpPosition]="'top'"
+                                                            [cpPresetColors]="colors"
+                                                            [(colorPicker)]="column.header.color"/>
+                                                    </div>
+                                                    <div class="col-3 vertical-align">
+                                                        Color - background
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input
+                                                            [value]="column.header.background_color"
+                                                            class="btn color-picker--custom"
+                                                            [style.background]="column.header.background_color"
+                                                            [cpPosition]="'top'"
+                                                            [cpPresetColors]="colors"
+                                                            [(colorPicker)]="column.header.background_color"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 bold">
+                                                        Title
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <angular-editor id="angular-editor-title-benefits"
+                                                                        class="angular-editor--simple"
+                                                                        [(ngModel)]="column.title"
+                                                                        [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}">
+                                                        </angular-editor>
+                                                    </div>
+                                                    <div class="col-12 bold">
+                                                        Show benefits
+                                                    </div>
+                                                    <div class="col-12 bold">
+                                                        <ng-select class="ng-select--custom"
+                                                                   [multiple]="true"
+                                                                   [items]="getBenefits(column)"
+                                                                   [(ngModel)]="column.show_benefits"
+                                                                   (ngModelChange)="updateActiveItems(column)"
+                                                                   placeholder="No benefit selected">
+                                                        </ng-select>
+                                                    </div>
+                                                    <div class="col-12 bold">
+                                                        Active benefits
+                                                    </div>
+                                                    <div class="col-12 bold">
+                                                        <ng-select class="ng-select--custom"
+                                                                   [multiple]="true"
+                                                                   [items]="getShowBenefits(column)"
+                                                                   [(ngModel)]="column.active_benefits"
+                                                                   placeholder="No benefit selected">
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="settings--card--header">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        Prices
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="settings--card--body">
+                                                <div class="row">
+                                                    <div class="col-2 vertical-align">
+                                                        Price options
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <app-inputNumber
+                                                            [value]="column.count_of_options"
+                                                            (valueChange)="updateNumberOfMonthlyPricesInColumn($event,column)">
+                                                        </app-inputNumber>
+                                                    </div>
+
+                                                    <div class="col-2 vertical-align">
+                                                        Options in row
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <app-inputNumber
+                                                            [(value)]="column.count_of_options_in_row">
+                                                        </app-inputNumber>
+                                                    </div>
+                                                    <div class="col-4 pull-right">
+                                                        <app-checkbox
+                                                            [(checked)]="column.custom_price"
+                                                            [name]="'Custom price option'"></app-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div *ngFor="let option of column.options; let i = index"
+                                                         class="col-6 pt-3 col-xxl-4">
+                                                        <div class="row">
+                                                            <div class="col-6 vertical-align">
+                                                                Price No.{{i + 1}}
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <app-inputNumber [(value)]="option.value">
+                                                                </app-inputNumber>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <div class="settings--card">
+                                <div class="row">
+                                    <div class="col bold">
+                                        Not active price design
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col bold">
+                                        Colors
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col-2 vertical-align">
+                                        Background
+                                    </div>
+                                    <div class="col-4">
+                                        <input
+                                            [value]="widget.settings[deviceType].payment_settings.price_background_color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].payment_settings.price_background_color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].payment_settings.price_background_color"/>
+                                    </div>
+                                    <div class="col-2 vertical-align">
+                                        Font
+                                    </div>
+                                    <div class="col-4">
+                                        <input
+                                            [value]="widget.settings[deviceType].payment_settings.price_text_color"
+                                            class="btn color-picker--custom"
+                                            [style.background]="widget.settings[deviceType].payment_settings.price_text_color"
+                                            [cpPosition]="'top'"
+                                            [cpPresetColors]="colors"
+                                            [(colorPicker)]="widget.settings[deviceType].payment_settings.price_text_color"/>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="settings--card">
                                 <div class="row">
                                     <div class="col bold">
                                         Active price design
                                     </div>
                                 </div>
-                                <div class="row pt-2">
-                                    <app-checkbox class="col"
-                                                  [name]="'Set monthly default active price'"
-                                                  [(checked)]="widget.settings[deviceType].payment_settings.default_price.monthly_active">
-                                    </app-checkbox>
-                                </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active"
-                                     class="row pt-2">
-                                    <app-dropdown class="classic col"
-                                                  [class]="'classic mr15'"
-                                                  [items]="createActivePriceOptionsMonthly()"
-                                                  [title]="'Choose default price'"
-                                                  [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.monthly_value"
-                                    ></app-dropdown>
-                                </div>
+                                <ng-container
+                                    *ngIf="widget.settings[deviceType].payment_settings.type !== monetizationTypesEnums.column.type; else columnDefaultActiveButton">
+                                    <div class="row pt-2">
+                                        <app-checkbox class="col"
+                                                      [name]="'Set monthly default active price'"
+                                                      [(checked)]="widget.settings[deviceType].payment_settings.default_price.monthly_active">
+                                        </app-checkbox>
+                                    </div>
+                                    <div
+                                        *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active"
+                                        class="row pt-2">
+                                        <app-dropdown class="classic col"
+                                                      [class]="'classic mr15'"
+                                                      [items]="createActivePriceOptionsMonthly()"
+                                                      [title]="'Choose default price'"
+                                                      [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.monthly_value"
+                                        ></app-dropdown>
+                                    </div>
 
-                                <div class="row pt-2">
-                                    <app-checkbox class="col"
-                                                  [name]="'Set one time default active price'"
-                                                  [(checked)]="widget.settings[deviceType].payment_settings.default_price.one_time_active">
-                                    </app-checkbox>
-                                </div>
-                                <div *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active"
-                                     class="row pt-2">
-                                    <app-dropdown class="classic col"
-                                                  [class]="'classic mr15'"
-                                                  [items]="createActivePriceOptionsOneTime()"
-                                                  [title]="'Choose default price'"
-                                                  [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.one_time_value"
-                                    ></app-dropdown>
-                                </div>
+                                    <div class="row pt-2">
+                                        <app-checkbox class="col"
+                                                      [name]="'Set one time default active price'"
+                                                      [(checked)]="widget.settings[deviceType].payment_settings.default_price.one_time_active">
+                                        </app-checkbox>
+                                    </div>
+                                    <div
+                                        *ngIf="widget.settings[deviceType].payment_settings.default_price.one_time_active"
+                                        class="row pt-2">
+                                        <app-dropdown class="classic col"
+                                                      [class]="'classic mr15'"
+                                                      [items]="createActivePriceOptionsOneTime()"
+                                                      [title]="'Choose default price'"
+                                                      [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.one_time_value"
+                                        ></app-dropdown>
+                                    </div>
+                                </ng-container>
+                                <ng-template #columnDefaultActiveButton>
+                                    <div class="row pt-2">
+                                        <app-checkbox class="col"
+                                                      [name]="'Set default active price'"
+                                                      [(checked)]="widget.settings[deviceType].payment_settings.default_price.monthly_active">
+                                        </app-checkbox>
+                                    </div>
+                                    <div
+                                        *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active"
+                                        class="row pt-2">
+                                        <app-dropdown class="classic col"
+                                                      [class]="'classic mr15'"
+                                                      [items]="createActivePriceOptionsColumnMonthly()"
+                                                      [title]="'Choose default price'"
+                                                      [(currentValue)]="widget.settings[deviceType].payment_settings.default_price.monthly_value"
+                                        ></app-dropdown>
+                                    </div>
+                                </ng-template>
                                 <ng-container *ngIf="widget.settings[deviceType].payment_settings.default_price.monthly_active ||
                                  widget.settings[deviceType].payment_settings.default_price.one_time_active">
                                     <div class="row pt-2">
@@ -1665,7 +2050,7 @@
                                     <!--<div class="row"-->
                                     <!--*ngIf="widget.settings[deviceType].additional_text.active">-->
                                     <!--<div class="col">-->
-                                    <!--<angular-editor class="angular-editor&#45;&#45;simple"-->
+                                    <!--<angular-editor id="angular-editor-" class="angular-editor--simple"-->
                                     <!--[(ngModel)]="widget.settings[deviceType].additional_text.text"></angular-editor>-->
                                     <!--</div>-->
                                     <!--</div>-->
@@ -1677,8 +2062,10 @@
                                         Terms and conditions
                                     </div>
                                     <div class="col-12">
-                                        <angular-editor
-                                            [(ngModel)]="widget.settings[deviceType].payment_settings.terms.text"></angular-editor>
+                                        <angular-editor id="angular-editor-terms-and-conditions"
+                                                        class="angular-editor--withImage"
+                                                        [(ngModel)]="widget.settings[deviceType].payment_settings.terms.text"
+                                                        [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                     </div>
                                 </div>
                             </div>
@@ -1701,7 +2088,8 @@
                     </div>
 
                     <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(6)">
-
+                        <p *ngIf="(widget.widget_type.method === 'leaderboard')">This widget is in second step show
+                            popup widget by default.</p>
                         <div class="settings--card">
                             <div class="row">
                                 <div class="col-12 bold">
@@ -1710,8 +2098,9 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.title.text"></angular-editor>
+                                    <angular-editor id="angular-editor-step-2-title" class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.title.text"
+                                                    [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                 </div>
                                 <div class="col-12 bold pt-3">
                                     <div class="settings--card--header">
@@ -1719,8 +2108,9 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text"></angular-editor>
+                                    <angular-editor id="angular-editor-cta-text" class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.cta.transfer.text"
+                                                    [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                 </div>
                                 <div class="col-12 boldpt-3">
                                     <div class="settings--card--header">
@@ -1728,8 +2118,10 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text"></angular-editor>
+                                    <angular-editor id="angular-editor-pay-by-square-text"
+                                                    class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.second_step.cta.payBySquare.text"
+                                                    [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                 </div>
                             </div>
                         </div>
@@ -1750,6 +2142,8 @@
                         </div>
                     </div>
                     <div class="settings--card--wrapper" [ngbCollapse]="!isOpened(7)">
+                        <p *ngIf="(widget.widget_type.method === 'leaderboard')">This widget is in third step show popup
+                            widget by default.</p>
                         <div class="settings--card">
                             <div class="row">
                                 <div class="col-12 bold">
@@ -1758,8 +2152,9 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.title.text"></angular-editor>
+                                    <angular-editor id="angular-editor-step-3-title" class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.title.text"
+                                                    [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                 </div>
                                 <div class="col-12 bold pt-3">
                                     <div class="settings--card--header">
@@ -1767,8 +2162,19 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.cta.description"></angular-editor>
+                                    <angular-editor id="angular-editor-step3-description" class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.cta.description"
+                                                    [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
+                                </div>
+                                <div class="col-12 bold pt-3">
+                                    <div class="settings--card--header">
+                                        CTA - redirect to my profile description list above button
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <angular-editor id="angular-editor-step3-list" class="angular-editor--halfSimple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.cta.list"
+                                                    [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                 </div>
                                 <div class="col-12 bold pt-3">
                                     <div class="settings--card--header">
@@ -1776,8 +2182,9 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    <angular-editor class="angular-editor--simple"
-                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.cta.text"></angular-editor>
+                                    <angular-editor id="angular-editor-step-3-cta-text" class="angular-editor--simple"
+                                                    [(ngModel)]="widget.settings[deviceType].payment_settings.third_step.cta.text"
+                                                    [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                                 </div>
                             </div>
                         </div>
@@ -1800,8 +2207,9 @@
                         <div class="settings--card">
                             <div class="settings--card--body">
                                 <p>Font family and font styles will be overrided with fonts used in your articles.</p>
-                                <angular-editor class="angular-editor--classic"
-                                                [(ngModel)]="widget.settings[deviceType].additional_settings.articleWidgetText"></angular-editor>
+                                <angular-editor id="angular-editor-article-widget-text" class="angular-editor--classic"
+                                                [(ngModel)]="widget.settings[deviceType].additional_settings.articleWidgetText"
+                                                [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                             </div>
                         </div>
                     </div>
@@ -1825,8 +2233,9 @@
                                 <p>Here you can write your own html widget with inline styles. You can type plain text
                                     or <b>click on html button under this text</b> and start write your own html code.
                                 </p>
-                                <angular-editor class="angular-editor--html"
-                                                [(ngModel)]="widget.settings[deviceType].additional_settings.customHtmlWidget"></angular-editor>
+                                <angular-editor id="angular-editor-custom-html" class="angular-editor--html"
+                                                [(ngModel)]="widget.settings[deviceType].additional_settings.customHtmlWidget"
+                                                [config]="{placeholder: 'Enter text here...', editable: true, uploadUrl: uploadUrl}"></angular-editor>
                             </div>
                         </div>
                     </div>
@@ -1834,9 +2243,12 @@
             </div>
         </div>
     </ng-container>
-    <app-actions class="actions" [(deviceType)]="deviceType" [live]="true" (submit)="updateWidget()"
+    <app-alert *ngIf="alertOpen" [type]="alertType" [(open)]="alertOpen" [message]="alertMessage"></app-alert>
+    <app-actions class="actions" [(deviceType)]="deviceType" [live]="true" (submit)="updateWidget($event)"
                  (preview)="togglePreview()"
-                 [submitting]="saving" (deviceTypeChange)="recreateRadioButtons()"></app-actions>
+                 (deviceTypeChange)="recreateRadioButtons()"
+                 [submitting]="saving"
+                 [saveWithoutClosingButton]="true"></app-actions>
 </div>
 
 <app-preview #previewGenerateHTML *ngIf="preview" [loading]="loading || saving" [widget]="widget"

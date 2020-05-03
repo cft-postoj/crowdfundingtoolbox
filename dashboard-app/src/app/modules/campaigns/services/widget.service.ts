@@ -26,10 +26,12 @@ export class WidgetService {
     }
 
     updateWidgetsHTML(widgetId: number, htmlsWrapper: any) {
-        return this.http.put<any>(`${environment.backOfficeUrl}${environment.widgetsUrl}/${widgetId}${environment.result}`, htmlsWrapper.widgets[0]);
+        return this.http.put<any>(`${environment.backOfficeUrl}${environment.widgetsUrl}/${widgetId}${environment.result}`,
+            htmlsWrapper.widgets[0]);
     }
 
     smartActive(widgetId: number, active: boolean) {
-        return this.http.put<any>(`${environment.backOfficeUrl}${environment.widgetsUrl}/${widgetId}${environment.smart}`, {active: active});
+        return this.http.put<any>(`${environment.backOfficeUrl}${environment.widgetsUrl}/${widgetId}${environment.smart}`,
+            {active: active});
     }
 }

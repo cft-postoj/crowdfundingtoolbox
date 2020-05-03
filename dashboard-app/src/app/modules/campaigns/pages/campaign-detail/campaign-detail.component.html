@@ -47,7 +47,7 @@
             <div class="row">
                 <div class="stats-card col-3 mt-5"
                      *ngFor="let widget of this.widgets">
-                    <app-campaign-status [campaignStats]="campaignStats" [campaignModel]="campaign" [id]="widget.id" [widget]="widget" (activeEmitter)="toggleWidgetActive(widget)" (previewEmitter)="openPreview($event)"></app-campaign-status>
+                    <app-widget-card [campaignStats]="campaignStats" [campaignModel]="campaign" [id]="widget.id" [widget]="widget" (activeEmitter)="toggleWidgetActive(widget)" (previewEmitter)="openPreview($event)"></app-widget-card>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class PreviewService {
 
     @Output() change: EventEmitter<boolean> = new EventEmitter();
 
-    @Output() htmls= new EventEmitter();
+    @Output() htmls = new EventEmitter();
 
     @Output() updatePreviewChange = new BehaviorSubject(true);
 
@@ -19,11 +19,11 @@ export class PreviewService {
         this.change.emit(this.isOpen);
     }
 
-    sendGeneratedHtml(campaignWithHtmls){
+    sendGeneratedHtml(campaignWithHtmls) {
         this.htmls.emit(campaignWithHtmls);
     }
 
     updatePreview() {
-        this.updatePreviewChange.next(true)
+        this.updatePreviewChange.next(true);
     }
 }

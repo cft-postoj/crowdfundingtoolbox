@@ -25,11 +25,9 @@ export class DonationDetailComponent implements OnInit {
     public loading: boolean = true;
     public campaignName: string = '';
     public campaignId: number = 0;
-    public users: any = [];
     public selectedUser: string = '';
 
     constructor(private donationService: DonationService, private router: Router,
-                private portalUserService: PortalUserService,
                 private helperService: HelpersService,
                 private route: ActivatedRoute, private campaignService: CampaignService,
                 private _modalService: NgbModal) {
@@ -40,7 +38,6 @@ export class DonationDetailComponent implements OnInit {
             params => {
                 this.id = params['id'];
                 this.getDetail();
-                this.getUsers();
             }
         );
     }
@@ -101,17 +98,7 @@ export class DonationDetailComponent implements OnInit {
 
     }
 
-    public getUsers() {
-        this.portalUserService.getAll().subscribe((data: [PortalUser]) => {
-            data.map((u, key) => {
-                const value = u.user_detail.first_name + ' ' + u.user_detail.last_name + ' - [ID: ' + u.id + ']';
-                if (u.id === this.detail.portal_user.user.id) {
-                    this.selectedUser = value;
-                }
-                this.users.push(value);
-            });
-        });
-    }
+
 
     public cancelDonationAssignment(action) {
         const modalRef = this._modalService.open(ModalComponent); // if user is admin

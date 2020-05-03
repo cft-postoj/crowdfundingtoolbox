@@ -236,37 +236,40 @@
                 </div>
             </div>
             <div class="row">
-                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
-                                        [title]="'Stopped supporting'" [dataType]="'stoppedSupporting'" [limit]="'3'"
-                                        [isDashboardPreview]="true"
-                                        [export]="true" [exportTitle]="'Export these stopped supporting donors'"
-                                        [exportType]="'stopped-supporting'"
-                                        [exportFileName]="'stopped-supporting-donors'"
-                                        [showDates]="false" [enablePortalUsersCount]="true"
-                                        (showMoreClicked)="openModal('Stopped supporting', null, 'tableDonors','stoppedSupporting')">
-                </app-table-portal-users>
+                <app-portal-user-table class="position-relative pt-4" [from]="from" [to]="to"
+                                       [id]="'stoppedSupporting'"
+                                       [title]="'Stopped supporting'" [dataType]="'stoppedSupporting'" [limit]="'3'"
+                                       [isDashboardPreview]="true"
+                                       [export]="true" [exportTitle]="'Export these stopped supporting donors'"
+                                       [exportType]="'stopped-supporting'"
+                                       [exportFileName]="'stopped-supporting-donors'"
+                                       [showDates]="false" [enablePortalUsersCount]="true"
+                                       (showMoreClicked)="openModal('Stopped supporting', null, 'tableDonors','stoppedSupporting')">
+                </app-portal-user-table>
             </div>
             <div class="row">
-                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
-                                        [title]="'Did not pay'" [dataType]="'didNotPay'" [limit]="'3'"
-                                        [isDashboardPreview]="true"
-                                        [export]="true" [exportTitle]="'Export these did not pay users'"
-                                        [exportType]="'didnt-pay'"
-                                        [exportFileName]="'didnt-pay-users'"
-                                        [showDates]="false" [enablePortalUsersCount]="true"
-                                        (showMoreClicked)="openModal('Did not pay', null, 'tableDonors','didNotPay')">
-                </app-table-portal-users>
-                <app-table-portal-users class="position-relative pt-4" [from]="from" [to]="to"
-                                        [title]="'Only initialize donation'" [dataType]="'onlyInitializeDonation'"
-                                        [limit]="'3'"
-                                        [export]="true"
-                                        [isDashboardPreview]="true"
-                                        [exportTitle]="'Export these users, which not complete donation'"
-                                        [exportType]="'not-complete-support'"
-                                        [exportFileName]="'not-complete-support'"
-                                        [showDates]="false" [enablePortalUsersCount]="true"
-                                        (showMoreClicked)="openModal('Only initialize donation', null, 'tableDonors','onlyInitializeDonation')">
-                </app-table-portal-users>
+                <app-portal-user-table class="position-relative pt-4" [from]="from" [to]="to"
+                                       [id]="'didNotPay'"
+                                       [title]="'Did not pay'" [dataType]="'didNotPay'" [limit]="'3'"
+                                       [isDashboardPreview]="true"
+                                       [export]="true" [exportTitle]="'Export these did not pay users'"
+                                       [exportType]="'didnt-pay'"
+                                       [exportFileName]="'didnt-pay-users'"
+                                       [showDates]="false" [enablePortalUsersCount]="true"
+                                       (showMoreClicked)="openModal('Did not pay', null, 'tableDonors','didNotPay')">
+                </app-portal-user-table>
+                <app-portal-user-table class="position-relative pt-4" [from]="from" [to]="to"
+                                       [id]="'onlyInitializeDonation'"
+                                       [title]="'Only initialize donation'" [dataType]="'onlyInitializeDonation'"
+                                       [limit]="'3'"
+                                       [export]="true"
+                                       [isDashboardPreview]="true"
+                                       [exportTitle]="'Export these users, which not complete donation'"
+                                       [exportType]="'not-complete-support'"
+                                       [exportFileName]="'not-complete-support'"
+                                       [showDates]="false" [enablePortalUsersCount]="true"
+                                       (showMoreClicked)="openModal('Only initialize donation', null, 'tableDonors','onlyInitializeDonation')">
+                </app-portal-user-table>
             </div>
         </div>
     </div>

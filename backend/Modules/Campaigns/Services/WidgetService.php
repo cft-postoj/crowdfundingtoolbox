@@ -118,6 +118,13 @@ class WidgetService implements WidgetServiceInterface
                     'payment_type' => $paymentType
                 ]);
 
+                $widget->settings = WidgetSettings::create([
+                    'widget_id' => $widget->id,
+                    'desktop' => $this->overrideMonetization(DeviceType::find(1), $widgetSettingsDesktop, $id),
+                    'tablet' => $this->overrideMonetization(DeviceType::find(2), $widgetSettingsTablet, $id),
+                    'mobile' => $this->overrideMonetization(DeviceType::find(3), $widgetSettingsMobile, $id)
+                ]);
+
                 // create Widget results
                 $widget->result = WidgetResult::create([
                     'widget_id' => $widget->id,

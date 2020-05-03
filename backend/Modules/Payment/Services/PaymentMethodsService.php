@@ -10,9 +10,9 @@ class PaymentMethodsService
 {
     protected $paymentMethodsRepository;
 
-    public function __construct(PaymentMethodsRepository $paymentMethodsRepository)
+    public function __construct()
     {
-        $this->paymentMethodsRepository = $paymentMethodsRepository;
+        $this->paymentMethodsRepository = new PaymentMethodsRepository();
     }
 
     public function all()

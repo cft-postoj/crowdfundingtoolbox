@@ -167,6 +167,7 @@ export const globalStyles = `
         display: flex;
         width: 100%;
         margin: 20px 0 30px;
+        cursor: pointer;
     }
    [id^=cr0wdfundingToolbox] .cft--monetization--container-step-2 .payment-options__button{
         flex: 1;
@@ -234,6 +235,83 @@ export const globalStyles = `
       -webkit-appearance: none; 
        margin: 0; 
    }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment {
+   display: block;
+   text-align: center;
+   margin-bottom: 15px;
+   padding-bottom: 15px;
+   }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment .cft--monetization--nationalPayment--country {
+    display: inline-block;
+    width: 50%;
+   }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment label {
+   position: relative;
+   display: inline-block;
+  padding-left: 27px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+   user-select: none;
+   width: 100%;
+   }
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment label input ~ .checkmark {
+   position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #e7e9eb;
+   }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment label input:checked ~ .checkmark {
+   background-color: #114b7d !important;
+   }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment label input {
+   position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+   }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment label input:checked ~ .checkmark:after {
+   display: block;
+   }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--nationalPayment label input:checked ~ .checkmark:after {
+    content: '';
+    margin-left: 8px;
+    margin-top: 5px;
+    width: 5px;
+    height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+   }
+   
+   [id^=cr0wdfundingToolbox] .cft--monetization--container a:not(.cft__cta__button) {
+    text-decoration: underline !important;
+    }
+    
+    [id^=cr0wdfundingToolbox] .cft--body a:not(.cft__cta__button) {
+        text-decoration: underline;
+        color: inherit !important;
+    }
+    
+    [id^=cr0wdfundingToolbox] .cft--body img {
+    width: auto !important;
+    height: auto !important;
+    }
     
 </style>
 `

@@ -18,7 +18,8 @@
                         <div class="col">
                             <span class="font-weight-bold">{{campaign.active ? 'Actived' : 'Deactived'}}</span>
                             <app-switcher [id]="'status-switcher'"
-                                          [(checked)]="campaign.active" class="float-right" [disabled]="campaign.prevent_disable"></app-switcher>
+                                          [(checked)]="campaign.active" class="float-right"
+                                          [disabled]="campaign.prevent_disable"></app-switcher>
                         </div>
                     </div>
                 </div>
@@ -123,6 +124,25 @@
                     </ng-container>
 
                 </div>
+                <div class="settings--card">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="font-weight-bold">Priority</label>
+                            <app-help class="position-relative"
+                                      extraClass="top-15"
+                                      text="Prioritize campaign over another. Lowe number means higher priority. You can use positive numbers with decimal point">
+                            </app-help>
+                        </div>
+                    </div>
+                    <div class="editInput row">
+                        <div class="col">
+                            <input #campaignName id="campaignPriority"
+                                   placeholder="Set priority, higher number indicates higher priority"
+                                   [(ngModel)]="campaign.priority"
+                                   type="number">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="collapse-container" [ngClass]="{'flex-open':isOpened(2)}">
@@ -151,7 +171,23 @@
                                           [(checked)]="campaign.targeting.signed_status.signed.active"
                                           (change)="changeUsersCount()"></app-switcher>
                         </div>
-                        <div class="row"
+                        <div class="row flex-center--vertical"
+                             [ngClass]="{'blur': !campaign.targeting.signed_status.signed.active }" disabled>
+                            <div class="col-10">Users with valid address</div>
+                            <app-switcher class="col-2 text-right" [id]="'users-with-valid-address'"
+                                          [(checked)]="campaign.targeting.signed_status.signed.valid_address"
+                                          (change)="changeUsersCount()"
+                            ></app-switcher>
+                        </div>
+                        <div class="row flex-center--vertical"
+                             [ngClass]="{'blur': !campaign.targeting.signed_status.signed.active }" disabled>
+                            <div class="col-10">Users with not valid address</div>
+                            <app-switcher class="col-2 text-right" [id]="'users-with-not-valid-address'"
+                                          [(checked)]="campaign.targeting.signed_status.signed.not_valid_address"
+                                          (change)="changeUsersCount()"
+                            ></app-switcher>
+                        </div>
+                        <div class="row pt-2"
                              [ngClass]="{'blur--targetBigger':!campaign.targeting.signed_status.not_signed.active}">
                             <div class="col-10 targetBigger">Not signed user</div>
                             <app-switcher class="col-2 text-right" [id]="'not_signed'"
@@ -187,7 +223,8 @@
                                 <app-switcher class="col-2 text-right" [id]="'one-time__older_than'"
                                               [(checked)]="campaign.targeting.support.one_time.older_than.active"
                                               (change)="changeUsersCount()"></app-switcher>
-                                <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
+                                <span
+                                        [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                             </div>
                         </div>
                         <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.one_time.active}">
@@ -206,7 +243,8 @@
                                               [(checked)]="campaign.targeting.support.one_time.not_older_than.active"
                                               (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
+                            <span
+                                    [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                         </div>
                         <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.one_time.active}">
                             <div class="row flex-center--vertical"
@@ -224,7 +262,8 @@
                                               [(checked)]="campaign.targeting.support.one_time.min.active"
                                               (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
+                            <span
+                                    [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                         </div>
                         <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.one_time.active}">
                             <div class="row flex-center--vertical"
@@ -242,7 +281,8 @@
                                               [(checked)]="campaign.targeting.support.one_time.max.active"
                                               (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
+                            <span
+                                    [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.one_time.active}"></span>
                         </div>
                         <hr>
                         <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.support.monthly.active}">
@@ -267,7 +307,8 @@
                                               [(checked)]="campaign.targeting.support.monthly.older_than.active"
                                               (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                            <span
+                                    [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
                         </div>
                         <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.monthly.active}">
                             <div class="row flex-center--vertical"
@@ -285,7 +326,8 @@
                                               [(checked)]="campaign.targeting.support.monthly.not_older_than.active"
                                               (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                            <span
+                                    [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
                         </div>
                         <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.monthly.active}">
                             <div class="row flex-center--vertical"
@@ -306,7 +348,8 @@
                                               [(checked)]="campaign.targeting.support.monthly.min.active"
                                               (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                            <span
+                                    [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
                         </div>
                         <div [ngClass]="{'blur--subTarget': !campaign.targeting.support.monthly.active}">
                             <div class="row flex-center--vertical"
@@ -327,7 +370,8 @@
                                               [(checked)]="campaign.targeting.support.monthly.max.active"
                                               (change)="changeUsersCount()"></app-switcher>
                             </div>
-                            <span [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
+                            <span
+                                    [ngClass]="{'blur--subTarget--span': !campaign.targeting.support.monthly.active}"></span>
                         </div>
                         <hr>
                         <div class="row"
@@ -481,23 +525,207 @@
                             <span class="btn btn-default btn-secondary btn-xs"
                                   *ngFor="let url of campaign.targeting.url.list; index as i">
                                 <span>{{url.path}}</span>
-                                <a class="icon-delete float-right" (click)="campaign.targeting.url.list.splice(i, 1);changeUsersCount();">
+                                <a class="icon-delete float-right"
+                                   (click)="campaign.targeting.url.list.splice(i, 1);changeUsersCount();">
                                     <i class="icon-delete--cross"></i>
                                 </a>
                             </span>
                         </div>
                     </div>
                     <div class="editInput row" [ngClass]="{'blur':!campaign.targeting.url.specific}">
-                        <div class="col-2">
-                            <span class="add-button vertical-align" title="Add new color"
+                        <div class="col-11">
+                            <input class="ng-pristine ng-valid ng-touched" #newUrlInput id="newUrl"
+                                   placeholder="Add url" [(ngModel)]="newUrl"
+                                   (keydown.enter)="addUrl();changeUsersCount();"
+                                   [disabled]="!campaign.targeting.url.specific">
+                        </div>
+                        <div class="col-1">
+                            <span class="add-button vertical-align" title="Add new url"
                                   [inlineSVG]="'/assets/images/icons/add.svg'"
                                   [removeSVGAttributes]="['fill']" (click)="addUrl()">
                             </span>
                         </div>
-                        <div class="col-10">
-                            <input class="ng-pristine ng-valid ng-touched" #newUrlInput id="newUrl"
-                                   placeholder="Add url" [(ngModel)]="newUrl" (keydown.enter)="addUrl();changeUsersCount();"
-                                   [disabled]="!campaign.targeting.url.specific">
+                    </div>
+                </div>
+                <div class="settings--card">
+                    <div class="settings--card--header">
+                        Exluded pages
+                    </div>
+                    <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.excludedPages.homepage}">
+                        <div class="col-10">Exlude homepage from campaign targeting
+                        </div>
+                        <!--                        <div class="col-10">{{campaign.targeting.url.specific?'Specific URLs':'All URLs'}}</div>-->
+                        <app-switcher class="col-2 text-right" [id]="'excludeHomepage'"
+                                      [(checked)]="campaign.targeting.excludedPages.homepage"
+                                      (change)="changeUsersCount()"></app-switcher>
+                    </div>
+                    <hr/>
+                    <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.excludedPages.specific}">
+                        <div class="col-10">Specific URLs for excluding campaign *<br/>
+                            <small><i>* if you won't specify urls, which will be excluded from this campaign
+                                targeting.</i></small>
+                        </div>
+                        <!--                        <div class="col-10">{{campaign.targeting.url.specific?'Specific URLs':'All URLs'}}</div>-->
+                        <app-switcher class="col-2 text-right" [id]="'exludedUrls'"
+                                      [(checked)]="campaign.targeting.excludedPages.specific"
+                                      (change)="changeUsersCount()"></app-switcher>
+                    </div>
+                    <div class="row" [ngClass]="{'blur':!campaign.targeting.excludedPages.specific}">
+                        <div class="button-group">
+                            <span class="btn btn-default btn-secondary btn-xs"
+                                  *ngFor="let url of campaign.targeting.excludedPages.list; index as i">
+                                <span>{{url.path}}</span>
+                                <a class="icon-delete float-right"
+                                   (click)="campaign.targeting.excludedPages.list.splice(i, 1);changeUsersCount();">
+                                    <i class="icon-delete--cross"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="editInput row" [ngClass]="{'blur':!campaign.targeting.excludedPages.specific}">
+                        <div class="col-11">
+                            <input class="ng-pristine ng-valid ng-touched" #newExcludedUrlInput id="newExcludedUrl"
+                                   placeholder="Add url" [(ngModel)]="newExcludedUrl"
+                                   (keydown.enter)="addExcludedUrl();changeUsersCount();"
+                                   [disabled]="!campaign.targeting.excludedPages.specific">
+                        </div>
+                        <div class="col-1">
+                            <span class="add-button vertical-align" title="Add new excluded url"
+                                  [inlineSVG]="'/assets/images/icons/add.svg'"
+                                  [removeSVGAttributes]="['fill']" (click)="addExcludedUrl()">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card">
+                    <div class="settings--card--header">
+                        Targeting for article author
+                    </div>
+                    <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.authors.specific}">
+                        <div class="col-10">Specific authors for campaign targeting *<br/>
+                            <small><i>* if you won't specify authors, which will be included for this campaign
+                                targeting.</i></small>
+                        </div>
+                        <!--                        <div class="col-10">{{campaign.targeting.url.specific?'Specific URLs':'All URLs'}}</div>-->
+                        <app-switcher class="col-2 text-right" [id]="'authors'"
+                                      [(checked)]="campaign.targeting.authors.specific"
+                                      (change)="changeUsersCount()"></app-switcher>
+                    </div>
+                    <div class="row" [ngClass]="{'blur':!campaign.targeting.authors.specific}">
+                        <div class="cft--multiselect">
+                            <ngx-select [multiple]="true"
+                                        [items]="authors"
+                                        [disabled]="false"
+                                        (select)="selectAuthorAction()"
+                                        (remove)="removeAuthorAction($event)"
+                                        [(ngModel)]="selectedAuthors"
+                                        [keepSelectedItems]="true"
+                                        [autoActiveOnMouseEnter]="true"
+                                        id="authorsList"
+                                        [placeholder]="'No author selected'" #authorsList>
+                            </ngx-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card">
+                    <div class="settings--card--header">
+                        Targeting for article category
+                    </div>
+                    <div class="row" [ngClass]="{'blur--targetBigger':!campaign.targeting.categories.specific}">
+                        <div class="col-10">Specific article categories for campaign targeting *<br/>
+                            <small><i>* if you won't specify categories, which will be included for this campaign
+                                targeting.</i></small>
+                        </div>
+                        <!--                        <div class="col-10">{{campaign.targeting.url.specific?'Specific URLs':'All URLs'}}</div>-->
+                        <app-switcher class="col-2 text-right" [id]="'categories'"
+                                      [(checked)]="campaign.targeting.categories.specific"
+                                      (change)="changeUsersCount()"></app-switcher>
+                    </div>
+                    <div class="row" [ngClass]="{'blur':!campaign.targeting.categories.specific}">
+                        <div class="cft--multiselect">
+                            <ngx-select [multiple]="true"
+                                        [items]="categories"
+                                        [disabled]="false"
+                                        (select)="selectCategoryAction()"
+                                        (remove)="removeCategoryAction($event)"
+                                        [keepSelectedItems]="true"
+                                        [autoActiveOnMouseEnter]="true"
+                                        id="categoriesList"
+                                        [placeholder]="'No category selected'" #categoriesList>
+                            </ngx-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card">
+                    <div class="settings--card--header">
+                        How often to display campaign?
+                    </div>
+                    <div class="row">
+                        <!--                        <div class="col-10">{{campaign.targeting.url.specific?'Specific URLs':'All URLs'}}</div>-->
+                        <app-radio-button class="col-12"
+                                          [(currentValue)]="currentValueOftenDisplay"
+                                          (currentValueChange)="changeHowOftenDisplay($event)"
+                                          [radioButtons]="howOftenRadioButtons"
+                                          [colClass]="'col'"></app-radio-button>
+
+                    </div>
+
+                    <div *ngIf="currentValueOftenDisplay === 'nth_page_view'">
+                        <h5>Logic for nth page view</h5>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="nth_page_view" style="margin-top: 10px;">Every nth page view: </label>
+                            </div>
+                            <div class="col">
+                                <app-inputNumber [(value)]="campaign.targeting.howOftenDisplay.nthPageView.nthPage"
+                                                 [disabled]="false" id="nth_page_view"></app-inputNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="currentValueOftenDisplay === 'page_view_pause'">
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="page_view_pause_count" style="margin-top: 10px;">Count of pages without
+                                    pause: </label>
+                            </div>
+                            <div class="col">
+                                <app-inputNumber [(value)]="campaign.targeting.howOftenDisplay.pageViewWithPause.count"
+                                                 [disabled]="false" id="page_view_pause_count"></app-inputNumber>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="page_view_pause" style="margin-top: 10px;">Pause (count of pages with
+                                    pause): </label>
+                            </div>
+                            <div class="col">
+                                <app-inputNumber [(value)]="campaign.targeting.howOftenDisplay.pageViewWithPause.pause"
+                                                 [disabled]="false" id="page_view_pause"></app-inputNumber>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings--card">
+                    <div class="settings--card--header">
+                        Logic for close Fixed / Popup widget
+                    </div>
+                    <div class="row">
+                        <app-radio-button class="col-12"
+                                          [(currentValue)]="currentValueCloseFixedPopup"
+                                          (currentValueChange)="changeValueCloseFixedPopup($event)"
+                                          [radioButtons]="closeFixedPopupRadioButtons"
+                                          [colClass]="'col'"></app-radio-button>
+                    </div>
+                    <div *ngIf="currentValueCloseFixedPopup === 'show_after_views'">
+                        <h5>Choosed case (show again after nth pages view):</h5>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="nth_page_view_popup" style="margin-top: 10px;">Every nth page view: </label>
+                            </div>
+                            <div class="col">
+                                <app-inputNumber [(value)]="campaign.targeting.popupFixed.afterNthPage.nthPage"
+                                                 [disabled]="false" id="nth_page_view_popup"></app-inputNumber>
+                            </div>
                         </div>
                     </div>
                 </div>

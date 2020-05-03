@@ -17,6 +17,9 @@ export class TokenExpirationService {
         let current = Math.round((new Date().getTime() / 1000));
         let timeout = (exp - current - 3600) * 1000; // timeout in miliseconds minus one hour
         timeout = (timeout < 0) ? 3000 : timeout + 3000; // if expiration is lower than one hour + three seconds
+        // timeout can be max 9 digits number
+        timeout = (timeout.toString().length > 9) ? 999999999 : timeout;
+
         setTimeout(() => {
             this.expirationEmitter.emit(true);
         }, timeout);

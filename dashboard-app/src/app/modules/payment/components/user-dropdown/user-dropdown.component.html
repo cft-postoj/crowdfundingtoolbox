@@ -8,6 +8,8 @@
               (select)="selectAction()"
               [autoActiveOnMouseEnter]="true"
               id="usersList"
+              (typed)="getUserByStringLazy($event)"
+              [noResultsFound]="'Finding or no results found.'"
               [placeholder]="(placeholder) ? placeholder : 'No user selected'" #usersList>
   </ngx-select>
 </div>

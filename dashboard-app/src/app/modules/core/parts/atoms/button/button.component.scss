@@ -32,6 +32,21 @@ button {
             background: $aquaHaze;
         }
     }
+    &.primary {
+        height: 32px;
+        border: 1px solid $geyser;
+        color: white;
+        text-align: center;
+        font-size: 14px;
+        background-color: rgba(0, 116, 233, 0.7);
+        background-repeat: no-repeat;
+        outline: none;
+        vertical-align: middle;
+        @include transitionSingle(.3s ease);
+        &:not(.disabled):hover {
+            background: $azure;
+        }
+    }
     &[icon=".*"] {
         padding-top: 5px;
     }

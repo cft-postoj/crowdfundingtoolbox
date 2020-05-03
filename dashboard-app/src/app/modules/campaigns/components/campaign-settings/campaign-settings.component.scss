@@ -1,3 +1,6 @@
+@import 'variables';
+@import 'mixins';
+
 .icon-delete {
     width: 1em;
     height: 1em;
@@ -53,4 +56,45 @@
 
 .settings--card {
     z-index: 1;
+}
+
+.cft--multiselect {
+    width: 100%;
+    padding: 10px;
+    ::ng-deep .selectWrapper {
+        width: 300px;
+        border: 1px solid $outer-space;
+        margin-left: 15px;
+        @include borderRadius(4px);
+    }
+
+    ::ng-deep .btn {
+        width: auto;
+        height: auto;
+    }
+    ::ng-deep .ngx-select__search.form-control {
+        cursor: pointer;
+        background: url('/assets/images/icons/add.svg') no-repeat;
+        padding-left: 50px!important;
+        height: 50px!important;
+    }
+    ::ng-deep .ngx-select__selected {
+        background: rgba($aquaHaze, .5);
+        padding: 5px;
+    }
+    ::ng-deep app-dropdown {
+        .selectWrapper {
+            width: 150px !important;
+            display: inline-block !important;
+        }
+        select {
+            color: $azure;
+            option {
+                color: $outer-space;
+            }
+        }
+    }
+    ::ng-deep .ngx-select__choices {
+        position: relative !important;
+    }
 }

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Routing} from './constants/config.constants';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +11,11 @@ import {Routing} from './constants/config.constants';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private translate: TranslateService) {
+        translate.addLangs(['en', 'sk']);
+        translate.setDefaultLang('en');
+        translate.use(environment.lang);
+
         // check for responsive version -- Responsive version has only campaigns active/deactive setting
         if (window.innerWidth <= 991) {
             this.router.navigateByUrl(`responsive`);

@@ -122,18 +122,22 @@ export class OverallComponent implements OnInit {
         monthly.label = 'monthly';
         monthly.borderColor = '#0f0';
         monthly.fill = false;
-        monthly.data = dateValuePair.monthly.map(donation => {
-            return {x: donation.date, y: donation.value};
-        });
+        if(dateValuePair.monthly) {
+            monthly.data = dateValuePair.monthly.map(donation => {
+                return {x: donation.date, y: donation.value};
+            });
+        }
         datasets.push(monthly);
 
         let oneTime: any = {};
         oneTime.label = 'one time';
         oneTime.borderColor = '#00f';
         oneTime.fill = false;
-        oneTime.data = dateValuePair.oneTime.map(donation => {
-            return {x: donation.date, y: donation.value};
-        });
+        if(dateValuePair.oneTime) {
+            oneTime.data = dateValuePair.oneTime.map(donation => {
+                return {x: donation.date, y: donation.value};
+            });
+        }
         datasets.push(oneTime);
 
         return {

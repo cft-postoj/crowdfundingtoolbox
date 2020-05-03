@@ -89,4 +89,8 @@ export class CampaignService {
     public getCampaignByWidgetId(id: number): Observable<any> {
         return this.http.get(`${environment.backOfficeUrl}${environment.campaignUrl}/widget/${id}`);
     }
+
+    getTargetingArticlesData(): Observable<any> {
+        return this.http.get(`${environment.backOfficeUrl}${environment.campaignTargeting}/articles-data`);
+    }
 }

@@ -46,7 +46,6 @@ class DonationService
         $this->bankButtonService = new BankButtonService();
         $this->payBySquareService = new PayBySquareService();
         $this->cardPayService = new CardPayService();
-        $this->comfortPayService = new ComfortPayService();
         $this->createdUserService = new CreatedUsersService();
     }
 

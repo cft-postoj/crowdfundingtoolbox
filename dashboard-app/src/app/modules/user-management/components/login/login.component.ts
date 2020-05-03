@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
         private compComService: ComponentCommunicationService
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
-            this.router.navigate(['/']);
+        if (!this.authenticationService.isTokenExpired(localStorage.getItem('token'))) {
+            this.router.navigate(['/dashboard/stats/all']);
         }
     }
 

@@ -1,3 +1,5 @@
+import {AdditionalText} from './additional-text';
+
 export class Widget {
     id = 0;
     updated_at: any = new Date();
@@ -8,7 +10,9 @@ export class Widget {
         id: 0,
         name: '',
         description: '',
-        method: ''
+        method: '',
+        widgetSubtypes: [],
+        active_subtype: ''
     };
     settings = {
         desktop: {
@@ -44,36 +48,8 @@ export class Widget {
                         value: ''
                     },
                 },
-                additional_text: {
-                    text: 'additional text',
-                    fontSettings: {
-                        fontFamily: 'Roboto',
-                        fontWeight: 'bold',
-                        alignment: 'center',
-                        color: '#fa',
-                        fontSize: 24
-                    },
-                    background: {
-                        type: 'image-overlay',
-                        image: {
-                            id: 1,
-                            url: ''
-                        },
-                        color: '#1F47BB',
-                        opacity: 33
-                    },
-                    text_background: '#fff',
-                    text_margin: {
-                        top: '0',
-                        right: 'auto',
-                        bottom: '0',
-                        left: 'auto'
-                    },
-                    common_text: {
-                        active: true,
-                        value: ''
-                    },
-                },
+                additional_text:  new AdditionalText(),
+                additional_text_bottom:  new AdditionalText(),
                 call_to_action: {
                     default: {
                         width: 'auto',
@@ -154,6 +130,10 @@ export class Widget {
                         },
                     },
                 },
+                close_text: '',
+                close_top : '',
+                close_color : '',
+                close_font_size : '',
             },
             promote_settings: {
                 status_bar: false,
@@ -171,10 +151,12 @@ export class Widget {
                 },
             },
             payment_settings: {
-                active: true,
+                active: false,
                 payment_type: 'both',
                 payment_method: 'bank_transfer',
-                type: 'classic' || 'lite', // classic or lite
+                type: 'classic' || 'lite' || 'row' || 'column', // classic or lite
+                currency: '€',
+                currencyInPriceOptions: 'disabled',
                 monetization_title: {
                     fontSettings: {
                         fontFamily: 'Roboto',
@@ -208,21 +190,42 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
-                    text_color: '#1f4e7b'
+                    text_color: '#1f4e7b',
+                    shadowBox: true,
+                    stepsPanel: true
                 },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     count_of_options_in_row: 3,
-                    options: [
-                        {value: 30},
-                        {value: 40}
-                    ],
                     benefit: {
                         active: true,
                         text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
                         value: 10
-                    }
+                    },
+                    benefits: [{
+                        id: 1,
+                        name: 'edit text of this benefit'
+                    }],
+                    columns_count: 1,
+                    columns: [{
+                        header: {
+                            enable: false,
+                            text: 'BEST OPTION',
+                            color: '#fff',
+                            background_color: '#2178CB',
+                        },
+                        title: 'Title',
+                        active_benefits: [],
+                        show_benefits: [],
+                        custom_price: false,
+                        count_of_options: 2,
+                        count_of_options_in_row: 2,
+                        options: [
+                            {value: 30},
+                            {value: 20}
+                        ],
+                    }],
                 },
                 once_prices: {
                     custom_price: false,
@@ -238,6 +241,8 @@ export class Widget {
                         value: 60
                     }
                 },
+                price_background_color: 'inherit',
+                price_text_color: 'inherit',
                 default_price: {
                     monthly_active: true,
                     monthly_value: 30,
@@ -265,6 +270,8 @@ export class Widget {
                     },
                     cta: {
                         description: 'To get all rewards please  fill your personal data in My profile',
+                        list: '<ul><li><b>Newsletter</b> denníka Postoj</li><li><b>Ukladanie článkov</b> na neskôr</li>' +
+                            '<li><b>Zľavy a novinky</b> z vydavatelstva</li></ul>',
                         text: 'My profile'
                     }
                 },
@@ -445,7 +452,8 @@ export class Widget {
                     }
                 },
                 articleWidgetText: '',
-                customHtmlWidget: ''
+                customHtmlWidget: '',
+                subtype: 'TOP' || 'BOTTOM' || 'MIDDLE'
             }
         },
         tablet: {
@@ -481,36 +489,8 @@ export class Widget {
                         value: ''
                     },
                 },
-                additional_text: {
-                    text: 'additional text',
-                    fontSettings: {
-                        fontFamily: 'Roboto',
-                        fontWeight: 'bold',
-                        alignment: 'center',
-                        color: '#FFFFFF',
-                        fontSize: 24
-                    },
-                    background: {
-                        type: 'image-overlay',
-                        image: {
-                            id: 1,
-                            url: ''
-                        },
-                        color: '#1F47BB',
-                        opacity: 33
-                    },
-                    text_background: '#fff',
-                    text_margin: {
-                        top: '0',
-                        right: 'auto',
-                        bottom: '0',
-                        left: 'auto'
-                    },
-                    common_text: {
-                        active: true,
-                        value: ''
-                    },
-                },
+                additional_text:  new AdditionalText(),
+                additional_text_bottom:  new AdditionalText(),
                 call_to_action: {
                     default: {
                         width: 'auto',
@@ -590,6 +570,10 @@ export class Widget {
                         },
                     },
                 },
+                close_text: '',
+                close_top : '',
+                close_color : '',
+                close_font_size : '',
             },
             promote_settings: {
                 status_bar: false,
@@ -607,9 +591,12 @@ export class Widget {
                 },
             },
             payment_settings: {
+                active: false,
                 payment_type: 'both',
                 payment_method: 'bank_transfer',
                 type: 'classic',
+                currency: '€',
+                currencyInPriceOptions: 'disabled',
                 monetization_title: {
                     fontSettings: {
                         fontFamily: 'Roboto',
@@ -643,21 +630,65 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
-                    text_color: '#1f4e7b'
+                    text_color: '#1f4e7b',
+                    shadowBox: true,
+                    stepsPanel: true
                 },
                 monthly_prices: {
                     custom_price: false,
                     count_of_options: 2,
                     count_of_options_in_row: 3,
                     options: [
-                        {value: 30},
-                        {value: 40}
+                        {
+                            title: 'Čestný čitateľ postoj Postoj',
+                            value: 5,
+                            description: '<ul><li><b>tlačené noviny</b> raz ročne</li></ul>'
+                        },
+                        {
+                            title: 'Člen Klubu Postoj',
+                            value: 10,
+                            description: '<div><ul><li><b>tlačené noviny</b> raz ročne</li><li>darček - <b>kniha </b>len pre darcov</li><li><b>zľava na knihy</b> z vydavatelstva Postoj</li></ul></div>'
+                        },
+                        {
+                            title: 'VIP člen klubu',
+                            value: 20,
+                            description: '<div><ul><li><b>tlačené noviny</b> raz ročne</li><li>darček - <b>kniha </b>len pre darcov</li><li><b>zľava na knihy</b> z vydavatelstva Postoj</li><li><b>VIP vstup</b> na eventy Postoj</li></ul></div>'
+                        },
+                        {
+                            title: 'Biznis klub Postoj',
+                            value: 50,
+                            description: '<div><ul><li><b>tlačené noviny</b> raz ročne</li><li>darček - <b>kniha </b>len pre darcov</li><li><b>zľava na knihy</b> z vydavatelstva Postoj</li><li><b>VIP vstup</b> na eventy Postoj</li><li>pozvánka na <b>diskusné večery</b> s redaktormi</li></ul></div>'
+                        }
+
                     ],
                     benefit: {
                         active: true,
                         text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
                         value: 10
-                    }
+                    },
+                    benefits: [{
+                        id: 1,
+                        name: 'edit text of this benefit'
+                    }],
+                    columns_count: 1,
+                    columns: [{
+                        header: {
+                            enable: false,
+                            text: 'BEST OPTION',
+                            color: '#fff',
+                            background_color: '#2178CB',
+                        },
+                        title: 'Title',
+                        active_benefits: [],
+                        show_benefits: [],
+                        custom_price: false,
+                        count_of_options: 2,
+                        count_of_options_in_row: 2,
+                        options: [
+                            {value: 30},
+                            {value: 20}
+                        ],
+                    }],
                 },
                 once_prices: {
                     custom_price: false,
@@ -700,6 +731,8 @@ export class Widget {
                     },
                     cta: {
                         description: 'To get all rewards please  fill your personal data in My profile',
+                        list: '<ul><li><b>Newsletter</b> denníka Postoj</li><li><b>Ukladanie článkov</b> na neskôr</li>' +
+                            '<li><b>Zľavy a novinky</b> z vydavatelstva</li></ul>',
                         text: 'My profile'
                     }
                 },
@@ -854,7 +887,8 @@ export class Widget {
                     }
                 },
                 articleWidgetText: '',
-                customHtmlWidget: ''
+                customHtmlWidget: '',
+                subtype: 'TOP' || 'BOTTOM' || 'MIDDLE'
             }
         },
         mobile: {
@@ -890,36 +924,8 @@ export class Widget {
                         value: ''
                     },
                 },
-                additional_text: {
-                    text: 'additional text',
-                    fontSettings: {
-                        fontFamily: 'Roboto',
-                        fontWeight: 'bold',
-                        alignment: 'center',
-                        color: '#FFFFFF',
-                        fontSize: 24
-                    },
-                    background: {
-                        type: 'image-overlay',
-                        image: {
-                            id: 1,
-                            url: ''
-                        },
-                        color: '#1F47BB',
-                        opacity: 33
-                    },
-                    text_background: '#fff',
-                    text_margin: {
-                        top: '0',
-                        right: 'auto',
-                        bottom: '0',
-                        left: 'auto'
-                    },
-                    common_text: {
-                        active: true,
-                        value: ''
-                    },
-                },
+                additional_text:  new AdditionalText(),
+                additional_text_bottom:  new AdditionalText(),
                 call_to_action: {
                     default: {
                         width: 'auto',
@@ -1000,6 +1006,10 @@ export class Widget {
                         },
                     },
                 },
+                close_text: '',
+                close_top : '',
+                close_color : '',
+                close_font_size : '',
             },
             promote_settings: {
                 status_bar: false,
@@ -1021,6 +1031,8 @@ export class Widget {
                 payment_type: 'both',
                 payment_method: 'bank_transfer',
                 type: 'classic',
+                currency: '€',
+                currencyInPriceOptions: 'disabled',
                 monetization_title: {
                     fontSettings: {
                         fontFamily: 'Roboto',
@@ -1054,7 +1066,9 @@ export class Widget {
                     },
                     width: '100%',
                     height: 'auto',
-                    text_color: '#1f4e7b'
+                    text_color: '#1f4e7b',
+                    shadowBox: true,
+                    stepsPanel: true
                 },
                 monthly_prices: {
                     custom_price: false,
@@ -1068,7 +1082,30 @@ export class Widget {
                         active: true,
                         text: 'S podporou 10 € a viac mesačne sa môžete stať členom Klubu Postoj a získať naše špeciálne tlačené vydanie.',
                         value: 10
-                    }
+                    },
+                    benefits: [{
+                        id: 1,
+                        name: 'edit text of this benefit'
+                    }],
+                    columns_count: 1,
+                    columns: [{
+                        header: {
+                            enable: false,
+                            text: 'BEST OPTION',
+                            color: '#fff',
+                            background_color: '#2178CB',
+                        },
+                        title: 'Title',
+                        active_benefits: [],
+                        show_benefits: [],
+                        custom_price: false,
+                        count_of_options: 2,
+                        count_of_options_in_row: 2,
+                        options: [
+                            {value: 30},
+                            {value: 20}
+                        ],
+                    }],
                 },
                 once_prices: {
                     custom_price: false,
@@ -1111,6 +1148,8 @@ export class Widget {
                     },
                     cta: {
                         description: 'To get all rewards please  fill your personal data in My profile',
+                        list: '<ul><li><b>Newsletter</b> denníka Postoj</li><li><b>Ukladanie článkov</b> na neskôr</li>' +
+                            '<li><b>Zľavy a novinky</b> z vydavatelstva</li></ul>',
                         text: 'My profile'
                     }
                 },
@@ -1263,8 +1302,11 @@ export class Widget {
                     }
                 },
                 articleWidgetText: '',
-                customHtmlWidget: ''
+                customHtmlWidget: '',
+                subtype: 'TOP' || 'BOTTOM' || 'MIDDLE'
             }
         },
     };
+    public contains_additional_widget_settings: boolean;
+    public additional_widget_settings: [];
 }

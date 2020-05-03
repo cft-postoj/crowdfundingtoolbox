@@ -7,11 +7,16 @@ import {PortalUserDetailDonationsComponent} from './pages/portal-user-detail-don
 import {PortalUserDetailComponent} from './components/portal-user-detail/portal-user-detail.component';
 import {DonorsComponent} from './pages/donors/donors.component';
 import {DonorsNewComponent} from './pages/donors-new/donors-new.component';
+import {PortalUserImportComponent} from './pages/portal-user-import/portal-user-import.component';
 
 const routes: Routes = [
     {
         path: 'all',
         component: PortalUserListComponent
+    },
+    {
+        path: 'import',
+        component: PortalUserImportComponent,
     },
     {
       path: 'donors/all',

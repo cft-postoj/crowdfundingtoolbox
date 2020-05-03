@@ -3,19 +3,18 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Payment} from '../models/payment';
 import {environment} from '../../../../environments/environment';
-import {Donation} from '../../statistics/models/donation';
-import {Routing} from '../../../constants/config.constants';
+import {Column} from '../../core/models/column';
+import {HelpersService} from '../../core/services/helpers.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PaymentService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private helpersService: HelpersService) {
     }
 
     public getUnpairedPayments(): Observable<Payment[]> {
-        console.log(`${environment.backOfficeUrl}${environment.unpairedPayments}`)
         return this.http.get<Payment[]>(`${environment.backOfficeUrl}${environment.unpairedPayments}`);
     }
 
@@ -32,16 +31,29 @@ export class PaymentService {
         });
     }
 
-    public getPayments(from: string, to: string,
-                       monthly) {
+    public getPayments(from: string, to: string, monthly, page: number = 1, filterColumns?: Column[], sort?,
+                       pageSize: number = 10): Observable<any> {
         const headers = new HttpHeaders().append('Content-Type', 'application/json');
         let params = new HttpParams()
-            .append('from', from)
-            .append('to', to);
-        if (monthly !== undefined) {
+            .append('page', page + '')
+            .append('page_size', pageSize + '');
+        if (from != null) {
+            params = params.append('from', from);
+        }
+        if (to != null) {
+            params = params.append('to', to);
+        }
+        if (monthly != null) {
             params = params.append('monthly', monthly);
         }
-        return this.http.get<[Payment]>(
+        if (filterColumns !== undefined) {
+            params = this.helpersService.transformFilterColumnsToParams(params, filterColumns);
+        }
+        if (sort && sort.sort_by !== null && sort.asc !== null) {
+            params = params.append('order_' + sort.sort_by.value_name, sort.asc ? 'ASC' : 'DESC');
+        }
+
+        return this.http.get<Payment[]>(
             `${environment.backOfficeUrl}${environment.payment}${environment.list}`,
             {
                 headers: headers,
@@ -73,5 +85,26 @@ export class PaymentService {
         const formData: FormData = new FormData();
         formData.append('file', file);
         return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/import-payments`, formData, options);
+    }
+
+    public pairAccountNameToPayments(file: File): Observable<any> {
+        const params = new HttpParams();
+        const options = {
+            params: params,
+            reportProgress: true,
+        };
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+        return this.http.post(`${environment.backOfficeUrl}${environment.importPayments}/pair-account-name-to-payments`,
+            formData, options);
+    }
+
+    public bulkPairing(bulkPaymentsPairing: { paymentIds: number[]; userId: any; }): Observable<any> {
+        return this.http.post(`${environment.backOfficeUrl}${environment.bulkPaymentPairing}`, bulkPaymentsPairing);
+    }
+
+    public bulkUnpairing(bulkPaymentsUnpairing:  { paymentIds: number[]}): Observable<any> {
+        return this.http.post(`${environment.backOfficeUrl}${environment.bulkPaymentUnpairing}`,
+            bulkPaymentsUnpairing);
     }
 }

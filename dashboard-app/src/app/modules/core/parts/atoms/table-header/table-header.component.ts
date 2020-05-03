@@ -17,12 +17,17 @@ export class TableHeaderComponent implements OnInit {
 
     @Output() modelChange = new EventEmitter();
 
+    @Output() modelFilterChange = new EventEmitter();
+
+    @Output() modelCheckedChange = new EventEmitter();
+
     @Input() hide: string[] = [];
 
     public asc;
     public min;
     public max;
     public textSearch;
+    public checked: boolean;
 
 
     constructor() {
@@ -33,27 +38,30 @@ export class TableHeaderComponent implements OnInit {
 
     // toogle ordering based on actual sort by value
     toogleOrdering() {
-        if (this.model.sortBy !== this.column || this.model.asc) {
-            this.asc = false;
-        } else {
-            this.asc = true;
+        if (!this.column.preventSorting) {
+            if (this.model.sortBy !== this.column || this.model.asc) {
+                this.asc = false;
+            } else {
+                this.asc = true;
+            }
+            this.model.sortBy = this.column;
+            this.model.asc = this.asc;
+            this.modelChange.emit(this.model);
         }
-        this.model.sortBy = this.column;
-        this.model.asc = this.asc;
-        this.modelChange.emit(this.model);
     }
 
     // update filters
     setFilter(type, input) {
         this.model.columns.forEach(column => {
             if (column.description === this.column.description) {
-                if (this.column.value_name.indexOf('user_detail.searchName') > -1) {
-                    column.filter[type] = input.toLowerCase();
-                } else {
-                    column.filter[type] = input;
-                }
+                column.filter[type] = input;
             }
         });
-        this.modelChange.emit(this.model);
+        this.modelFilterChange.emit(this.model);
+    }
+
+    // update filters
+    emitCheckedChanges(type, input) {
+        this.modelCheckedChange.emit({'column' : type, 'checked' : input });
     }
 }

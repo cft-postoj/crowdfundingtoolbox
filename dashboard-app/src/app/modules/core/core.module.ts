@@ -35,6 +35,12 @@ import { PreviousPageComponent } from './components/previous-page/previous-page.
 import {PortalConnectionsSettingsComponent} from './components/portal-connections-settings/portal-connections-settings.component';
 import { ResponsiveComponent } from './pages/responsive/responsive.component';
 import { SafariDatePipe } from './pipes/safari-date.pipe';
+import {PaginatorModule} from 'primeng/paginator';
+import { UploadCsvComponent } from './components/upload-csv/upload-csv.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {OrderListModule} from 'primeng/orderlist';
+import {SelectModule} from 'ng2-select';
+import {MonthlyPipe} from './pipes/monthly.pipe';
 
 @NgModule({
     declarations: [
@@ -58,8 +64,11 @@ import { SafariDatePipe } from './pipes/safari-date.pipe';
         PreviewMonetizationComponent,
         ModalFullSizeComponent,
         StatusComponent,
+        UploadCsvComponent,
+
 
         SafePipe,
+        MonthlyPipe,
         SlovakNumberFormatter,
         TableHeaderComponent,
         InputTextComponent,
@@ -85,6 +94,10 @@ import { SafariDatePipe } from './pipes/safari-date.pipe';
         NgCircleProgressModule.forRoot({
             space: -5
         }),
+        PaginatorModule,
+        OrderListModule,
+        TranslateModule,
+        SelectModule
     ],
     exports: [
 
@@ -112,11 +125,13 @@ import { SafariDatePipe } from './pipes/safari-date.pipe';
         TableHeaderComponent,
         ModalFullSizeComponent,
         StatusComponent,
+        UploadCsvComponent,
 
         // pipes
         SafePipe,
         SlovakNumberFormatter,
         SafariDatePipe,
+        MonthlyPipe,
         // modules
         CommonModule,
         RouterModule,
@@ -132,6 +147,11 @@ import { SafariDatePipe } from './pipes/safari-date.pipe';
         ExportCsvComponent,
         HelpComponent,
         PreviousPageComponent,
+        PaginatorModule,
+        OrderListModule,
+        SelectModule,
+        InlineSVGModule
+
 
     ]
 })

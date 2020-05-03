@@ -16,7 +16,7 @@ class WidgetTypesController extends Controller
 
     public static function getWidgetTypeIds()
     {
-        return WidgetType::with('widgetSubtypes')->get()->sortBy('id');
+        return WidgetType::get()->sortBy('id');
     }
 
     public function getWidgetTypeById($id)

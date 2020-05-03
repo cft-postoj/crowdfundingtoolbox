@@ -6,7 +6,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent {
-    @Input() type: string;
+    @Input() type: 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'secondary' | 'light' | 'dark';
     @Input() message: string;
     @Input() open: boolean;
     @Input() class: string;
@@ -14,9 +14,10 @@ export class AlertComponent {
     @Output()
     openChange = new EventEmitter<boolean>();
 
-    constructor() {}
+    constructor() {
+    }
 
-    closeAlert(){
+    closeAlert() {
         this.openChange.emit(false);
     }
 }

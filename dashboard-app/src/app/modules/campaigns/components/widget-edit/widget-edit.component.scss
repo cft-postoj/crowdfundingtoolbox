@@ -1,0 +1,19 @@
+::ng-deep .ui-orderlist-list {
+    height: 100%;
+}
+
+::ng-deep ngx-select .btn {
+    width: auto;
+    height: auto;
+}
+
+::ng-deep ngx-select .ngx-select__search.form-control {
+    cursor: pointer;
+    background: url('/assets/images/icons/add.svg') no-repeat;
+    padding-left: 50px!important;
+    height: 50px!important;
+}
+
+ngx-select .dropdown-menu {
+    display: block;
+}

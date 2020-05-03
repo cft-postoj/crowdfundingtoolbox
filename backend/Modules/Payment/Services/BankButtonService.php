@@ -11,9 +11,9 @@ class BankButtonService
 
     private $bankButtonRepository;
 
-    public function __construct(BankButtonRepository $bankButtonRepository)
+    public function __construct()
     {
-        $this->bankButtonRepository = $bankButtonRepository;
+        $this->bankButtonRepository = new BankButtonRepository();
     }
 
     public function getBankButtons()

@@ -52,4 +52,5 @@ export class Routing {
     static readonly IMPORT_PAYMENTS = `${Routing.PAYMENT}/import-payments`;
 
     static readonly DONORS = 'donors';
+    public static IMPORT = 'import';
 }

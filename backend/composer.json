@@ -12,6 +12,7 @@
         "darkaonline/l5-swagger": "5.8.*",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.5",
         "illuminated/helper-functions": "^5.8",
         "jadjoubran/laravel-angular": "^0.4.0",
         "jenssegers/agent": "^2.6",

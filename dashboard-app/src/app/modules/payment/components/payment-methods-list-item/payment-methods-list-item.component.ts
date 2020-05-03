@@ -21,7 +21,8 @@ export class PaymentMethodsListItemComponent implements OnInit {
 
     ngOnInit() {
         this.extraClass = 'inactive';
-        if (this.paymentMethod.method_slug === 'bank-transfer' || this.paymentMethod.method_slug === 'pay-by-square') {
+        if (this.paymentMethod.method_slug === 'bank-transfer' || this.paymentMethod.method_slug === 'pay-by-square'
+            || this.paymentMethod.method_slug === 'card') {
             this.extraClass = 'active';
         }
     }
