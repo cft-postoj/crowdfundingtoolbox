@@ -12,7 +12,7 @@ class Campaign extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'active', 'description', 'date_from', 'date_to', 'headline_text', 'updated_at','prevent_disable'
+        'name', 'active', 'description', 'date_from', 'date_to', 'headline_text', 'updated_at','prevent_disable','priority'
     ];
 
     public function targeting() {
@@ -25,6 +25,16 @@ class Campaign extends Model
 
     public function widget() {
         return $this->hasMany('\Modules\Campaigns\Entities\Widget');
+    }
+
+    function shows()
+    {
+        return $this->hasManyThrough('\Modules\UserManagement\Entities\TrackingShow', '\Modules\Campaigns\Entities\Widget');
+    }
+
+    function donations()
+    {
+        return $this->hasManyThrough('\Modules\Payment\Entities\Donation', '\Modules\Campaigns\Entities\Widget');
     }
 
 }

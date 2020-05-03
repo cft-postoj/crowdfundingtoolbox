@@ -3,13 +3,18 @@
 namespace Modules\Campaigns\Services;
 
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Modules\Campaigns\Entities\Campaign;
 use Modules\Campaigns\Entities\CampaignImage;
 use Modules\Campaigns\Entities\CampaignsConfiguration;
+use Modules\Campaigns\Entities\CampaignsVisited;
 use Modules\Campaigns\Entities\DeviceType;
+use Modules\Campaigns\Entities\UserData;
+use Modules\Campaigns\Entities\UserDonationData;
 use Modules\Campaigns\Entities\Widget;
 use Modules\Campaigns\Entities\WidgetResult;
 use Modules\Campaigns\Entities\WidgetSettings;
@@ -24,8 +29,15 @@ use Modules\Campaigns\WidgetTypesResources\LeaderboardWidget;
 use Modules\Campaigns\WidgetTypesResources\LockedArticleWidget;
 use Modules\Campaigns\WidgetTypesResources\PopupWidget;
 use Modules\Campaigns\WidgetTypesResources\SidebarWidget;
+use Modules\Payment\Services\ComfortPayService;
+use Modules\Payment\Services\DonationService;
+use Modules\Payment\Services\PaymentService;
+use Modules\Targeting\Entities\Targeting;
+use Modules\UserManagement\Emails\DonationEmail;
 use Modules\UserManagement\Services\PortalUserService;
+use Modules\UserManagement\Services\TrackingCampaignShowService;
 use Modules\UserManagement\Services\TrackingService;
+use Modules\UserManagement\Services\UserDetailService;
 use Modules\UserManagement\Services\UserService;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -46,6 +58,13 @@ class WidgetService implements WidgetServiceInterface
     private $articleService;
     private $portalUserService;
     private $campaignRepository;
+    private $paymentService;
+    private $donationService;
+    private $trackingCampaignShowS;
+    private $userDetailService;
+
+    const FIXED_WIDGET_TYPE_ID = 5;
+    const POPUP_WIDGET_TYPE_ID = 4;
 
     public function __construct(TrackingService $trackingService,
                                 UserService $userService,
@@ -57,7 +76,11 @@ class WidgetService implements WidgetServiceInterface
                                 ArticleWidget $articleWidget,
                                 ArticleService $articleService,
                                 PortalUserService $portalUserService,
-                                CampaignRepository $campaignRepository)
+                                CampaignRepository $campaignRepository,
+                                PaymentService $paymentService,
+                                DonationService $donationService,
+                                TrackingCampaignShowService $trackingCampaignShowService,
+                                UserDetailService $userDetailService)
     {
         $this->trackingService = $trackingService;
         $this->userService = $userService;
@@ -70,15 +93,19 @@ class WidgetService implements WidgetServiceInterface
         $this->articleService = $articleService;
         $this->portalUserService = $portalUserService;
         $this->campaignRepository = $campaignRepository;
+        $this->paymentService = $paymentService;
+        $this->donationService = $donationService;
+        $this->trackingCampaignShowS = $trackingCampaignShowService;
+        $this->userDetailService = $userDetailService;
     }
 
     public function createWidgetsForCampaign($campaignId)
     {
         $result = array();
         try {
-            $widgetIds = WidgetTypesController::getWidgetTypeIds();
-
-            foreach ($widgetIds as $id) {
+            $widgetTypes = WidgetTypesController::getWidgetTypeIds();
+            foreach ($widgetTypes as $widgetType) {
+                $id = $widgetType->id;
                 $widgetSettingsDesktop = $this->initialWidgetSettings($campaignId, $id, 'desktop');
                 $widgetSettingsTablet = $this->initialWidgetSettings($campaignId, $id, 'tablet');
                 $widgetSettingsMobile = $this->initialWidgetSettings($campaignId, $id, 'mobile');
@@ -91,12 +118,6 @@ class WidgetService implements WidgetServiceInterface
                     'payment_type' => $paymentType
                 ]);
 
-                $widget->settings = WidgetSettings::create([
-                    'widget_id' => $widget->id,
-                    'desktop' => $this->overrideMonetization(DeviceType::find(1), $widgetSettingsDesktop, $id),
-                    'tablet' => $this->overrideMonetization(DeviceType::find(2), $widgetSettingsTablet, $id),
-                    'mobile' => $this->overrideMonetization(DeviceType::find(3), $widgetSettingsMobile, $id)
-                ]);
                 // create Widget results
                 $widget->result = WidgetResult::create([
                     'widget_id' => $widget->id,
@@ -126,11 +147,23 @@ class WidgetService implements WidgetServiceInterface
             'payment_type' => $paymentType
         ]);
 
-        WidgetSettings::where('widget_id', $id)->update([
-            'desktop' => json_encode($rawWidgetData['settings']['desktop']),
-            'tablet' => json_encode($rawWidgetData['settings']['tablet']),
-            'mobile' => json_encode($rawWidgetData['settings']['mobile'])
-        ]);
+        if ($rawWidgetData['contains_additional_widget_settings']) {
+            foreach ($rawWidgetData['additional_widget_settings'] as $widgetSetting) {
+                WidgetSettings::where('widget_id', $id)
+                    ->update([
+                        'desktop' => json_encode($widgetSetting['settings']['desktop']),
+                        'tablet' => json_encode($widgetSetting['settings']['tablet']),
+                        'mobile' => json_encode($widgetSetting['settings']['mobile']),
+                        'active' => $widgetSetting['active']
+                    ]);
+            }
+        } else {
+            WidgetSettings::where('widget_id', $id)->update([
+                'desktop' => json_encode($rawWidgetData['settings']['desktop']),
+                'tablet' => json_encode($rawWidgetData['settings']['tablet']),
+                'mobile' => json_encode($rawWidgetData['settings']['mobile'])
+            ]);
+        }
         if (CampaignImage::where('widget_id', $rawWidgetData->id)->first() == null &&
             $rawWidgetData['settings']['desktop']['widget_settings']['general']['background']['image']['url'] != null) {
             // create image mapping
@@ -1715,6 +1748,7 @@ class WidgetService implements WidgetServiceInterface
                     );
                 }
                 break;
+            case 10: // article_advanced
             case 6: // locked
                 if ($deviceType == 'desktop') {
                     $result = array(
@@ -2185,8 +2219,27 @@ class WidgetService implements WidgetServiceInterface
                     'left' => 'auto'
                 )
             );
+            $result['widget_settings']['additional_text'] = array(
+                'text' => '',
+                'fontSettings' => array(
+                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                    'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                    'alignment' => 'center',
+                    'color' => $generalSettingsHeadlineText['color'],
+                    'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                    'fontSize' => 18
+                ),
+                'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                'text_margin' => array(
+                    'top' => '0',
+                    'right' => 'auto',
+                    'bottom' => '0',
+                    'left' => 'auto'
+                )
+            );
 
         } else {
+
             $articleWidgetText = null;
             if ($widgetType == 7) {
                 $articleWidgetText = '<p><b><font color="#004080">Thank you for reading this article.</font></b></p><p><b><font color=\"#004080\">Our articles are made only</font></b></p><p><b><font color="#114b7d">by our subscribers.<\/font><\/b><\/p><p><i>Lorem ipsum ...<\/i><\/p><p><b><a href="/podpora"><font color="#cc0000">Be our subscriber now!</font></a></b></p><p><b><font color="#114b7d">Thanks!</font></b></p>';
@@ -2238,6 +2291,26 @@ class WidgetService implements WidgetServiceInterface
                     'left' => 'auto'
                 )
             );
+
+            $this->widgetSettings['additional_text_bottom'] = array(
+                'text' => '',
+                'fontSettings' => array(
+                    'fontFamily' => $generalSettingsHeadlineText['fontFamily'],
+                    'fontWeight' => $generalSettingsHeadlineText['fontWeight'],
+                    'alignment' => 'center',
+                    'color' => $generalSettingsHeadlineText['color'],
+                    'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                    'fontSize' => 18
+                ),
+                'backgroundColor' => $generalSettingsHeadlineText['backgroundColor'],
+                'text_margin' => array(
+                    'top' => '0',
+                    'right' => 'auto',
+                    'bottom' => '0',
+                    'left' => 'auto'
+                )
+            );
+
 
             $result = array(
                 'headline_text' => $generalWidgetSettings['headline_text']['text'],
@@ -2491,7 +2564,7 @@ class WidgetService implements WidgetServiceInterface
             'type' => 'classic',
             'monetization_title' => array(
                 'fontSettings' => array(
-                    'fontFamily' => '"Roboto Slab", sans-serif',
+                    'fontFamily' => 'Roboto Slab',
                     'fontWeight' => '700',
                     'backgroundColor' => '#fff',
                     'fontSize' => 21
@@ -2537,18 +2610,28 @@ class WidgetService implements WidgetServiceInterface
                 'count_of_options_in_row' => 3,
                 'options' => array(
                     array(
+                        'title' => '',
+                        'description' => '',
                         'value' => 30
                     ),
                     array(
+                        'title' => 'VIP člen klubu',
+                        'description' => '<div><ul><li><b>tlačené noviny</b> raz ročne</li><li>darček - <b>kniha </b>len pre darcov</li><li><b>zľava na knihy</b> z vydavatelstva Postoj</li><li><b>VIP vstup</b> na eventy Postoj</li></ul></div>',
                         'value' => 20
                     ),
                     array(
+                        'title' => '',
+                        'description' => '',
                         'value' => 15
                     ),
                     array(
+                        'title' => 'Člen Klubu Postoj',
+                        'description' => '<div><ul><li><b>tlačené noviny</b> raz ročne</li><li>darček - <b>kniha </b>len pre darcov</li><li><b>zľava na knihy</b> z vydavatelstva Postoj</li></ul></div>',
                         'value' => 10
                     ),
                     array(
+                        'title' => 'Čestný čitateľ postoj Postoj',
+                        'description' => '<ul><li><b>tlačené noviny</b> raz ročne</li></ul>',
                         'value' => 5
                     ),
                 ),
@@ -2556,6 +2639,210 @@ class WidgetService implements WidgetServiceInterface
                     'active' => true,
                     'text' => 'Donate 10 € or more monthly to <b>become a premium member</b>',
                     'value' => 10
+                ),
+                'benefits' => array(
+                    array(
+                        'id' => 1,
+                        'text' => '<b>pomáhate tvoriť kvalitnú žurnalistiku</b>'
+                    ),
+                    array(
+                        'id' => 2,
+                        'text' => '<b>tlačené noviny</b> raz ročne'
+                    ),
+                    array(
+                        'id' => 3,
+                        'text' => 'Darček - <b>kniha</b> len pre darcov'
+                    ),
+                    array(
+                        'id' => 4,
+                        'text' => '<b>Zľava na knihy</b> z vydavatelstva Postoj'
+                    ),
+                    array(
+                        'id' => 5,
+                        'text' => '<b>VIP vstup</b> na eventy Postoj'
+                    ),
+                    array(
+                        'id' => 6,
+                        'text' => 'Pozvánka na diskusné večery s redaktormi'
+                    ),
+                    array(
+                        'id' => 7,
+                        'text' => '<b>špeciálny darček z Postoja</b>'
+                    )
+                ),
+                'columns_count' => 3,
+                'columns' => array(
+                    array(
+                        'header' => array(
+                            'enable' => false,
+                            'text' => 'BEST OPTION',
+                            'color' => '#fff',
+                            'background_color' => '#2178CB'
+                        ),
+                        'title' => 'Čestný čitateľ Postoj',
+                        'active_benefits' => [
+                            array(
+                                'id' => 1,
+                                'text' => '<b>pomáhate tvoriť kvalitnú žurnalistiku</b>'
+                            ),
+                        ],
+                        'show_benefits' => [
+                            array(
+                                'id' => 1,
+                                'text' => '<b>pomáhate tvoriť kvalitnú žurnalistiku</b>'
+                            ),
+                            array(
+                                'id' => 3,
+                                'text' => 'Darček - <b>kniha</b> len pre darcov'
+                            ),
+                            array(
+                                'id' => 4,
+                                'text' => '<b>Zľava na knihy</b> z vydavatelstva Postoj'
+                            ),
+                            array(
+                                'id' => 5,
+                                'text' => '<b>VIP vstup</b> na eventy Postoj'
+                            ),
+                            array(
+                                'id' => 6,
+                                'text' => 'Pozvánka na diskusné večery s redaktormi'
+                            ),
+                        ],
+                        'custom_price' => false,
+                        'count_of_options' => 2,
+                        'count_of_options_in_row' => 2,
+                        'options' => array(
+                            array('value' => 5),
+                            array('value' => 7)
+                        )
+                    ),
+                    array(
+                        'header' => array(
+                            'enable' => true,
+                            'text' => 'OBĽÚBENÁ VOĽBA',
+                            'color' => '#fff',
+                            'background_color' => '#2178CB'
+                        ),
+                        'title' => 'Člen Klubu Postoj',
+                        'active_benefits' => [
+                            array(
+                                'id' => 1,
+                                'text' => '<b>pomáhate tvoriť kvalitnú žurnalistiku</b>'
+                            ),
+                            array(
+                                'id' => 2,
+                                'text' => '<b>tlačené noviny</b> raz ročne'
+                            ),
+                            array(
+                                'id' => 3,
+                                'text' => 'Darček - <b>kniha</b> len pre darcov'
+                            ),
+                            array(
+                                'id' => 4,
+                                'text' => '<b>Zľava na knihy</b> z vydavatelstva Postoj'
+                            ),
+                        ],
+                        'show_benefits' => [
+                            array(
+                                'id' => 1,
+                                'text' => '<b>pomáhate tvoriť kvalitnú žurnalistiku</b>'
+                            ),
+                            array(
+                                'id' => 2,
+                                'text' => '<b>tlačené noviny</b> raz ročne'
+                            ),
+                            array(
+                                'id' => 3,
+                                'text' => 'Darček - <b>kniha</b> len pre darcov'
+                            ),
+                            array(
+                                'id' => 4,
+                                'text' => '<b>Zľava na knihy</b> z vydavatelstva Postoj'
+                            ),
+                            array(
+                                'id' => 5,
+                                'text' => '<b>VIP vstup</b> na eventy Postoj'
+                            ),
+                            array(
+                                'id' => 6,
+                                'text' => 'Pozvánka na diskusné večery s redaktormi'
+                            ),
+                        ],
+                        'custom_price' => false,
+                        'count_of_options' => 2,
+                        'count_of_options_in_row' => 2,
+                        'options' => array(
+                            array('value' => 10),
+                            array('value' => 20)
+                        )
+                    ),
+                    array(
+                        'header' => array(
+                            'enable' => false,
+                            'text' => 'BEST OPTION',
+                            'color' => '#fff',
+                            'background_color' => '#2178CB'
+                        ),
+                        'title' => 'VIP člen klubu',
+                        'active_benefits' => [
+                            array(
+                                'id' => 1,
+                                'text' => '<b>pomáhate tvoriť kvalitnú žurnalistiku</b>'
+                            ),
+                            array(
+                                'id' => 2,
+                                'text' => '<b>tlačené noviny</b> raz ročne'
+                            ),
+                            array(
+                                'id' => 3,
+                                'text' => 'Darček - <b>kniha</b> len pre darcov'
+                            ),
+                            array(
+                                'id' => 4,
+                                'text' => '<b>Zľava na knihy</b> z vydavatelstva Postoj'
+                            ),
+                            array(
+                                'id' => 5,
+                                'text' => '<b>VIP vstup</b> na eventy Postoj'
+                            ),
+                            array(
+                                'id' => 7,
+                                'text' => '<b>špeciálny darček z Postoja</b>'
+                            )
+                        ],
+                        'show_benefits' => [
+                            array(
+                                'id' => 1,
+                                'text' => '<b>pomáhate tvoriť kvalitnú žurnalistiku</b>'
+                            ),
+                            array(
+                                'id' => 2,
+                                'text' => '<b>tlačené noviny</b> raz ročne'
+                            ),
+                            array(
+                                'id' => 3,
+                                'text' => 'Darček - <b>kniha</b> len pre darcov'
+                            ),
+                            array(
+                                'id' => 4,
+                                'text' => '<b>Zľava na knihy</b> z vydavatelstva Postoj'
+                            ),
+                            array(
+                                'id' => 5,
+                                'text' => '<b>VIP vstup</b> na eventy Postoj'
+                            ),
+                            array(
+                                'id' => 7,
+                                'text' => '<b>špeciálny darček z Postoja</b>'
+                            )
+                        ],
+                        'custom_price' => true,
+                        'count_of_options' => 1,
+                        'count_of_options_in_row' => 2,
+                        'options' => array(
+                            array('value' => 30)
+                        )
+                    )
                 )
             ),
             'once_prices' => array(
@@ -2585,6 +2872,8 @@ class WidgetService implements WidgetServiceInterface
                     'value' => 100
                 )
             ),
+            'price_background_color' => 'inherit',
+            'price_text_color' => 'inherit',
             'default_price' => array(
                 'monthly_active' => true,
                 'monthly_value' => 20,
@@ -2725,6 +3014,7 @@ class WidgetService implements WidgetServiceInterface
                     (($deviceType === 'tablet') ? $this->fixedWidget->initTablet()
                         : $this->fixedWidget->initMobile());
                 break;
+            case 10: // article_advanced
             case 6: // locked article
                 $outputJson = ($deviceType === 'desktop')
                     ? $this->lockedArticleWidget->initDesktop() :
@@ -2779,6 +3069,7 @@ class WidgetService implements WidgetServiceInterface
         return Widget::orderBy('active', 'desc')
             ->with('widgetSettings')
             ->with('campaignImage')
+            ->with('widgetResults')
             ->orderBy('updated_at', 'desc')
             ->get()
             ->where('campaign_id', $campaignId);
@@ -2884,53 +3175,334 @@ class WidgetService implements WidgetServiceInterface
             ->where('campaign_id', $campaign->id)->whereIn('widget_type_id', [1, 2, 3, 5]);
     }
 
+    public function closePopupFixedWidget($user_cookie, $widget_id)
+    {
+        $widget = Widget::where('id', $widget_id)->first();
+        CampaignsVisited::where('campaign_id', $widget->campaign_id)->where('user_cookie', $user_cookie)->update([
+            'click_on_x' => true
+        ]);
+    }
+
+
     /**
      * @return array
      */
-    public function getWidgets($url, $article, $userCookie, $userToken, $ip)
+    public function getWidgets($url, $article, $special, $userCookie, $userToken, $referalWidgetId, $ip, $popupTime)
     {
+        // TESTING EMAIL
+        //Mail::to('ondas.stevo@gmail.com')->send(new DonationEmail(null, null, '**** **** **** 1234', 'cardExpiration', 'monthly', null));
+
+        // Comfortpay testing
+//        $comfortpayService = new ComfortPayService();
+//        dd($comfortpayService->ping());
+
+        $user = (JWTAuth::getToken())
+            ? ((JWTAuth::check()) ? JWTAuth::parseToken()->authenticate() : null)
+            : null;
+
+        if ($special === 'is_user_account') {
+            $availableWidgets = Widget::get()
+                ->where('active', true)
+                ->whereIn('campaign_id', 1); // default campaign
+
+            //get widgets but only one for specific widget_type_id.
+            $widgetDistinctType = array();
+            $usedWidgetIds = array();
+            $usedCampaignIds = array();
+            $userId = $user['id'];
+            $portalUserId = $this->portalUserService->getPortalUserIdByUserId($userId);
+            //track visit
+            $trackingVisit = $this->trackingService->createVisit($portalUserId, null, $url, null);
+
+            //filter campaigns - get users data -read articles
+            $readArticles = $this->articleService->getNumberOfArticlesPortalUser($portalUserId);
+            $validAddress = JWTAuth::parseToken()->getPayload()['valid_address'];
+            if ($validAddress == null) {
+                $userDetail = $this->userDetailService->getByUserId($userId);
+                $validAddress = $this->userService->userHaveValidAddress($userDetail);
+            }
+            $userData = new UserData(true, $readArticles);
+            $userData->setValidAddress($validAddress);
+            $campaigns = $this->campaignRepository->getActiveCampaigns($userData, $url, '', '');
+            //filter campaigns - get users data - donations
+            $donations = $this->donationService->getDonationsByPortalUserId($portalUserId);
+
+            $this->trackingCampaignShowS->getByPortalUserId($portalUserId);
+            foreach ($availableWidgets as $widget) {
+                if (!in_array($widget['widget_type_id'], $usedWidgetIds)) {
+                    $widget['widget_id'] = $widget['id'];
+                    array_push($widgetDistinctType, WidgetResultResource::make($widget));
+                    array_push($usedWidgetIds, $widget['widget_type_id']);
+                    if (!in_array($widget['campaign_id'], $usedCampaignIds)) {
+                        array_push($usedCampaignIds, $widget['campaign_id']);
+                    }
+                }
+            }
+            $result['widgets'] = $widgetDistinctType;
+            //append addition properties to help tracking with user tracking
+            $result['tracking_visit_id'] = $trackingVisit->id;
+            $result['user_cookie'] = $userCookie;
+            return $result;
+        }
+
+        //only for page, where is landing page, a.k.a. fero
+        if ($special === 'support') {
+            //logged user
+            if ($user !== null && $user !== false) {
+                $userId = $user['id'];
+                $portalUserId = $this->portalUserService->getPortalUserIdByUserId($userId);
+                //track visit
+                $trackingVisit = $this->trackingService->createVisit($portalUserId, null, $url, null);
+            } else {
+                //create new cookie, if user dont send any cookie
+                if ($userCookie == null || $userCookie == "" || $userCookie == "null" || $userCookie == "undefined") {
+                    $cookie = $this->userService->createCookieIfNew($ip);
+                    $userCookie = $cookie->id;
+                } else if ($userCookie !== null && $userCookie !== null && $userCookie !== 'null' && $userCookie !== 'undefined') {
+                    if (sizeof($this->trackingCampaignShowS->getByUserCookieId($userCookie)) === 0) {
+                        $cookie = $this->userService->createCookieIfNew($ip);
+                        $userCookie = $cookie->id;
+                    }
+                }
+                //track visit
+                $trackingVisit = $this->trackingService->createVisit(null, $userCookie, $url, null);
+            }
+            //request without referal widget id always return default landing page.
+            if ($referalWidgetId === null) {
+                $landingWidget = Widget::get()->where('campaign_id', 1)->where('widget_type_id', 1)->first();
+            } else {
+                $landingWidget = $this->getLandingOfCampaignContainingWidget($referalWidgetId);
+                if ($landingWidget === null) {
+                    $landingWidget = Widget::get()->where('campaign_id', 1)->where('widget_type_id', 1)->first();
+                }
+
+            }
+            $landingWidget['widget_id'] = $landingWidget['id'];
+            $result['widgets'] = [WidgetResultResource::make($landingWidget)];
+            //append addition properties to help tracking with user tracking
+            $result['tracking_visit_id'] = $trackingVisit->id;
+            $result['user_cookie'] = $userCookie;
+
+            return $result;
+        }
 
         //handle article
         $articleId = null;
         if ($article != null) {
             $articleId = $this->articleService->createArticleIfDontExist($article)->id;
         }
-        $user = (JWTAuth::getToken())
-            ? ((JWTAuth::check()) ? JWTAuth::parseToken()->authenticate() : null)
-            : null;
 
-        $campaignIds = [];
+        $author = ($article !== null) ? $article['author'] : null;
+        $category = ($article !== null) ? $article['category_title'] : null;
+
         //logged user
-        if ($user != null) {
+        if ($user !== null && $user !== false) {
             $userId = $user['id'];
             $portalUserId = $this->portalUserService->getPortalUserIdByUserId($userId);
+            //track visit
             $trackingVisit = $this->trackingService->createVisit($portalUserId, null, $url, $articleId);
-            $campaignIds = $this->getActiveCampaigns(true, null, $url)->pluck('id');
 
+            //filter campaigns - get users data -read articles
+            $readArticles = $this->articleService->getNumberOfArticlesPortalUser($portalUserId);
+            $validAddress = JWTAuth::parseToken()->getPayload()['valid_address'];
+            if ($validAddress == null) {
+                $userDetail = $this->userDetailService->getByUserId($userId);
+                $validAddress = $this->userService->userHaveValidAddress($userDetail);
+            }
+            $userData = new UserData(true, $readArticles);
+            $userData->setValidAddress($validAddress);
+
+            $campaigns = $this->campaignRepository->getActiveCampaigns($userData, $url, $author, $category);
+            //filter campaigns - get users data - donations
+            $donations = $this->donationService->getDonationsByPortalUserIdWithPaymentId($portalUserId);
+            $campaigns = $this->donationService->filterCampaignByTargetingAndDonations($campaigns, $donations);
+
+            $trackingCampaignShow = $this->trackingCampaignShowS->getByPortalUserId($portalUserId);
         } else {
-            $cookie = $this->userService->createCookieIfNew($userCookie, null, $ip);
-            $userCookieId = $cookie->id;
-            $trackingVisit = $this->trackingService->createVisit(null, $userCookieId, $url, $articleId);
-            $campaignIds = $this->getActiveCampaigns(null, true, $url)->pluck('id');
+            //create new cookie, if user dont send any cookie
+            if ($userCookie == null || $userCookie == "" || $userCookie == "null" || $userCookie == "undefined") {
+                $cookie = $this->userService->createCookieIfNew($ip);
+                $userCookie = $cookie->id;
+            } else if ($userCookie !== null && $userCookie !== null && $userCookie !== 'null' && $userCookie !== 'undefined') {
+                if (sizeof($this->trackingCampaignShowS->getByUserCookieId($userCookie)) === 0) {
+                    $cookie = $this->userService->createCookieIfNew($ip);
+                    $userCookie = $cookie->id;
+                }
+            }
+
+            //track visit
+            $trackingVisit = $this->trackingService->createVisit(null, $userCookie, $url, $articleId);
+            //filter campaigns - get users data -read articles
+            $readArticles = $this->articleService->getNumberOfArticlesUserCookie($userCookie);
+            $userData = new UserData(false, $readArticles);
+
+            $campaigns = $this->campaignRepository->getActiveCampaigns($userData, $url, $author, $category)->toArray();
+
+            //remove show, not valid campaigns
+            $trackingCampaignShow = $this->trackingCampaignShowS->getByUserCookieId($userCookie);
         }
 
-        $randomResponse =
-            Widget::inRandomOrder()
-                ->get()
-                ->where('active', true)
-                ->whereIn('campaign_id', $campaignIds);
-        $onlyThreeWidgets = array();
-        $usedWidgetIds = array();
+        // TODO: FIX THIS .. request of this method is running long time (more than 40 seconds)
+        //$campaigns = $this->trackingCampaignShowS->orderByShowedCampaigns($trackingCampaignShow, $campaigns);
+        $campaignIds = array_column($campaigns, 'id');
+        // remove first campaign from array (not show in base pages)
+        $campaignIds = array_diff($campaignIds, [1]);
 
-        foreach ($randomResponse as $rand) {
-            if (!in_array($rand['widget_type_id'], $usedWidgetIds)) {
-                $rand['widget_id'] = $rand->id;
-                array_push($onlyThreeWidgets, WidgetResultResource::make($rand));
-                array_push($usedWidgetIds, $rand['widget_type_id']);
+
+        $availableWidgets = Widget::get()
+            ->where('active', true)
+            ->whereIn('campaign_id', $campaignIds)->toArray();
+
+        // order widget by campaign ids (e.g.: if campaign ids = [3,4,2], than widget from campaign 3 are first,
+        // than widgets from campaign 4 and 2)
+        usort($availableWidgets, (function ($key1, $key2) use ($campaignIds) {
+            return (array_search($key1['campaign_id'], $campaignIds) > array_search($key2['campaign_id'], $campaignIds));
+        }));
+
+        //get widgets but only one for specific widget_type_id.
+        $widgetDistinctType = array();
+        $usedWidgetIds = array();
+        $usedCampaignIds = array();
+        foreach ($availableWidgets as $widget) {
+            $alreadyAddedVisited = false;
+            // Check if campaign does not have set how often to display
+            $targeting = Targeting::where('campaign_id', $widget['campaign_id'])->first();
+            $visitingObject = CampaignsVisited::where('user_cookie', $userCookie)->where('campaign_id', $widget['campaign_id'])->first();
+            if ($visitingObject === null) {
+                $visiting = 0;
+                $previousVisit = '2000-01-01 0:00:00';
+            } else {
+                $visiting = $visitingObject->visits;
+                $previousVisit = $visitingObject->updated_at;
+            }
+            $canShowWidget = true;
+
+            // handle excluded homepage
+            if (($url === env('CFT_PORTAL_URL') || $url === env('CFT_PORTAL_URL') . '/') && $targeting->exclude_homepage) {
+                $canShowWidget = false;
+            }
+
+            if ($targeting->show_session) {
+                // IN THIS CASE SESSION MEANS - show once per 24 hours
+                if (Carbon::now() < Carbon::createFromFormat('Y-m-d H:i:s', $previousVisit)->addHours(24)) {
+                    $canShowWidget = false;
+                }
+            } else if ($visiting !== 0 && $targeting->show_nth_page_view) {
+                $visiting = (int)$visiting + 1;
+                if ($visiting % (int)$targeting->nth_page_view_count !== 0) {
+                    $canShowWidget = false;
+                    // add visiting for this widget (for next counting)
+                    $visitingObject->update([
+                        'portal_user_id' => empty($portalUserId) ? null : $portalUserId,
+                        'visits' => $visiting
+                    ]);
+                    $alreadyAddedVisited = true;
+                }
+            } else if ($visiting !== 0 && $targeting->show_nth_page_view_pause) {
+                $countPageView = (int)$targeting->nth_page_view_pause_count; // 5
+                $visiting = $visiting + 1;
+                for ($i = 1; $i <= $visiting; $i++) { // visiting = 15
+                    if ($i <= ($countPageView + (int)$targeting->nth_page_view_pause_pause)) { // 6, 7
+                        $canShowWidget = false;
+                        if ($i === ($countPageView + (int)$targeting->nth_page_view_pause_pause)) {
+                            // next iteration can show widget
+                            $countPageView = $i + (int)$targeting->nth_page_view_pause_count; // 7 + 5 = 12
+                        }
+                    }
+                }
+
+                // add visiting for this widget if is pause
+                if (!$canShowWidget) {
+                    $visitingObject->update([
+                        'portal_user_id' => empty($portalUserId) ? null : $portalUserId,
+                        'visits' => $visiting
+                    ]);
+                    $alreadyAddedVisited = true;
+                }
+            }
+
+            if ($canShowWidget && !in_array($widget['widget_type_id'], $usedWidgetIds)) {
+                $canStillShowWidget = true;
+                // if is popup or fixed widget
+                if ($widget['widget_type_id'] === self::POPUP_WIDGET_TYPE_ID || $widget['widget_type_id'] === self::FIXED_WIDGET_TYPE_ID) {
+                    // if click on X
+                    if ($targeting->popup_fixed_once && $visitingObject->click_on_x) {
+                        $canStillShowWidget = false;
+                    } else if ((int)$visiting !== 0 && $targeting->popup_fixed_again_after && $visitingObject->click_on_x) {
+                        if (!$alreadyAddedVisited) {
+                            $visiting = (int)$visiting + 1;
+                            if ($visiting % $targeting->popup_fixed_again_after_count !== 0) {
+                                $canStillShowWidget = false;
+                                $visitingObject->update([
+                                    'portal_user_id' => empty($portalUserId) ? null : $portalUserId,
+                                    'visits' => $visiting
+                                ]);
+                                $alreadyAddedVisited = true;
+                            }
+                        }
+
+                    } else {
+                        // if is POPUP -- EVERY 30mins
+                        if ($widget['widget_type_id'] === self::POPUP_WIDGET_TYPE_ID) {
+                            if ($popupTime !== null) {
+                                if (Carbon::createFromFormat('Y-m-d H:i:s', $popupTime) > Carbon::now()) {
+                                    $canStillShowWidget = false;
+                                }
+                            }
+                        }
+                    }
+
+                }
+                if ($canStillShowWidget) {
+                    $widget['widget_id'] = $widget['id'];
+                    array_push($widgetDistinctType, WidgetResultResource::make($widget));
+                    array_push($usedWidgetIds, $widget['widget_type_id']);
+                    if (!in_array($widget['campaign_id'], $usedCampaignIds)) {
+                        array_push($usedCampaignIds, $widget['campaign_id']);
+                    }
+                }
             }
         }
+
+
+        // save/update/don't change tracking_campaign_show depending on widgets and its campaigns, that was selected in previous step
+        foreach ($usedCampaignIds as $usedCampaignId) {
+            $searchIndex = array_search($usedCampaignId, array_column($campaigns, 'id'));
+            if ($searchIndex !== false) {
+                if (!empty($campaigns[$searchIndex]['create_new_campaign_show'])) {
+                    if (!empty($portalUserId)) {
+                        $this->trackingCampaignShowS->createByPortalUserId($portalUserId, $campaigns[$searchIndex]['id'], $userCookie);
+                    } else if ($userCookie) {
+                        $this->trackingCampaignShowS->createByUserCookieId($userCookie, $campaigns[$searchIndex]['id']);
+                    }
+                }
+                if (!empty($campaigns[$searchIndex]['update_campaign_show'])) {
+                    $this->trackingCampaignShowS->updateValidUntil($campaigns[$searchIndex]['update_campaign_show_id']);
+                }
+
+                // add visited campaign
+                $campaignVisited = CampaignsVisited::where('user_cookie', $userCookie)->where('campaign_id', $usedCampaignId)->first();
+                if ($campaignVisited !== null) {
+                    // UPDATE
+                    $campaignVisited->update([
+                        'portal_user_id' => empty($portalUserId) ? null : $portalUserId,
+                        'visits' => $campaignVisited->visits + 1
+                    ]);
+                } else {
+                    // CREATE
+                    CampaignsVisited::create([
+                        'campaign_id' => $usedCampaignId,
+                        'user_cookie' => $userCookie,
+                        'portal_user_id' => empty($portalUserId) ? null : $portalUserId,
+                        'visits' => 1
+                    ]);
+                }
+            }
+        }
+
+        $result['widgets'] = $widgetDistinctType;
+        //append addition properties to help tracking with user tracking
         $result['tracking_visit_id'] = $trackingVisit->id;
-        $result['widgets'] = $onlyThreeWidgets;
         $result['user_cookie'] = $userCookie;
         return $result;
     }
@@ -2953,16 +3525,18 @@ class WidgetService implements WidgetServiceInterface
             $newWidget->campaign_id = $newCampaign->id;
 
             $newWidget->save();
-            $newWidgetSettings = $widget->widgetSettings->replicate();
-            //$newWidgetSettings->widget_id = $newWidget->id;
 
-            // widget settings
-            WidgetSettings::create([
-                'widget_id' => $newWidget->id,
-                'desktop' => $newWidgetSettings['desktop'],
-                'tablet' => $newWidgetSettings['tablet'],
-                'mobile' => $newWidgetSettings['mobile']
-            ]);
+            // clone all widget settings
+            foreach ($widget->widgetSettings as $widgetSetting) {
+                $newWidgetSettings = $widgetSetting->replicate();
+                // widget settings
+                WidgetSettings::create([
+                    'widget_id' => $newWidget->id,
+                    'desktop' => $newWidgetSettings['desktop'],
+                    'tablet' => $newWidgetSettings['tablet'],
+                    'mobile' => $newWidgetSettings['mobile']
+                ]);
+            }
 
             foreach ($widget->campaignImage as $img) {
                 $newImg = $img->replicate();
@@ -2970,12 +3544,25 @@ class WidgetService implements WidgetServiceInterface
                 $newImg->widget_id = $newWidget->id;
                 $newImg->save();
             }
+
+            $newWidgetResult = $widget->widgetResults->replicate();
+            $newWidgetResult->widget_id = $newWidget->id;
+            $newWidgetResult->save();
         }
     }
 
-    private function getActiveCampaigns($signed, $notSigned, $url)
+    //get 'sibling' landing widget if campaign, where is widget has active landing widget
+    private function getLandingOfCampaignContainingWidget($widgetId)
     {
-        $activeCampaigns = $this->campaignRepository->getActiveCampaigns($signed, $notSigned, $url);
-        return $activeCampaigns;
+        $widgetId = 12;
+        return Widget::query()->whereHas('campaign', function ($q) use ($widgetId) {
+            $q->whereHas('widget', function ($q2) use ($widgetId) {
+                $q2->where('id', $widgetId);
+            });
+        })->where('widget_type_id', 1)
+            ->where('active', true)
+            ->first();
+
     }
+
 }

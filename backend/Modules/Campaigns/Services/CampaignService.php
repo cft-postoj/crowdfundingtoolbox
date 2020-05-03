@@ -106,13 +106,13 @@ class CampaignService implements CampaignServiceInterface
 
         $this->campaignPromoteService->createCampaignPromoteSettings($newCampaign->id, $newPromote);
 
-//        $newPromote->campaign_id = $newCampaign->id;
-//        $newCampaign->promote = $newPromote;
-
-
-
         $this->widgetService->cloneWidgetsInCampaign($campaign, $newCampaign);
         $this->targetingService->cloneTargeting($campaign, $newCampaign);
+
+        $user = Auth::user();
+        //id 1 should have user with username admin created during migration
+        $userId = Auth::user() != null ? $user->id : 1;
+        $newCampaign->tracking = $this->addTracking($newCampaign->id, $userId, $this->show($newCampaign->id));
 
         return $newCampaign;
     }
@@ -140,14 +140,7 @@ class CampaignService implements CampaignServiceInterface
      */
     public function getAll()
     {
-        return Campaign::orderBy('active', 'desc')
-            ->orderBy('updated_at', 'desc')
-            ->with('targeting')
-            ->with('promote')
-            ->with('widget')
-            ->with('widget.show')
-            ->with('widget.donation')
-            ->get();
+        return $this->campaignRepository->getAll();
     }
 
     /**
@@ -164,10 +157,9 @@ class CampaignService implements CampaignServiceInterface
             ->first();
     }
 
-    public function getActiveCampaigns($signed, $notSigned, $url)
+    public function getActiveCampaigns($userData, $url)
     {
-        return $this->campaignRepository->getActiveCampaigns($signed, $notSigned, $url);
-
+        return $this->campaignRepository->getActiveCampaigns($userData, $url);
     }
 
 }

@@ -119,4 +119,49 @@ class ImagesController extends Controller
         return $name;
     }
 
+    protected function uploadWysiwyg(Request $request)
+    {
+        try {
+            if ($request->hasFile('file')) {
+                $valid = validator($request->only('file'), [
+                    'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+                ]);
+                if ($valid->fails()) {
+                    $jsonError = response()->json([
+                        'error' => $valid->errors()
+                    ], Response::HTTP_BAD_REQUEST);
+                    return $jsonError;
+                }
+
+                $file = $request->file('file');
+                $name = $this->fileName($file->getClientOriginalName());
+                $size = (string)$file->getSize();
+                $type = (string)$file->getClientMimeType();
+                $file->move($this->imagePath, $name);
+
+                $responsePath = (strpos($this->imagePath, '/postoj-backend/') !== false) ?
+                    env('BACKEND_URL') . explode('/postoj-backend', $this->imagePath)[1] : $this->imagePath;
+
+               return \response()->json([
+                    'status' => true,
+                   'originalName' => $name,
+                   'generatedName' => $name,
+                   'msg' => 'Image upload successful',
+                   'imageUrl' => $responsePath . $name
+
+               ], Response::HTTP_CREATED);
+
+            } else {
+                return \response()->json([
+                    'error' => 'File image is required.'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+        } catch (\Exception $e) {
+            return \response()->json([
+                'error' => $e
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
 }

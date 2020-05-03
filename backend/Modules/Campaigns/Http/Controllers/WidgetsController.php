@@ -36,15 +36,6 @@ class WidgetsController extends Controller
     }
 
 
-    //TODO: create routing and fill data from request to widget
-//    private function create()
-//    {
-//        $this->widgetService->create();
-//        return response()->json([
-//            'message' => 'Successfully created widgets!'
-//        ], Response::HTTP_CREATED);
-//    }
-
 
     protected function delete(Request $request)
     {
@@ -228,14 +219,39 @@ class WidgetsController extends Controller
     {
         try {
             $onlyThreeWidgets = $this->widgetService->getWidgets(
-                $request['url'], $request['article'],
-                $request['user_cookie'], $request['user_id'], $_SERVER['REMOTE_ADDR']);
+                $request['url'], $request['article'], $request['special'],
+                $request['user_cookie'], $request['user_id'], $request['referral_widget_id'], $_SERVER['REMOTE_ADDR'], $request['popup_time']);
         } catch (\Exception $e) {
             return \response()->json([
                 'error' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
         }
         return $onlyThreeWidgets;
+    }
+
+    protected function closePopupFixedWidget(Request $request) {
+        $valid = validator($request->only('user_cookie', 'widget_id'), [
+            'user_cookie' => 'required',
+            'widget_id' => 'required'
+        ]);
+        if ($valid->fails()) {
+            return response()->json([
+                'error' => $valid->errors()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $this->widgetService->closePopupFixedWidget($request['user_cookie'], $request['widget_id']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e,
+                'message' => 'Wrong request format.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        return response()->json([
+            'message' => 'Success.'
+        ], Response::HTTP_CREATED);
     }
 
     /**

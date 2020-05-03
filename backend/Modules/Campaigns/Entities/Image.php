@@ -23,8 +23,8 @@ class Image extends Model
      */
     public function getUrlAttribute()
     {
-        $appUrl = env('ASSETS_URL');
-        return $appUrl.env('STORAGE_PREFIX').$this->attributes['path'];
+        $backendUrl = env('BACKEND_URL');
+        return $backendUrl.env('STORAGE_PREFIX').$this->attributes['path'];
     }
 
 

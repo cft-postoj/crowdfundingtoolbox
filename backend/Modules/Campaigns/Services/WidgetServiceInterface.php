@@ -33,7 +33,7 @@ interface WidgetServiceInterface
     public function updateResults($request);
     public function getCampaignWidgets($user);
     public function getWidgetsByCampaginReduced($campaign);
-    public function getWidgets($url, $title, $userCookie, $userId, $ip);
+    public function getWidgets($url, $article, $special, $userCookie, $userToken, $referalWidgetId, $ip, $popupTime);
 
 
     public function cloneWidgetsInCampaign(Campaign $campaign, $newCampaign);
