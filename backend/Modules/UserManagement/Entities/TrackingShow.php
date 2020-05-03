@@ -3,7 +3,6 @@
 namespace Modules\UserManagement\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 //store all widgets that user saw
 
