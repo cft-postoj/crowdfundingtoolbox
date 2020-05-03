@@ -128,6 +128,8 @@ If you changed some specific widget settings in widget edit window, you cannot o
 
 Every widget has live preview, which help to customize widget content. Preview is scaled to 55% from original.
 
+In project you can find several schedule jobs for storing user data, checking payments etc. You can find and edit it in Laravel project --> app/console/Kernel.php
+
 #### Portal communication
 If you can show created widgets on your portal, you have to paste external script to portal footer. Communication script is in public folder of Laravel app - /public/js/crowdFundingToolbox.js
 
