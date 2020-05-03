@@ -7,6 +7,7 @@ namespace Modules\Targeting\Services;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Modules\Payment\Services\DonationService;
+use Modules\Targeting\Entities\AggregateTargeting;
 use Modules\UserManagement\Services\PortalUserService;
 use Modules\UserManagement\Services\TrackingService;
 
@@ -32,7 +33,8 @@ class CampaignTargetingService implements CampaignTargetingServiceInterface
     public function getUsersCount($request)
     {
         $usersList = [];
-        $countVisitors = 0;
+        $aggData = 0;
+        $countVisitors = 999999;
         $isUserInScope = false;
         try {
             $signed_status = $request['signed_status']['signed']['active'];
@@ -44,175 +46,195 @@ class CampaignTargetingService implements CampaignTargetingServiceInterface
             $registrationBefore = $request['registration']['before'];
             $registrationAfter = $request['registration']['after'];
 
+
             if ($signed_status) {
-                //$users = $this->portalUserService->getAll();
-                $usersObject = $this->portalUserService->getAllWithDonations();
-                $this->users = json_decode($usersObject->original);
-                $this->countUsers = sizeof($this->users);
+                $whereClausules = array();
+                $oneTimeDonationBefore = null;
+                $oneTimeDonationAfter = null;
+                $monthlyDonationBefore = null;
+                $monthlyDonationAfter = null;
 
-                foreach ($this->users as $user) {
-                    $actualUserDonations = $user->donations;
-                    $this->removeItemStatus = false;
+                if (!$notsigned_status) {
+                    $countVisitors = 0;
+                }
 
-                    // if is not supporter active
+                $newArray = array();
+                foreach($whereClausules as $array) {
+                    foreach($array as $k=>$v) {
+                        $newArray[$k] = $v;
+                    }
+                }
+
+                // if is active one time supporter and monthly supporter in same time
+                if ($one_time_supporter['active'] && $monthly_supporter['active']) {
                     if ($not_supporter['active']) {
-                        if ($actualUserDonations === null) {
-                            $isUserInScope = true;
-                            $this->removeUsersFromResult($user);
-                        }
-                    }
 
-                    if ($actualUserDonations !== null) {
-                        // if portal user has some only donations
-                        if (!$one_time_supporter['active'] && !$monthly_supporter['active'] && !$not_supporter['active']) {
-                            $isUserInScope = true;
-                        } else {
-                            if (!$this->removeItemStatus && $one_time_supporter['active'] && $this->donationService->isUserOneTimeSupporter($actualUserDonations)) {
-                                $isUserInScope = true;
-                                // One-time payment older/not older than...
-                                if (!$this->removeItemStatus && ($one_time_supporter['older_than']['active'] || $one_time_supporter['not_older_than']['active'])) {
-                                    if (!$this->donationService->isInSpecificLastPaymentTarget(
-                                        $actualUserDonations,
-                                        ($one_time_supporter['older_than']['active']) ?
-                                            (($one_time_supporter['older_than']['value'] === null) ? 0 : $one_time_supporter['older_than']['value'])
-                                            : null,
-                                        ($one_time_supporter['not_older_than']['active']) ?
-                                            (($one_time_supporter['not_older_than']['value'] === null) ? 0 : $one_time_supporter['not_older_than']['value'])
-                                            : null,
-                                        'one-time'
-                                    )) {
-                                        $this->removeUsersFromResult($user);
-                                    }
+                            $aggData = 'all';
+
+                    } else {
+                        $aggData = AggregateTargeting::where($newArray)
+                            ->whereNotNull('last_donation_value')
+                            ->where('last_donation_value', '>', 0);
+                        $aggData->where(function ($q2) use ($one_time_supporter, $monthly_supporter) {
+                            $q2->orWhere(function ($q3) use ($one_time_supporter) {
+                                $q3->where('monthly_supporter', false);
+                                if ($one_time_supporter['older_than']['active']) {
+                                    $q3->where('last_donation_before', '>=', $one_time_supporter['older_than']['value']);
                                 }
-
-                                // One-time donation is bigger/less than..
-                                if (!$this->removeItemStatus && ($one_time_supporter['min']['active'] || $one_time_supporter['max']['active'])) {
-                                    if (!$this->donationService->isInSpecificDonationTarget(
-                                        $actualUserDonations,
-                                        ($one_time_supporter['min']['active']) ?
-                                            (($one_time_supporter['min']['value'] === null) ? 0 : $one_time_supporter['min']['value'])
-                                            : null,
-                                        ($one_time_supporter['max']['active']) ?
-                                            (($one_time_supporter['max']['value'] === null) ? 0 : $one_time_supporter['max']['value'])
-                                            : null,
-                                        'one-time'
-                                    )) {
-                                        $this->removeUsersFromResult($user);
-                                    }
+                                if ($one_time_supporter['not_older_than']['active']) {
+                                    $q3->where('last_donation_before', '<=', $one_time_supporter['not_older_than']['value']);
                                 }
-                            } else if (!$this->removeItemStatus && $one_time_supporter['active'] && !$this->donationService->isUserOneTimeSupporter($actualUserDonations)) {
-                                $isUserInScope = true;
-                                $this->removeUsersFromResult($user);
-                            }
-
-                            // if portal user has some monthly donations
-                            if (!$this->removeItemStatus && !$this->donationService->isUserOneTimeSupporter($actualUserDonations) && $monthly_supporter['active']) {
-                                $isUserInScope = true;
-
-                                // Monthly payment older/not older than...
-                                if (!$this->removeItemStatus && ($monthly_supporter['older_than']['active'] || $monthly_supporter['not_older_than']['active'])) {
-                                    if (!$this->donationService->isInSpecificLastPaymentTarget(
-                                        $actualUserDonations,
-                                        ($monthly_supporter['older_than']['active']) ?
-                                            (($monthly_supporter['older_than']['value'] === null) ? 0 : $monthly_supporter['older_than']['value'])
-                                            : null,
-                                        ($monthly_supporter['not_older_than']['active']) ?
-                                            (($monthly_supporter['not_older_than']['value'] === null) ? 0 : $monthly_supporter['not_older_than']['value'])
-                                            : null,
-                                        'monthly'
-                                    )) {
-                                        $this->removeUsersFromResult($user);
-                                    }
+                                if ($one_time_supporter['min']['active']) {
+                                    $q3->where('last_donation_value', '>=', $one_time_supporter['min']['value']);
                                 }
-
-                                // Monthly donation is bigger/less than..
-                                if (!$this->removeItemStatus && ($monthly_supporter['min']['active'] || $monthly_supporter['max']['active'])) {
-                                    if (!$this->donationService->isInSpecificDonationTarget(
-                                        $actualUserDonations,
-                                        ($monthly_supporter['min']['active']) ?
-                                            (($monthly_supporter['min']['value'] === null) ? 0 : $monthly_supporter['min']['value'])
-                                            : null,
-                                        ($monthly_supporter['max']['active']) ?
-                                            (($monthly_supporter['max']['value'] === null) ? 0 : $monthly_supporter['max']['value'])
-                                            : null,
-                                        'monthly'
-                                    )) {
-                                        $this->removeUsersFromResult($user);
-                                    }
+                                if ($one_time_supporter['max']['active']) {
+                                    $q3->where('last_donation_value', '<=', $one_time_supporter['max']['value']);
                                 }
-                            }
-
-                            if (!$this->removeItemStatus && $not_supporter['active'] && !$monthly_supporter['active'] && !$one_time_supporter['active']) {
-                                $isUserInScope = true;
-                                $this->removeUsersFromResult($user);
-                            }
-                        }
-                    }
-
-
-                    // COUNT OF READ ARTICLES
-                    if (!$this->removeItemStatus && ($readArticles['today']['active'] || $readArticles['week']['active'] || $readArticles['month']['active'])) {
-                        $isUserInScope = true;
-                        $today = ($readArticles['today']['active']) ?
-                            $this->trackingService->hasUserReadArticles($user->visit, 'today', $readArticles['today']['min'], $readArticles['today']['max']) : null;
-                        $week = ($readArticles['week']['active']) ?
-                            $this->trackingService->hasUserReadArticles($user->visit, 'week', $readArticles['week']['min'], $readArticles['week']['max']) : null;
-                        $month = ($readArticles['month']['active']) ?
-                            $this->trackingService->hasUserReadArticles($user->visit, 'month', $readArticles['month']['min'], $readArticles['month']['max']) : null;
-
-
-                        if (!$this->isReadArticle($today, $week, $month)) {
-                            $this->removeUsersFromResult($user);
-                        }
+                            });
+                            $q2->orWhere(function ($q4) use ($monthly_supporter) {
+                                $q4->where('monthly_supporter', true);
+                                if ($monthly_supporter['older_than']['active']) {
+                                    $q4->where('last_donation_before', '>=', $monthly_supporter['older_than']['value']);
+                                }
+                                if ($monthly_supporter['not_older_than']['active']) {
+                                    $q4->where('last_donation_before', '<=', $monthly_supporter['not_older_than']['value']);
+                                }
+                                if ($monthly_supporter['min']['active']) {
+                                    $q4->where('last_donation_value', '>=', $monthly_supporter['min']['value']);
+                                }
+                                if ($monthly_supporter['max']['active']) {
+                                    $q4->where('last_donation_value', '<=', $monthly_supporter['max']['value']);
+                                }
+                            });
+                        });
 
                     }
 
-                    // USER REGISTRATION BEFORE / AFTER
-                    if (!$this->removeItemStatus && ($registrationBefore['active'] || $registrationAfter['active'])) {
-                        $isUserInScope = true;
-                        if ($registrationBefore['active']) {
-                            $year = $registrationBefore['date']['year'];
-                            $month = $num_padded = sprintf("%02d", $registrationBefore['date']['month']);
-                            $day = $num_padded = sprintf("%02d", $registrationBefore['date']['day']);
-                            $choosedRegistrationdate = Carbon::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . $day . ' 23:59:59');
-                            $userRegistrationDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at);
-                            if ($userRegistrationDate >= $choosedRegistrationdate) {
-                                $this->removeUsersFromResult($user);
-                            }
-                        }
-                        if (!$this->removeItemStatus && $registrationAfter['active']) {
-                            $year = $registrationAfter['date']['year'];
-                            $month = $num_padded = sprintf("%02d", $registrationAfter['date']['month']);
-                            $day = $num_padded = sprintf("%02d", $registrationAfter['date']['day']);
-                            $choosedRegistrationdate = Carbon::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . $day . ' 23:59:59');
-                            $userRegistrationDate = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at);
-                            if ($userRegistrationDate <= $choosedRegistrationdate) {
-                                $this->removeUsersFromResult($user);
-                            }
-                        }
+                } else if ($one_time_supporter['active'] !== $monthly_supporter['active']) {
+                    if ($one_time_supporter['active']) {
+                        $aggData = AggregateTargeting::whereNotNull('last_donation_value')
+                            ->where('monthly_supporter', false);
+                        $aggData->where(function ($q2) use ($one_time_supporter) {
+                                if ($one_time_supporter['older_than']['active']) {
+                                    $q2->where('last_donation_before', '>=', $one_time_supporter['older_than']['value']);
+                                }
+                                if ($one_time_supporter['not_older_than']['active']) {
+                                    $q2->where('last_donation_before', '<=', $one_time_supporter['not_older_than']['value']);
+                                }
+                                if ($one_time_supporter['min']['active']) {
+                                    $q2->where('last_donation_value', '>=', $one_time_supporter['min']['value']);
+                                }
+                                if ($one_time_supporter['max']['active']) {
+                                    $q2->where('last_donation_value', '<=', $one_time_supporter['max']['value']);
+                                }
+                            });
+                    } else {
+                            $aggData = AggregateTargeting::whereNotNull('last_donation_value')
+                                ->where('monthly_supporter', true);
+                            $aggData->where(function ($q2) use ($monthly_supporter) {
+                                if ($monthly_supporter['older_than']['active']) {
+                                    $q2->where('last_donation_before', '>=', $monthly_supporter['older_than']['value']);
+                                }
+                                if ($monthly_supporter['not_older_than']['active']) {
+                                    $q2->where('last_donation_before', '<=', $monthly_supporter['not_older_than']['value']);
+                                }
+                                if ($monthly_supporter['min']['active']) {
+                                    $q2->where('last_donation_value', '>=', $monthly_supporter['min']['value']);
+                                }
+                                if ($monthly_supporter['max']['active']) {
+                                    $q2->where('last_donation_value', '<=', $monthly_supporter['max']['value']);
+                                }
+                            });
                     }
 
 
-                    if (!$isUserInScope) {
-                        $this->removeUsersFromResult($user);
+                    if ($not_supporter['active']) {
+                        $aggData = 'all';
+                    } else {
+                        if ($one_time_supporter['active']) {
+                            if ($one_time_supporter['older_than']['active']) {
+                                $aggData = $aggData->where('last_donation_before', '<=', $one_time_supporter['older_than']['value']);
+                            }
+                            if ($one_time_supporter['not_older_than']['active']) {
+                                $aggData = $aggData->where('last_donation_before', '<=', $one_time_supporter['not_older_than']['value']);
+                            }
+                            if ($one_time_supporter['min']['active']) {
+                                $aggData = $aggData->where('last_donation_value', '>=', $one_time_supporter['min']['value']);
+                            }
+                            if ($one_time_supporter['max']['active']) {
+                                $aggData = $aggData->where('last_donation_value', '<=', $one_time_supporter['max']['value']);
+                            }
+                        }
+                        if ($monthly_supporter['active']) {
+                            if ($monthly_supporter['older_than']['active']) {
+                                $aggData = $aggData->where('last_donation_before', '<=', $monthly_supporter['older_than']['value']);
+                            }
+                            if ($monthly_supporter['not_older_than']['active']) {
+                                $aggData = $aggData->where('last_donation_before', '<=', $monthly_supporter['not_older_than']['value']);
+                            }
+                            if ($monthly_supporter['min']['active']) {
+                                $aggData = $aggData->where('last_donation_value', '>=', $monthly_supporter['min']['value']);
+                            }
+                            if ($monthly_supporter['max']['active']) {
+                                $aggData = $aggData->where('last_donation_value', '<=', $monthly_supporter['max']['value']);
+                            }
+                        }
                     }
-
-                    $isUserInScope = false;
-
-                    if (!$this->removeItemStatus) {
-                        array_push($usersList, array(
-                            'email' => $user->user->email,
-                            'first_name' => $user->user->user_detail->first_name,
-                            'last_name' => $user->user->user_detail->last_name,
-                            'id' => $user->user_id
-                        ));
+                } else {
+                    if ($not_supporter['active']) {
+                        if (!$one_time_supporter['active'] && !$monthly_supporter['active']) {
+                            $aggData = AggregateTargeting::where('last_donation_value', null);
+                        }
+                    } else {
+                        $aggData = AggregateTargeting::where($newArray);
                     }
 
                 }
-            }
 
-            if ($notsigned_status) {
-                $countVisitors = 999999;
+                if ($aggData === 'all') {
+                    $aggData = AggregateTargeting::where('id', '>=', 1);
+                }
+
+
+                // READ ARTICLES
+                if ($readArticles['today']['active']) {
+                    $aggData = $aggData->where('read_articles_today', '>=', $readArticles['today']['min']);
+                    $aggData = $aggData->where('read_articles_today', '<=', $readArticles['today']['max']);
+                }
+                if ($readArticles['week']['active']) {
+                    $aggData = $aggData->where('read_articles_week', '>=', $readArticles['week']['min']);
+                    $aggData = $aggData->where('read_articles_week', '<=', $readArticles['week']['max']);
+                }
+                if ($readArticles['month']['active']) {
+                    $aggData = $aggData->where('read_articles_month', '>=', $readArticles['month']['min']);
+                    $aggData = $aggData->where('read_articles_month', '<=', $readArticles['month']['max']);
+                }
+
+
+                // REGISTRATION BEFORE/AFTER
+                if ($registrationBefore['active']) {
+                    $aggData = $aggData->whereDate('unlocked_at', '<=', Carbon::createFromFormat('Y-m-d', $registrationBefore['value']));
+                }
+                if ($registrationAfter['active']) {
+                    $aggData = $aggData->whereDate('unlocked_at', '>=', Carbon::createFromFormat('Y-m-d', $registrationAfter['value']));
+                }
+
+
+                // VALID ADDRESS
+                $aggData->where(function ($add) use ($request) {
+                    if ($request['signed_status']['signed']['valid_address']) {
+                        $add->orWhere('has_valid_address', true);
+                    }
+                    if ($request['signed_status']['signed']['not_valid_address']) {
+                        $add->orWhere('has_valid_address', false);
+                    }
+                });
+
+
+                $aggData = $aggData->get();
+                $this->users = json_decode($aggData);
+                $this->countUsers = count($this->users);
+
             }
 
         } catch (\Exception $exception) {
@@ -224,7 +246,7 @@ class CampaignTargetingService implements CampaignTargetingServiceInterface
         return \response()->json([
             'count_users' => $this->countUsers,
             'count_visitors' => $countVisitors,
-            'users' => $usersList
+            'users' => $aggData
         ], Response::HTTP_OK);
     }
 
